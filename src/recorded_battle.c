@@ -140,13 +140,13 @@ void sub_8184E58(void)
 
     if (sUnknown_0203C7AC == 1)
     {
-        gRecordedBattleRngSeed = gRngValue;
+        gRecordedBattleRngSeed = gRngValueOld;
         sFrontierFacility = VarGet(VAR_FRONTIER_FACILITY);
         sFrontierBrainSymbol = GetFronterBrainSymbol();
     }
     else if (sUnknown_0203C7AC == 2)
     {
-        gRngValue = gRecordedBattleRngSeed;
+        gRngValueOld = gRecordedBattleRngSeed;
     }
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)

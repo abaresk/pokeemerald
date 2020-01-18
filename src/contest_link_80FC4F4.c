@@ -169,7 +169,7 @@ void sub_80FC804(u8 taskId)
     case 0:
         if (GetMultiplayerId() == 0)
         {
-            if (IsLinkTaskFinished() && sub_80FC4F4(&gRngValue, sizeof(gRngValue)) == TRUE)
+            if (IsLinkTaskFinished() && sub_80FC4F4(&gRngValueOld, sizeof(gRngValueOld)) == TRUE)
                 gTasks[taskId].data[0]++;
         }
         else
@@ -180,7 +180,7 @@ void sub_80FC804(u8 taskId)
     case 1:
         if (sub_80FC530(0))
         {
-            memcpy(&gRngValue, gBlockRecvBuffer[0], sizeof(gRngValue));
+            memcpy(&gRngValueOld, gBlockRecvBuffer[0], sizeof(gRngValueOld));
             memcpy(&gContestRngValue, gBlockRecvBuffer[0], sizeof(gContestRngValue));
             gTasks[taskId].data[0]++;
         }

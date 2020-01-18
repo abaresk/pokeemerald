@@ -1143,7 +1143,7 @@ static void sub_80D7DE8(u8 taskId)
         GetMultiplayerId();  // unused return value
         DestroyTask(taskId);
         gTasks[eContest.mainTaskId].func = sub_80D80C8;
-        gRngValue = gContestRngValue;
+        gRngValueOld = gContestRngValue;
     }
 }
 
@@ -1548,7 +1548,7 @@ static void sub_80D8A88(u8 taskId)
     if (++gTasks[taskId].data[0] > 19)
     {
         eContest.unk19214 = 0;
-        eContest.unk1921C = gRngValue;
+        eContest.unk1921C = gRngValueOld;
         if ((gLinkContestFlags & LINK_CONTEST_FLAG_IS_LINK) && sub_80DA8A4())
         {
             s32 i;
@@ -2500,7 +2500,7 @@ static void sub_80DA5E8(u8 taskId)
         sub_80DF4F8();
         ContestDebugPrintBitStrings();
     }
-    gContestRngValue = gRngValue;
+    gContestRngValue = gRngValueOld;
     StringExpandPlaceholders(gStringVar4, gText_AllOutOfAppealTime);
     Contest_StartTextPrinter(gStringVar4, TRUE);
     gTasks[taskId].data[2] = 0;
