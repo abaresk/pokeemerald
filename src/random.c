@@ -11,6 +11,7 @@ EWRAM_DATA static u32 sRandCount = 0;
 u32 gRngValue;
 u32 gRng2Value;
 
+// Changes will be made here
 u16 Random(void)
 {
     gRngValue = 1103515245 * gRngValue + 24691;
