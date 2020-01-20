@@ -1,2 +1,4 @@
 gRngValue
 gRng2Value
+gRngXoshiro
+gRngTinyMT
