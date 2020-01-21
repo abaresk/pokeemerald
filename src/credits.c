@@ -2327,7 +2327,7 @@ static void DeterminePokemonToShow(void)
     do
     {
         // Select a random mon, insert into array
-        page = Random() % sCreditsData->numCaughtMon;
+        page = RandomTinyMT() % sCreditsData->numCaughtMon;
         sCreditsData->monToShow[j] = sCreditsData->caughtMonIds[page];
         
         // Remove the select mon from the array, and condense array entries

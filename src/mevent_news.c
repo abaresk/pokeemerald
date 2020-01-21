@@ -21,10 +21,10 @@ void GenerateRandomNews(u32 a0)
         break;
     case 1:
     case 2:
-        r5->unk_1 = (Random() % 15) + 16;
+        r5->unk_1 = (RandomTinyMT() % 15) + 16;
         break;
     case 3:
-        r5->unk_1 = (Random() % 15) + 1;
+        r5->unk_1 = (RandomTinyMT() % 15) + 1;
         break;
     }
 }

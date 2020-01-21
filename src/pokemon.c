@@ -2230,7 +2230,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     else
     {
         u32 iv;
-        value = Random();
+        value = RandomTinyMT();
 
         iv = value & 0x1F;
         SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
@@ -2239,7 +2239,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         iv = (value & 0x7C00) >> 10;
         SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
 
-        value = Random();
+        value = RandomTinyMT();
 
         iv = value & 0x1F;
         SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
@@ -3354,7 +3354,7 @@ u8 GetDefaultMoveTarget(u8 battlerId)
     {
         u8 position;
 
-        if ((Random() & 1) == 0)
+        if ((RandomTinyMT() & 1) == 0)
             position = BATTLE_PARTNER(opposing);
         else
             position = opposing;
@@ -5766,7 +5766,7 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
             friendshipLevel++;
         if (friendship > 199)
             friendshipLevel++;
-        if ((event != 5 || !(Random() & 1))
+        if ((event != 5 || !(RandomTinyMT() & 1))
          && (event != 3
           || ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
            && (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR
@@ -5891,7 +5891,7 @@ u16 GetMonEVCount(struct Pokemon *mon)
 
 void RandomlyGivePartyPokerus(struct Pokemon *party)
 {
-    u16 rnd = Random();
+    u16 rnd = RandomTinyMT();
     if (rnd == 0x4000 || rnd == 0x8000 || rnd == 0xC000)
     {
         struct Pokemon *mon;
@@ -5900,7 +5900,7 @@ void RandomlyGivePartyPokerus(struct Pokemon *party)
         {
             do
             {
-                rnd = Random() % PARTY_SIZE;
+                rnd = RandomTinyMT() % PARTY_SIZE;
                 mon = &party[rnd];
             }
             while (!GetMonData(mon, MON_DATA_SPECIES, 0));
@@ -5913,7 +5913,7 @@ void RandomlyGivePartyPokerus(struct Pokemon *party)
 
             do
             {
-                rnd2 = Random();
+                rnd2 = RandomTinyMT();
             }
             while ((rnd2 & 0x7) == 0);
 
@@ -6011,7 +6011,7 @@ void UpdatePartyPokerusTime(u16 days)
 
 void PartySpreadPokerus(struct Pokemon *party)
 {
-    if ((Random() % 3) == 0)
+    if ((RandomTinyMT() % 3) == 0)
     {
         int i;
         for (i = 0; i < PARTY_SIZE; i++)
@@ -6464,7 +6464,7 @@ void SetWildMonHeldItem(void)
 {
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_TRAINER | BATTLE_TYPE_PYRAMID | BATTLE_TYPE_PIKE)))
     {
-        u16 rnd = Random() % 100;
+        u16 rnd = RandomTinyMT() % 100;
         u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, 0);
         u16 var1 = 45;
         u16 var2 = 95;

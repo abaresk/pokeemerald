@@ -1085,7 +1085,7 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void)
 static void Task_IntroLoadPart1Graphics(u8 taskId)
 {
     SetVBlankCallback(NULL);
-    gIntroCharacterGender = Random() & 1;
+    gIntroCharacterGender = RandomTinyMT() & 1;
     intro_reset_and_hide_bgs();
     SetGpuReg(REG_OFFSET_BG3VOFS, 0);
     SetGpuReg(REG_OFFSET_BG2VOFS, 0x50);
@@ -2799,7 +2799,7 @@ static void SpriteCB_IntroGraphicsBicycle(struct Sprite *sprite)
     }
     else
     {
-        switch (Random() & 3)
+        switch (RandomTinyMT() & 3)
         {
         case 0:
             sprite->pos2.y = -1;

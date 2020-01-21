@@ -1389,7 +1389,7 @@ static void sub_8141344(u8 taskId)
     u16 randmod;
     u16 angles[4] = {0, 180, 90, 270}; // angles in 90 degree steps
 
-    rand = Random();
+    rand = RandomTinyMT();
     randmod = rand % 100;
     gUnknown_0203AB88->var7C = gTasks[taskId].data[6];
     gUnknown_0203AB88->var7D = gUnknown_0203AB88->var7E = gUnknown_0203AB88->var7F = g;
@@ -3915,7 +3915,7 @@ static void sub_8144264(struct Sprite *sprite)
         u8 t;
         u32 z;
         m4aSongNumStart(SE_KON);
-        z = Random() & 1;
+        z = RandomTinyMT() & 1;
         if (z)
         {
             gUnknown_0203AB88->var8C = 0.0f;
@@ -4098,7 +4098,7 @@ static void sub_8144A24(struct Sprite *sprite)
     u8 i = 0;
     u8 val;
     u8 s[10] = {};
-    u16 rand = Random();
+    u16 rand = RandomTinyMT();
 
     gUnknown_0203AB88->var7D = 1;
     gUnknown_0203AB88->var03_5 = TRUE;

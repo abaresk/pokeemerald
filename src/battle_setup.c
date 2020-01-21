@@ -854,13 +854,13 @@ u8 sub_80B100C(s32 arg0)
         case 13:
             return B_TRANSITION_POKEBALLS_TRAIL;
         case 10:
-            return sUnknown_0854FEA4[Random() % ARRAY_COUNT(sUnknown_0854FEA4)];
+            return sUnknown_0854FEA4[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FEA4)];
         case 3:
-            return sUnknown_0854FEA7[Random() % ARRAY_COUNT(sUnknown_0854FEA7)];
+            return sUnknown_0854FEA7[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FEA7)];
         }
 
         if (VarGet(VAR_FRONTIER_BATTLE_MODE) != FRONTIER_MODE_LINK_MULTIS)
-            return sUnknown_0854FE98[Random() % ARRAY_COUNT(sUnknown_0854FE98)];
+            return sUnknown_0854FE98[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FE98)];
     }
     else
     {
@@ -871,13 +871,13 @@ u8 sub_80B100C(s32 arg0)
         case 13:
             return B_TRANSITION_BIG_POKEBALL;
         case 10:
-            return sUnknown_0854FEA4[Random() % ARRAY_COUNT(sUnknown_0854FEA4)];
+            return sUnknown_0854FEA4[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FEA4)];
         case 3:
-            return sUnknown_0854FEA7[Random() % ARRAY_COUNT(sUnknown_0854FEA7)];
+            return sUnknown_0854FEA7[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FEA7)];
         }
 
         if (VarGet(VAR_FRONTIER_BATTLE_MODE) != FRONTIER_MODE_LINK_MULTIS)
-            return sUnknown_0854FE98[Random() % ARRAY_COUNT(sUnknown_0854FE98)];
+            return sUnknown_0854FE98[RandomTinyMT() % ARRAY_COUNT(sUnknown_0854FE98)];
     }
 
     var = gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum * 2 + 0]
@@ -1592,7 +1592,7 @@ static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u
                 ret = TRUE;
             }
             else if (FlagGet(FLAG_MATCH_CALL_REGISTERED + i)
-             && (Random() % 100) <= 30)  // 31% chance of getting a rematch.
+             && (RandomTinyMT() % 100) <= 30)  // 31% chance of getting a rematch.
             {
                 SetRematchIdForTrainer(table, i);
                 ret = TRUE;

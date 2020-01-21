@@ -24,15 +24,15 @@ static u8 GetMatchingDigits(u16, u16);
 
 void ResetLotteryCorner(void)
 {
-    u16 rand = Random();
+    u16 rand = RandomTinyMT();
 
-    SetLotteryNumber((Random() << 16) | rand);
+    SetLotteryNumber((RandomTinyMT() << 16) | rand);
     VarSet(VAR_POKELOT_PRIZE_ITEM, 0);
 }
 
 void SetRandomLotteryNumber(u16 i)
 {
-    u32 var = Random();
+    u32 var = RandomTinyMT();
 
     while (--i != 0xFFFF)
         var = var * 1103515245 + 12345;

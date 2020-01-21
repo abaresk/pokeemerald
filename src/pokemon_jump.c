@@ -1058,7 +1058,7 @@ static bool32 sub_802B5C8(void)
         if (gUnknown_02022CFC->unk49)
         {
             sub_802AA94(gUnknown_02022CFC);
-            gUnknown_02022CFC->unk24 = Random();
+            gUnknown_02022CFC->unk24 = RandomTinyMT();
             gUnknown_02022CFC->unk70.unk2 = gUnknown_02022CFC->unk24;
             gUnknown_02022CFC->unk4C = 0;
             return FALSE;
@@ -2116,7 +2116,7 @@ static void sub_802C808(u16 arg0, u16 *arg1, u16 *arg2)
 
 static u16 sub_802C818(void)
 {
-    u16 index = Random() % ARRAY_COUNT(gUnknown_082FB704);
+    u16 index = RandomTinyMT() % ARRAY_COUNT(gUnknown_082FB704);
     return gUnknown_082FB704[index];
 }
 

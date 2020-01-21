@@ -1697,7 +1697,7 @@ static void sub_8080EA4(u8 taskId)
         {
             if (sBerryBlenderData->field_123 == 0)
             {
-                u8 rand = Random() / 655;
+                u8 rand = RandomTinyMT() / 655;
                 if (sBerryBlenderData->field_4C < 500)
                 {
                     if (rand > 75)
@@ -1759,7 +1759,7 @@ static void sub_8080FD0(u8 taskId)
         {
             if (sBerryBlenderData->field_123 == 0)
             {
-                u8 rand = Random() / 655;
+                u8 rand = RandomTinyMT() / 655;
                 if (sBerryBlenderData->field_4C < 500)
                 {
                     if (rand > 66)
@@ -1806,7 +1806,7 @@ static void sub_80810F8(u8 taskId)
         {
             if (sBerryBlenderData->field_123 == 0)
             {
-                u8 rand = (Random() / 655);
+                u8 rand = (RandomTinyMT() / 655);
                 if (sBerryBlenderData->field_4C < 500)
                 {
                     if (rand > 88)
@@ -2276,7 +2276,7 @@ static void Blender_CalculatePokeblock(struct BlenderBerry *berries, struct Poke
 
     if (pokeblock->color == 12)
     {
-        multiuseVar = Random() % 10;
+        multiuseVar = RandomTinyMT() % 10;
         for (i = 0; i < 5; i++)
         {
             if ((sUnknown_08339CC8[multiuseVar] >> i) & 1)
@@ -2962,7 +2962,7 @@ static void sub_8082E3C(struct Sprite* sprite)
 
 static void sub_8082E84(void)
 {
-    s32 limit = (Random() % 2) + 1;
+    s32 limit = (RandomTinyMT() % 2) + 1;
     s32 i;
 
     for (i = 0; i < limit; i++)
@@ -2971,14 +2971,14 @@ static void sub_8082E84(void)
         s32 x, y;
         u8 spriteId;
 
-        rand = sBerryBlenderData->arrowPos + (Random() % 20);
+        rand = sBerryBlenderData->arrowPos + (RandomTinyMT() % 20);
 
         x = gSineTable[(rand & 0xFF) + 64] / 4;
         y = gSineTable[(rand & 0xFF)] / 4;
 
         spriteId = CreateSprite(&sUnknown_08339BE0, x + 120, y + 80, 1);
-        gSprites[spriteId].data[0] = 16 - (Random() % 32);
-        gSprites[spriteId].data[1] = 16 - (Random() % 32);
+        gSprites[spriteId].data[0] = 16 - (RandomTinyMT() % 32);
+        gSprites[spriteId].data[1] = 16 - (RandomTinyMT() % 32);
 
         gSprites[spriteId].callback = sub_8082E3C;
     }
@@ -3148,7 +3148,7 @@ static void sub_8083230(u16 a0)
 static void sub_80832BC(s16* a0, u16 a1)
 {
     if (*a0 == 0)
-        *a0 = (Random() % a1) - (a1 / 2);
+        *a0 = (RandomTinyMT() % a1) - (a1 / 2);
 }
 
 static void sub_80832E8(s16* a0)
@@ -3176,7 +3176,7 @@ static void sub_8083334(s16* a0, u16 a1)
 
     if (*a0 == 0)
     {
-        *a0 = (Random() % var) - (var / 2);
+        *a0 = (RandomTinyMT() % var) - (var / 2);
     }
     else
     {

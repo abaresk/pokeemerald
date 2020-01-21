@@ -13,7 +13,7 @@ u16 RandomXoshiro(void);
 u16 RandomTinyMT(void);
 
 //Returns a 32-bit pseudorandom number
-#define Random32() (Random() | (Random() << 16))
+#define Random32() (RandomTinyMT() | (RandomTinyMT() << 16))
 
 //Sets the initial seed value of the pseudorandom number generator
 void SeedRng(u16 seed);
@@ -32,5 +32,6 @@ struct Bit64 xoshiroNext(void);
 void tinymt32_init(u32 seed);
 void tinymt32_next_state(void);
 u32 tinymt32_generate_uint32(void);
+void period_certification(void);
 
 #endif // GUARD_RANDOM_H

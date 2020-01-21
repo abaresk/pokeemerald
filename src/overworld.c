@@ -1267,8 +1267,8 @@ static void PlayAmbientCry(void)
     if (sIsAmbientCryWaterMon == TRUE
      && !MetatileBehavior_IsSurfableWaterOrUnderwater(MapGridGetMetatileBehaviorAt(x, y)))
         return;
-    pan = (Random() % 88) + 212;
-    volume = (Random() % 30) + 50;
+    pan = (RandomTinyMT() % 88) + 212;
+    volume = (RandomTinyMT() % 30) + 50;
     PlayCry2(sAmbientCrySpecies, pan, volume, 1);
 }
 
@@ -1285,7 +1285,7 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter)
             *state = 1;
         break;
     case 1:
-        *delayCounter = (Random() % 2400) + 1200;
+        *delayCounter = (RandomTinyMT() % 2400) + 1200;
         *state = 3;
         break;
     case 2:
@@ -1300,7 +1300,7 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter)
                 break;
             }
         }
-        *delayCounter = ((Random() % 1200) + 1200) / divBy;
+        *delayCounter = ((RandomTinyMT() % 1200) + 1200) / divBy;
         *state = 3;
         break;
     case 3:

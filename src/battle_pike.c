@@ -755,7 +755,7 @@ static void GetRoomInflictedStatusMon(void)
 
 static void HealOneOrTwoMons(void)
 {
-    u16 toHeal = (Random() % 2) + 1;
+    u16 toHeal = (RandomTinyMT() % 2) + 1;
     TryHealMons(toHeal);
     gSpecialVar_Result = toHeal;
 }
@@ -886,8 +886,8 @@ static bool8 TryInflictRandomStatus(void)
     {
         u8 temp, id;
 
-        i = Random() % 3;
-        id = Random() % 3;
+        i = RandomTinyMT() % 3;
+        id = RandomTinyMT() % 3;
         SWAP(indices[i], indices[id], temp);
     }
 
@@ -904,7 +904,7 @@ static bool8 TryInflictRandomStatus(void)
         u8 rand;
 
         statusChosen = FALSE;
-        rand = Random() % 100;
+        rand = RandomTinyMT() % 100;
 
         if (rand < 35)
             sStatusFlags = STATUS1_TOXIC_POISON;
@@ -949,7 +949,7 @@ static bool8 TryInflictRandomStatus(void)
         sStatusMon = PIKE_STATUSMON_DUSCLOPS;
         break;
     case STATUS1_BURN:
-        if (Random() % 2 != 0)
+        if (RandomTinyMT() % 2 != 0)
             sStatusMon = PIKE_STATUSMON_DUSCLOPS;
         else
             sStatusMon = PIKE_STATUSMON_KIRLIA;
@@ -1085,7 +1085,7 @@ static u8 GetNextRoomType(void)
             roomCandidates[id++] = i;
     }
 
-    nextRoomType = roomCandidates[Random() % numRoomCandidates];
+    nextRoomType = roomCandidates[RandomTinyMT() % numRoomCandidates];
     free(roomCandidates);
     if (nextRoomType == PIKE_ROOM_STATUS)
         TryInflictRandomStatus();
@@ -1095,7 +1095,7 @@ static u8 GetNextRoomType(void)
 
 static u16 GetNPCRoomGraphicsId(void)
 {
-    sNpcId = Random() % ARRAY_COUNT(sNPCTable);
+    sNpcId = RandomTinyMT() % ARRAY_COUNT(sNPCTable);
     return sNPCTable[sNpcId].graphicsId;
 }
 
@@ -1143,7 +1143,7 @@ bool32 TryGenerateBattlePikeWildMon(bool8 checkKeenEyeIntimidate)
                &gExperienceTables[gBaseStats[wildMons[headerId][pikeMonId].species].growthRate][monLevel]);
 
     if (gBaseStats[wildMons[headerId][pikeMonId].species].abilities[1])
-        abilityNum = Random() % 2;
+        abilityNum = RandomTinyMT() % 2;
     else
         abilityNum = 0;
     SetMonData(&gEnemyParty[0], MON_DATA_ABILITY_NUM, &abilityNum);
@@ -1273,8 +1273,8 @@ static void TryHealMons(u8 healCount)
     {
         u8 temp;
 
-        i = Random() % 3;
-        j = Random() % 3;
+        i = RandomTinyMT() % 3;
+        j = RandomTinyMT() % 3;
         SWAP(indices[i], indices[j], temp);
     }
 
@@ -1339,12 +1339,12 @@ static void SetHintedRoom(void)
     if (GetPikeQueenFightType(1))
     {
         gSpecialVar_Result = TRUE;
-        gSaveBlock2Ptr->frontier.pikeHintedRoomIndex = Random() % 6;
+        gSaveBlock2Ptr->frontier.pikeHintedRoomIndex = RandomTinyMT() % 6;
         gSaveBlock2Ptr->frontier.pikeHintedRoomType = PIKE_ROOM_BRAIN;
     }
     else
     {
-        gSaveBlock2Ptr->frontier.pikeHintedRoomIndex = Random() % 3;
+        gSaveBlock2Ptr->frontier.pikeHintedRoomIndex = RandomTinyMT() % 3;
         if (gSaveBlock2Ptr->frontier.pikeHealingRoomsDisabled)
             count = NUM_PIKE_ROOM_TYPES - 3; // exclude healing rooms and Brain room
         else
@@ -1364,7 +1364,7 @@ static void SetHintedRoom(void)
             }
         }
 
-        gSaveBlock2Ptr->frontier.pikeHintedRoomType = roomCandidates[Random() % count];
+        gSaveBlock2Ptr->frontier.pikeHintedRoomType = roomCandidates[RandomTinyMT() % count];
         free(roomCandidates);
         if (gSaveBlock2Ptr->frontier.pikeHintedRoomType == PIKE_ROOM_STATUS && !AtLeastOneHealthyMon())
             gSaveBlock2Ptr->frontier.pikeHintedRoomType = PIKE_ROOM_NPC;
@@ -1630,7 +1630,7 @@ static bool8 CanEncounterWildMon(u8 enemyMonLevel)
         if (monAbility == ABILITY_KEEN_EYE || monAbility == ABILITY_INTIMIDATE)
         {
             u8 playerMonLevel = GetMonData(&gPlayerParty[0], MON_DATA_LEVEL);
-            if (playerMonLevel > 5 && enemyMonLevel <= playerMonLevel - 5 && Random() % 2 == 0)
+            if (playerMonLevel > 5 && enemyMonLevel <= playerMonLevel - 5 && RandomTinyMT() % 2 == 0)
                 return FALSE;
         }
     }

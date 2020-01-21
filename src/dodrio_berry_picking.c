@@ -1691,7 +1691,7 @@ static void sub_8026324(void)
                 {
                     u8 unk0 = gUnknown_02022C98->unkF4[r5][0];
                     i = gUnknown_02022C98->unkF4[r5][1]; // Have to re-use the variable to match.
-                    if (!(Random() & 1))
+                    if (!(RandomTinyMT() & 1))
                     {
                         r4 = unk0;
                         id = i;
@@ -2314,7 +2314,7 @@ static void sub_80273F0(void)
     case 5:  var = 2; break;
     }
 
-    var2 = Random() % 10;
+    var2 = RandomTinyMT() % 10;
     for (i = 0; i < 5; i++)
         gUnknown_02022C98->unk4A[i][4] = gUnknown_082F7AA4[var][var2];
 }

@@ -215,7 +215,7 @@ static void ShowContestPainting(void)
         gMain.state++;
         break;
     case 2:
-        SeedRng(gMain.vblankCounter1);
+        SeedRngTinyMT(gMain.vblankCounter1);
         InitKeys();
         InitContestPaintingWindow();
         gMain.state++;

@@ -324,7 +324,7 @@ void SetMirageTowerVisibility(void)
         return;
     }
 
-    rand = Random();
+    rand = RandomTinyMT();
     visible = rand & 1;
     if (FlagGet(FLAG_FORCE_MIRAGE_TOWER_VISIBLE) == TRUE)
         visible = TRUE;
@@ -577,8 +577,8 @@ static void DoMirageTowerDisintegration(u8 taskId)
                 {
                     u16 rand1, rand2, temp;
 
-                    rand1 = Random() % 0x30;
-                    rand2 = Random() % 0x30;
+                    rand1 = RandomTinyMT() % 0x30;
+                    rand2 = RandomTinyMT() % 0x30;
                     SWAP(sUnknown_0203CF10[index].buffer[rand2], sUnknown_0203CF10[index].buffer[rand1], temp);
                 }
                 if (gTasks[taskId].data[3] <= (OUTER_BUFFER_LENGTH - 1))
@@ -682,8 +682,8 @@ static void DoFossilFallAndSink(u8 taskId)
         {
             u16 rand1, rand2, temp;
 
-            rand1 = Random() % 0x100;
-            rand2 = Random() % 0x100;
+            rand1 = RandomTinyMT() % 0x100;
+            rand2 = RandomTinyMT() % 0x100;
             SWAP(sUnknown_0203CF0C->unkC[rand2], sUnknown_0203CF0C->unkC[rand1], temp);
         }
         gSprites[sUnknown_0203CF0C->spriteId].callback = sub_81BF248;

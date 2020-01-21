@@ -2067,7 +2067,7 @@ void VBlankCB_Battle(void)
 {
     // Change gRngSeed every vblank unless the battle could be recorded.
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
-        Random();
+        RandomTinyMT();
 
     SetGpuReg(REG_OFFSET_BG0HOFS, gBattle_BG0_X);
     SetGpuReg(REG_OFFSET_BG0VOFS, gBattle_BG0_Y);
@@ -3114,7 +3114,7 @@ static void BattleStartClearSetData(void)
     gBattleStruct->givenExpMons = 0;
     gBattleStruct->field_92 = 0;
 
-    gRandomTurnNumber = Random();
+    gRandomTurnNumber = RandomTinyMT();
 
     dataPtr = (u8 *)(&gBattleResults);
     for (i = 0; i < sizeof(struct BattleResults); i++)
@@ -3959,7 +3959,7 @@ static void TryDoEventsBeforeFirstTurn(void)
     gBattleStruct->turnCountersTracker = 0;
     gMoveResultFlags = 0;
 
-    gRandomTurnNumber = Random();
+    gRandomTurnNumber = RandomTinyMT();
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
     {
@@ -4049,7 +4049,7 @@ void BattleTurnPassed(void)
     *(&gBattleStruct->field_91) = gAbsentBattlerFlags;
     BattlePutTextOnWindow(gText_EmptyString3, 0);
     gBattleMainFunc = HandleTurnActionSelectionState;
-    gRandomTurnNumber = Random();
+    gRandomTurnNumber = RandomTinyMT();
 
     if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
         BattleScriptExecute(BattleScript_82DB881);
@@ -4766,7 +4766,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         // both priorities are the same
         if (gBattleMoves[moveBattler1].priority == gBattleMoves[moveBattler2].priority)
         {
-            if (speedBattler1 == speedBattler2 && Random() & 1)
+            if (speedBattler1 == speedBattler2 && RandomTinyMT() & 1)
                 strikesFirst = 2; // same speeds, same priorities
             else if (speedBattler1 < speedBattler2)
                 strikesFirst = 1; // battler2 has more speed
@@ -4781,7 +4781,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     // both priorities are equal to 0
     else
     {
-        if (speedBattler1 == speedBattler2 && Random() & 1)
+        if (speedBattler1 == speedBattler2 && RandomTinyMT() & 1)
             strikesFirst = 2; // same speeds, same priorities
         else if (speedBattler1 < speedBattler2)
             strikesFirst = 1; // battler2 has more speed
@@ -5407,14 +5407,14 @@ static void HandleAction_UseMove(void)
             {
                 if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
                 {
-                    if (Random() & 1)
+                    if (RandomTinyMT() & 1)
                         gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
                     else
                         gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
                 }
                 else
                 {
-                    if (Random() & 1)
+                    if (RandomTinyMT() & 1)
                         gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
                     else
                         gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
@@ -5452,14 +5452,14 @@ static void HandleAction_UseMove(void)
     {
         if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
         {
-            if (Random() & 1)
+            if (RandomTinyMT() & 1)
                 gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
             else
                 gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
         }
         else
         {
-            if (Random() & 1)
+            if (RandomTinyMT() & 1)
                 gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
             else
                 gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
@@ -5645,7 +5645,7 @@ bool8 TryRunFromBattle(u8 battler)
             gBattleStruct->runTries++;
             pyramidMultiplier = GetPyramidRunMultiplier();
             speedVar = (gBattleMons[battler].speed * pyramidMultiplier) / (gBattleMons[BATTLE_OPPOSITE(battler)].speed) + (gBattleStruct->runTries * 30);
-            if (speedVar > (Random() & 0xFF))
+            if (speedVar > (RandomTinyMT() & 0xFF))
             {
                 gLastUsedAbility = ABILITY_RUN_AWAY;
                 gProtectStructs[battler].fleeFlag = 2;
@@ -5671,13 +5671,13 @@ bool8 TryRunFromBattle(u8 battler)
             {
                 pyramidMultiplier = GetPyramidRunMultiplier();
                 speedVar = (gBattleMons[battler].speed * pyramidMultiplier) / (gBattleMons[BATTLE_OPPOSITE(battler)].speed) + (gBattleStruct->runTries * 30);
-                if (speedVar > (Random() & 0xFF))
+                if (speedVar > (RandomTinyMT() & 0xFF))
                     effect++;
             }
             else if (gBattleMons[battler].speed < gBattleMons[BATTLE_OPPOSITE(battler)].speed)
             {
                 speedVar = (gBattleMons[battler].speed * 128) / (gBattleMons[BATTLE_OPPOSITE(battler)].speed) + (gBattleStruct->runTries * 30);
-                if (speedVar > (Random() & 0xFF))
+                if (speedVar > (RandomTinyMT() & 0xFF))
                     effect++;
             }
             else // same speed or faster

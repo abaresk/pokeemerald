@@ -1734,7 +1734,7 @@ static bool8 Fishing2(struct Task *task)
     const s16 arr2[] = {1, 3, 6};
 
     task->tRoundsPlayed = 0;
-    task->tMinRoundsRequired = arr1[task->tFishingRod] + (Random() % arr2[task->tFishingRod]);
+    task->tMinRoundsRequired = arr1[task->tFishingRod] + (RandomTinyMT() % arr2[task->tFishingRod]);
     task->tPlayerGfxId = gEventObjects[gPlayerAvatar.eventObjectId].graphicsId;
     playerEventObj = &gEventObjects[gPlayerAvatar.eventObjectId];
     EventObjectClearHeldMovementIfActive(playerEventObj);
@@ -1763,7 +1763,7 @@ static bool8 Fishing4(struct Task *task)
     task->tStep++;
     task->tFrameCounter = 0;
     task->tNumDots = 0;
-    randVal = Random();
+    randVal = RandomTinyMT();
     randVal %= 10;
     task->tDotsRequired = randVal + 1;
     if (task->tRoundsPlayed == 0)
@@ -1829,7 +1829,7 @@ static bool8 Fishing6(struct Task *task)
             u8 ability = GetMonAbility(&gPlayerParty[0]);
             if (ability == ABILITY_SUCTION_CUPS || ability  == ABILITY_STICKY_HOLD)
             {
-                if (Random() % 100 > 14)
+                if (RandomTinyMT() % 100 > 14)
                 {
                     bite = TRUE;
                 }
@@ -1838,7 +1838,7 @@ static bool8 Fishing6(struct Task *task)
 
         if (!bite)
         {
-            if (Random() & 1)
+            if (RandomTinyMT() & 1)
             {
                 task->tStep = FISHING_NO_BITE;
             }
@@ -1899,7 +1899,7 @@ static bool8 Fishing9(struct Task *task)
     else if (task->tRoundsPlayed < 2)
     {
         // probability of having to play another round
-        s16 probability = Random() % 100;
+        s16 probability = RandomTinyMT() % 100;
 
         if (arr[task->tFishingRod][task->tRoundsPlayed] > probability)
             task->tStep = FISHING_START_ROUND;

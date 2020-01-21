@@ -788,13 +788,13 @@ static u16 GetMonSetId(u8 lvlMode, u8 challengeNum, bool8 arg2)
         if (arg2)
         {
             range = (sMonsToChooseFrom[adder + challengeNum + 1][1] - sMonsToChooseFrom[adder + challengeNum + 1][0]) + 1;
-            monSetId = Random() % range;
+            monSetId = RandomTinyMT() % range;
             monSetId += sMonsToChooseFrom[adder + challengeNum + 1][0];
         }
         else
         {
             range = (sMonsToChooseFrom[adder + challengeNum][1] - sMonsToChooseFrom[adder + challengeNum][0]) + 1;
-            monSetId = Random() % range;
+            monSetId = RandomTinyMT() % range;
             monSetId += sMonsToChooseFrom[adder + challengeNum][0];
         }
     }
@@ -804,7 +804,7 @@ static u16 GetMonSetId(u8 lvlMode, u8 challengeNum, bool8 arg2)
         if (num != 7)
             num = 7;
         range = (sMonsToChooseFrom[adder + num][1] - sMonsToChooseFrom[adder + num][0]) + 1;
-        monSetId = Random() % range;
+        monSetId = RandomTinyMT() % range;
         monSetId += sMonsToChooseFrom[adder + num][0];
     }
 

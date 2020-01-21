@@ -25,7 +25,7 @@ static void SetMirageRnd(u32 rnd)
 // unused
 void InitMirageRnd(void)
 {
-    SetMirageRnd((Random() << 16) | Random());
+    SetMirageRnd((RandomTinyMT() << 16) | RandomTinyMT());
 }
 
 void UpdateMirageRnd(u16 days)

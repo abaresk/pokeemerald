@@ -4823,7 +4823,7 @@ static void CB2_SaveAndEndTrade(void)
         {
             if (GetMultiplayerId() == 0)
             {
-                sTradeData->timer = Random() % 30;
+                sTradeData->timer = RandomTinyMT() % 30;
             }
             else
             {
@@ -5132,7 +5132,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
         if (++sTradeData->timer > 10)
         {
             if (GetMultiplayerId() == 0)
-                sTradeData->timer = Random() % 30;
+                sTradeData->timer = RandomTinyMT() % 30;
             else
                 sTradeData->timer = 0;
             gMain.state = 7;

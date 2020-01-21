@@ -1572,14 +1572,14 @@ static void OpponentHandleChooseMove(void)
             u16 move;
             do
             {
-                chosenMoveId = Random() & 3;
+                chosenMoveId = RandomTinyMT() & 3;
                 move = moveInfo->moves[chosenMoveId];
             } while (move == MOVE_NONE);
 
             if (gBattleMoves[move].target & (MOVE_TARGET_USER_OR_SELECTED | MOVE_TARGET_USER))
                 BtlController_EmitTwoReturnValues(1, 10, (chosenMoveId) | (gActiveBattler << 8));
             else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-                BtlController_EmitTwoReturnValues(1, 10, (chosenMoveId) | (GetBattlerAtPosition(Random() & 2) << 8));
+                BtlController_EmitTwoReturnValues(1, 10, (chosenMoveId) | (GetBattlerAtPosition(RandomTinyMT() & 2) << 8));
             else
                 BtlController_EmitTwoReturnValues(1, 10, (chosenMoveId) | (GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) << 8));
 

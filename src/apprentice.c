@@ -185,14 +185,14 @@ static void SetApprenticeId(void)
     {
         do
         {
-            PLAYER_APPRENTICE.id = sInitialApprenticeIds[Random() % ARRAY_COUNT(sInitialApprenticeIds)];
+            PLAYER_APPRENTICE.id = sInitialApprenticeIds[RandomTinyMT() % ARRAY_COUNT(sInitialApprenticeIds)];
         } while (PLAYER_APPRENTICE.id == gSaveBlock2Ptr->apprentices[0].id);
     }
     else
     {
         do
         {
-            PLAYER_APPRENTICE.id = Random() % (NUM_APPRENTICES);
+            PLAYER_APPRENTICE.id = RandomTinyMT() % (NUM_APPRENTICES);
         } while (PLAYER_APPRENTICE.id == gSaveBlock2Ptr->apprentices[0].id);
     }
 }
@@ -214,8 +214,8 @@ static void ShuffleApprenticeSpecies(void)
     for (i = 0; i < 50; i++)
     {
         u8 temp;
-        u8 rand1 = Random() % ARRAY_COUNT(species);
-        u8 rand2 = Random() % ARRAY_COUNT(species);
+        u8 rand1 = RandomTinyMT() % ARRAY_COUNT(species);
+        u8 rand2 = RandomTinyMT() % ARRAY_COUNT(species);
         SWAP(species[rand1], species[rand2], temp);
     }
 
@@ -234,7 +234,7 @@ static u8 GetMonIdForQuestion(u8 questionId, u8 *party, u8 *partySlot)
     {
         do
         {
-            monId = Random() % (MULTI_PARTY_SIZE);
+            monId = RandomTinyMT() % (MULTI_PARTY_SIZE);
             for (count = 0, i = 0; i < NUM_WHICH_MOVE_QUESTIONS; i++)
             {
                 if (gApprenticePartyMovesData->moves[monId][i] != MOVE_NONE)
@@ -268,8 +268,8 @@ static void SetRandomQuestionData(void)
     for (i = 0; i < 10; i++)
     {
         u8 temp;
-        rand1 = Random() % ARRAY_COUNT(partyOrder);
-        rand2 = Random() % ARRAY_COUNT(partyOrder);
+        rand1 = RandomTinyMT() % ARRAY_COUNT(partyOrder);
+        rand2 = RandomTinyMT() % ARRAY_COUNT(partyOrder);
         SWAP(partyOrder[rand1], partyOrder[rand2], temp);
     }
 
@@ -280,8 +280,8 @@ static void SetRandomQuestionData(void)
     for (i = 0; i < 50; i++)
     {
         u8 temp;
-        rand1 = Random() % ARRAY_COUNT(questionOrder);
-        rand2 = Random() % ARRAY_COUNT(questionOrder);
+        rand1 = RandomTinyMT() % ARRAY_COUNT(questionOrder);
+        rand2 = RandomTinyMT() % ARRAY_COUNT(questionOrder);
         SWAP(questionOrder[rand1], questionOrder[rand2], temp);
     }
 
@@ -305,7 +305,7 @@ static void SetRandomQuestionData(void)
             {
                 do
                 {
-                    rand1 = Random() % MAX_MON_MOVES;
+                    rand1 = RandomTinyMT() % MAX_MON_MOVES;
                     for (j = 0; j < gApprenticePartyMovesData->moveCounter + 1; j++)
                     {
                         if (gApprenticePartyMovesData->moveSlots[id][j] == rand1)
@@ -381,7 +381,7 @@ static u16 GetRandomAlternateMove(u8 monId)
     // This while loop contains 3 potential infinite loops, though none of them would occur in the base game
     while (i < 5)
     {
-        if (Random() % 2 == 0 || needTMs == TRUE)
+        if (RandomTinyMT() % 2 == 0 || needTMs == TRUE)
         {
             // Get TM move
             // NOTE: Below is an infinite loop if a species that only learns TMs for moves
@@ -391,7 +391,7 @@ static u16 GetRandomAlternateMove(u8 monId)
                 // NOTE: Below is an infinite loop if a species which cannot learn TMs is assigned to an Apprentice
                 do
                 {
-                    id = Random() % (NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES);
+                    id = RandomTinyMT() % (NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES);
                     shouldUseMove = CanSpeciesLearnTMHM(species, id);
                 }
                 while (!shouldUseMove);
@@ -430,7 +430,7 @@ static u16 GetRandomAlternateMove(u8 monId)
                 do
                 {
                     // Get a random move excluding the 4 it would know at max level
-                    u8 learnsetId = Random() % (numLearnsetMoves - MAX_MON_MOVES);
+                    u8 learnsetId = RandomTinyMT() % (numLearnsetMoves - MAX_MON_MOVES);
                     moveId = learnset[learnsetId] & LEVEL_UP_MOVE_ID;
                     shouldUseMove = TRUE;
 

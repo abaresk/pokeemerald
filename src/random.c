@@ -18,7 +18,6 @@ u32 gRng2Value;
 struct Bit64 gRngXoshiro[4];
 u32 gRngTinyMT[4];
 
-// Changes will be made here
 u16 Random(void)
 {
     gRngValue = 1103515245 * gRngValue + 24691;
@@ -332,7 +331,7 @@ struct Bit64 xoshiroNext(void)
  * This function certificate the period of 2^127-1.
  * @param random tinymt state vector.
  */
-static void period_certification(void)
+void period_certification(void)
 {
     if ((gRngTinyMT[0] & TINYMT32_MASK) == 0 &&
         gRngTinyMT[1] == 0 &&
@@ -393,8 +392,8 @@ void tinymt32_next_state(void)
     gRngTinyMT[3] = y;
     if ((y & 1) == 1)
     {
-        gRngTinyMT[1] = MAT1;
-        gRngTinyMT[2] = MAT2;
+        gRngTinyMT[1] ^= MAT1;
+        gRngTinyMT[2] ^= MAT2;
     }
 }
 

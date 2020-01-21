@@ -2711,7 +2711,7 @@ static void CreateDomeOpponentMons(u16 tournamentTrainerId)
     ZeroEnemyPartyMons();
     bits = GetDomeTrainerMonCountInBits(tournamentTrainerId);
     otId = Random32();
-    if (Random() % 10 > 5)
+    if (RandomTinyMT() % 10 > 5)
     {
         for (i = 0; i < 3; i++)
         {
@@ -2740,7 +2740,7 @@ static void CreateDomeOpponentMons(u16 tournamentTrainerId)
 int GetDomeTrainerMonCountInBits(u16 tournamentTrainerId)
 {
     int bits;
-    if (Random() & 1)
+    if (RandomTinyMT() & 1)
     {
         bits = sub_818FCBC(tournamentTrainerId, FALSE);
         if (bits == 0)
@@ -2828,7 +2828,7 @@ static int sub_818FEB4(int *arr, bool8 arg1)
             i = 0;
             while (i != 2)
             {
-                u32 rand = Random() & 3;
+                u32 rand = RandomTinyMT() & 3;
                 if (rand != 3 && !(bits & gBitTable[rand]))
                 {
                     bits |= gBitTable[rand];
@@ -2856,7 +2856,7 @@ static int sub_818FEB4(int *arr, bool8 arg1)
                     array[j] = temp;
                 }
 
-                if (arr[i] == arr[j] && (Random() & 1))
+                if (arr[i] == arr[j] && (RandomTinyMT() & 1))
                 {
                     temp = arr[i];
                     arr[i] = arr[j];
@@ -5466,7 +5466,7 @@ static u16 GetWinningMove(int winnerTournamentId, int loserTournamentId, u8 roun
             }
             else if (bestScore == moveScores[i * 4 + j])
             {
-                if (moveIds[bestId] < moveIds[i * 4 + j]) // Why not use (Random() & 1) instead of promoting moves with a higher id?
+                if (moveIds[bestId] < moveIds[i * 4 + j]) // Why not use (RandomTinyMT() & 1) instead of promoting moves with a higher id?
                     bestId = i * 4 + j;
             }
         }
@@ -6030,11 +6030,11 @@ static void sub_8194F58(void)
         do
         {
             if (i < 5)
-                trainerId = Random() % 10;
+                trainerId = RandomTinyMT() % 10;
             else if (i < 15)
-                trainerId = Random() % 20 + 10;
+                trainerId = RandomTinyMT() % 20 + 10;
             else
-                trainerId = Random() % 10 + 30;
+                trainerId = RandomTinyMT() % 10 + 30;
 
             for (j = 0; j < i; j++)
             {
@@ -6219,7 +6219,7 @@ static void DecideRoundWinners(u8 roundId)
                            + gBaseStats[species].baseSpDefense) / 10;
             }
             // Random part of the formula.
-            points1 += (Random() & 0x1F);
+            points1 += (RandomTinyMT() & 0x1F);
             // Favor trainers with higher id;
             points1 += tournamentId1;
 
@@ -6242,7 +6242,7 @@ static void DecideRoundWinners(u8 roundId)
                            + gBaseStats[species].baseSpDefense) / 10;
             }
             // Random part of the formula.
-            points2 += (Random() & 0x1F);
+            points2 += (RandomTinyMT() & 0x1F);
             // Favor trainers with higher id;
             points2 += tournamentId2;
 

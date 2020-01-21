@@ -80,7 +80,7 @@ static void CreateInitialRoamerMon(bool16 createLatios)
     (&gSaveBlock1Ptr->roamer)->smart = GetMonData(&gEnemyParty[0], MON_DATA_SMART);
     (&gSaveBlock1Ptr->roamer)->tough = GetMonData(&gEnemyParty[0], MON_DATA_TOUGH);
     sRoamerLocation[MAP_GRP] = 0;
-    sRoamerLocation[MAP_NUM] = sRoamerLocations[Random() % (ARRAY_COUNT(sRoamerLocations) - 1)][0];
+    sRoamerLocation[MAP_NUM] = sRoamerLocations[RandomTinyMT() % (ARRAY_COUNT(sRoamerLocations) - 1)][0];
 }
 
 void InitRoamer(void)
@@ -114,7 +114,7 @@ void RoamerMoveToOtherLocationSet(void)
 
     while (1)
     {
-        mapNum = sRoamerLocations[Random() % (ARRAY_COUNT(sRoamerLocations) - 1)][0];
+        mapNum = sRoamerLocations[RandomTinyMT() % (ARRAY_COUNT(sRoamerLocations) - 1)][0];
         if (sRoamerLocation[MAP_NUM] != mapNum)
         {
             sRoamerLocation[MAP_NUM] = mapNum;
@@ -127,7 +127,7 @@ void RoamerMove(void)
 {
     u8 locSet = 0;
 
-    if ((Random() % 16) == 0)
+    if ((RandomTinyMT() % 16) == 0)
     {
         RoamerMoveToOtherLocationSet();
     }
@@ -145,7 +145,7 @@ void RoamerMove(void)
                 u8 mapNum;
                 while (1)
                 {
-                    mapNum = sRoamerLocations[locSet][(Random() % 5) + 1];
+                    mapNum = sRoamerLocations[locSet][(RandomTinyMT() % 5) + 1];
                     if (!(sLocationHistory[2][MAP_GRP] == 0 && sLocationHistory[2][MAP_NUM] == mapNum) && mapNum != 0xFF)
                         break;
                 }
@@ -187,7 +187,7 @@ void CreateRoamerMonInstance(void)
 
 bool8 TryStartRoamerEncounter(void)
 {
-    if (IsRoamerAt(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum) == TRUE && (Random() % 4) == 0)
+    if (IsRoamerAt(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum) == TRUE && (RandomTinyMT() % 4) == 0)
     {
         CreateRoamerMonInstance();
         return TRUE;

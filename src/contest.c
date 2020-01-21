@@ -2721,7 +2721,7 @@ void sub_80DAB8C(u8 contestType, u8 rank)
     // Choose three random opponents from the list
     for (i = 0; i < 3; i++)
     {
-        u16 rnd = Random() % opponentsCount;
+        u16 rnd = RandomTinyMT() % opponentsCount;
         s32 j;
 
         gContestMons[i] = gContestOpponents[opponents[rnd]];
@@ -3398,7 +3398,7 @@ static void DetermineFinalStandings(void)
     {
         s32 r2;
 
-        randomOrdering[i] = Random();
+        randomOrdering[i] = RandomTinyMT();
         for (r2 = 0; r2 < i; r2++)
         {
             if (randomOrdering[i] == randomOrdering[r2])
@@ -4089,7 +4089,7 @@ void SortContestants(bool8 useRanking)
     for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         s32 j;
-        randomOrdering[i] = Random();
+        randomOrdering[i] = RandomTinyMT();
 
         // Loop through all the numbers generated so far.
         for (j = 0; j < i; j++)
@@ -4309,7 +4309,7 @@ static void sub_80DD080(u8 contestant)
         eContestResources10.unk2 = 0;
     }
 
-    rnd = Random() % 3;
+    rnd = RandomTinyMT() % 3;
     for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         if (i != contestant)
@@ -5284,7 +5284,7 @@ void ResetContestLinkResults(void)
 bool8 sub_80DEDA8(u8 rank)
 {
     s32 i;
-    u8 r7 = Random() % 3;
+    u8 r7 = RandomTinyMT() % 3;
 
     for (i = 0; i < CONTESTANT_COUNT - 1; i++)
     {
@@ -5549,7 +5549,7 @@ static void sub_80DF250(void)
         }
     }
 
-    gContestResources->field_1c[var_38].unkA = sp14[Random() % count];
+    gContestResources->field_1c[var_38].unkA = sp14[RandomTinyMT() % count];
 }
 
 static void sub_80DF4F8(void)
@@ -5594,7 +5594,7 @@ static void sub_80DF4F8(void)
             count++;
     }
 
-    r5 = Random() % count;
+    r5 = RandomTinyMT() % count;
     bits = gContestResources->field_1c[r7].unkC;
     count = 0;
     r2 = 0;
@@ -5640,7 +5640,7 @@ static void sub_80DF4F8(void)
         }
     }
 
-    r6 = sp0[Random() % r5];
+    r6 = sp0[RandomTinyMT() % r5];
     r2 = 0x80;
     for (i = 0; i < 8; r2 >>= 1, i++)
     {

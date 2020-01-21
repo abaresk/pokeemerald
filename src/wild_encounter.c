@@ -105,7 +105,7 @@ static bool8 CheckFeebas(void)
         if (y >= gRoute119WaterTileData[3 * 2 + 0] && y <= gRoute119WaterTileData[3 * 2 + 1])
             route119Section = 2;
 
-        if (Random() % 100 > 49) // 50% chance of encountering Feebas
+        if (RandomTinyMT() % 100 > 49) // 50% chance of encountering Feebas
             return FALSE;
 
         FeebasSeedRng(gSaveBlock1Ptr->easyChatPairs[0].unk2);
@@ -143,7 +143,7 @@ static void FeebasSeedRng(u16 seed)
 
 static u8 ChooseWildMonIndex_Land(void)
 {
-    u8 rand = Random() % ENCOUNTER_CHANCE_LAND_MONS_TOTAL;
+    u8 rand = RandomTinyMT() % ENCOUNTER_CHANCE_LAND_MONS_TOTAL;
 
     if (rand < ENCOUNTER_CHANCE_LAND_MONS_SLOT_0)
         return 0;
@@ -173,7 +173,7 @@ static u8 ChooseWildMonIndex_Land(void)
 
 static u8 ChooseWildMonIndex_WaterRock(void)
 {
-    u8 rand = Random() % ENCOUNTER_CHANCE_WATER_MONS_TOTAL;
+    u8 rand = RandomTinyMT() % ENCOUNTER_CHANCE_WATER_MONS_TOTAL;
 
     if (rand < ENCOUNTER_CHANCE_WATER_MONS_SLOT_0)
         return 0;
@@ -197,7 +197,7 @@ enum
 static u8 ChooseWildMonIndex_Fishing(u8 rod)
 {
     u8 wildMonIndex = 0;
-    u8 rand = Random() % max(max(ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_TOTAL, ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_TOTAL),
+    u8 rand = RandomTinyMT() % max(max(ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_TOTAL, ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_TOTAL),
                              ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_TOTAL);
 
     switch (rod)
@@ -251,7 +251,7 @@ static u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon)
         max = wildPokemon->minLevel;
     }
     range = max - min + 1;
-    rand = Random() % range;
+    rand = RandomTinyMT() % range;
 
     // check ability for max level mon
     if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
@@ -259,7 +259,7 @@ static u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon)
         u8 ability = GetMonAbility(&gPlayerParty[0]);
         if (ability == ABILITY_HUSTLE || ability == ABILITY_VITAL_SPIRIT || ability == ABILITY_PRESSURE)
         {
-            if (Random() % 2 == 0)
+            if (RandomTinyMT() % 2 == 0)
                 return max;
 
             if (rand != 0)
@@ -307,7 +307,7 @@ static u8 PickWildMonNature(void)
     struct Pokeblock *safariPokeblock;
     u8 natures[25];
 
-    if (GetSafariZoneFlag() == TRUE && Random() % 100 < 80)
+    if (GetSafariZoneFlag() == TRUE && RandomTinyMT() % 100 < 80)
     {
         safariPokeblock = SafariZoneGetActivePokeblock();
         if (safariPokeblock != NULL)
@@ -318,7 +318,7 @@ static u8 PickWildMonNature(void)
             {
                 for (j = i + 1; j < 25; j++)
                 {
-                    if (Random() & 1)
+                    if (RandomTinyMT() & 1)
                     {
                         u8 temp = natures[i];
 
@@ -337,13 +337,13 @@ static u8 PickWildMonNature(void)
     // check synchronize for a pokemon with the same ability
     if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
         && GetMonAbility(&gPlayerParty[0]) == ABILITY_SYNCHRONIZE
-        && Random() % 2 == 0)
+        && RandomTinyMT() % 2 == 0)
     {
         return GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY) % 25;
     }
 
     // random nature
-    return Random() % 25;
+    return RandomTinyMT() % 25;
 }
 
 static void CreateWildMon(u16 species, u8 level)
@@ -365,7 +365,7 @@ static void CreateWildMon(u16 species, u8 level)
     if (checkCuteCharm
         && !GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG)
         && GetMonAbility(&gPlayerParty[0]) == ABILITY_CUTE_CHARM
-        && Random() % 3 != 0)
+        && RandomTinyMT() % 3 != 0)
     {
         u16 leadingMonSpecies = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES);
         u32 leadingMonPersonality = GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY);
@@ -460,7 +460,7 @@ static bool8 DoMassOutbreakEncounterTest(void)
      && gSaveBlock1Ptr->location.mapNum == gSaveBlock1Ptr->outbreakLocationMapNum
      && gSaveBlock1Ptr->location.mapGroup == gSaveBlock1Ptr->outbreakLocationMapGroup)
     {
-        if (Random() % 100 < gSaveBlock1Ptr->outbreakPokemonProbability)
+        if (RandomTinyMT() % 100 < gSaveBlock1Ptr->outbreakPokemonProbability)
             return TRUE;
     }
     return FALSE;
@@ -468,7 +468,7 @@ static bool8 DoMassOutbreakEncounterTest(void)
 
 static bool8 DoWildEncounterRateDiceRoll(u16 encounterRate)
 {
-    if (Random() % 2880 < encounterRate)
+    if (RandomTinyMT() % 2880 < encounterRate)
         return TRUE;
     else
         return FALSE;
@@ -505,7 +505,7 @@ static bool8 DoWildEncounterRateTest(u32 encounterRate, bool8 ignoreAbility)
 
 static bool8 DoGlobalWildEncounterDiceRoll(void)
 {
-    if (Random() % 100 >= 60)
+    if (RandomTinyMT() % 100 >= 60)
         return FALSE;
     else
         return TRUE;
@@ -795,7 +795,7 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
         return waterMonsInfo->wildPokemon[ChooseWildMonIndex_WaterRock()].species;
     }
     // Either land or water Pokemon
-    if ((Random() % 100) < 80)
+    if ((RandomTinyMT() % 100) < 80)
     {
         return landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
     }
@@ -878,7 +878,7 @@ static bool8 IsAbilityAllowingEncounter(u8 level)
     if (ability == ABILITY_KEEN_EYE || ability == ABILITY_INTIMIDATE)
     {
         u8 playerMonLevel = GetMonData(&gPlayerParty[0], MON_DATA_LEVEL);
-        if (playerMonLevel > 5 && level <= playerMonLevel - 5 && !(Random() % 2))
+        if (playerMonLevel > 5 && level <= playerMonLevel - 5 && !(RandomTinyMT() % 2))
             return FALSE;
     }
 
@@ -902,7 +902,7 @@ static bool8 TryGetRandomWildMonIndexByType(const struct WildPokemon *wildMon, u
     if (validMonCount == 0 || validMonCount == numMon)
         return FALSE;
 
-    *monIndex = validIndexes[Random() % validMonCount];
+    *monIndex = validIndexes[RandomTinyMT() % validMonCount];
     return TRUE;
 }
 
@@ -912,7 +912,7 @@ static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildM
         return FALSE;
     else if (GetMonAbility(&gPlayerParty[0]) != ability)
         return FALSE;
-    else if (Random() % 2 != 0)
+    else if (RandomTinyMT() % 2 != 0)
         return FALSE;
 
     return TryGetRandomWildMonIndexByType(wildMon, type, LAND_WILD_COUNT, monIndex);

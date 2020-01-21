@@ -869,9 +869,9 @@ static void SetArenaPrize(void)
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
     if (gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode] > 41)
-        gSaveBlock2Ptr->frontier.arenaPrize = sLongStreakPrizeItems[Random() % ARRAY_COUNT(sLongStreakPrizeItems)];
+        gSaveBlock2Ptr->frontier.arenaPrize = sLongStreakPrizeItems[RandomTinyMT() % ARRAY_COUNT(sLongStreakPrizeItems)];
     else
-        gSaveBlock2Ptr->frontier.arenaPrize = sShortStreakPrizeItems[Random() % ARRAY_COUNT(sShortStreakPrizeItems)];
+        gSaveBlock2Ptr->frontier.arenaPrize = sShortStreakPrizeItems[RandomTinyMT() % ARRAY_COUNT(sShortStreakPrizeItems)];
 }
 
 static void GiveArenaPrize(void)

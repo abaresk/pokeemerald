@@ -1001,7 +1001,7 @@ static bool32 CheckMatchCallChance(void)
     if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG) && GetMonAbility(&gPlayerParty[0]) == ABILITY_LIGHTNING_ROD)
         callChance = 2;
     
-    if (Random() % 10 < callChance * 3) 
+    if (RandomTinyMT() % 10 < callChance * 3) 
         return TRUE;
     else
         return FALSE;
@@ -1045,7 +1045,7 @@ static bool32 SelectMatchCallTrainer(void)
     if (!numRegistered)
         return FALSE;
 
-    gMatchCallState.trainerId = GetActiveMatchCallTrainerId(Random() % numRegistered);
+    gMatchCallState.trainerId = GetActiveMatchCallTrainerId(RandomTinyMT() % numRegistered);
     gMatchCallState.triggeredFromScript = 0;
     if (gMatchCallState.trainerId == REMATCH_TABLE_ENTRIES)
         return FALSE;
@@ -1430,7 +1430,7 @@ bool32 SelectMatchCallMessage(int trainerId, u8 *str)
         retVal = TRUE;
         UpdateRematchIfDefeated(matchCallId);
     }
-    else if (Random() % 3)
+    else if (RandomTinyMT() % 3)
     {
         matchCallText = GetBattleMatchCallText(matchCallId, str);
     }
@@ -1478,7 +1478,7 @@ static const struct MatchCallText *GetBattleMatchCallText(int matchCallId, u8 *s
     int mask;
     u32 textId, topic, id;
     
-    topic = Random() % 3;
+    topic = RandomTinyMT() % 3;
     textId = sMatchCallTrainers[matchCallId].battleTopicTextIds[topic];
     if (!textId)
         SpriteCallbackDummy(NULL); // leftover debugging ???
@@ -1497,7 +1497,7 @@ static const struct MatchCallText *GetGeneralMatchCallText(int matchCallId, u8 *
     u16 rand;
     u16 var3;
 
-    rand = Random();
+    rand = RandomTinyMT();
     if (!(rand & 1))
     {
         for (count = 0, i = 0; i < NUM_FRONTIER_FACILITIES; i++)
@@ -1508,7 +1508,7 @@ static const struct MatchCallText *GetGeneralMatchCallText(int matchCallId, u8 *
 
         if (count)
         {
-            count = Random() % count;
+            count = RandomTinyMT() % count;
             for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
             {
                 gBattleFrontierStreakInfo.streak = GetFrontierStreakInfo(i, &topic);
@@ -1598,7 +1598,7 @@ static void PopulateMapName(int matchCallId, u8 *destStr)
 
 static u8 GetLandEncounterSlot(void)
 {
-    int rand = Random() % 100;
+    int rand = RandomTinyMT() % 100;
     if (rand < 20)
         return 0;
     else if (rand >= 20 && rand < 40)
@@ -1627,7 +1627,7 @@ static u8 GetLandEncounterSlot(void)
 
 static u8 GetWaterEncounterSlot(void)
 {
-    int rand = Random() % 100;
+    int rand = RandomTinyMT() % 100;
     if (rand < 60)
         return 0;
     else if (rand >= 60 && rand < 90)
@@ -1677,7 +1677,7 @@ static void PopulateSpeciesFromTrainerLocation(int matchCallId, u8 *destStr)
 
             if (numSpecies)
             {
-                StringCopy(destStr, gSpeciesNames[species[Random() % numSpecies]]);
+                StringCopy(destStr, gSpeciesNames[species[RandomTinyMT() % numSpecies]]);
                 return;
             }
         }
@@ -1695,7 +1695,7 @@ static void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
 
     trainerId = GetLastBeatenRematchTrainerId(sMatchCallTrainers[matchCallId].trainerId);
     party = gTrainers[trainerId].party;
-    monId = Random() % gTrainers[trainerId].partySize;
+    monId = RandomTinyMT() % gTrainers[trainerId].partySize;
 
     switch (gTrainers[trainerId].partyFlags)
     {

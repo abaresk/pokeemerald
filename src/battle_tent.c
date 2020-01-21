@@ -128,7 +128,7 @@ static void SetVerdanturfTentPrize(void)
 
 static void SetVerdanturfTentTrainerGfx(void)
 {
-    gTrainerBattleOpponent_A = (u32)((Random() % 255) * 5) / 64;
+    gTrainerBattleOpponent_A = (u32)((RandomTinyMT() % 255) * 5) / 64;
     SetBattleFacilityTrainerGfxId(gTrainerBattleOpponent_A, 0);
 }
 
@@ -148,7 +148,7 @@ static void SaveVerdanturfTentChallenge(void)
 
 static void SetRandomVerdanturfTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.verdanturfTentPrize = sVerdanturfTentRewards[Random() % ARRAY_COUNT(sVerdanturfTentRewards)];
+    gSaveBlock2Ptr->frontier.verdanturfTentPrize = sVerdanturfTentRewards[RandomTinyMT() % ARRAY_COUNT(sVerdanturfTentRewards)];
 }
 
 static void GiveVerdanturfTentPrize(void)
@@ -198,7 +198,7 @@ static void SaveFallarborTentChallenge(void)
 
 static void SetRandomFallarborTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.fallarborTentPrize = sFallarborTentRewards[Random() % ARRAY_COUNT(sFallarborTentRewards)];
+    gSaveBlock2Ptr->frontier.fallarborTentPrize = sFallarborTentRewards[RandomTinyMT() % ARRAY_COUNT(sFallarborTentRewards)];
 }
 
 static void GiveFallarborTentPrize(void)
@@ -253,7 +253,7 @@ static void SaveSlateportTentChallenge(void)
 
 static void SetRandomSlateportTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.slateportTentPrize = sSlateportTentRewards[Random() % ARRAY_COUNT(sSlateportTentRewards)];
+    gSaveBlock2Ptr->frontier.slateportTentPrize = sSlateportTentRewards[RandomTinyMT() % ARRAY_COUNT(sSlateportTentRewards)];
 }
 
 static void GiveSlateportTentPrize(void)
@@ -311,7 +311,7 @@ static void GenerateInitialRentalMons(void)
     while (i != PARTY_SIZE)
     {
         // Cannot have two pokemon of the same species.
-        monSetId = Random() % 70;
+        monSetId = RandomTinyMT() % 70;
         for (j = firstMonId; j < firstMonId + i; j++)
         {
             u16 monId = monIds[j];
@@ -365,7 +365,7 @@ static void GenerateOpponentMons(void)
     {
         do
         {
-            trainerId = Random() % 30;
+            trainerId = RandomTinyMT() % 30;
             for (i = 0; i < gSaveBlock2Ptr->frontier.curChallengeBattleNum; i++)
             {
                 if (gSaveBlock2Ptr->frontier.trainerIds[i] == trainerId)
@@ -388,7 +388,7 @@ static void GenerateOpponentMons(void)
     i = 0;
     while (i != FRONTIER_PARTY_SIZE)
     {
-        sRandMonSetId = monSets[Random() % setsCount];
+        sRandMonSetId = monSets[RandomTinyMT() % setsCount];
         for (j = 0; j < 6; j++)
         {
             if (gFacilityTrainerMons[sRandMonSetId].species == gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)

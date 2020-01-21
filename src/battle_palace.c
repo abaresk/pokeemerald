@@ -144,7 +144,7 @@ static void GetPalaceCommentId(void)
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
     if (gSaveBlock2Ptr->frontier.palaceWinStreaks[battleMode][lvlMode] < 50)
-        gSpecialVar_Result = Random() % 3;
+        gSpecialVar_Result = RandomTinyMT() % 3;
     else if (gSaveBlock2Ptr->frontier.palaceWinStreaks[battleMode][lvlMode] < 99)
         gSpecialVar_Result = 3;
     else
@@ -153,7 +153,7 @@ static void GetPalaceCommentId(void)
 
 static void SetPalaceOpponent(void)
 {
-    gTrainerBattleOpponent_A = 5 *(Random() % 255) / 64u;
+    gTrainerBattleOpponent_A = 5 *(RandomTinyMT() % 255) / 64u;
     SetBattleFacilityTrainerGfxId(gTrainerBattleOpponent_A, 0);
 }
 
@@ -192,9 +192,9 @@ static void SetRandomPalacePrize(void)
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
     if (gSaveBlock2Ptr->frontier.palaceWinStreaks[battleMode][lvlMode] > 41)
-        gSaveBlock2Ptr->frontier.palacePrize = sBattlePalaceLatePrizes[Random() % ARRAY_COUNT(sBattlePalaceLatePrizes)];
+        gSaveBlock2Ptr->frontier.palacePrize = sBattlePalaceLatePrizes[RandomTinyMT() % ARRAY_COUNT(sBattlePalaceLatePrizes)];
     else
-        gSaveBlock2Ptr->frontier.palacePrize = sBattlePalaceEarlyPrizes[Random() % ARRAY_COUNT(sBattlePalaceEarlyPrizes)];
+        gSaveBlock2Ptr->frontier.palacePrize = sBattlePalaceEarlyPrizes[RandomTinyMT() % ARRAY_COUNT(sBattlePalaceEarlyPrizes)];
 }
 
 static void GivePalacePrize(void)

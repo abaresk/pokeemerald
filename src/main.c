@@ -75,7 +75,7 @@ static EWRAM_DATA u16 gTrainerId = 0;
 static void UpdateLinkAndCallCallbacks(void);
 static void InitMainCallbacks(void);
 static void CallCallbacks(void);
-static void SeedRngWithRtc(void);
+void SeedRngWithRtc(void);
 static void ReadKeys(void);
 void InitIntrHandlers(void);
 static void WaitForVBlank(void);
@@ -118,6 +118,7 @@ void AgbMain()
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
+    SeedRngWithRtc();
     ClearDma3Requests();
     ResetBgs();
     SetDefaultFontsPointer();
@@ -208,12 +209,25 @@ void StartTimer1(void)
     REG_TM1CNT_H = 0x80;
 }
 
+#define QUANTUM_SEED 0xD049BB13
+
 void SeedRngAndSetTrainerId(void)
 {
     u16 val = REG_TM1CNT_L;
-    SeedRng(val);
+    SeedRngTinyMT(QUANTUM_SEED);
     REG_TM1CNT_H = 0;
     gTrainerId = val;
+}
+
+// This function wasn't in Emerald, which is why the RNG is broken.
+void SeedRngWithRtc(void)
+{
+    // Use timer as seed if it exists
+    u32 seed = RtcGetMinuteCount();
+    if (seed == 0) {
+        seed = QUANTUM_SEED;
+    }
+    SeedRngTinyMT(QUANTUM_SEED);
 }
 
 u16 GetGeneratedTrainerIdLower(void)
@@ -356,7 +370,7 @@ static void VBlankIntr(void)
     sub_8033648();
 
     if (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
-        Random();
+        RandomTinyMT();
 
     sub_800E174();
 

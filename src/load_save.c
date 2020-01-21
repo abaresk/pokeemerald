@@ -75,7 +75,7 @@ void SetSaveBlocksPointers(u16 offset)
 {
     struct SaveBlock1** sav1_LocalVar = &gSaveBlock1Ptr;
 
-    offset = (offset + Random()) & (SAVEBLOCK_MOVE_RANGE - 4);
+    offset = (offset + RandomTinyMT()) & (SAVEBLOCK_MOVE_RANGE - 4);
 
     gSaveBlock2Ptr = (void*)(&gSaveblock2) + offset;
     *sav1_LocalVar = (void*)(&gSaveblock1) + offset;
@@ -130,7 +130,7 @@ void MoveSaveBlocks_ResetHeap(void)
     gMain.vblankCallback = vblankCB;
 
     // create a new encryption key
-    encryptionKey = (Random() << 0x10) + (Random());
+    encryptionKey = (RandomTinyMT() << 0x10) + (RandomTinyMT());
     ApplyNewEncryptionKeyToAllEncryptedData(encryptionKey);
     gSaveBlock2Ptr->encryptionKey = encryptionKey;
 }

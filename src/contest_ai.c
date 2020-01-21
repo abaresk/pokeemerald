@@ -321,7 +321,7 @@ u8 ContestAI_GetActionToUse(void)
 
     while (1)
     {
-        u8 rval = Random() & 3;
+        u8 rval = RandomTinyMT() & 3;
         u8 r2 = eContestAI.unk5[rval];
         int i;
         for (i = 0; i < 4; i++)
@@ -1625,7 +1625,7 @@ static void ContestAICmd_unk_7C(void)
 
 static void ContestAICmd_if_random(void)
 {
-    if ((Random() & 0xFF) < eContestAI.scriptArr[gAIScriptPtr[1]])
+    if ((RandomTinyMT() & 0xFF) < eContestAI.scriptArr[gAIScriptPtr[1]])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
     else
         gAIScriptPtr += 6;
@@ -1633,7 +1633,7 @@ static void ContestAICmd_if_random(void)
 
 static void ContestAICmd_unk_7E(void)
 {
-    if ((Random() & 0xFF) > eContestAI.scriptArr[gAIScriptPtr[1]])
+    if ((RandomTinyMT() & 0xFF) > eContestAI.scriptArr[gAIScriptPtr[1]])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
     else
         gAIScriptPtr += 6;

@@ -2539,7 +2539,7 @@ bool8 MovementType_WanderAround_Step2(struct EventObject *eventObject, struct Sp
     {
         return FALSE;
     }
-    SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+    SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
     sprite->data[1] = 3;
     return TRUE;
 }
@@ -2560,7 +2560,7 @@ bool8 MovementType_WanderAround_Step4(struct EventObject *eventObject, struct Sp
     u8 chosenDirection;
 
     memcpy(directions, gStandardDirections, sizeof directions);
-    chosenDirection = directions[Random() & 3];
+    chosenDirection = directions[RandomTinyMT() & 3];
     SetEventObjectDirection(eventObject, chosenDirection);
     sprite->data[1] = 5;
     if (GetCollisionInDirection(eventObject, chosenDirection))
@@ -2856,7 +2856,7 @@ bool8 MovementType_LookAround_Step2(struct EventObject *eventObject, struct Spri
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -2880,7 +2880,7 @@ bool8 MovementType_LookAround_Step4(struct EventObject *eventObject, struct Spri
     memcpy(directions, gStandardDirections, sizeof directions);
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_ANY);
     if (direction == DIR_NONE)
-        direction = directions[Random() & 3];
+        direction = directions[RandomTinyMT() & 3];
 
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -2909,7 +2909,7 @@ bool8 MovementType_WanderUpAndDown_Step2(struct EventObject *eventObject, struct
     {
         return FALSE;
     }
-    SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+    SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
     sprite->data[1] = 3;
     return TRUE;
 }
@@ -2929,7 +2929,7 @@ bool8 MovementType_WanderUpAndDown_Step4(struct EventObject *eventObject, struct
     u8 direction;
     u8 directions[2];
     memcpy(directions, gUpAndDownDirections, sizeof directions);
-    direction = directions[Random() & 1];
+    direction = directions[RandomTinyMT() & 1];
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 5;
     if (GetCollisionInDirection(eventObject, direction))
@@ -2978,7 +2978,7 @@ bool8 MovementType_WanderLeftAndRight_Step2(struct EventObject *eventObject, str
     {
         return FALSE;
     }
-    SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+    SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
     sprite->data[1] = 3;
     return TRUE;
 }
@@ -2998,7 +2998,7 @@ bool8 MovementType_WanderLeftAndRight_Step4(struct EventObject *eventObject, str
     u8 direction;
     u8 directions[2];
     memcpy(directions, gLeftAndRightDirections, sizeof directions);
-    direction = directions[Random() & 1];
+    direction = directions[RandomTinyMT() & 1];
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 5;
     if (GetCollisionInDirection(eventObject, direction))
@@ -3177,7 +3177,7 @@ bool8 MovementType_FaceDownAndUp_Step2(struct EventObject *eventObject, struct S
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3202,7 +3202,7 @@ bool8 MovementType_FaceDownAndUp_Step4(struct EventObject *eventObject, struct S
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_SOUTH);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3229,7 +3229,7 @@ bool8 MovementType_FaceLeftAndRight_Step2(struct EventObject *eventObject, struc
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysMedium[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysMedium[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3254,7 +3254,7 @@ bool8 MovementType_FaceLeftAndRight_Step4(struct EventObject *eventObject, struc
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_EAST_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3281,7 +3281,7 @@ bool8 MovementType_FaceUpAndLeft_Step2(struct EventObject *eventObject, struct S
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3306,7 +3306,7 @@ bool8 MovementType_FaceUpAndLeft_Step4(struct EventObject *eventObject, struct S
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3333,7 +3333,7 @@ bool8 MovementType_FaceUpAndRight_Step2(struct EventObject *eventObject, struct 
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3358,7 +3358,7 @@ bool8 MovementType_FaceUpAndRight_Step4(struct EventObject *eventObject, struct 
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_EAST);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3385,7 +3385,7 @@ bool8 MovementType_FaceDownAndLeft_Step2(struct EventObject *eventObject, struct
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3410,7 +3410,7 @@ bool8 MovementType_FaceDownAndLeft_Step4(struct EventObject *eventObject, struct
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_SOUTH_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3437,7 +3437,7 @@ bool8 MovementType_FaceDownAndRight_Step2(struct EventObject *eventObject, struc
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3462,7 +3462,7 @@ bool8 MovementType_FaceDownAndRight_Step4(struct EventObject *eventObject, struc
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_SOUTH_EAST);
     if (direction == 0)
     {
-        direction = directions[Random() & 1];
+        direction = directions[RandomTinyMT() & 1];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3489,7 +3489,7 @@ bool8 MovementType_FaceDownUpAndLeft_Step2(struct EventObject *eventObject, stru
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3514,7 +3514,7 @@ bool8 MovementType_FaceDownUpAndLeft_Step4(struct EventObject *eventObject, stru
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_SOUTH_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 3];
+        direction = directions[RandomTinyMT() & 3];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3541,7 +3541,7 @@ bool8 MovementType_FaceDownUpAndRight_Step2(struct EventObject *eventObject, str
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3566,7 +3566,7 @@ bool8 MovementType_FaceDownUpAndRight_Step4(struct EventObject *eventObject, str
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_SOUTH_EAST);
     if (direction == 0)
     {
-        direction = directions[Random() & 3];
+        direction = directions[RandomTinyMT() & 3];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3593,7 +3593,7 @@ bool8 MovementType_FaceUpLeftAndRight_Step2(struct EventObject *eventObject, str
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3618,7 +3618,7 @@ bool8 MovementType_FaceUpLeftAndRight_Step4(struct EventObject *eventObject, str
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_NORTH_EAST_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 3];
+        direction = directions[RandomTinyMT() & 3];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;
@@ -3645,7 +3645,7 @@ bool8 MovementType_FaceDownLeftAndRight_Step2(struct EventObject *eventObject, s
 {
     if (EventObjectExecSingleMovementAction(eventObject, sprite))
     {
-        SetMovementDelay(sprite, gMovementDelaysShort[Random() & 3]);
+        SetMovementDelay(sprite, gMovementDelaysShort[RandomTinyMT() & 3]);
         eventObject->singleMovementActive = 0;
         sprite->data[1] = 3;
     }
@@ -3670,7 +3670,7 @@ bool8 MovementType_FaceDownLeftAndRight_Step4(struct EventObject *eventObject, s
     direction = TryGetTrainerEncounterDirection(eventObject, RUNFOLLOW_SOUTH_EAST_WEST);
     if (direction == 0)
     {
-        direction = directions[Random() & 3];
+        direction = directions[RandomTinyMT() & 3];
     }
     SetEventObjectDirection(eventObject, direction);
     sprite->data[1] = 1;

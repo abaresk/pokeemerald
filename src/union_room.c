@@ -3884,16 +3884,16 @@ s32 sub_80179D4(struct UnkStruct_Main0 *arg0, u8 arg1, u8 arg2, u32 playerGender
         switch (r5->unk.field_0.unk_0a_0 & 0x3F)
         {
         case 1:
-            StringExpandPlaceholders(gStringVar4, sBattleReactionTexts[playerGender][Random() % 4]);
+            StringExpandPlaceholders(gStringVar4, sBattleReactionTexts[playerGender][RandomTinyMT() % 4]);
             break;
         case 4:
-            StringExpandPlaceholders(gStringVar4, sTradeReactionTexts[playerGender][Random() % 2]);
+            StringExpandPlaceholders(gStringVar4, sTradeReactionTexts[playerGender][RandomTinyMT() % 2]);
             break;
         case 5:
-            StringExpandPlaceholders(gStringVar4, sChatReactionTexts[playerGender][Random() % 4]);
+            StringExpandPlaceholders(gStringVar4, sChatReactionTexts[playerGender][RandomTinyMT() % 4]);
             break;
         case 8:
-            StringExpandPlaceholders(gStringVar4, sTrainerCardReactionTexts[playerGender][Random() % 2]);
+            StringExpandPlaceholders(gStringVar4, sTrainerCardReactionTexts[playerGender][RandomTinyMT() % 2]);
             break;
         default:
             StringExpandPlaceholders(gStringVar4, sText_TrainerAppearsBusy);
