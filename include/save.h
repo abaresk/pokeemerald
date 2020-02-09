@@ -73,6 +73,7 @@ extern u16 gSaveFileStatus;
 extern void (*gGameContinueCallback)(void);
 extern struct SaveSectionLocation gRamSaveSectionLocations[];
 extern u16 gUnknown_03006294;
+extern u32 gClockMinutes;
 
 extern struct SaveSection gSaveDataBuffer;
 

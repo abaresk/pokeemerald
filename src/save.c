@@ -12,6 +12,8 @@
 #include "trainer_hill.h"
 #include "link.h"
 #include "constants/game_stat.h"
+#include "rtc.h"
+#include "mgba.h"
 
 static u16 CalculateChecksum(void *data, u16 size);
 static u8 DoReadFlashWholeSection(u8 sector, struct SaveSection *section);
@@ -715,6 +717,16 @@ u8 TrySavingData(u8 saveType)
     {
         gUnknown_03006294 = 0xFF;
         return 0xFF;
+    }
+
+    // Store the amount of minutes elapsed while playing in gSaveBlock2.
+    if (!(RtcGetErrorStatus() & RTC_ERR_FLAG_MASK))
+    {
+        gSaveBlock2Ptr->clockMinutes = RtcGetMinuteCount();
+    }
+    else
+    {
+        gSaveBlock2Ptr->clockMinutes = gClockMinutes + gMain.vblankCounter1 / 3600;
     }
 
     HandleSavingData(saveType);

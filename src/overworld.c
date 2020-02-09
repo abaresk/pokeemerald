@@ -66,6 +66,8 @@
 #include "constants/species.h"
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
+#include "rtc.h"
+#include "mgba.h"
 
 #define PLAYER_TRADING_STATE_IDLE 0x80
 #define PLAYER_TRADING_STATE_BUSY 0x81
@@ -1738,6 +1740,13 @@ void CB2_ContinueSavedGame(void)
         InitMapFromSavedGame();
 
     PlayTimeCounter_Start();
+    SeedRngWithRtc();
+    // Get time at start of game.
+    if (!(RtcGetErrorStatus() & RTC_ERR_FLAG_MASK))
+        gClockMinutes = RtcGetMinuteCount();
+    else
+        gClockMinutes = gSaveBlock2Ptr->clockMinutes;
+
     ScriptContext1_Init();
     ScriptContext2_Disable();
     InitMatchCallCounters();

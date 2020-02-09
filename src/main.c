@@ -110,6 +110,10 @@ void AgbMain()
     *(vu16 *)BG_PLTT = 0x7FFF;
     InitGpuRegManager();
     REG_WAITCNT = WAITCNT_PREFETCH_ENABLE | WAITCNT_WS0_S_1 | WAITCNT_WS0_N_3;
+#if !MODERN
+    mgba_open();
+    mgba_printf(MGBA_LOG_INFO, "Does this work?");
+#endif
     InitKeys();
     InitIntrHandlers();
     m4aSoundInit();
@@ -119,15 +123,10 @@ void AgbMain()
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
-    SeedRngWithRtc();
     ClearDma3Requests();
     ResetBgs();
     SetDefaultFontsPointer();
     InitHeap(gHeap, HEAP_SIZE);
-#if !MODERN
-    mgba_open();
-    mgba_printf(MGBA_LOG_INFO, "Does this work?");
-#endif
 
     gSoftResetDisabled = FALSE;
 
@@ -219,7 +218,7 @@ void StartTimer1(void)
 void SeedRngAndSetTrainerId(void)
 {
     u16 val = REG_TM1CNT_L;
-    SeedRngTinyMT(QUANTUM_SEED);
+    SeedRngTinyMT(val);
     REG_TM1CNT_H = 0;
     gTrainerId = val;
 }
@@ -227,12 +226,13 @@ void SeedRngAndSetTrainerId(void)
 // This function wasn't in Emerald, which is why the RNG is broken.
 void SeedRngWithRtc(void)
 {
-    // Use timer as seed if it exists
-    u32 seed = RtcGetMinuteCount();
-    if (seed == 0) {
-        seed = QUANTUM_SEED;
+    u32 seed;
+    if (RtcGetErrorStatus() & RTC_ERR_FLAG_MASK) {
+        seed = gSaveBlock2Ptr->clockMinutes;
+    } else {
+        seed = RtcGetMinuteCount();
     }
-    SeedRngTinyMT(QUANTUM_SEED);
+    SeedRngTinyMT(seed);
 }
 
 u16 GetGeneratedTrainerIdLower(void)
