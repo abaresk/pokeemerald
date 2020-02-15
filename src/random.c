@@ -13,20 +13,20 @@ EWRAM_DATA static u8 sUnknown = 0;
 EWRAM_DATA static u32 sRandCount = 0;
 
 // IWRAM common
-u32 gRngValue;
+u32 gRngValueOld;
 u32 gRng2Value;
 u32 gRngTinyMT[4];
 
-u16 Random(void)
+u16 RandomOld(void)
 {
-    gRngValue = 1103515245 * gRngValue + 24691;
+    gRngValueOld = 1103515245 * gRngValueOld + 24691;
     sRandCount++;
-    return gRngValue >> 16;
+    return gRngValueOld >> 16;
 }
 
-void SeedRng(u16 seed)
+void SeedRngOld(u16 seed)
 {
-    gRngValue = seed;
+    gRngValueOld = seed;
     sUnknown = 0;
 }
 

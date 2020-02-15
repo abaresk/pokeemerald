@@ -2608,9 +2608,9 @@ _081A4E70:\n\
     lsls r0, 2\n\
     mov r8, r0\n\
 _081A4E96:\n\
-    bl Random\n\
+    bl RandomOld\n\
     adds r4, r0, 0\n\
-    bl Random\n\
+    bl RandomOld\n\
     lsls r4, 16\n\
     lsrs r7, r4, 16\n\
     lsls r0, 16\n\

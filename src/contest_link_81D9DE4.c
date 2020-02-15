@@ -192,7 +192,7 @@ static void sub_81DA244(u8 taskId)
             if (!IsLinkTaskFinished())
                 return;
             
-            if (sub_80FC4F4(&gRngValue, sizeof(gRngValue)) == 1)
+            if (sub_80FC4F4(&gRngValueOld, sizeof(gRngValueOld)) == 1)
                 gTasks[taskId].data[0]++;
         }
         else
@@ -203,7 +203,7 @@ static void sub_81DA244(u8 taskId)
     case 1:
         if (sub_80FC530(0))
         {
-            memcpy(&gRngValue, gBlockRecvBuffer[0], sizeof(gRngValue));
+            memcpy(&gRngValueOld, gBlockRecvBuffer[0], sizeof(gRngValueOld));
             memcpy(&gContestRngValue, gBlockRecvBuffer[0], sizeof(gContestRngValue));
             gTasks[taskId].data[0]++;
         }

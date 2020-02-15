@@ -4429,7 +4429,7 @@ _08023DA0:
 	adds r4, r0, 0
 	asrs r0, r4, 8
 	str r0, [r7, 0x68]
-	bl Random
+	bl RandomOld
 	lsls r0, 16
 	lsrs r0, 16
 	movs r1, 0x3
