@@ -1644,7 +1644,7 @@ static bool8 Phase2_PokeballsTrail_Func2(struct Task *task)
 
     memcpy(arr0, sUnknown_085C8B88, sizeof(sUnknown_085C8B88));
     memcpy(arr1, sUnknown_085C8B8C, sizeof(sUnknown_085C8B8C));
-    rand = RandomTinyMT() & 1;
+    rand = Random() & 1;
     for (i = 0; i <= 4; i++, rand ^= 1)
     {
         gFieldEffectArguments[0] = arr0[rand];      // x
@@ -4236,7 +4236,7 @@ static bool8 Phase2_32_Func1(struct Task *task)
 
     task->tData2 = 0;
     taskId = CreateTask(sub_814ABE4, 1);
-    switch (RandomTinyMT() % 4)
+    switch (Random() % 4)
     {
     case 0:
         gTasks[taskId].tSub32_X_delta = 1;

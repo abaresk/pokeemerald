@@ -32,7 +32,7 @@ static const u16 GymLeaderRematches_BeforeNewMauville[] = {
 
 void UpdateGymLeaderRematch(void)
 {
-    if (FlagGet(FLAG_SYS_GAME_CLEAR) && (RandomTinyMT() % 100) <= 30)
+    if (FlagGet(FLAG_SYS_GAME_CLEAR) && (Random() % 100) <= 30)
     {
         if (FlagGet(FLAG_WATTSON_REMATCH_AVAILABLE))
             UpdateGymLeaderRematchFromArray(GymLeaderRematches_AfterNewMauville, ARRAY_COUNT(GymLeaderRematches_AfterNewMauville), 5);
@@ -71,7 +71,7 @@ static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 ma
         }
         if (whichLeader != 0)
         {
-            whichLeader = RandomTinyMT() % whichLeader;
+            whichLeader = Random() % whichLeader;
             for (i = 0; i < size; i++)
             {
                 if (!gSaveBlock1Ptr->trainerRematches[data[i]])

@@ -1290,7 +1290,7 @@ static bool8 ChooseSpecialBattleTowerTrainer(void)
 
     if (idsCount != 0)
     {
-        gTrainerBattleOpponent_A = trainerIds[RandomTinyMT() % idsCount];
+        gTrainerBattleOpponent_A = trainerIds[Random() % idsCount];
         return TRUE;
     }
     else
@@ -1361,18 +1361,18 @@ u16 sub_8162548(u8 challengeNum, u8 battleNum)
         if (battleNum == 6)
         {
             trainerId = (gUnknown_085DFA1A[challengeNum][1] - gUnknown_085DFA1A[challengeNum][0]) + 1;
-            trainerId = gUnknown_085DFA1A[challengeNum][0] + (RandomTinyMT() % trainerId);
+            trainerId = gUnknown_085DFA1A[challengeNum][0] + (Random() % trainerId);
         }
         else
         {
             trainerId = (gUnknown_085DF9FA[challengeNum][1] - gUnknown_085DF9FA[challengeNum][0]) + 1;
-            trainerId = gUnknown_085DF9FA[challengeNum][0] + (RandomTinyMT() % trainerId);
+            trainerId = gUnknown_085DF9FA[challengeNum][0] + (Random() % trainerId);
         }
     }
     else
     {
         trainerId = (gUnknown_085DF9FA[7][1] - gUnknown_085DF9FA[7][0]) + 1;
-        trainerId = gUnknown_085DF9FA[7][0] + (RandomTinyMT() % trainerId);
+        trainerId = gUnknown_085DF9FA[7][0] + (Random() % trainerId);
     }
 
     return trainerId;
@@ -1639,7 +1639,7 @@ void PutNewBattleTowerRecord(struct EmeraldBattleTowerRecord *newRecordEm)
         }
     }
 
-    i = RandomTinyMT() % slotsCount;
+    i = Random() % slotsCount;
     gSaveBlock2Ptr->frontier.towerRecords[slotIds[i]] = *newRecord;
 }
 
@@ -1933,7 +1933,7 @@ static void FillTrainerParty(u16 trainerId, u8 firstMonId, u8 monCount)
     otID = Random32();
     while (i != monCount)
     {
-        u16 monSetId = monSets[RandomTinyMT() % bfMonCount];
+        u16 monSetId = monSets[Random() % bfMonCount];
         if ((level == 50 || level == 20) && monSetId > 849)
             continue;
 
@@ -2045,7 +2045,7 @@ u16 RandomizeFacilityTrainerMonSet(u16 trainerId)
 
     do
     {
-        monSetId = monSets[RandomTinyMT() % bfMonCount];
+        monSetId = monSets[Random() % bfMonCount];
     } while((level == 50 || level == 20) && monSetId > 849);
 
     return monSetId;
@@ -2466,10 +2466,10 @@ static void sub_81640E0(u16 trainerId)
         }
     }
 
-    gUnknown_03006298[0] = validSpecies[RandomTinyMT() % count];
+    gUnknown_03006298[0] = validSpecies[Random() % count];
     do
     {
-        gUnknown_03006298[1] = validSpecies[RandomTinyMT() % count];
+        gUnknown_03006298[1] = validSpecies[Random() % count];
     } while (gUnknown_03006298[0] == gUnknown_03006298[1]);
 }
 
@@ -2494,10 +2494,10 @@ static void sub_8164188(u16 trainerId)
         }
     }
 
-    gUnknown_03006298[2] = validSpecies[RandomTinyMT() % count];
+    gUnknown_03006298[2] = validSpecies[Random() % count];
     do
     {
-        gUnknown_03006298[3] = validSpecies[RandomTinyMT() % count];
+        gUnknown_03006298[3] = validSpecies[Random() % count];
     } while (gUnknown_03006298[2] == gUnknown_03006298[3]);
 }
 
@@ -2597,7 +2597,7 @@ static void sub_81642A0(void)
     }
     if (r10 != 0)
     {
-        gSaveBlock2Ptr->frontier.trainerIds[6] = spArray[RandomTinyMT() % r10];
+        gSaveBlock2Ptr->frontier.trainerIds[6] = spArray[Random() % r10];
         eventObjTemplates[7].graphicsId = GetBattleFacilityTrainerGfxId(gSaveBlock2Ptr->frontier.trainerIds[6]);
         FlagClear(FLAG_HIDE_BATTLE_TOWER_MULTI_BATTLE_PARTNER_ALT_1);
         sub_81640E0(gSaveBlock2Ptr->frontier.trainerIds[6]);
@@ -2640,7 +2640,7 @@ static void sub_81642A0(void)
     }
     if (r10 != 0)
     {
-        gSaveBlock2Ptr->frontier.trainerIds[7] = spArray[RandomTinyMT() % r10];
+        gSaveBlock2Ptr->frontier.trainerIds[7] = spArray[Random() % r10];
         eventObjTemplates[8].graphicsId = GetBattleFacilityTrainerGfxId(gSaveBlock2Ptr->frontier.trainerIds[7]);
         FlagClear(FLAG_HIDE_BATTLE_TOWER_MULTI_BATTLE_PARTNER_ALT_2);
         sub_8164188(gSaveBlock2Ptr->frontier.trainerIds[7]);
@@ -3518,11 +3518,11 @@ static u16 sub_8165D40(void)
     u32 facility = VarGet(VAR_FRONTIER_FACILITY);
 
     if (facility == FRONTIER_FACILITY_PALACE)
-        return RandomTinyMT() % 30;
+        return Random() % 30;
     else if (facility == FRONTIER_FACILITY_ARENA)
-        return RandomTinyMT() % 30;
+        return Random() % 30;
     else if (facility == FRONTIER_FACILITY_FACTORY)
-        return RandomTinyMT() % 30;
+        return Random() % 30;
     else if (facility == FRONTIER_FACILITY_TOWER)
         return 0;
     else
@@ -3611,7 +3611,7 @@ static void FillTentTrainerParty_(u16 trainerId, u8 firstMonId, u8 monCount)
     otID = Random32();
     while (i != monCount)
     {
-        u16 monSetId = monSets[RandomTinyMT() % bfMonCount];
+        u16 monSetId = monSets[Random() % bfMonCount];
 
         // Ensure this pokemon species isn't a duplicate.
         for (j = 0; j < i + firstMonId; j++)

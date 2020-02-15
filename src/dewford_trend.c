@@ -27,12 +27,12 @@ void InitDewfordTrend(void)
     {
         gSaveBlock1Ptr->easyChatPairs[i].words[0] = sub_811EE38(EC_GROUP_CONDITIONS);
 
-        if (RandomTinyMT() & 1)
+        if (Random() & 1)
             gSaveBlock1Ptr->easyChatPairs[i].words[1] = sub_811EE38(EC_GROUP_LIFESTYLE);
         else
             gSaveBlock1Ptr->easyChatPairs[i].words[1] = sub_811EE38(EC_GROUP_HOBBIES);
 
-        gSaveBlock1Ptr->easyChatPairs[i].unk1_6 = RandomTinyMT() & 1;
+        gSaveBlock1Ptr->easyChatPairs[i].unk1_6 = Random() & 1;
         sub_8122B28(&(gSaveBlock1Ptr->easyChatPairs[i]));
     }
     sub_8122804(gSaveBlock1Ptr->easyChatPairs, 5, 0);
@@ -284,23 +284,23 @@ static bool8 sub_8122A58(struct EasyChatPair *a, struct EasyChatPair *b, u8 c)
             return 0;
         return 1;
     }
-    return RandomTinyMT() & 1;
+    return Random() & 1;
 }
 
 static void sub_8122B28(struct EasyChatPair *s)
 {
     u16 r4;
 
-    r4 = RandomTinyMT() % 98;
+    r4 = Random() % 98;
     if (r4 > 50)
     {
-        r4 = RandomTinyMT() % 98;
+        r4 = Random() % 98;
         if (r4 > 80)
-            r4 = RandomTinyMT() % 98;
+            r4 = Random() % 98;
     }
     s->unk0_7 = r4 + 30;
-    s->unk0_0 = (RandomTinyMT() % (r4 + 1)) + 30;
-    s->unk2 = RandomTinyMT();
+    s->unk0_0 = (Random() % (r4 + 1)) + 30;
+    s->unk2 = Random();
 }
 
 static bool8 SB1ContainsWords(u16 *a)

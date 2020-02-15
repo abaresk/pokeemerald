@@ -838,7 +838,7 @@ static void SlotMachineSetup_0_1(void)
     sub_81019EC();  // assigns sSlotMachine->machineId, etc.
     sSlotMachine->state = 0;
     sSlotMachine->pikaPower = 0;
-    sSlotMachine->luckyGame = RandomTinyMT() & 1;
+    sSlotMachine->luckyGame = Random() & 1;
     sSlotMachine->luckyFlags = 0;
     sSlotMachine->matchedSymbols = 0;
     sSlotMachine->fairRollsLeft = 0;
@@ -1445,7 +1445,7 @@ static u8 GetBiasTag(u8 luckyFlags)
 // you have way more luck betting 3 coins than anything lower
 static bool8 IsThisRoundLucky(void)
 {
-    u8 rval = RandomTinyMT();
+    u8 rval = Random();
     if (gLuckyRoundProbabilities[sSlotMachine->machineId][sSlotMachine->bet - 1] > rval)
         return TRUE;
     return FALSE;
@@ -1457,7 +1457,7 @@ static u8 AttemptsAtLuckyFlags_Top3(void)
 
     for (count = 0; count < 3; count++)
     {
-        s16 rval = RandomTinyMT() & 0xff;
+        s16 rval = Random() & 0xff;
         s16 value = gLuckyFlagProbabilities_Top3[count][sSlotMachine->machineId];
         if (value > rval)
             break;
@@ -1471,7 +1471,7 @@ static u8 AttemptsAtLuckyFlags_NotTop3(void)
 
     for (count = 0; count < 5; count++)
     {
-        s16 rval = RandomTinyMT() & 0xff; // random byte
+        s16 rval = Random() & 0xff; // random byte
         s16 value = gLuckyFlagProbabilities_NotTop3[count][sSlotMachine->machineId];
         // make first attempt easier if it's a lucky game
         if (count == 0 && sSlotMachine->luckyGame == TRUE)
@@ -1507,12 +1507,12 @@ static void GetReeltimeDraw(void)
     s16 reelTimeDraw;
 
     sSlotMachine->reelTimeDraw = 0;
-    rval = RandomTinyMT();
+    rval = Random();
     if (rval < GetReelTimeProbability(0))
         return;
     for (reelTimeDraw = 5; reelTimeDraw > 0; reelTimeDraw--)
     {
-        rval = RandomTinyMT();
+        rval = Random();
         if (rval < GetReelTimeProbability(reelTimeDraw))
             break;
     }
@@ -1521,7 +1521,7 @@ static void GetReeltimeDraw(void)
 
 static bool8 SkipToReeltimeAction14(u16 i)
 {
-    u16 rval = RandomTinyMT() & 0xff;
+    u16 rval = Random() & 0xff;
     if (rval < gProbabilityTable_SkipToReeltimeAction14[i])
         return TRUE;
     else
@@ -1541,11 +1541,11 @@ static u16 SlowReelSpeed(void)
         i = 2;
     else if (sSlotMachine->netCoinLoss >= 150)
         i = 1;
-    rval = RandomTinyMT() % 100;
+    rval = Random() % 100;
     value = gReelIncrementTable[i][0];
     if (rval < value)
         return 4;
-    rval = RandomTinyMT() % 100;
+    rval = Random() % 100;
     value = gReelIncrementTable[i][1] + gReelTimeBonusIncrementTable[sSlotMachine->fairRollsUsed];
     if (rval < value)
         return 2;

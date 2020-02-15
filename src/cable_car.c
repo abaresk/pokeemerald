@@ -771,7 +771,7 @@ static void LoadCableCarSprites(void)
         EVENT_OBJ_GFX_RIVAL_BRENDAN_NORMAL,
         EVENT_OBJ_GFX_RIVAL_MAY_NORMAL
     };
-    u16 rval = RandomTinyMT();
+    u16 rval = Random();
     u8 hikerGraphicsIds[4] = {
         EVENT_OBJ_GFX_HIKER,
         EVENT_OBJ_GFX_CAMPER,

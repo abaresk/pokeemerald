@@ -102,7 +102,7 @@ static bool8 ShouldSwitchIfWonderGuard(void)
                 continue;
 
             moveFlags = AI_TypeCalc(move, gBattleMons[opposingBattler].species, gBattleMons[opposingBattler].ability);
-            if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && RandomTinyMT() % 3 < 2)
+            if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && Random() % 3 < 2)
             {
                 // We found a mon.
                 *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = i;
@@ -124,7 +124,7 @@ static bool8 FindMonThatAbsorbsOpponentsMove(void)
     struct Pokemon *party;
     s32 i;
 
-    if (HasSuperEffectiveMoveAgainstOpponents(TRUE) && RandomTinyMT() % 3 != 0)
+    if (HasSuperEffectiveMoveAgainstOpponents(TRUE) && Random() % 3 != 0)
         return FALSE;
     if (gLastLandedMoves[gActiveBattler] == 0)
         return FALSE;
@@ -202,7 +202,7 @@ static bool8 FindMonThatAbsorbsOpponentsMove(void)
         else
             monAbility = gBaseStats[species].abilities[0];
 
-        if (absorbingTypeAbility == monAbility && RandomTinyMT() & 1)
+        if (absorbingTypeAbility == monAbility && Random() & 1)
         {
             // we found a mon.
             *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = i;
@@ -223,13 +223,13 @@ static bool8 ShouldSwitchIfNaturalCure(void)
     if (gBattleMons[gActiveBattler].hp < gBattleMons[gActiveBattler].maxHP / 2)
         return FALSE;
 
-    if ((gLastLandedMoves[gActiveBattler] == 0 || gLastLandedMoves[gActiveBattler] == 0xFFFF) && RandomTinyMT() & 1)
+    if ((gLastLandedMoves[gActiveBattler] == 0 || gLastLandedMoves[gActiveBattler] == 0xFFFF) && Random() & 1)
     {
         *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = PARTY_SIZE;
         BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
         return TRUE;
     }
-    else if (gBattleMoves[gLastLandedMoves[gActiveBattler]].power == 0 && RandomTinyMT() & 1)
+    else if (gBattleMoves[gLastLandedMoves[gActiveBattler]].power == 0 && Random() & 1)
     {
         *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = PARTY_SIZE;
         BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
@@ -241,7 +241,7 @@ static bool8 ShouldSwitchIfNaturalCure(void)
     if (FindMonWithFlagsAndSuperEffective(MOVE_RESULT_NOT_VERY_EFFECTIVE, 1))
         return TRUE;
 
-    if (RandomTinyMT() & 1)
+    if (Random() & 1)
     {
         *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = PARTY_SIZE;
         BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
@@ -275,7 +275,7 @@ static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
             {
                 if (noRng)
                     return TRUE;
-                if (RandomTinyMT() % 10 != 0)
+                if (Random() % 10 != 0)
                     return TRUE;
             }
         }
@@ -298,7 +298,7 @@ static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
             {
                 if (noRng)
                     return TRUE;
-                if (RandomTinyMT() % 10 != 0)
+                if (Random() % 10 != 0)
                     return TRUE;
             }
         }
@@ -409,7 +409,7 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
                     continue;
 
                 moveFlags = AI_TypeCalc(move, gBattleMons[battlerIn1].species, gBattleMons[battlerIn1].ability);
-                if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && RandomTinyMT() % moduloPercent == 0)
+                if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && Random() % moduloPercent == 0)
                 {
                     *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = i;
                     BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
@@ -651,7 +651,7 @@ u8 GetMostSuitableMonToSwitchInto(void)
             battlerIn2 = GetBattlerAtPosition(GetBattlerPosition(gActiveBattler) ^ BIT_FLANK);
 
         // UB: It considers the opponent only player's side even though it can battle alongside player.
-        opposingBattler = RandomTinyMT() & BIT_FLANK;
+        opposingBattler = Random() & BIT_FLANK;
         if (gAbsentBattlerFlags & gBitTable[opposingBattler])
             opposingBattler ^= BIT_FLANK;
     }

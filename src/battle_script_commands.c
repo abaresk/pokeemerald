@@ -1179,7 +1179,7 @@ static void Cmd_accuracycheck(void)
             calc = (calc * (100 - param)) / 100;
 
         // final calculation
-        if ((RandomTinyMT() % 100 + 1) > calc)
+        if ((Random() % 100 + 1) > calc)
         {
             gMoveResultFlags |= MOVE_RESULT_MISSED;
             if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE &&
@@ -1283,7 +1283,7 @@ static void Cmd_critcalc(void)
     if ((gBattleMons[gBattlerTarget].ability != ABILITY_BATTLE_ARMOR && gBattleMons[gBattlerTarget].ability != ABILITY_SHELL_ARMOR)
      && !(gStatuses3[gBattlerAttacker] & STATUS3_CANT_SCORE_A_CRIT)
      && !(gBattleTypeFlags & (BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_FIRST_BATTLE))
-     && !(RandomTinyMT() % sCriticalHitChance[critChance]))
+     && !(Random() % sCriticalHitChance[critChance]))
         gCritMultiplier = 2;
     else
         gCritMultiplier = 1;
@@ -1641,7 +1641,7 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
 // Multiplies the damage by a random factor between 85% to 100% inclusive
 static inline void ApplyRandomDmgMultiplier(void)
 {
-    u16 rand = RandomTinyMT();
+    u16 rand = Random();
     u16 randPercent = 100 - (rand % 16);
 
     if (gBattleMoveDamage != 0)
@@ -1677,7 +1677,7 @@ static void Cmd_adjustnormaldamage(void)
 
     gPotentialItemEffectBattler = gBattlerTarget;
 
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (RandomTinyMT() % 100) < param)
+    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
@@ -1719,7 +1719,7 @@ static void Cmd_adjustnormaldamage2(void) // The same as adjustnormaldamage exce
 
     gPotentialItemEffectBattler = gBattlerTarget;
 
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (RandomTinyMT() % 100) < param)
+    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
@@ -2453,7 +2453,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
             BattleScriptPush(gBattlescriptCurrInstr + 1);
 
             if (sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]] == STATUS1_SLEEP)
-                gBattleMons[gEffectBattler].status1 |= ((RandomTinyMT() & 3) + 2);
+                gBattleMons[gEffectBattler].status1 |= ((Random() & 3) + 2);
             else
                 gBattleMons[gEffectBattler].status1 |= sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]];
 
@@ -2513,7 +2513,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 else
                 {
-                    gBattleMons[gEffectBattler].status2 |= (((RandomTinyMT()) % 0x4)) + 2;
+                    gBattleMons[gEffectBattler].status2 |= (((Random()) % 0x4)) + 2;
 
                     BattleScriptPush(gBattlescriptCurrInstr + 1);
                     gBattlescriptCurrInstr = sMoveEffectBS_Ptrs[gBattleCommunication[MOVE_EFFECT_BYTE]];
@@ -2546,7 +2546,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
 
                     gBattleMons[gEffectBattler].status2 |= STATUS2_MULTIPLETURNS;
                     gLockedMoves[gEffectBattler] = gCurrentMove;
-                    gBattleMons[gEffectBattler].status2 |= ((RandomTinyMT() & 3) + 2) << 4;
+                    gBattleMons[gEffectBattler].status2 |= ((Random() & 3) + 2) << 4;
 
                     BattleScriptPush(gBattlescriptCurrInstr + 1);
                     gBattlescriptCurrInstr = sMoveEffectBS_Ptrs[gBattleCommunication[MOVE_EFFECT_BYTE]];
@@ -2574,7 +2574,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 else
                 {
-                    gBattleCommunication[MOVE_EFFECT_BYTE] = RandomTinyMT() % 3 + 3;
+                    gBattleCommunication[MOVE_EFFECT_BYTE] = Random() % 3 + 3;
                     SetMoveEffect(FALSE, 0);
                 }
                 break;
@@ -2591,7 +2591,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 else
                 {
-                    gBattleMons[gEffectBattler].status2 |= ((RandomTinyMT() & 3) + 3) << 0xD;
+                    gBattleMons[gEffectBattler].status2 |= ((Random() & 3) + 3) << 0xD;
 
                     *(gBattleStruct->wrappedMove + gEffectBattler * 2 + 0) = gCurrentMove;
                     *(gBattleStruct->wrappedMove + gEffectBattler * 2 + 1) = gCurrentMove >> 8;
@@ -2834,7 +2834,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 {
                     gBattleMons[gEffectBattler].status2 |= STATUS2_MULTIPLETURNS;
                     gLockedMoves[gEffectBattler] = gCurrentMove;
-                    gBattleMons[gEffectBattler].status2 |= (((RandomTinyMT() & 1) + 2) << 0xA);
+                    gBattleMons[gEffectBattler].status2 |= (((Random() & 1) + 2) << 0xA);
                 }
                 break;
             case MOVE_EFFECT_KNOCK_OFF:
@@ -2897,7 +2897,7 @@ static void Cmd_seteffectwithchance(void)
         gBattleCommunication[MOVE_EFFECT_BYTE] &= ~(MOVE_EFFECT_CERTAIN);
         SetMoveEffect(0, MOVE_EFFECT_CERTAIN);
     }
-    else if (RandomTinyMT() % 100 < percentChance
+    else if (Random() % 100 < percentChance
              && gBattleCommunication[MOVE_EFFECT_BYTE]
              && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
     {
@@ -6135,7 +6135,7 @@ static void Cmd_adjustsetdamage(void) // The same as adjustnormaldamage, except 
 
     gPotentialItemEffectBattler = gBattlerTarget;
 
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (RandomTinyMT() % 100) < param)
+    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
@@ -6752,7 +6752,7 @@ static void Cmd_setprotectlike(void) // protect and endure
     if (gCurrentTurnActionNumber == (gBattlersCount - 1))
         notLastTurn = FALSE;
 
-    if (sProtectSuccessRates[gDisableStructs[gBattlerAttacker].protectUses] >= RandomTinyMT() && notLastTurn)
+    if (sProtectSuccessRates[gDisableStructs[gBattlerAttacker].protectUses] >= Random() && notLastTurn)
     {
         if (gBattleMoves[gCurrentMove].effect == EFFECT_PROTECT)
         {
@@ -6905,7 +6905,7 @@ static void Cmd_trymirrormove(void)
     else if (validMovesCount)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
-        i = RandomTinyMT() % validMovesCount;
+        i = Random() % validMovesCount;
         gCurrentMove = movesArray[i];
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
@@ -7389,9 +7389,9 @@ static void Cmd_setmultihitcounter(void)
     }
     else
     {
-        gMultiHitCounter = RandomTinyMT() & 3;
+        gMultiHitCounter = Random() & 3;
         if (gMultiHitCounter > 1)
-            gMultiHitCounter = (RandomTinyMT() & 3) + 2;
+            gMultiHitCounter = (Random() & 3) + 2;
         else
             gMultiHitCounter += 2;
     }
@@ -7414,7 +7414,7 @@ static bool8 TryDoForceSwitchOut(void)
     }
     else
     {
-        u16 random = RandomTinyMT() & 0xFF;
+        u16 random = Random() & 0xFF;
         if ((u32)((random * (gBattleMons[gBattlerAttacker].level + gBattleMons[gBattlerTarget].level) >> 8) + 1) <= (gBattleMons[gBattlerTarget].level / 4))
         {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
@@ -7555,7 +7555,7 @@ static void Cmd_forcerandomswitch(void)
             {
                 do
                 {
-                    i = RandomTinyMT() % monsCount;
+                    i = Random() % monsCount;
                     i += firstMonId;
                 }
                 while (i == battler2PartyId
@@ -7629,7 +7629,7 @@ static void Cmd_tryconversiontypechange(void) // randomly changes user's type to
         do
         {
 
-            while ((moveChecked = RandomTinyMT() & 3) >= validMoves);
+            while ((moveChecked = Random() & 3) >= validMoves);
 
             moveType = gBattleMoves[gBattleMons[gBattlerAttacker].moves[moveChecked]].type;
 
@@ -7707,7 +7707,7 @@ static void Cmd_tryKO(void)
 
     gPotentialItemEffectBattler = gBattlerTarget;
 
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (RandomTinyMT() % 100) < param)
+    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
     {
         RecordItemEffectBattle(gBattlerTarget, HOLD_EFFECT_FOCUS_BAND);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
@@ -7726,7 +7726,7 @@ static void Cmd_tryKO(void)
         if (!(gStatuses3[gBattlerTarget] & STATUS3_ALWAYS_HITS))
         {
             chance = gBattleMoves[gCurrentMove].accuracy + (gBattleMons[gBattlerAttacker].level - gBattleMons[gBattlerTarget].level);
-            if (RandomTinyMT() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+            if (Random() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
                 chance = TRUE;
             else
                 chance = FALSE;
@@ -7739,7 +7739,7 @@ static void Cmd_tryKO(void)
         else
         {
             chance = gBattleMoves[gCurrentMove].accuracy + (gBattleMons[gBattlerAttacker].level - gBattleMons[gBattlerTarget].level);
-            if (RandomTinyMT() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+            if (Random() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
                 chance = TRUE;
             else
                 chance = FALSE;
@@ -8091,7 +8091,7 @@ static void Cmd_metronome(void)
     {
         s32 i;
 
-        gCurrentMove = (RandomTinyMT() & 0x1FF) + 1;
+        gCurrentMove = (Random() & 0x1FF) + 1;
         if (gCurrentMove >= MOVES_COUNT)
             continue;
 
@@ -8127,7 +8127,7 @@ static void Cmd_psywavedamageeffect(void)
 {
     s32 randDamage;
 
-    while ((randDamage = (RandomTinyMT() & 0xF)) > 10);
+    while ((randDamage = (Random() & 0xF)) > 10);
 
     randDamage *= 10;
     gBattleMoveDamage = gBattleMons[gBattlerAttacker].level * (randDamage + 50) / 100;
@@ -8197,7 +8197,7 @@ static void Cmd_disablelastusedattack(void)
         PREPARE_MOVE_BUFFER(gBattleTextBuff1, gBattleMons[gBattlerTarget].moves[i])
 
         gDisableStructs[gBattlerTarget].disabledMove = gBattleMons[gBattlerTarget].moves[i];
-        gDisableStructs[gBattlerTarget].disableTimer = (RandomTinyMT() & 3) + 2;
+        gDisableStructs[gBattlerTarget].disableTimer = (Random() & 3) + 2;
         gDisableStructs[gBattlerTarget].disableTimerStartValue = gDisableStructs[gBattlerTarget].disableTimer; // used to save the random amount of turns?
         gBattlescriptCurrInstr += 5;
     }
@@ -8229,7 +8229,7 @@ static void Cmd_trysetencore(void)
     {
         gDisableStructs[gBattlerTarget].encoredMove = gBattleMons[gBattlerTarget].moves[i];
         gDisableStructs[gBattlerTarget].encoredMovePos = i;
-        gDisableStructs[gBattlerTarget].encoreTimer = (RandomTinyMT() & 3) + 3;
+        gDisableStructs[gBattlerTarget].encoreTimer = (Random() & 3) + 3;
         gDisableStructs[gBattlerTarget].encoreTimerStartValue = gDisableStructs[gBattlerTarget].encoreTimer;
         gBattlescriptCurrInstr += 5;
     }
@@ -8281,7 +8281,7 @@ static void Cmd_settypetorandomresistance(void) // conversion 2
 
         for (rands = 0; rands < 1000; rands++)
         {
-            while (((i = (RandomTinyMT() & 0x7F)) > sizeof(gTypeEffectiveness) / 3));
+            while (((i = (Random() & 0x7F)) > sizeof(gTypeEffectiveness) / 3));
 
             i *= 3;
 
@@ -8454,7 +8454,7 @@ static void Cmd_trychoosesleeptalkmove(void)
 
         do
         {
-            movePosition = RandomTinyMT() & 3;
+            movePosition = Random() & 3;
         } while ((gBitTable[movePosition] & unusableMovesBits));
 
         gCalledMove = gBattleMons[gBattlerAttacker].moves[movePosition];
@@ -8519,7 +8519,7 @@ static void Cmd_tryspiteppreduce(void)
 
         if (i != MAX_MON_MOVES && gBattleMons[gBattlerTarget].pp[i] > 1)
         {
-            s32 ppToDeduct = (RandomTinyMT() & 3) + 2;
+            s32 ppToDeduct = (Random() & 3) + 2;
             if (gBattleMons[gBattlerTarget].pp[i] < ppToDeduct)
                 ppToDeduct = gBattleMons[gBattlerTarget].pp[i];
 
@@ -8798,7 +8798,7 @@ static void Cmd_happinesstodamagecalculation(void)
 
 static void Cmd_presentdamagecalculation(void)
 {
-    s32 rand = RandomTinyMT() & 0xFF;
+    s32 rand = Random() & 0xFF;
 
     if (rand < 102)
         gDynamicBasePower = 40;
@@ -8844,7 +8844,7 @@ static void Cmd_setsafeguard(void)
 
 static void Cmd_magnitudedamagecalculation(void)
 {
-    s32 magnitude = RandomTinyMT() % 100;
+    s32 magnitude = Random() % 100;
 
     if (magnitude < 5)
     {
@@ -9685,7 +9685,7 @@ static void Cmd_assistattackselect(void)
     if (chooseableMovesNo)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
-        gCalledMove = movesArray[((RandomTinyMT() & 0xFF) * chooseableMovesNo) >> 8];
+        gCalledMove = movesArray[((Random() & 0xFF) * chooseableMovesNo) >> 8];
         gBattlerTarget = GetMoveTarget(gCalledMove, 0);
         gBattlescriptCurrInstr += 5;
     }
@@ -9834,7 +9834,7 @@ static void Cmd_pickup(void)
                 && species != 0
                 && species != SPECIES_EGG
                 && heldItem == ITEM_NONE
-                && (RandomTinyMT() % 10) == 0)
+                && (Random() % 10) == 0)
             {
                 heldItem = GetBattlePyramidPickupItemId();
                 SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
@@ -9857,10 +9857,10 @@ static void Cmd_pickup(void)
                 && species != 0
                 && species != SPECIES_EGG
                 && heldItem == ITEM_NONE
-                && (RandomTinyMT() % 10) == 0)
+                && (Random() % 10) == 0)
             {
                 s32 j;
-                s32 rand = RandomTinyMT() % 100;
+                s32 rand = Random() % 100;
                 u8 lvlDivBy10 = (GetMonData(&gPlayerParty[i], MON_DATA_LEVEL) - 1) / 10;
                 if (lvlDivBy10 > 9)
                     lvlDivBy10 = 9;
@@ -10177,7 +10177,7 @@ static void Cmd_handleballthrow(void)
             odds = Sqrt(Sqrt(16711680 / odds));
             odds = 1048560 / odds;
 
-            for (shakes = 0; shakes < BALL_3_SHAKES_SUCCESS && RandomTinyMT() < odds; shakes++);
+            for (shakes = 0; shakes < BALL_3_SHAKES_SUCCESS && Random() < odds; shakes++);
 
             if (gLastUsedItem == ITEM_MASTER_BALL)
                 shakes = BALL_3_SHAKES_SUCCESS; // why calculate the shakes before that check?

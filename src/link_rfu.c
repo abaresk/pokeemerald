@@ -2003,7 +2003,7 @@ void sub_800DBF8(u8 *q1, u8 mode)
         case 2:
             for (i = 0; i < 200; i++)
             {
-                rval = RandomTinyMT();
+                rval = Random();
                 q1[i] = rval;
                 r5 += rval;
             }
@@ -4744,9 +4744,9 @@ void sub_8011AFC(void)
         gLinkType = LINKTYPE_0x1111;
         sub_800B488();
         OpenLink();
-        SeedRngTinyMT(gMain.vblankCounter2);
+        SeedRng(gMain.vblankCounter2);
         for (i = 0; i < 4; i++)
-            gSaveBlock2Ptr->playerTrainerId[i] = RandomTinyMT() % 256;
+            gSaveBlock2Ptr->playerTrainerId[i] = Random() % 256;
 
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_1D_MAP);
         RunTasks();

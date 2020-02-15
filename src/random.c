@@ -15,19 +15,19 @@ EWRAM_DATA static u32 sRandCount = 0;
 // IWRAM common
 u32 gRngValueOld;
 u32 gRng2Value;
-u32 gRngTinyMT[4];
+// Tiny Mersenne Twister state
+u32 gRngState[4];
 
-u16 RandomOld(void)
+void SeedRng(u32 seed)
 {
-    gRngValueOld = 1103515245 * gRngValueOld + 24691;
-    sRandCount++;
-    return gRngValueOld >> 16;
+    tinymt32_init(seed);
 }
 
-void SeedRngOld(u16 seed)
+u16 Random(void)
 {
-    gRngValueOld = seed;
-    sUnknown = 0;
+    u32 val;
+    val = tinymt32_generate_uint32();
+    return val >> 16;
 }
 
 void SeedRng2(u16 seed)
@@ -41,16 +41,17 @@ u16 Random2(void)
     return gRng2Value >> 16;
 }
 
-void SeedRngTinyMT(u32 seed)
+void SeedRngOld(u16 seed)
 {
-    tinymt32_init(seed);
+    gRngValueOld = seed;
+    sUnknown = 0;
 }
 
-u16 RandomTinyMT(void)
+u16 RandomOld(void)
 {
-    u32 val;
-    val = tinymt32_generate_uint32();
-    return val >> 16;
+    gRngValueOld = 1103515245 * gRngValueOld + 24691;
+    sRandCount++;
+    return gRngValueOld >> 16;
 }
 
 /**
@@ -86,15 +87,15 @@ u16 RandomTinyMT(void)
  */
 void period_certification(void)
 {
-    if ((gRngTinyMT[0] & TINYMT32_MASK) == 0 &&
-        gRngTinyMT[1] == 0 &&
-        gRngTinyMT[2] == 0 &&
-        gRngTinyMT[3] == 0)
+    if ((gRngState[0] & TINYMT32_MASK) == 0 &&
+        gRngState[1] == 0 &&
+        gRngState[2] == 0 &&
+        gRngState[3] == 0)
     {
-        gRngTinyMT[0] = 'T';
-        gRngTinyMT[1] = 'I';
-        gRngTinyMT[2] = 'N';
-        gRngTinyMT[3] = 'Y';
+        gRngState[0] = 'T';
+        gRngState[1] = 'I';
+        gRngState[2] = 'N';
+        gRngState[3] = 'Y';
     }
 }
 
@@ -108,14 +109,14 @@ void tinymt32_init(u32 seed)
 {
     u16 i;
 
-    gRngTinyMT[0] = seed;
-    gRngTinyMT[1] = MAT1;
-    gRngTinyMT[2] = MAT2;
-    gRngTinyMT[3] = TMAT;
+    gRngState[0] = seed;
+    gRngState[1] = MAT1;
+    gRngState[2] = MAT2;
+    gRngState[3] = TMAT;
 
     for (i = 1; i < MIN_LOOP; i++)
     {
-        gRngTinyMT[i & 3] ^= i + 1812433253 * (gRngTinyMT[(i - 1) & 3] ^ (gRngTinyMT[(i - 1) & 3] >> 30));
+        gRngState[i & 3] ^= i + 1812433253 * (gRngState[(i - 1) & 3] ^ (gRngState[(i - 1) & 3] >> 30));
     }
     period_certification();
 
@@ -135,18 +136,18 @@ void tinymt32_next_state(void)
     u32 x;
     u32 y;
 
-    y = gRngTinyMT[3];
-    x = (gRngTinyMT[0] & TINYMT32_MASK) ^ gRngTinyMT[1] ^ gRngTinyMT[2];
+    y = gRngState[3];
+    x = (gRngState[0] & TINYMT32_MASK) ^ gRngState[1] ^ gRngState[2];
     x ^= (x << TINYMT32_SH0);
     y ^= (y >> TINYMT32_SH0) ^ x;
-    gRngTinyMT[0] = gRngTinyMT[1];
-    gRngTinyMT[1] = gRngTinyMT[2];
-    gRngTinyMT[2] = x ^ (y << TINYMT32_SH1);
-    gRngTinyMT[3] = y;
+    gRngState[0] = gRngState[1];
+    gRngState[1] = gRngState[2];
+    gRngState[2] = x ^ (y << TINYMT32_SH1);
+    gRngState[3] = y;
     if ((y & 1) == 1)
     {
-        gRngTinyMT[1] ^= MAT1;
-        gRngTinyMT[2] ^= MAT2;
+        gRngState[1] ^= MAT1;
+        gRngState[2] ^= MAT2;
     }
 }
 
@@ -160,8 +161,8 @@ u32 tinymt32_temper(void)
 {
     u32 t0, t1;
 
-    t0 = gRngTinyMT[3];
-    t1 = gRngTinyMT[0] + (gRngTinyMT[2] >> TINYMT32_SH8);
+    t0 = gRngState[3];
+    t1 = gRngState[0] + (gRngState[2] >> TINYMT32_SH8);
     t0 ^= t1;
     if ((t1 & 1) == 1) {
         t0 ^= TMAT;

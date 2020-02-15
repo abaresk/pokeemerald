@@ -1213,7 +1213,7 @@ static u8 CalcBerryYieldInternal(u16 max, u16 min, u8 water)
     {
         randMin = (max - min) * (water - 1);
         randMax = (max - min) * (water);
-        rand = randMin + RandomTinyMT() % (randMax - randMin + 1);
+        rand = randMin + Random() % (randMax - randMin + 1);
 
         if ((rand & 3) > 1)
             extraYield = rand / 4 + 1;

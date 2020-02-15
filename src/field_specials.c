@@ -2014,7 +2014,7 @@ void BufferVarsForIVRater(void)
         }
         else if (ivStorage[gSpecialVar_0x8006] == ivStorage[i])
         {
-            u16 randomNumber = RandomTinyMT();
+            u16 randomNumber = Random();
             if (randomNumber & 1)
             {
                 gSpecialVar_0x8006 = i;
@@ -3544,7 +3544,7 @@ bool8 IsDestinationBoxFull(void)
 
 void CreateAbnormalWeatherEvent(void)
 {
-    u16 randomValue = RandomTinyMT();
+    u16 randomValue = Random();
     VarSet(VAR_ABNORMAL_WEATHER_STEP_COUNTER, 0);
 
     if (FlagGet(FLAG_DEFEATED_KYOGRE) == TRUE)
@@ -3557,12 +3557,12 @@ void CreateAbnormalWeatherEvent(void)
     }
     else if ((randomValue & 1) == 0)
     {
-        randomValue = RandomTinyMT();
+        randomValue = Random();
         VarSet(VAR_ABNORMAL_WEATHER_LOCATION, (randomValue % ABNORMAL_WEATHER_COUNT_PER_LEGENDARY) + ABNORMAL_WEATHER_GROUDON_LOCATIONS_START);
     }
     else
     {
-        randomValue = RandomTinyMT();
+        randomValue = Random();
         VarSet(VAR_ABNORMAL_WEATHER_LOCATION, (randomValue % ABNORMAL_WEATHER_COUNT_PER_LEGENDARY) + ABNORMAL_WEATHER_KYOGRE_LOCATIONS_START);
     }
 }
@@ -4151,7 +4151,7 @@ static u16 PlayerGainRandomTrainerFan(void)
         if (!GET_TRAINER_FAN_CLUB_FLAG(sFanClubMemberIds[i]))
         {
             idx = i;
-            if (RandomTinyMT() & 1)
+            if (Random() & 1)
             {
                 SET_TRAINER_FAN_CLUB_FLAG(sFanClubMemberIds[idx]);
                 return idx;
@@ -4192,7 +4192,7 @@ static u16 PlayerLoseRandomTrainerFan(void)
         if (GET_TRAINER_FAN_CLUB_FLAG(sFanClubMemberIds[i]))
         {
             idx = i;
-            if (RandomTinyMT() & 1)
+            if (Random() & 1)
             {
                 FLIP_TRAINER_FAN_CLUB_FLAG(sFanClubMemberIds[idx]);
                 return idx;

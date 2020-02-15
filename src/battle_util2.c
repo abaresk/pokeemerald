@@ -174,7 +174,7 @@ u32 sub_805725C(u8 battlerId)
         case 1:
             if (gBattleMons[battlerId].status1 & STATUS1_FREEZE)
             {
-                if (RandomTinyMT() % 5 != 0)
+                if (Random() % 5 != 0)
                 {
                     gBattlescriptCurrInstr = BattleScript_MoveUsedIsFrozen;
                 }

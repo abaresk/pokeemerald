@@ -96,7 +96,7 @@ void ResetLilycoveLadyForRecordMix(void)
 // Unused
 void InitLilycoveLadyRandomly(void)
 {
-    u8 lady = RandomTinyMT() % LILYCOVE_LADY_COUNT;
+    u8 lady = Random() % LILYCOVE_LADY_COUNT;
 
     switch (lady)
     {
@@ -130,9 +130,9 @@ static void FavorLadyPickFavorAndBestItem(void)
     u8 numItems;
     u8 bestItem;
 
-    sFavorLadyPtr->favorId = RandomTinyMT() % ARRAY_COUNT(sFavorLadyRequests);
+    sFavorLadyPtr->favorId = Random() % ARRAY_COUNT(sFavorLadyRequests);
     numItems = GetNumAcceptedItems(sFavorLadyAcceptedItemLists[sFavorLadyPtr->favorId]);
-    bestItem = RandomTinyMT() % numItems;
+    bestItem = Random() % numItems;
     sFavorLadyPtr->bestItem = sFavorLadyAcceptedItemLists[sFavorLadyPtr->favorId][bestItem];
 }
 
@@ -310,7 +310,7 @@ static void QuizLadyPickQuestion(void)
     u8 questionId;
     u8 i;
 
-    questionId = RandomTinyMT() % ARRAY_COUNT(sQuizLadyQuizQuestions);
+    questionId = Random() % ARRAY_COUNT(sQuizLadyQuizQuestions);
     for (i = 0; i < QUIZ_QUESTION_LEN; i ++)
     {
         sQuizLadyPtr->question[i] = sQuizLadyQuizQuestions[questionId][i];
@@ -623,7 +623,7 @@ void QuizLadyClearQuestionForRecordMix(const LilycoveLady *lilycoveLady)
             {
                 break;
             }
-            sQuizLadyPtr->questionId = RandomTinyMT() % ARRAY_COUNT(sQuizLadyQuizQuestions);
+            sQuizLadyPtr->questionId = Random() % ARRAY_COUNT(sQuizLadyQuizQuestions);
         }
         if (lilycoveLady->quiz.prevQuestionId == sQuizLadyPtr->questionId)
         {
@@ -639,7 +639,7 @@ static void ResetContestLadyContestData(void)
     sContestLadyPtr->numGoodPokeblocksGiven = 0;
     sContestLadyPtr->numOtherPokeblocksGiven = 0;
     sContestLadyPtr->maxSheen = 0;
-    sContestLadyPtr->category = RandomTinyMT() % CONTEST_CATEGORIES_COUNT;
+    sContestLadyPtr->category = Random() % CONTEST_CATEGORIES_COUNT;
 }
 
 static void InitLilycoveContestLady(void)

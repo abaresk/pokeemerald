@@ -2410,8 +2410,8 @@ static void sub_81D8AD8(u8 taskId)
     s16 *data = gTasks[taskId].data;
     if ((data[15] & 3) == 0)
     {
-        ChangeBgX(1, (RandomTinyMT() % 8 - 4) << 8, 0);
-        ChangeBgY(1, (RandomTinyMT() % 8 - 4) << 8, 0);
+        ChangeBgX(1, (Random() % 8 - 4) << 8, 0);
+        ChangeBgY(1, (Random() % 8 - 4) << 8, 0);
     }
 
     data[15]++;

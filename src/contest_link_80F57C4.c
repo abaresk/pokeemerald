@@ -1629,11 +1629,11 @@ static void sub_80F7670(u8 taskId)
         gTasks[taskId].data[0] = 0;
         if (gUnknown_0203A034->unk0->unk7 < 40)
         {
-            u8 spriteId = CreateSprite(&gSpriteTemplate_858D860, (RandomTinyMT() % 240) - 20, 44, 5);
-            gSprites[spriteId].data[0] = RandomTinyMT() % 512;
-            gSprites[spriteId].data[1] = (RandomTinyMT() % 24) + 16;
-            gSprites[spriteId].data[2] = (RandomTinyMT() % 256) + 48;
-            gSprites[spriteId].oam.tileNum += RandomTinyMT() % 17;
+            u8 spriteId = CreateSprite(&gSpriteTemplate_858D860, (Random() % 240) - 20, 44, 5);
+            gSprites[spriteId].data[0] = Random() % 512;
+            gSprites[spriteId].data[1] = (Random() % 24) + 16;
+            gSprites[spriteId].data[2] = (Random() % 256) + 48;
+            gSprites[spriteId].oam.tileNum += Random() % 17;
             gUnknown_0203A034->unk0->unk7++;
         }
     }

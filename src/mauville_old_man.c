@@ -287,7 +287,7 @@ void ScrSpecial_GenerateGiddyLine(void)
     if (giddy->randomWords[giddy->taleCounter] != 0xFFFF) // is not the last element of the array?
     {
         u8 *stringPtr;
-        u32 adjective = RandomTinyMT();
+        u32 adjective = Random();
 
         adjective %= 8;
         stringPtr = CopyEasyChatWord(gStringVar4, giddy->randomWords[giddy->taleCounter]);
@@ -300,7 +300,7 @@ void ScrSpecial_GenerateGiddyLine(void)
         StringCopy(gStringVar4, sGiddyQuestions[giddy->questionList[giddy->questionNum++]]);
     }
 
-    if (!(RandomTinyMT() % 10))
+    if (!(Random() % 10))
         giddy->taleCounter = 10;
     else
         giddy->taleCounter++;
@@ -329,7 +329,7 @@ static void InitGiddyTaleList(void)
 
     for (i = 0; i < 8; i++)
     {
-        r1 = RandomTinyMT() % (i + 1);
+        r1 = Random() % (i + 1);
         r7 = giddy->questionList[i];
         giddy->questionList[i] = giddy->questionList[r1];
         giddy->questionList[r1] = r7;
@@ -346,7 +346,7 @@ static void InitGiddyTaleList(void)
     r7 = 0;
     for (i = 0; i < 10; i++)
     {
-        r1 = RandomTinyMT() % 10;
+        r1 = Random() % 10;
         if (r1 < 3 && r7 < 8)
         {
             giddy->randomWords[i] = 0xFFFF;
@@ -354,7 +354,7 @@ static void InitGiddyTaleList(void)
         }
         else
         {
-            s16 r2 = RandomTinyMT() % r10;
+            s16 r2 = Random() % r10;
             for (r1 = 0; i < 6; r1++)
                 if ((r2 -= arr[r1][1]) <= 0)
                     break;
@@ -1261,8 +1261,8 @@ static void ScrambleStatList(u8 * arr, s32 count)
         arr[i] = i;
     for (i = 0; i < count; i++)
     {
-        u32 a = RandomTinyMT() % count;
-        u32 b = RandomTinyMT() % count;
+        u32 a = Random() % count;
+        u32 b = Random() % count;
         u8 temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;

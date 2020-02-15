@@ -5058,7 +5058,7 @@ bool8 sub_811EDC4(const u16 *easyChatWords, u8 arg1, u8 arg2, u16 arg3)
 
 u16 sub_811EE38(u16 groupId)
 {
-    u16 index = RandomTinyMT() % gEasyChatGroups[groupId].numWords;
+    u16 index = Random() % gEasyChatGroups[groupId].numWords;
     if (groupId == EC_GROUP_POKEMON
      || groupId == EC_GROUP_POKEMON_2
      || groupId == EC_GROUP_MOVE_1
@@ -5125,7 +5125,7 @@ void sub_811EECC(void)
 
 void sub_811EF6C(void)
 {
-    int groupId = RandomTinyMT() & 1 ? EC_GROUP_HOBBIES : EC_GROUP_LIFESTYLE;
+    int groupId = Random() & 1 ? EC_GROUP_HOBBIES : EC_GROUP_LIFESTYLE;
     u16 easyChatWord = sub_811EE90(groupId);
     CopyEasyChatWord(gStringVar2, easyChatWord);
 }
@@ -5169,7 +5169,7 @@ u16 GetNewHipsterPhraseToTeach(void)
     if (numAdditionalPhrasesUnlocked == NUM_ADDITIONAL_PHRASES)
         return 0xFFFF;
 
-    additionalPhraseId = RandomTinyMT() % (NUM_ADDITIONAL_PHRASES - numAdditionalPhrasesUnlocked);
+    additionalPhraseId = Random() % (NUM_ADDITIONAL_PHRASES - numAdditionalPhrasesUnlocked);
     for (i = 0; i < NUM_ADDITIONAL_PHRASES; i++)
     {
         if (!IsAdditionalPhraseUnlocked(i))
@@ -5197,7 +5197,7 @@ u16 GetRandomTaughtHipsterPhrase(void)
     if (additionalPhraseId == 0)
         return 0xFFFF;
 
-    additionalPhraseId = RandomTinyMT() % additionalPhraseId;
+    additionalPhraseId = Random() % additionalPhraseId;
     for (i = 0; i < NUM_ADDITIONAL_PHRASES; i++)
     {
         if (IsAdditionalPhraseUnlocked(i))
@@ -5226,7 +5226,7 @@ static u16 sub_811F108(void)
     if (index == 0)
         return 0xFFFF;
 
-    index = RandomTinyMT() % index;
+    index = Random() % index;
     species = gEasyChatGroups[EC_GROUP_POKEMON].wordData.valueList;
     numWords = gEasyChatGroups[EC_GROUP_POKEMON].numWords;
     for (i = 0; i < numWords; i++)

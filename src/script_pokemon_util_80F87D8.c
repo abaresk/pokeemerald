@@ -439,7 +439,7 @@ void ScriptRandom(void)
     else
     {
         scriptPtr = &gSpecialVar_Result;
-        random = RandomTinyMT();
+        random = Random();
     }
     *scriptPtr = random % *scriptPtr;
 }

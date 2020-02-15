@@ -340,7 +340,7 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
         if (gBitTable[i] & moveLimitations)
             AI_THINKING_STRUCT->score[i] = 0;
 
-        AI_THINKING_STRUCT->simulatedRNG[i] = 100 - (RandomTinyMT() % 16);
+        AI_THINKING_STRUCT->simulatedRNG[i] = 100 - (Random() % 16);
     }
 
     gBattleResources->AI_ScriptsStack->size = 0;
@@ -349,7 +349,7 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
     // Decide a random target battlerId in doubles.
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
     {
-        gBattlerTarget = (RandomTinyMT() & BIT_FLANK) + (GetBattlerSide(gActiveBattler) ^ BIT_SIDE);
+        gBattlerTarget = (Random() & BIT_FLANK) + (GetBattlerSide(gActiveBattler) ^ BIT_SIDE);
         if (gAbsentBattlerFlags & gBitTable[gBattlerTarget])
             gBattlerTarget ^= BIT_FLANK;
     }
@@ -444,7 +444,7 @@ static u8 ChooseMoveOrAction_Singles(void)
             }
         }
     }
-    return consideredMoveArray[RandomTinyMT() % numOfBestMoves];
+    return consideredMoveArray[Random() % numOfBestMoves];
 }
 
 static u8 ChooseMoveOrAction_Doubles(void)
@@ -526,7 +526,7 @@ static u8 ChooseMoveOrAction_Doubles(void)
                         }
                     }
                 }
-                actionOrMoveIndex[i] = mostViableMovesIndices[RandomTinyMT() % mostViableMovesNo];
+                actionOrMoveIndex[i] = mostViableMovesIndices[Random() % mostViableMovesNo];
                 bestMovePointsForTarget[i] = mostViableMovesScores[0];
 
                 // Don't use a move against ally if it has less than 100 points.
@@ -558,7 +558,7 @@ static u8 ChooseMoveOrAction_Doubles(void)
         }
     }
 
-    gBattlerTarget = mostViableTargetsArray[RandomTinyMT() % mostViableTargetsNo];
+    gBattlerTarget = mostViableTargetsArray[Random() % mostViableTargetsNo];
     return actionOrMoveIndex[gBattlerTarget];
 }
 
@@ -655,7 +655,7 @@ void ClearBattlerItemEffectHistory(u8 battlerId)
 
 static void Cmd_if_random_less_than(void)
 {
-    u16 random = RandomTinyMT();
+    u16 random = Random();
 
     if (random % 256 < gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
@@ -665,7 +665,7 @@ static void Cmd_if_random_less_than(void)
 
 static void Cmd_if_random_greater_than(void)
 {
-    u16 random = RandomTinyMT();
+    u16 random = Random();
 
     if (random % 256 > gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
@@ -675,7 +675,7 @@ static void Cmd_if_random_greater_than(void)
 
 static void Cmd_if_random_equal(void)
 {
-    u16 random = RandomTinyMT();
+    u16 random = Random();
 
     if (random % 256 == gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
@@ -685,7 +685,7 @@ static void Cmd_if_random_equal(void)
 
 static void Cmd_if_random_not_equal(void)
 {
-    u16 random = RandomTinyMT();
+    u16 random = Random();
 
     if (random % 256 != gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
@@ -1369,7 +1369,7 @@ static void Cmd_get_ability(void)
             if (gBaseStats[gBattleMons[battlerId].species].abilities[1] != ABILITY_NONE)
             {
                 // AI has no knowledge of opponent, so it guesses which ability.
-                if (RandomTinyMT() & 1)
+                if (Random() & 1)
                     AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[0];
                 else
                     AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[1];
@@ -1972,7 +1972,7 @@ static void Cmd_if_random_safari_flee(void)
 {
     u8 safariFleeRate = gBattleStruct->safariEscapeFactor * 5; // Safari flee rate, from 0-20.
 
-    if ((u8)(RandomTinyMT() % 100) < safariFleeRate)
+    if ((u8)(Random() % 100) < safariFleeRate)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;

@@ -1048,7 +1048,7 @@ static void sub_819A44C(struct Sprite *sprite)
             {
                 sprite->data[0]--;
             }
-            else if (RandomTinyMT() % 5 == 0)
+            else if (Random() % 5 == 0)
             {
                 StartSpriteAnim(sprite, 0);
                 sprite->data[0] = 32;

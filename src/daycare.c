@@ -441,7 +441,7 @@ static s32 GetParentToInheritNature(struct DayCare *daycare)
     // coin flip on ...two Dittos
     if (dittoCount == DAYCARE_MON_COUNT)
     {
-        if (RandomTinyMT() >= USHRT_MAX / 2)
+        if (Random() >= USHRT_MAX / 2)
             parent = 0;
         else
             parent = 1;
@@ -449,7 +449,7 @@ static s32 GetParentToInheritNature(struct DayCare *daycare)
 
     // Don't inherit nature if not holding Everstone
     if (GetBoxMonData(&daycare->mons[parent].mon, MON_DATA_HELD_ITEM) != ITEM_EVERSTONE
-        || RandomTinyMT() >= USHRT_MAX / 2)
+        || Random() >= USHRT_MAX / 2)
     {
         return -1;
     }
@@ -468,7 +468,7 @@ static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
     // don't inherit nature
     if (parent < 0)
     {
-        daycare->offspringPersonality = (Random2() << 16) | ((RandomTinyMT() % 0xfffe) + 1);
+        daycare->offspringPersonality = (Random2() << 16) | ((Random() % 0xfffe) + 1);
     }
     // inherit nature
     else
@@ -478,7 +478,7 @@ static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
 
         do
         {
-            personality = (Random2() << 16) | (RandomTinyMT());
+            personality = (Random2() << 16) | (Random());
             if (wantedNature == GetNatureFromPersonality(personality) && personality != 0)
                 break; // found a personality with the same nature
 
@@ -494,7 +494,7 @@ static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
 // Functionally unused
 static void _TriggerPendingDaycareMaleEgg(struct DayCare *daycare)
 {
-    daycare->offspringPersonality = (RandomTinyMT()) | (EGG_GENDER_MALE);
+    daycare->offspringPersonality = (Random()) | (EGG_GENDER_MALE);
     FlagSet(FLAG_PENDING_DAYCARE_EGG);
 }
 
@@ -548,14 +548,14 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
     for (i = 0; i < INHERITED_IV_COUNT; i++)
     {
         // Randomly pick an IV from the available list and stop from being chosen again.
-        selectedIvs[i] = availableIVs[RandomTinyMT() % (NUM_STATS - i)];
+        selectedIvs[i] = availableIVs[Random() % (NUM_STATS - i)];
         RemoveIVIndexFromList(availableIVs, i);
     }
 
     // Determine which parent each of the selected IVs should inherit from.
     for (i = 0; i < INHERITED_IV_COUNT; i++)
     {
-        whichParents[i] = RandomTinyMT() % DAYCARE_MON_COUNT;
+        whichParents[i] = Random() % DAYCARE_MON_COUNT;
     }
 
     // Set each of inherited IVs on the egg mon.
@@ -888,7 +888,7 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
     if (daycare->offspringPersonality == 0 && validEggs == DAYCARE_MON_COUNT && (daycare->mons[1].steps & 0xFF) == 0xFF)
     {
         u8 compatability = GetDaycareCompatibilityScore(daycare);
-        if (compatability > (RandomTinyMT() * 100u) / USHRT_MAX)
+        if (compatability > (Random() * 100u) / USHRT_MAX)
             TriggerPendingDaycareEgg();
     }
 

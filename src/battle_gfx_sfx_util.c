@@ -114,7 +114,7 @@ u16 ChooseMoveAndTargetInBattlePalace(void)
     s32 chosenMoveId = -1;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct*)(&gBattleBufferA[gActiveBattler][4]);
     u8 unusableMovesBits = CheckMoveLimitations(gActiveBattler, 0, 0xFF);
-    s32 percent = RandomTinyMT() % 100;
+    s32 percent = Random() % 100;
 
     i = (gBattleStruct->field_92 & gBitTable[gActiveBattler]) ? 2 : 0;
     var2 = i;
@@ -173,7 +173,7 @@ u16 ChooseMoveAndTargetInBattlePalace(void)
             {
                 do
                 {
-                    i = RandomTinyMT() % MAX_MON_MOVES;
+                    i = Random() % MAX_MON_MOVES;
                     if (!(gBitTable[i] & unusableMovesBits))
                         chosenMoveId = i;
                 } while (chosenMoveId == -1);
@@ -189,13 +189,13 @@ u16 ChooseMoveAndTargetInBattlePalace(void)
 
                 do
                 {
-                    i = RandomTinyMT() % MAX_MON_MOVES;
+                    i = Random() % MAX_MON_MOVES;
                     if (!(gBitTable[i] & unusableMovesBits) && var2 == sub_805D4A8(moveInfo->moves[i]))
                         chosenMoveId = i;
                 } while (chosenMoveId == -1);
             }
 
-            if (RandomTinyMT() % 100 > 49)
+            if (Random() % 100 > 49)
             {
                 gProtectStructs[gActiveBattler].palaceUnableToUseMove = 1;
                 return 0;
@@ -272,7 +272,7 @@ static u16 BattlePalaceGetTargetRetValue(void)
         }
 
         if (gBattleMons[opposing1].hp == gBattleMons[opposing2].hp)
-            return (((gActiveBattler & BIT_SIDE) ^ BIT_SIDE) + (RandomTinyMT() & 2)) << 8;
+            return (((gActiveBattler & BIT_SIDE) ^ BIT_SIDE) + (Random() & 2)) << 8;
 
         switch (gUnknown_0831C604[GetNatureFromPersonality(gBattleMons[gActiveBattler].personality)])
         {
@@ -287,7 +287,7 @@ static u16 BattlePalaceGetTargetRetValue(void)
             else
                 return opposing2 << 8;
         case 2:
-            return (((gActiveBattler & BIT_SIDE) ^ BIT_SIDE) + (RandomTinyMT() & 2)) << 8;
+            return (((gActiveBattler & BIT_SIDE) ^ BIT_SIDE) + (Random() & 2)) << 8;
         }
     }
 

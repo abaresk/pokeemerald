@@ -943,9 +943,9 @@ static void SetBattlePyramidPrize(void)
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
     if (gSaveBlock2Ptr->frontier.pyramidWinStreaks[lvlMode] > 41)
-        gSaveBlock2Ptr->frontier.pyramidPrize = sLongStreakRewardItems[RandomTinyMT() % ARRAY_COUNT(sLongStreakRewardItems)];
+        gSaveBlock2Ptr->frontier.pyramidPrize = sLongStreakRewardItems[Random() % ARRAY_COUNT(sLongStreakRewardItems)];
     else
-        gSaveBlock2Ptr->frontier.pyramidPrize = sShortStreakRewardItems[RandomTinyMT() % ARRAY_COUNT(sShortStreakRewardItems)];
+        gSaveBlock2Ptr->frontier.pyramidPrize = sShortStreakRewardItems[Random() % ARRAY_COUNT(sShortStreakRewardItems)];
 }
 
 static void GiveBattlePyramidPrize(void)
@@ -967,7 +967,7 @@ static void SeedPyramidFloor(void)
     int i;
 
     for (i = 0; i < 4; i++)
-        gSaveBlock2Ptr->frontier.pyramidRandoms[i] = RandomTinyMT();
+        gSaveBlock2Ptr->frontier.pyramidRandoms[i] = Random();
 
     gSaveBlock2Ptr->frontier.pyramidTrainerFlags = 0;
 }
@@ -1365,11 +1365,11 @@ void GenerateBattlePyramidWildMon(void)
     {
         lvl = SetFacilityPtrsGetLevel();
         lvl -= wildMons[id].lvl;
-        lvl = lvl - 5 + (RandomTinyMT() % 11);
+        lvl = lvl - 5 + (Random() % 11);
     }
     else
     {
-        lvl = wildMons[id].lvl - 5 + ((RandomTinyMT() % 11));
+        lvl = wildMons[id].lvl - 5 + ((Random() % 11));
     }
     SetMonData(&gEnemyParty[0],
                MON_DATA_EXP,
@@ -1402,7 +1402,7 @@ void GenerateBattlePyramidWildMon(void)
     // BUG: Reading outside the array as lvl was used for mon level instead of frontier lvl mode.
     if (gSaveBlock2Ptr->frontier.pyramidWinStreaks[lvl] >= 140)
     {
-        id = (RandomTinyMT() % 17) + 15;
+        id = (Random() % 17) + 15;
         for (i = 0; i < NUM_STATS; i++)
             SetMonData(&gEnemyParty[0], MON_DATA_HP_IV + i, &id);
     }
@@ -1957,7 +1957,7 @@ u16 GetBattlePyramidPickupItemId(void)
     if (round >= TOTAL_ROUNDS)
         round = TOTAL_ROUNDS - 1;
 
-    rand = RandomTinyMT() % 100;
+    rand = Random() % 100;
 
     for (i = 0; i < ARRAY_COUNT(sPickupPercentages); i++)
     {

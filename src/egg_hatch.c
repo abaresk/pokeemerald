@@ -843,7 +843,7 @@ static void CreateRandomEggShardSprite(void)
     s16 velocity1 = sEggShardVelocities[sEggHatchData->eggShardVelocityID][0];
     s16 velocity2 = sEggShardVelocities[sEggHatchData->eggShardVelocityID][1];
     sEggHatchData->eggShardVelocityID++;
-    spriteAnimIndex = RandomTinyMT() % 4;
+    spriteAnimIndex = Random() % 4;
     CreateEggShardSprite(120, 60, velocity1, velocity2, 100, spriteAnimIndex);
 }
 

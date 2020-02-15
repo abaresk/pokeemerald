@@ -218,7 +218,7 @@ void StartTimer1(void)
 void SeedRngAndSetTrainerId(void)
 {
     u16 val = REG_TM1CNT_L;
-    SeedRngTinyMT(val);
+    SeedRng(val);
     REG_TM1CNT_H = 0;
     gTrainerId = val;
 }
@@ -232,7 +232,7 @@ void SeedRngWithRtc(void)
     } else {
         seed = RtcGetMinuteCount();
     }
-    SeedRngTinyMT(seed);
+    SeedRng(seed);
 }
 
 u16 GetGeneratedTrainerIdLower(void)
@@ -375,7 +375,7 @@ static void VBlankIntr(void)
     sub_8033648();
 
     if (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
-        RandomTinyMT();
+        Random();
 
     sub_800E174();
 

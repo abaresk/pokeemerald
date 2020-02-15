@@ -919,7 +919,7 @@ static void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t r
     _src = (void *)src + which * recordSize;
     memcpy(&gSaveBlock1Ptr->daycare.mons[0].mail, &_src->mail[0], sizeof(struct DayCareMail));
     memcpy(&gSaveBlock1Ptr->daycare.mons[1].mail, &_src->mail[1], sizeof(struct DayCareMail));
-    SeedRngTinyMT(oldSeed);
+    SeedRng(oldSeed);
 }
 
 

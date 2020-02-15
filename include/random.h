@@ -3,20 +3,20 @@
 
 extern u32 gRngValueOld;
 extern u32 gRng2Value;
-extern u32 gRngTinyMT[4];
+extern u32 gRngState[4];
 
 //Returns a 16-bit pseudorandom number
-u16 RandomOld(void);
+u16 Random(void);
 u16 Random2(void);
-u16 RandomTinyMT(void);
+u16 RandomOld(void);
 
 //Returns a 32-bit pseudorandom number
-#define Random32() (RandomTinyMT() | (RandomTinyMT() << 16))
+#define Random32() (Random() | (Random() << 16))
 
 //Sets the initial seed value of the pseudorandom number generator
-void SeedRngOld(u16 seed);
+void SeedRng(u32 seed);
 void SeedRng2(u16 seed);
-void SeedRngTinyMT(u32 seed);
+void SeedRngOld(u16 seed);
 
 void tinymt32_init(u32 seed);
 void tinymt32_next_state(void);

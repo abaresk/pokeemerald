@@ -775,7 +775,7 @@ u8 GetRandomActiveShowIdx(void)
         if (gSaveBlock1Ptr->tvShows[i].common.kind == TVSHOW_OFF_AIR)
             break;
     }
-    j = RandomTinyMT() % i;
+    j = Random() % i;
     selIdx = j;
     do
     {
@@ -1612,8 +1612,8 @@ void PutNameRaterShowOnTheAir(void)
             show->nameRaterShow.kind = TVSHOW_NAME_RATER_SHOW;
             show->nameRaterShow.active = TRUE;
             show->nameRaterShow.species = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES, NULL);
-            show->nameRaterShow.random = RandomTinyMT() % 3;
-            show->nameRaterShow.random2 = RandomTinyMT() % 2;
+            show->nameRaterShow.random = Random() % 3;
+            show->nameRaterShow.random2 = Random() % 2;
             show->nameRaterShow.randomSpecies = TV_GetSomeOtherSpeciesAlreadySeenByPlayer(show->nameRaterShow.species);
             StringCopy(show->nameRaterShow.trainerName, gSaveBlock2Ptr->playerName);
             GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, show->nameRaterShow.pokemonName);
@@ -1742,7 +1742,7 @@ static void sub_80ED718(void)
             sCurTVShowSlot = FindEmptyTVSlotWithinFirstFiveShowsOfArray(gSaveBlock1Ptr->tvShows);
             if (sCurTVShowSlot != -1)
             {
-                outbreakIdx = RandomTinyMT() % ARRAY_COUNT(sPokeOutbreakSpeciesList);
+                outbreakIdx = Random() % ARRAY_COUNT(sPokeOutbreakSpeciesList);
                 show = &gSaveBlock1Ptr->tvShows[sCurTVShowSlot];
                 show->massOutbreak.kind = TVSHOW_MASS_OUTBREAK;
                 show->massOutbreak.active = TRUE;
@@ -2131,8 +2131,8 @@ static void sub_80EDE98(TVShow *show)
         default:
             for (k = 0; k < n * n; k ++)
             {
-                deco = RandomTinyMT() % n;
-                j = RandomTinyMT() % n;
+                deco = Random() % n;
+                j = Random() % n;
                 i = sTV_DecorationsBuffer[deco];
                 sTV_DecorationsBuffer[deco] = sTV_DecorationsBuffer[j];
                 sTV_DecorationsBuffer[j] = i;
@@ -2185,7 +2185,7 @@ static void sub_80EDFB4(TVShow *show)
                 sTV_SecretBaseVisitMovesTemp[nMoves] = move;
                 nMoves ++;
             }
-            sTV_SecretBaseVisitMonsTemp[nPokemon].move = sTV_SecretBaseVisitMovesTemp[RandomTinyMT() % nMoves];
+            sTV_SecretBaseVisitMonsTemp[nPokemon].move = sTV_SecretBaseVisitMovesTemp[Random() % nMoves];
             nPokemon ++;
         }
     }
@@ -2194,7 +2194,7 @@ static void sub_80EDFB4(TVShow *show)
         sum += sTV_SecretBaseVisitMonsTemp[i].level;
     }
     show->secretBaseVisit.avgLevel = sum / nPokemon;
-    j = RandomTinyMT() % nPokemon;
+    j = Random() % nPokemon;
     show->secretBaseVisit.species = sTV_SecretBaseVisitMonsTemp[j].species;
     show->secretBaseVisit.move = sTV_SecretBaseVisitMonsTemp[j].move;
 }
@@ -2662,7 +2662,7 @@ static void sub_80EED88(void)
         sCurTVShowSlot = sub_80EEE30(gSaveBlock1Ptr->pokeNews);
         if (sCurTVShowSlot != -1 && rbernoulli(1, 100) != TRUE)
         {
-            newsKind = (RandomTinyMT() % 4) + POKENEWS_SLATEPORT;
+            newsKind = (Random() % 4) + POKENEWS_SLATEPORT;
             if (sub_80EF0E4(newsKind) != TRUE)
             {
                 gSaveBlock1Ptr->pokeNews[sCurTVShowSlot].kind = newsKind;
@@ -3222,7 +3222,7 @@ u16 TV_GetSomeOtherSpeciesAlreadySeenByPlayer(u16 passedSpecies)
     u16 species;
     u16 initSpecies;
 
-    species = (RandomTinyMT() % (NUM_SPECIES - 1)) + 1;
+    species = (Random() % (NUM_SPECIES - 1)) + 1;
     initSpecies = species;
     while (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN) != TRUE || species == passedSpecies)
     {
@@ -3287,7 +3287,7 @@ s8 FindEmptyTVSlotBeyondFirstFiveShowsOfArray(TVShow *shows)
 
 bool8 TV_BernoulliTrial(u16 ratio)
 {
-    if (RandomTinyMT() <= ratio)
+    if (Random() <= ratio)
     {
         return FALSE;
     }
@@ -3298,7 +3298,7 @@ void TV_FanClubLetter_RandomWordToStringVar3(TVShow *show)
 {
     u8 i;
 
-    i = RandomTinyMT() % 6;
+    i = Random() % 6;
     while (TRUE)
     {
         if (i == 6)
@@ -3578,7 +3578,7 @@ void GetMomOrDadStringForTVMessage(void)
     }
     else
     {
-        if (RandomTinyMT() % 2 != 0)
+        if (Random() % 2 != 0)
         {
             StringCopy(gStringVar1, gText_Mom);
             VarSet(VAR_TEMP_3, 1);
@@ -5114,7 +5114,7 @@ static void DoTVShowTodaysSmartShopper(void)
             TVShowConvertInternationalString(gStringVar1, show->smartshopperShow.playerName, show->smartshopperShow.language);
             StringCopy(gStringVar2, ItemId_GetName(show->smartshopperShow.itemIds[0]));
             TV_PrintIntToStringVar(2, show->smartshopperShow.itemAmounts[0]);
-            sTVShowState += 1 + (RandomTinyMT() % 4);
+            sTVShowState += 1 + (Random() % 4);
             break;
         case 2:
         case 4:
@@ -5365,7 +5365,7 @@ static void DoTVShowPokemonTodaySuccessfulCapture(void)
             TVShowConvertInternationalString(gStringVar1, show->pokemonToday.playerName, show->pokemonToday.language);
             StringCopy(gStringVar2, gSpeciesNames[show->pokemonToday.species]);
             TVShowConvertInternationalString(gStringVar3, show->pokemonToday.nickname, show->pokemonToday.language2);
-            sTVShowState += 1 + (RandomTinyMT() % 4);
+            sTVShowState += 1 + (Random() % 4);
             break;
         case 7:
         case 8:
@@ -5419,7 +5419,7 @@ static void DoTVShowPokemonTodayFailedCapture(void)
         case 3:
             TVShowConvertInternationalString(gStringVar1, show->pokemonTodayFailed.playerName, show->pokemonTodayFailed.language);
             TV_PrintIntToStringVar(1, show->pokemonTodayFailed.nBallsUsed);
-            if (RandomTinyMT() % 3 == 0)
+            if (Random() % 3 == 0)
             {
                 sTVShowState = 5;
             }
@@ -5457,7 +5457,7 @@ static void DoTVShowPokemonFanClubLetter(void)
             sTVShowState = 50;
             break;
         case 1:
-            rval = (RandomTinyMT() % 4) + 1;
+            rval = (Random() % 4) + 1;
             if (rval == 1)
                 sTVShowState = 2;
             else
@@ -5467,7 +5467,7 @@ static void DoTVShowPokemonFanClubLetter(void)
             sTVShowState = 51;
             break;
         case 3:
-            sTVShowState += (RandomTinyMT() % 3) + 1;
+            sTVShowState += (Random() % 3) + 1;
             break;
         case 4:
         case 5:
@@ -5476,7 +5476,7 @@ static void DoTVShowPokemonFanClubLetter(void)
             sTVShowState = 7;
             break;
         case 7:
-            rval = (RandomTinyMT() % 0x1f) + 0x46;
+            rval = (Random() % 0x1f) + 0x46;
             TV_PrintIntToStringVar(2, rval);
             TVShowDone();
             break;
@@ -5510,7 +5510,7 @@ static void DoTVShowRecentHappenings(void)
             sTVShowState = 50;
             break;
         case 1:
-            sTVShowState += 1 + (RandomTinyMT() % 3);
+            sTVShowState += 1 + (Random() % 3);
             break;
         case 2:
         case 3:
@@ -7397,7 +7397,7 @@ static void DoTVShowSecretBaseSecrets(void)
             else
             {
                 show->secretBaseSecrets.savedState = 1;
-                sTVSecretBaseSecretsRandomValues[0] = RandomTinyMT() % bitCount;
+                sTVSecretBaseSecretsRandomValues[0] = Random() % bitCount;
                 sTVShowState = SecretBaseSecrets_GetStateForFlagNumber(show, sTVSecretBaseSecretsRandomValues[0]);
             }
             break;
@@ -7423,7 +7423,7 @@ static void DoTVShowSecretBaseSecrets(void)
                 default:
                     for (i = 0; i < 0xFFFF; i ++)
                     {
-                        sTVSecretBaseSecretsRandomValues[1] = RandomTinyMT() % bitCount;
+                        sTVSecretBaseSecretsRandomValues[1] = Random() % bitCount;
                         if (sTVSecretBaseSecretsRandomValues[1] != sTVSecretBaseSecretsRandomValues[0])
                         {
                             break;
@@ -7445,7 +7445,7 @@ static void DoTVShowSecretBaseSecrets(void)
             {
                 for (i = 0; i < 0xFFFF; i ++)
                 {
-                    sTVSecretBaseSecretsRandomValues[2] = RandomTinyMT() % bitCount;
+                    sTVSecretBaseSecretsRandomValues[2] = Random() % bitCount;
                     if (sTVSecretBaseSecretsRandomValues[2] != sTVSecretBaseSecretsRandomValues[0] && sTVSecretBaseSecretsRandomValues[2] != sTVSecretBaseSecretsRandomValues[1])
                     {
                         break;

@@ -1359,7 +1359,7 @@ static void sub_81751A4(struct Sprite* sprite)
         sprite->pos2.y += sprite->data[1];
 
         tableID = sprite->data[0];
-        rand = (RandomTinyMT() % 4) + 8;
+        rand = (Random() % 4) + 8;
         sprite->pos2.x = rand * gSineTable[tableID] / 256;
 
         sprite->data[0] += 4;
@@ -1371,15 +1371,15 @@ static bool8 sub_81751FC(void)
     u8 spriteID;
     struct Sprite* sprite;
 
-    s16 posX = RandomTinyMT() % 240;
-    s16 posY = -(RandomTinyMT() % 8);
+    s16 posX = Random() % 240;
+    s16 posY = -(Random() % 8);
 
     spriteID = CreateSprite(&sSpriteTemplate_85E54D0, posX, posY, 0);
     sprite = &gSprites[spriteID];
 
-    StartSpriteAnim(sprite, RandomTinyMT() % 17);
+    StartSpriteAnim(sprite, Random() % 17);
 
-    if (RandomTinyMT() & 3)
+    if (Random() & 3)
         sprite->data[1] = 0;
     else
         sprite->data[1] = 1;
@@ -1428,7 +1428,7 @@ static void sub_81752F4(struct UnkStruct_81520A8 *structPtr)
         structPtr->yDelta += structPtr->data[1];
 
         var = structPtr->data[0];
-        rand = RandomTinyMT();
+        rand = Random();
         rand &= 3;
         rand += 8;
         structPtr->xDelta = (rand) * ((gSineTable[var])) / 256;
@@ -1458,11 +1458,11 @@ static void sub_8175364(u8 taskId)
     case 1:
         if (data[1] != 0 && data[1] % 3 == 0)
         {
-            var = sub_81524C4(&sOamData_85E53FC, 0x3E9, 0x3E9, RandomTinyMT() % 240, -(RandomTinyMT() % 8), RandomTinyMT() % 0x11, var);
+            var = sub_81524C4(&sOamData_85E53FC, 0x3E9, 0x3E9, Random() % 240, -(Random() % 8), Random() % 0x11, var);
             if (var != 0xFF)
             {
                 sub_8152438(var, sub_81752F4);
-                if ((RandomTinyMT() & 3) == 0)
+                if ((Random() & 3) == 0)
                     sub_8152474(var, 1, 1);
                 sub_8152474(var, 7, taskId);
                 data[15]++;

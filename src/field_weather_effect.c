@@ -924,13 +924,13 @@ static bool8 DestroySnowflakeSprite(void)
 static void InitSnowflakeSpriteMovement(struct Sprite *sprite)
 {
     u16 rand;
-    u16 x = ((sprite->tSnowflakeId * 5) & 7) * 30 + (RandomTinyMT() % 30);
+    u16 x = ((sprite->tSnowflakeId * 5) & 7) * 30 + (Random() % 30);
 
     sprite->pos1.y = -3 - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
     sprite->pos1.x = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
     sprite->tPosY = sprite->pos1.y * 128;
     sprite->pos2.x = 0;
-    rand = RandomTinyMT();
+    rand = Random();
     sprite->tDeltaY = (rand & 3) * 5 + 64;
     sprite->tDeltaY2 = sprite->tDeltaY;
     StartSpriteAnim(sprite, (rand & 1) ? 0 : 1);
@@ -1088,7 +1088,7 @@ void Thunderstorm_Main(void)
         break;
     case 4:
         gWeatherPtr->unknown_6EA = 1;
-        gWeatherPtr->unknown_6E6 = (RandomTinyMT() % 360) + 360;
+        gWeatherPtr->unknown_6E6 = (Random() % 360) + 360;
         gWeatherPtr->initStep++;
         // fall through
     case 5:
@@ -1097,11 +1097,11 @@ void Thunderstorm_Main(void)
         break;
     case 6:
         gWeatherPtr->unknown_6EA = 1;
-        gWeatherPtr->unknown_6EB = RandomTinyMT() % 2;
+        gWeatherPtr->unknown_6EB = Random() % 2;
         gWeatherPtr->initStep++;
         break;
     case 7:
-        gWeatherPtr->unknown_6EC = (RandomTinyMT() & 1) + 1;
+        gWeatherPtr->unknown_6EC = (Random() & 1) + 1;
         gWeatherPtr->initStep++;
         // fall through
     case 8:
@@ -1109,7 +1109,7 @@ void Thunderstorm_Main(void)
         if (gWeatherPtr->unknown_6EB == 0 && gWeatherPtr->unknown_6EC == 1)
             SetThunderCounter(20);
 
-        gWeatherPtr->unknown_6E6 = (RandomTinyMT() % 3) + 6;
+        gWeatherPtr->unknown_6E6 = (Random() % 3) + 6;
         gWeatherPtr->initStep++;
         break;
     case 9:
@@ -1119,7 +1119,7 @@ void Thunderstorm_Main(void)
             gWeatherPtr->unknown_6EA = 1;
             if (--gWeatherPtr->unknown_6EC != 0)
             {
-                gWeatherPtr->unknown_6E6 = (RandomTinyMT() % 16) + 60;
+                gWeatherPtr->unknown_6E6 = (Random() % 16) + 60;
                 gWeatherPtr->initStep = 10;
             }
             else if (gWeatherPtr->unknown_6EB == 0)
@@ -1137,7 +1137,7 @@ void Thunderstorm_Main(void)
             gWeatherPtr->initStep = 8;
         break;
     case 11:
-        gWeatherPtr->unknown_6E6 = (RandomTinyMT() % 16) + 60;
+        gWeatherPtr->unknown_6E6 = (Random() % 16) + 60;
         gWeatherPtr->initStep++;
         break;
     case 12:
@@ -1145,7 +1145,7 @@ void Thunderstorm_Main(void)
         {
             SetThunderCounter(100);
             sub_80ABC48(19);
-            gWeatherPtr->unknown_6E6 = (RandomTinyMT() & 0xF) + 30;
+            gWeatherPtr->unknown_6E6 = (Random() & 0xF) + 30;
             gWeatherPtr->initStep++;
         }
         break;
@@ -1206,7 +1206,7 @@ static void SetThunderCounter(u16 max)
 {
     if (gWeatherPtr->thunderTriggered == 0)
     {
-        gWeatherPtr->thunderCounter = RandomTinyMT() % max;
+        gWeatherPtr->thunderCounter = Random() % max;
         gWeatherPtr->thunderTriggered = 1;
     }
 }
@@ -1220,7 +1220,7 @@ static void UpdateThunderSound(void)
             if (IsSEPlaying())
                 return;
 
-            if (RandomTinyMT() & 1)
+            if (Random() & 1)
                 PlaySE(SE_T_KAMI);
             else
                 PlaySE(SE_T_KAMI2);

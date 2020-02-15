@@ -179,7 +179,7 @@ static void ContestEffect_StartlePrevMons(void)
 // Startles the POKéMON that appealed before the user.
 static void ContestEffect_StartlePrevMon2(void)
 {
-    u8 rval = RandomTinyMT() % 10;
+    u8 rval = Random() % 10;
     int jam;
 
     if (rval < 2)
@@ -212,7 +212,7 @@ static void ContestEffect_StartlePrevMons2(void)
 
                 eContestResources8.jamQueue[0] = i;
                 eContestResources8.jamQueue[1] = 0xFF;
-                rval = RandomTinyMT() % 10;
+                rval = Random() % 10;
 
                 if (rval == 0)
                     jam = 0;
@@ -433,7 +433,7 @@ static void ContestEffect_MakeFollowingMonsNervous(void)
     {
         for (i = 0; contestantIds[i] != 0xFF; i++)
         {
-            if (RandomTinyMT() % 100 < odds[i] + oddsMod[contestantIds[i]])
+            if (Random() % 100 < odds[i] + oddsMod[contestantIds[i]])
             {
                 if (CanUnnerveContestant(contestantIds[i]))
                 {
@@ -608,7 +608,7 @@ static void ContestEffect_BetterWhenLater(void)
 // The appeal's quality varies depending on its timing.
 static void ContestEffect_QualityDependsOnTiming(void)
 {
-    u8 rval = RandomTinyMT() % 10;
+    u8 rval = Random() % 10;
     s16 appeal;
 
     if (rval < 3)
@@ -851,7 +851,7 @@ static void ContestEffect_ScrambleNextTurnOrder(void)
 
         for (i = 0; i < 4; i++)
         {
-            u8 rval = RandomTinyMT() % (4 - i);
+            u8 rval = Random() % (4 - i);
 
             for (j = 0; j < 4; j++)
             {
