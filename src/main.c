@@ -109,6 +109,10 @@ void AgbMain()
     *(vu16 *)BG_PLTT = 0x7FFF;
     InitGpuRegManager();
     REG_WAITCNT = WAITCNT_PREFETCH_ENABLE | WAITCNT_WS0_S_1 | WAITCNT_WS0_N_3;
+#if !MODERN
+    mgba_open();
+    mgba_printf(MGBA_LOG_INFO, "Does this work?");
+#endif
     InitKeys();
     InitIntrHandlers();
     m4aSoundInit();
