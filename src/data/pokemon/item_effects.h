@@ -160,6 +160,17 @@ const u8 gItemEffect_SacredAsh[7] = {
     [6] = -1,
 };
 
+// New item for mod -- for now, same effect as Rare Candy
+const u8 gItemEffect_GoldSodacap[10] = {
+    [3] = ITEM3_LEVEL_UP,
+    [4] = ITEM4_REVIVE | ITEM4_HEAL_HP,
+    [5] = ITEM5_FRIENDSHIP_ALL,
+    [6] = 0xFD,
+    [7] = 5,
+    [8] = 3,
+    [9] = 2,
+};
+
 const u8 gItemEffect_HPUp[10] = {
     [4] = ITEM4_EV_HP,
     [5] = ITEM5_FRIENDSHIP_ALL,
@@ -434,6 +445,7 @@ const u8 *const gItemEffectTable[] =
     [ITEM_RED_FLUTE - ITEM_POTION] = gItemEffect_RedFlute,
     [ITEM_BERRY_JUICE - ITEM_POTION] = gItemEffect_BerryJuice,
     [ITEM_SACRED_ASH - ITEM_POTION] = gItemEffect_SacredAsh,
+    [ITEM_GOLD_SODACAP - ITEM_POTION] = gItemEffect_GoldSodacap,
     [ITEM_HP_UP - ITEM_POTION] = gItemEffect_HPUp,
     [ITEM_PROTEIN - ITEM_POTION] = gItemEffect_Protein,
     [ITEM_IRON - ITEM_POTION] = gItemEffect_Iron,

@@ -3854,6 +3854,10 @@ extern const u32 gItemIconPalette_OldSeaMap[];
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u32 gItemIconPalette_ReturnToFieldArrow[];
 
+// New graphics for mod
+extern const u32 gItemIcon_GoldSodacap[];
+extern const u32 gItemIconPalette_GoldSodacap[];
+
 //menu graphics
 extern const u16 gFireRedMenuElements1_Pal[16];
 extern const u16 gFireRedMenuElements2_Pal[16];

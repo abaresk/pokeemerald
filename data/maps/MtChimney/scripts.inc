@@ -108,10 +108,10 @@ MtChimney_EventScript_LavaCookieLady:: @ 822EEF3
 	compare VAR_RESULT, FALSE
 	goto_if_eq MtChimney_EventScript_NotEnoughMoney
 	msgbox MtChimney_Text_ThankYouDear, MSGBOX_DEFAULT
-	checkitemspace ITEM_LAVA_COOKIE, 1
+	checkitemspace ITEM_GOLD_SODACAP, 1
 	compare VAR_RESULT, TRUE
 	call_if_eq MtChimney_EventScript_RemoveMoney
-	giveitem ITEM_LAVA_COOKIE
+	giveitem ITEM_GOLD_SODACAP
 	compare VAR_RESULT, FALSE
 	goto_if_eq MtChimney_EventScript_BagIsFull
 	hidemoneybox

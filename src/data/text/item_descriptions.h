@@ -251,6 +251,12 @@ static const u8 sGreenShardDesc[] = _(
     "ancient item. Can\n"
     "be sold cheaply.");
 
+// New item for mod
+static const u8 sGoldSodacapDesc[] = _(
+    "Maxes out all of a\n"
+    "POKéMON's inherent\n"
+    "stats.");
+
 // Vitamins
 static const u8 sHPUpDesc[] = _(
     "Raises the base HP\n"
