@@ -161,14 +161,9 @@ const u8 gItemEffect_SacredAsh[7] = {
 };
 
 // New item for mod -- for now, same effect as Rare Candy
-const u8 gItemEffect_GoldSodacap[10] = {
-    [3] = ITEM3_LEVEL_UP,
-    [4] = ITEM4_REVIVE | ITEM4_HEAL_HP,
-    [5] = ITEM5_FRIENDSHIP_ALL,
-    [6] = 0xFD,
-    [7] = 5,
-    [8] = 3,
-    [9] = 2,
+const u8 gItemEffect_GoldSodacap[11] = {
+    [0] = ITEM0_ITEM_ENUM,
+    [10] = ITEM10_IV_MAX_ALL,
 };
 
 const u8 gItemEffect_HPUp[10] = {

@@ -6557,8 +6557,14 @@ static void Cmd_hpthresholds2(void)
 
 static void Cmd_useitemonopponent(void)
 {
+    struct UseItemOptions options = 
+    {
+        .moveIndex = 0, 
+        .e = 1, 
+        .stat = 0
+    };
     gBattlerInMenuId = gBattlerAttacker;
-    PokemonUseItemEffects(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], 0, 1);
+    PokemonUseItemEffects(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], &options);
     gBattlescriptCurrInstr += 1;
 }
 

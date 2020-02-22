@@ -338,6 +338,11 @@ static void Task_HandleStopLearningMoveYesNoInput(u8);
 static void Task_TryLearningNextMoveAfterText(u8);
 static void BufferMonStatsToTaskData(struct Pokemon*, s16*);
 static void UpdateMonDisplayInfoAfterRareCandy(u8, struct Pokemon*);
+static void Task_DisplayStatBoostPg1(u8 taskId);
+static void Task_DisplayStatBoostPg2(u8 taskId);
+static void DisplayStatBoostPg1(u8 taskId);
+static void DisplayStatBoostPg2(u8 taskId);
+static void Task_CloseStatBoostDisplay(u8 taskId);
 static void Task_DisplayLevelUpStatsPg1(u8);
 static void DisplayLevelUpStatsPg1(u8);
 static void Task_DisplayLevelUpStatsPg2(u8);
@@ -4918,6 +4923,40 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     }
 }
 
+void ItemUseCB_Sodacap(u8 taskId, TaskFunc task)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    struct PartyMenuInternal *ptr = sPartyMenuInternal;
+    s16 *arrayPtr = ptr->data;
+    u16 *itemPtr = &gSpecialVar_ItemId;
+    bool8 cannotUseEffect;
+
+    BufferMonStatsToTaskData(mon, arrayPtr);
+    cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
+    BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
+
+    PlaySE(SE_SELECT);
+    if (cannotUseEffect)
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        schedule_bg_copy_tilemap_to_vram(2);
+        gTasks[taskId].func = task;
+    }
+    else
+    {
+        gPartyMenuUseExitCallback = TRUE;
+        PlayFanfareByFanfareNum(0);
+        UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+        RemoveBagItem(gSpecialVar_ItemId, 1);
+        GetMonNickname(mon, gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnInherentStatsIncreased);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        schedule_bg_copy_tilemap_to_vram(2);
+        gTasks[taskId].func = Task_DisplayStatBoostPg1;
+    }
+}
+
 static void UpdateMonDisplayInfoAfterRareCandy(u8 slot, struct Pokemon *mon)
 {
     SetPartyMonAilmentGfx(mon, &sPartyMenuBoxes[slot]);
@@ -4929,6 +4968,35 @@ static void UpdateMonDisplayInfoAfterRareCandy(u8 slot, struct Pokemon *mon)
     UpdatePartyMonHPBar(sPartyMenuBoxes[slot].monSpriteId, mon);
     AnimatePartySlot(slot, 1);
     schedule_bg_copy_tilemap_to_vram(0);
+}
+
+static void Task_DisplayStatBoostPg1(u8 taskId)
+{
+    if (WaitFanfare(FALSE) && IsPartyMenuTextPrinterActive() != TRUE && ((gMain.newKeys & A_BUTTON) || (gMain.newKeys & B_BUTTON)))
+    {
+        PlaySE(SE_SELECT);
+        DisplayStatBoostPg1(taskId);
+        gTasks[taskId].func = Task_DisplayStatBoostPg2;
+    }
+}
+
+static void Task_DisplayStatBoostPg2(u8 taskId)
+{
+    if ((gMain.newKeys & A_BUTTON) || (gMain.newKeys & B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        DisplayStatBoostPg2(taskId);
+        gTasks[taskId].func = Task_CloseStatBoostDisplay;
+    }
+}
+
+static void Task_CloseStatBoostDisplay(u8 taskId)
+{
+    if (WaitFanfare(0) && ((gMain.newKeys & A_BUTTON) || (gMain.newKeys & B_BUTTON)))
+    {
+        RemoveLevelUpStatsWindow();
+        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+    }
 }
 
 static void Task_DisplayLevelUpStatsPg1(u8 taskId)
@@ -4949,6 +5017,25 @@ static void Task_DisplayLevelUpStatsPg2(u8 taskId)
         DisplayLevelUpStatsPg2(taskId);
         gTasks[taskId].func = Task_TryLearnNewMoves;
     }
+}
+
+static void DisplayStatBoostPg1(u8 taskId)
+{
+    s16 *arrayPtr = sPartyMenuInternal->data;
+
+    arrayPtr[12] = CreateLevelUpStatsWindow();
+    DrawLevelUpWindowPg1(arrayPtr[12], arrayPtr, &arrayPtr[6], TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY);
+    CopyWindowToVram(arrayPtr[12], 2);
+    schedule_bg_copy_tilemap_to_vram(2);
+}
+
+static void DisplayStatBoostPg2(u8 taskId)
+{
+    s16 *arrayPtr = sPartyMenuInternal->data;
+
+    DrawLevelUpWindowPg2(arrayPtr[12], &arrayPtr[6], TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY);
+    CopyWindowToVram(arrayPtr[12], 2);
+    schedule_bg_copy_tilemap_to_vram(2);
 }
 
 static void DisplayLevelUpStatsPg1(u8 taskId)
@@ -5236,8 +5323,19 @@ u8 GetItemEffectType(u16 item)
         return ITEM_EFFECT_PP_MAX;
     else if (itemEffect[4] & (ITEM4_HEAL_PP_ALL | ITEM4_HEAL_PP_ONE))
         return ITEM_EFFECT_HEAL_PP;
-    else
-        return ITEM_EFFECT_NONE;
+
+    if (itemEffect[0] & ITEM0_ITEM_ENUM)
+    {
+        switch(itemEffect[10]) 
+        {
+        case ITEM10_IV_MAX_ONE:
+        case ITEM10_IV_MAX_ALL:
+            return ITEM_EFFECT_BOOST_STATS;
+        default:
+            break;
+        }
+    }
+    return ITEM_EFFECT_NONE;
 }
 
 static void TryTutorSelectedMon(u8 taskId)

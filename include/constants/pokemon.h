@@ -228,6 +228,8 @@
 #define MAX_TOTAL_EVS 510
 #define EV_ITEM_RAISE_LIMIT 100
 
+#define MAX_IV 31
+
 #define UNOWN_FORM_COUNT 28
 
 // Battle move flags

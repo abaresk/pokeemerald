@@ -6,6 +6,8 @@
 #define ITEM0_DIRE_HIT          0x30 // Works the same way as the move Focus Energy.
 #define ITEM0_SACRED_ASH        0x40
 #define ITEM0_INFATUATION       0x80
+// Set this if you want to use enum effect in field 10
+#define ITEM0_ITEM_ENUM         0xF0
 
 // field 1 masks
 #define ITEM1_X_SPEED           0x0F
@@ -51,6 +53,13 @@
 
 // fields 6 and onwards are item-specific arguments
 
+// New fields for mod
+
+// field 10 masks
+#define ITEM10_IV_MAX_ONE       1
+#define ITEM10_IV_MAX_ALL       2
+
+
 // Used for GetItemEffectType.
 #define ITEM_EFFECT_X_ITEM 0
 #define ITEM_EFFECT_RAISE_LEVEL 1
@@ -75,5 +84,7 @@
 #define ITEM_EFFECT_PP_MAX 20
 #define ITEM_EFFECT_HEAL_PP 21
 #define ITEM_EFFECT_NONE 22
+// new item effects for mod
+#define ITEM_EFFECT_BOOST_STATS 23
 
 #endif // GUARD_CONSTANTS_ITEM_EFFECTS_H

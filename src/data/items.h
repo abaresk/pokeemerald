@@ -727,7 +727,7 @@ const struct Item gItems[] =
         .description = sGoldSodacapDesc,
         .pocket = POCKET_ITEMS,
         .type = 1,
-        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .fieldUseFunc = ItemUseOutOfBattle_Sodacap,
         .secondaryId = 0,
     },
 
