@@ -521,6 +521,17 @@ static const struct WindowTemplate sMoveSelectWindowTemplate =
     .baseBlock = 0x2E9,
 };
 
+static const struct WindowTemplate sStatSelectWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 21,
+    .tilemapTop = 7,
+    .width = 8,
+    .height = 12,
+    .paletteNum = 14,
+    .baseBlock = 0x2E9,
+};
+
 static const struct WindowTemplate sPartyMenuYesNoWindowTemplate =
 {
     .bg = 2,
@@ -650,6 +661,7 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_DO_WHAT_WITH_ITEM]      = gText_DoWhatWithItem,
     [PARTY_MSG_DO_WHAT_WITH_MAIL]      = gText_DoWhatWithMail,
     [PARTY_MSG_ALREADY_HOLDING_ONE]    = gText_AlreadyHoldingOne,
+    [PARTY_MSG_BOOST_IV_WHICH_STAT]    = gText_BoostIv,
 };
 
 static const u8 *const sDescriptionStringTable[] =
@@ -1182,7 +1194,7 @@ static const bool8 sMultiBattlePartnersPartyMask[PARTY_SIZE + 2] =
     FALSE
 };
 
-static const u8 *const sUnused_StatStrings[] =
+static const u8 *const sStatStrings[] =
 {
     gText_HP4,
     gText_Attack3,

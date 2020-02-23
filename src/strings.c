@@ -438,6 +438,7 @@ const u8 gText_CantUseHere[] = _("Can't use that here.");
 const u8 gText_RestoreWhichMove[] = _("Restore which move?");
 const u8 gText_BoostPp[] = _("Boost PP of which move?");
 const u8 gText_DoWhatWithItem[] = _("Do what with an item?");
+const u8 gText_BoostIv[] = _("Boost which stat?");
 const u8 gText_NoPokemonForBattle[] = _("No POKéMON for battle!");
 const u8 gText_ChoosePokemon2[] = _("Choose a POKéMON.");
 const u8 gText_NotEnoughHp[] = _("Not enough HP…");

@@ -168,7 +168,7 @@ const u8 gItemEffect_GoldSodacap[11] = {
 
 const u8 gItemEffect_SilverSodacap[11] = {
     [0] = ITEM0_ITEM_ENUM,
-    [10] = ITEM10_IV_MAX_ALL,
+    [10] = ITEM10_IV_MAX_ONE,
 };
 
 const u8 gItemEffect_HPUp[10] = {

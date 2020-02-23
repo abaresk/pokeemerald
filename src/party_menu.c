@@ -319,6 +319,7 @@ static u16 ItemEffectToMonEv(struct Pokemon*, u8);
 static void ItemEffectToStatString(u8, u8*);
 static void ReturnToUseOnWhichMon(u8);
 static void SetSelectedMoveForPPItem(u8);
+static void SetSelectedStatForSodacap(u8);
 static void TryUsePPItem(u8);
 static void Task_LearnedMove(u8);
 static void Task_ReplaceMoveYesNo(u8);
@@ -2473,8 +2474,12 @@ static u8 DisplaySelectionWindow(u8 windowType)
     case SELECTWINDOW_MAIL:
         window = sMailReadTakeWindowTemplate;
         break;
-    default: // SELECTWINDOW_MOVES
+    case SELECTWINDOW_MOVES:
         window = sMoveSelectWindowTemplate;
+        break;
+    case SELECTWINDOW_STATS:
+    default:
+        window = sStatSelectWindowTemplate;
         break;
     }
 
@@ -2487,7 +2492,8 @@ static u8 DisplaySelectionWindow(u8 windowType)
 
     for (i = 0; i < sPartyMenuInternal->numActions; i++)
     {
-        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 : 3;
+        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 :
+        3;
         AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], 1, cursorDimension, (i * 16) + 1, fontAttribute, 0, sFontColorTable[fontColorsId], 0, sCursorOptions[sPartyMenuInternal->actions[i]].text);
     }
 
@@ -4520,6 +4526,20 @@ static void ShowMoveSelectWindow(u8 slot)
     schedule_bg_copy_tilemap_to_vram(2);
 }
 
+static void ShowStatSelectWindow(void)
+{
+    u8 i;
+    u8 windowId = DisplaySelectionWindow(SELECTWINDOW_STATS);
+    u8 fontId = 1;
+
+    for (i = 0; i < NUM_STATS; i++) 
+    {
+        AddTextPrinterParameterized(windowId, fontId, sStatStrings[i], 8, (i * 16) + 1, TEXT_SPEED_FF, NULL);
+    }
+    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(windowId, NUM_STATS, 0);
+    schedule_bg_copy_tilemap_to_vram(2);
+}
+
 static void Task_HandleWhichMoveInput(u8 taskId)
 {
     s8 input = Menu_ProcessInput();
@@ -4535,6 +4555,25 @@ static void Task_HandleWhichMoveInput(u8 taskId)
         {
             PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
             SetSelectedMoveForPPItem(taskId);
+        }
+    }
+}
+
+static void Task_HandleWhichStatInput(u8 taskId)
+{
+    s8 input = Menu_ProcessInput();
+
+    if (input != MENU_NOTHING_CHOSEN)
+    {
+        if (input == MENU_B_PRESSED)
+        {
+            PlaySE(SE_SELECT);
+            ReturnToUseOnWhichMon(taskId);
+        }
+        else
+        {
+            PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+            SetSelectedStatForSodacap(taskId);
         }
     }
 }
@@ -4568,6 +4607,15 @@ static void SetSelectedMoveForPPItem(u8 taskId)
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
     gPartyMenu.data1 = Menu_GetCursorPos();
     TryUsePPItem(taskId);
+}
+
+static void SetSelectedStatForSodacap(u8 taskId)
+{
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    gPartyMenu.data1 = Menu_GetCursorPos();
+    // TODO: Change this
+    mgba_printf(MGBA_LOG_INFO, "klink");
+    ItemUseCB_Sodacap(taskId, Task_ClosePartyMenuAfterText);
 }
 
 static void ReturnToUseOnWhichMon(u8 taskId)
@@ -4923,16 +4971,20 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     }
 }
 
+// Gold Sodacap executes this immediately
 void ItemUseCB_Sodacap(u8 taskId, TaskFunc task)
 {
+    // TODO: Refactor body of function or use this function for both
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     struct PartyMenuInternal *ptr = sPartyMenuInternal;
     s16 *arrayPtr = ptr->data;
     u16 *itemPtr = &gSpecialVar_ItemId;
     bool8 cannotUseEffect;
 
-    BufferMonStatsToTaskData(mon, arrayPtr);
+    mgba_printf(MGBA_LOG_INFO, "bouluu");
+
     cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
+    BufferMonStatsToTaskData(mon, arrayPtr);
     BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
 
     PlaySE(SE_SELECT);
@@ -4942,19 +4994,26 @@ void ItemUseCB_Sodacap(u8 taskId, TaskFunc task)
         DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
         schedule_bg_copy_tilemap_to_vram(2);
         gTasks[taskId].func = task;
+        return;
     }
-    else
-    {
-        gPartyMenuUseExitCallback = TRUE;
-        PlayFanfareByFanfareNum(0);
-        UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
-        RemoveBagItem(gSpecialVar_ItemId, 1);
-        GetMonNickname(mon, gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gText_PkmnInherentStatsIncreased);
-        DisplayPartyMenuMessage(gStringVar4, TRUE);
-        schedule_bg_copy_tilemap_to_vram(2);
-        gTasks[taskId].func = Task_DisplayStatBoostPg1;
-    }
+
+    gPartyMenuUseExitCallback = TRUE;
+    PlayFanfareByFanfareNum(0);
+    UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+    RemoveBagItem(gSpecialVar_ItemId, 1);
+    GetMonNickname(mon, gStringVar1);
+    StringExpandPlaceholders(gStringVar4, gText_PkmnInherentStatsIncreased);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    schedule_bg_copy_tilemap_to_vram(2);
+    gTasks[taskId].func = Task_DisplayStatBoostPg1;
+}
+
+void ItemUseCB_SilverSodacap(u8 taskId, TaskFunc task)
+{
+    PlaySE(SE_SELECT);
+    DisplayPartyMenuStdMessage(PARTY_MSG_BOOST_IV_WHICH_STAT);
+    ShowStatSelectWindow();
+    gTasks[taskId].func = Task_HandleWhichStatInput;
 }
 
 static void UpdateMonDisplayInfoAfterRareCandy(u8 slot, struct Pokemon *mon)

@@ -778,9 +778,15 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
-void ItemUseOutOfBattle_Sodacap(u8 taskId)
+void ItemUseOutOfBattle_GoldSodacap(u8 taskId)
 {
     gItemUseCB = ItemUseCB_Sodacap;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_SilverSodacap(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_SilverSodacap;
     SetUpItemUseCallback(taskId);
 }
 
@@ -1086,7 +1092,7 @@ void ItemUseOutOfBattle_EnigmaBerry(u8 taskId)
         break;
     case ITEM_EFFECT_BOOST_STATS:
         gTasks[taskId].data[4] = 1;
-        ItemUseOutOfBattle_Sodacap(taskId);
+        ItemUseOutOfBattle_GoldSodacap(taskId);
         break;
     case ITEM_EFFECT_PP_UP:
     case ITEM_EFFECT_PP_MAX:

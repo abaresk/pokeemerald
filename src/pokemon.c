@@ -5206,6 +5206,8 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
         {
         case ITEM10_IV_MAX_ONE:
             // If current IV is max, fail and say "Won't have any effect"
+            mgba_printf(MGBA_LOG_INFO, "pooch");
+            mgba_printf(MGBA_LOG_INFO, "Boosting stat: %d", options->stat);
             if (GetMonData(mon, MON_DATA_HP_IV + options->stat, 0) == MAX_IV)
                 return TRUE;
 
