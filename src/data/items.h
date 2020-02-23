@@ -731,15 +731,15 @@ const struct Item gItems[] =
         .secondaryId = 0,
     },
 
-    [ITEM_035] =
+    [ITEM_SILVER_SODACAP] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
+        .name = _("SILV SODACAP"),
+        .itemId = ITEM_SILVER_SODACAP,
+        .price = 4800,
+        .description = sSilverSodacapDesc,
         .pocket = POCKET_ITEMS,
-        .type = 4,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .type = 1,
+        .fieldUseFunc = ItemUseOutOfBattle_Sodacap,
         .secondaryId = 0,
     },
 

@@ -3855,8 +3855,9 @@ extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u32 gItemIconPalette_ReturnToFieldArrow[];
 
 // New graphics for mod
-extern const u32 gItemIcon_GoldSodacap[];
+extern const u32 gItemIcon_Sodacap[];
 extern const u32 gItemIconPalette_GoldSodacap[];
+extern const u32 gItemIconPalette_SilverSodacap[];
 
 //menu graphics
 extern const u16 gFireRedMenuElements1_Pal[16];

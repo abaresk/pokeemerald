@@ -166,6 +166,11 @@ const u8 gItemEffect_GoldSodacap[11] = {
     [10] = ITEM10_IV_MAX_ALL,
 };
 
+const u8 gItemEffect_SilverSodacap[11] = {
+    [0] = ITEM0_ITEM_ENUM,
+    [10] = ITEM10_IV_MAX_ALL,
+};
+
 const u8 gItemEffect_HPUp[10] = {
     [4] = ITEM4_EV_HP,
     [5] = ITEM5_FRIENDSHIP_ALL,
@@ -441,6 +446,7 @@ const u8 *const gItemEffectTable[] =
     [ITEM_BERRY_JUICE - ITEM_POTION] = gItemEffect_BerryJuice,
     [ITEM_SACRED_ASH - ITEM_POTION] = gItemEffect_SacredAsh,
     [ITEM_GOLD_SODACAP - ITEM_POTION] = gItemEffect_GoldSodacap,
+    [ITEM_SILVER_SODACAP - ITEM_POTION] = gItemEffect_SilverSodacap,
     [ITEM_HP_UP - ITEM_POTION] = gItemEffect_HPUp,
     [ITEM_PROTEIN - ITEM_POTION] = gItemEffect_Protein,
     [ITEM_IRON - ITEM_POTION] = gItemEffect_Iron,

@@ -130,8 +130,9 @@ const u32 gItemIconPalette_YellowShard[] = INCBIN_U32("graphics/items/icon_palet
 const u32 gItemIconPalette_GreenShard[] = INCBIN_U32("graphics/items/icon_palettes/green_shard.gbapal.lz");
 
 // New items for mod
-const u32 gItemIcon_GoldSodacap[] = INCBIN_U32("graphics/items/icons/gold_sodacap.4bpp.lz");
+const u32 gItemIcon_Sodacap[] = INCBIN_U32("graphics/items/icons/sodacap.4bpp.lz");
 const u32 gItemIconPalette_GoldSodacap[] = INCBIN_U32("graphics/items/icon_palettes/gold_sodacap.gbapal.lz");
+const u32 gItemIconPalette_SilverSodacap[] = INCBIN_U32("graphics/items/icon_palettes/silver_sodacap.gbapal.lz");
 
 // Vitamins
 

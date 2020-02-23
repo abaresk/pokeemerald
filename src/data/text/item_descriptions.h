@@ -257,6 +257,11 @@ static const u8 sGoldSodacapDesc[] = _(
     "POKéMON's inherent\n"
     "stats.");
 
+static const u8 sSilverSodacapDesc[] = _(
+    "Maxes out one of a\n"
+    "POKéMON's inherent\n"
+    "stats.");
+
 // Vitamins
 static const u8 sHPUpDesc[] = _(
     "Raises the base HP\n"

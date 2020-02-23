@@ -56,8 +56,8 @@ const u32 *const gItemIconTable[][2] =
     [ITEM_YELLOW_SHARD] = {gItemIcon_Shard, gItemIconPalette_YellowShard},
     [ITEM_GREEN_SHARD] = {gItemIcon_Shard, gItemIconPalette_GreenShard},
     // ????????
-    [ITEM_GOLD_SODACAP] = {gItemIcon_GoldSodacap, gItemIconPalette_GoldSodacap},
-    [ITEM_035] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
+    [ITEM_GOLD_SODACAP] = {gItemIcon_Sodacap, gItemIconPalette_GoldSodacap},
+    [ITEM_SILVER_SODACAP] = {gItemIcon_Sodacap, gItemIconPalette_SilverSodacap},
     [ITEM_036] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
     [ITEM_037] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
     [ITEM_038] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
