@@ -780,7 +780,7 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
 
 void ItemUseOutOfBattle_GoldSodacap(u8 taskId)
 {
-    gItemUseCB = ItemUseCB_Sodacap;
+    gItemUseCB = ItemUseCB_GoldSodacap;
     SetUpItemUseCallback(taskId);
 }
 
@@ -996,8 +996,9 @@ static void Task_UseStatIncreaseItem(u8 taskId)
 void ItemUseInBattle_StatIncrease(u8 taskId)
 {
     u16 partyId = gBattlerPartyIndexes[gBattlerInMenuId];
+    struct UseItemOptions options = {0};
 
-    if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
+    if (PokemonUseItemEffects(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, &options) != FALSE)
     {
         if (!InBattlePyramid())
             DisplayItemMessage(taskId, 1, gText_WontHaveEffect, BagMenu_InitListsMenu);

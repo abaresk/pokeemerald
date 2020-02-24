@@ -4326,12 +4326,12 @@ static bool8 IsItemFlute(u16 item)
     return FALSE;
 }
 
-static bool8 ExecuteTableBasedItemEffect_(u8 partyMonIndex, u16 item, u8 monMoveIndex)
+static bool8 ExecuteTableBasedItemEffect_(u8 partyMonIndex, u16 item, struct UseItemOptions *options)
 {
     if (gMain.inBattle)
-        return ExecuteTableBasedItemEffect(&gPlayerParty[partyMonIndex], item, GetPartyIdFromBattleSlot(partyMonIndex), monMoveIndex);
+        return PokemonUseItemEffects(&gPlayerParty[partyMonIndex], item, GetPartyIdFromBattleSlot(partyMonIndex), options);
     else
-        return ExecuteTableBasedItemEffect(&gPlayerParty[partyMonIndex], item, partyMonIndex, monMoveIndex);
+        return PokemonUseItemEffects(&gPlayerParty[partyMonIndex], item, partyMonIndex, options);
 }
 
 void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
@@ -4340,6 +4340,7 @@ void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     u16 item = gSpecialVar_ItemId;
     bool8 canHeal;
+    struct UseItemOptions options = {0};
 
     if (NotUsingHPEVItemOnShedinja(mon, item))
     {
@@ -4350,7 +4351,7 @@ void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
             if (hp == GetMonData(mon, MON_DATA_MAX_HP))
                 canHeal = FALSE;
         }
-        if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, item, 0))
+        if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, item, &options))
         {
             iTriedHonestlyIDid:
             gPartyMenuUseExitCallback = FALSE;
@@ -4424,7 +4425,8 @@ void ItemUseCB_ReduceEV(u8 taskId, TaskFunc task)
     u8 effectType = GetItemEffectType(item);
     u16 friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
     u16 ev = ItemEffectToMonEv(mon, effectType);
-    bool8 cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, item, 0);
+    struct UseItemOptions options = {0};
+    bool8 cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, item, &options);
     u16 newFriendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
     u16 newEv = ItemEffectToMonEv(mon, effectType);
 
@@ -4612,10 +4614,7 @@ static void SetSelectedMoveForPPItem(u8 taskId)
 static void SetSelectedStatForSodacap(u8 taskId)
 {
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
-    gPartyMenu.data1 = Menu_GetCursorPos();
-    // TODO: Change this
-    mgba_printf(MGBA_LOG_INFO, "klink");
-    ItemUseCB_Sodacap(taskId, Task_ClosePartyMenuAfterText);
+    UseSilverSodacap(taskId, Task_ClosePartyMenuAfterText, Menu_GetCursorPos());
 }
 
 static void ReturnToUseOnWhichMon(u8 taskId)
@@ -4633,8 +4632,9 @@ static void TryUsePPItem(u8 taskId)
     u16 item = gSpecialVar_ItemId;
     struct PartyMenu *ptr = &gPartyMenu;
     struct Pokemon *mon;
+    struct UseItemOptions options = {.moveIndex = *moveSlot};
 
-    if (ExecuteTableBasedItemEffect_(ptr->slotId, item, *moveSlot))
+    if (ExecuteTableBasedItemEffect_(ptr->slotId, item, &options))
     {
         gPartyMenuUseExitCallback = FALSE;
         PlaySE(SE_SELECT);
@@ -4937,11 +4937,12 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     s16 *arrayPtr = ptr->data;
     u16 *itemPtr = &gSpecialVar_ItemId;
     bool8 cannotUseEffect;
+    struct UseItemOptions options = {0};
 
     if (GetMonData(mon, MON_DATA_LEVEL) != MAX_LEVEL)
     {
         BufferMonStatsToTaskData(mon, arrayPtr);
-        cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
+        cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, &options);
         BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
     }
     else
@@ -4972,19 +4973,19 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
 }
 
 // Gold Sodacap executes this immediately
-void ItemUseCB_Sodacap(u8 taskId, TaskFunc task)
+void ItemUseCB_GoldSodacap(u8 taskId, TaskFunc task)
 {
-    // TODO: Refactor body of function or use this function for both
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     struct PartyMenuInternal *ptr = sPartyMenuInternal;
     s16 *arrayPtr = ptr->data;
     u16 *itemPtr = &gSpecialVar_ItemId;
     bool8 cannotUseEffect;
+    struct UseItemOptions options = {0};
 
     mgba_printf(MGBA_LOG_INFO, "bouluu");
 
-    cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
     BufferMonStatsToTaskData(mon, arrayPtr);
+    cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, &options);
     BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
 
     PlaySE(SE_SELECT);
@@ -5002,7 +5003,43 @@ void ItemUseCB_Sodacap(u8 taskId, TaskFunc task)
     UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
     RemoveBagItem(gSpecialVar_ItemId, 1);
     GetMonNickname(mon, gStringVar1);
-    StringExpandPlaceholders(gStringVar4, gText_PkmnInherentStatsIncreased);
+    StringExpandPlaceholders(gStringVar4, gText_PkmnAllInherentStatsIncreased);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    schedule_bg_copy_tilemap_to_vram(2);
+    gTasks[taskId].func = Task_DisplayStatBoostPg1;
+}
+
+void UseSilverSodacap(u8 taskId, TaskFunc task, int statIndex)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    struct PartyMenuInternal *ptr = sPartyMenuInternal;
+    s16 *arrayPtr = ptr->data;
+    u16 *itemPtr = &gSpecialVar_ItemId;
+    bool8 cannotUseEffect;
+    struct UseItemOptions options = {.stat = statIndex};
+
+    mgba_printf(MGBA_LOG_INFO, "bouluu");
+
+    BufferMonStatsToTaskData(mon, arrayPtr);
+    cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, &options);
+    BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
+
+    PlaySE(SE_SELECT);
+    if (cannotUseEffect)
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        schedule_bg_copy_tilemap_to_vram(2);
+        gTasks[taskId].func = task;
+        return;
+    }
+
+    gPartyMenuUseExitCallback = TRUE;
+    PlayFanfareByFanfareNum(0);
+    UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+    RemoveBagItem(gSpecialVar_ItemId, 1);
+    GetMonNickname(mon, gStringVar1);
+    StringExpandPlaceholders(gStringVar4, gText_PkmnOneInherentStatIncreased);
     DisplayPartyMenuMessage(gStringVar4, TRUE);
     schedule_bg_copy_tilemap_to_vram(2);
     gTasks[taskId].func = Task_DisplayStatBoostPg1;
@@ -5229,6 +5266,7 @@ static void UseSacredAsh(u8 taskId)
 {
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     u16 hp;
+    struct UseItemOptions options = {0};
 
     if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE)
     {
@@ -5237,7 +5275,7 @@ static void UseSacredAsh(u8 taskId)
     }
 
     hp = GetMonData(mon, MON_DATA_HP);
-    if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, gSpecialVar_ItemId, 0))
+    if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, gSpecialVar_ItemId, &options))
     {
         gTasks[taskId].func = Task_SacredAshLoop;
         return;
@@ -5302,9 +5340,11 @@ static void Task_SacredAshDisplayHPRestored(u8 taskId)
 
 void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
 {
+    struct UseItemOptions options = {0};
+
     PlaySE(SE_SELECT);
     gCB2_AfterEvolution = gPartyMenu.exitCallback;
-    if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, gSpecialVar_ItemId, 0))
+    if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, gSpecialVar_ItemId, &options))
     {
         gPartyMenuUseExitCallback = FALSE;
         DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);

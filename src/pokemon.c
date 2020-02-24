@@ -62,6 +62,7 @@ static void sub_806E6CC(u8 taskId);
 static bool8 ShouldGetStatBadgeBoost(u16 flagId, u8 battlerId);
 static u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 static bool8 ShouldSkipFriendshipChange(void);
+static int StatToIvIndex(u8 statIndex);
 
 // EWRAM vars
 EWRAM_DATA static u8 sLearningMoveTableID = 0;
@@ -4632,17 +4633,6 @@ void CopyPlayerPartyMonToBattleData(u8 battlerId, u8 partyIndex)
     ClearTemporarySpeciesSpriteData(battlerId, FALSE);
 }
 
-bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex)
-{
-    struct UseItemOptions options = 
-    {
-        .moveIndex = moveIndex, 
-        .e = 0,
-        .stat = 0
-    };
-    return PokemonUseItemEffects(mon, item, partyIndex, &options);
-}
-
 bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct UseItemOptions *options)
 {
     u32 dataUnsigned;
@@ -4666,6 +4656,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
     int i;
     bool8 useItemEnum = FALSE;
     u8 max_iv = MAX_IV;
+    u16 ivIndex;
  
     mgba_printf(MGBA_LOG_INFO, "Options used!");
     mgba_printf(MGBA_LOG_INFO, "moveIndex: %u, e: %u, stat: %u", options->moveIndex, options->e, options->stat);
@@ -5199,6 +5190,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
     }
 
   // Add new item functionality -- mod
+    ivIndex = StatToIvIndex(options->stat);
     if (useItemEnum)
     {
         mgba_printf(MGBA_LOG_INFO, "IV count: %u", GetMonIVCount(mon));
@@ -5208,11 +5200,12 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
             // If current IV is max, fail and say "Won't have any effect"
             mgba_printf(MGBA_LOG_INFO, "pooch");
             mgba_printf(MGBA_LOG_INFO, "Boosting stat: %d", options->stat);
-            if (GetMonData(mon, MON_DATA_HP_IV + options->stat, 0) == MAX_IV)
+
+            if (GetMonData(mon, ivIndex, 0) == MAX_IV)
                 return TRUE;
 
             // Set the specified IV to the max
-            SetMonData(mon, MON_DATA_HP_IV + options->stat, &max_iv);
+            SetMonData(mon, ivIndex, &max_iv);
 
             CalculateMonStats(mon);
             retVal = FALSE;
@@ -5236,6 +5229,26 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
         }
     }
     return retVal;
+}
+
+static int StatToIvIndex(u8 statIndex)
+{
+    switch(statIndex)
+    {
+    case 0:
+        return MON_DATA_HP_IV;
+    case 1:
+        return MON_DATA_ATK_IV;
+    case 2:
+        return MON_DATA_DEF_IV;
+    case 3:
+        return MON_DATA_SPATK_IV;
+    case 4:
+        return MON_DATA_SPDEF_IV;
+    case 5:
+    default:
+        return MON_DATA_SPEED_IV;
+    }
 }
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battlerId)
