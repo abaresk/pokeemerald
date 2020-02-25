@@ -4658,9 +4658,6 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
     u8 max_iv = MAX_IV;
     u16 ivIndex;
  
-    mgba_printf(MGBA_LOG_INFO, "Options used!");
-    mgba_printf(MGBA_LOG_INFO, "moveIndex: %u, e: %u, stat: %u", options->moveIndex, options->e, options->stat);
-
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
     if (heldItem == ITEM_ENIGMA_BERRY)
     {
@@ -4935,7 +4932,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
                         }
                         if (GetMonData(mon, MON_DATA_MAX_HP, NULL) != GetMonData(mon, MON_DATA_HP, NULL))
                         {
-                            if (options->e == 0)
+                            if (!options->isOpponent)
                             {
                                 dataUnsigned = GetMonData(mon, MON_DATA_HP, NULL) + dataUnsigned;
                                 if (dataUnsigned > GetMonData(mon, MON_DATA_MAX_HP, NULL))
@@ -5190,17 +5187,13 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, struct
     }
 
   // Add new item functionality -- mod
-    ivIndex = StatToIvIndex(options->stat);
     if (useItemEnum)
     {
-        mgba_printf(MGBA_LOG_INFO, "IV count: %u", GetMonIVCount(mon));
         switch (itemEffect[10])
         {
         case ITEM10_IV_MAX_ONE:
             // If current IV is max, fail and say "Won't have any effect"
-            mgba_printf(MGBA_LOG_INFO, "pooch");
-            mgba_printf(MGBA_LOG_INFO, "Boosting stat: %d", options->stat);
-
+            ivIndex = StatToIvIndex(options->stat);
             if (GetMonData(mon, ivIndex, 0) == MAX_IV)
                 return TRUE;
 

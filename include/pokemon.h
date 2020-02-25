@@ -240,7 +240,7 @@ struct Evolution
 struct UseItemOptions
 {
     u8 moveIndex;
-    u8 e;
+    bool8 isOpponent;
     u8 stat;
 };
 

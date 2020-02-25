@@ -2492,8 +2492,7 @@ static u8 DisplaySelectionWindow(u8 windowType)
 
     for (i = 0; i < sPartyMenuInternal->numActions; i++)
     {
-        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 :
-        3;
+        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 : 3;
         AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], 1, cursorDimension, (i * 16) + 1, fontAttribute, 0, sFontColorTable[fontColorsId], 0, sCursorOptions[sPartyMenuInternal->actions[i]].text);
     }
 
@@ -4982,8 +4981,6 @@ void ItemUseCB_GoldSodacap(u8 taskId, TaskFunc task)
     bool8 cannotUseEffect;
     struct UseItemOptions options = {0};
 
-    mgba_printf(MGBA_LOG_INFO, "bouluu");
-
     BufferMonStatsToTaskData(mon, arrayPtr);
     cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, &options);
     BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
@@ -5009,6 +5006,14 @@ void ItemUseCB_GoldSodacap(u8 taskId, TaskFunc task)
     gTasks[taskId].func = Task_DisplayStatBoostPg1;
 }
 
+void ItemUseCB_SilverSodacap(u8 taskId, TaskFunc task)
+{
+    PlaySE(SE_SELECT);
+    DisplayPartyMenuStdMessage(PARTY_MSG_BOOST_IV_WHICH_STAT);
+    ShowStatSelectWindow();
+    gTasks[taskId].func = Task_HandleWhichStatInput;
+}
+
 void UseSilverSodacap(u8 taskId, TaskFunc task, int statIndex)
 {
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
@@ -5017,8 +5022,6 @@ void UseSilverSodacap(u8 taskId, TaskFunc task, int statIndex)
     u16 *itemPtr = &gSpecialVar_ItemId;
     bool8 cannotUseEffect;
     struct UseItemOptions options = {.stat = statIndex};
-
-    mgba_printf(MGBA_LOG_INFO, "bouluu");
 
     BufferMonStatsToTaskData(mon, arrayPtr);
     cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, &options);
@@ -5043,14 +5046,6 @@ void UseSilverSodacap(u8 taskId, TaskFunc task, int statIndex)
     DisplayPartyMenuMessage(gStringVar4, TRUE);
     schedule_bg_copy_tilemap_to_vram(2);
     gTasks[taskId].func = Task_DisplayStatBoostPg1;
-}
-
-void ItemUseCB_SilverSodacap(u8 taskId, TaskFunc task)
-{
-    PlaySE(SE_SELECT);
-    DisplayPartyMenuStdMessage(PARTY_MSG_BOOST_IV_WHICH_STAT);
-    ShowStatSelectWindow();
-    gTasks[taskId].func = Task_HandleWhichStatInput;
 }
 
 static void UpdateMonDisplayInfoAfterRareCandy(u8 slot, struct Pokemon *mon)
