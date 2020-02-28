@@ -355,6 +355,101 @@ Route109_EventScript_OldMan:: @ 81EEA0F
 	msgbox Route109_Text_ZigzagoonPicksUpLitter, MSGBOX_NPC
 	end
 
+Route109_EventScript_SodacapCollector::
+	lock
+	faceplayer
+	msgbox Route109_Text_ICollectSodacaps, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq Route109_EventScript_DeclineTrade
+	special ChoosePartyMon
+	waitstate
+	copyvar VAR_0x800A, VAR_0x8004
+	compare VAR_0x8004, 255
+	goto_if_eq Route109_EventScript_DeclineTrade
+	copyvar VAR_0x8005, VAR_0x800A
+	specialvar VAR_RESULT, GetPokemonLevel
+	copyvar VAR_0x800B, VAR_RESULT
+	compare VAR_RESULT, 255
+	goto_if_eq Route109_EventScript_DeclineTrade
+	setvar VAR_RESULT, 1
+	compare VAR_RESULT, 1
+	goto_if_eq Route109_EventScript_DecideTrade
+	release
+	end
+
+Route109_EventScript_DecideTrade::
+	compare VAR_0x800B, 100
+	goto_if_eq Route109_EventScript_GoldMon
+	compare VAR_0x800B, 70
+	goto_if_ge Route109_EventScript_SilverMon
+	msgbox Route109_Text_NotRequestedMon, MSGBOX_DEFAULT
+	release
+	end
+
+Route109_EventScript_GoldMon::
+	random 2
+	compare VAR_RESULT, 0
+	goto_if_eq Route109_EventScript_TradeScizor
+	setvar VAR_0x8004, INGAME_TRADE_STEELIX_GOLD_SODACAP
+	setvar VAR_RESULT, 1
+	compare VAR_RESULT, 1
+	goto_if_eq Route109_EventScript_DoTrade
+	release
+	end
+
+Route109_EventScript_TradeScizor::
+	setvar VAR_0x8004, INGAME_TRADE_SCIZOR_GOLD_SODACAP
+	setvar VAR_RESULT, 1
+	compare VAR_RESULT, 1
+	goto_if_eq Route109_EventScript_DoTrade
+	release
+	end
+
+Route109_EventScript_SilverMon::
+	random 2
+	compare VAR_RESULT, 0
+	goto_if_eq Route109_EventScript_TradeMisdreavus
+	setvar VAR_0x8004, INGAME_TRADE_MURKROW_SILVER_SODACAP
+	setvar VAR_RESULT, 1
+	compare VAR_RESULT, 1
+	goto_if_eq Route109_EventScript_DoTrade
+	release
+	end
+
+Route109_EventScript_TradeMisdreavus::
+	setvar VAR_0x8004, INGAME_TRADE_MISDREAVUS_SILVER_SODACAP
+	setvar VAR_RESULT, 1
+	compare VAR_RESULT, 1
+	goto_if_eq Route109_EventScript_DoTrade
+	release
+	end
+
+Route109_EventScript_DeclineTrade::
+	msgbox Route109_Text_YouWontTradeMe, MSGBOX_DEFAULT
+	release
+	end
+
+Route109_EventScript_DoTrade::
+	copyvar VAR_0x8005, VAR_0x800A
+	special CreateInGameTradePokemon
+	special DoInGameTradeScene
+	waitstate
+	compare VAR_0x800B, 100
+	goto_if_eq Route109_EventScript_TradedGoldMon
+	msgbox Route109_Text_TradedSilverMon, MSGBOX_DEFAULT
+	release
+	end
+
+Route109_EventScript_TradedGoldMon::
+	msgbox Route109_Text_TradedGoldMon, MSGBOX_DEFAULT
+	release
+	end
+
+Route109_EventScript_Level70PlusTrade::
+	msgbox Route109_Text_ICollectSodacaps, MSGBOX_DEFAULT
+	release
+	end
+
 Route109_EventScript_Zigzagoon:: @ 81EEA18
 	lock
 	faceplayer
@@ -548,6 +643,30 @@ Route109_Text_ZigzagoonPicksUpLitter: @ 81EF080
 	.string "rivers, which we drink from…\p"
 	.string "If we pollute the sea, it all comes\n"
 	.string "back to haunt us eventually.$"
+
+Route109_Text_ICollectSodacaps:
+	.string "Sometimes SODACAPS wash up on shore.\p"
+	.string "I pick them up before anyone else can.\p"
+	.string "I'd be willing to part with one if you\n"
+	.string "trade me a well-trained POKéMON.\p"
+	.string "What do you say?$"
+
+Route109_Text_YouWontTradeMe:
+	.string "Well fine, more SODACAPS for me.$"
+
+Route109_Text_NotRequestedMon:
+	.string "This POKéMON? I'm looking for\n"
+	.string "something stronger.$"
+
+Route109_Text_TradedGoldMon:
+	.string "Wow! I'm very impressed with\n" 
+	.string "the POKéMON you sent me.\p"
+	.string "Check the POKéMON I sent you.\p"
+	.string "I gave it an extra special SODACAP.$"
+
+Route109_Text_TradedSilverMon:
+	.string "Check the POKéMON I sent you.\p"
+	.string "I gave it one of my SODACAPS.$"
 
 Route109_Text_ZigzagoonCry: @ 81EF173
 	.string "ZIGZAGOON: Guguu?$"

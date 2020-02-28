@@ -1427,6 +1427,13 @@ bool8 Special_AreLeadMonEVsMaxedOut(void)
     return FALSE;
 }
 
+u8 GetPokemonLevel(void)
+{
+    if (GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_IS_EGG))
+        return 0xFF;
+    return GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_LEVEL);
+}
+
 u8 TryUpdateRusturfTunnelState(void)
 {
     if (!FlagGet(FLAG_RUSTURF_TUNNEL_OPENED) 

@@ -1041,7 +1041,63 @@ static const struct InGameTrade sIngameTrades[] =
         .otGender = FEMALE, 
         .sheen = 10,
         .requestedSpecies = SPECIES_SKITTY
-    }
+    },
+    [INGAME_TRADE_SCIZOR_GOLD_SODACAP] =
+    {
+        .nickname = _("SCARLET"),
+        .species = SPECIES_SCIZOR,
+        .ivs = {4, 4, 5, 4, 4, 5},
+        .abilityNum = 0,
+        .otId = 65717,
+        .personality = 0x24,
+        .heldItem = ITEM_GOLD_SODACAP,
+        .otName = _("HERMES"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_NONE
+    },
+    [INGAME_TRADE_STEELIX_GOLD_SODACAP] =
+    {
+        .nickname = _("COLOSSUS"),
+        .species = SPECIES_STEELIX,
+        .ivs = {4, 5, 4, 4, 5, 4},
+        .abilityNum = 0,
+        .otId = 65717,
+        .personality = 0x24,
+        .heldItem = ITEM_GOLD_SODACAP,
+        .otName = _("HERMES"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_NONE
+    },
+    [INGAME_TRADE_MISDREAVUS_SILVER_SODACAP] =
+    {
+        .nickname = _("VESPER"),
+        .species = SPECIES_MISDREAVUS,
+        .ivs = {4, 4, 4, 5, 5, 4},
+        .abilityNum = 0,
+        .otId = 65717,
+        .personality = 0x24,
+        .heldItem = ITEM_SILVER_SODACAP,
+        .otName = _("HERMES"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_NONE
+    },
+    [INGAME_TRADE_MURKROW_SILVER_SODACAP] =
+    {
+        .nickname = _("EDGAR"),
+        .species = SPECIES_MURKROW,
+        .ivs = {4, 5, 5, 4, 4, 4},
+        .abilityNum = 0,
+        .otId = 65717,
+        .personality = 0x24,
+        .heldItem = ITEM_SILVER_SODACAP,
+        .otName = _("HERMES"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_NONE
+    },
 };
 
 static const u16 sIngameTradeMail[][MAIL_WORDS_COUNT + 1] =
