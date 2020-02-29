@@ -347,6 +347,10 @@ SlateportCity_EventScript_Sailor2:: @ 81DCFEE
 	msgbox SlateportCity_Text_SinkOldBoats, MSGBOX_NPC
 	end
 
+SlateportCity_EventScript_WomanUpset::
+	msgbox SlateportCity_Text_IfIWakeUpEarly, MSGBOX_NPC
+	end
+
 SlateportCity_EventScript_PokefanF:: @ 81DCFF7
 	msgbox SlateportCity_Text_BuyTooMuch, MSGBOX_NPC
 	end
@@ -1375,3 +1379,10 @@ SlateportCity_Text_TakingBattleTentChallenge: @ 81DF28C
 	.string "After all, a tough TRAINER is\n"
 	.string "the perfect fit for the BATTLE TENT!\p"
 	.string "Give it your best effort!$"
+
+SlateportCity_Text_IfIWakeUpEarly:
+	.string "I'd love to give my POKéMON a SODACAP,\n"
+	.string "but I can never get them in time.\p"
+	.string "There's a man who scours the beach\n"
+	.string "every morning and snatches them all.\p" 
+	.string "Maybe if I wake up earlier…$"

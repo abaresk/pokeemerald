@@ -102,6 +102,18 @@ BattleFrontier_OutsideEast_EventScript_TriathleteM:: @ 8242CE1
 	msgbox BattleFrontier_OutsideEast_Text_DidScottBringYouHere, MSGBOX_NPC
 	end
 
+BattleFrontier_OutsideEast_EventScript_AmbitiousChild::
+	msgbox BattleFrontier_OutsideEast_Text_CowerBeforeMe, MSGBOX_NPC
+	end
+
+BattleFrontier_OutsideEast_EventScript_WiseMan::
+	msgbox BattleFrontier_OutsideEast_Text_SodacapsInSlateport, MSGBOX_NPC
+	end
+
+BattleFrontier_OutsideEast_EventScript_EavesdroppingGirl::
+	msgbox BattleFrontier_OutsideEast_Text_ListeningOnConversation, MSGBOX_NPC
+	end
+
 BattleFrontier_OutsideEast_EventScript_Sudowoodo:: @ 8242CEA
 	lock
 	faceplayer
@@ -439,3 +451,26 @@ BattleFrontier_OutsideEast_Text_StickyMonWithLongTail: @ 8243D0B
 	.string "with a long tail up ahead!\p"
 	.string "It was hiding under a boulder, and\n"
 	.string "it kept staring at me!$"
+
+BattleFrontier_OutsideEast_Text_CowerBeforeMe:
+	.string "If I could get my hands on some\n"
+	.string "SODACAPS, I could really power up\l" 
+	.string "my POKéMON's stats.\p"
+	.string "I'd be unstoppable!\p"
+	.string "Even the ARENA TYCOON would cower\n"
+	.string "before me!$"
+
+BattleFrontier_OutsideEast_Text_SodacapsInSlateport:
+	.string "They say there's a man south of\n"
+	.string "SLATEPORT CITY who will trade you\l"
+	.string "SODACAPS for high-leveled POKéMON.\p"
+	.string "As for myself, I like training POKéMON\n" 
+	.string "the old-fashioned way.$"
+
+BattleFrontier_OutsideEast_Text_ListeningOnConversation:
+	.string "… … …Shh!! I'm trying to overhear their\n"
+	.string "conversation!\p"
+	.string "… … … … … …\p"
+	.string "Wow, do you think if I show that man a\n"
+	.string "super high-leveled POKéMON, he'd even\l"
+	.string "give me a GOLD SODACAP?$"
