@@ -69,6 +69,7 @@ struct InGameTrade {
     /*0x36*/ u8 otGender;
     /*0x37*/ u8 sheen;
     /*0x38*/ u16 requestedSpecies;
+    u8 level;
 };
 
 static EWRAM_DATA u8 *sMessageBoxAllocBuffer = NULL;
@@ -4429,15 +4430,27 @@ static void BufferInGameTradeMonName(void)
 
 static void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
 {
-    const struct InGameTrade *inGameTrade = &sIngameTrades[whichInGameTrade];
-    u8 level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
 
     struct MailStruct mail;
-    u8 metLocation = METLOC_IN_GAME_TRADE;
-    u8 isMail;
     struct Pokemon *pokemon = &gEnemyParty[0];
+    const struct InGameTrade *inGameTrade = &sIngameTrades[whichInGameTrade];
+    u8 isMail;
+    u8 level;
+    u8 metLocation = METLOC_IN_GAME_TRADE;
+    u8 abilityNum;
+    u32 personality;
 
-    CreateMon(pokemon, inGameTrade->species, level, 32, TRUE, inGameTrade->personality, OT_ID_PRESET, inGameTrade->otId);
+    if (inGameTrade->level > 100)
+        level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
+    else
+        level = inGameTrade->level;
+
+    if (inGameTrade->personality == 0)
+        personality = Random32();
+    else
+        personality = inGameTrade->personality;
+
+    CreateMon(pokemon, inGameTrade->species, level, 32, TRUE, personality, OT_ID_PRESET, inGameTrade->otId);
 
     SetMonData(pokemon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
     SetMonData(pokemon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);

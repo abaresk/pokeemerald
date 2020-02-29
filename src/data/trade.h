@@ -992,7 +992,8 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("KOBE"), 
         .otGender = MALE, 
         .sheen = 10,
-        .requestedSpecies = SPECIES_RALTS
+        .requestedSpecies = SPECIES_RALTS,
+        .level = 0xFF
     }, 
     [INGAME_TRADE_PLUSLE] = 
     {
@@ -1008,7 +1009,8 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("ROMAN"), 
         .otGender = MALE, 
         .sheen = 10,
-        .requestedSpecies = SPECIES_VOLBEAT
+        .requestedSpecies = SPECIES_VOLBEAT,
+        .level = 0xFF
     }, 
     [INGAME_TRADE_HORSEA] = 
     {
@@ -1024,7 +1026,8 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("SKYLAR"), 
         .otGender = MALE, 
         .sheen = 10,
-        .requestedSpecies = SPECIES_BAGON
+        .requestedSpecies = SPECIES_BAGON,
+        .level = 0xFF
     }, 
     [INGAME_TRADE_MEOWTH] = 
     {
@@ -1040,7 +1043,8 @@ static const struct InGameTrade sIngameTrades[] =
         .otName = _("ISIS"), 
         .otGender = FEMALE, 
         .sheen = 10,
-        .requestedSpecies = SPECIES_SKITTY
+        .requestedSpecies = SPECIES_SKITTY,
+        .level = 0xFF
     },
     [INGAME_TRADE_SCIZOR_GOLD_SODACAP] =
     {
@@ -1049,12 +1053,13 @@ static const struct InGameTrade sIngameTrades[] =
         .ivs = {4, 4, 5, 4, 4, 5},
         .abilityNum = 0,
         .otId = 65717,
-        .personality = 0x24,
+        .personality = 0,
         .heldItem = ITEM_GOLD_SODACAP,
         .otName = _("HERMES"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NONE
+        .requestedSpecies = SPECIES_NONE,
+        .level = 0xFF
     },
     [INGAME_TRADE_STEELIX_GOLD_SODACAP] =
     {
@@ -1063,12 +1068,13 @@ static const struct InGameTrade sIngameTrades[] =
         .ivs = {4, 5, 4, 4, 5, 4},
         .abilityNum = 0,
         .otId = 65717,
-        .personality = 0x24,
+        .personality = 0,
         .heldItem = ITEM_GOLD_SODACAP,
         .otName = _("HERMES"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NONE
+        .requestedSpecies = SPECIES_NONE,
+        .level = 45
     },
     [INGAME_TRADE_MISDREAVUS_SILVER_SODACAP] =
     {
@@ -1077,12 +1083,13 @@ static const struct InGameTrade sIngameTrades[] =
         .ivs = {4, 4, 4, 5, 5, 4},
         .abilityNum = 0,
         .otId = 65717,
-        .personality = 0x24,
+        .personality = 0,
         .heldItem = ITEM_SILVER_SODACAP,
         .otName = _("HERMES"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NONE
+        .requestedSpecies = SPECIES_NONE,
+        .level = 45
     },
     [INGAME_TRADE_MURKROW_SILVER_SODACAP] =
     {
@@ -1091,12 +1098,13 @@ static const struct InGameTrade sIngameTrades[] =
         .ivs = {4, 5, 5, 4, 4, 4},
         .abilityNum = 0,
         .otId = 65717,
-        .personality = 0x24,
+        .personality = 0,
         .heldItem = ITEM_SILVER_SODACAP,
         .otName = _("HERMES"),
         .otGender = MALE,
         .sheen = 10,
-        .requestedSpecies = SPECIES_NONE
+        .requestedSpecies = SPECIES_NONE,
+        .level = 45
     },
 };
 
