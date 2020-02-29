@@ -75,7 +75,7 @@ static EWRAM_DATA u16 gTrainerId = 0;
 static void UpdateLinkAndCallCallbacks(void);
 static void InitMainCallbacks(void);
 static void CallCallbacks(void);
-static void SeedRngWithRtc(void);
+void SeedRngWithRtc(void);
 static void ReadKeys(void);
 void InitIntrHandlers(void);
 static void WaitForVBlank(void);
@@ -212,12 +212,26 @@ void StartTimer1(void)
     REG_TM1CNT_H = 0x80;
 }
 
+#define QUANTUM_SEED 0xD049BB13
+
 void SeedRngAndSetTrainerId(void)
 {
     u16 val = REG_TM1CNT_L;
     SeedRng(val);
     REG_TM1CNT_H = 0;
     gTrainerId = val;
+}
+
+// This function wasn't in Emerald, which is why the RNG is broken.
+void SeedRngWithRtc(void)
+{
+    u32 seed;
+    if (RtcGetErrorStatus() & RTC_ERR_FLAG_MASK) {
+        seed = gSaveBlock2Ptr->clockMinutes;
+    } else {
+        seed = RtcGetMinuteCount();
+    }
+    SeedRng(seed);
 }
 
 u16 GetGeneratedTrainerIdLower(void)

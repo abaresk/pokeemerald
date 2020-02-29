@@ -41,6 +41,8 @@ EWRAM_DATA u8 gSaveblock3_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
 EWRAM_DATA struct LoadedSaveData gLoadedSaveData = {0};
 EWRAM_DATA u32 gLastEncryptionKey = 0;
 
+EWRAM_DATA u32 gClockMinutes = 0;
+
 // IWRAM common
 bool32 gFlashMemoryPresent;
 struct SaveBlock1 *gSaveBlock1Ptr;
