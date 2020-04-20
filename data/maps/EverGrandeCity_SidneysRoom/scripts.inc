@@ -46,15 +46,30 @@ EverGrandeCity_SidneysRoom_EventScript_WalkInCloseDoor:: @ 8227F57
 EverGrandeCity_SidneysRoom_EventScript_Sidney:: @ 8227F64
 	lock
 	faceplayer
-	goto_if_set FLAG_DEFEATED_ELITE_4_SIDNEY, EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
+	goto_if_unset FLAG_DEFEATED_ELITE_4_SIDNEY, EverGrandeCity_SidneysRoom_EventScript_SidneyEncounter
+	goto_if_set TRAINER_SIDNEY_2, EverGrandeCity_SidneysRoom_EventScript_RematchPostBattleSpeech
+	goto EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
+	end
+
+EverGrandeCity_SidneysRoom_EventScript_SidneyEncounter::
 	playbgm MUS_SITENNOU, 0
-	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
-	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
+
+	@ First battle
+	trainerbattle_single TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_IntroSpeech, EverGrandeCity_SidneysRoom_Text_Defeat, EverGrandeCity_SidneysRoom_EventScript_Defeated
+
+	@ Rematch
+	msgbox EverGrandeCity_SidneysRoom_Text_RematchIntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_SIDNEY_2, EverGrandeCity_SidneysRoom_Text_RematchDefeat
+	goto EverGrandeCity_SidneysRoom_EventScript_RematchDefeated
 	end
 
 EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech:: @ 8227F8B
 	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end
+
+EverGrandeCity_SidneysRoom_EventScript_RematchPostBattleSpeech:: @ 8227F8B
+	msgbox EverGrandeCity_SidneysRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
 
@@ -64,6 +79,13 @@ EverGrandeCity_SidneysRoom_EventScript_Defeated:: @ 8227F95
 	msgbox EverGrandeCity_SidneysRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
+
+EverGrandeCity_SidneysRoom_EventScript_RematchDefeated::
+	setflag FLAG_DEFEATED_ELITE_4_SIDNEY
+	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	msgbox EverGrandeCity_SidneysRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end	
 
 EverGrandeCity_SidneysRoom_Text_IntroSpeech: @ 8227FA7
 	.string "Welcome, challenger!\n"
@@ -86,3 +108,22 @@ EverGrandeCity_SidneysRoom_Text_PostBattleSpeech: @ 82280EC
 	.string "Now, go on to the next room and enjoy\l"
 	.string "your next battle!$"
 
+EverGrandeCity_SidneysRoom_Text_RematchIntroSpeech:
+	.string "Welcome back, CHAMPION!\p"
+	.string "I knew you had mettle.\n" 
+	.string "That look of surefire determination…\p" 
+	.string "There's nothing getting in your\n"
+	.string "way.\p"
+	.string "I guess you're itching for a rematch.\p"
+	.string "Let's do it! But trust that I'm fully\n"
+	.string "prepared to take you on!$"
+
+EverGrandeCity_SidneysRoom_Text_RematchDefeat:
+	.string "Well, what do you know? I can see why\n"
+	.string "you're the reigning CHAMPION.$"
+
+EverGrandeCity_SidneysRoom_Text_RematchPostBattleSpeech:
+	.string "You pulled out another victory.\n"
+	.string "Can't say I'm surprised at this point.\p"
+	.string "Go on and show the rest of 'em what\n" 
+	.string "you got!$"
