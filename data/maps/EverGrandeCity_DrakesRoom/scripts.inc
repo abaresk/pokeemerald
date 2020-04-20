@@ -41,15 +41,30 @@ EverGrandeCity_DrakesRoom_EventScript_CloseDoor:: @ 82286ED
 EverGrandeCity_DrakesRoom_EventScript_Drake:: @ 82286F3
 	lock
 	faceplayer
-	goto_if_set FLAG_DEFEATED_ELITE_4_DRAKE, EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech
+	goto_if_unset FLAG_DEFEATED_ELITE_4_DRAKE, EverGrandeCity_DrakesRoom_EventScript_DrakeEncounter
+	goto_if_set TRAINER_DRAKE_2, EverGrandeCity_DrakesRoom_EventScript_RematchPostBattleSpeech
+	goto EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech
+	end
+
+EverGrandeCity_DrakesRoom_EventScript_DrakeEncounter::
 	playbgm MUS_SITENNOU, 0
-	msgbox EverGrandeCity_DrakesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_Defeat
-	goto EverGrandeCity_DrakesRoom_EventScript_Defeated
+
+	@ First battle
+	trainerbattle_single TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_IntroSpeech, EverGrandeCity_DrakesRoom_Text_Defeat, EverGrandeCity_DrakesRoom_EventScript_Defeated
+
+	@ Rematch
+	msgbox EverGrandeCity_DrakesRoom_Text_RematchIntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_DRAKE_2, EverGrandeCity_DrakesRoom_Text_RematchDefeat
+	goto EverGrandeCity_DrakesRoom_EventScript_RematchDefeated
 	end
 
 EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech:: @ 822871A
 	msgbox EverGrandeCity_DrakesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end
+
+EverGrandeCity_DrakesRoom_EventScript_RematchPostBattleSpeech:: @ 82281F2
+	msgbox EverGrandeCity_DrakesRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
 
@@ -61,6 +76,15 @@ EverGrandeCity_DrakesRoom_EventScript_Defeated:: @ 8228724
 	msgbox EverGrandeCity_DrakesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
+
+EverGrandeCity_DrakesRoom_EventScript_RematchDefeated::
+	setvar VAR_0x8004, 0
+	special Script_TryGainNewFanFromCounter
+	setflag FLAG_DEFEATED_ELITE_4_DRAKE
+	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	msgbox EverGrandeCity_DrakesRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end	
 
 EverGrandeCity_DrakesRoom_Text_IntroSpeech: @ 822873E
 	.string "I am the last of the POKéMON LEAGUE\n"
@@ -91,3 +115,28 @@ EverGrandeCity_DrakesRoom_Text_PostBattleSpeech: @ 82288B0
 	.string "Go! Go onwards!\n"
 	.string "The CHAMPION is waiting!$"
 
+EverGrandeCity_DrakesRoom_Text_RematchIntroSpeech:
+	.string "Excellent, you made it here once\n"
+	.string "again!\p"
+	.string "I have captained many ships across the\n"
+	.string "regions of the world.\p"
+	.string "I wonder, have you witnessed the sheer\n"
+	.string "force of the sea?\p"
+	.string "At times, it is still and calm.\n"
+	.string "At others, it rages fiercely.\p"
+	.string "When the tide turns against you,\n"
+	.string "only the trust between you and your\l"
+	.string "partners will keep you afloat.\p"
+	.string "That trust…\n" 
+	.string "Let's see whether you possess it!$"
+
+EverGrandeCity_DrakesRoom_Text_RematchDefeat:
+	.string "A valiant victory on your part.$"
+
+EverGrandeCity_DrakesRoom_Text_RematchPostBattleSpeech:
+	.string "Truly impeccable…\p"
+	.string "Your strength has not diminished in\n" 
+	.string "the slightest.\p"
+	.string "Please go onwards…\p"
+	.string "And present WALLACE with a match\n" 
+	.string "worthy of a CHAMPION!$"
