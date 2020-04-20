@@ -40,15 +40,42 @@ EverGrandeCity_GlaciasRoom_EventScript_CloseDoor:: @ 8228463
 EverGrandeCity_GlaciasRoom_EventScript_Glacia:: @ 8228469
 	lock
 	faceplayer
-	goto_if_set FLAG_DEFEATED_ELITE_4_GLACIA, EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech
+	goto_if_unset FLAG_DEFEATED_ELITE_4_GLACIA, EverGrandeCity_GlaciasRoom_EventScript_GlaciaEncounter
+	goto_if_set TRAINER_GLACIA_2, EverGrandeCity_GlaciasRoom_EventScript_RematchPostBattleSpeech
+	goto EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech
+	end
+
+EverGrandeCity_GlaciasRoom_EventScript_GlaciaEncounter::
 	playbgm MUS_SITENNOU, 0
-	msgbox EverGrandeCity_GlaciasRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_Defeat
-	goto EverGrandeCity_GlaciasRoom_EventScript_Defeated
+
+	@ First battle
+	trainerbattle_single TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_IntroSpeech, EverGrandeCity_GlaciasRoom_Text_Defeat, EverGrandeCity_GlaciasRoom_EventScript_Defeated
+
+	@ Rematch
+	random 2
+	compare VAR_RESULT, 1
+	goto_if_eq EverGrandeCity_GlaciasRoom_EventScript_GlaciaIntro_GymLeader
+	msgbox EverGrandeCity_GlaciasRoom_Text_RematchIntroSpeech_Froslass, MSGBOX_DEFAULT
+	goto EverGrandeCity_GlaciasRoom_EventScript_GlaciaRematchBattle
+	end
+
+EverGrandeCity_GlaciasRoom_EventScript_GlaciaIntro_GymLeader::
+	msgbox EverGrandeCity_GlaciasRoom_Text_RematchIntroSpeech_GymLeader, MSGBOX_DEFAULT
+	goto EverGrandeCity_GlaciasRoom_EventScript_GlaciaRematchBattle
+	end
+
+EverGrandeCity_GlaciasRoom_EventScript_GlaciaRematchBattle::
+	trainerbattle_no_intro TRAINER_GLACIA_2, EverGrandeCity_GlaciasRoom_Text_RematchDefeat
+	goto EverGrandeCity_GlaciasRoom_EventScript_RematchDefeated
 	end
 
 EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech:: @ 8228490
 	msgbox EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end
+
+EverGrandeCity_GlaciasRoom_EventScript_RematchPostBattleSpeech:: @ 8228490
+	msgbox EverGrandeCity_GlaciasRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
 
@@ -58,6 +85,13 @@ EverGrandeCity_GlaciasRoom_EventScript_Defeated:: @ 822849A
 	msgbox EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	release
 	end
+
+EverGrandeCity_GlaciasRoom_EventScript_RematchDefeated::
+	setflag FLAG_DEFEATED_ELITE_4_GLACIA
+	call PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	msgbox EverGrandeCity_GlaciasRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
+	release
+	end	
 
 EverGrandeCity_GlaciasRoom_Text_IntroSpeech: @ 82284AC
 	.string "Welcome, my name is GLACIA\n"
@@ -82,3 +116,37 @@ EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech: @ 8228640
 	.string "And there, confirm the truly fearsome\n"
 	.string "side of the POKéMON LEAGUE.$"
 
+EverGrandeCity_GlaciasRoom_Text_RematchIntroSpeech_Froslass:
+	.string "Hello again, young CHAMPION.\p"
+	.string "Back in my home region, there are legends\n"
+	.string "of a woman who froze on a snowcapped\l"
+	.string "mountain and became a POKéMON.\p"
+	.string "The grace of such a figure…\n"
+	.string "The thought of her inflamed spirit…\p"
+	.string "I'll do right by her and show you the\n"
+	.string "power of an all-out ice offensive!$"
+
+EverGrandeCity_GlaciasRoom_Text_RematchIntroSpeech_GymLeader:
+	.string "Hello again, young CHAMPION.\p"
+	.string "I used to be a GYM LEADER in another\n"
+	.string "region, you know.\p"
+	.string "You remind me of someone I once\n"
+	.string "trained…\p"
+	.string "A girl with fiery focus and a will of\n"
+	.string "steel.\p"
+	.string "She took up the GYM LEADER role when I\n"
+	.string "accepted my position here.\p"
+	.string "I hope you'll rise to this occasion and\n"
+	.string "engage me in the full heat of battle!$"
+
+EverGrandeCity_GlaciasRoom_Text_RematchDefeat:
+	.string "Still your spirit burns red-hot!$"
+
+EverGrandeCity_GlaciasRoom_Text_RematchPostBattleSpeech:
+	.string "My icy barrage…\n"
+	.string "evaporated in an instant…\p"
+	.string "But your challenge is far from over.\p"
+	.string "Do not let your guard down--I assure\n"
+	.string "you, your next opponents will show no\l"
+	.string "restraint.\p"
+	.string "Go on, DRAKE awaits you.$"
