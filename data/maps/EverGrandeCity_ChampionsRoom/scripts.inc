@@ -388,14 +388,17 @@ EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech:
 	.string "I must admit, our last battle left me\n"
 	.string "yearning to encounter you again.\p"
 	.string "The way that you and your POKéMON\n"
-	.string "peformed…\p"
+	.string "performed…\p"
 	.string "It was quite the spectacle to behold!\p"
 	.string "Yet, it is not our victories that make us\n"
 	.string "great TRAINERS.\p"
-	@ This is a little vague, see if I can add more detail
+
+	@ This is a little vague, see if I can add more detail -- make it more
+	@ about him wanting to develop a new tactic w/ his pokes.
 	.string "We ascend to greater heights only\n"
-	.string "through the partnership of our fellow\l" 
-	.string "POKéMON.\p"
+	.string "through our partnership with our\l" 
+	.string "fellow POKéMON.\p"
+
 	.string "I am sure you know this, of course.\p"
 	.string "After all, you have proven yourself a\n"
 	.string "capable and discerning TRAINER.\p"
@@ -403,18 +406,19 @@ EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech:
 	.string "since our last battle…\p"
 	@ Perhaps shorten this?
 	.string "In this next performance, I will emulate\n"
-	.string "a wondrous illusion made possible only\l"
-	.string "by water.\p"
-	.string "Like a rainbow, the radiance of my team\n"
-	.string "will utterly dazzle you!\p"
+	.string "a wondrous illusion that can only be\l"
+	.string "created with water.\p"
+	@ What's the right adjective? Luminous, shining, elusive, lustrous, 
+	@ shimmering, beaming?
+	.string "Like a shimmering rainbow, the radiance\n"
+	.string "of my team will utterly dazzle you!\p"
 	.string "Now!\p"
-	.string "Let me put your skills as the HOENN\n"
+	.string "Allow me to put your skills as the HOENN\n"
 	.string "CHAMPION to the ultimate test!$"
 
 EverGrandeCity_ChampionsRoom_Text_RematchDefeat:
-	.string "Illusory like a rainbow…\p"
-	.string "You completely outshone me! Your radiance\n" 
-	.string "is utterly iridescent!$"
+	.string "You completely outshone me in brilliant\n"
+	.string "iridescence!$"
 
 EverGrandeCity_ChampionsRoom_Text_RematchPostBattleSpeech:
 	.string "Truly impeccable…\p"
