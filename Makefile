@@ -111,7 +111,7 @@ MAKEFLAGS += --no-print-directory
 # Secondary expansion is required for dependency variables in object rules.
 .SECONDEXPANSION:
 
-.PHONY: all rom clean compare tidy tools mostlyclean clean-tools $(TOOLDIRS) berry_fix libagbsyscall modern
+.PHONY: all rom clean compare tidy tools mostlyclean clean-tools $(TOOLDIRS) berry_fix libagbsyscall modern format
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 
@@ -168,6 +168,10 @@ endif
 
 # For contributors to make sure a change didn't affect the contents of the ROM.
 compare: ; @$(MAKE) COMPARE=1
+
+format:
+	find . -not -path "./tools/*" -type f \( -iname \*.c -o -iname \*.h \) \
+	-exec sh -c 'echo Formatting: {}; clang-format -i {}' \;
 
 clean: mostlyclean clean-tools
 
