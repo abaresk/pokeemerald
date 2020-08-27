@@ -7,7 +7,7 @@
 
 #define RAM_SCRIPT_MAGIC 51
 
-extern const u8* gUnknown_020375C0;
+extern const u8 *gUnknown_020375C0;
 
 // ewram bss
 static u8 sScriptContext1Status;
@@ -238,7 +238,8 @@ void ScriptContext2_RunNewScript(const u8 *ptr)
 {
     InitScriptContext(&sScriptContext2, &gScriptCmdTable, &gScriptCmdTableEnd);
     SetupBytecodeScript(&sScriptContext2, ptr);
-    while (RunScriptCommand(&sScriptContext2) == TRUE);
+    while (RunScriptCommand(&sScriptContext2) == TRUE)
+        ;
 }
 
 u8 *MapHeaderGetScriptTable(u8 tag)
@@ -255,7 +256,8 @@ u8 *MapHeaderGetScriptTable(u8 tag)
         if (*mapScripts == tag)
         {
             mapScripts++;
-            return (u8 *)(mapScripts[0] + (mapScripts[1] << 8) + (mapScripts[2] << 16) + (mapScripts[3] << 24));
+            return (u8 *)(mapScripts[0] + (mapScripts[1] << 8) + (mapScripts[2] << 16) +
+                          (mapScripts[3] << 24));
         }
         mapScripts += 5;
     }
@@ -336,7 +338,8 @@ void TryRunOnWarpIntoMapScript(void)
 
 u32 CalculateRamScriptChecksum(void)
 {
-    return CalcCRC16WithTable((u8*)(&gSaveBlock1Ptr->ramScript.data), sizeof(gSaveBlock1Ptr->ramScript.data));
+    return CalcCRC16WithTable(
+        (u8 *)(&gSaveBlock1Ptr->ramScript.data), sizeof(gSaveBlock1Ptr->ramScript.data));
 }
 
 void ClearRamScript(void)

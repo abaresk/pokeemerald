@@ -50,8 +50,8 @@ static EWRAM_DATA u16 *sEvoMovingBgPtr = NULL;
 // IWRAM common
 void (*gCB2_AfterEvolution)(void);
 
-#define sEvoCursorPos           gBattleCommunication[1] // when learning a new move
-#define sEvoGraphicsTaskID      gBattleCommunication[2]
+#define sEvoCursorPos      gBattleCommunication[1] // when learning a new move
+#define sEvoGraphicsTaskID gBattleCommunication[2]
 
 // this file's functions
 static void Task_EvolutionScene(u8 taskID);
@@ -74,74 +74,825 @@ static const u16 sUnknown_085B4114[] = INCBIN_U16("graphics/evolution_scene/unkn
 static const u32 sUnknown_085B4134[] = INCBIN_U32("graphics/evolution_scene/bg.4bpp.lz");
 static const u32 sUnknown_085B482C[] = INCBIN_U32("graphics/evolution_scene/bg.bin.lz");
 static const u32 sUnknown_085B4D10[] = INCBIN_U32("graphics/evolution_scene/bg2.bin.lz");
-static const u16 sUnknown_085B51E4[] = INCBIN_U16("graphics/evolution_scene/gray_transition_intro.gbapal");
-static const u16 sUnknown_085B53E4[] = INCBIN_U16("graphics/evolution_scene/gray_transition_lighten.gbapal");
-static const u16 sUnknown_085B5544[] = INCBIN_U16("graphics/evolution_scene/gray_transition_darken.gbapal");
-static const u16 sUnknown_085B56E4[] = INCBIN_U16("graphics/evolution_scene/gray_transition_outro.gbapal");
+static const u16 sUnknown_085B51E4[] =
+    INCBIN_U16("graphics/evolution_scene/gray_transition_intro.gbapal");
+static const u16 sUnknown_085B53E4[] =
+    INCBIN_U16("graphics/evolution_scene/gray_transition_lighten.gbapal");
+static const u16 sUnknown_085B5544[] =
+    INCBIN_U16("graphics/evolution_scene/gray_transition_darken.gbapal");
+static const u16 sUnknown_085B56E4[] =
+    INCBIN_U16("graphics/evolution_scene/gray_transition_outro.gbapal");
 static const u16 sUnknown_085B5884[] = INCBIN_U16("graphics/evolution_scene/transition.gbapal");
 
 static const u8 Text_ShedinjaJapaneseName[] = _("ヌケニン");
 
-static const u8 sUnknown_085B58C9[][4] =
-{
+static const u8 sUnknown_085B58C9[][4] = {
     { 0x00, 0x0C, 0x01, 0x06 },
     { 0x0D, 0x24, 0x05, 0x02 },
     { 0x0D, 0x18, 0x01, 0x02 },
     { 0x25, 0x31, 0x01, 0x06 },
 };
 
-static const u8 sUnknown_085B58D9[][16] = {
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00, 0x0B, 0x00, 0x00 },
-    { 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x00, 0x00 },
-    { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x00, 0x00 },
-    { 0x00, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x00, 0x00 },
-    { 0x00, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x00, 0x00 },
-    { 0x00, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x00, 0x00 },
-    { 0x00, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x00, 0x00 },
-    { 0x00, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x00, 0x00 },
-    { 0x00, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x00, 0x00 },
-    { 0x00, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x00, 0x00 },
-    { 0x00, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x00, 0x00 },
-    { 0x00, 0x0A, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x00, 0x00 },
-    { 0x00, 0x0B, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x00, 0x00 },
-    { 0x00, 0x0C, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x00, 0x00 },
-    { 0x00, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00 },
-    { 0x00, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x00, 0x00 },
-    { 0x00, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x00, 0x00 },
-    { 0x00, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x00, 0x00 },
-    { 0x00, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x00, 0x00 },
-    { 0x00, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x00, 0x00 },
-    { 0x00, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x00 },
-    { 0x00, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x00, 0x00 },
-    { 0x00, 0x05, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00, 0x00 },
-    { 0x00, 0x04, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x00, 0x00 },
-    { 0x00, 0x03, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x00, 0x00 },
-    { 0x00, 0x02, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x00, 0x00 },
-    { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x00, 0x00 },
-    { 0x00, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00 },
-    { 0x00, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x04, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-};
+static const u8 sUnknown_085B58D9[][16] = { { 0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x00,
+                                                0x01,
+                                                0x00,
+                                                0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x00,
+        0x0B,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0C,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0D,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x03,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x02,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x01,
+        0x02,
+        0x03,
+        0x04,
+        0x05,
+        0x06,
+        0x07,
+        0x08,
+        0x09,
+        0x0A,
+        0x0B,
+        0x0C,
+        0x0D,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0C,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0B,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x0A,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x09,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x08,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x07,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x06,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x05,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x04,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x03,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x02,
+        0x01,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 },
+    { 0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00 } };
 
 static void CB2_BeginEvolutionScene(void)
 {
@@ -149,24 +900,24 @@ static void CB2_BeginEvolutionScene(void)
     RunTasks();
 }
 
-#define tState              data[0]
-#define tPreEvoSpecies      data[1]
-#define tPostEvoSpecies     data[2]
-#define tCanStop            data[3]
-#define tBits               data[3]
-#define tLearnsFirstMove    data[4]
-#define tLearnMoveState     data[6]
-#define tData7              data[7]
-#define tData8              data[8]
-#define tEvoWasStopped      data[9]
-#define tPartyID            data[10]
+#define tState           data[0]
+#define tPreEvoSpecies   data[1]
+#define tPostEvoSpecies  data[2]
+#define tCanStop         data[3]
+#define tBits            data[3]
+#define tLearnsFirstMove data[4]
+#define tLearnMoveState  data[6]
+#define tData7           data[7]
+#define tData8           data[8]
+#define tEvoWasStopped   data[9]
+#define tPartyID         data[10]
 
-#define TASK_BIT_CAN_STOP       0x1
-#define TASK_BIT_LEARN_MOVE     0x80
+#define TASK_BIT_CAN_STOP   0x1
+#define TASK_BIT_LEARN_MOVE 0x80
 
 static void Task_BeginEvolutionScene(u8 taskID)
 {
-    struct Pokemon* mon = NULL;
+    struct Pokemon *mon = NULL;
     switch (gTasks[taskID].tState)
     {
     case 0:
@@ -192,7 +943,7 @@ static void Task_BeginEvolutionScene(u8 taskID)
     }
 }
 
-void BeginEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, u8 partyID)
+void BeginEvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, bool8 canStopEvo, u8 partyID)
 {
     u8 taskID = CreateTask(Task_BeginEvolutionScene, 0);
     gTasks[taskID].tState = 0;
@@ -202,17 +953,17 @@ void BeginEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStop
     SetMainCallback2(CB2_BeginEvolutionScene);
 }
 
-void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, u8 partyID)
+void EvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, bool8 canStopEvo, u8 partyID)
 {
     u8 name[20];
     u16 currSpecies;
     u32 trainerId, personality;
-    const struct CompressedSpritePalette* pokePal;
+    const struct CompressedSpritePalette *pokePal;
     u8 ID;
 
     SetHBlankCallback(NULL);
     SetVBlankCallback(NULL);
-    CpuFill32(0, (void*)(VRAM), VRAM_SIZE);
+    CpuFill32(0, (void *)(VRAM), VRAM_SIZE);
 
     SetGpuReg(REG_OFFSET_MOSAIC, 0);
     SetGpuReg(REG_OFFSET_WIN0H, 0);
@@ -255,9 +1006,8 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     currSpecies = GetMonData(mon, MON_DATA_SPECIES);
     trainerId = GetMonData(mon, MON_DATA_OT_ID);
     personality = GetMonData(mon, MON_DATA_PERSONALITY);
-    DecompressPicFromTable_2(&gMonFrontPicTable[currSpecies],
-                             gMonSpritesGfxPtr->sprites[1],
-                             currSpecies);
+    DecompressPicFromTable_2(
+        &gMonFrontPicTable[currSpecies], gMonSpritesGfxPtr->sprites[1], currSpecies);
     pokePal = GetMonSpritePalStructFromOtIdPersonality(currSpecies, trainerId, personality);
     LoadCompressedPalette(pokePal->data, 0x110, 0x20);
 
@@ -270,9 +1020,8 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     gSprites[ID].invisible = TRUE;
 
     // postEvo sprite
-    DecompressPicFromTable_2(&gMonFrontPicTable[speciesToEvolve],
-                             gMonSpritesGfxPtr->sprites[3],
-                             speciesToEvolve);
+    DecompressPicFromTable_2(
+        &gMonFrontPicTable[speciesToEvolve], gMonSpritesGfxPtr->sprites[3], speciesToEvolve);
     pokePal = GetMonSpritePalStructFromOtIdPersonality(speciesToEvolve, trainerId, personality);
     LoadCompressedPalette(pokePal->data, 0x120, 0x20);
 
@@ -307,10 +1056,10 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
 static void CB2_EvolutionSceneLoadGraphics(void)
 {
     u8 ID;
-    const struct CompressedSpritePalette* pokePal;
+    const struct CompressedSpritePalette *pokePal;
     u16 postEvoSpecies;
     u32 trainerId, personality;
-    struct Pokemon* Mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskID].tPartyID];
+    struct Pokemon *Mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskID].tPartyID];
 
     postEvoSpecies = gTasks[sEvoStructPtr->evoTaskID].tPostEvoSpecies;
     trainerId = GetMonData(Mon, MON_DATA_OT_ID);
@@ -318,7 +1067,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
 
     SetHBlankCallback(NULL);
     SetVBlankCallback(NULL);
-    CpuFill32(0, (void*)(VRAM), VRAM_SIZE);
+    CpuFill32(0, (void *)(VRAM), VRAM_SIZE);
 
     SetGpuReg(REG_OFFSET_MOSAIC, 0);
     SetGpuReg(REG_OFFSET_WIN0H, 0);
@@ -347,9 +1096,8 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 4;
 
-    DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
-                             gMonSpritesGfxPtr->sprites[3],
-                             postEvoSpecies);
+    DecompressPicFromTable_2(
+        &gMonFrontPicTable[postEvoSpecies], gMonSpritesGfxPtr->sprites[3], postEvoSpecies);
     pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
 
     LoadCompressedPalette(pokePal->data, 0x120, 0x20);
@@ -377,7 +1125,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
 
 static void CB2_TradeEvolutionSceneLoadGraphics(void)
 {
-    struct Pokemon* Mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskID].tPartyID];
+    struct Pokemon *Mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskID].tPartyID];
     u16 postEvoSpecies = gTasks[sEvoStructPtr->evoTaskID].tPostEvoSpecies;
 
     switch (gMain.state)
@@ -415,39 +1163,38 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         gMain.state++;
         break;
     case 4:
-        {
-            const struct CompressedSpritePalette* pokePal;
-            u32 trainerId = GetMonData(Mon, MON_DATA_OT_ID);
-            u32 personality = GetMonData(Mon, MON_DATA_PERSONALITY);
-            DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
-                                     gMonSpritesGfxPtr->sprites[3],
-                                     postEvoSpecies);
-            pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
-            LoadCompressedPalette(pokePal->data, 0x120, 0x20);
-            gMain.state++;
-        }
-        break;
+    {
+        const struct CompressedSpritePalette *pokePal;
+        u32 trainerId = GetMonData(Mon, MON_DATA_OT_ID);
+        u32 personality = GetMonData(Mon, MON_DATA_PERSONALITY);
+        DecompressPicFromTable_2(
+            &gMonFrontPicTable[postEvoSpecies], gMonSpritesGfxPtr->sprites[3], postEvoSpecies);
+        pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
+        LoadCompressedPalette(pokePal->data, 0x120, 0x20);
+        gMain.state++;
+    }
+    break;
     case 5:
-        {
-            u8 ID;
+    {
+        u8 ID;
 
-            SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, 1);
-            gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-            sEvoStructPtr->postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+        SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, 1);
+        gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+        sEvoStructPtr->postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
 
-            gSprites[ID].callback = SpriteCallbackDummy_2;
-            gSprites[ID].oam.paletteNum = 2;
-            gMain.state++;
-            LinkTradeDrawWindow();
-        }
-        break;
+        gSprites[ID].callback = SpriteCallbackDummy_2;
+        gSprites[ID].oam.paletteNum = 2;
+        gMain.state++;
+        LinkTradeDrawWindow();
+    }
+    break;
     case 6:
         if (gWirelessCommType)
         {
             LoadWirelessStatusIndicatorSpriteGfx();
             CreateWirelessStatusIndicatorSprite(0, 0);
         }
-        BlendPalettes(-1,0x10, 0);
+        BlendPalettes(-1, 0x10, 0);
         gMain.state++;
         break;
     case 7:
@@ -456,17 +1203,18 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         ShowBg(0);
         ShowBg(1);
         SetMainCallback2(CB2_TradeEvolutionSceneUpdate);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP);
         break;
     }
 }
 
-void TradeEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, u8 preEvoSpriteID, u8 partyID)
+void TradeEvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, u8 preEvoSpriteID, u8 partyID)
 {
     u8 name[20];
     u16 currSpecies;
     u32 trainerId, personality;
-    const struct CompressedSpritePalette* pokePal;
+    const struct CompressedSpritePalette *pokePal;
     u8 ID;
 
     GetMonData(mon, MON_DATA_NICKNAME, name);
@@ -483,9 +1231,8 @@ void TradeEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, u8 preEvoSpri
     sEvoStructPtr = AllocZeroed(sizeof(struct EvoInfo));
     sEvoStructPtr->preEvoSpriteID = preEvoSpriteID;
 
-    DecompressPicFromTable_2(&gMonFrontPicTable[speciesToEvolve],
-                            gMonSpritesGfxPtr->sprites[1],
-                            speciesToEvolve);
+    DecompressPicFromTable_2(
+        &gMonFrontPicTable[speciesToEvolve], gMonSpritesGfxPtr->sprites[1], speciesToEvolve);
 
     pokePal = GetMonSpritePalStructFromOtIdPersonality(speciesToEvolve, trainerId, personality);
     LoadCompressedPalette(pokePal->data, 0x120, 0x20);
@@ -541,19 +1288,23 @@ static void CB2_TradeEvolutionSceneUpdate(void)
     RunTasks();
 }
 
-static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
+static void CreateShedinja(u16 preEvoSpecies, struct Pokemon *mon)
 {
     u32 data = 0;
     if (gEvolutionTable[preEvoSpecies][0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < 6)
     {
         s32 i;
-        struct Pokemon* shedinja = &gPlayerParty[gPlayerPartyCount];
+        struct Pokemon *shedinja = &gPlayerParty[gPlayerPartyCount];
         const struct Evolution *evos;
         const struct Evolution *evos2;
 
         CopyMon(&gPlayerParty[gPlayerPartyCount], mon, sizeof(struct Pokemon));
-        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_SPECIES, (&gEvolutionTable[preEvoSpecies][1].targetSpecies));
-        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_NICKNAME, (gSpeciesNames[gEvolutionTable[preEvoSpecies][1].targetSpecies]));
+        SetMonData(&gPlayerParty[gPlayerPartyCount],
+            MON_DATA_SPECIES,
+            (&gEvolutionTable[preEvoSpecies][1].targetSpecies));
+        SetMonData(&gPlayerParty[gPlayerPartyCount],
+            MON_DATA_NICKNAME,
+            (gSpeciesNames[gEvolutionTable[preEvoSpecies][1].targetSpecies]));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_HELD_ITEM, (&data));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_MARKINGS, (&data));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_ENCRYPT_SEPARATOR, (&data));
@@ -577,23 +1328,21 @@ static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
         GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos[1].targetSpecies), FLAG_SET_SEEN);
         GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos[1].targetSpecies), FLAG_SET_CAUGHT);
 
-        if (GetMonData(shedinja, MON_DATA_SPECIES) == SPECIES_SHEDINJA
-            && GetMonData(shedinja, MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE
-            && GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NINJASK)
-                SetMonData(shedinja, MON_DATA_NICKNAME, Text_ShedinjaJapaneseName);
+        if (GetMonData(shedinja, MON_DATA_SPECIES) == SPECIES_SHEDINJA &&
+            GetMonData(shedinja, MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE &&
+            GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NINJASK)
+            SetMonData(shedinja, MON_DATA_NICKNAME, Text_ShedinjaJapaneseName);
     }
 }
 
 static void Task_EvolutionScene(u8 taskID)
 {
     u32 var;
-    struct Pokemon* mon = &gPlayerParty[gTasks[taskID].tPartyID];
+    struct Pokemon *mon = &gPlayerParty[gTasks[taskID].tPartyID];
 
     // check if B Button was held, so the evolution gets stopped
-    if (gMain.heldKeys == B_BUTTON
-        && gTasks[taskID].tState == 8
-        && gTasks[sEvoGraphicsTaskID].isActive
-        && gTasks[taskID].tBits & TASK_BIT_CAN_STOP)
+    if (gMain.heldKeys == B_BUTTON && gTasks[taskID].tState == 8 &&
+        gTasks[sEvoGraphicsTaskID].isActive && gTasks[taskID].tBits & TASK_BIT_CAN_STOP)
     {
         gTasks[taskID].tState = 17;
         gTasks[sEvoGraphicsTaskID].EvoGraphicsTaskEvoStop = TRUE;
@@ -628,7 +1377,8 @@ static void Task_EvolutionScene(u8 taskID)
         }
         break;
     case 3:
-        if (EvoScene_IsMonAnimFinished(sEvoStructPtr->preEvoSpriteID)) // wait for animation, play tu du SE
+        if (EvoScene_IsMonAnimFinished(
+                sEvoStructPtr->preEvoSpriteID)) // wait for animation, play tu du SE
         {
             PlaySE(MUS_ME_SHINKA);
             gTasks[taskID].tState++;
@@ -661,7 +1411,8 @@ static void Task_EvolutionScene(u8 taskID)
     case 7: // launch task that flashes pre evo with post evo sprites
         if (!gTasks[sEvoGraphicsTaskID].isActive)
         {
-            sEvoGraphicsTaskID = sub_817C3A0(sEvoStructPtr->preEvoSpriteID, sEvoStructPtr->postEvoSpriteID);
+            sEvoGraphicsTaskID =
+                sub_817C3A0(sEvoStructPtr->preEvoSpriteID, sEvoStructPtr->postEvoSpriteID);
             gTasks[taskID].tState++;
         }
         break;
@@ -680,7 +1431,8 @@ static void Task_EvolutionScene(u8 taskID)
     case 10:
         if (!gTasks[sEvoGraphicsTaskID].isActive)
         {
-            sEvoGraphicsTaskID = LaunchTask_PostEvoSparklesSet2AndFlash(gTasks[taskID].tPostEvoSpecies);
+            sEvoGraphicsTaskID =
+                LaunchTask_PostEvoSparklesSet2AndFlash(gTasks[taskID].tPostEvoSpecies);
             gTasks[taskID].tState++;
         }
         break;
@@ -715,11 +1467,13 @@ static void Task_EvolutionScene(u8 taskID)
             BattlePutTextOnWindow(gStringVar4, 0);
             PlayBGM(MUS_FANFA5);
             gTasks[taskID].tState++;
-            SetMonData(mon, MON_DATA_SPECIES, (void*)(&gTasks[taskID].tPostEvoSpecies));
+            SetMonData(mon, MON_DATA_SPECIES, (void *)(&gTasks[taskID].tPostEvoSpecies));
             CalculateMonStats(mon);
             EvolutionRenameMon(mon, gTasks[taskID].tPreEvoSpecies, gTasks[taskID].tPostEvoSpecies);
-            GetSetPokedexFlag(SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_SEEN);
-            GetSetPokedexFlag(SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_CAUGHT);
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_SEEN);
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_CAUGHT);
             IncrementGameStat(GAME_STAT_EVOLVED_POKEMON);
         }
         break;
@@ -809,7 +1563,8 @@ static void Task_EvolutionScene(u8 taskID)
         {
             BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_FANFA1);
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_ID_ADDER]);
             BattlePutTextOnWindow(gDisplayedStringBattle, 0);
             gTasks[taskID].tLearnsFirstMove = 0x40; // re-used as a counter
             gTasks[taskID].tState++;
@@ -826,7 +1581,8 @@ static void Task_EvolutionScene(u8 taskID)
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
                 BufferMoveToLearnIntoBattleTextBuff2();
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE1 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE1 - BATTLESTRINGS_ID_ADDER]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -834,7 +1590,8 @@ static void Task_EvolutionScene(u8 taskID)
         case 1:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE2 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE2 - BATTLESTRINGS_ID_ADDER]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -842,7 +1599,8 @@ static void Task_EvolutionScene(u8 taskID)
         case 2:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_ID_ADDER]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                 gTasks[taskID].tData7 = 5;
                 gTasks[taskID].tData8 = 10;
@@ -900,9 +1658,11 @@ static void Task_EvolutionScene(u8 taskID)
             if (!gPaletteFade.active)
             {
                 FreeAllWindowBuffers();
-                ShowSelectMovePokemonSummaryScreen(gPlayerParty, gTasks[taskID].tPartyID,
-                            gPlayerPartyCount - 1, CB2_EvolutionSceneLoadGraphics,
-                            gMoveToLearn);
+                ShowSelectMovePokemonSummaryScreen(gPlayerParty,
+                    gTasks[taskID].tPartyID,
+                    gPlayerPartyCount - 1,
+                    CB2_EvolutionSceneLoadGraphics,
+                    gMoveToLearn);
                 gTasks[taskID].tLearnMoveState++;
             }
             break;
@@ -919,7 +1679,9 @@ static void Task_EvolutionScene(u8 taskID)
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
                     if (IsHMMove2(move))
                     {
-                        BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_HMMOVESCANTBEFORGOTTEN - BATTLESTRINGS_ID_ADDER]);
+                        BattleStringExpandPlaceholdersToDisplayedString(
+                            gBattleStringsTable[STRINGID_HMMOVESCANTBEFORGOTTEN -
+                                                BATTLESTRINGS_ID_ADDER]);
                         BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                         gTasks[taskID].tLearnMoveState = 12;
                     }
@@ -935,14 +1697,16 @@ static void Task_EvolutionScene(u8 taskID)
             }
             break;
         case 7:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_123POOF - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_123POOF - BATTLESTRINGS_ID_ADDER]);
             BattlePutTextOnWindow(gDisplayedStringBattle, 0);
             gTasks[taskID].tLearnMoveState++;
             break;
         case 8:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNFORGOTMOVE - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_PKMNFORGOTMOVE - BATTLESTRINGS_ID_ADDER]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -950,20 +1714,23 @@ static void Task_EvolutionScene(u8 taskID)
         case 9:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_ANDELLIPSIS - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_ANDELLIPSIS - BATTLESTRINGS_ID_ADDER]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, 0);
                 gTasks[taskID].tState = 20;
             }
             break;
         case 10:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_ID_ADDER]);
             BattlePutTextOnWindow(gDisplayedStringBattle, 0);
             gTasks[taskID].tData7 = 11;
             gTasks[taskID].tData8 = 0;
             gTasks[taskID].tLearnMoveState = 3;
             break;
         case 11:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_ID_ADDER]);
             BattlePutTextOnWindow(gDisplayedStringBattle, 0);
             gTasks[taskID].tState = 15;
             break;
@@ -979,7 +1746,7 @@ static void Task_EvolutionScene(u8 taskID)
 static void Task_TradeEvolutionScene(u8 taskID)
 {
     u32 var = 0;
-    struct Pokemon* mon = &gPlayerParty[gTasks[taskID].tPartyID];
+    struct Pokemon *mon = &gPlayerParty[gTasks[taskID].tPartyID];
 
     switch (gTasks[taskID].tState)
     {
@@ -1032,7 +1799,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
     case 6:
         if (!gTasks[sEvoGraphicsTaskID].isActive)
         {
-            sEvoGraphicsTaskID = sub_817C3A0(sEvoStructPtr->preEvoSpriteID, sEvoStructPtr->postEvoSpriteID);
+            sEvoGraphicsTaskID =
+                sub_817C3A0(sEvoStructPtr->preEvoSpriteID, sEvoStructPtr->postEvoSpriteID);
             gTasks[taskID].tState++;
         }
         break;
@@ -1051,7 +1819,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
     case 9:
         if (!gTasks[sEvoGraphicsTaskID].isActive)
         {
-            sEvoGraphicsTaskID = LaunchTask_PostEvoSparklesSet2AndFlash_Trade(gTasks[taskID].tPostEvoSpecies);
+            sEvoGraphicsTaskID =
+                LaunchTask_PostEvoSparklesSet2AndFlash_Trade(gTasks[taskID].tPostEvoSpecies);
             gTasks[taskID].tState++;
         }
         break;
@@ -1081,8 +1850,10 @@ static void Task_TradeEvolutionScene(u8 taskID)
             SetMonData(mon, MON_DATA_SPECIES, (&gTasks[taskID].tPostEvoSpecies));
             CalculateMonStats(mon);
             EvolutionRenameMon(mon, gTasks[taskID].tPreEvoSpecies, gTasks[taskID].tPostEvoSpecies);
-            GetSetPokedexFlag(SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_SEEN);
-            GetSetPokedexFlag(SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_CAUGHT);
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_SEEN);
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(gTasks[taskID].tPostEvoSpecies), FLAG_SET_CAUGHT);
             IncrementGameStat(GAME_STAT_EVOLVED_POKEMON);
         }
         break;
@@ -1129,7 +1900,12 @@ static void Task_TradeEvolutionScene(u8 taskID)
         if (!gTasks[sEvoGraphicsTaskID].isActive)
         {
             m4aMPlayAllStop();
-            BeginNormalPaletteFade((1 << (gSprites[sEvoStructPtr->preEvoSpriteID].oam.paletteNum + 16)) | (0x4001C), 0, 0x10, 0, RGB_WHITE);
+            BeginNormalPaletteFade(
+                (1 << (gSprites[sEvoStructPtr->preEvoSpriteID].oam.paletteNum + 16)) | (0x4001C),
+                0,
+                0x10,
+                0,
+                RGB_WHITE);
             gTasks[taskID].tState++;
         }
         break;
@@ -1154,14 +1930,16 @@ static void Task_TradeEvolutionScene(u8 taskID)
         {
             BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_FANFA1);
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_ID_ADDER]);
             DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
             gTasks[taskID].tLearnsFirstMove = 0x40; // re-used as a counter
             gTasks[taskID].tState++;
         }
         break;
     case 19:
-        if (!IsTextPrinterActive(0) && IsFanfareTaskInactive() == TRUE && --gTasks[taskID].tLearnsFirstMove == 0)
+        if (!IsTextPrinterActive(0) && IsFanfareTaskInactive() == TRUE &&
+            --gTasks[taskID].tLearnsFirstMove == 0)
             gTasks[taskID].tState = 13;
         break;
     case 20:
@@ -1171,7 +1949,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
                 BufferMoveToLearnIntoBattleTextBuff2();
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE1 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE1 - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -1179,7 +1958,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 1:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE2 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE2 - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -1187,7 +1967,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 2:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tData7 = 5;
                 gTasks[taskID].tData8 = 9;
@@ -1208,7 +1989,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
             {
             case 0:
                 sEvoCursorPos = 0;
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_EMPTYSTRING3 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_EMPTYSTRING3 - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tLearnMoveState = gTasks[taskID].tData7;
                 if (gTasks[taskID].tLearnMoveState == 5)
@@ -1217,7 +1999,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
             case 1:
             case -1:
                 sEvoCursorPos = 1;
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_EMPTYSTRING3 - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_EMPTYSTRING3 - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tLearnMoveState = gTasks[taskID].tData8;
                 break;
@@ -1234,9 +2017,11 @@ static void Task_TradeEvolutionScene(u8 taskID)
                 Free(GetBgTilemapBuffer(0));
                 FreeAllWindowBuffers();
 
-                ShowSelectMovePokemonSummaryScreen(gPlayerParty, gTasks[taskID].tPartyID,
-                            gPlayerPartyCount - 1, CB2_TradeEvolutionSceneLoadGraphics,
-                            gMoveToLearn);
+                ShowSelectMovePokemonSummaryScreen(gPlayerParty,
+                    gTasks[taskID].tPartyID,
+                    gPlayerPartyCount - 1,
+                    CB2_TradeEvolutionSceneLoadGraphics,
+                    gMoveToLearn);
                 gTasks[taskID].tLearnMoveState++;
             }
             break;
@@ -1253,7 +2038,9 @@ static void Task_TradeEvolutionScene(u8 taskID)
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
                     if (IsHMMove2(move))
                     {
-                        BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_HMMOVESCANTBEFORGOTTEN - BATTLESTRINGS_ID_ADDER]);
+                        BattleStringExpandPlaceholdersToDisplayedString(
+                            gBattleStringsTable[STRINGID_HMMOVESCANTBEFORGOTTEN -
+                                                BATTLESTRINGS_ID_ADDER]);
                         DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                         gTasks[taskID].tLearnMoveState = 11;
                     }
@@ -1263,7 +2050,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
 
                         RemoveMonPPBonus(mon, var);
                         SetMonMoveSlot(mon, gMoveToLearn, var);
-                        BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_123POOF - BATTLESTRINGS_ID_ADDER]);
+                        BattleStringExpandPlaceholdersToDisplayedString(
+                            gBattleStringsTable[STRINGID_123POOF - BATTLESTRINGS_ID_ADDER]);
                         DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                         gTasks[taskID].tLearnMoveState++;
                     }
@@ -1273,7 +2061,8 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 7:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNFORGOTMOVE - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_PKMNFORGOTMOVE - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tLearnMoveState++;
             }
@@ -1281,20 +2070,23 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 8:
             if (!IsTextPrinterActive(0) && !IsSEPlaying())
             {
-                BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_ANDELLIPSIS - BATTLESTRINGS_ID_ADDER]);
+                BattleStringExpandPlaceholdersToDisplayedString(
+                    gBattleStringsTable[STRINGID_ANDELLIPSIS - BATTLESTRINGS_ID_ADDER]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskID].tState = 18;
             }
             break;
         case 9:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_ID_ADDER]);
             DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
             gTasks[taskID].tData7 = 10;
             gTasks[taskID].tData8 = 0;
             gTasks[taskID].tLearnMoveState = 3;
             break;
         case 10:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_ID_ADDER]);
+            BattleStringExpandPlaceholdersToDisplayedString(
+                gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_ID_ADDER]);
             DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
             gTasks[taskID].tState = 13;
             break;
@@ -1476,7 +2268,8 @@ static void InitMovingBackgroundTask(bool8 isLink)
     {
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG2);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_OBJ_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
 
         SetBgAttribute(innerBgId, BG_ATTR_PRIORITY, 2);
         SetBgAttribute(outerBgId, BG_ATTR_PRIORITY, 2);
@@ -1488,7 +2281,8 @@ static void InitMovingBackgroundTask(bool8 isLink)
     {
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
     }
 
     CreateTask(sub_813FDEC, 5);
@@ -1526,7 +2320,8 @@ static void sub_8140174(void)
     gBattle_BG2_X = 0;
     SetBgAttribute(1, BG_ATTR_PRIORITY, sub_80391E0(1, 5));
     SetBgAttribute(2, BG_ATTR_PRIORITY, sub_80391E0(2, 5));
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+    SetGpuReg(
+        REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
     Free(sEvoMovingBgPtr);
 }
 

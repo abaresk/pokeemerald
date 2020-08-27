@@ -11,4 +11,4 @@ void sub_81A586C(u8 battler);
 void DrawArenaRefereeTextBox(void);
 void RemoveArenaRefereeTextBox(void);
 
-#endif //GUARD_BATTLE_ARENA_H
+#endif // GUARD_BATTLE_ARENA_H

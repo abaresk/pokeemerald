@@ -20,73 +20,44 @@ static bool32 RunMinigameCountdownDigitsAnim(u8 spriteId);
 static bool32 IsStartGraphicAnimRunning(u8 spriteId);
 static void Load321StartGfx(u16 tileTag, u16 palTag);
 static u8 CreateNumberSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority);
-static void CreateStartSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority, s16 *spriteId1, s16 *spriteId2);
+static void CreateStartSprite(
+    u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority, s16 *spriteId1, s16 *spriteId2);
 static void InitStartGraphic(u8 spriteId1, u8 spriteId2, u8 spriteId3);
 static void SpriteCB_Start(struct Sprite *sprite);
 
 static const u16 sSpritePal_321Start_2[] = INCBIN_U16("graphics/link_games/321start_2.gbapal");
 static const u32 sSpriteSheet_321Start_2[] = INCBIN_U32("graphics/link_games/321start_2.4bpp.lz");
 
-static const struct CompressedSpriteSheet gUnknown_082FE6C8[] =
-{
-    {sSpriteSheet_321Start_2, 0xC00, 0x2000},
+static const struct CompressedSpriteSheet gUnknown_082FE6C8[] = {
+    { sSpriteSheet_321Start_2, 0xC00, 0x2000 },
     {},
 };
 
-static const struct SpritePalette gUnknown_082FE6D8[] =
-{
-    {sSpritePal_321Start_2, 0x2000},
+static const struct SpritePalette gUnknown_082FE6D8[] = {
+    { sSpritePal_321Start_2, 0x2000 },
     {},
 };
 
-static const union AnimCmd sSpriteAnim_82FE6E8[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE6E8[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FE6F0[] =
-{
-    ANIMCMD_FRAME(16, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE6F0[] = { ANIMCMD_FRAME(16, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FE6F8[] =
-{
-    ANIMCMD_FRAME(32, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE6F8[] = { ANIMCMD_FRAME(32, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FE700[] =
-{
-    ANIMCMD_FRAME(64, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE700[] = { ANIMCMD_FRAME(64, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FE708[] =
-{
-    ANIMCMD_FRAME(48, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE708[] = { ANIMCMD_FRAME(48, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FE710[] =
-{
-    ANIMCMD_FRAME(80, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FE710[] = { ANIMCMD_FRAME(80, 0), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_82FE718[] =
-{
-    sSpriteAnim_82FE6E8,
+static const union AnimCmd *const sSpriteAnimTable_82FE718[] = { sSpriteAnim_82FE6E8,
     sSpriteAnim_82FE6F0,
     sSpriteAnim_82FE6F8,
     sSpriteAnim_82FE700,
     sSpriteAnim_82FE708,
-    sSpriteAnim_82FE710
-};
+    sSpriteAnim_82FE710 };
 
-static const struct SpriteTemplate gUnknown_082FE730[] =
-{
+static const struct SpriteTemplate gUnknown_082FE730[] = {
     {
         .tileTag = 0x2000,
         .paletteTag = 0x2000,
@@ -98,14 +69,8 @@ static const struct SpriteTemplate gUnknown_082FE730[] =
     },
 };
 
-static const TaskFunc gUnknown_082FE748[][4] =
-{
-    {
-        sub_802E83C,
-        sub_802E8C8,
-        sub_802EA50,
-        sub_802EAB0
-    },
+static const TaskFunc gUnknown_082FE748[][4] = {
+    { sub_802E83C, sub_802E8C8, sub_802EA50, sub_802EAB0 },
 };
 
 static const u16 sSpritePal_321Start[] = INCBIN_U16("graphics/link_games/321start.gbapal");
@@ -478,8 +443,8 @@ static void SpriteCB_Start(struct Sprite *sprite)
 
 static void Load321StartGfx(u16 tileTag, u16 palTag)
 {
-    struct CompressedSpriteSheet spriteSheet = {sSpriteSheet_321Start, 0xE00, 0};
-    struct SpritePalette spritePalette = {sSpritePal_321Start, 0};
+    struct CompressedSpriteSheet spriteSheet = { sSpriteSheet_321Start, 0xE00, 0 };
+    struct SpritePalette spritePalette = { sSpritePal_321Start, 0 };
 
     spriteSheet.tag = tileTag;
     spritePalette.tag = palTag;
@@ -488,9 +453,7 @@ static void Load321StartGfx(u16 tileTag, u16 palTag)
     LoadSpritePalette(&spritePalette);
 }
 
-static const struct OamData sOamData_Numbers =
-{
-    .y = 0,
+static const struct OamData sOamData_Numbers = { .y = 0,
     .affineMode = ST_OAM_AFFINE_DOUBLE,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -502,12 +465,9 @@ static const struct OamData sOamData_Numbers =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_Start =
-{
-    .y = 0,
+static const struct OamData sOamData_Start = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -519,91 +479,46 @@ static const struct OamData sOamData_Start =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AnimCmd sAnim_Numbers_Three[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+
+static const union AnimCmd sAnim_Numbers_Two[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
+
+static const union AnimCmd sAnim_Numbers_One[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sAnimTable_Numbers[] = {
+    sAnim_Numbers_Three, sAnim_Numbers_Two, sAnim_Numbers_One
 };
 
-static const union AnimCmd sAnim_Numbers_Three[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
+static const union AnimCmd sAnim_StartLeft[] = { ANIMCMD_FRAME(48, 1), ANIMCMD_END };
+
+static const union AnimCmd sAnim_StartRight[] = { ANIMCMD_FRAME(80, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sAnimTable_Start[] = { sAnim_StartLeft, sAnim_StartRight };
+
+static const union AffineAnimCmd sAffineAnim_Numbers_0[] = { AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END };
+
+static const union AffineAnimCmd sAffineAnim_Numbers_1[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_FRAME(16, -16, 0, 8), AFFINEANIMCMD_END
 };
 
-static const union AnimCmd sAnim_Numbers_Two[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
+static const union AffineAnimCmd sAffineAnim_Numbers_2[] = { AFFINEANIMCMD_FRAME(-18, 18, 0, 8),
+    AFFINEANIMCMD_END };
 
-static const union AnimCmd sAnim_Numbers_One[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sAnimTable_Numbers[] =
-{
-    sAnim_Numbers_Three,
-    sAnim_Numbers_Two,
-    sAnim_Numbers_One
-};
-
-static const union AnimCmd sAnim_StartLeft[] =
-{
-    ANIMCMD_FRAME(48, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sAnim_StartRight[] =
-{
-    ANIMCMD_FRAME(80, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sAnimTable_Start[] =
-{
-    sAnim_StartLeft,
-    sAnim_StartRight
-};
-
-static const union AffineAnimCmd sAffineAnim_Numbers_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_Numbers_3[] = { AFFINEANIMCMD_FRAME(6, -6, 0, 8),
+    AFFINEANIMCMD_FRAME(-4, 4, 0, 8),
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
+    AFFINEANIMCMD_END };
 
-static const union AffineAnimCmd sAffineAnim_Numbers_1[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_FRAME(16, -16, 0, 8),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd sAffineAnim_Numbers_2[] =
-{
-    AFFINEANIMCMD_FRAME(-18, 18, 0, 8),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd sAffineAnim_Numbers_3[] =
-{
-    AFFINEANIMCMD_FRAME(  6,  -6, 0, 8),
-    AFFINEANIMCMD_FRAME( -4,   4, 0, 8),
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sAffineAnimTable_Numbers[] =
-{
-    sAffineAnim_Numbers_0,
-    sAffineAnim_Numbers_1,
-    sAffineAnim_Numbers_2,
-    sAffineAnim_Numbers_3
+static const union AffineAnimCmd *const sAffineAnimTable_Numbers[] = {
+    sAffineAnim_Numbers_0, sAffineAnim_Numbers_1, sAffineAnim_Numbers_2, sAffineAnim_Numbers_3
 };
 
 static u8 CreateNumberSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority)
 {
-    struct SpriteTemplate spriteTemplate =
-    {
+    struct SpriteTemplate spriteTemplate = {
         .oam = &sOamData_Numbers,
         .anims = sAnimTable_Numbers,
         .affineAnims = sAffineAnimTable_Numbers,
@@ -615,10 +530,10 @@ static u8 CreateNumberSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriori
     return CreateSprite(&spriteTemplate, x, y, subpriority);
 }
 
-static void CreateStartSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority, s16 *spriteId1, s16 *spriteId2)
+static void CreateStartSprite(
+    u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority, s16 *spriteId1, s16 *spriteId2)
 {
-    struct SpriteTemplate spriteTemplate =
-    {
+    struct SpriteTemplate spriteTemplate = {
         .oam = &sOamData_Start,
         .anims = sAnimTable_Start,
         .affineAnims = gDummySpriteAffineAnimTable,

@@ -51,12 +51,9 @@ static void Task_EnableScriptAfterMusicFade(u8 taskId);
 static const u16 sFlashLevelPixelRadii[] = { 200, 72, 64, 56, 48, 40, 32, 24, 0 };
 const s32 gMaxFlashLevel = ARRAY_COUNT(sFlashLevelPixelRadii) - 1;
 
-const struct ScanlineEffectParams sFlashEffectParams =
-{
-    (void *)REG_ADDR_WIN0H,
+const struct ScanlineEffectParams sFlashEffectParams = { (void *)REG_ADDR_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
-    1
-};
+    1 };
 
 // code
 static void FillPalBufferWhite(void)
@@ -335,7 +332,8 @@ static void Task_ExitDoor(u8 taskId)
             u8 objEventId;
             SetPlayerVisibility(TRUE);
             objEventId = GetObjectEventIdByLocalIdAndMap(OBJ_EVENT_ID_PLAYER, 0, 0);
-            ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN);
+            ObjectEventSetHeldMovement(
+                &gObjectEvents[objEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN);
             task->data[0] = 2;
         }
         break;
@@ -383,7 +381,8 @@ static void Task_ExitNonAnimDoor(u8 taskId)
             u8 objEventId;
             SetPlayerVisibility(TRUE);
             objEventId = GetObjectEventIdByLocalIdAndMap(OBJ_EVENT_ID_PLAYER, 0, 0);
-            ObjectEventSetHeldMovement(&gObjectEvents[objEventId], GetWalkNormalMovementAction(GetPlayerFacingDirection()));
+            ObjectEventSetHeldMovement(&gObjectEvents[objEventId],
+                GetWalkNormalMovementAction(GetPlayerFacingDirection()));
             task->data[0] = 2;
         }
         break;
@@ -543,7 +542,8 @@ void DoLavaridgeGym1FWarp(void)
     StartLavaridgeGym1FWarp(10);
 }
 
-// Warp from a teleporting tile, e.g. in Aqua Hideout (For the move Teleport see FldEff_TeleportWarpOut)
+// Warp from a teleporting tile, e.g. in Aqua Hideout (For the move Teleport see
+// FldEff_TeleportWarpOut)
 void DoTeleportTileWarp(void)
 {
     ScriptContext2_Enable();
@@ -818,7 +818,8 @@ static void SetOrbFlashScanlineEffectWindowBoundary(u16 *dest, u32 y, s32 left, 
     }
 }
 
-static void SetOrbFlashScanlineEffectWindowBoundaries(u16 *dest, s32 centerX, s32 centerY, s32 radius)
+static void SetOrbFlashScanlineEffectWindowBoundaries(
+    u16 *dest, s32 centerX, s32 centerY, s32 radius)
 {
     s32 r = radius;
     s32 v2 = radius;
@@ -853,11 +854,17 @@ static void UpdateFlashLevelEffect(u8 taskId)
     switch (data[0])
     {
     case 0:
-        SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
+        SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer],
+            tFlashCenterX,
+            tFlashCenterY,
+            tCurFlashRadius);
         data[0] = 1;
         break;
     case 1:
-        SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
+        SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer],
+            tFlashCenterX,
+            tFlashCenterY,
+            tCurFlashRadius);
         data[0] = 0;
         tCurFlashRadius += tFlashRadiusDelta;
         if (tCurFlashRadius > tDestFlashRadius)
@@ -887,11 +894,19 @@ static void UpdateOrbFlashEffect(u8 taskId)
     switch (data[0])
     {
     case 0:
-        SetOrbFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
+        SetOrbFlashScanlineEffectWindowBoundaries(
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer],
+            tFlashCenterX,
+            tFlashCenterY,
+            tCurFlashRadius);
         data[0] = 1;
         break;
     case 1:
-        SetOrbFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
+        SetOrbFlashScanlineEffectWindowBoundaries(
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer],
+            tFlashCenterX,
+            tFlashCenterY,
+            tCurFlashRadius);
         data[0] = 0;
         tCurFlashRadius += tFlashRadiusDelta;
         if (tCurFlashRadius > tDestFlashRadius)
@@ -929,7 +944,12 @@ static void sub_80AFFB8(void)
         CreateTask(sub_80AFF90, 80);
 }
 
-static u8 sub_80AFFDC(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
+static u8 sub_80AFFDC(s32 centerX,
+    s32 centerY,
+    s32 initialFlashRadius,
+    s32 destFlashRadius,
+    s32 clearScanlineEffect,
+    u8 delta)
 {
     u8 taskId = CreateTask(UpdateFlashLevelEffect, 80);
     s16 *data = gTasks[taskId].data;
@@ -948,7 +968,12 @@ static u8 sub_80AFFDC(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 dest
     return taskId;
 }
 
-static u8 sub_80B003C(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
+static u8 sub_80B003C(s32 centerX,
+    s32 centerY,
+    s32 initialFlashRadius,
+    s32 destFlashRadius,
+    s32 clearScanlineEffect,
+    u8 delta)
 {
     u8 taskId = CreateTask(UpdateOrbFlashEffect, 80);
     s16 *data = gTasks[taskId].data;
@@ -978,7 +1003,12 @@ void AnimateFlash(u8 flashLevel)
     u8 value = 0;
     if (!flashLevel)
         value = 1;
-    sub_80AFFDC(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
+    sub_80AFFDC(DISPLAY_WIDTH / 2,
+        DISPLAY_HEIGHT / 2,
+        sFlashLevelPixelRadii[curFlashLevel],
+        sFlashLevelPixelRadii[flashLevel],
+        value,
+        1);
     sub_80AFFB8();
     ScriptContext2_Enable();
 }
@@ -987,14 +1017,20 @@ void WriteFlashScanlineEffectBuffer(u8 flashLevel)
 {
     if (flashLevel)
     {
-        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelPixelRadii[flashLevel]);
+        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0],
+            DISPLAY_WIDTH / 2,
+            DISPLAY_HEIGHT / 2,
+            sFlashLevelPixelRadii[flashLevel]);
         CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
     }
 }
 
 void WriteBattlePyramidViewScanlineEffectBuffer(void)
 {
-    SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, gSaveBlock2Ptr->frontier.pyramidLightRadius);
+    SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0],
+        DISPLAY_WIDTH / 2,
+        DISPLAY_HEIGHT / 2,
+        gSaveBlock2Ptr->frontier.pyramidLightRadius);
     CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
 }
 
@@ -1109,17 +1145,17 @@ static bool8 sub_80B02C8(u16 shakeDir)
         return FALSE;
 }
 
-#define tState       data[0]
-#define tBlueOrb     data[1]
-#define tCenterX     data[2]
-#define tCenterY     data[3]
-#define tShakeDelay  data[4]
-#define tShakeDir    data[5]
-#define tDispCnt     data[6]
-#define tBldCnt      data[7]
-#define tBldAlpha    data[8]
-#define tWinIn       data[9]
-#define tWinOut      data[10]
+#define tState      data[0]
+#define tBlueOrb    data[1]
+#define tCenterX    data[2]
+#define tCenterY    data[3]
+#define tShakeDelay data[4]
+#define tShakeDir   data[5]
+#define tDispCnt    data[6]
+#define tBldCnt     data[7]
+#define tBldAlpha   data[8]
+#define tWinIn      data[9]
+#define tWinOut     data[10]
 
 static void Task_OrbEffect(u8 taskId)
 {
@@ -1137,10 +1173,12 @@ static void Task_OrbEffect(u8 taskId)
         SetGpuRegBits(REG_OFFSET_BLDCNT, gOrbEffectBackgroundLayerFlags[0]);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 7));
         SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT,
+            WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ);
         SetBgTilemapPalette(0, 0, 0, 0x1E, 0x14, 0xF);
         ScheduleBgCopyTilemapToVram(0);
-        SetOrbFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], tCenterX, tCenterY, 1);
+        SetOrbFlashScanlineEffectWindowBoundaries(
+            &gScanlineEffectRegBuffers[0][0], tCenterX, tCenterY, 1);
         CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
         ScanlineEffect_SetParams(sFlashEffectParams);
         tState = 1;

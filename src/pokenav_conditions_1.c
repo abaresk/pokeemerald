@@ -194,7 +194,9 @@ u8 sub_81CD258(u8 arg0)
     struct PokenavSub18 *unkPtr = GetSubstructPtr(18);
 
     r7 = (arg0) ? structPtr->unk6788 : structPtr->unk6787;
-    sub_81D1F84(&structPtr->unk6428, structPtr->unk6428.unk14[structPtr->unk6786], structPtr->unk6428.unk14[r7]);
+    sub_81D1F84(&structPtr->unk6428,
+        structPtr->unk6428.unk14[structPtr->unk6786],
+        structPtr->unk6428.unk14[r7]);
     r6 = (unkPtr->unk2 != ((sub_81CDD5C() != 0) ? unkPtr->unk0 : unkPtr->unk0 - 1));
     if (arg0)
     {
@@ -360,7 +362,8 @@ u8 *sub_81CD624(u8 *str, u16 id, bool8 arg3)
         level = GetLevelFromBoxMonExp(boxMon);
     }
 
-    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && !StringCompare(str, gSpeciesNames[species]))
+    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) &&
+        !StringCompare(str, gSpeciesNames[species]))
         gender = MON_GENDERLESS;
 
     str_ = str; // For some reason, a variable is needed to match.
@@ -497,10 +500,12 @@ void sub_81CDA1C(s16 arg0, u8 arg1)
         structPtr->unk6428.unk0[arg1][1] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_TOUGH, NULL);
         structPtr->unk6428.unk0[arg1][2] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SMART, NULL);
         structPtr->unk6428.unk0[arg1][3] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_CUTE, NULL);
-        structPtr->unk6428.unk0[arg1][4] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_BEAUTY, NULL);
-        structPtr->unk6780[arg1] = (GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) != 255)
-                                 ? GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) / 29u
-                                 : 9;
+        structPtr->unk6428.unk0[arg1][4] =
+            GetBoxOrPartyMonData(boxId, monId, MON_DATA_BEAUTY, NULL);
+        structPtr->unk6780[arg1] =
+            (GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) != 255)
+                ? GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) / 29u
+                : 9;
         structPtr->unk6783[arg1] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_MARKINGS, NULL);
         sub_81D2754(structPtr->unk6428.unk0[arg1], structPtr->unk6428.unk14[arg1]);
     }
@@ -530,8 +535,10 @@ void sub_81CDB98(s16 arg0, u8 arg1)
     species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES2, NULL);
     tid = GetBoxOrPartyMonData(boxId, monId, MON_DATA_OT_ID, NULL);
     personality = GetBoxOrPartyMonData(boxId, monId, MON_DATA_PERSONALITY, NULL);
-    LoadSpecialPokePic(&gMonFrontPicTable[species], structPtr->monPicGfx[arg1], species, personality, TRUE);
-    LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, tid, personality), structPtr->monPal[arg1]);
+    LoadSpecialPokePic(
+        &gMonFrontPicTable[species], structPtr->monPicGfx[arg1], species, personality, TRUE);
+    LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, tid, personality),
+        structPtr->monPal[arg1]);
 }
 
 u16 sub_81CDC50(void)

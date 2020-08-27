@@ -28,7 +28,8 @@
 #include "constants/event_objects.h"
 #include "constants/rgb.h"
 
-enum {
+enum
+{
     INPUT_NONE,
     INPUT_DPAD_UP,
     INPUT_DPAD_DOWN,
@@ -44,7 +45,8 @@ enum {
 #define KBROW_COUNT 4
 #define KBCOL_COUNT 8
 
-enum {
+enum
+{
     GFXTAG_BACK_BUTTON,
     GFXTAG_OK_BUTTON,
     GFXTAG_PAGE_SWAP_FRAME,
@@ -59,7 +61,8 @@ enum {
     GFXTAG_UNDERSCORE,
 };
 
-enum {
+enum
+{
     PALTAG_PC_ICON,
     PALTAG_PAGE_SWAP_UPPER,
     PALTAG_PAGE_SWAP_LOWER,
@@ -70,7 +73,8 @@ enum {
     PALTAG_OK_BUTTON,
 };
 
-enum {
+enum
+{
     WIN_KB_PAGE_1, // Which of these two windows is in front is cycled as the player swaps
     WIN_KB_PAGE_2, // Initially WIN_KB_PAGE_1 is in front, with WIN_KB_PAGE_2 on deck
     WIN_TEXT_ENTRY,
@@ -79,9 +83,11 @@ enum {
     WIN_COUNT,
 };
 
-// The constants for the pages are needlessly complicated because GF didn't keep the indexing order consistent
-// This set is used for sNamingScreen->currentPage. It uses the order that the pages are cycled in
-enum {
+// The constants for the pages are needlessly complicated because GF didn't keep the indexing order
+// consistent This set is used for sNamingScreen->currentPage. It uses the order that the pages are
+// cycled in
+enum
+{
     KBPAGE_SYMBOLS,
     KBPAGE_LETTERS_UPPER,
     KBPAGE_LETTERS_LOWER,
@@ -89,27 +95,31 @@ enum {
 };
 
 // This set is used for initializing a page's keyboard text and getting its number of columns
-enum {
+enum
+{
     KEYBOARD_LETTERS_LOWER,
     KEYBOARD_LETTERS_UPPER,
     KEYBOARD_SYMBOLS,
 };
 
 // This set is used for getting the gfx/pal tags of the page's swap button
-enum {
+enum
+{
     PAGE_SWAP_UPPER,
     PAGE_SWAP_OTHERS,
     PAGE_SWAP_LOWER,
 };
 
-enum {
+enum
+{
     KEY_ROLE_CHAR,
     KEY_ROLE_PAGE,
     KEY_ROLE_BACKSPACE,
     KEY_ROLE_OK,
 };
 
-enum {
+enum
+{
     BUTTON_PAGE,
     BUTTON_BACK,
     BUTTON_OK,
@@ -117,7 +127,8 @@ enum {
 };
 
 // states for Task_NamingScreen
-enum {
+enum
+{
     STATE_FADE_IN,
     STATE_WAIT_FADE_IN,
     STATE_HANDLE_INPUT,
@@ -149,7 +160,7 @@ struct NamingScreenTemplate
     const u8 *title;
 };
 
-struct NamingScreenData 
+struct NamingScreenData
 {
     u8 tilemapBuffer1[0x800];
     u8 tilemapBuffer2[0x800];
@@ -188,126 +199,105 @@ extern const u8 gText_BoxName[];
 extern const u8 gText_PkmnsNickname[];
 extern const u8 gText_TellHimTheWords[];
 
-
 // start of .rodata
 static const u8 sPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon/off.4bpp");
 static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon/on.4bpp");
 static const u16 sKeyboard_Pal[] = INCBIN_U16("graphics/naming_screen/keyboard.gbapal");
 static const u16 sUnused_Pal[] = INCBIN_U16("graphics/naming_screen/unused.gbapal");
 
-static const u8 *const sTransferredToPCMessages[] =
-{
-    gText_PkmnTransferredSomeonesPC,
+static const u8 *const sTransferredToPCMessages[] = { gText_PkmnTransferredSomeonesPC,
     gText_PkmnTransferredLanettesPC,
     gText_PkmnTransferredSomeonesPCBoxFull,
-    gText_PkmnTransferredLanettesPCBoxFull
+    gText_PkmnTransferredLanettesPCBoxFull };
+
+static const u8 sText_AlphabetUpperLower[] =
+    _("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!");
+
+static const struct BgTemplate sBgTemplates[] = {
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 30, .priority = 0 },
+    { .bg = 1, .charBaseIndex = 2, .mapBaseIndex = 29, .priority = 1 },
+    { .bg = 2, .charBaseIndex = 2, .mapBaseIndex = 28, .priority = 2 },
+    { .bg = 3, .charBaseIndex = 3, .mapBaseIndex = 31, .priority = 3 }
 };
 
-static const u8 sText_AlphabetUpperLower[] = _("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!");
-
-static const struct BgTemplate sBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 30,
-        .priority = 0
-    },
-    {
-        .bg = 1,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 29,
-        .priority = 1
-    },
-    {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 28,
-        .priority = 2
-    },
-    {
-        .bg = 3,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 31,
-        .priority = 3
-    }
-};
-
-static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
-{
-    [WIN_KB_PAGE_1] = {
-        .bg = 1,
+static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] = { [WIN_KB_PAGE_1] = { .bg = 1,
+                                                                           .tilemapLeft = 3,
+                                                                           .tilemapTop = 10,
+                                                                           .width = 19,
+                                                                           .height = 8,
+                                                                           .paletteNum = 10,
+                                                                           .baseBlock = 0x030 },
+    [WIN_KB_PAGE_2] = { .bg = 2,
         .tilemapLeft = 3,
         .tilemapTop = 10,
         .width = 19,
         .height = 8,
         .paletteNum = 10,
-        .baseBlock = 0x030
-    },
-    [WIN_KB_PAGE_2] = {
-        .bg = 2,
-        .tilemapLeft = 3,
-        .tilemapTop = 10,
-        .width = 19,
-        .height = 8,
-        .paletteNum = 10,
-        .baseBlock = 0x0C8
-    },
-    [WIN_TEXT_ENTRY] = {
-        .bg = 3,
+        .baseBlock = 0x0C8 },
+    [WIN_TEXT_ENTRY] = { .bg = 3,
         .tilemapLeft = 8,
         .tilemapTop = 6,
         .width = 17,
         .height = 2,
         .paletteNum = 10,
-        .baseBlock = 0x030
-    },
-    [WIN_TEXT_ENTRY_BOX] = {
-        .bg = 3,
+        .baseBlock = 0x030 },
+    [WIN_TEXT_ENTRY_BOX] = { .bg = 3,
         .tilemapLeft = 8,
         .tilemapTop = 4,
         .width = 17,
         .height = 2,
         .paletteNum = 10,
-        .baseBlock = 0x052
-    },
-    [WIN_BANNER] = {
-        .bg = 0,
+        .baseBlock = 0x052 },
+    [WIN_BANNER] = { .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 0,
         .width = 30,
         .height = 2,
         .paletteNum = 11,
-        .baseBlock = 0x074
-    },
-    DUMMY_WIN_TEMPLATE
-};
+        .baseBlock = 0x074 },
+    DUMMY_WIN_TEMPLATE };
 
 // This handles what characters get inserted when a key is pressed
 // The keys shown on the keyboard are handled separately by sNamingScreenKeyboardText
-static const u8 sKeyboardChars[KBPAGE_COUNT * KBROW_COUNT * KBCOL_COUNT] = __(
-    "abcdef ."
-    "ghijkl ,"
-    "mnopqrs "
-    "tuvwxyz "
-    "ABCDEF ."
-    "GHIJKL ,"
-    "MNOPQRS "
-    "TUVWXYZ "
-    "01234   "
-    "56789   "
-    "!?♂♀/-  "
-    "…“”‘'   ");
+static const u8 sKeyboardChars[KBPAGE_COUNT * KBROW_COUNT * KBCOL_COUNT] = __("abcdef ."
+                                                                              "ghijkl ,"
+                                                                              "mnopqrs "
+                                                                              "tuvwxyz "
+                                                                              "ABCDEF ."
+                                                                              "GHIJKL ,"
+                                                                              "MNOPQRS "
+                                                                              "TUVWXYZ "
+                                                                              "01234   "
+                                                                              "56789   "
+                                                                              "!?♂♀/-  "
+                                                                              "…“”‘'   ");
 
-static const u8 sPageColumnCounts[KBPAGE_COUNT] = { 
-    [KEYBOARD_LETTERS_LOWER] = KBCOL_COUNT, 
-    [KEYBOARD_LETTERS_UPPER] = KBCOL_COUNT, 
-    [KEYBOARD_SYMBOLS]       = 6 
-};
-static const u8 sPageColumnXPos[KBPAGE_COUNT * KBCOL_COUNT] = { 
-    0, 12, 24, 56, 68, 80, 92, 123, // KEYBOARD_LETTERS_LOWER
-    0, 12, 24, 56, 68, 80, 92, 123, // KEYBOARD_LETTERS_UPPER
-    0, 22, 44, 66, 88, 110          // KEYBOARD_SYMBOLS
+static const u8 sPageColumnCounts[KBPAGE_COUNT] = { [KEYBOARD_LETTERS_LOWER] = KBCOL_COUNT,
+    [KEYBOARD_LETTERS_UPPER] = KBCOL_COUNT,
+    [KEYBOARD_SYMBOLS] = 6 };
+static const u8 sPageColumnXPos[KBPAGE_COUNT * KBCOL_COUNT] = {
+    0,
+    12,
+    24,
+    56,
+    68,
+    80,
+    92,
+    123, // KEYBOARD_LETTERS_LOWER
+    0,
+    12,
+    24,
+    56,
+    68,
+    80,
+    92,
+    123, // KEYBOARD_LETTERS_UPPER
+    0,
+    22,
+    44,
+    66,
+    88,
+    110 // KEYBOARD_SYMBOLS
 };
 
 // forward declarations
@@ -325,7 +315,7 @@ static const struct SpriteTemplate sSpriteTemplate_Cursor;
 static const struct SpriteTemplate sSpriteTemplate_InputArrow;
 static const struct SpriteTemplate sSpriteTemplate_Underscore;
 static const struct SpriteTemplate sSpriteTemplate_PCIcon;
-static const u8* const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT];
+static const u8 *const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT];
 static const struct SpriteSheet sSpriteSheets[];
 static const struct SpritePalette sSpritePalettes[];
 
@@ -394,7 +384,12 @@ static void VBlankCB_NamingScreen(void);
 static void NamingScreen_ShowBgs(void);
 static bool8 IsWideLetter(u8);
 
-void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
+void DoNamingScreen(u8 templateNum,
+    u8 *destBuffer,
+    u16 monSpecies,
+    u16 monGender,
+    u32 monPersonality,
+    MainCallback returnCallback)
 {
     sNamingScreen = Alloc(sizeof(struct NamingScreenData));
     if (!sNamingScreen)
@@ -583,26 +578,17 @@ static void Task_NamingScreen(u8 taskId)
 }
 
 // Which gfx/pal to load for the swap page button
-static const u8 sPageToNextGfxId[KBPAGE_COUNT] = 
-{ 
-    [KBPAGE_SYMBOLS]       = PAGE_SWAP_UPPER, 
-    [KBPAGE_LETTERS_UPPER] = PAGE_SWAP_LOWER, 
-    [KBPAGE_LETTERS_LOWER] = PAGE_SWAP_OTHERS 
-};
+static const u8 sPageToNextGfxId[KBPAGE_COUNT] = { [KBPAGE_SYMBOLS] = PAGE_SWAP_UPPER,
+    [KBPAGE_LETTERS_UPPER] = PAGE_SWAP_LOWER,
+    [KBPAGE_LETTERS_LOWER] = PAGE_SWAP_OTHERS };
 
-static const u8 sPageToNextKeyboardId[KBPAGE_COUNT] = 
-{ 
-    [KBPAGE_SYMBOLS]       = KEYBOARD_LETTERS_UPPER, 
-    [KBPAGE_LETTERS_UPPER] = KEYBOARD_LETTERS_LOWER, 
-    [KBPAGE_LETTERS_LOWER] = KEYBOARD_SYMBOLS 
-};
+static const u8 sPageToNextKeyboardId[KBPAGE_COUNT] = { [KBPAGE_SYMBOLS] = KEYBOARD_LETTERS_UPPER,
+    [KBPAGE_LETTERS_UPPER] = KEYBOARD_LETTERS_LOWER,
+    [KBPAGE_LETTERS_LOWER] = KEYBOARD_SYMBOLS };
 
-static const u8 sPageToKeyboardId[KBPAGE_COUNT] = 
-{ 
-    [KBPAGE_SYMBOLS]       = KEYBOARD_SYMBOLS, 
-    [KBPAGE_LETTERS_UPPER] = KEYBOARD_LETTERS_UPPER, 
-    [KBPAGE_LETTERS_LOWER] = KEYBOARD_LETTERS_LOWER 
-};
+static const u8 sPageToKeyboardId[KBPAGE_COUNT] = { [KBPAGE_SYMBOLS] = KEYBOARD_SYMBOLS,
+    [KBPAGE_LETTERS_UPPER] = KEYBOARD_LETTERS_UPPER,
+    [KBPAGE_LETTERS_LOWER] = KEYBOARD_LETTERS_LOWER };
 
 static u8 PageToNextGfxId(u8 page)
 {
@@ -674,8 +660,8 @@ static bool8 MainState_PressedOKButton(void)
     SetInputState(INPUT_STATE_DISABLED);
     SetCursorFlashing(FALSE);
     TryStartButtonFlash(BUTTON_COUNT, FALSE, TRUE);
-    if (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON 
-        && CalculatePlayerPartyCount() >= PARTY_SIZE)
+    if (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON &&
+        CalculatePlayerPartyCount() >= PARTY_SIZE)
     {
         DisplaySentToPCMessage();
         sNamingScreen->state = STATE_WAIT_SENT_TO_PC_MESSAGE;
@@ -795,7 +781,7 @@ static bool8 MainState_WaitPageSwap(void)
 // Page Swap
 //--------------------------------------------------
 
-#define tState data[0]
+#define tState      data[0]
 #define tFrameCount data[1]
 
 static bool8 PageSwapAnimState_Init(struct Task *);
@@ -803,8 +789,7 @@ static bool8 PageSwapAnimState_1(struct Task *);
 static bool8 PageSwapAnimState_2(struct Task *);
 static bool8 PageSwapAnimState_Done(struct Task *);
 
-static bool8 (*const sPageSwapAnimStateFuncs[])(struct Task *) =
-{
+static bool8 (*const sPageSwapAnimStateFuncs[])(struct Task *) = {
     PageSwapAnimState_Init,
     PageSwapAnimState_1,
     PageSwapAnimState_2,
@@ -821,7 +806,8 @@ static void StartPageSwapAnim(void)
 
 static void Task_HandlePageSwapAnim(u8 taskId)
 {
-    while (sPageSwapAnimStateFuncs[gTasks[taskId].tState](&gTasks[taskId]) != 0);
+    while (sPageSwapAnimStateFuncs[gTasks[taskId].tState](&gTasks[taskId]) != 0)
+        ;
 }
 
 static bool8 IsPageSwapAnimNotInProgress(void)
@@ -842,18 +828,14 @@ static bool8 PageSwapAnimState_Init(struct Task *task)
 
 static bool8 PageSwapAnimState_1(struct Task *task)
 {
-    u16 *const vOffsets[] =
-    {
-        &sNamingScreen->bg2vOffset,
-        &sNamingScreen->bg1vOffset
-    };
+    u16 *const vOffsets[] = { &sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset };
 
     task->tFrameCount += 4;
     *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
     *vOffsets[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
     if (task->tFrameCount >= 64)
     {
-        u8 temp = sNamingScreen->bg1Priority;  //Why u8 and not u16?
+        u8 temp = sNamingScreen->bg1Priority; // Why u8 and not u16?
 
         sNamingScreen->bg1Priority = sNamingScreen->bg2Priority;
         sNamingScreen->bg2Priority = temp;
@@ -864,11 +846,7 @@ static bool8 PageSwapAnimState_1(struct Task *task)
 
 static bool8 PageSwapAnimState_2(struct Task *task)
 {
-    u16 *const vOffsets[] =
-    {
-        &sNamingScreen->bg2vOffset,
-        &sNamingScreen->bg1vOffset
-    };
+    u16 *const vOffsets[] = { &sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset };
 
     task->tFrameCount += 4;
     *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
@@ -939,7 +917,8 @@ static void Task_UpdateButtonFlash(u8 taskId)
     if (task->tButtonId == BUTTON_COUNT || !task->tAllowFlash)
         return;
 
-    MultiplyInvertedPaletteRGBComponents(GetButtonPalOffset(task->tButtonId), task->tColor, task->tColor, task->tColor);
+    MultiplyInvertedPaletteRGBComponents(
+        GetButtonPalOffset(task->tButtonId), task->tColor, task->tColor, task->tColor);
 
     if (task->tColorDelay && --task->tColorDelay)
         return;
@@ -978,11 +957,10 @@ static void Task_UpdateButtonFlash(u8 taskId)
 
 static u16 GetButtonPalOffset(u8 button)
 {
-    const u16 palOffsets[BUTTON_COUNT + 1] =
-    {
-        [BUTTON_PAGE]  = IndexOfSpritePaletteTag(PALTAG_PAGE_SWAP) * 16 + 0x10E,
-        [BUTTON_BACK]  = IndexOfSpritePaletteTag(PALTAG_BACK_BUTTON) * 16 + 0x10E,
-        [BUTTON_OK]    = IndexOfSpritePaletteTag(PALTAG_OK_BUTTON) * 16 + 0x10E,
+    const u16 palOffsets[BUTTON_COUNT + 1] = {
+        [BUTTON_PAGE] = IndexOfSpritePaletteTag(PALTAG_PAGE_SWAP) * 16 + 0x10E,
+        [BUTTON_BACK] = IndexOfSpritePaletteTag(PALTAG_BACK_BUTTON) * 16 + 0x10E,
+        [BUTTON_OK] = IndexOfSpritePaletteTag(PALTAG_OK_BUTTON) * 16 + 0x10E,
         [BUTTON_COUNT] = IndexOfSpritePaletteTag(PALTAG_OK_BUTTON) * 16 + 0x101,
     };
 
@@ -1030,10 +1008,8 @@ static void SpriteCB_Cursor(struct Sprite *sprite)
     if (sprite->sX == GetCurrentPageColumnCount())
         sprite->invisible = TRUE;
 
-    if (sprite->invisible 
-       || !(sprite->sFlashing)
-       || sprite->sX != sprite->sPrevX 
-       || sprite->sY != sprite->sPrevY)
+    if (sprite->invisible || !(sprite->sFlashing) || sprite->sX != sprite->sPrevX ||
+        sprite->sY != sprite->sPrevY)
     {
         sprite->sColor = 0;
         sprite->sColorIncr = 2;
@@ -1064,7 +1040,7 @@ static void SpriteCB_Cursor(struct Sprite *sprite)
 
 static void SpriteCB_InputArrow(struct Sprite *sprite)
 {
-    const s16 x[] = {0, -4, -2, -1};
+    const s16 x[] = { 0, -4, -2, -1 };
 
     if (sprite->sDelay == 0 || --sprite->sDelay == 0)
     {
@@ -1083,7 +1059,7 @@ static void SpriteCB_InputArrow(struct Sprite *sprite)
 
 static void SpriteCB_Underscore(struct Sprite *sprite)
 {
-    const s16 y[] = {2, 3, 2, 1};
+    const s16 y[] = { 2, 3, 2, 1 };
     u8 pos;
 
     pos = GetTextEntryPosition();
@@ -1181,7 +1157,7 @@ static bool8 IsCursorAnimFinished(void)
     return gSprites[sNamingScreen->cursorSpriteId].animEnded;
 }
 
-static const u8 sButtonKeyRoles[] = {KEY_ROLE_PAGE, KEY_ROLE_BACKSPACE, KEY_ROLE_OK};
+static const u8 sButtonKeyRoles[] = { KEY_ROLE_PAGE, KEY_ROLE_BACKSPACE, KEY_ROLE_OK };
 
 static u8 GetKeyRoleAtCursorPos(void)
 {
@@ -1251,8 +1227,7 @@ static void StartPageSwapButtonAnim(void)
     sprite->sPage = sNamingScreen->currentPage;
 }
 
-static u8 (*const sPageSwapSpriteFuncs[])(struct Sprite *) =
-{
+static u8 (*const sPageSwapSpriteFuncs[])(struct Sprite *) = {
     PageSwapSprite_Init,
     PageSwapSprite_Idle,
     PageSwapSprite_SlideOff,
@@ -1261,7 +1236,8 @@ static u8 (*const sPageSwapSpriteFuncs[])(struct Sprite *) =
 
 static void SpriteCB_PageSwap(struct Sprite *sprite)
 {
-    while (sPageSwapSpriteFuncs[sprite->sState](sprite));
+    while (sPageSwapSpriteFuncs[sprite->sState](sprite))
+        ;
 }
 
 static bool8 PageSwapSprite_Init(struct Sprite *sprite)
@@ -1309,17 +1285,13 @@ static bool8 PageSwapSprite_SlideOn(struct Sprite *sprite)
     return FALSE;
 }
 
-static const u16 sPageSwapPalTags[] = {
-    [PAGE_SWAP_UPPER]  = PALTAG_PAGE_SWAP_UPPER, 
-    [PAGE_SWAP_OTHERS] = PALTAG_PAGE_SWAP_OTHERS, 
-    [PAGE_SWAP_LOWER]  = PALTAG_PAGE_SWAP_LOWER
-};
+static const u16 sPageSwapPalTags[] = { [PAGE_SWAP_UPPER] = PALTAG_PAGE_SWAP_UPPER,
+    [PAGE_SWAP_OTHERS] = PALTAG_PAGE_SWAP_OTHERS,
+    [PAGE_SWAP_LOWER] = PALTAG_PAGE_SWAP_LOWER };
 
-static const u16 sPageSwapGfxTags[] = {
-    [PAGE_SWAP_UPPER]  = GFXTAG_PAGE_SWAP_UPPER, 
-    [PAGE_SWAP_OTHERS] = GFXTAG_PAGE_SWAP_OTHERS, 
-    [PAGE_SWAP_LOWER]  = GFXTAG_PAGE_SWAP_LOWER
-};
+static const u16 sPageSwapGfxTags[] = { [PAGE_SWAP_UPPER] = GFXTAG_PAGE_SWAP_UPPER,
+    [PAGE_SWAP_OTHERS] = GFXTAG_PAGE_SWAP_OTHERS,
+    [PAGE_SWAP_LOWER] = GFXTAG_PAGE_SWAP_LOWER };
 
 static void SetPageSwapButtonGfx(u8 page, struct Sprite *text, struct Sprite *button)
 {
@@ -1376,8 +1348,7 @@ static void NamingScreen_CreatePCIcon(void);
 static void NamingScreen_CreateMonIcon(void);
 static void NamingScreen_CreateWaldaDadIcon(void);
 
-static void (*const sIconFunctions[])(void) =
-{
+static void (*const sIconFunctions[])(void) = {
     NamingScreen_NoIcon,
     NamingScreen_CreatePlayerIcon,
     NamingScreen_CreatePCIcon,
@@ -1392,7 +1363,6 @@ static void CreateInputTargetIcon(void)
 
 static void NamingScreen_NoIcon(void)
 {
-
 }
 
 static void NamingScreen_CreatePlayerIcon(void)
@@ -1420,7 +1390,13 @@ static void NamingScreen_CreateMonIcon(void)
     u8 spriteId;
 
     LoadMonIconPalettes();
-    spriteId = CreateMonIcon(sNamingScreen->monSpecies, SpriteCallbackDummy, 56, 40, 0, sNamingScreen->monPersonality, 1);
+    spriteId = CreateMonIcon(sNamingScreen->monSpecies,
+        SpriteCallbackDummy,
+        56,
+        40,
+        0,
+        sNamingScreen->monPersonality,
+        1);
     gSprites[spriteId].oam.priority = 3;
 }
 
@@ -1442,12 +1418,11 @@ static bool8 KeyboardKeyHandler_Page(u8);
 static bool8 KeyboardKeyHandler_Backspace(u8);
 static bool8 KeyboardKeyHandler_OK(u8);
 
-static bool8 (*const sKeyboardKeyHandlers[])(u8) =
-{
-    [KEY_ROLE_CHAR]      = KeyboardKeyHandler_Character,
-    [KEY_ROLE_PAGE]      = KeyboardKeyHandler_Page,
+static bool8 (*const sKeyboardKeyHandlers[])(u8) = {
+    [KEY_ROLE_CHAR] = KeyboardKeyHandler_Character,
+    [KEY_ROLE_PAGE] = KeyboardKeyHandler_Page,
     [KEY_ROLE_BACKSPACE] = KeyboardKeyHandler_Backspace,
-    [KEY_ROLE_OK]        = KeyboardKeyHandler_OK,
+    [KEY_ROLE_OK] = KeyboardKeyHandler_OK,
 };
 
 static bool8 HandleKeyboardEvent(void)
@@ -1532,19 +1507,17 @@ static bool8 SwapKeyboardPage(void)
 // Input handling
 //--------------------------------------------------
 
-#define tState data[0]
+#define tState         data[0]
 #define tKeyboardEvent data[1]
-#define tButtonId data[2]
-
+#define tButtonId      data[2]
 
 static void Input_Disabled(struct Task *);
 static void Input_Enabled(struct Task *);
 static void Input_Override(struct Task *);
 
-static void (*const sInputFuncs[])(struct Task *) =
-{
+static void (*const sInputFuncs[])(struct Task *) = {
     [INPUT_STATE_DISABLED] = Input_Disabled,
-    [INPUT_STATE_ENABLED]  = Input_Enabled,
+    [INPUT_STATE_ENABLED] = Input_Enabled,
     [INPUT_STATE_OVERRIDE] = Input_Override,
 };
 
@@ -1603,26 +1576,20 @@ static void Input_Override(struct Task *task)
 
 static void HandleDpadMovement(struct Task *task)
 {
-    const s16 sDpadDeltaX[] =
-    {
-        [INPUT_NONE]       = 0,
-        [INPUT_DPAD_UP]    = 0,
-        [INPUT_DPAD_DOWN]  = 0,
-        [INPUT_DPAD_LEFT]  = -1,
-        [INPUT_DPAD_RIGHT] = 1
-    };
+    const s16 sDpadDeltaX[] = { [INPUT_NONE] = 0,
+        [INPUT_DPAD_UP] = 0,
+        [INPUT_DPAD_DOWN] = 0,
+        [INPUT_DPAD_LEFT] = -1,
+        [INPUT_DPAD_RIGHT] = 1 };
 
-    const s16 sDpadDeltaY[] =
-    {
-        [INPUT_NONE]       = 0,
-        [INPUT_DPAD_UP]    = -1,
-        [INPUT_DPAD_DOWN]  = 1,
-        [INPUT_DPAD_LEFT]  = 0,
-        [INPUT_DPAD_RIGHT] = 0
-    };
+    const s16 sDpadDeltaY[] = { [INPUT_NONE] = 0,
+        [INPUT_DPAD_UP] = -1,
+        [INPUT_DPAD_DOWN] = 1,
+        [INPUT_DPAD_LEFT] = 0,
+        [INPUT_DPAD_RIGHT] = 0 };
 
-    const s16 sKeyRowToButtonRow[KBROW_COUNT] = {0, 1, 1, 2};
-    const s16 sButtonRowToKeyRow[BUTTON_COUNT] = {0, 0, 3};
+    const s16 sKeyRowToButtonRow[KBROW_COUNT] = { 0, 1, 1, 2 };
+    const s16 sButtonRowToKeyRow[BUTTON_COUNT] = { 0, 0, 3 };
 
     s16 cursorX;
     s16 cursorY;
@@ -1651,7 +1618,6 @@ static void HandleDpadMovement(struct Task *task)
     if (cursorX > GetCurrentPageColumnCount())
         cursorX = 0;
 
-    
     // Handle moving on/off the button column
     if (sDpadDeltaX[input] != 0)
     {
@@ -1706,7 +1672,8 @@ static void HandleDpadMovement(struct Task *task)
 static void DrawNormalTextEntryBox(void)
 {
     FillWindowPixelBuffer(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX], PIXEL_FILL(1));
-    AddTextPrinterParameterized(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX], 1, sNamingScreen->template->title, 8, 1, 0, 0);
+    AddTextPrinterParameterized(
+        sNamingScreen->windows[WIN_TEXT_ENTRY_BOX], 1, sNamingScreen->template->title, 8, 1, 0, 0);
     PutWindowTilemap(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX]);
 }
 
@@ -1721,13 +1688,12 @@ static void DrawMonTextEntryBox(void)
     PutWindowTilemap(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX]);
 }
 
-static void (*const sDrawTextEntryBoxFuncs[])(void) =
-{
-    [NAMING_SCREEN_PLAYER]     = DrawNormalTextEntryBox,
-    [NAMING_SCREEN_BOX]        = DrawNormalTextEntryBox,
+static void (*const sDrawTextEntryBoxFuncs[])(void) = {
+    [NAMING_SCREEN_PLAYER] = DrawNormalTextEntryBox,
+    [NAMING_SCREEN_BOX] = DrawNormalTextEntryBox,
     [NAMING_SCREEN_CAUGHT_MON] = DrawMonTextEntryBox,
-    [NAMING_SCREEN_NICKNAME]   = DrawMonTextEntryBox,
-    [NAMING_SCREEN_WALDA]      = DrawNormalTextEntryBox,
+    [NAMING_SCREEN_NICKNAME] = DrawMonTextEntryBox,
+    [NAMING_SCREEN_WALDA] = DrawNormalTextEntryBox,
 };
 
 static void DrawTextEntryBox(void)
@@ -1738,10 +1704,9 @@ static void DrawTextEntryBox(void)
 static void DummyGenderIcon(void);
 static void DrawGenderIcon(void);
 
-static void (*const sDrawGenderIconFuncs[])(void) =
-{
+static void (*const sDrawGenderIconFuncs[])(void) = {
     [FALSE] = DummyGenderIcon,
-    [TRUE]  = DrawGenderIcon,
+    [TRUE] = DrawGenderIcon,
 };
 
 static void TryDrawGenderIcon(void)
@@ -1751,13 +1716,11 @@ static void TryDrawGenderIcon(void)
 
 static void DummyGenderIcon(void)
 {
-
 }
 
-static const u8 sGenderColors[2][3] =
-{
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_BLUE, TEXT_COLOR_BLUE},
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_RED}
+static const u8 sGenderColors[2][3] = {
+    { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_BLUE, TEXT_COLOR_BLUE },
+    { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_RED }
 };
 
 static void DrawGenderIcon(void)
@@ -1773,15 +1736,16 @@ static void DrawGenderIcon(void)
             StringCopy(text, gText_FemaleSymbol);
             isFemale = TRUE;
         }
-        AddTextPrinterParameterized3(sNamingScreen->windows[WIN_TEXT_ENTRY], 1, 0x68, 1, sGenderColors[isFemale], -1, text);
+        AddTextPrinterParameterized3(
+            sNamingScreen->windows[WIN_TEXT_ENTRY], 1, 0x68, 1, sGenderColors[isFemale], -1, text);
     }
 }
 
 static u8 GetCharAtKeyboardPos(s16 x, s16 y)
 {
-    return sKeyboardChars[x + y * KBCOL_COUNT + CurrentPageToKeyboardId() * KBCOL_COUNT * KBROW_COUNT];
+    return sKeyboardChars[x + y * KBCOL_COUNT +
+                          CurrentPageToKeyboardId() * KBCOL_COUNT * KBROW_COUNT];
 }
-
 
 static u8 GetTextEntryPosition(void)
 {
@@ -1858,7 +1822,9 @@ static void SaveInputText(void)
     {
         if (sNamingScreen->textBuffer[i] != CHAR_SPACE && sNamingScreen->textBuffer[i] != EOS)
         {
-            StringCopyN(sNamingScreen->destBuffer, sNamingScreen->textBuffer, sNamingScreen->template->maxChars + 1);
+            StringCopyN(sNamingScreen->destBuffer,
+                sNamingScreen->textBuffer,
+                sNamingScreen->template->maxChars + 1);
             break;
         }
     }
@@ -1894,7 +1860,6 @@ static void DrawBgTilemap(u8 bg, const void *src)
 
 static void NamingScreen_Dummy(u8 bg, u8 page)
 {
-
 }
 
 static void DrawTextEntry(void)
@@ -1913,7 +1878,8 @@ static void DrawTextEntry(void)
         temp[1] = gText_ExpandedPlaceholder_Empty[0];
         extraWidth = (IsWideLetter(temp[0]) == TRUE) ? 2 : 0;
 
-        AddTextPrinterParameterized(sNamingScreen->windows[WIN_TEXT_ENTRY], 1, temp, i * 8 + x + extraWidth, 1, 0xFF, NULL);
+        AddTextPrinterParameterized(
+            sNamingScreen->windows[WIN_TEXT_ENTRY], 1, temp, i * 8 + x + extraWidth, 1, 0xFF, NULL);
     }
 
     TryDrawGenderIcon();
@@ -1921,33 +1887,25 @@ static void DrawTextEntry(void)
     PutWindowTilemap(sNamingScreen->windows[WIN_TEXT_ENTRY]);
 }
 
-struct TextColor   // Needed because of alignment
+struct TextColor // Needed because of alignment
 {
     u8 colors[3][4];
 };
 
-static const struct TextColor sTextColorStruct =
-{
-    {
-        {TEXT_DYNAMIC_COLOR_4, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY},
-        {TEXT_DYNAMIC_COLOR_5, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY},
-        {TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY}
-    }
+static const struct TextColor sTextColorStruct = {
+    { { TEXT_DYNAMIC_COLOR_4, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY },
+        { TEXT_DYNAMIC_COLOR_5, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY },
+        { TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY } }
 };
 
-static const u8 sFillValues[KBPAGE_COUNT] =
-{
-    [KEYBOARD_LETTERS_LOWER] = PIXEL_FILL(14),
+static const u8 sFillValues[KBPAGE_COUNT] = { [KEYBOARD_LETTERS_LOWER] = PIXEL_FILL(14),
     [KEYBOARD_LETTERS_UPPER] = PIXEL_FILL(13),
-    [KEYBOARD_SYMBOLS]       = PIXEL_FILL(15)
-};
+    [KEYBOARD_SYMBOLS] = PIXEL_FILL(15) };
 
-static const u8 *const sKeyboardTextColors[KBPAGE_COUNT] =
-{
-    [KEYBOARD_LETTERS_LOWER] = sTextColorStruct.colors[1],
+static const u8 *const sKeyboardTextColors[KBPAGE_COUNT] = { [KEYBOARD_LETTERS_LOWER] =
+                                                                 sTextColorStruct.colors[1],
     [KEYBOARD_LETTERS_UPPER] = sTextColorStruct.colors[0],
-    [KEYBOARD_SYMBOLS]       = sTextColorStruct.colors[2]
-};
+    [KEYBOARD_SYMBOLS] = sTextColorStruct.colors[2] };
 
 static void PrintKeyboardKeys(u8 window, u8 page)
 {
@@ -1956,20 +1914,26 @@ static void PrintKeyboardKeys(u8 window, u8 page)
     FillWindowPixelBuffer(window, sFillValues[page]);
 
     for (i = 0; i < KBROW_COUNT; i++)
-        AddTextPrinterParameterized3(window, 1, 0, i * 16 + 1, sKeyboardTextColors[page], 0, sNamingScreenKeyboardText[page][i]);
+        AddTextPrinterParameterized3(window,
+            1,
+            0,
+            i * 16 + 1,
+            sKeyboardTextColors[page],
+            0,
+            sNamingScreenKeyboardText[page][i]);
 
     PutWindowTilemap(window);
 }
 
-static const u8 *const sNextKeyboardPageTilemaps[] =
-{
+static const u8 *const sNextKeyboardPageTilemaps[] = {
     [KBPAGE_SYMBOLS] = gNamingScreenKeyboardUpper_Tilemap,
-    [KBPAGE_LETTERS_UPPER] = gNamingScreenKeyboardLower_Tilemap, // lower
-    [KBPAGE_LETTERS_LOWER] = gNamingScreenKeyboardSymbols_Tilemap  // symbols
+    [KBPAGE_LETTERS_UPPER] = gNamingScreenKeyboardLower_Tilemap,  // lower
+    [KBPAGE_LETTERS_LOWER] = gNamingScreenKeyboardSymbols_Tilemap // symbols
 };
 
-// There are always 2 keyboard pages drawn, the current page and the one that will shown next if the player swaps
-// When the page swap is complete this function invisibly replaces the old page with the new next one
+// There are always 2 keyboard pages drawn, the current page and the one that will shown next if the
+// player swaps When the page swap is complete this function invisibly replaces the old page with
+// the new next one
 static void DrawKeyboardPageOnDeck(void)
 {
     u8 bg;
@@ -2002,7 +1966,8 @@ static void PrintControls(void)
     const u8 color[3] = { TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY };
 
     FillWindowPixelBuffer(sNamingScreen->windows[WIN_BANNER], PIXEL_FILL(15));
-    AddTextPrinterParameterized3(sNamingScreen->windows[WIN_BANNER], 0, 2, 1, color, 0, gText_MoveOkBack);
+    AddTextPrinterParameterized3(
+        sNamingScreen->windows[WIN_BANNER], 0, 2, 1, color, 0, gText_MoveOkBack);
     PutWindowTilemap(sNamingScreen->windows[WIN_BANNER]);
     CopyWindowToVram(sNamingScreen->windows[WIN_BANNER], 3);
 }
@@ -2063,31 +2028,51 @@ static bool8 IsWideLetter(u8 character)
 // Debug? Unused, and arguments aren't sensible for non-player screens.
 static void Debug_NamingScreenPlayer(void)
 {
-    DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_PLAYER,
+        gSaveBlock2Ptr->playerName,
+        gSaveBlock2Ptr->playerGender,
+        0,
+        0,
+        CB2_ReturnToFieldWithOpenMenu);
 }
 
 static void Debug_NamingScreenBox(void)
 {
-    DoNamingScreen(NAMING_SCREEN_BOX, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_BOX,
+        gSaveBlock2Ptr->playerName,
+        gSaveBlock2Ptr->playerGender,
+        0,
+        0,
+        CB2_ReturnToFieldWithOpenMenu);
 }
 
 static void Debug_NamingScreenCaughtMon(void)
 {
-    DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_CAUGHT_MON,
+        gSaveBlock2Ptr->playerName,
+        gSaveBlock2Ptr->playerGender,
+        0,
+        0,
+        CB2_ReturnToFieldWithOpenMenu);
 }
 
 static void Debug_NamingScreenNickname(void)
 {
-    DoNamingScreen(NAMING_SCREEN_NICKNAME, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_NICKNAME,
+        gSaveBlock2Ptr->playerName,
+        gSaveBlock2Ptr->playerGender,
+        0,
+        0,
+        CB2_ReturnToFieldWithOpenMenu);
 }
 
 //--------------------------------------------------
 // Forward-declared variables
 //--------------------------------------------------
 
-// Initial pages below are pointless, they're overwritten with KBPAGE_LETTERS_UPPER in MainState_FadeIn()
-static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
-{
+// Initial pages below are pointless, they're overwritten with KBPAGE_LETTERS_UPPER in
+// MainState_FadeIn()
+static const struct NamingScreenTemplate sPlayerNamingScreenTemplate = {
     .copyExistingString = FALSE,
     .maxChars = 7,
     .iconFunction = 1,
@@ -2097,8 +2082,7 @@ static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
     .title = gText_YourName,
 };
 
-static const struct NamingScreenTemplate sPCBoxNamingTemplate =
-{
+static const struct NamingScreenTemplate sPCBoxNamingTemplate = {
     .copyExistingString = FALSE,
     .maxChars = 8,
     .iconFunction = 2,
@@ -2108,8 +2092,7 @@ static const struct NamingScreenTemplate sPCBoxNamingTemplate =
     .title = gText_BoxName,
 };
 
-static const struct NamingScreenTemplate sMonNamingScreenTemplate =
-{
+static const struct NamingScreenTemplate sMonNamingScreenTemplate = {
     .copyExistingString = FALSE,
     .maxChars = 10,
     .iconFunction = 3,
@@ -2119,8 +2102,7 @@ static const struct NamingScreenTemplate sMonNamingScreenTemplate =
     .title = gText_PkmnsNickname,
 };
 
-static const struct NamingScreenTemplate sWaldaWordsScreenTemplate =
-{
+static const struct NamingScreenTemplate sWaldaWordsScreenTemplate = {
     .copyExistingString = TRUE,
     .maxChars = 15,
     .iconFunction = 4,
@@ -2130,17 +2112,15 @@ static const struct NamingScreenTemplate sWaldaWordsScreenTemplate =
     .title = gText_TellHimTheWords,
 };
 
-static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
-{
-    [NAMING_SCREEN_PLAYER]     = &sPlayerNamingScreenTemplate,
-    [NAMING_SCREEN_BOX]        = &sPCBoxNamingTemplate,
+static const struct NamingScreenTemplate *const sNamingScreenTemplates[] = {
+    [NAMING_SCREEN_PLAYER] = &sPlayerNamingScreenTemplate,
+    [NAMING_SCREEN_BOX] = &sPCBoxNamingTemplate,
     [NAMING_SCREEN_CAUGHT_MON] = &sMonNamingScreenTemplate,
-    [NAMING_SCREEN_NICKNAME]   = &sMonNamingScreenTemplate,
-    [NAMING_SCREEN_WALDA]      = &sWaldaWordsScreenTemplate,
+    [NAMING_SCREEN_NICKNAME] = &sMonNamingScreenTemplate,
+    [NAMING_SCREEN_WALDA] = &sWaldaWordsScreenTemplate,
 };
 
-static const struct OamData sOam_8x8 =
-{
+static const struct OamData sOam_8x8 = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -2153,8 +2133,7 @@ static const struct OamData sOam_8x8 =
     .paletteNum = 0,
 };
 
-static const struct OamData sOam_16x16 =
-{
+static const struct OamData sOam_16x16 = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -2167,8 +2146,7 @@ static const struct OamData sOam_16x16 =
     .paletteNum = 0,
 };
 
-static const struct OamData sOam_32x16 =
-{
+static const struct OamData sOam_32x16 = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -2181,390 +2159,273 @@ static const struct OamData sOam_32x16 =
     .paletteNum = 0,
 };
 
-static const struct Subsprite sSubsprites_PageSwapFrame[] =
-{
-    {
-        .x = -20,  
-        .y = -16, 
-        .shape = SPRITE_SHAPE(32x8),  
-        .size = SPRITE_SIZE(32x8),  
-        .tileOffset = 0,     
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y = -16, 
-        .shape = SPRITE_SHAPE(8x8),  
-        .size = SPRITE_SIZE(8x8),  
-        .tileOffset = 4,     
-        .priority = 1
-    },
-    {
-        .x = -20,  
-        .y = -8,  
-        .shape = SPRITE_SHAPE(32x8),  
-        .size = SPRITE_SIZE(32x8), 
-        .tileOffset = 5,     
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y = -8,  
-        .shape = SPRITE_SHAPE(8x8),  
+static const struct Subsprite sSubsprites_PageSwapFrame[] = { { .x = -20,
+                                                                  .y = -16,
+                                                                  .shape = SPRITE_SHAPE(32x8),
+                                                                  .size = SPRITE_SIZE(32x8),
+                                                                  .tileOffset = 0,
+                                                                  .priority = 1 },
+    { .x = 12,
+        .y = -16,
+        .shape = SPRITE_SHAPE(8x8),
         .size = SPRITE_SIZE(8x8),
-        .tileOffset = 9,     
-        .priority = 1
-    },
-    {
-        .x = -20,  
-        .y =  0,  
-        .shape = SPRITE_SHAPE(32x8),  
-        .size = SPRITE_SIZE(32x8), 
-        .tileOffset = 10,    
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y =  0,  
-        .shape = SPRITE_SHAPE(8x8),  
-        .size = SPRITE_SIZE(8x8), 
-        .tileOffset = 14,    
-        .priority = 1
-    },
-    {
-        .x = -20,  
-        .y =  8,  
-        .shape = SPRITE_SHAPE(32x8),  
+        .tileOffset = 4,
+        .priority = 1 },
+    { .x = -20,
+        .y = -8,
+        .shape = SPRITE_SHAPE(32x8),
         .size = SPRITE_SIZE(32x8),
-        .tileOffset = 15,    
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y =  8,  
-        .shape = SPRITE_SHAPE(8x8),  
+        .tileOffset = 5,
+        .priority = 1 },
+    { .x = 12,
+        .y = -8,
+        .shape = SPRITE_SHAPE(8x8),
         .size = SPRITE_SIZE(8x8),
-        .tileOffset = 19,    
-        .priority = 1
-    }
-};
-
-static const struct Subsprite sSubsprites_PageSwapText[] =
-{
-    {
-        .x = -12,  
-        .y = -4,  
-        .shape = SPRITE_SHAPE(16x8),  
-        .size = SPRITE_SIZE(16x8),  
-        .tileOffset = 0,     
-        .priority = 1
-    },
-    {
-        .x =   4,  
-        .y = -4,  
-        .shape = SPRITE_SHAPE(8x8),  
-        .size = SPRITE_SIZE(8x8), 
-        .tileOffset = 2,     
-        .priority = 1
-    }
-};
-
-static const struct Subsprite sSubsprites_Button[] =
-{
-    {
-        .x = -20,  
-        .y = -12, 
-        .shape = SPRITE_SHAPE(32x8),  
+        .tileOffset = 9,
+        .priority = 1 },
+    { .x = -20,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x8),
         .size = SPRITE_SIZE(32x8),
-        .tileOffset = 0,     
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y = -12, 
-        .shape = SPRITE_SHAPE(8x8),  
+        .tileOffset = 10,
+        .priority = 1 },
+    { .x = 12,
+        .y = 0,
+        .shape = SPRITE_SHAPE(8x8),
         .size = SPRITE_SIZE(8x8),
-        .tileOffset = 4,     
-        .priority = 1
-    },
-    {
-        .x = -20,  
-        .y = -4,  
-        .shape = SPRITE_SHAPE(32x8),  
+        .tileOffset = 14,
+        .priority = 1 },
+    { .x = -20,
+        .y = 8,
+        .shape = SPRITE_SHAPE(32x8),
         .size = SPRITE_SIZE(32x8),
-        .tileOffset = 5,     
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y = -4,  
-        .shape = SPRITE_SHAPE(8x8),  
+        .tileOffset = 15,
+        .priority = 1 },
+    { .x = 12,
+        .y = 8,
+        .shape = SPRITE_SHAPE(8x8),
         .size = SPRITE_SIZE(8x8),
-        .tileOffset = 9,     
-        .priority = 1
-    },
-    {
-        .x = -20,  
-        .y =  4,  
-        .shape = SPRITE_SHAPE(32x8),  
-        .size = SPRITE_SIZE(32x8), 
-        .tileOffset = 10,    
-        .priority = 1
-    },
-    {
-        .x =  12,  
-        .y =  4,  
-        .shape = SPRITE_SHAPE(8x8),  
-        .size = SPRITE_SIZE(8x8),
-        .tileOffset = 14,    
-        .priority = 1
-    }
-};
+        .tileOffset = 19,
+        .priority = 1 } };
 
-static const struct Subsprite sSubsprites_PCIcon[] =
-{
-    {
-        .x = -8,   
-        .y = -12, 
-        .shape = SPRITE_SHAPE(16x8),  
-        .size = SPRITE_SIZE(16x8), 
-        .tileOffset = 0,     
-        .priority = 3
-    },
-    {
-        .x = -8,   
-        .y = -4,  
-        .shape = SPRITE_SHAPE(16x8),  
+static const struct Subsprite sSubsprites_PageSwapText[] = { { .x = -12,
+                                                                 .y = -4,
+                                                                 .shape = SPRITE_SHAPE(16x8),
+                                                                 .size = SPRITE_SIZE(16x8),
+                                                                 .tileOffset = 0,
+                                                                 .priority = 1 },
+    { .x = 4,
+        .y = -4,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 2,
+        .priority = 1 } };
+
+static const struct Subsprite sSubsprites_Button[] = { { .x = -20,
+                                                           .y = -12,
+                                                           .shape = SPRITE_SHAPE(32x8),
+                                                           .size = SPRITE_SIZE(32x8),
+                                                           .tileOffset = 0,
+                                                           .priority = 1 },
+    { .x = 12,
+        .y = -12,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 4,
+        .priority = 1 },
+    { .x = -20,
+        .y = -4,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 5,
+        .priority = 1 },
+    { .x = 12,
+        .y = -4,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 9,
+        .priority = 1 },
+    { .x = -20,
+        .y = 4,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 10,
+        .priority = 1 },
+    { .x = 12,
+        .y = 4,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 14,
+        .priority = 1 } };
+
+static const struct Subsprite sSubsprites_PCIcon[] = { { .x = -8,
+                                                           .y = -12,
+                                                           .shape = SPRITE_SHAPE(16x8),
+                                                           .size = SPRITE_SIZE(16x8),
+                                                           .tileOffset = 0,
+                                                           .priority = 3 },
+    { .x = -8,
+        .y = -4,
+        .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
-        .tileOffset = 2,     
-        .priority = 3
-    },
-    {
-        .x = -8,   
-        .y =  4,  
-        .shape = SPRITE_SHAPE(16x8),  
-        .size = SPRITE_SIZE(16x8), 
-        .tileOffset = 4,     
-        .priority = 3
-    }
+        .tileOffset = 2,
+        .priority = 3 },
+    { .x = -8,
+        .y = 4,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 4,
+        .priority = 3 } };
+
+static const struct SubspriteTable sSubspriteTable_PageSwapFrame[] = {
+    { ARRAY_COUNT(sSubsprites_PageSwapFrame), sSubsprites_PageSwapFrame }
 };
 
-static const struct SubspriteTable sSubspriteTable_PageSwapFrame[] =
-{
-    {ARRAY_COUNT(sSubsprites_PageSwapFrame), sSubsprites_PageSwapFrame}
+static const struct SubspriteTable sSubspriteTable_PageSwapText[] = {
+    { ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText },
+    { ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText },
+    { ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText }
 };
 
-static const struct SubspriteTable sSubspriteTable_PageSwapText[] =
-{
-    {ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText},
-    {ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText},
-    {ARRAY_COUNT(sSubsprites_PageSwapText), sSubsprites_PageSwapText}
+static const struct SubspriteTable sSubspriteTable_Button[] = { { ARRAY_COUNT(sSubsprites_Button),
+    sSubsprites_Button } };
+
+static const struct SubspriteTable sSubspriteTable_PCIcon[] = { { ARRAY_COUNT(sSubsprites_PCIcon),
+    sSubsprites_PCIcon } };
+
+static const struct SpriteFrameImage sImageTable_PCIcon[] = {
+    { sPCIconOff_Gfx, sizeof(sPCIconOff_Gfx) },
+    { sPCIconOn_Gfx, sizeof(sPCIconOn_Gfx) },
 };
 
-static const struct SubspriteTable sSubspriteTable_Button[] =
-{
-    {ARRAY_COUNT(sSubsprites_Button), sSubsprites_Button}
+static const union AnimCmd sAnim_Loop[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_JUMP(0) };
+
+static const union AnimCmd sAnim_CursorSquish[] = {
+    ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(8, 8), ANIMCMD_END
 };
 
-static const struct SubspriteTable sSubspriteTable_PCIcon[] =
-{
-    {ARRAY_COUNT(sSubsprites_PCIcon), sSubsprites_PCIcon}
+static const union AnimCmd sAnim_PCIcon[] = {
+    ANIMCMD_FRAME(0, 2), ANIMCMD_FRAME(1, 2), ANIMCMD_JUMP(0)
 };
 
-static const struct SpriteFrameImage sImageTable_PCIcon[] =
-{
-    {sPCIconOff_Gfx, sizeof(sPCIconOff_Gfx)},
-    {sPCIconOn_Gfx, sizeof(sPCIconOn_Gfx)},
-};
+static const union AnimCmd *const sAnims_Loop[] = { sAnim_Loop };
 
-static const union AnimCmd sAnim_Loop[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_JUMP(0)
-};
+static const union AnimCmd *const sAnims_Cursor[] = { sAnim_Loop, sAnim_CursorSquish };
 
-static const union AnimCmd sAnim_CursorSquish[] =
-{
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(8, 8),
-    ANIMCMD_END
-};
+static const union AnimCmd *const sAnims_PCIcon[] = { sAnim_PCIcon };
 
-static const union AnimCmd sAnim_PCIcon[] =
-{
-    ANIMCMD_FRAME(0, 2),
-    ANIMCMD_FRAME(1, 2),
-    ANIMCMD_JUMP(0)
-};
-
-static const union AnimCmd *const sAnims_Loop[] =
-{
-    sAnim_Loop
-};
-
-static const union AnimCmd *const sAnims_Cursor[] =
-{
-    sAnim_Loop,
-    sAnim_CursorSquish
-};
-
-static const union AnimCmd *const sAnims_PCIcon[] =
-{
-    sAnim_PCIcon
-};
-
-static const struct SpriteTemplate sSpriteTemplate_PageSwapFrame =
-{
-    .tileTag = GFXTAG_PAGE_SWAP_FRAME,
+static const struct SpriteTemplate sSpriteTemplate_PageSwapFrame = { .tileTag =
+                                                                         GFXTAG_PAGE_SWAP_FRAME,
     .paletteTag = PALTAG_PAGE_SWAP,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_PageSwap
-};
+    .callback = SpriteCB_PageSwap };
 
-static const struct SpriteTemplate sSpriteTemplate_PageSwapButton =
-{
-    .tileTag = GFXTAG_PAGE_SWAP_BUTTON,
+static const struct SpriteTemplate sSpriteTemplate_PageSwapButton = { .tileTag =
+                                                                          GFXTAG_PAGE_SWAP_BUTTON,
     .paletteTag = PALTAG_PAGE_SWAP_UPPER,
     .oam = &sOam_32x16,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct SpriteTemplate sSpriteTemplate_PageSwapText =
-{
-    .tileTag = GFXTAG_PAGE_SWAP_UPPER,
+static const struct SpriteTemplate sSpriteTemplate_PageSwapText = { .tileTag =
+                                                                        GFXTAG_PAGE_SWAP_UPPER,
     .paletteTag = PALTAG_PAGE_SWAP,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct SpriteTemplate sSpriteTemplate_BackButton =
-{
-    .tileTag = GFXTAG_BACK_BUTTON,
+static const struct SpriteTemplate sSpriteTemplate_BackButton = { .tileTag = GFXTAG_BACK_BUTTON,
     .paletteTag = PALTAG_BACK_BUTTON,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct SpriteTemplate sSpriteTemplate_OkButton =
-{
-    .tileTag = GFXTAG_OK_BUTTON,
+static const struct SpriteTemplate sSpriteTemplate_OkButton = { .tileTag = GFXTAG_OK_BUTTON,
     .paletteTag = PALTAG_OK_BUTTON,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct SpriteTemplate sSpriteTemplate_Cursor =
-{
-    .tileTag = GFXTAG_CURSOR,
+static const struct SpriteTemplate sSpriteTemplate_Cursor = { .tileTag = GFXTAG_CURSOR,
     .paletteTag = PALTAG_CURSOR,
     .oam = &sOam_16x16,
     .anims = sAnims_Cursor,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_Cursor
-};
+    .callback = SpriteCB_Cursor };
 
-static const struct SpriteTemplate sSpriteTemplate_InputArrow =
-{
-    .tileTag = GFXTAG_INPUT_ARROW,
+static const struct SpriteTemplate sSpriteTemplate_InputArrow = { .tileTag = GFXTAG_INPUT_ARROW,
     .paletteTag = PALTAG_PAGE_SWAP_OTHERS,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_InputArrow
-};
+    .callback = SpriteCB_InputArrow };
 
-static const struct SpriteTemplate sSpriteTemplate_Underscore =
-{
-    .tileTag = GFXTAG_UNDERSCORE,
+static const struct SpriteTemplate sSpriteTemplate_Underscore = { .tileTag = GFXTAG_UNDERSCORE,
     .paletteTag = PALTAG_PAGE_SWAP_OTHERS,
     .oam = &sOam_8x8,
     .anims = sAnims_Loop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_Underscore
-};
+    .callback = SpriteCB_Underscore };
 
-static const struct SpriteTemplate sSpriteTemplate_PCIcon =
-{
-    .tileTag = 0xFFFF,
+static const struct SpriteTemplate sSpriteTemplate_PCIcon = { .tileTag = 0xFFFF,
     .paletteTag = PALTAG_PC_ICON,
     .oam = &sOam_8x8,
     .anims = sAnims_PCIcon,
     .images = sImageTable_PCIcon,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const u8* const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT] =
-{
-    [KEYBOARD_LETTERS_LOWER] = 
-    {
-        gText_NamingScreenKeyboard_abcdef,
+static const u8 *const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT] = {
+    [KEYBOARD_LETTERS_LOWER] = { gText_NamingScreenKeyboard_abcdef,
         gText_NamingScreenKeyboard_ghijkl,
         gText_NamingScreenKeyboard_mnopqrs,
-        gText_NamingScreenKeyboard_tuvwxyz
-    },
-    [KEYBOARD_LETTERS_UPPER] = 
-    {
-        gText_NamingScreenKeyboard_ABCDEF,
+        gText_NamingScreenKeyboard_tuvwxyz },
+    [KEYBOARD_LETTERS_UPPER] = { gText_NamingScreenKeyboard_ABCDEF,
         gText_NamingScreenKeyboard_GHIJKL,
         gText_NamingScreenKeyboard_MNOPQRS,
-        gText_NamingScreenKeyboard_TUVWXYZ
-    },
-    [KEYBOARD_SYMBOLS] = 
-    {
-        gText_NamingScreenKeyboard_01234,
+        gText_NamingScreenKeyboard_TUVWXYZ },
+    [KEYBOARD_SYMBOLS] = { gText_NamingScreenKeyboard_01234,
         gText_NamingScreenKeyboard_56789,
         gText_NamingScreenKeyboard_Symbols1,
-        gText_NamingScreenKeyboard_Symbols2
-    },
+        gText_NamingScreenKeyboard_Symbols2 },
 };
 
-static const struct SpriteSheet sSpriteSheets[] =
-{
-    {gNamingScreenRWindow_Gfx + 0x280,          0x1E0,  GFXTAG_BACK_BUTTON},
-    {gNamingScreenRWindow_Gfx + 0x460,          0x1E0,  GFXTAG_OK_BUTTON},
-    {gNamingScreenRWindow_Gfx,                  0x280,  GFXTAG_PAGE_SWAP_FRAME},
-    {gNamingScreenPageButton_Gfx + 0x20,        0x100,  GFXTAG_PAGE_SWAP_BUTTON},
-    {gNamingScreenROptions_Gfx,                 0x060,  GFXTAG_PAGE_SWAP_UPPER},
-    {gNamingScreenROptions_Gfx + 0xA0,          0x060,  GFXTAG_PAGE_SWAP_LOWER},
-    {gNamingScreenROptions_Gfx + 0x140,         0x060,  GFXTAG_PAGE_SWAP_OTHERS},
-    {gNamingScreenCursor_Gfx,                   0x080,  GFXTAG_CURSOR},
-    {gNamingScreenCursor_Gfx + 0xA0,            0x080,  GFXTAG_CURSOR_SQUISHED},
-    {gNamingScreenCursor_Gfx + 0x140,           0x080,  GFXTAG_CURSOR_FILLED},
-    {gNamingScreenInputArrow_Gfx,               0x020,  GFXTAG_INPUT_ARROW},
-    {gNamingScreenUnderscore_Gfx,               0x020,  GFXTAG_UNDERSCORE},
+static const struct SpriteSheet sSpriteSheets[] = {
+    { gNamingScreenRWindow_Gfx + 0x280, 0x1E0, GFXTAG_BACK_BUTTON },
+    { gNamingScreenRWindow_Gfx + 0x460, 0x1E0, GFXTAG_OK_BUTTON },
+    { gNamingScreenRWindow_Gfx, 0x280, GFXTAG_PAGE_SWAP_FRAME },
+    { gNamingScreenPageButton_Gfx + 0x20, 0x100, GFXTAG_PAGE_SWAP_BUTTON },
+    { gNamingScreenROptions_Gfx, 0x060, GFXTAG_PAGE_SWAP_UPPER },
+    { gNamingScreenROptions_Gfx + 0xA0, 0x060, GFXTAG_PAGE_SWAP_LOWER },
+    { gNamingScreenROptions_Gfx + 0x140, 0x060, GFXTAG_PAGE_SWAP_OTHERS },
+    { gNamingScreenCursor_Gfx, 0x080, GFXTAG_CURSOR },
+    { gNamingScreenCursor_Gfx + 0xA0, 0x080, GFXTAG_CURSOR_SQUISHED },
+    { gNamingScreenCursor_Gfx + 0x140, 0x080, GFXTAG_CURSOR_FILLED },
+    { gNamingScreenInputArrow_Gfx, 0x020, GFXTAG_INPUT_ARROW },
+    { gNamingScreenUnderscore_Gfx, 0x020, GFXTAG_UNDERSCORE },
     {}
 };
 
-static const struct SpritePalette sSpritePalettes[] =
-{
-    {gNamingScreenMenu_Pal,         PALTAG_PC_ICON},
-    {gNamingScreenMenu_Pal + 0x10,  PALTAG_PAGE_SWAP_UPPER},
-    {gNamingScreenMenu_Pal + 0x20,  PALTAG_PAGE_SWAP_LOWER},
-    {gNamingScreenMenu_Pal + 0x30,  PALTAG_PAGE_SWAP_OTHERS},
-    {gNamingScreenMenu_Pal + 0x40,  PALTAG_PAGE_SWAP},
-    {gNamingScreenMenu_Pal + 0x50,  PALTAG_CURSOR},
-    {gNamingScreenMenu_Pal + 0x40,  PALTAG_BACK_BUTTON},
-    {gNamingScreenMenu_Pal + 0x40,  PALTAG_OK_BUTTON},
-    {}
-};
-
-
+static const struct SpritePalette sSpritePalettes[] = { { gNamingScreenMenu_Pal, PALTAG_PC_ICON },
+    { gNamingScreenMenu_Pal + 0x10, PALTAG_PAGE_SWAP_UPPER },
+    { gNamingScreenMenu_Pal + 0x20, PALTAG_PAGE_SWAP_LOWER },
+    { gNamingScreenMenu_Pal + 0x30, PALTAG_PAGE_SWAP_OTHERS },
+    { gNamingScreenMenu_Pal + 0x40, PALTAG_PAGE_SWAP },
+    { gNamingScreenMenu_Pal + 0x50, PALTAG_CURSOR },
+    { gNamingScreenMenu_Pal + 0x40, PALTAG_BACK_BUTTON },
+    { gNamingScreenMenu_Pal + 0x40, PALTAG_OK_BUTTON },
+    {} };

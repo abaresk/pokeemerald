@@ -21,9 +21,9 @@ extern ScrCmdFunc gMysteryEventScriptCmdTable[];
 extern ScrCmdFunc gMysteryEventScriptCmdTableEnd[];
 
 #define LANGUAGE_MASK 0x1
-#define VERSION_MASK 0x200
+#define VERSION_MASK  0x200
 
-EWRAM_DATA static struct ScriptContext sMysteryEventScriptContext = {0};
+EWRAM_DATA static struct ScriptContext sMysteryEventScriptContext = { 0 };
 
 static bool32 CheckCompatibility(u16 a1, u32 a2, u16 a3, u32 a4)
 {
@@ -83,7 +83,8 @@ u32 RunMysteryEventScript(u8 *script)
 {
     struct ScriptContext *ctx = &sMysteryEventScriptContext;
     InitMysteryEventScript(ctx, script);
-    while (RunMysteryEventScriptCommand(ctx));
+    while (RunMysteryEventScriptCommand(ctx))
+        ;
 
     return ctx->data[2];
 }
@@ -97,7 +98,7 @@ static int CalcRecordMixingGiftChecksum(void)
 {
     unsigned int i;
     int sum = 0;
-    u8 *data = (u8*)(&gSaveBlock1Ptr->recordMixingGift.data);
+    u8 *data = (u8 *)(&gSaveBlock1Ptr->recordMixingGift.data);
 
     for (i = 0; i < sizeof(gSaveBlock1Ptr->recordMixingGift.data); i++)
         sum += data[i];
@@ -110,11 +111,8 @@ static bool32 IsRecordMixingGiftValid(void)
     struct RecordMixingGiftData *data = &gSaveBlock1Ptr->recordMixingGift.data;
     int checksum = CalcRecordMixingGiftChecksum();
 
-    if (data->unk0 == 0
-        || data->quantity == 0
-        || data->itemId == 0
-        || checksum == 0
-        || checksum != gSaveBlock1Ptr->recordMixingGift.checksum)
+    if (data->unk0 == 0 || data->quantity == 0 || data->itemId == 0 || checksum == 0 ||
+        checksum != gSaveBlock1Ptr->recordMixingGift.checksum)
         return FALSE;
     else
         return TRUE;
@@ -351,7 +349,7 @@ bool8 MEScrCmd_givepokemon(struct ScriptContext *ctx)
 bool8 MEScrCmd_addtrainer(struct ScriptContext *ctx)
 {
     u32 data = ScriptReadWord(ctx) - ctx->data[1] + ctx->data[0];
-    memcpy((void*)(gSaveBlock2Ptr) + 0xBEC, (void *)data, 0xBC);
+    memcpy((void *)(gSaveBlock2Ptr) + 0xBEC, (void *)data, 0xBC);
     ValidateEReaderTrainer();
     StringExpandPlaceholders(gStringVar4, gText_MysteryGiftNewTrainer);
     ctx->data[2] = 2;

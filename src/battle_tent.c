@@ -61,48 +61,42 @@ static void GenerateInitialRentalMons(void);
 static u16 sRandMonSetId;
 
 // const rom data
-void static (*const sVerdanturfTentFuncs[])(void) =
-{
-    [VERDANTURF_TENT_FUNC_INIT]               = InitVerdanturfTentChallenge,
-    [VERDANTURF_TENT_FUNC_GET_PRIZE]          = GetVerdanturfTentPrize,
-    [VERDANTURF_TENT_FUNC_SET_PRIZE]          = SetVerdanturfTentPrize,
-    [VERDANTURF_TENT_FUNC_SET_OPPONENT_GFX]   = SetVerdanturfTentTrainerGfx,
+void static (*const sVerdanturfTentFuncs[])(
+    void) = { [VERDANTURF_TENT_FUNC_INIT] = InitVerdanturfTentChallenge,
+    [VERDANTURF_TENT_FUNC_GET_PRIZE] = GetVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_SET_PRIZE] = SetVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_SET_OPPONENT_GFX] = SetVerdanturfTentTrainerGfx,
     [VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO] = BufferVerdanturfTentTrainerIntro,
-    [VERDANTURF_TENT_FUNC_SAVE]               = SaveVerdanturfTentChallenge,
-    [VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE]   = SetRandomVerdanturfTentPrize,
-    [VERDANTURF_TENT_FUNC_GIVE_PRIZE]         = GiveVerdanturfTentPrize
-};
+    [VERDANTURF_TENT_FUNC_SAVE] = SaveVerdanturfTentChallenge,
+    [VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE] = SetRandomVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_GIVE_PRIZE] = GiveVerdanturfTentPrize };
 
-static const u16 sVerdanturfTentRewards[] = {ITEM_NEST_BALL};
+static const u16 sVerdanturfTentRewards[] = { ITEM_NEST_BALL };
 
-void static (*const sFallarborTentFuncs[])(void) =
-{
-    [FALLARBOR_TENT_FUNC_INIT]              = InitFallarborTentChallenge,
-    [FALLARBOR_TENT_FUNC_GET_PRIZE]         = GetFallarborTentPrize,
-    [FALLARBOR_TENT_FUNC_SET_PRIZE]         = SetFallarborTentPrize,
-    [FALLARBOR_TENT_FUNC_SAVE]              = SaveFallarborTentChallenge,
-    [FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE]  = SetRandomFallarborTentPrize,
-    [FALLARBOR_TENT_FUNC_GIVE_PRIZE]        = GiveFallarborTentPrize,
-    [FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME] = BufferFallarborTentTrainerName
-};
+void static (*const sFallarborTentFuncs[])(
+    void) = { [FALLARBOR_TENT_FUNC_INIT] = InitFallarborTentChallenge,
+    [FALLARBOR_TENT_FUNC_GET_PRIZE] = GetFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_SET_PRIZE] = SetFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_SAVE] = SaveFallarborTentChallenge,
+    [FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE] = SetRandomFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_GIVE_PRIZE] = GiveFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME] = BufferFallarborTentTrainerName };
 
-static const u16 sFallarborTentRewards[] = {ITEM_HYPER_POTION};
+static const u16 sFallarborTentRewards[] = { ITEM_HYPER_POTION };
 
-void static (*const sSlateportTentFuncs[])(void) =
-{
-    [SLATEPORT_TENT_FUNC_INIT]                   = InitSlateportTentChallenge,
-    [SLATEPORT_TENT_FUNC_GET_PRIZE]              = GetSlateportTentPrize,
-    [SLATEPORT_TENT_FUNC_SET_PRIZE]              = SetSlateportTentPrize,
-    [SLATEPORT_TENT_FUNC_SAVE]                   = SaveSlateportTentChallenge,
-    [SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE]       = SetRandomSlateportTentPrize,
-    [SLATEPORT_TENT_FUNC_GIVE_PRIZE]             = GiveSlateportTentPrize,
-    [SLATEPORT_TENT_FUNC_SELECT_RENT_MONS]       = SelectInitialRentalMons,
-    [SLATEPORT_TENT_FUNC_SWAP_RENT_MONS]         = SwapRentalMons,
+void static (*const sSlateportTentFuncs[])(
+    void) = { [SLATEPORT_TENT_FUNC_INIT] = InitSlateportTentChallenge,
+    [SLATEPORT_TENT_FUNC_GET_PRIZE] = GetSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SET_PRIZE] = SetSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SAVE] = SaveSlateportTentChallenge,
+    [SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE] = SetRandomSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_GIVE_PRIZE] = GiveSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SELECT_RENT_MONS] = SelectInitialRentalMons,
+    [SLATEPORT_TENT_FUNC_SWAP_RENT_MONS] = SwapRentalMons,
     [SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS] = GenerateOpponentMons,
-    [SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS]   = GenerateInitialRentalMons
-};
+    [SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS] = GenerateInitialRentalMons };
 
-static const u16 sSlateportTentRewards[] = {ITEM_FULL_HEAL};
+static const u16 sSlateportTentRewards[] = { ITEM_FULL_HEAL };
 
 // code
 void CallVerdanturfTentFunction(void)
@@ -150,7 +144,8 @@ static void SaveVerdanturfTentChallenge(void)
 
 static void SetRandomVerdanturfTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.verdanturfTentPrize = sVerdanturfTentRewards[Random() % ARRAY_COUNT(sVerdanturfTentRewards)];
+    gSaveBlock2Ptr->frontier.verdanturfTentPrize =
+        sVerdanturfTentRewards[Random() % ARRAY_COUNT(sVerdanturfTentRewards)];
 }
 
 static void GiveVerdanturfTentPrize(void)
@@ -200,7 +195,8 @@ static void SaveFallarborTentChallenge(void)
 
 static void SetRandomFallarborTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.fallarborTentPrize = sFallarborTentRewards[Random() % ARRAY_COUNT(sFallarborTentRewards)];
+    gSaveBlock2Ptr->frontier.fallarborTentPrize =
+        sFallarborTentRewards[Random() % ARRAY_COUNT(sFallarborTentRewards)];
 }
 
 static void GiveFallarborTentPrize(void)
@@ -255,7 +251,8 @@ static void SaveSlateportTentChallenge(void)
 
 static void SetRandomSlateportTentPrize(void)
 {
-    gSaveBlock2Ptr->frontier.slateportTentPrize = sSlateportTentRewards[Random() % ARRAY_COUNT(sSlateportTentRewards)];
+    gSaveBlock2Ptr->frontier.slateportTentPrize =
+        sSlateportTentRewards[Random() % ARRAY_COUNT(sSlateportTentRewards)];
 }
 
 static void GiveSlateportTentPrize(void)
@@ -285,8 +282,9 @@ static void SwapRentalMons(void)
 
 bool8 InSlateportBattleTent(void)
 {
-    return gMapHeader.regionMapSectionId == MAPSEC_SLATEPORT_CITY
-           && (gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_CORRIDOR || gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_BATTLE_ROOM);
+    return gMapHeader.regionMapSectionId == MAPSEC_SLATEPORT_CITY &&
+           (gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_CORRIDOR ||
+               gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_BATTLE_ROOM);
 }
 
 static void GenerateInitialRentalMons(void)
@@ -333,7 +331,9 @@ static void GenerateInitialRentalMons(void)
         // Cannot have two same held items.
         for (j = firstMonId; j < i + firstMonId; j++)
         {
-            if (heldItems[j] != 0 && heldItems[j] == gBattleFrontierHeldItems[gFacilityTrainerMons[monSetId].itemTableId])
+            if (heldItems[j] != 0 &&
+                heldItems[j] ==
+                    gBattleFrontierHeldItems[gFacilityTrainerMons[monSetId].itemTableId])
             {
                 if (gFacilityTrainerMons[monSetId].species == currSpecies)
                     currSpecies = SPECIES_NONE;
@@ -355,11 +355,12 @@ static void GenerateOpponentMons(void)
 {
     u16 trainerId;
     s32 i, j, k;
-    #ifndef NONMATCHING
-        register const u16 *monSet asm("r9"); // Fix me. Compiler insists on moving that variable into stack.
-    #else
-        const u16 *monSet;
-    #endif
+#ifndef NONMATCHING
+    register const u16 *monSet asm(
+        "r9"); // Fix me. Compiler insists on moving that variable into stack.
+#else
+    const u16 *monSet;
+#endif
     u16 species[FRONTIER_PARTY_SIZE];
     u16 heldItems[FRONTIER_PARTY_SIZE];
     s32 monId = 0;
@@ -388,7 +389,8 @@ static void GenerateOpponentMons(void)
     }
 
     if (gSaveBlock2Ptr->frontier.curChallengeBattleNum < 2)
-        gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] = gTrainerBattleOpponent_A;
+        gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] =
+            gTrainerBattleOpponent_A;
 
     monSet = gFacilityTrainers[gTrainerBattleOpponent_A].monSet;
     i = 0;
@@ -397,7 +399,8 @@ static void GenerateOpponentMons(void)
         sRandMonSetId = monSet[Random() % monId];
         for (j = 0; j < 6; j++)
         {
-            if (gFacilityTrainerMons[sRandMonSetId].species == gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)
+            if (gFacilityTrainerMons[sRandMonSetId].species ==
+                gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)
                 break;
         }
         if (j != 6)
@@ -413,7 +416,9 @@ static void GenerateOpponentMons(void)
 
         for (k = 0; k < i; k++)
         {
-            if (heldItems[k] != 0 && heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[sRandMonSetId].itemTableId])
+            if (heldItems[k] != 0 &&
+                heldItems[k] ==
+                    gBattleFrontierHeldItems[gFacilityTrainerMons[sRandMonSetId].itemTableId])
                 break;
         }
         if (k != i)

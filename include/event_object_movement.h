@@ -90,7 +90,8 @@ void TrySpawnObjectEvents(s16, s16);
 u8 CreateObjectSprite(u8 graphicsId, u8 a1, s16 x, s16 y, u8 z, u8 direction);
 u8 AddPseudoObjectEvent(u16, void (*)(struct Sprite *), s16 x, s16 y, u8 subpriority);
 u8 TrySpawnObjectEvent(u8, u8, u8);
-u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 z);
+u8 SpawnSpecialObjectEventParameterized(
+    u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 z);
 u8 SpawnSpecialObjectEvent(struct ObjectEventTemplate *);
 void SetSpritePosToMapCoords(s16, s16, s16 *, s16 *);
 void CameraObjectReset1(void);
@@ -104,12 +105,14 @@ void SetObjectEventSpritePosByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup, 
 void sub_808E7E4(u8, u8, u8);
 void sub_808E78C(u8, u8, u8, u8);
 void sub_808E75C(s16, s16);
-void ObjectEventGetLocalIdAndMap(struct ObjectEvent *objectEvent, void *localId, void *mapNum, void *mapGroup);
+void ObjectEventGetLocalIdAndMap(
+    struct ObjectEvent *objectEvent, void *localId, void *mapNum, void *mapGroup);
 void ShiftObjectEventCoords(struct ObjectEvent *, s16, s16);
 void MoveObjectEventToMapCoords(struct ObjectEvent *, s16, s16);
 void TryOverrideObjectEventTemplateCoords(u8, u8, u8);
 void InitObjectEventPalettes(u8 palSlot);
-void UpdateObjectEventCurrentMovement(struct ObjectEvent *, struct Sprite *, bool8(struct ObjectEvent *, struct Sprite *));
+void UpdateObjectEventCurrentMovement(
+    struct ObjectEvent *, struct Sprite *, bool8(struct ObjectEvent *, struct Sprite *));
 u8 ObjectEventFaceOppositeDirection(struct ObjectEvent *, u8);
 u8 GetOppositeDirection(u8);
 u8 GetWalkInPlaceFastestMovementAction(u32);
@@ -152,7 +155,8 @@ void ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 movemen
 bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent);
 u8 ObjectEventCheckHeldMovementStatus(struct ObjectEvent *objectEvent);
 u8 ObjectEventGetHeldMovementActionId(struct ObjectEvent *objectEvent);
-void TryOverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent, u8 movementType);
+void TryOverrideTemplateCoordsForObjectEvent(
+    const struct ObjectEvent *objectEvent, u8 movementType);
 void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent);
 void ShiftStillObjectEventCoords(struct ObjectEvent *pObject);
 void ObjectEventMoveDestCoords(struct ObjectEvent *pObject, u32 unk_19, s16 *pInt, s16 *pInt1);
@@ -420,4 +424,4 @@ void SetObjectEventSpriteGraphics(u8 var1, u8 graphicsId);
 void SetObjectEventSpriteAnim(u8 var1, u8 var2);
 bool32 IsObjectEventSpriteAnimating(u8 var);
 
-#endif //GUARD_EVENT_OBJECT_MOVEMENT_H
+#endif // GUARD_EVENT_OBJECT_MOVEMENT_H

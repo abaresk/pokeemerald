@@ -4,7 +4,8 @@
 typedef union // size = 0x24
 {
     // Common
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 pad02[26];
@@ -19,7 +20,8 @@ typedef union // size = 0x24
     } common;
 
     // Common init (used for initialization loop)
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 pad02[34];
@@ -27,7 +29,8 @@ typedef union // size = 0x24
 
     // Local shows
     // TVSHOW_FAN_CLUB_LETTER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 species;
@@ -37,7 +40,8 @@ typedef union // size = 0x24
     } fanclubLetter;
 
     // TVSHOW_RECENT_HAPPENINGS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 var02;
@@ -47,12 +51,13 @@ typedef union // size = 0x24
     } recentHappenings;
 
     // TVSHOW_PKMN_FAN_CLUB_OPINIONS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 species;
-        /*0x04*/ u8 friendshipHighNybble:4;
-        /*0x04*/ u8 questionAsked:4;
+        /*0x04*/ u8 friendshipHighNybble : 4;
+        /*0x04*/ u8 questionAsked : 4;
         /*0x05*/ u8 playerName[8];
         /*0x0D*/ u8 language;
         /*0x0E*/ u8 pokemonNameLanguage;
@@ -63,7 +68,8 @@ typedef union // size = 0x24
     } fanclubOpinions;
 
     // TVSHOW_UNKN_SHOWTYPE_04 (dummied out)
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 words[2];
@@ -74,7 +80,8 @@ typedef union // size = 0x24
     } unkShow04;
 
     // TVSHOW_NAME_RATER_SHOW
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 species;
@@ -88,15 +95,16 @@ typedef union // size = 0x24
     } nameRaterShow;
 
     // TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE (contest)
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 species;
         /*0x04*/ u16 words[2];
         /*0x08*/ u8 pokemonNickname[11];
-        /*0x13*/ u8 contestCategory:3;
-        /*0x13*/ u8 contestRank:2;
-        /*0x13*/ u8 contestResult:2;
+        /*0x13*/ u8 contestCategory : 3;
+        /*0x13*/ u8 contestRank : 2;
+        /*0x13*/ u8 contestResult : 2;
         /*0x14*/ u16 move;
         /*0x16*/ u8 playerName[8];
         /*0x1E*/ u8 language;
@@ -104,7 +112,8 @@ typedef union // size = 0x24
     } bravoTrainer;
 
     // TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 trainerName[8];
@@ -121,7 +130,8 @@ typedef union // size = 0x24
     } bravoTrainerTower;
 
     // TVSHOW_CONTEST_LIVE_UPDATES
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 losingSpecies;
@@ -139,12 +149,13 @@ typedef union // size = 0x24
     } contestLiveUpdates;
 
     // TVSHOW_3_CHEERS_FOR_POKEBLOCKS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 sheen;
-        /*0x03*/ u8 flavor:3;
-        /*0x03*/ u8 unk_03_3:2;
+        /*0x03*/ u8 flavor : 3;
+        /*0x03*/ u8 unk_03_3 : 2;
         /*0x04*/ u8 worstBlenderName[8];
         /*0x0C*/ u8 playerName[8];
         /*0x14*/ u8 language;
@@ -152,7 +163,8 @@ typedef union // size = 0x24
     } threeCheers;
 
     // TVSHOW_BATTLE_UPDATE
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 speciesOpponent;
@@ -166,7 +178,8 @@ typedef union // size = 0x24
     } battleUpdate;
 
     // TVSHOW_FAN_CLUB_SPECIAL
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 playerName[8];
@@ -180,7 +193,8 @@ typedef union // size = 0x24
     } fanClubSpecial;
 
     // TVSHOW_CONTEST_LIVE_UPDATES_2
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 playerName[8];
@@ -193,7 +207,8 @@ typedef union // size = 0x24
 
     // Record Mixing Shows
     // TVSHOW_POKEMON_TODAY_CAUGHT
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 language;
@@ -206,7 +221,8 @@ typedef union // size = 0x24
     } pokemonToday;
 
     // TVSHOW_SMART_SHOPPER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 priceReduced;
@@ -219,7 +235,8 @@ typedef union // size = 0x24
     } smartshopperShow;
 
     // TVSHOW_POKEMON_TODAY_FAILED
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 language;
@@ -233,7 +250,8 @@ typedef union // size = 0x24
     } pokemonTodayFailed;
 
     // TVSHOW_FISHING_ADVICE
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 nBites;
@@ -245,7 +263,8 @@ typedef union // size = 0x24
     } pokemonAngler;
 
     // TVSHOW_WORLD_OF_MASTERS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 numPokeCaught;
@@ -259,7 +278,8 @@ typedef union // size = 0x24
     } worldOfMasters;
 
     // TVSHOW_TODAYS_RIVAL_TRAINER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 dexCount;
@@ -275,7 +295,8 @@ typedef union // size = 0x24
     } rivalTrainer;
 
     // TVSHOW_TREND_WATCHER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 filler_02[2];
@@ -287,7 +308,8 @@ typedef union // size = 0x24
     } trendWatcher;
 
     // TVSHOW_TREASURE_INVESTIGATORS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 item;
@@ -299,7 +321,8 @@ typedef union // size = 0x24
     } treasureInvestigators;
 
     // TVSHOW_FIND_THAT_GAMER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 won;
@@ -312,7 +335,8 @@ typedef union // size = 0x24
     } findThatGamer;
 
     // TVSHOW_BREAKING_NEWS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 lastOpponentSpecies;
@@ -328,7 +352,8 @@ typedef union // size = 0x24
     } breakingNews;
 
     // TVSHOW_SECRET_BASE_VISIT
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 avgLevel;
@@ -342,7 +367,8 @@ typedef union // size = 0x24
     } secretBaseVisit;
 
     // TVSHOW_LOTTO_WINNER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 item;
@@ -353,7 +379,8 @@ typedef union // size = 0x24
     } lottoWinner;
 
     // TVSHOW_BATTLE_SEMINAR
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 move;
@@ -368,7 +395,8 @@ typedef union // size = 0x24
     } battleSeminar;
 
     // TVSHOW_TRAINER_FAN_CLUB
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 filler_02[2];
@@ -379,7 +407,8 @@ typedef union // size = 0x24
     } trainerFanClub;
 
     // TVSHOW_CUTIES
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 nRibbons;
@@ -392,7 +421,8 @@ typedef union // size = 0x24
     } cuties;
 
     // TVSHOW_FRONTIER
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 winStreak;
@@ -407,7 +437,8 @@ typedef union // size = 0x24
     } frontier;
 
     // TVSHOW_NUMBER_ONE
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 count;
@@ -418,7 +449,8 @@ typedef union // size = 0x24
     } numberOne;
 
     // TVSHOW_SECRET_BASE_SECRETS
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 stepsInBase;
@@ -432,7 +464,8 @@ typedef union // size = 0x24
     } secretBaseSecrets;
 
     // TVSHOW_SAFARI_FAN_CLUB
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 nMonsCaught;
@@ -444,7 +477,8 @@ typedef union // size = 0x24
 
     // Mass Outbreak
     // TVSHOW_MASS_OUTBREAK
-    struct {
+    struct
+    {
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 var02;
@@ -478,17 +512,17 @@ struct GabbyAndTyData
     /*2baa*/ u16 quote[1];
     /*2bac*/ u8 mapnum;
     /*2bad*/ u8 battleNum;
-    /*2bae*/ u8 battleTookMoreThanOneTurn:1;
-    /*2bae*/ u8 playerLostAMon:1;
-    /*2bae*/ u8 playerUsedHealingItem:1;
-    /*2bae*/ u8 playerThrewABall:1;
-    /*2bae*/ u8 onAir:1;
-    /*2bae*/ u8 valA_5:3;
-    /*2baf*/ u8 battleTookMoreThanOneTurn2:1;
-    /*2baf*/ u8 playerLostAMon2:1;
-    /*2baf*/ u8 playerUsedHealingItem2:1;
-    /*2baf*/ u8 playerThrewABall2:1;
-    /*2baf*/ u8 valB_4:4;
+    /*2bae*/ u8 battleTookMoreThanOneTurn : 1;
+    /*2bae*/ u8 playerLostAMon : 1;
+    /*2bae*/ u8 playerUsedHealingItem : 1;
+    /*2bae*/ u8 playerThrewABall : 1;
+    /*2bae*/ u8 onAir : 1;
+    /*2bae*/ u8 valA_5 : 3;
+    /*2baf*/ u8 battleTookMoreThanOneTurn2 : 1;
+    /*2baf*/ u8 playerLostAMon2 : 1;
+    /*2baf*/ u8 playerUsedHealingItem2 : 1;
+    /*2baf*/ u8 playerThrewABall2 : 1;
+    /*2baf*/ u8 valB_4 : 4;
 };
 
-#endif //GUARD_GLOBAL_TV_H
+#endif // GUARD_GLOBAL_TV_H

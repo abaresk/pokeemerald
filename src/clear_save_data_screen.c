@@ -22,8 +22,7 @@ static bool8 SetupClearSaveDataScreen(void);
 static void CB2_FadeAndDoReset(void);
 static void InitClearSaveDataScreenWindows(void);
 
-static const struct BgTemplate sClearSaveBgTemplates[2] =
-{
+static const struct BgTemplate sClearSaveBgTemplates[2] = {
     {
         .bg = 0,
         .charBaseIndex = 0,
@@ -44,32 +43,26 @@ static const struct BgTemplate sClearSaveBgTemplates[2] =
     },
 };
 
-static const struct WindowTemplate sClearSaveTextWindow[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 15,
-        .width = 26,
-        .height = 4,
-        .paletteNum = 15,
-        .baseBlock = 11,
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sClearSaveTextWindow[] = { {
+                                                                  .bg = 0,
+                                                                  .tilemapLeft = 3,
+                                                                  .tilemapTop = 15,
+                                                                  .width = 26,
+                                                                  .height = 4,
+                                                                  .paletteNum = 15,
+                                                                  .baseBlock = 11,
+                                                              },
+    DUMMY_WIN_TEMPLATE };
 
-static const struct WindowTemplate sClearSaveYesNo[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 2,
-        .width = 5,
-        .height = 4,
-        .paletteNum = 15,
-        .baseBlock = 115,
-    }
-};
+static const struct WindowTemplate sClearSaveYesNo[] = { {
+    .bg = 0,
+    .tilemapLeft = 3,
+    .tilemapTop = 2,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 115,
+} };
 
 void CB2_InitClearSaveDataScreen(void)
 {
@@ -124,7 +117,7 @@ static bool8 SetupClearSaveDataScreen(void)
 {
     u16 i;
 
-    switch(gMain.state)
+    switch (gMain.state)
     {
     case 0:
     default:
@@ -170,7 +163,7 @@ static bool8 SetupClearSaveDataScreen(void)
         break;
     case 1:
         UpdatePaletteFade();
-        if(!gPaletteFade.active)
+        if (!gPaletteFade.active)
         {
             SetMainCallback2(MainCB);
             return TRUE;
@@ -181,7 +174,7 @@ static bool8 SetupClearSaveDataScreen(void)
 
 static void CB2_FadeAndDoReset(void)
 {
-    switch(gMain.state)
+    switch (gMain.state)
     {
     case 0:
     default:
@@ -190,7 +183,7 @@ static void CB2_FadeAndDoReset(void)
         break;
     case 1:
         UpdatePaletteFade();
-        if(!gPaletteFade.active)
+        if (!gPaletteFade.active)
         {
             FreeAllWindowBuffers();
             DoSoftReset();

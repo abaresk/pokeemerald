@@ -1,16 +1,17 @@
 #ifndef GUARD_CONSTANTS_BATTLE_STRING_IDS_H
 #define GUARD_CONSTANTS_BATTLE_STRING_IDS_H
 
-#define BATTLESTRINGS_COUNT     369
+#define BATTLESTRINGS_COUNT 369
 
-#define BATTLESTRINGS_ID_ADDER  12 // all battlestrings have its ID + 12, because first 5 are reserved
+#define BATTLESTRINGS_ID_ADDER                                                                     \
+    12 // all battlestrings have its ID + 12, because first 5 are reserved
 
-#define STRINGID_INTROMSG       0
-#define STRINGID_INTROSENDOUT   1
-#define STRINGID_RETURNMON      2
-#define STRINGID_SWITCHINMON    3
-#define STRINGID_USEDMOVE       4
-#define STRINGID_BATTLEEND      5
+#define STRINGID_INTROMSG     0
+#define STRINGID_INTROSENDOUT 1
+#define STRINGID_RETURNMON    2
+#define STRINGID_SWITCHINMON  3
+#define STRINGID_USEDMOVE     4
+#define STRINGID_BATTLEEND    5
 
 // todo: make some of those names less vague: attacker/target vs pkmn, etc.
 #define STRINGID_TRAINER1LOSETEXT           12

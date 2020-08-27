@@ -2201,4 +2201,3 @@ const struct MonCoords gMonBackPicCoords[] =
         .y_offset = 6,
     },
 };
-

@@ -3,7 +3,7 @@
 
 // return values for BattleAI_ChooseMoveOrAction
 // 0 - 3 are move idx
-#define AI_CHOICE_FLEE 4
+#define AI_CHOICE_FLEE  4
 #define AI_CHOICE_WATCH 5
 
 void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves);

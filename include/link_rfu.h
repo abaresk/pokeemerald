@@ -5,55 +5,55 @@
 #include "link.h"
 #include "AgbRfu_LinkManager.h"
 
-#define RFU_COMMAND_0x4400 0x4400
-#define RFU_COMMAND_0x8800 0x8800
-#define RFU_COMMAND_0x8900 0x8900
-#define RFU_COMMAND_SEND_BLOCK_REQ 0xA100
-#define RFU_COMMAND_0x7700 0x7700
-#define RFU_COMMAND_0x7800 0x7800
+#define RFU_COMMAND_0x4400             0x4400
+#define RFU_COMMAND_0x8800             0x8800
+#define RFU_COMMAND_0x8900             0x8900
+#define RFU_COMMAND_SEND_BLOCK_REQ     0xA100
+#define RFU_COMMAND_0x7700             0x7700
+#define RFU_COMMAND_0x7800             0x7800
 #define RFU_COMMAND_READY_EXIT_STANDBY 0x6600
-#define RFU_COMMAND_READY_CLOSE_LINK 0x5F00
-#define RFU_COMMAND_0x2F00 0x2F00
-#define RFU_COMMAND_0xBE00 0xBE00
-#define RFU_COMMAND_0xEE00 0xEE00
-#define RFU_COMMAND_0xED00 0xED00
+#define RFU_COMMAND_READY_CLOSE_LINK   0x5F00
+#define RFU_COMMAND_0x2F00             0x2F00
+#define RFU_COMMAND_0xBE00             0xBE00
+#define RFU_COMMAND_0xEE00             0xEE00
+#define RFU_COMMAND_0xED00             0xED00
 
 #define RFU_SERIAL_7F7D 0x7F7D
 
-#define RECV_QUEUE_NUM_SLOTS 32
+#define RECV_QUEUE_NUM_SLOTS   32
 #define RECV_QUEUE_SLOT_LENGTH (14 * MAX_RFU_PLAYERS)
 
-#define SEND_QUEUE_NUM_SLOTS 40
+#define SEND_QUEUE_NUM_SLOTS   40
 #define SEND_QUEUE_SLOT_LENGTH 14
 
-#define BACKUP_QUEUE_NUM_SLOTS 2
+#define BACKUP_QUEUE_NUM_SLOTS   2
 #define BACKUP_QUEUE_SLOT_LENGTH 14
 
-#define RFU_STATUS_OK                   0
-#define RFU_STATUS_FATAL_ERROR          1
-#define RFU_STATUS_CONNECTION_ERROR     2
-#define RFU_STATUS_CHILD_SEND_COMPLETE  3
-#define RFU_STATUS_NEW_CHILD_DETECTED   4
-#define RFU_STATUS_JOIN_GROUP_OK        5
-#define RFU_STATUS_JOIN_GROUP_NO        6
-#define RFU_STATUS_WAIT_ACK_JOIN_GROUP  7
-#define RFU_STATUS_LEAVE_GROUP_NOTICE   8
-#define RFU_STATUS_LEAVE_GROUP          9
-#define RFU_STATUS_10                   10
-#define RFU_STATUS_11                   11
-#define RFU_STATUS_ACK_JOIN_GROUP       12
+#define RFU_STATUS_OK                  0
+#define RFU_STATUS_FATAL_ERROR         1
+#define RFU_STATUS_CONNECTION_ERROR    2
+#define RFU_STATUS_CHILD_SEND_COMPLETE 3
+#define RFU_STATUS_NEW_CHILD_DETECTED  4
+#define RFU_STATUS_JOIN_GROUP_OK       5
+#define RFU_STATUS_JOIN_GROUP_NO       6
+#define RFU_STATUS_WAIT_ACK_JOIN_GROUP 7
+#define RFU_STATUS_LEAVE_GROUP_NOTICE  8
+#define RFU_STATUS_LEAVE_GROUP         9
+#define RFU_STATUS_10                  10
+#define RFU_STATUS_11                  11
+#define RFU_STATUS_ACK_JOIN_GROUP      12
 
 // RfuTgtData.gname is read as these structs.
 struct GFtgtGnameSub
 {
-    u16 language:4;
-    u16 hasNews:1;
-    u16 hasCard:1;
-    u16 unknown:1; // Never read
-    u16 isChampion:1;
-    u16 hasNationalDex:1;
-    u16 gameClear:1;
-    u16 version:4;
+    u16 language : 4;
+    u16 hasNews : 1;
+    u16 hasCard : 1;
+    u16 unknown : 1; // Never read
+    u16 isChampion : 1;
+    u16 hasNationalDex : 1;
+    u16 gameClear : 1;
+    u16 version : 4;
     u8 playerTrainerId[2];
 };
 
@@ -64,12 +64,12 @@ struct __attribute__((packed, aligned(2))) GFtgtGname
     // u8 gender:1;
     // u8 unk_4:3
     // u8 active:1
-    u16 species:10;
-    u16 type:6;
-    u8 activity:7;
-    u8 started:1;
-    u8 playerGender:1;
-    u8 level:7;
+    u16 species : 10;
+    u16 type : 6;
+    u8 activity : 7;
+    u8 started : 1;
+    u8 playerGender : 1;
+    u8 level : 7;
     u8 padding;
 }; // size: RFU_GNAME_SIZE
 
@@ -276,9 +276,10 @@ bool8 RfuRecvQueue_Dequeue(struct RfuRecvQueue *queue, u8 *dest);
 bool8 RfuSendQueue_Dequeue(struct RfuSendQueue *queue, u8 *dest);
 void RfuBackupQueue_Enqueue(struct RfuBackupQueue *queue, const u8 *q2);
 bool8 RfuBackupQueue_Dequeue(struct RfuBackupQueue *queue, u8 *q2);
-void InitHostRFUtgtGname(struct GFtgtGname *data, u8 activity, bool32 started, s32 child_sprite_genders);
+void InitHostRFUtgtGname(
+    struct GFtgtGname *data, u8 activity, bool32 started, s32 child_sprite_genders);
 void CreateWirelessStatusIndicatorSprite(u8 x, u8 y);
 void DestroyWirelessStatusIndicatorSprite(void);
 void LoadWirelessStatusIndicatorSpriteGfx(void);
 
-#endif //GUARD_LINK_RFU_H
+#endif // GUARD_LINK_RFU_H

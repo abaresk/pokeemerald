@@ -18,31 +18,35 @@
 
 struct ConnectionFlags
 {
-    u8 south:1;
-    u8 north:1;
-    u8 west:1;
-    u8 east:1;
+    u8 south : 1;
+    u8 north : 1;
+    u8 west : 1;
+    u8 east : 1;
 };
 
-EWRAM_DATA static u16 gBackupMapData[MAX_MAP_DATA_SIZE] = {0};
-EWRAM_DATA struct MapHeader gMapHeader = {0};
-EWRAM_DATA struct Camera gCamera = {0};
-EWRAM_DATA static struct ConnectionFlags gMapConnectionFlags = {0};
+EWRAM_DATA static u16 gBackupMapData[MAX_MAP_DATA_SIZE] = { 0 };
+EWRAM_DATA struct MapHeader gMapHeader = { 0 };
+EWRAM_DATA struct Camera gCamera = { 0 };
+EWRAM_DATA static struct ConnectionFlags gMapConnectionFlags = { 0 };
 EWRAM_DATA static u32 sFiller_02037344 = 0; // without this, the next file won't align properly
 
 struct BackupMapLayout gBackupMapLayout;
 
-static const struct ConnectionFlags sDummyConnectionFlags = {0};
+static const struct ConnectionFlags sDummyConnectionFlags = { 0 };
 
 static void InitMapLayoutData(struct MapHeader *mapHeader);
 static void InitBackupMapLayoutData(u16 *map, u16 width, u16 height);
-static void FillSouthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
-static void FillNorthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
-static void FillWestConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
-static void FillEastConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
+static void FillSouthConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
+static void FillNorthConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
+static void FillWestConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
+static void FillEastConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
 static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader);
 static void LoadSavedMapView(void);
-static bool8 SkipCopyingMetatileFromSavedMap(u16* mapMetatilePtr, u16 mapWidth, u8 yMode);
+static bool8 SkipCopyingMetatileFromSavedMap(u16 *mapMetatilePtr, u16 mapWidth, u8 yMode);
 
 struct MapHeader const *const GetMapHeaderFromConnection(struct MapConnection *connection)
 {
@@ -149,7 +153,8 @@ static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader)
     }
 }
 
-static void sub_8087F54(int x, int y, struct MapHeader const *connectedMapHeader, int x2, int y2, int width, int height)
+static void sub_8087F54(
+    int x, int y, struct MapHeader const *connectedMapHeader, int x2, int y2, int width, int height)
 {
     int i;
     u16 *src;
@@ -168,7 +173,8 @@ static void sub_8087F54(int x, int y, struct MapHeader const *connectedMapHeader
     }
 }
 
-static void FillSouthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
+static void FillSouthConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
 {
     int x, y;
     int x2;
@@ -207,15 +213,12 @@ static void FillSouthConnection(struct MapHeader const *mapHeader, struct MapHea
             }
         }
 
-        sub_8087F54(
-            x, y,
-            connectedMapHeader,
-            x2, /*y2*/ 0,
-            width, /*height*/ 7);
+        sub_8087F54(x, y, connectedMapHeader, x2, /*y2*/ 0, width, /*height*/ 7);
     }
 }
 
-static void FillNorthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
+static void FillNorthConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
 {
     int x;
     int x2, y2;
@@ -255,16 +258,12 @@ static void FillNorthConnection(struct MapHeader const *mapHeader, struct MapHea
             }
         }
 
-        sub_8087F54(
-            x, /*y*/ 0,
-            connectedMapHeader,
-            x2, y2,
-            width, /*height*/ 7);
-
+        sub_8087F54(x, /*y*/ 0, connectedMapHeader, x2, y2, width, /*height*/ 7);
     }
 }
 
-static void FillWestConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
+static void FillWestConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
 {
     int y;
     int x2, y2;
@@ -303,14 +302,18 @@ static void FillWestConnection(struct MapHeader const *mapHeader, struct MapHead
         }
 
         sub_8087F54(
-            /*x*/ 0, y,
+            /*x*/ 0,
+            y,
             connectedMapHeader,
-            x2, y2,
-            /*width*/ 7, height);
+            x2,
+            y2,
+            /*width*/ 7,
+            height);
     }
 }
 
-static void FillEastConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
+static void FillEastConnection(
+    struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset)
 {
     int x, y;
     int y2;
@@ -347,11 +350,13 @@ static void FillEastConnection(struct MapHeader const *mapHeader, struct MapHead
             }
         }
 
-        sub_8087F54(
-            x, y,
+        sub_8087F54(x,
+            y,
             connectedMapHeader,
-            /*x2*/ 0, y2,
-            /*width*/ 8, height);
+            /*x2*/ 0,
+            y2,
+            /*width*/ 8,
+            height);
     }
 }
 
@@ -359,9 +364,9 @@ union Block
 {
     struct
     {
-        u16 block:10;
-        u16 collision:2;
-        u16 elevation:4;
+        u16 block : 10;
+        u16 collision : 2;
+        u16 elevation : 4;
     } block;
     u16 value;
 };
@@ -372,8 +377,7 @@ u8 MapGridGetZCoordAt(int x, int y)
     int i;
     u16 *border;
 
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         block = gBackupMapLayout.map[x + gBackupMapLayout.width * y];
     }
@@ -400,8 +404,7 @@ u8 MapGridIsImpassableAt(int x, int y)
     int i;
     u16 *border;
 
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         block = gBackupMapLayout.map[x + gBackupMapLayout.width * y];
     }
@@ -429,8 +432,7 @@ u32 MapGridGetMetatileIdAt(int x, int y)
     u16 *border;
     u16 block2;
 
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         block = gBackupMapLayout.map[x + gBackupMapLayout.width * y];
     }
@@ -465,25 +467,25 @@ u8 MapGridGetMetatileLayerTypeAt(int x, int y)
 {
     u16 metatile;
     metatile = MapGridGetMetatileIdAt(x, y);
-    return (GetBehaviorByMetatileId(metatile) & METATILE_ELEVATION_MASK) >> METATILE_ELEVATION_SHIFT;
+    return (GetBehaviorByMetatileId(metatile) & METATILE_ELEVATION_MASK) >>
+           METATILE_ELEVATION_SHIFT;
 }
 
 void MapGridSetMetatileIdAt(int x, int y, u16 metatile)
 {
     int i;
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         i = x + y * gBackupMapLayout.width;
-        gBackupMapLayout.map[i] = (gBackupMapLayout.map[i] & METATILE_ELEVATION_MASK) | (metatile & ~METATILE_ELEVATION_MASK);
+        gBackupMapLayout.map[i] = (gBackupMapLayout.map[i] & METATILE_ELEVATION_MASK) |
+                                  (metatile & ~METATILE_ELEVATION_MASK);
     }
 }
 
 void MapGridSetMetatileEntryAt(int x, int y, u16 metatile)
 {
     int i;
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         i = x + gBackupMapLayout.width * y;
         gBackupMapLayout.map[i] = metatile;
@@ -542,7 +544,6 @@ static bool32 SavedMapViewIsEmpty(void)
     for (i = 0; i < ARRAY_COUNT(gSaveBlock1Ptr->mapView); i++)
         marker |= gSaveBlock1Ptr->mapView[i];
 #endif
-
 
     if (marker == 0)
         return TRUE;
@@ -656,8 +657,7 @@ int GetMapBorderIdAt(int x, int y)
     struct MapLayout const *mapLayout;
     u16 block, block2;
     int i, j;
-    if (x >= 0 && x < gBackupMapLayout.width
-     && y >= 0 && y < gBackupMapLayout.height)
+    if (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
     {
         i = gBackupMapLayout.width;
         i *= y;
@@ -817,10 +817,12 @@ bool8 sub_80889A8(u8 direction, int x, int y, struct MapConnection *connection)
     {
     case CONNECTION_SOUTH:
     case CONNECTION_NORTH:
-        return sub_8088A0C(x, gMapHeader.mapLayout->width, mapHeader->mapLayout->width, connection->offset);
+        return sub_8088A0C(
+            x, gMapHeader.mapLayout->width, mapHeader->mapLayout->width, connection->offset);
     case CONNECTION_WEST:
     case CONNECTION_EAST:
-        return sub_8088A0C(y, gMapHeader.mapLayout->height, mapHeader->mapLayout->height, connection->offset);
+        return sub_8088A0C(
+            y, gMapHeader.mapLayout->height, mapHeader->mapLayout->height, connection->offset);
     }
     return FALSE;
 }
@@ -883,11 +885,11 @@ struct MapConnection *GetConnectionAtCoords(s16 x, s16 y)
         for (i = 0; i < count; i++, connection++)
         {
             direction = connection->direction;
-            if ((direction == CONNECTION_DIVE || direction == CONNECTION_EMERGE)
-             || (direction == CONNECTION_NORTH && y > 6)
-             || (direction == CONNECTION_SOUTH && y < gMapHeader.mapLayout->height + 7)
-             || (direction == CONNECTION_WEST && x > 6)
-             || (direction == CONNECTION_EAST && x < gMapHeader.mapLayout->width + 7))
+            if ((direction == CONNECTION_DIVE || direction == CONNECTION_EMERGE) ||
+                (direction == CONNECTION_NORTH && y > 6) ||
+                (direction == CONNECTION_SOUTH && y < gMapHeader.mapLayout->height + 7) ||
+                (direction == CONNECTION_WEST && x > 6) ||
+                (direction == CONNECTION_EAST && x < gMapHeader.mapLayout->width + 7))
             {
                 continue;
             }
@@ -936,7 +938,7 @@ void MapGridSetMetatileImpassabilityAt(int x, int y, bool32 impassable)
     }
 }
 
-static bool8 SkipCopyingMetatileFromSavedMap(u16* mapMetatilePtr, u16 mapWidth, u8 yMode)
+static bool8 SkipCopyingMetatileFromSavedMap(u16 *mapMetatilePtr, u16 mapWidth, u8 yMode)
 {
     if (yMode == 0xFF)
         return FALSE;
@@ -975,12 +977,10 @@ static void CopyTilesetToVramUsingHeap(struct Tileset const *tileset, u16 numTil
 
 void nullsub_3(u16 a0, u16 a1)
 {
-
 }
 
 void nullsub_90(void)
 {
-
 }
 
 void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size)
@@ -992,17 +992,17 @@ void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size)
         if (tileset->isSecondary == FALSE)
         {
             LoadPalette(&black, destOffset, 2);
-            LoadPalette(((u16*)tileset->palettes) + 1, destOffset + 1, size - 2);
+            LoadPalette(((u16 *)tileset->palettes) + 1, destOffset + 1, size - 2);
             nullsub_3(destOffset + 1, (size - 2) >> 1);
         }
         else if (tileset->isSecondary == TRUE)
         {
-            LoadPalette(((u16*)tileset->palettes) + (NUM_PALS_IN_PRIMARY * 16), destOffset, size);
+            LoadPalette(((u16 *)tileset->palettes) + (NUM_PALS_IN_PRIMARY * 16), destOffset, size);
             nullsub_3(destOffset, size >> 1);
         }
         else
         {
-            LoadCompressedPalette((u32*)tileset->palettes, destOffset, size);
+            LoadCompressedPalette((u32 *)tileset->palettes, destOffset, size);
             nullsub_3(destOffset, size >> 1);
         }
     }
@@ -1015,12 +1015,14 @@ void CopyPrimaryTilesetToVram(struct MapLayout const *mapLayout)
 
 void CopySecondaryTilesetToVram(struct MapLayout const *mapLayout)
 {
-    CopyTilesetToVram(mapLayout->secondaryTileset, NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY, NUM_TILES_IN_PRIMARY);
+    CopyTilesetToVram(
+        mapLayout->secondaryTileset, NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY, NUM_TILES_IN_PRIMARY);
 }
 
 void CopySecondaryTilesetToVramUsingHeap(struct MapLayout const *mapLayout)
 {
-    CopyTilesetToVramUsingHeap(mapLayout->secondaryTileset, NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY, NUM_TILES_IN_PRIMARY);
+    CopyTilesetToVramUsingHeap(
+        mapLayout->secondaryTileset, NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY, NUM_TILES_IN_PRIMARY);
 }
 
 static void LoadPrimaryTilesetPalette(struct MapLayout const *mapLayout)
@@ -1030,7 +1032,9 @@ static void LoadPrimaryTilesetPalette(struct MapLayout const *mapLayout)
 
 void LoadSecondaryTilesetPalette(struct MapLayout const *mapLayout)
 {
-    LoadTilesetPalette(mapLayout->secondaryTileset, NUM_PALS_IN_PRIMARY * 16, (NUM_PALS_TOTAL - NUM_PALS_IN_PRIMARY) * 16 * 2);
+    LoadTilesetPalette(mapLayout->secondaryTileset,
+        NUM_PALS_IN_PRIMARY * 16,
+        (NUM_PALS_TOTAL - NUM_PALS_IN_PRIMARY) * 16 * 2);
 }
 
 void CopyMapTilesetsToVram(struct MapLayout const *mapLayout)
@@ -1038,7 +1042,9 @@ void CopyMapTilesetsToVram(struct MapLayout const *mapLayout)
     if (mapLayout)
     {
         CopyTilesetToVramUsingHeap(mapLayout->primaryTileset, NUM_TILES_IN_PRIMARY, 0);
-        CopyTilesetToVramUsingHeap(mapLayout->secondaryTileset, NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY, NUM_TILES_IN_PRIMARY);
+        CopyTilesetToVramUsingHeap(mapLayout->secondaryTileset,
+            NUM_TILES_TOTAL - NUM_TILES_IN_PRIMARY,
+            NUM_TILES_IN_PRIMARY);
     }
 }
 

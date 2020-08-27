@@ -1,10 +1,10 @@
 #ifndef GUARD_POKEMON_STORAGE_SYSTEM_H
 #define GUARD_POKEMON_STORAGE_SYSTEM_H
 
-#define TOTAL_BOXES_COUNT       14
-#define IN_BOX_ROWS             6
-#define IN_BOX_COLUMNS          5
-#define IN_BOX_COUNT            (IN_BOX_ROWS * IN_BOX_COLUMNS)
+#define TOTAL_BOXES_COUNT 14
+#define IN_BOX_ROWS       6
+#define IN_BOX_COLUMNS    5
+#define IN_BOX_COUNT      (IN_BOX_ROWS * IN_BOX_COLUMNS)
 
 /*
             ROWS
@@ -46,7 +46,15 @@ void SetBoxMonNickAt(u8 boxId, u8 boxPosition, const u8 *nick);
 u32 GetAndCopyBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request, void *dst);
 void SetBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *src);
 void CopyBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *dst);
-void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID);
+void CreateBoxMonAt(u8 boxId,
+    u8 boxPosition,
+    u16 species,
+    u8 level,
+    u8 fixedIV,
+    u8 hasFixedPersonality,
+    u32 personality,
+    u8 otIDType,
+    u32 otID);
 void ZeroBoxMonAt(u8 boxId, u8 boxPosition);
 void BoxMonAtToMon(u8 boxId, u8 boxPosition, struct Pokemon *dst);
 struct BoxPokemon *GetBoxedMonPtr(u8 boxId, u8 boxPosition);

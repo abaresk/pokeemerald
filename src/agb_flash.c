@@ -27,12 +27,13 @@ void SwitchFlashBank(u8 bankNum)
     FLASH_WRITE(0x0000, bankNum);
 }
 
-#define DELAY()                  \
-do {                             \
-    vu16 i;                      \
-    for (i = 20000; i != 0; i--) \
-        ;                        \
-} while (0)
+#define DELAY()                                                                                    \
+    do                                                                                             \
+    {                                                                                              \
+        vu16 i;                                                                                    \
+        for (i = 20000; i != 0; i--)                                                               \
+            ;                                                                                      \
+    } while (0)
 
 u16 ReadFlashId(void)
 {
@@ -41,7 +42,7 @@ u16 ReadFlashId(void)
     u8 (*readFlash1)(u8 *);
 
     SetReadFlash1(readFlash1Buffer);
-    readFlash1 = (u8 (*)(u8 *))((uintptr_t)readFlash1Buffer + 1);
+    readFlash1 = (u8(*)(u8 *))((uintptr_t)readFlash1Buffer + 1);
 
     // Enter ID mode.
     FLASH_WRITE(0x5555, 0xAA);
@@ -113,7 +114,7 @@ void SetReadFlash1(u16 *dest)
     u16 *src;
     u16 i;
 
-    PollFlashStatus = (u8 (*)(u8 *))((uintptr_t)dest + 1);
+    PollFlashStatus = (u8(*)(u8 *))((uintptr_t)dest + 1);
 
     src = (u16 *)ReadFlash1;
     src = (u16 *)((uintptr_t)src ^ 1);
@@ -127,7 +128,8 @@ void SetReadFlash1(u16 *dest)
     }
 }
 
-// Using volatile here to make sure the flash memory will ONLY be read as bytes, to prevent any compiler optimizations.
+// Using volatile here to make sure the flash memory will ONLY be read as bytes, to prevent any
+// compiler optimizations.
 void ReadFlash_Core(vu8 *src, u8 *dest, u32 size)
 {
     while (size-- != 0)
@@ -213,7 +215,8 @@ u32 VerifyFlashSector(u16 sectorNum, u8 *src)
         i--;
     }
 
-    verifyFlashSector_Core = (u32 (*)(u8 *, u8 *, u32))((uintptr_t)verifyFlashSector_Core_Buffer + 1);
+    verifyFlashSector_Core =
+        (u32(*)(u8 *, u8 *, u32))((uintptr_t)verifyFlashSector_Core_Buffer + 1);
 
     tgt = FLASH_BASE + (sectorNum << gFlash->sector.shift);
     size = gFlash->sector.size;
@@ -250,7 +253,8 @@ u32 VerifyFlashSectorNBytes(u16 sectorNum, u8 *src, u32 n)
         i--;
     }
 
-    verifyFlashSector_Core = (u32 (*)(u8 *, u8 *, u32))((uintptr_t)verifyFlashSector_Core_Buffer + 1);
+    verifyFlashSector_Core =
+        (u32(*)(u8 *, u8 *, u32))((uintptr_t)verifyFlashSector_Core_Buffer + 1);
 
     tgt = FLASH_BASE + (sectorNum << gFlash->sector.shift);
 

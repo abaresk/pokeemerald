@@ -43,20 +43,20 @@ struct BattleEnigmaBerry
 struct BerryTree
 {
     /*0x00*/ u8 berry;
-    /*0x01*/ u8 stage:7;
+    /*0x01*/ u8 stage : 7;
     /*
         A berry sparkle is a state that a berry tree
         can be in after growing within the player's
         viewport.
     */
-    /*0x01*/ bool8 growthSparkle:1;
+    /*0x01*/ bool8 growthSparkle : 1;
     /*0x02*/ u16 minutesUntilNextStage;
     /*0x04*/ u8 berryYield;
-    /*0x05*/ u8 regrowthCount:4;
-    /*0x05*/ u8 watered1:1;
-    /*0x05*/ u8 watered2:1;
-    /*0x05*/ u8 watered3:1;
-    /*0x05*/ u8 watered4:1;
+    /*0x05*/ u8 regrowthCount : 4;
+    /*0x05*/ u8 watered1 : 1;
+    /*0x05*/ u8 watered2 : 1;
+    /*0x05*/ u8 watered3 : 1;
+    /*0x05*/ u8 watered4 : 1;
 };
 
 #endif // GUARD_GLOBAL_BERRY_H

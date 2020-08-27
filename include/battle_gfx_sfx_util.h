@@ -8,7 +8,8 @@ void sub_805D714(struct Sprite *sprite);
 void sub_805D770(struct Sprite *sprite, bool8 arg1);
 void sub_805D7AC(struct Sprite *sprite);
 void InitAndLaunchChosenStatusAnimation(bool8 isStatus2, u32 status);
-bool8 TryHandleLaunchBattleTableAnimation(u8 activeBattlerId, u8 attacker, u8 target, u8 tableId, u16 argument);
+bool8 TryHandleLaunchBattleTableAnimation(
+    u8 activeBattlerId, u8 attacker, u8 target, u8 tableId, u16 argument);
 void InitAndLaunchSpecialAnimation(u8 activeBattlerId, u8 attacker, u8 target, u8 tableId);
 bool8 IsMoveWithoutAnimation(u16 moveId, u8 animationTurn);
 bool8 mplay_80342A4(u8 battlerId);

@@ -890,51 +890,49 @@ const struct Berry gBerries[] =
     },
 };
 
-const struct UnkStruct_0858AB24 gUnknown_0858AB24[] = {
-    { 50,  20},
-    { 50,  20},
-    { 50,  20},
-    { 50,  20},
-    { 50,  20},
-    { 50,  30},
-    { 50,  30},
-    { 50,  30},
-    { 50,  30},
-    { 50,  30},
-    { 60,  50},
-    { 60,  50},
-    { 60,  50},
-    { 60,  50},
-    { 60,  50},
-    { 80,  70},
-    { 80,  70},
-    { 80,  70},
-    { 80,  70},
-    { 80,  70},
-    {100, 100},
-    {100, 100},
-    {100, 100},
-    {100, 100},
-    {100, 100},
-    {130, 150},
-    {130, 150},
-    {130, 150},
-    {130, 150},
-    {130, 150},
-    {160, 250},
-    {160, 250},
-    {160, 250},
-    {160, 250},
-    {160, 250},
-    {180, 500},
-    {180, 500},
-    {180, 500},
-    {180, 500},
-    {180, 500},
-    {200, 750},
-    {200, 750},
-    {150, 200}
-};
+const struct UnkStruct_0858AB24 gUnknown_0858AB24[] = { { 50, 20 },
+    { 50, 20 },
+    { 50, 20 },
+    { 50, 20 },
+    { 50, 20 },
+    { 50, 30 },
+    { 50, 30 },
+    { 50, 30 },
+    { 50, 30 },
+    { 50, 30 },
+    { 60, 50 },
+    { 60, 50 },
+    { 60, 50 },
+    { 60, 50 },
+    { 60, 50 },
+    { 80, 70 },
+    { 80, 70 },
+    { 80, 70 },
+    { 80, 70 },
+    { 80, 70 },
+    { 100, 100 },
+    { 100, 100 },
+    { 100, 100 },
+    { 100, 100 },
+    { 100, 100 },
+    { 130, 150 },
+    { 130, 150 },
+    { 130, 150 },
+    { 130, 150 },
+    { 130, 150 },
+    { 160, 250 },
+    { 160, 250 },
+    { 160, 250 },
+    { 160, 250 },
+    { 160, 250 },
+    { 180, 500 },
+    { 180, 500 },
+    { 180, 500 },
+    { 180, 500 },
+    { 180, 500 },
+    { 200, 750 },
+    { 200, 750 },
+    { 150, 200 } };
 
 const struct BerryTree gBlankBerryTree = {};
 
@@ -947,7 +945,7 @@ void ClearEnigmaBerries(void)
 void SetEnigmaBerry(u8 *src)
 {
     u32 i;
-    u8 *dest = (u8*)&gSaveBlock1Ptr->enigmaBerry;
+    u8 *dest = (u8 *)&gSaveBlock1Ptr->enigmaBerry;
 
     for (i = 0; i < sizeof(gSaveBlock1Ptr->enigmaBerry); i++)
         dest[i] = src[i];
@@ -959,9 +957,11 @@ static u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
     u32 checksum;
     u8 *dest;
 
-    dest = (u8*)enigmaBerry;
+    dest = (u8 *)enigmaBerry;
     checksum = 0;
-    for (i = 0; i < sizeof(gSaveBlock1Ptr->enigmaBerry) - sizeof(gSaveBlock1Ptr->enigmaBerry.checksum); i++)
+    for (i = 0;
+         i < sizeof(gSaveBlock1Ptr->enigmaBerry) - sizeof(gSaveBlock1Ptr->enigmaBerry.checksum);
+         i++)
         checksum += dest[i];
 
     return checksum;
@@ -973,7 +973,8 @@ bool32 IsEnigmaBerryValid(void)
         return FALSE;
     if (!gSaveBlock1Ptr->enigmaBerry.berry.maxYield)
         return FALSE;
-    if (GetEnigmaBerryChecksum(&gSaveBlock1Ptr->enigmaBerry) != gSaveBlock1Ptr->enigmaBerry.checksum)
+    if (GetEnigmaBerryChecksum(&gSaveBlock1Ptr->enigmaBerry) !=
+        gSaveBlock1Ptr->enigmaBerry.checksum)
         return FALSE;
     return TRUE;
 }
@@ -981,7 +982,7 @@ bool32 IsEnigmaBerryValid(void)
 const struct Berry *GetBerryInfo(u8 berry)
 {
     if (berry == ITEM_TO_BERRY(ITEM_ENIGMA_BERRY) && IsEnigmaBerryValid())
-        return (struct Berry*)(&gSaveBlock1Ptr->enigmaBerry.berry);
+        return (struct Berry *)(&gSaveBlock1Ptr->enigmaBerry.berry);
     else
     {
         if (berry == BERRY_NONE || berry > ITEM_TO_BERRY(LAST_BERRY_INDEX))
@@ -1021,8 +1022,9 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
 
 bool8 IsPlayerFacingEmptyBerryTreePatch(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
-     && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
+    if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript &&
+        GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) ==
+            BERRY_STAGE_NO_BERRY)
         return TRUE;
     else
         return FALSE;
@@ -1170,7 +1172,7 @@ void GetBerryNameByBerryType(u8 berry, u8 *string)
     string[BERRY_NAME_LENGTH] = EOS;
 }
 
-void GetBerryCountStringByBerryType(u8 berry, u8* dest, u32 berryCount)
+void GetBerryCountStringByBerryType(u8 berry, u8 *dest, u32 berryCount)
 {
     GetBerryCountString(dest, GetBerryInfo(berry)->name, berryCount);
 }
@@ -1313,7 +1315,8 @@ void ObjectEventInteractionPickBerryTree(void)
 void ObjectEventInteractionRemoveBerryTree(void)
 {
     RemoveBerryTree(GetObjectEventBerryTreeId(gSelectedObjectEvent));
-    sub_8092EF0(gSpecialVar_LastTalked, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
+    sub_8092EF0(
+        gSpecialVar_LastTalked, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
 }
 
 bool8 PlayerHasBerries(void)
@@ -1331,14 +1334,15 @@ void ResetBerryTreeSparkleFlags(void)
     s16 bottom;
     int i;
 
-    GetCameraCoords((u16*)&cam_left, (u16*)&cam_top);
+    GetCameraCoords((u16 *)&cam_left, (u16 *)&cam_top);
     left = cam_left;
     top = cam_top + 3;
     right = cam_left + 14;
     bottom = top + 8;
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
-        if (gObjectEvents[i].active && gObjectEvents[i].movementType == MOVEMENT_TYPE_BERRY_TREE_GROWTH)
+        if (gObjectEvents[i].active &&
+            gObjectEvents[i].movementType == MOVEMENT_TYPE_BERRY_TREE_GROWTH)
         {
             cam_left = gObjectEvents[i].currentCoords.x;
             cam_top = gObjectEvents[i].currentCoords.y;

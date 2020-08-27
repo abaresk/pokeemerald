@@ -14,7 +14,7 @@ static void AnimTask_TranslateMonElliptical_Step(u8 taskId);
 static void DoHorizontalLunge(struct Sprite *sprite);
 static void ReverseHorizontalLungeDirection(struct Sprite *sprite);
 static void DoVerticalDip(struct Sprite *sprite);
-static void ReverseVerticalDipDirection(struct Sprite* sprite);
+static void ReverseVerticalDipDirection(struct Sprite *sprite);
 static void SlideMonToOriginalPos(struct Sprite *sprite);
 static void SlideMonToOriginalPos_Step(struct Sprite *sprite);
 static void SlideMonToOffset(struct Sprite *sprite);
@@ -28,8 +28,7 @@ static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId);
 static void AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step(u8 taskId);
 static void AnimTask_SlideOffScreen_Step(u8 taskId);
 
-const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
-{
+const struct SpriteTemplate gHorizontalLungeSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -39,8 +38,7 @@ const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
     .callback = DoHorizontalLunge,
 };
 
-const struct SpriteTemplate gVerticalDipSpriteTemplate =
-{
+const struct SpriteTemplate gVerticalDipSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -50,8 +48,7 @@ const struct SpriteTemplate gVerticalDipSpriteTemplate =
     .callback = DoVerticalDip,
 };
 
-const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -61,8 +58,7 @@ const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate =
     .callback = SlideMonToOriginalPos,
 };
 
-const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -72,8 +68,7 @@ const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate =
     .callback = SlideMonToOffset,
 };
 
-const struct SpriteTemplate gSlideMonToOffsetAndBackSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOffsetAndBackSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -625,7 +620,6 @@ static void SlideMonToOffsetAndBack(struct Sprite *sprite)
     sprite->callback = TranslateMonSpriteLinearFixedPoint;
 }
 
-
 static void SlideMonToOffsetAndBack_End(struct Sprite *sprite)
 {
     gSprites[sprite->data[5]].pos2.x = 0;
@@ -808,8 +802,9 @@ static void AnimTask_SwayMonStep(u8 taskId)
         }
     }
 
-    if (((waveIndex >= 0x80u) && (gTasks[taskId].data[11] == 0) && (gTasks[taskId].data[12] == 1))
-        || ((waveIndex < 0x7fu) && (gTasks[taskId].data[11] == 1) && (gTasks[taskId].data[12] == 0)))
+    if (((waveIndex >= 0x80u) && (gTasks[taskId].data[11] == 0) &&
+            (gTasks[taskId].data[12] == 1)) ||
+        ((waveIndex < 0x7fu) && (gTasks[taskId].data[11] == 1) && (gTasks[taskId].data[12] == 0)))
     {
         gTasks[taskId].data[11] ^= 1;
         gTasks[taskId].data[12] ^= 1;

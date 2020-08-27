@@ -48,18 +48,17 @@ static void AnimTask_SurfWaveScanlineEffect(u8);
 static void AnimTask_WaterSpoutLaunch_Step(u8);
 static void AnimTask_WaterSpoutRain_Step(u8);
 static u8 GetWaterSpoutPowerForAnim(void);
-static void CreateWaterSpoutLaunchDroplets(struct Task*, u8);
-static void CreateWaterSpoutRainDroplet(struct Task*, u8);
+static void CreateWaterSpoutLaunchDroplets(struct Task *, u8);
+static void CreateWaterSpoutRainDroplet(struct Task *, u8);
 static void AnimTask_WaterSport_Step(u8);
-static void CreateWaterSportDroplet(struct Task*);
-static void CreateWaterPulseRingBubbles(struct Sprite*, s32, s32);
+static void CreateWaterSportDroplet(struct Task *);
+static void CreateWaterPulseRingBubbles(struct Sprite *, s32, s32);
 
 // Both unused
 const u8 gUnknown_8593C80[] = INCBIN_U8("graphics/unknown/unknown_593C80.4bpp");
 const u8 gUnknown_8593FFC[] = INCBIN_U8("graphics/unknown/unknown_593FFC.bin");
 
-static const union AnimCmd sAnim_RainDrop[] =
-{
+static const union AnimCmd sAnim_RainDrop[] = {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
     ANIMCMD_FRAME(16, 2),
@@ -70,13 +69,11 @@ static const union AnimCmd sAnim_RainDrop[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_RainDrop[] =
-{
+static const union AnimCmd *const sAnims_RainDrop[] = {
     sAnim_RainDrop,
 };
 
-const struct SpriteTemplate gRainDropSpriteTemplate =
-{
+const struct SpriteTemplate gRainDropSpriteTemplate = {
     .tileTag = ANIM_TAG_RAIN_DROPS,
     .paletteTag = ANIM_TAG_RAIN_DROPS,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
@@ -86,33 +83,28 @@ const struct SpriteTemplate gRainDropSpriteTemplate =
     .callback = AnimRainDrop,
 };
 
-static const union AffineAnimCmd sAffineAnim_WaterBubbleProjectile[] =
-{
+static const union AffineAnimCmd sAffineAnim_WaterBubbleProjectile[] = {
     AFFINEANIMCMD_FRAME(0xFFFB, 0xFFFB, 0, 10),
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_WaterBubbleProjectile[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_WaterBubbleProjectile[] = {
     sAffineAnim_WaterBubbleProjectile,
 };
 
-static const union AnimCmd sAnim_WaterBubbleProjectile[] =
-{
+static const union AnimCmd sAnim_WaterBubbleProjectile[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_WaterBubbleProjectile[] =
-{
+static const union AnimCmd *const sAnims_WaterBubbleProjectile[] = {
     sAnim_WaterBubbleProjectile,
 };
 
-const struct SpriteTemplate gWaterBubbleProjectileSpriteTemplate =
-{
+const struct SpriteTemplate gWaterBubbleProjectileSpriteTemplate = {
     .tileTag = ANIM_TAG_BUBBLE,
     .paletteTag = ANIM_TAG_BUBBLE,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
@@ -122,38 +114,32 @@ const struct SpriteTemplate gWaterBubbleProjectileSpriteTemplate =
     .callback = AnimWaterBubbleProjectile,
 };
 
-static const union AnimCmd sAnim_AuroraBeamRing_0[] =
-{
+static const union AnimCmd sAnim_AuroraBeamRing_0[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_AuroraBeamRing_1[] =
-{
+static const union AnimCmd sAnim_AuroraBeamRing_1[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_AuroraBeamRing[] =
-{
+static const union AnimCmd *const sAnims_AuroraBeamRing[] = {
     sAnim_AuroraBeamRing_0,
     sAnim_AuroraBeamRing_1,
 };
 
-static const union AffineAnimCmd sAffineAnim_AuroraBeamRing[] =
-{
+static const union AffineAnimCmd sAffineAnim_AuroraBeamRing[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
     AFFINEANIMCMD_FRAME(0x60, 0x60, 0, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_AuroraBeamRing[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_AuroraBeamRing[] = {
     sAffineAnim_AuroraBeamRing,
 };
 
-const struct SpriteTemplate gAuroraBeamRingSpriteTemplate =
-{
+const struct SpriteTemplate gAuroraBeamRingSpriteTemplate = {
     .tileTag = ANIM_TAG_RAINBOW_RINGS,
     .paletteTag = ANIM_TAG_RAINBOW_RINGS,
     .oam = &gOamData_AffineDouble_ObjNormal_8x16,
@@ -163,8 +149,7 @@ const struct SpriteTemplate gAuroraBeamRingSpriteTemplate =
     .callback = AnimAuroraBeamRings,
 };
 
-static const union AnimCmd sAnim_WaterMudOrb[] =
-{
+static const union AnimCmd sAnim_WaterMudOrb[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_FRAME(8, 1),
@@ -172,13 +157,11 @@ static const union AnimCmd sAnim_WaterMudOrb[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gAnims_WaterMudOrb[] =
-{
+const union AnimCmd *const gAnims_WaterMudOrb[] = {
     sAnim_WaterMudOrb,
 };
 
-const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
-{
+const struct SpriteTemplate gHydroPumpOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
@@ -188,8 +171,7 @@ const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gMudShotOrbSpriteTemplate =
-{
+const struct SpriteTemplate gMudShotOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_BROWN_ORB,
     .paletteTag = ANIM_TAG_BROWN_ORB,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
@@ -199,8 +181,7 @@ const struct SpriteTemplate gMudShotOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate =
-{
+const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_GLOWY_RED_ORB,
     .paletteTag = ANIM_TAG_GLOWY_RED_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -210,8 +191,7 @@ const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
-{
+const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_GLOWY_GREEN_ORB,
     .paletteTag = ANIM_TAG_GLOWY_GREEN_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -221,21 +201,18 @@ const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-static const union AnimCmd sAnim_FlamethrowerFlame[] =
-{
+static const union AnimCmd sAnim_FlamethrowerFlame[] = {
     ANIMCMD_FRAME(16, 2),
     ANIMCMD_FRAME(32, 2),
     ANIMCMD_FRAME(48, 2),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sAnims_FlamethrowerFlame[] =
-{
+static const union AnimCmd *const sAnims_FlamethrowerFlame[] = {
     sAnim_FlamethrowerFlame,
 };
 
-const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
-{
+const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -245,8 +222,7 @@ const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gPsywaveRingSpriteTemplate =
-{
+const struct SpriteTemplate gPsywaveRingSpriteTemplate = {
     .tileTag = ANIM_TAG_BLUE_RING,
     .paletteTag = ANIM_TAG_BLUE_RING,
     .oam = &gOamData_AffineDouble_ObjNormal_16x32,
@@ -256,32 +232,27 @@ const struct SpriteTemplate gPsywaveRingSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-static const union AffineAnimCmd sAffineAnim_HydroCannonCharge[] =
-{
+static const union AffineAnimCmd sAffineAnim_HydroCannonCharge[] = {
     AFFINEANIMCMD_FRAME(0x3, 0x3, 10, 50),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 10),
     AFFINEANIMCMD_FRAME(0xFFEC, 0xFFEC, -10, 20),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_HydroCannonBeam[] =
-{
+static const union AffineAnimCmd sAffineAnim_HydroCannonBeam[] = {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_HydroCannonCharge[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonCharge[] = {
     sAffineAnim_HydroCannonCharge,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_HydroCannonBeam[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonBeam[] = {
     sAffineAnim_HydroCannonBeam,
 };
 
-const struct SpriteTemplate gHydroCannonChargeSpriteTemplate =
-{
+const struct SpriteTemplate gHydroCannonChargeSpriteTemplate = {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
@@ -291,8 +262,7 @@ const struct SpriteTemplate gHydroCannonChargeSpriteTemplate =
     .callback = AnimHydroCannonCharge,
 };
 
-const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
-{
+const struct SpriteTemplate gHydroCannonBeamSpriteTemplate = {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
@@ -302,30 +272,25 @@ const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
     .callback = AnimHydroCannonBeam,
 };
 
-static const union AnimCmd sAnim_WaterBubble[] =
-{
+static const union AnimCmd sAnim_WaterBubble[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_WaterGunDroplet[] =
-{
+static const union AnimCmd sAnim_WaterGunDroplet[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gAnims_WaterBubble[] =
-{
+const union AnimCmd *const gAnims_WaterBubble[] = {
     sAnim_WaterBubble,
 };
 
-static const union AnimCmd *const sAnims_WaterGunDroplet[] =
-{
+static const union AnimCmd *const sAnims_WaterGunDroplet[] = {
     sAnim_WaterGunDroplet,
 };
 
-const struct SpriteTemplate gWaterGunProjectileSpriteTemplate =
-{
+const struct SpriteTemplate gWaterGunProjectileSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
@@ -335,8 +300,7 @@ const struct SpriteTemplate gWaterGunProjectileSpriteTemplate =
     .callback = AnimThrowProjectile,
 };
 
-const struct SpriteTemplate gWaterGunDropletSpriteTemplate =
-{
+const struct SpriteTemplate gWaterGunDropletSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
@@ -346,8 +310,7 @@ const struct SpriteTemplate gWaterGunDropletSpriteTemplate =
     .callback = AnimWaterGunDroplet,
 };
 
-const struct SpriteTemplate gSmallBubblePairSpriteTemplate =
-{
+const struct SpriteTemplate gSmallBubblePairSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS, // ice_crystals_4, which are bubbles
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -357,8 +320,7 @@ const struct SpriteTemplate gSmallBubblePairSpriteTemplate =
     .callback = AnimSmallBubblePair,
 };
 
-const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate =
-{
+const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -369,8 +331,7 @@ const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate =
 };
 
 // Used by Water Spout / Water Sport
-const struct SpriteTemplate gSmallWaterOrbSpriteTemplate =
-{
+const struct SpriteTemplate gSmallWaterOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_GLOWY_BLUE_ORB,
     .paletteTag = ANIM_TAG_GLOWY_BLUE_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -380,69 +341,58 @@ const struct SpriteTemplate gSmallWaterOrbSpriteTemplate =
     .callback = AnimSmallWaterOrb,
 };
 
-static const union AnimCmd sAnim_WaterPulseBubble_0[] =
-{
+static const union AnimCmd sAnim_WaterPulseBubble_0[] = {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_WaterPulseBubble_1[] =
-{
+static const union AnimCmd sAnim_WaterPulseBubble_1[] = {
     ANIMCMD_FRAME(9, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_WeatherBallWaterDown[] =
-{
+static const union AnimCmd sAnim_WeatherBallWaterDown[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_WaterPulseBubble[] =
-{
+static const union AnimCmd *const sAnims_WaterPulseBubble[] = {
     sAnim_WaterPulseBubble_0,
     sAnim_WaterPulseBubble_1,
 };
 
-static const union AnimCmd *const sAnims_WeatherBallWaterDown[] =
-{
+static const union AnimCmd *const sAnims_WeatherBallWaterDown[] = {
     sAnim_WeatherBallWaterDown,
 };
 
-static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_0[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_1[] = {
     AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_WeatherBallWaterDown[] =
-{
+static const union AffineAnimCmd sAffineAnim_WeatherBallWaterDown[] = {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_WaterPulseRingBubble[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_WaterPulseRingBubble[] = {
     sAffineAnim_WaterPulseRingBubble_0,
     sAffineAnim_WaterPulseRingBubble_1,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_WeatherBallWaterDown[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallWaterDown[] = {
     sAffineAnim_WeatherBallWaterDown,
 };
 
-const struct SpriteTemplate gWaterPulseBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gWaterPulseBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -452,8 +402,7 @@ const struct SpriteTemplate gWaterPulseBubbleSpriteTemplate =
     .callback = AnimWaterPulseBubble,
 };
 
-const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjNormal_8x8,
@@ -463,8 +412,7 @@ const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate =
     .callback = AnimWaterPulseRingBubble,
 };
 
-const struct SpriteTemplate gWeatherBallWaterDownSpriteTemplate =
-{
+const struct SpriteTemplate gWeatherBallWaterDownSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -616,7 +564,8 @@ static void AnimAuroraBeamRings_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-// Updates the palette on the rainbow rings used in Aurora Beam to make them appear to be rotating counterclockwise
+// Updates the palette on the rainbow rings used in Aurora Beam to make them appear to be rotating
+// counterclockwise
 void AnimTask_RotateAuroraRingColors(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
@@ -745,7 +694,8 @@ static void AnimHydroCannonBeam(struct Sprite *sprite)
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
         gBattleAnimArgs[0] *= -1;
-        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_LEFT)
+        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT ||
+            GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_LEFT)
             gBattleAnimArgs[0] *= -1;
     }
 
@@ -802,7 +752,7 @@ void AnimTask_CreateSurfWave(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     u8 taskId2;
-    u16 *x, *y; //These pointers are needed to match
+    u16 *x, *y; // These pointers are needed to match
 
     x = &gBattle_BG1_X;
     y = &gBattle_BG1_Y;
@@ -812,7 +762,7 @@ void AnimTask_CreateSurfWave(u8 taskId)
     SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
     SetAnimBgAttribute(1, BG_ANIM_SCREEN_SIZE, 1);
     sub_80A6B30(&animBg);
-    
+
     if (!IsContest())
     {
         SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 1);
@@ -894,7 +844,9 @@ static void AnimTask_CreateSurfWave_Step1(u8 taskId)
         rgbBuffer = gPlttBufferFaded[16 * animBg.paletteId + 7];
         for (i = 6; i != 0; i--) // i > 0 generates the exact same code in this context
         {
-            gPlttBufferFaded[16 * animBg.paletteId + 1 + i] = gPlttBufferFaded[16 * animBg.paletteId + 1 + i - 1]; // 1 + i - 1 is needed to match for some bizarre reason
+            gPlttBufferFaded[16 * animBg.paletteId + 1 + i] =
+                gPlttBufferFaded[16 * animBg.paletteId + 1 + i -
+                                 1]; // 1 + i - 1 is needed to match for some bizarre reason
         }
         gPlttBufferFaded[16 * animBg.paletteId + 1] = rgbBuffer;
         gTasks[taskId].data[5] = 0;
@@ -904,13 +856,15 @@ static void AnimTask_CreateSurfWave_Step1(u8 taskId)
         gTasks[taskId].data[6] = 0;
         if (++gTasks[taskId].data[3] < 14)
         {
-            gTasks[gTasks[taskId].data[15]].data[1] = (s16)((gTasks[taskId].data[3]) | ((16 - gTasks[taskId].data[3]) << 8));
+            gTasks[gTasks[taskId].data[15]].data[1] =
+                (s16)((gTasks[taskId].data[3]) | ((16 - gTasks[taskId].data[3]) << 8));
             gTasks[taskId].data[4]++;
         }
         if (gTasks[taskId].data[3] > 54)
         {
             gTasks[taskId].data[4]--;
-            gTasks[gTasks[taskId].data[15]].data[1] = (s16)((gTasks[taskId].data[4]) | ((16 - gTasks[taskId].data[4]) << 8));
+            gTasks[gTasks[taskId].data[15]].data[1] =
+                (s16)((gTasks[taskId].data[4]) | ((16 - gTasks[taskId].data[4]) << 8));
         }
     }
     if (!(gTasks[gTasks[taskId].data[15]].data[1] & 0x1F))
@@ -919,7 +873,6 @@ static void AnimTask_CreateSurfWave_Step1(u8 taskId)
         gTasks[taskId].func = AnimTask_CreateSurfWave_Step2;
     }
 }
-
 
 static void AnimTask_CreateSurfWave_Step2(u8 taskId)
 {
@@ -1148,7 +1101,7 @@ static u8 GetWaterSpoutPowerForAnim(void)
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         partyIndex = gBattlerPartyIndexes[gBattleAnimAttacker];
-        slot =  &gPlayerParty[partyIndex];
+        slot = &gPlayerParty[partyIndex];
         maxhp = GetMonData(slot, MON_DATA_MAX_HP);
         hp = GetMonData(slot, MON_DATA_HP);
         maxhp /= 4;
@@ -1156,7 +1109,7 @@ static u8 GetWaterSpoutPowerForAnim(void)
     else
     {
         partyIndex = gBattlerPartyIndexes[gBattleAnimAttacker];
-        slot =  &gEnemyParty[partyIndex];
+        slot = &gEnemyParty[partyIndex];
         maxhp = GetMonData(slot, MON_DATA_MAX_HP);
         hp = GetMonData(slot, MON_DATA_HP);
         maxhp /= 4;
@@ -1183,7 +1136,8 @@ static void CreateWaterSpoutLaunchDroplets(struct Task *task, u8 taskId)
         increment = 1;
     for (i = 0; i < 20; i += increment)
     {
-        spriteId = CreateSprite(&gSmallWaterOrbSpriteTemplate, attackerCoordX, attackerCoordY, subpriority);
+        spriteId = CreateSprite(
+            &gSmallWaterOrbSpriteTemplate, attackerCoordX, attackerCoordY, subpriority);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].data[1] = i;
@@ -1215,7 +1169,8 @@ static void AnimSmallWaterOrb(struct Sprite *sprite)
         sprite->data[3] += sprite->data[5];
         sprite->pos1.x = sprite->data[2] >> 4;
         sprite->pos1.y = sprite->data[3] >> 4;
-        if (sprite->pos1.x < -8 || sprite->pos1.x > 248 || sprite->pos1.y < -8 || sprite->pos1.y > 120)
+        if (sprite->pos1.x < -8 || sprite->pos1.x > 248 || sprite->pos1.y < -8 ||
+            sprite->pos1.y > 120)
         {
             gTasks[sprite->data[6]].data[sprite->data[7]]--;
             DestroySprite(sprite);
@@ -1314,7 +1269,8 @@ static void AnimWaterSpoutRain(struct Sprite *sprite)
         if (sprite->pos1.y >= sprite->data[5])
         {
             gTasks[sprite->data[6]].data[10] = 1;
-            sprite->data[1] = CreateSprite(&gWaterHitSplatSpriteTemplate, sprite->pos1.x, sprite->pos1.y, 1);
+            sprite->data[1] =
+                CreateSprite(&gWaterHitSplatSpriteTemplate, sprite->pos1.x, sprite->pos1.y, 1);
             if (sprite->data[1] != MAX_SPRITES)
             {
                 StartSpriteAffineAnim(&gSprites[sprite->data[1]], 3);
@@ -1547,7 +1503,7 @@ static void CreateWaterPulseRingBubbles(struct Sprite *sprite, s32 xDiff, s32 yD
 {
     s16 combinedX, combinedY;
     s16 i, something;
-    s16 unusedVar = 1; //unusedVar is needed to match
+    s16 unusedVar = 1; // unusedVar is needed to match
     s16 somethingRandomX, somethingRandomY;
     u8 spriteId;
 
@@ -1555,13 +1511,14 @@ static void CreateWaterPulseRingBubbles(struct Sprite *sprite, s32 xDiff, s32 yD
     combinedX = sprite->pos1.x + sprite->pos2.x;
     combinedY = sprite->pos1.y + sprite->pos2.y;
     if (yDiff < 0)
-        unusedVar *= -1; //Needed to Match
+        unusedVar *= -1; // Needed to Match
     somethingRandomY = yDiff + (Random2() % 10) - 5;
     somethingRandomX = -xDiff + (Random2() % 10) - 5;
 
     for (i = 0; i < 1; i++)
     {
-        spriteId = CreateSprite(&gWaterPulseRingBubbleSpriteTemplate, combinedX, combinedY + something, 130);
+        spriteId = CreateSprite(
+            &gWaterPulseRingBubbleSpriteTemplate, combinedX, combinedY + something, 130);
         gSprites[spriteId].data[0] = 20;
         gSprites[spriteId].data[1] = somethingRandomY;
         gSprites[spriteId].subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker) - 1;
@@ -1576,7 +1533,8 @@ static void CreateWaterPulseRingBubbles(struct Sprite *sprite, s32 xDiff, s32 yD
     }
     for (i = 0; i < 1; i++)
     {
-        spriteId = CreateSprite(&gWaterPulseRingBubbleSpriteTemplate, combinedX, combinedY - something, 130);
+        spriteId = CreateSprite(
+            &gWaterPulseRingBubbleSpriteTemplate, combinedX, combinedY - something, 130);
         gSprites[spriteId].data[0] = 20;
         gSprites[spriteId].data[1] = somethingRandomY;
         gSprites[spriteId].subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker) - 1;

@@ -9,8 +9,8 @@ struct EasyChatScreenTemplate
     u8 type;
     u8 numColumns;
     u8 numRows;
-    u8 frameId:7;
-    u8 fourFooterOptions:1;
+    u8 frameId : 7;
+    u8 fourFooterOptions : 1;
     const u8 *titleText;
     const u8 *instructionsText1;
     const u8 *instructionsText2;
@@ -77,8 +77,8 @@ struct Unk203A11C
 
 struct EasyChatPhraseFrameDimensions
 {
-    u8 left:5;
-    u8 top:3;
+    u8 left : 5;
+    u8 top : 3;
     u8 width;
     u8 height;
     u8 footerId;
@@ -123,7 +123,7 @@ struct EasyChatWordsByLetter
 
 void InitEasyChatPhrases(void);
 void ShowEasyChatScreen(void);
-u8 * CopyEasyChatWord(u8 *dest, u16 word);
+u8 *CopyEasyChatWord(u8 *dest, u16 word);
 bool32 sub_811F8D8(int word);
 void InitializeEasyChatWordArray(u16 *words, u16 length);
 u8 *ConvertEasyChatWordsToString(u8 *dest, const u16 *src, u16 columns, u16 rows);

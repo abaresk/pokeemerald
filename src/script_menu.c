@@ -27,14 +27,16 @@ static u8 sLilycoveSSTidalSelections[SSTIDAL_SELECTION_COUNT];
 static void Task_HandleMultichoiceInput(u8 taskId);
 static void Task_HandleYesNoInput(u8 taskId);
 static void Task_HandleMultichoiceGridInput(u8 taskId);
-static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos);
+static void DrawMultichoiceMenu(
+    u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos);
 static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId);
 static void DrawLinkServicesMultichoiceMenu(u8 multichoiceId);
 static void CreatePCMultichoice(void);
 static void CreateLilycoveSSTidalMultichoice(void);
 static bool8 IsPicboxClosed(void);
 static void CreateStartMenuForPokenavTutorial(void);
-static void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId);
+static void InitMultichoiceNoWrap(
+    bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId);
 
 bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
 {
@@ -50,7 +52,8 @@ bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPre
     }
 }
 
-bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 defaultChoice)
+bool8 ScriptMenu_MultichoiceWithDefault(
+    u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 defaultChoice)
 {
     if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
     {
@@ -114,14 +117,14 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreB
     InitMultichoiceCheckWrap(ignoreBPress, count, windowId, multichoiceId);
 }
 
-#define tLeft           data[0]
-#define tTop            data[1]
-#define tRight          data[2]
-#define tBottom         data[3]
-#define tIgnoreBPress   data[4]
-#define tDoWrap         data[5]
-#define tWindowId       data[6]
-#define tMultichoiceId  data[7]
+#define tLeft          data[0]
+#define tTop           data[1]
+#define tRight         data[2]
+#define tBottom        data[3]
+#define tIgnoreBPress  data[4]
+#define tDoWrap        data[5]
+#define tWindowId      data[6]
+#define tMultichoiceId data[7]
 
 static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId)
 {
@@ -248,7 +251,8 @@ static void Task_HandleYesNoInput(u8 taskId)
     EnableBothScriptContexts();
 }
 
-bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 columnCount)
+bool8 ScriptMenu_MultichoiceGrid(
+    u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 columnCount)
 {
     if (FuncIsActiveTask(Task_HandleMultichoiceGridInput) == TRUE)
     {
@@ -276,9 +280,14 @@ bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignore
         taskId = CreateTask(Task_HandleMultichoiceGridInput, 80);
 
         gTasks[taskId].tIgnoreBPress = ignoreBPress;
-        gTasks[taskId].tWindowId = CreateWindowFromRect(left, top, columnCount * newWidth, rowCount * 2);
+        gTasks[taskId].tWindowId =
+            CreateWindowFromRect(left, top, columnCount * newWidth, rowCount * 2);
         SetStandardWindowBorderStyle(gTasks[taskId].tWindowId, 0);
-        PrintMenuGridTable(gTasks[taskId].tWindowId, newWidth * 8, columnCount, rowCount, sMultichoiceLists[multichoiceId].list);
+        PrintMenuGridTable(gTasks[taskId].tWindowId,
+            newWidth * 8,
+            columnCount,
+            rowCount,
+            sMultichoiceLists[multichoiceId].list);
         sub_8199944(gTasks[taskId].tWindowId, newWidth * 8, columnCount, rowCount, 0);
         CopyWindowToVram(gTasks[taskId].tWindowId, 3);
         return TRUE;
@@ -428,7 +437,8 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_EON_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_SOUTHERN_ISLAND) == TRUE)
+    if (CheckBagHasItem(ITEM_EON_TICKET, 1) == TRUE &&
+        FlagGet(FLAG_ENABLE_SHIP_SOUTHERN_ISLAND) == TRUE)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -444,7 +454,8 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_MYSTIC_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK) == TRUE)
+    if (CheckBagHasItem(ITEM_MYSTIC_TICKET, 1) == TRUE &&
+        FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK) == TRUE)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -460,7 +471,8 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_AURORA_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND) == TRUE)
+    if (CheckBagHasItem(ITEM_AURORA_TICKET, 1) == TRUE &&
+        FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND) == TRUE)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -476,7 +488,8 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_OLD_SEA_MAP, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_FARAWAY_ISLAND) == TRUE)
+    if (CheckBagHasItem(ITEM_OLD_SEA_MAP, 1) == TRUE &&
+        FlagGet(FLAG_ENABLE_SHIP_FARAWAY_ISLAND) == TRUE)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -515,19 +528,27 @@ static void CreateLilycoveSSTidalMultichoice(void)
             u8 selection = sLilycoveSSTidalSelections[j];
             if (selection != 0xFF)
             {
-                pixelWidth = DisplayTextAndGetWidth(sLilycoveSSTidalDestinations[selection], pixelWidth);
+                pixelWidth =
+                    DisplayTextAndGetWidth(sLilycoveSSTidalDestinations[selection], pixelWidth);
             }
         }
 
         width = ConvertPixelWidthToTileWidth(pixelWidth);
-        windowId = CreateWindowFromRect(MAX_MULTICHOICE_WIDTH - width, (6 - count) * 2, width, count * 2);
+        windowId =
+            CreateWindowFromRect(MAX_MULTICHOICE_WIDTH - width, (6 - count) * 2, width, count * 2);
         SetStandardWindowBorderStyle(windowId, 0);
 
         for (selectionCount = 0, i = 0; i < SSTIDAL_SELECTION_COUNT; i++)
         {
             if (sLilycoveSSTidalSelections[i] != 0xFF)
             {
-                AddTextPrinterParameterized(windowId, 1, sLilycoveSSTidalDestinations[sLilycoveSSTidalSelections[i]], 8, selectionCount * 16 + 1, TEXT_SPEED_FF, NULL);
+                AddTextPrinterParameterized(windowId,
+                    1,
+                    sLilycoveSSTidalDestinations[sLilycoveSSTidalSelections[i]],
+                    8,
+                    selectionCount * 16 + 1,
+                    TEXT_SPEED_FF,
+                    NULL);
                 selectionCount++;
             }
         }
@@ -645,27 +666,33 @@ static void DrawLinkServicesMultichoiceMenu(u8 multichoiceId)
     {
     case MULTI_WIRELESS_NO_BERRY:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sWirelessOptionsNoBerryCrush[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sWirelessOptionsNoBerryCrush[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     case MULTI_CABLE_CLUB_WITH_RECORD_MIX:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sCableClubOptions_WithRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sCableClubOptions_WithRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     case MULTI_WIRELESS_NO_RECORD:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sWirelessOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sWirelessOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     case MULTI_WIRELESS_ALL_SERVICES:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sWirelessOptions_AllServices[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sWirelessOptions_AllServices[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     case MULTI_WIRELESS_NO_RECORD_BERRY:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sWirelessOptions_NoRecordMixBerryCrush[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sWirelessOptions_NoRecordMixBerryCrush[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     case MULTI_CABLE_CLUB_NO_RECORD_MIX:
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, sCableClubOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, sCableClubOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, 2, 1, 3);
         break;
     }
 }
@@ -692,16 +719,18 @@ static void CreateStartMenuForPokenavTutorial(void)
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionPokemon, 8, 25, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionBag, 8, 41, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionPokenav, 8, 57, TEXT_SPEED_FF, NULL);
-    AddTextPrinterParameterized(windowId, 1, gSaveBlock2Ptr->playerName, 8, 73, TEXT_SPEED_FF, NULL);
+    AddTextPrinterParameterized(
+        windowId, 1, gSaveBlock2Ptr->playerName, 8, 73, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionSave, 8, 89, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionOption, 8, 105, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionExit, 8, 121, TEXT_SPEED_FF, NULL);
     sub_81983AC(windowId, 1, 0, 9, 16, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), 0);
-    InitMultichoiceNoWrap(FALSE, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), windowId, MULTI_FORCED_START_MENU);
+    InitMultichoiceNoWrap(
+        FALSE, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), windowId, MULTI_FORCED_START_MENU);
     CopyWindowToVram(windowId, 3);
 }
 
-#define tWindowId       data[6]
+#define tWindowId data[6]
 
 static void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId)
 {
@@ -742,7 +771,8 @@ int DisplayTextAndGetWidth(const u8 *str, int prevWidth)
 
 int ConvertPixelWidthToTileWidth(int width)
 {
-    return (((width + 9) / 8) + 1) > MAX_MULTICHOICE_WIDTH ? MAX_MULTICHOICE_WIDTH : (((width + 9) / 8) + 1);
+    return (((width + 9) / 8) + 1) > MAX_MULTICHOICE_WIDTH ? MAX_MULTICHOICE_WIDTH
+                                                           : (((width + 9) / 8) + 1);
 }
 
 int ScriptMenu_AdjustLeftCoordFromWidth(int left, int width)

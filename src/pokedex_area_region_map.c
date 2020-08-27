@@ -11,8 +11,10 @@ static EWRAM_DATA u8 *sPokedexAreaMapBgNum = NULL;
 static const u16 sPokedexAreaMap_Pal[] = INCBIN_U16("graphics/interface/region_map.gbapal");
 static const u32 sPokedexAreaMap_Gfx[] = INCBIN_U32("graphics/interface/region_map.8bpp.lz");
 static const u32 sPokedexAreaMap_Tilemap[] = INCBIN_U32("graphics/interface/region_map.bin.lz");
-static const u32 sPokedexAreaMapAffine_Gfx[] = INCBIN_U32("graphics/interface/region_map_affine.8bpp.lz");
-static const u32 sPokedexAreaMapAffine_Tilemap[] = INCBIN_U32("graphics/interface/region_map_affine.bin.lz");
+static const u32 sPokedexAreaMapAffine_Gfx[] =
+    INCBIN_U32("graphics/interface/region_map_affine.8bpp.lz");
+static const u32 sPokedexAreaMapAffine_Tilemap[] =
+    INCBIN_U32("graphics/interface/region_map_affine.bin.lz");
 
 void LoadPokedexAreaMapGfx(const struct PokedexAreaMapTemplate *template)
 {
@@ -24,14 +26,24 @@ void LoadPokedexAreaMapGfx(const struct PokedexAreaMapTemplate *template)
     {
         SetBgAttribute(template->bg, BG_ATTR_METRIC, 0);
         DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMap_Gfx, 0, template->offset, 0);
-        sub_8199D3C(DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMap_Tilemap, 0, 0, 1), template->offset, 32, 32, FALSE);
+        sub_8199D3C(DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMap_Tilemap, 0, 0, 1),
+            template->offset,
+            32,
+            32,
+            FALSE);
     }
     else
     {
         SetBgAttribute(template->bg, BG_ATTR_METRIC, 2);
         SetBgAttribute(template->bg, BG_ATTR_TYPE, 1);
-        DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMapAffine_Gfx, 0, template->offset, 0);
-        sub_8199D3C(DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMapAffine_Tilemap, 0, 0, 1), template->offset, 64, 64, TRUE);
+        DecompressAndCopyTileDataToVram(
+            template->bg, sPokedexAreaMapAffine_Gfx, 0, template->offset, 0);
+        sub_8199D3C(
+            DecompressAndCopyTileDataToVram(template->bg, sPokedexAreaMapAffine_Tilemap, 0, 0, 1),
+            template->offset,
+            64,
+            64,
+            TRUE);
     }
 
     ChangeBgX(template->bg, 0, 0);

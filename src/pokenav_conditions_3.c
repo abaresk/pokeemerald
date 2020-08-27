@@ -55,14 +55,10 @@ static void sub_81CF7F4(struct PokenavSub8 *);
 static void sub_81CF88C(void);
 static void sub_81CF8E4(struct PokenavMonList *, u8 *);
 
-static const u32 gUnknown_086233A0[] = {0x16, 0x17, 0x18, 0x21, 0x2F};
+static const u32 gUnknown_086233A0[] = { 0x16, 0x17, 0x18, 0x21, 0x2F };
 
-static const LoopedTask gUnknown_086233B4[] =
-{
-    sub_81CF134,
-    sub_81CF1C4,
-    sub_81CF1D8,
-    sub_81CF278
+static const LoopedTask gUnknown_086233B4[] = {
+    sub_81CF134, sub_81CF1C4, sub_81CF1D8, sub_81CF278
 };
 
 static const u16 gUnknown_086233C4[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
@@ -70,51 +66,37 @@ static const u32 gUnknown_086233E4[] = INCBIN_U32("graphics/pokenav/condition_se
 static const u32 gUnknown_086234AC[] = INCBIN_U32("graphics/pokenav/condition_search2.bin.lz");
 static const u16 gUnknown_08623570[] = INCBIN_U16("graphics/pokenav/8623570.gbapal");
 
-static const struct BgTemplate gUnknown_08623590[] =
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 1,
-        .mapBaseIndex = 0x06,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    }, {
-        .bg = 2,
+static const struct BgTemplate gUnknown_08623590[] = { { .bg = 1,
+                                                           .charBaseIndex = 1,
+                                                           .mapBaseIndex = 0x06,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 2,
+                                                           .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 0x07,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
+        .baseTile = 0 } };
+
+static const LoopedTask gUnknown_08623598[] = {
+    NULL, sub_81CF578, sub_81CF5F0, sub_81CF668, sub_81CF6E0, sub_81CF758, sub_81CF798
 };
 
-static const LoopedTask gUnknown_08623598[] = 
-{
-    NULL,
-    sub_81CF578,
-    sub_81CF5F0,
-    sub_81CF668,
-    sub_81CF6E0,
-    sub_81CF758,
-    sub_81CF798
-};
-
-static const struct WindowTemplate gUnknown_086235B4 = 
-{
-    .bg = 1,
+static const struct WindowTemplate gUnknown_086235B4 = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 6,
     .width = 7,
     .height = 2,
     .paletteNum = 1,
-    .baseBlock = 20
-};
+    .baseBlock = 20 };
 
-static const u8 sText_MaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
-static const u8 sText_FemaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sText_MaleSymbol[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sText_FemaleSymbol[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
 static const u8 sText_NoGenderSymbol[] = _("{UNK_SPACER}");
 
 bool32 PokenavCallback_Init_8(void)
@@ -211,28 +193,28 @@ static u32 sub_81CF0C0(void)
     return structPtr->unk18;
 }
 
-static struct PokenavMonList * sub_81CF0D0(void)
+static struct PokenavMonList *sub_81CF0D0(void)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     return ptr->unkPtr->unk4;
 }
 
 static u16 sub_81CF0E0(void)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     return ptr->unkPtr->unk0;
 }
 
 static s32 sub_81CF0F0(void)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     s32 i = GetSelectedMatchCall();
     return ptr->unkPtr->unk4[i].data;
 }
 
 static u16 sub_81CF10C(void)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     return ptr->unkPtr->unk2;
 }
 
@@ -245,14 +227,14 @@ static u32 sub_81CF134(s32 state)
 {
     s32 i;
     struct PokenavMonList item;
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
 
     ptr->unkPtr->unk0 = 0;
     ptr->unkPtr->unk2 = 0;
     item.boxId = 14;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        struct Pokemon * pokemon = &gPlayerParty[i];
+        struct Pokemon *pokemon = &gPlayerParty[i];
         if (!GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES))
             return LT_INC_AND_CONTINUE;
         if (!GetMonData(pokemon, MON_DATA_SANITY_IS_EGG))
@@ -268,7 +250,7 @@ static u32 sub_81CF134(s32 state)
 
 static u32 sub_81CF1C4(s32 state)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     ptr->unk10 = 0;
     ptr->unkC = 0;
     return LT_INC_AND_CONTINUE;
@@ -276,7 +258,7 @@ static u32 sub_81CF1C4(s32 state)
 
 static u32 sub_81CF1D8(s32 state)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     s32 boxId = ptr->unkC;
     s32 monId = ptr->unk10;
     s32 boxCount = 0;
@@ -311,7 +293,7 @@ static u32 sub_81CF1D8(s32 state)
 
 static u32 sub_81CF278(s32 state)
 {
-    struct PokenavSub7 * ptr = GetSubstructPtr(7);
+    struct PokenavSub7 *ptr = GetSubstructPtr(7);
     s32 r6 = ptr->unkPtr->unk0;
     s32 r4 = ptr->unkPtr->unk4[0].data;
     s32 i;
@@ -354,7 +336,7 @@ static void sub_81CF2C4(struct PokenavSub7 *structPtr, struct PokenavMonList *it
 
 bool32 sub_81CF330(void)
 {
-    struct PokenavSub8 * unk = AllocSubstruct(8, sizeof(struct PokenavSub8));
+    struct PokenavSub8 *unk = AllocSubstruct(8, sizeof(struct PokenavSub8));
     if (unk == NULL)
         return FALSE;
     unk->ltid = CreateLoopedTask(sub_81CF418, 1);
@@ -365,7 +347,7 @@ bool32 sub_81CF330(void)
 
 bool32 sub_81CF368(void)
 {
-    struct PokenavSub8 * unk = AllocSubstruct(8, sizeof(struct PokenavSub8));
+    struct PokenavSub8 *unk = AllocSubstruct(8, sizeof(struct PokenavSub8));
     if (unk == NULL)
         return FALSE;
     unk->ltid = CreateLoopedTask(sub_81CF418, 1);
@@ -376,26 +358,26 @@ bool32 sub_81CF368(void)
 
 void sub_81CF3A0(s32 idx)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     unk->ltid = CreateLoopedTask(gUnknown_08623598[idx], 1);
     unk->callback = sub_81CF3E4;
 }
 
 bool32 sub_81CF3D0(void)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     return unk->callback();
 }
 
 bool32 sub_81CF3E4(void)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     return IsLoopedTaskActive(unk->ltid);
 }
 
 void sub_81CF3F8(void)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     sub_81C8234();
     RemoveWindow(unk->winid);
     FreePokenavSubstruct(8);
@@ -403,7 +385,7 @@ void sub_81CF3F8(void)
 
 static u32 sub_81CF418(s32 state)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     switch (state)
     {
     case 0:
@@ -462,7 +444,7 @@ static u32 sub_81CF418(s32 state)
 
 static u32 sub_81CF578(s32 state)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     switch (state)
     {
     case 0:
@@ -495,7 +477,7 @@ static u32 sub_81CF578(s32 state)
 
 static u32 sub_81CF5F0(s32 state)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     switch (state)
     {
     case 0:
@@ -528,7 +510,7 @@ static u32 sub_81CF5F0(s32 state)
 
 static u32 sub_81CF668(s32 state)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     switch (state)
     {
     case 0:
@@ -561,7 +543,7 @@ static u32 sub_81CF668(s32 state)
 
 static u32 sub_81CF6E0(s32 state)
 {
-    struct PokenavSub8 * unk = GetSubstructPtr(8);
+    struct PokenavSub8 *unk = GetSubstructPtr(8);
     switch (state)
     {
     case 0:
@@ -628,7 +610,7 @@ static u32 sub_81CF798(s32 state)
     return LT_FINISH;
 }
 
-static void sub_81CF7C8(struct PokenavSub8 * ptr)
+static void sub_81CF7C8(struct PokenavSub8 *ptr)
 {
     ptr->winid = AddWindow(&gUnknown_086235B4);
     PutWindowTilemap(ptr->winid);
@@ -636,7 +618,7 @@ static void sub_81CF7C8(struct PokenavSub8 * ptr)
     sub_81CF7F4(ptr);
 }
 
-static void sub_81CF7F4(struct PokenavSub8 * ptr)
+static void sub_81CF7F4(struct PokenavSub8 *ptr)
 {
     s32 r7 = sub_81CF0F0();
     DynamicPlaceholderTextUtil_Reset();
@@ -667,17 +649,17 @@ static void sub_81CF88C(void)
     sub_81C81D4(&gUnknown_08623590[1], &template, 0);
 }
 
-static void sub_81CF8E4(struct PokenavMonList * item, u8 * dest)
+static void sub_81CF8E4(struct PokenavMonList *item, u8 *dest)
 {
     u8 gender;
     u8 level;
-    u8 * s;
-    const u8 * genderStr;
+    u8 *s;
+    const u8 *genderStr;
 
     // Mon is in party
     if (item->boxId == TOTAL_BOXES_COUNT)
     {
-        struct Pokemon * mon = &gPlayerParty[item->monId];
+        struct Pokemon *mon = &gPlayerParty[item->monId];
         gender = GetMonGender(mon);
         level = GetLevelFromMonExp(mon);
         GetMonData(mon, MON_DATA_NICKNAME, gStringVar3);
@@ -685,7 +667,7 @@ static void sub_81CF8E4(struct PokenavMonList * item, u8 * dest)
     // Mon is in PC
     else
     {
-        struct BoxPokemon * mon = GetBoxedMonPtr(item->boxId, item->monId);
+        struct BoxPokemon *mon = GetBoxedMonPtr(item->boxId, item->monId);
         gender = GetBoxMonGender(mon);
         level = GetLevelFromBoxMonExp(mon);
         GetBoxMonData(mon, MON_DATA_NICKNAME, gStringVar3);

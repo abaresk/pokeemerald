@@ -3,4 +3,4 @@
 
 bool8 InSlateportBattleTent(void);
 
-#endif //GUARD_BATTLE_TENT_H
+#endif // GUARD_BATTLE_TENT_H

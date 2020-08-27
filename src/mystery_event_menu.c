@@ -28,41 +28,29 @@ static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 sp
 static EWRAM_DATA u8 sUnknown_0203BCF8 = 0; // set but unused
 
 // const rom data
-static const struct BgTemplate sBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    }
-};
+static const struct BgTemplate sBgTemplates[] = { { .bg = 0,
+    .charBaseIndex = 2,
+    .mapBaseIndex = 31,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0 } };
 
-static const struct WindowTemplate sWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 4,
-        .tilemapTop = 15,
-        .width = 22,
-        .height = 4,
-        .paletteNum = 14,
-        .baseBlock = 20
-    },
-    {
-        .bg = 0,
+static const struct WindowTemplate sWindowTemplates[] = { { .bg = 0,
+                                                              .tilemapLeft = 4,
+                                                              .tilemapTop = 15,
+                                                              .width = 22,
+                                                              .height = 4,
+                                                              .paletteNum = 14,
+                                                              .baseBlock = 20 },
+    { .bg = 0,
         .tilemapLeft = 7,
         .tilemapTop = 6,
         .width = 16,
         .height = 4,
         .paletteNum = 14,
-        .baseBlock = 0x6C
-    },
-    DUMMY_WIN_TEMPLATE
-};
+        .baseBlock = 0x6C },
+    DUMMY_WIN_TEMPLATE };
 
 // code
 static void VBlankCB(void)
@@ -315,5 +303,6 @@ static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 sp
     textColor[2] = 3;
 
     FillWindowPixelBuffer(windowId, PIXEL_FILL(textColor[0]));
-    AddTextPrinterParameterized4(windowId, 1, x, y, letterSpacing, lineSpacing, textColor, speed, text);
+    AddTextPrinterParameterized4(
+        windowId, 1, x, y, letterSpacing, lineSpacing, textColor, speed, text);
 }

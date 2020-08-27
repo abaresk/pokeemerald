@@ -169,7 +169,9 @@ u8 TakeMailFromMon2(struct Pokemon *mon)
     {
         if (gSaveBlock1Ptr->mail[i].itemId == ITEM_NONE)
         {
-            memcpy(&gSaveBlock1Ptr->mail[i], &gSaveBlock1Ptr->mail[GetMonData(mon, MON_DATA_MAIL)], sizeof(struct MailStruct));
+            memcpy(&gSaveBlock1Ptr->mail[i],
+                &gSaveBlock1Ptr->mail[GetMonData(mon, MON_DATA_MAIL)],
+                sizeof(struct MailStruct));
             gSaveBlock1Ptr->mail[GetMonData(mon, MON_DATA_MAIL)].itemId = ITEM_NONE;
             SetMonData(mon, MON_DATA_MAIL, &newMailId);
             SetMonData(mon, MON_DATA_HELD_ITEM, newHeldItem);

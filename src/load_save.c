@@ -16,29 +16,29 @@
 
 static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey);
 
-#define SAVEBLOCK_MOVE_RANGE    128
+#define SAVEBLOCK_MOVE_RANGE 128
 
 struct LoadedSaveData
 {
- /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
- /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
- /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
- /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
- /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
- /*0x02E8*/ struct MailStruct mail[MAIL_COUNT];
+    /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
+    /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+    /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
+    /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
+    /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
+    /*0x02E8*/ struct MailStruct mail[MAIL_COUNT];
 };
 
 // EWRAM DATA
-EWRAM_DATA struct SaveBlock2 gSaveblock2 = {0};
-EWRAM_DATA u8 gSaveblock2_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct SaveBlock2 gSaveblock2 = { 0 };
+EWRAM_DATA u8 gSaveblock2_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct SaveBlock1 gSaveblock1 = {0};
-EWRAM_DATA u8 gSaveblock1_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct SaveBlock1 gSaveblock1 = { 0 };
+EWRAM_DATA u8 gSaveblock1_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct PokemonStorage gPokemonStorage = {0};
-EWRAM_DATA u8 gSaveblock3_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct PokemonStorage gPokemonStorage = { 0 };
+EWRAM_DATA u8 gSaveblock3_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct LoadedSaveData gLoadedSaveData = {0};
+EWRAM_DATA struct LoadedSaveData gLoadedSaveData = { 0 };
 EWRAM_DATA u32 gLastEncryptionKey = 0;
 
 // IWRAM common
@@ -73,13 +73,13 @@ void ClearSav1(void)
 
 void SetSaveBlocksPointers(u16 offset)
 {
-    struct SaveBlock1** sav1_LocalVar = &gSaveBlock1Ptr;
+    struct SaveBlock1 **sav1_LocalVar = &gSaveBlock1Ptr;
 
     offset = (offset + Random()) & (SAVEBLOCK_MOVE_RANGE - 4);
 
-    gSaveBlock2Ptr = (void*)(&gSaveblock2) + offset;
-    *sav1_LocalVar = (void*)(&gSaveblock1) + offset;
-    gPokemonStoragePtr = (void*)(&gPokemonStorage) + offset;
+    gSaveBlock2Ptr = (void *)(&gSaveblock2) + offset;
+    *sav1_LocalVar = (void *)(&gSaveblock1) + offset;
+    gPokemonStoragePtr = (void *)(&gPokemonStorage) + offset;
 
     SetBagItemsPointers();
     SetDecorationInventoriesPointers();
@@ -102,7 +102,8 @@ void MoveSaveBlocks_ResetHeap(void)
 
     saveBlock2Copy = (struct SaveBlock2 *)(gHeap);
     saveBlock1Copy = (struct SaveBlock1 *)(gHeap + sizeof(struct SaveBlock2));
-    pokemonStorageCopy = (struct PokemonStorage *)(gHeap + sizeof(struct SaveBlock2) + sizeof(struct SaveBlock1));
+    pokemonStorageCopy =
+        (struct PokemonStorage *)(gHeap + sizeof(struct SaveBlock2) + sizeof(struct SaveBlock1));
 
     // backup the saves.
     *saveBlock2Copy = *gSaveBlock2Ptr;
@@ -111,11 +112,8 @@ void MoveSaveBlocks_ResetHeap(void)
 
     // change saveblocks' pointers
     // argument is a sum of the individual trainerId bytes
-    SetSaveBlocksPointers(
-      saveBlock2Copy->playerTrainerId[0] +
-      saveBlock2Copy->playerTrainerId[1] +
-      saveBlock2Copy->playerTrainerId[2] +
-      saveBlock2Copy->playerTrainerId[3]);
+    SetSaveBlocksPointers(saveBlock2Copy->playerTrainerId[0] + saveBlock2Copy->playerTrainerId[1] +
+                          saveBlock2Copy->playerTrainerId[2] + saveBlock2Copy->playerTrainerId[3]);
 
     // restore saveblock data since the pointers changed
     *gSaveBlock2Ptr = *saveBlock2Copy;

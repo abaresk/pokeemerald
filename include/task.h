@@ -4,7 +4,7 @@
 #define HEAD_SENTINEL 0xFE
 #define TAIL_SENTINEL 0xFF
 
-#define NUM_TASKS 16
+#define NUM_TASKS     16
 #define NUM_TASK_DATA 16
 
 typedef void (*TaskFunc)(u8 taskId);

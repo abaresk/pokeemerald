@@ -92,26 +92,23 @@ struct
     u8 unk1;
     u8 unk2;
     u8 unk3;
-} static  const gUnknown_086237F8[] =
-{
-    {1, 1, 0, 0},
-    {3, 4, 1, 0},
-    {3, 4, 5, 0},
-    {3, 4, 9, 0},
-    {3, 4, 13, 0},
-    {3, 4, 17, 0},
-    {1, 1, 21, 0},
-    {1, 1, 22, 0},
-    {1, 1, 23, 0},
-    {1, 1, 24, 0},
-    {1, 1, 25, 1},
-    {1, 1, 26, 1},
-    {1, 1, 27, 1},
-    {1, 1, 28, 1},
-    {1, 1, 29, 1},
-    {1, 1, 30, 1},
-    {1, 1, 31, 1}
-};
+} static const gUnknown_086237F8[] = { { 1, 1, 0, 0 },
+    { 3, 4, 1, 0 },
+    { 3, 4, 5, 0 },
+    { 3, 4, 9, 0 },
+    { 3, 4, 13, 0 },
+    { 3, 4, 17, 0 },
+    { 1, 1, 21, 0 },
+    { 1, 1, 22, 0 },
+    { 1, 1, 23, 0 },
+    { 1, 1, 24, 0 },
+    { 1, 1, 25, 1 },
+    { 1, 1, 26, 1 },
+    { 1, 1, 27, 1 },
+    { 1, 1, 28, 1 },
+    { 1, 1, 29, 1 },
+    { 1, 1, 30, 1 },
+    { 1, 1, 31, 1 } };
 
 #include "data/text/ribbon_descriptions.h"
 #include "data/text/gift_ribbon_descriptions.h"
@@ -125,36 +122,23 @@ static const u16 gUnknown_08624098[] = INCBIN_U16("graphics/pokenav/8624098.gbap
 static const u32 sRibbonIconsSmall_Gfx[] = INCBIN_U32("graphics/pokenav/ribbons_icon.4bpp.lz");
 static const u32 sRibbonIconsBig_Gfx[] = INCBIN_U32("graphics/pokenav/ribbons_icon_big.4bpp.lz");
 
-static const struct BgTemplate gUnknown_08624B98[] =
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 0x07,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+static const struct BgTemplate gUnknown_08624B98[] = { { .bg = 1,
+                                                           .charBaseIndex = 3,
+                                                           .mapBaseIndex = 0x07,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 1,
+                                                           .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 1,
         .mapBaseIndex = 0x06,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const LoopedTask gUnknown_08624BA0[] =
-{
-    NULL,
-    sub_81D0C84,
-    sub_81D0D2C,
-    sub_81D0D8C,
-    sub_81D0E00,
-    sub_81D0C54
+static const LoopedTask gUnknown_08624BA0[] = {
+    NULL, sub_81D0C84, sub_81D0D2C, sub_81D0D8C, sub_81D0E00, sub_81D0C54
 };
 
 // code
@@ -195,7 +179,8 @@ u32 sub_81D04C4(struct PokenavSub13 *structPtr)
         sub_81D0814(structPtr);
         return 1;
     }
-    else if (gMain.newAndRepeatedKeys & DPAD_DOWN && structPtr->field_8->unk2 < structPtr->field_8->unk0 - 1)
+    else if (gMain.newAndRepeatedKeys & DPAD_DOWN &&
+             structPtr->field_8->unk2 < structPtr->field_8->unk0 - 1)
     {
         structPtr->field_8->unk2++;
         structPtr->field_C = 0;
@@ -732,8 +717,7 @@ u32 sub_81D0E00(s32 state)
     return LT_FINISH;
 }
 
-static const struct WindowTemplate gUnknown_08624BB8 =
-{
+static const struct WindowTemplate gUnknown_08624BB8 = {
     .bg = 2,
     .tilemapLeft = 12,
     .tilemapTop = 13,
@@ -752,7 +736,7 @@ void sub_81D0E60(struct PokenavSub14 *structPtr)
 
 void sub_81D0E84(struct PokenavSub14 *structPtr)
 {
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+    u8 color[] = { TEXT_COLOR_RED, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY };
 
     ConvertIntToDecimalStringN(gStringVar1, GetCurrMonRibbonCount(), STR_CONV_MODE_LEFT_ALIGN, 2);
     DynamicPlaceholderTextUtil_Reset();
@@ -767,13 +751,19 @@ void sub_81D0EFC(struct PokenavSub14 *structPtr)
 {
     s32 i;
     u32 ribbonId = sub_81D0954();
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+    u8 color[] = { TEXT_COLOR_RED, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY };
 
     FillWindowPixelBuffer(structPtr->field_A, PIXEL_FILL(4));
     if (ribbonId < 25)
     {
         for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(structPtr->field_A, 1, 0, (i * 16) + 1, color, -1, gRibbonDescriptionPointers[ribbonId][i]);
+            AddTextPrinterParameterized3(structPtr->field_A,
+                1,
+                0,
+                (i * 16) + 1,
+                color,
+                -1,
+                gRibbonDescriptionPointers[ribbonId][i]);
     }
     else
     {
@@ -783,14 +773,19 @@ void sub_81D0EFC(struct PokenavSub14 *structPtr)
 
         ribbonId--;
         for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(structPtr->field_A, 1, 0, (i * 16) + 1, color, -1, gGiftRibbonDescriptionPointers[ribbonId][i]);
+            AddTextPrinterParameterized3(structPtr->field_A,
+                1,
+                0,
+                (i * 16) + 1,
+                color,
+                -1,
+                gGiftRibbonDescriptionPointers[ribbonId][i]);
     }
 
     CopyWindowToVram(structPtr->field_A, 2);
 }
 
-static const struct WindowTemplate gUnknown_08624BC4 =
-{
+static const struct WindowTemplate gUnknown_08624BC4 = {
     .bg = 2,
     .tilemapLeft = 14,
     .tilemapTop = 1,
@@ -807,8 +802,10 @@ void sub_81D0FCC(struct PokenavSub14 *structPtr)
     sub_81D0FF0(structPtr);
 }
 
-static const u8 sMaleIconString[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
-static const u8 sFemaleIconString[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sMaleIconString[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sFemaleIconString[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
 static const u8 sGenderlessIconString[] = _("{UNK_SPACER}");
 
 void sub_81D0FF0(struct PokenavSub14 *structPtr)
@@ -843,8 +840,7 @@ void sub_81D0FF0(struct PokenavSub14 *structPtr)
     CopyWindowToVram(windowId, 2);
 }
 
-static const struct WindowTemplate gUnknown_08624BE8[] =
-{
+static const struct WindowTemplate gUnknown_08624BE8[] = {
     {
         .bg = 2,
         .tilemapLeft = 1,
@@ -902,7 +898,8 @@ u16 sub_81D1184(s32 unused0, s32 unused1)
     u32 personality, otId;
 
     GetCurrMonInfo2(&species, &personality, &otId);
-    spriteId = CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, 40, 104, 15, 0xFFFF);
+    spriteId =
+        CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, 40, 104, 15, 0xFFFF);
     gSprites[spriteId].oam.priority = 0;
     return spriteId;
 }
@@ -992,40 +989,39 @@ struct
 {
     u16 var0;
     u16 var2;
-} static const gUnknown_08624BF8[] =
-{
-    {0, 0},
-    {1, 0},
-    {2, 0},
-    {3, 0},
-    {4, 0},
-    {1, 1},
-    {2, 1},
-    {3, 1},
-    {4, 1},
-    {1, 2},
-    {2, 2},
-    {3, 2},
-    {4, 2},
-    {1, 3},
-    {2, 3},
-    {3, 3},
-    {4, 3},
-    {1, 4},
-    {2, 4},
-    {3, 4},
-    {4, 4},
-    {5, 0},
-    {6, 0},
-    {7, 1},
-    {8, 2},
-    {9, 1},
-    {9, 3},
-    {9, 4},
-    {10, 3},
-    {10, 4},
-    {11, 0},
-    {11, 1},
+} static const gUnknown_08624BF8[] = {
+    { 0, 0 },
+    { 1, 0 },
+    { 2, 0 },
+    { 3, 0 },
+    { 4, 0 },
+    { 1, 1 },
+    { 2, 1 },
+    { 3, 1 },
+    { 4, 1 },
+    { 1, 2 },
+    { 2, 2 },
+    { 3, 2 },
+    { 4, 2 },
+    { 1, 3 },
+    { 2, 3 },
+    { 3, 3 },
+    { 4, 3 },
+    { 1, 4 },
+    { 2, 4 },
+    { 3, 4 },
+    { 4, 4 },
+    { 5, 0 },
+    { 6, 0 },
+    { 7, 1 },
+    { 8, 2 },
+    { 9, 1 },
+    { 9, 3 },
+    { 9, 4 },
+    { 10, 3 },
+    { 10, 4 },
+    { 11, 0 },
+    { 11, 1 },
 };
 
 void sub_81D13BC(u16 *dst, u32 id)
@@ -1034,29 +1030,23 @@ void sub_81D13BC(u16 *dst, u32 id)
     u16 r1 = (gUnknown_08624BF8[id].var0 * 2) + 1;
 
     dst[0] = r1 | (r3 << 12);
-    dst[1] = r1 | (r3 << 12) |0x400;
+    dst[1] = r1 | (r3 << 12) | 0x400;
     dst[2] = (r1 + 1) | (r3 << 12);
     dst[3] = (r1 + 1) | (r3 << 12) | 0x400;
 }
 
-static const struct CompressedSpriteSheet gUnknown_08624C78 =
-{
-    sRibbonIconsBig_Gfx, 0x1800, 9
-};
+static const struct CompressedSpriteSheet gUnknown_08624C78 = { sRibbonIconsBig_Gfx, 0x1800, 9 };
 
-static const struct SpritePalette gUnknown_08624C80[] =
-{
-    {gUnknown_08623FF8, 15},
-    {gUnknown_08624018, 16},
-    {gUnknown_08624038, 17},
-    {gUnknown_08624058, 18},
-    {gUnknown_08624078, 19},
+static const struct SpritePalette gUnknown_08624C80[] = {
+    { gUnknown_08623FF8, 15 },
+    { gUnknown_08624018, 16 },
+    { gUnknown_08624038, 17 },
+    { gUnknown_08624058, 18 },
+    { gUnknown_08624078, 19 },
     {},
 };
 
-static const struct OamData sOamData_8624CB0 =
-{
-    .y = 0,
+static const struct OamData sOamData_8624CB0 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -1068,38 +1058,25 @@ static const struct OamData sOamData_8624CB0 =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AffineAnimCmd sSpriteAffineAnim_8624CB8[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_8624CB8[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_8624CC8[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_FRAME(32, 32, 0, 4), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_8624CC8[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_FRAME(32, 32, 0, 4),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_8624CE0[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_FRAME(-32, -32, 0, 4), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_8624CE0[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_FRAME(-32, -32, 0, 4),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_8624CF8[] = {
+    sSpriteAffineAnim_8624CB8, sSpriteAffineAnim_8624CC8, sSpriteAffineAnim_8624CE0
 };
 
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_8624CF8[] =
-{
-    sSpriteAffineAnim_8624CB8,
-    sSpriteAffineAnim_8624CC8,
-    sSpriteAffineAnim_8624CE0
-};
-
-static const struct SpriteTemplate gUnknown_08624D04 =
-{
+static const struct SpriteTemplate gUnknown_08624D04 = {
     .tileTag = 9,
     .paletteTag = 15,
     .oam = &sOamData_8624CB0,
@@ -1132,8 +1109,10 @@ void sub_81D1448(struct PokenavSub14 *structPtr)
     structPtr->field_14->pos1.y = r0;
 
     ribbonId = sub_81D0954();
-    structPtr->field_14->oam.tileNum = (gUnknown_08624BF8[ribbonId].var0 * 16) + GetSpriteTileStartByTag(9);
-    structPtr->field_14->oam.paletteNum = IndexOfSpritePaletteTag(gUnknown_08624BF8[ribbonId].var2 + 15);
+    structPtr->field_14->oam.tileNum =
+        (gUnknown_08624BF8[ribbonId].var0 * 16) + GetSpriteTileStartByTag(9);
+    structPtr->field_14->oam.paletteNum =
+        IndexOfSpritePaletteTag(gUnknown_08624BF8[ribbonId].var2 + 15);
 
     StartSpriteAffineAnim(structPtr->field_14, 1);
     structPtr->field_14->invisible = FALSE;

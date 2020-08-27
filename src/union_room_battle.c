@@ -26,28 +26,20 @@ struct UnionRoomBattle
     s16 textState;
 };
 
-static EWRAM_DATA struct UnionRoomBattle * sBattle = NULL;
+static EWRAM_DATA struct UnionRoomBattle *sBattle = NULL;
 
 static const struct BgTemplate sBgTemplates[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 31
-    }
+    { .bg = 0, .charBaseIndex = 3, .mapBaseIndex = 31 }
 };
 
-static const struct WindowTemplate sWindowTemplates[] = {
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 15,
-        .width = 24,
-        .height = 4,
-        .paletteNum = 0xE,
-        .baseBlock = 0x014
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sWindowTemplates[] = { { .bg = 0,
+                                                              .tilemapLeft = 3,
+                                                              .tilemapTop = 15,
+                                                              .width = 24,
+                                                              .height = 4,
+                                                              .paletteNum = 0xE,
+                                                              .baseBlock = 0x014 },
+    DUMMY_WIN_TEMPLATE };
 
 static const u8 sTextColors[] = { TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY };
 
@@ -73,15 +65,16 @@ static void CB2_SetUpPartiesAndStartBattle(void)
     SetMainCallback2(CB2_InitBattle);
 }
 
-static void AddTextPrinterForUnionRoomBattle(u8 windowId, const u8 * str, u8 x, u8 y, s32 speed)
+static void AddTextPrinterForUnionRoomBattle(u8 windowId, const u8 *str, u8 x, u8 y, s32 speed)
 {
     s32 letterSpacing = 0;
     s32 lineSpacing = 1;
     FillWindowPixelBuffer(windowId, (sTextColors[0] << 4) | sTextColors[0]);
-    AddTextPrinterParameterized4(windowId, 1, x, y, letterSpacing, lineSpacing, sTextColors, speed, str);
+    AddTextPrinterParameterized4(
+        windowId, 1, x, y, letterSpacing, lineSpacing, sTextColors, speed, str);
 }
 
-static bool32 PrintUnionRoomBattleMessage(s16 * state, const u8 * str, s32 speed)
+static bool32 PrintUnionRoomBattleMessage(s16 *state, const u8 *str, s32 speed)
 {
     switch (*state)
     {
@@ -137,7 +130,8 @@ void CB2_UnionRoomBattle(void)
         gMain.state++;
         break;
     case 1:
-        if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_CommStandbyAwaitingOtherPlayer, 0))
+        if (PrintUnionRoomBattleMessage(
+                &sBattle->textState, gText_CommStandbyAwaitingOtherPlayer, 0))
         {
             gMain.state++;
         }
@@ -166,8 +160,8 @@ void CB2_UnionRoomBattle(void)
     case 4:
         if (GetBlockReceivedStatus() == 3)
         {
-            if (gBlockRecvBuffer[0][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM) 
-             && gBlockRecvBuffer[1][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
+            if (gBlockRecvBuffer[0][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM) &&
+                gBlockRecvBuffer[1][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
             {
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
                 gMain.state = 50;

@@ -1,5 +1,4 @@
-const u8 *const gMonFootprintTable[] =
-{
+const u8 *const gMonFootprintTable[] = {
     [SPECIES_NONE] = gMonFootprint_Bulbasaur,
     [SPECIES_BULBASAUR] = gMonFootprint_Bulbasaur,
     [SPECIES_IVYSAUR] = gMonFootprint_Ivysaur,

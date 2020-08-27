@@ -10,7 +10,7 @@
 
 #define ROTATE_COUNTERCLOCKWISE 0
 #define ROTATE_CLOCKWISE        1
-#define ROTATE_NONE             2 
+#define ROTATE_NONE             2
 
 struct RotatingTileObject
 {
@@ -25,61 +25,33 @@ struct RotatingTilePuzzle
     bool8 isTrickHouse;
 };
 
-static const u8 sMovement_ShiftRight[] =
-{
-    MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
+static const u8 sMovement_ShiftRight[] = { MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
     MOVEMENT_ACTION_WALK_NORMAL_RIGHT,
     MOVEMENT_ACTION_FREE_AND_UNLOCK_ANIM,
-    MOVEMENT_ACTION_STEP_END
-};
+    MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_ShiftDown[] =
-{
-    MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
+static const u8 sMovement_ShiftDown[] = { MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
     MOVEMENT_ACTION_WALK_NORMAL_DOWN,
     MOVEMENT_ACTION_FREE_AND_UNLOCK_ANIM,
-    MOVEMENT_ACTION_STEP_END
-};
+    MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_ShiftLeft[] =
-{
-    MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
+static const u8 sMovement_ShiftLeft[] = { MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
     MOVEMENT_ACTION_WALK_NORMAL_LEFT,
     MOVEMENT_ACTION_FREE_AND_UNLOCK_ANIM,
-    MOVEMENT_ACTION_STEP_END
-};
+    MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_ShiftUp[] =
-{
-    MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
+static const u8 sMovement_ShiftUp[] = { MOVEMENT_ACTION_STORE_AND_LOCK_ANIM,
     MOVEMENT_ACTION_WALK_NORMAL_UP,
     MOVEMENT_ACTION_FREE_AND_UNLOCK_ANIM,
-    MOVEMENT_ACTION_STEP_END
-};
+    MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_FaceRight[] =
-{
-    MOVEMENT_ACTION_FACE_RIGHT,
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sMovement_FaceRight[] = { MOVEMENT_ACTION_FACE_RIGHT, MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_FaceDown[] =
-{
-    MOVEMENT_ACTION_FACE_DOWN,
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sMovement_FaceDown[] = { MOVEMENT_ACTION_FACE_DOWN, MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_FaceLeft[] =
-{
-    MOVEMENT_ACTION_FACE_LEFT,
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sMovement_FaceLeft[] = { MOVEMENT_ACTION_FACE_LEFT, MOVEMENT_ACTION_STEP_END };
 
-static const u8 sMovement_FaceUp[] =
-{
-    MOVEMENT_ACTION_FACE_UP,
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sMovement_FaceUp[] = { MOVEMENT_ACTION_FACE_UP, MOVEMENT_ACTION_STEP_END };
 
 // This file's functions.
 static void SaveRotatingTileObject(u8 eventTemplateId, u8 arg1);
@@ -129,15 +101,18 @@ u16 MoveRotatingTileObjects(u8 puzzleNumber)
             puzzleTileStart = METATILE_TrickHousePuzzle_Arrow_YellowOnWhite_Right;
 
         // Object is on a metatile before the puzzle tile section
-        // UB: Because this is not if (metatile < puzzleTileStart), for the trick house (metatile - puzzleTileStart) below can result in casting a negative value to u8 
+        // UB: Because this is not if (metatile < puzzleTileStart), for the trick house (metatile -
+        // puzzleTileStart) below can result in casting a negative value to u8
         if (metatile < METATILE_MossdeepGym_YellowArrow_Right)
             continue;
 
-        // Object is on a metatile after the puzzle tile section (never occurs, in both cases the puzzle tiles are last)
+        // Object is on a metatile after the puzzle tile section (never occurs, in both cases the
+        // puzzle tiles are last)
         if ((u8)((metatile - puzzleTileStart) / 8) >= 5)
             continue;
 
-        // Object is on a metatile in puzzle tile section, but not one of the currently rotating color
+        // Object is on a metatile in puzzle tile section, but not one of the currently rotating
+        // color
         if ((u8)((metatile - puzzleTileStart) / 8) != puzzleNumber)
             continue;
 
@@ -174,11 +149,16 @@ u16 MoveRotatingTileObjects(u8 puzzleNumber)
 
             objectEvents[i].x += x;
             objectEvents[i].y += y;
-            if (GetObjectEventIdByLocalIdAndMap(objectEvents[i].localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup) != OBJECT_EVENTS_COUNT)
+            if (GetObjectEventIdByLocalIdAndMap(objectEvents[i].localId,
+                    gSaveBlock1Ptr->location.mapNum,
+                    gSaveBlock1Ptr->location.mapGroup) != OBJECT_EVENTS_COUNT)
             {
                 SaveRotatingTileObject(i, puzzleTileNum);
                 localId = objectEvents[i].localId;
-                ScriptMovement_StartObjectMovementScript(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, movementScript);
+                ScriptMovement_StartObjectMovementScript(localId,
+                    gSaveBlock1Ptr->location.mapNum,
+                    gSaveBlock1Ptr->location.mapGroup,
+                    movementScript);
             }
             // Never reached in normal gameplay
             else
@@ -215,15 +195,19 @@ void TurnRotatingTileObjects(void)
         s16 y = objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].y + 7;
         u16 metatile = MapGridGetMetatileIdAt(x, y);
 
-        // NOTE: The following 2 assignments and if else could all be replaced with rotation = ROTATE_COUNTERCLOCKWISE
-        // For an object to be saved in sRotatingTilePuzzle->objects, it must have been on a colored arrow tile
-        // After the first assignment, tileDifference will always be a number [0-3] representing which arrow tile the object is on now (0: right, 1: down, 2: left, 3: up)
-        // prevPuzzleTileNum will similarly be a number [0-3] representing the arrow tile the object just moved from
-        // All the puzzles are oriented counter-clockwise and can only move 1 step at a time, so the difference between the current tile and the previous tile will always either be -1 or 3 (0-1, 1-2, 2-3, 3-0)
-        // Which means tileDifference will always either be -1 or 3 after the below subtraction, and rotation will always be ROTATE_COUNTERCLOCKWISE after the following conditionals
+        // NOTE: The following 2 assignments and if else could all be replaced with rotation =
+        // ROTATE_COUNTERCLOCKWISE For an object to be saved in sRotatingTilePuzzle->objects, it
+        // must have been on a colored arrow tile After the first assignment, tileDifference will
+        // always be a number [0-3] representing which arrow tile the object is on now (0: right, 1:
+        // down, 2: left, 3: up) prevPuzzleTileNum will similarly be a number [0-3] representing the
+        // arrow tile the object just moved from All the puzzles are oriented counter-clockwise and
+        // can only move 1 step at a time, so the difference between the current tile and the
+        // previous tile will always either be -1 or 3 (0-1, 1-2, 2-3, 3-0) Which means
+        // tileDifference will always either be -1 or 3 after the below subtraction, and rotation
+        // will always be ROTATE_COUNTERCLOCKWISE after the following conditionals
         tileDifference = (u8)((metatile - puzzleTileStart) % 8);
         tileDifference -= (sRotatingTilePuzzle->objects[i].prevPuzzleTileNum);
-        
+
         // Always true, see above
         if (tileDifference < 0 || tileDifference == 3)
         {
@@ -241,7 +225,10 @@ void TurnRotatingTileObjects(void)
                 rotation = ROTATE_NONE;
         }
 
-        objectEventId = GetObjectEventIdByLocalIdAndMap(objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
+        objectEventId = GetObjectEventIdByLocalIdAndMap(
+            objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId,
+            gSaveBlock1Ptr->location.mapNum,
+            gSaveBlock1Ptr->location.mapGroup);
         if (objectEventId != OBJECT_EVENTS_COUNT)
         {
             const u8 *movementScript;
@@ -252,27 +239,32 @@ void TurnRotatingTileObjects(void)
                 {
                 case DIR_EAST:
                     movementScript = sMovement_FaceUp;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_UP;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_UP;
                     break;
                 case DIR_SOUTH:
                     movementScript = sMovement_FaceRight;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_RIGHT;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_RIGHT;
                     break;
                 case DIR_WEST:
                     movementScript = sMovement_FaceDown;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_DOWN;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_DOWN;
                     break;
                 case DIR_NORTH:
                     movementScript = sMovement_FaceLeft;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_LEFT;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_LEFT;
                     break;
                 default:
                     continue;
                 }
-                ScriptMovement_StartObjectMovementScript(objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId,
-                                                         gSaveBlock1Ptr->location.mapNum,
-                                                         gSaveBlock1Ptr->location.mapGroup,
-                                                         movementScript);
+                ScriptMovement_StartObjectMovementScript(
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId,
+                    gSaveBlock1Ptr->location.mapNum,
+                    gSaveBlock1Ptr->location.mapGroup,
+                    movementScript);
             }
             // Never reached
             else if (rotation == ROTATE_CLOCKWISE)
@@ -281,27 +273,32 @@ void TurnRotatingTileObjects(void)
                 {
                 case DIR_EAST:
                     movementScript = sMovement_FaceDown;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_DOWN;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_DOWN;
                     break;
                 case DIR_SOUTH:
                     movementScript = sMovement_FaceLeft;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_LEFT;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_LEFT;
                     break;
                 case DIR_WEST:
                     movementScript = sMovement_FaceUp;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_UP;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_UP;
                     break;
                 case DIR_NORTH:
                     movementScript = sMovement_FaceRight;
-                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType = MOVEMENT_TYPE_FACE_RIGHT;
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].movementType =
+                        MOVEMENT_TYPE_FACE_RIGHT;
                     break;
                 default:
                     continue;
                 }
-                ScriptMovement_StartObjectMovementScript(objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId,
-                                                         gSaveBlock1Ptr->location.mapNum,
-                                                         gSaveBlock1Ptr->location.mapGroup,
-                                                         movementScript);
+                ScriptMovement_StartObjectMovementScript(
+                    objectEvents[sRotatingTilePuzzle->objects[i].eventTemplateId].localId,
+                    gSaveBlock1Ptr->location.mapNum,
+                    gSaveBlock1Ptr->location.mapGroup,
+                    movementScript);
             }
         }
     }

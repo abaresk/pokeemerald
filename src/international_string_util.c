@@ -20,7 +20,8 @@ int GetStringRightAlignXOffset(int fontId, const u8 *str, int totalWidth)
     return GetStringWidthDifference(fontId, str, totalWidth, 0);
 }
 
-int GetStringCenterAlignXOffsetWithLetterSpacing(int fontId, const u8 *str, int totalWidth, int letterSpacing)
+int GetStringCenterAlignXOffsetWithLetterSpacing(
+    int fontId, const u8 *str, int totalWidth, int letterSpacing)
 {
     return GetStringWidthDifference(fontId, str, totalWidth, letterSpacing) / 2;
 }
@@ -48,7 +49,7 @@ int GetMaxWidthInMenuTable(const struct MenuAction *str, int arg1)
     return ConvertPixelWidthToTileWidth(var);
 }
 
-int sub_81DB3D8(const struct MenuAction *str, const u8* arg1, int arg2)
+int sub_81DB3D8(const struct MenuAction *str, const u8 *arg1, int arg2)
 {
     int i, var;
 

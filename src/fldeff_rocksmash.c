@@ -35,7 +35,8 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
 
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
     gPlayerFacingPosition.height = PlayerGetZCoord();
-    objEventId = GetObjectEventIdByXYZ(gPlayerFacingPosition.x, gPlayerFacingPosition.y, gPlayerFacingPosition.height);
+    objEventId = GetObjectEventIdByXYZ(
+        gPlayerFacingPosition.x, gPlayerFacingPosition.y, gPlayerFacingPosition.height);
     if (gObjectEvents[objEventId].graphicsId != graphicsId)
     {
         return FALSE;
@@ -60,8 +61,8 @@ static void Task_DoFieldMove_Init(u8 taskId)
     ScriptContext2_Enable();
     gPlayerAvatar.preventStep = TRUE;
     objEventId = gPlayerAvatar.objectEventId;
-    if (!ObjectEventIsMovementOverridden(&gObjectEvents[objEventId])
-     || ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]))
+    if (!ObjectEventIsMovementOverridden(&gObjectEvents[objEventId]) ||
+        ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]))
     {
         if (gMapHeader.mapType == MAP_TYPE_UNDERWATER)
         {
@@ -73,7 +74,8 @@ static void Task_DoFieldMove_Init(u8 taskId)
         {
             // Do field move pose
             SetPlayerAvatarFieldMove();
-            ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
+            ObjectEventSetHeldMovement(
+                &gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
             gTasks[taskId].func = Task_DoFieldMove_ShowMonAfterPose;
         }
     }
@@ -101,7 +103,8 @@ static void Task_DoFieldMove_WaitForMon(u8 taskId)
             gFieldEffectArguments[2] = 2;
         if (gFieldEffectArguments[1] == DIR_EAST)
             gFieldEffectArguments[2] = 3;
-        ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByCurrentState());
+        ObjectEventSetGraphicsId(
+            &gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByCurrentState());
         StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], gFieldEffectArguments[2]);
         FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
         gTasks[taskId].func = Task_DoFieldMove_RunFunc;
@@ -111,7 +114,8 @@ static void Task_DoFieldMove_WaitForMon(u8 taskId)
 static void Task_DoFieldMove_RunFunc(u8 taskId)
 {
     // The function for the field move to do is stored in halves across data[8] and data[9]
-    void (*fieldMoveFunc)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
+    void (*fieldMoveFunc)(void) =
+        (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
 
     fieldMoveFunc();
     gPlayerAvatar.preventStep = FALSE;

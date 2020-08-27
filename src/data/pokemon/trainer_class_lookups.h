@@ -1,5 +1,4 @@
-const u8 gFacilityClassToPicIndex[] =
-{
+const u8 gFacilityClassToPicIndex[] = {
     [FACILITY_CLASS_HIKER] = TRAINER_PIC_HIKER,
     [FACILITY_CLASS_AQUA_GRUNT_M] = TRAINER_PIC_AQUA_GRUNT_M,
     [FACILITY_CLASS_PKMN_BREEDER_F] = TRAINER_PIC_POKEMON_BREEDER_F,
@@ -84,8 +83,7 @@ const u8 gFacilityClassToPicIndex[] =
     [FACILITY_CLASS_RS_MAY] = TRAINER_PIC_RS_MAY,
 };
 
-const u8 gFacilityClassToTrainerClass[] =
-{
+const u8 gFacilityClassToTrainerClass[] = {
     [FACILITY_CLASS_HIKER] = TRAINER_CLASS_HIKER,
     [FACILITY_CLASS_AQUA_GRUNT_M] = TRAINER_CLASS_TEAM_AQUA,
     [FACILITY_CLASS_PKMN_BREEDER_F] = TRAINER_CLASS_PKMN_BREEDER,

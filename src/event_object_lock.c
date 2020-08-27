@@ -38,7 +38,6 @@ bool8 sub_80983C4(void)
     }
 }
 
-
 void ScriptFreezeObjectEvents(void)
 {
     FreezeObjectEvents();
@@ -141,20 +140,20 @@ void sub_8098630(void)
 {
     u8 trainerObjectId1, trainerObjectId2, taskId;
     trainerObjectId1 = GetChosenApproachingTrainerObjectEventId(0);
-    if(gNoOfApproachingTrainers == 2)
+    if (gNoOfApproachingTrainers == 2)
     {
         trainerObjectId2 = GetChosenApproachingTrainerObjectEventId(1);
         sub_8098074(trainerObjectId1, trainerObjectId2);
         taskId = CreateTask(sub_80985BC, 80);
         gTasks[taskId].data[2] = trainerObjectId1;
-        if(!gObjectEvents[trainerObjectId1].singleMovementActive)
+        if (!gObjectEvents[trainerObjectId1].singleMovementActive)
         {
             FreezeObjectEvent(&gObjectEvents[trainerObjectId1]);
             gTasks[taskId].data[1] = 1;
         }
         taskId = CreateTask(sub_80985BC, 81);
         gTasks[taskId].data[2] = trainerObjectId2;
-        if(!gObjectEvents[trainerObjectId2].singleMovementActive)
+        if (!gObjectEvents[trainerObjectId2].singleMovementActive)
         {
             FreezeObjectEvent(&gObjectEvents[trainerObjectId2]);
             gTasks[taskId].data[1] = 1;
@@ -165,7 +164,7 @@ void sub_8098630(void)
         FreezeObjectEventsExceptOne(trainerObjectId1);
         taskId = CreateTask(sub_80985BC, 80);
         gTasks[taskId].data[2] = trainerObjectId1;
-        if(!gObjectEvents[trainerObjectId1].singleMovementActive)
+        if (!gObjectEvents[trainerObjectId1].singleMovementActive)
         {
             FreezeObjectEvent(&gObjectEvents[trainerObjectId1]);
             gTasks[taskId].data[1] = 1;

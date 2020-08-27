@@ -49,28 +49,52 @@ void sub_81D2230(struct ConditionGraph *graph);
 bool8 sub_81D20BC(struct ConditionGraph *graph);
 bool32 TransitionConditionGraph(struct ConditionGraph *graph);
 void sub_81D2754(u8 *arg0, struct UnknownSubStruct_81D1ED4 *arg1);
-void sub_81D1F84(struct ConditionGraph *graph, struct UnknownSubStruct_81D1ED4 *arg1, struct UnknownSubStruct_81D1ED4 *arg2);
+void sub_81D1F84(struct ConditionGraph *graph,
+    struct UnknownSubStruct_81D1ED4 *arg1,
+    struct UnknownSubStruct_81D1ED4 *arg2);
 void MoveRelearnerPrintText(u8 *str);
 bool16 MoveRelearnerRunTextPrinters(void);
 void MoveRelearnerCreateYesNoMenu(void);
 u8 LoadMoveRelearnerMovesList(const struct ListMenuItem *items, u16 numChoices);
 void InitMoveRelearnerWindows(bool8 useContextWindow);
 s32 GetBoxOrPartyMonData(u16 boxId, u16 monId, s32 request, u8 *dst);
-void GetConditionMenuMonNameAndLocString(u8 *locationDst, u8 *nameDst, u16 boxId, u16 monId, u16 partyId, u16 numMons, bool8 excludesCancel);
-void GetConditionMenuMonConditions(struct ConditionGraph *graph, u8 *sheen, u16 boxId, u16 monId, u16 partyId, u16 id, u16 numMons, bool8 excludesCancel);
-void GetConditionMenuMonGfx(void *tilesDst, void *palDst, u16 boxId, u16 monId, u16 partyId, u16 numMons, bool8 excludesCancel);
+void GetConditionMenuMonNameAndLocString(u8 *locationDst,
+    u8 *nameDst,
+    u16 boxId,
+    u16 monId,
+    u16 partyId,
+    u16 numMons,
+    bool8 excludesCancel);
+void GetConditionMenuMonConditions(struct ConditionGraph *graph,
+    u8 *sheen,
+    u16 boxId,
+    u16 monId,
+    u16 partyId,
+    u16 id,
+    u16 numMons,
+    bool8 excludesCancel);
+void GetConditionMenuMonGfx(void *tilesDst,
+    void *palDst,
+    u16 boxId,
+    u16 monId,
+    u16 partyId,
+    u16 numMons,
+    bool8 excludesCancel);
 bool8 MoveConditionMonOnscreen(s16 *x);
 bool8 MoveConditionMonOffscreen(s16 *x);
 bool8 TryUpdateConditionMonTransitionOn(struct ConditionGraph *graph, s16 *x);
 bool8 TryUpdateConditionMonTransitionOff(struct ConditionGraph *graph, s16 *x);
-void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplate *template, struct SpritePalette *pal);
-void LoadConditionSelectionIcons(struct SpriteSheet *sheets, struct SpriteTemplate * template, struct SpritePalette *pals);
+void LoadConditionMonPicTemplate(
+    struct SpriteSheet *sheet, struct SpriteTemplate *template, struct SpritePalette *pal);
+void LoadConditionSelectionIcons(
+    struct SpriteSheet *sheets, struct SpriteTemplate *template, struct SpritePalette *pals);
 void LoadConditionSparkle(struct SpriteSheet *sheet, struct SpritePalette *pal);
 void ResetConditionSparkleSprites(struct Sprite **sprites);
 void CreateConditionSparkleSprites(struct Sprite **sprites, u8 monSpriteId, u8 count);
 void DestroyConditionSparkleSprites(struct Sprite **sprites);
 void FreeConditionSparkles(struct Sprite **sprites);
-void DrawLevelUpWindowPg1(u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bgClr, u8 fgClr, u8 shadowClr);
+void DrawLevelUpWindowPg1(
+    u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bgClr, u8 fgClr, u8 shadowClr);
 void DrawLevelUpWindowPg2(u16 windowId, u16 *currStats, u8 bgClr, u8 fgClr, u8 shadowClr);
 void GetMonLevelUpWindowStats(struct Pokemon *mon, u16 *currStats);
 

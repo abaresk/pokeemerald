@@ -10,9 +10,9 @@
 
 #define LOOPED_TASK_DECODE_STATE(action) (action - 5)
 
-#define LOOPED_TASK_ID(primary, secondary) (((secondary) << 16) |(primary))
-#define LOOPED_TASK_PRIMARY_ID(taskId) (taskId & 0xFFFF)
-#define LOOPED_TASK_SECONDARY_ID(taskId) (taskId >> 16)
+#define LOOPED_TASK_ID(primary, secondary) (((secondary) << 16) | (primary))
+#define LOOPED_TASK_PRIMARY_ID(taskId)     (taskId & 0xFFFF)
+#define LOOPED_TASK_SECONDARY_ID(taskId)   (taskId >> 16)
 
 #define SUBSTRUCT_COUNT 19
 
@@ -230,9 +230,10 @@ bool32 IsLoopedTaskActive(u32 taskId)
     u32 primaryId = LOOPED_TASK_PRIMARY_ID(taskId);
     u32 secondaryId = LOOPED_TASK_SECONDARY_ID(taskId);
 
-    if (gTasks[primaryId].isActive
-        && (gTasks[primaryId].func == Task_RunLoopedTask || gTasks[primaryId].func == Task_RunLoopedTask_LinkMode)
-        && gTasks[primaryId].data[3] == secondaryId)
+    if (gTasks[primaryId].isActive &&
+        (gTasks[primaryId].func == Task_RunLoopedTask ||
+            gTasks[primaryId].func == Task_RunLoopedTask_LinkMode) &&
+        gTasks[primaryId].data[3] == secondaryId)
         return TRUE;
     else
         return FALSE;
@@ -243,9 +244,10 @@ bool32 FuncIsActiveLoopedTask(LoopedTask func)
     int i;
     for (i = 0; i < NUM_TASKS; i++)
     {
-        if (gTasks[i].isActive
-            && (gTasks[i].func == Task_RunLoopedTask || gTasks[i].func == Task_RunLoopedTask_LinkMode)
-            && (LoopedTask)GetWordTaskArg(i, 1) == func)
+        if (gTasks[i].isActive &&
+            (gTasks[i].func == Task_RunLoopedTask ||
+                gTasks[i].func == Task_RunLoopedTask_LinkMode) &&
+            (LoopedTask)GetWordTaskArg(i, 1) == func)
             return TRUE;
     }
     return FALSE;
@@ -394,9 +396,9 @@ static bool32 AnyMonHasRibbon(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&gPlayerParty[i],  MON_DATA_SANITY_HAS_SPECIES)
-            && !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG)
-            && GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT) != 0)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES) &&
+            !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG) &&
+            GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT) != 0)
         {
             return TRUE;
         }
@@ -406,8 +408,7 @@ static bool32 AnyMonHasRibbon(void)
     {
         for (i = 0; i < IN_BOX_COUNT; i++)
         {
-            if (CheckBoxMonSanityAt(j, i)
-                && GetBoxMonDataAt(j, i, MON_DATA_RIBBON_COUNT) != 0)
+            if (CheckBoxMonSanityAt(j, i) && GetBoxMonDataAt(j, i, MON_DATA_RIBBON_COUNT) != 0)
             {
                 return TRUE;
             }
@@ -516,7 +517,8 @@ static bool32 SetActivePokenavMenu(u32 menuId)
     if (!PokenavMenuCallbacks[index].open())
         return FALSE;
 
-    sub_81C7834(PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
+    sub_81C7834(
+        PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
     gPokenavResources->currentMenuCb1 = PokenavMenuCallbacks[index].callback;
     gPokenavResources->currentMenuIndex = index;
     return TRUE;

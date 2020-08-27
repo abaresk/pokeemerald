@@ -3,25 +3,24 @@
 #include "text.h"
 #include "strings.h"
 
-EWRAM_DATA u8 gStringVar1[0x100] = {0};
-EWRAM_DATA u8 gStringVar2[0x100] = {0};
-EWRAM_DATA u8 gStringVar3[0x100] = {0};
-EWRAM_DATA u8 gStringVar4[0x3E8] = {0};
-EWRAM_DATA static u8 sUnknownStringVar[16] = {0};
+EWRAM_DATA u8 gStringVar1[0x100] = { 0 };
+EWRAM_DATA u8 gStringVar2[0x100] = { 0 };
+EWRAM_DATA u8 gStringVar3[0x100] = { 0 };
+EWRAM_DATA u8 gStringVar4[0x3E8] = { 0 };
+EWRAM_DATA static u8 sUnknownStringVar[16] = { 0 };
 
 static const u8 sDigits[] = __("0123456789ABCDEF");
 
-static const s32 sPowersOfTen[] =
-{
-             1,
-            10,
-           100,
-          1000,
-         10000,
-        100000,
-       1000000,
-      10000000,
-     100000000,
+static const s32 sPowersOfTen[] = {
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000,
+    1000000,
+    10000000,
+    100000000,
     1000000000,
 };
 
@@ -162,7 +161,12 @@ bool8 IsStringLengthAtLeast(const u8 *str, s32 n)
 
 u8 *ConvertIntToDecimalStringN(u8 *dest, s32 value, enum StringConvertMode mode, u8 n)
 {
-    enum { WAITING_FOR_NONZERO_DIGIT, WRITING_DIGITS, WRITING_SPACES } state;
+    enum
+    {
+        WAITING_FOR_NONZERO_DIGIT,
+        WRITING_DIGITS,
+        WRITING_SPACES
+    } state;
     s32 powerOfTen;
     s32 largestPowerOfTen = sPowersOfTen[n - 1];
 
@@ -218,7 +222,12 @@ u8 *ConvertIntToDecimalStringN(u8 *dest, s32 value, enum StringConvertMode mode,
 
 u8 *ConvertUIntToDecimalStringN(u8 *dest, u32 value, enum StringConvertMode mode, u8 n)
 {
-    enum { WAITING_FOR_NONZERO_DIGIT, WRITING_DIGITS, WRITING_SPACES } state;
+    enum
+    {
+        WAITING_FOR_NONZERO_DIGIT,
+        WRITING_DIGITS,
+        WRITING_SPACES
+    } state;
     s32 powerOfTen;
     s32 largestPowerOfTen = sPowersOfTen[n - 1];
 
@@ -274,7 +283,12 @@ u8 *ConvertUIntToDecimalStringN(u8 *dest, u32 value, enum StringConvertMode mode
 
 u8 *ConvertIntToHexStringN(u8 *dest, s32 value, enum StringConvertMode mode, u8 n)
 {
-    enum { WAITING_FOR_NONZERO_DIGIT, WRITING_DIGITS, WRITING_SPACES } state;
+    enum
+    {
+        WAITING_FOR_NONZERO_DIGIT,
+        WRITING_DIGITS,
+        WRITING_SPACES
+    } state;
     u8 i;
     s32 powerOfSixteen;
     s32 largestPowerOfSixteen = 1;
@@ -384,19 +398,8 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
 
 u8 *StringBraille(u8 *dest, const u8 *src)
 {
-    const u8 setBrailleFont[] = { 
-        EXT_CTRL_CODE_BEGIN, 
-        EXT_CTRL_CODE_SIZE, 
-        6, 
-        EOS 
-    };
-    const u8 gotoLine2[] = { 
-        CHAR_NEWLINE, 
-        EXT_CTRL_CODE_BEGIN, 
-        EXT_CTRL_CODE_SHIFT_DOWN, 
-        2, 
-        EOS 
-    };
+    const u8 setBrailleFont[] = { EXT_CTRL_CODE_BEGIN, EXT_CTRL_CODE_SIZE, 6, EOS };
+    const u8 gotoLine2[] = { CHAR_NEWLINE, EXT_CTRL_CODE_BEGIN, EXT_CTRL_CODE_SHIFT_DOWN, 2, EOS };
 
     dest = StringCopy(dest, setBrailleFont);
 
@@ -500,22 +503,21 @@ const u8 *GetExpandedPlaceholder(u32 id)
 {
     typedef const u8 *(*ExpandPlaceholderFunc)(void);
 
-    static const ExpandPlaceholderFunc funcs[] =
-    {
-        [PLACEHOLDER_ID_UNKNOWN]      = ExpandPlaceholder_UnknownStringVar,
-        [PLACEHOLDER_ID_PLAYER]       = ExpandPlaceholder_PlayerName,
+    static const ExpandPlaceholderFunc funcs[] = {
+        [PLACEHOLDER_ID_UNKNOWN] = ExpandPlaceholder_UnknownStringVar,
+        [PLACEHOLDER_ID_PLAYER] = ExpandPlaceholder_PlayerName,
         [PLACEHOLDER_ID_STRING_VAR_1] = ExpandPlaceholder_StringVar1,
         [PLACEHOLDER_ID_STRING_VAR_2] = ExpandPlaceholder_StringVar2,
         [PLACEHOLDER_ID_STRING_VAR_3] = ExpandPlaceholder_StringVar3,
-        [PLACEHOLDER_ID_KUN]          = ExpandPlaceholder_KunChan,
-        [PLACEHOLDER_ID_RIVAL]        = ExpandPlaceholder_RivalName,
-        [PLACEHOLDER_ID_VERSION]      = ExpandPlaceholder_Version,
-        [PLACEHOLDER_ID_AQUA]         = ExpandPlaceholder_Aqua,
-        [PLACEHOLDER_ID_MAGMA]        = ExpandPlaceholder_Magma,
-        [PLACEHOLDER_ID_ARCHIE]       = ExpandPlaceholder_Archie,
-        [PLACEHOLDER_ID_MAXIE]        = ExpandPlaceholder_Maxie,
-        [PLACEHOLDER_ID_KYOGRE]       = ExpandPlaceholder_Kyogre,
-        [PLACEHOLDER_ID_GROUDON]      = ExpandPlaceholder_Groudon,
+        [PLACEHOLDER_ID_KUN] = ExpandPlaceholder_KunChan,
+        [PLACEHOLDER_ID_RIVAL] = ExpandPlaceholder_RivalName,
+        [PLACEHOLDER_ID_VERSION] = ExpandPlaceholder_Version,
+        [PLACEHOLDER_ID_AQUA] = ExpandPlaceholder_Aqua,
+        [PLACEHOLDER_ID_MAGMA] = ExpandPlaceholder_Magma,
+        [PLACEHOLDER_ID_ARCHIE] = ExpandPlaceholder_Archie,
+        [PLACEHOLDER_ID_MAXIE] = ExpandPlaceholder_Maxie,
+        [PLACEHOLDER_ID_KYOGRE] = ExpandPlaceholder_Kyogre,
+        [PLACEHOLDER_ID_GROUDON] = ExpandPlaceholder_Groudon,
     };
 
     if (id >= ARRAY_COUNT(funcs))
@@ -656,33 +658,32 @@ bool32 sub_800924C(u8 *str, s32 n)
 
 u8 GetExtCtrlCodeLength(u8 code)
 {
-    static const u8 lengths[] =
-    {
-        [0]                                    = 1,
-        [EXT_CTRL_CODE_COLOR]                  = 2,
-        [EXT_CTRL_CODE_HIGHLIGHT]              = 2,
-        [EXT_CTRL_CODE_SHADOW]                 = 2,
+    static const u8 lengths[] = {
+        [0] = 1,
+        [EXT_CTRL_CODE_COLOR] = 2,
+        [EXT_CTRL_CODE_HIGHLIGHT] = 2,
+        [EXT_CTRL_CODE_SHADOW] = 2,
         [EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW] = 4,
-        [EXT_CTRL_CODE_PALETTE]                = 2,
-        [EXT_CTRL_CODE_SIZE]                   = 2,
-        [EXT_CTRL_CODE_RESET_SIZE]             = 1,
-        [EXT_CTRL_CODE_PAUSE]                  = 2,
-        [EXT_CTRL_CODE_PAUSE_UNTIL_PRESS]      = 1,
-        [EXT_CTRL_CODE_WAIT_SE]                = 1,
-        [EXT_CTRL_CODE_PLAY_BGM]               = 3,
-        [EXT_CTRL_CODE_ESCAPE]                 = 2,
-        [EXT_CTRL_CODE_SHIFT_TEXT]             = 2,
-        [EXT_CTRL_CODE_SHIFT_DOWN]             = 2,
-        [EXT_CTRL_CODE_FILL_WINDOW]            = 1,
-        [EXT_CTRL_CODE_PLAY_SE]                = 3,
-        [EXT_CTRL_CODE_CLEAR]                  = 2,
-        [EXT_CTRL_CODE_SKIP]                   = 2,
-        [EXT_CTRL_CODE_CLEAR_TO]               = 2,
-        [EXT_CTRL_CODE_MIN_LETTER_SPACING]     = 2,
-        [EXT_CTRL_CODE_JPN]                    = 1,
-        [EXT_CTRL_CODE_ENG]                    = 1,
-        [EXT_CTRL_CODE_PAUSE_MUSIC]            = 1,
-        [EXT_CTRL_CODE_RESUME_MUSIC]           = 1,
+        [EXT_CTRL_CODE_PALETTE] = 2,
+        [EXT_CTRL_CODE_SIZE] = 2,
+        [EXT_CTRL_CODE_RESET_SIZE] = 1,
+        [EXT_CTRL_CODE_PAUSE] = 2,
+        [EXT_CTRL_CODE_PAUSE_UNTIL_PRESS] = 1,
+        [EXT_CTRL_CODE_WAIT_SE] = 1,
+        [EXT_CTRL_CODE_PLAY_BGM] = 3,
+        [EXT_CTRL_CODE_ESCAPE] = 2,
+        [EXT_CTRL_CODE_SHIFT_TEXT] = 2,
+        [EXT_CTRL_CODE_SHIFT_DOWN] = 2,
+        [EXT_CTRL_CODE_FILL_WINDOW] = 1,
+        [EXT_CTRL_CODE_PLAY_SE] = 3,
+        [EXT_CTRL_CODE_CLEAR] = 2,
+        [EXT_CTRL_CODE_SKIP] = 2,
+        [EXT_CTRL_CODE_CLEAR_TO] = 2,
+        [EXT_CTRL_CODE_MIN_LETTER_SPACING] = 2,
+        [EXT_CTRL_CODE_JPN] = 1,
+        [EXT_CTRL_CODE_ENG] = 1,
+        [EXT_CTRL_CODE_PAUSE_MUSIC] = 1,
+        [EXT_CTRL_CODE_RESUME_MUSIC] = 1,
     };
 
     u8 length = 0;

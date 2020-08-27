@@ -25,15 +25,15 @@ struct UnkIndicatorsStruct
     u8 field_11;
     u8 field_12;
     u8 field_13;
-    u8 field_14_0:4;
-    u8 field_14_1:4;
-    u8 field_15_0:4;
-    u8 field_15_1:4;
-    u8 field_16_0:3;
-    u8 field_16_1:3;
-    u8 field_16_2:2;
-    u8 field_17_0:6;
-    u8 field_17_1:2;
+    u8 field_14_0 : 4;
+    u8 field_14_1 : 4;
+    u8 field_15_0 : 4;
+    u8 field_15_1 : 4;
+    u8 field_16_0 : 3;
+    u8 field_16_1 : 3;
+    u8 field_16_2 : 2;
+    u8 field_17_0 : 6;
+    u8 field_17_1 : 2;
 };
 
 struct ScrollIndicatorPair
@@ -65,8 +65,10 @@ struct RedArrowCursor
 };
 
 // this file's functions
-static u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
-static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown);
+static u8 ListMenuInitInternal(
+    struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
+static bool8 ListMenuChangeSelection(
+    struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown);
 static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
 static void ListMenuDrawCursor(struct ListMenu *list);
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
@@ -85,24 +87,26 @@ static void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite);
 static void SpriteCallback_RedArrowCursor(struct Sprite *sprite);
 
 // EWRAM vars
-static EWRAM_DATA struct {
+static EWRAM_DATA struct
+{
     s32 currItemId;
     u8 state;
     u8 windowId;
     u8 listTaskId;
-} sMysteryGiftLinkMenu = {0};
+} sMysteryGiftLinkMenu = { 0 };
 
-EWRAM_DATA struct ScrollArrowsTemplate gTempScrollArrowTemplate = {0};
+EWRAM_DATA struct ScrollArrowsTemplate gTempScrollArrowTemplate = { 0 };
 
 // IWRAM common
-struct {
-    u8 cursorPal:4;
-    u8 fillValue:4;
-    u8 cursorShadowPal:4;
-    u8 lettersSpacing:6;
-    u8 field_2_2:6; // unused
-    u8 fontId:7;
-    bool8 enabled:1;
+struct
+{
+    u8 cursorPal : 4;
+    u8 fillValue : 4;
+    u8 cursorShadowPal : 4;
+    u8 lettersSpacing : 6;
+    u8 field_2_2 : 6; // unused
+    u8 fontId : 7;
+    bool8 enabled : 1;
 } gListMenuOverride;
 
 struct ListMenuTemplate gMultiuseListMenuTemplate;
@@ -110,21 +114,18 @@ struct ListMenuTemplate gMultiuseListMenuTemplate;
 // const rom data
 static const struct
 {
-    u8 animNum:4;
-    u8 bounceDir:4;
+    u8 animNum : 4;
+    u8 bounceDir : 4;
     u8 multiplier;
     u16 frequency;
-} sScrollIndicatorTemplates[] =
-{
-    {0, 0, 2, 8},
-    {1, 0, 2, -8},
-    {2, 1, 2, 8},
-    {3, 1, 2, -8},
+} sScrollIndicatorTemplates[] = {
+    { 0, 0, 2, 8 },
+    { 1, 0, 2, -8 },
+    { 2, 1, 2, 8 },
+    { 3, 1, 2, -8 },
 };
 
-static const struct OamData sOamData_ScrollArrowIndicator =
-{
-    .y = 0,
+static const struct OamData sOamData_ScrollArrowIndicator = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -136,43 +137,28 @@ static const struct OamData sOamData_ScrollArrowIndicator =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_ScrollArrowIndicator0[] =
-{
-    ANIMCMD_FRAME(0, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollArrowIndicator0[] = { ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_ScrollArrowIndicator1[] =
-{
-    ANIMCMD_FRAME(0, 30, 1, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollArrowIndicator1[] = { ANIMCMD_FRAME(0, 30, 1, 0),
+    ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_ScrollArrowIndicator2[] =
-{
-    ANIMCMD_FRAME(4, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollArrowIndicator2[] = { ANIMCMD_FRAME(4, 30),
+    ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_ScrollArrowIndicator3[] =
-{
-    ANIMCMD_FRAME(4, 30, 0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollArrowIndicator3[] = { ANIMCMD_FRAME(4, 30, 0, 1),
+    ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_ScrollArrowIndicator[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_ScrollArrowIndicator[] = {
     sSpriteAnim_ScrollArrowIndicator0,
     sSpriteAnim_ScrollArrowIndicator1,
     sSpriteAnim_ScrollArrowIndicator2,
     sSpriteAnim_ScrollArrowIndicator3
 };
 
-static const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator =
-{
+static const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &sOamData_ScrollArrowIndicator,
@@ -182,8 +168,7 @@ static const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator =
     .callback = SpriteCallback_ScrollIndicatorArrow,
 };
 
-static const struct Subsprite sSubsprite_RedOutline1 =
-{
+static const struct Subsprite sSubsprite_RedOutline1 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -192,8 +177,7 @@ static const struct Subsprite sSubsprite_RedOutline1 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline2 =
-{
+static const struct Subsprite sSubsprite_RedOutline2 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -202,8 +186,7 @@ static const struct Subsprite sSubsprite_RedOutline2 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline3 =
-{
+static const struct Subsprite sSubsprite_RedOutline3 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -212,8 +195,7 @@ static const struct Subsprite sSubsprite_RedOutline3 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline4 =
-{
+static const struct Subsprite sSubsprite_RedOutline4 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -222,8 +204,7 @@ static const struct Subsprite sSubsprite_RedOutline4 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline5 =
-{
+static const struct Subsprite sSubsprite_RedOutline5 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -232,8 +213,7 @@ static const struct Subsprite sSubsprite_RedOutline5 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline6 =
-{
+static const struct Subsprite sSubsprite_RedOutline6 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -242,8 +222,7 @@ static const struct Subsprite sSubsprite_RedOutline6 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline7 =
-{
+static const struct Subsprite sSubsprite_RedOutline7 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -252,8 +231,7 @@ static const struct Subsprite sSubsprite_RedOutline7 =
     .priority = 0,
 };
 
-static const struct Subsprite sSubsprite_RedOutline8 =
-{
+static const struct Subsprite sSubsprite_RedOutline8 = {
     .x = 0,
     .y = 0,
     .shape = SPRITE_SHAPE(8x8),
@@ -262,9 +240,7 @@ static const struct Subsprite sSubsprite_RedOutline8 =
     .priority = 0,
 };
 
-static const struct OamData sOamData_RedArrowCursor =
-{
-    .y = 0,
+static const struct OamData sOamData_RedArrowCursor = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -276,22 +252,15 @@ static const struct OamData sOamData_RedArrowCursor =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_RedArrowCursor[] =
-{
-    ANIMCMD_FRAME(0, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_RedArrowCursor[] = { ANIMCMD_FRAME(0, 30), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_RedArrowCursor[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_RedArrowCursor[] = {
     sSpriteAnim_RedArrowCursor
 };
 
-static const struct SpriteTemplate sSpriteTemplate_RedArrowCursor =
-{
+static const struct SpriteTemplate sSpriteTemplate_RedArrowCursor = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &sOamData_RedArrowCursor,
@@ -309,10 +278,13 @@ static const u32 sRedArrowGfx[] = INCBIN_U32("graphics/interface/red_arrow.4bpp.
 // code
 static void ListMenuDummyTask(u8 taskId)
 {
-
 }
 
-s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 arg2, u16 tileNum, u16 palNum)
+s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate,
+    const struct ListMenuTemplate *listMenuTemplate,
+    u8 arg2,
+    u16 tileNum,
+    u16 palNum)
 {
     switch (sMysteryGiftLinkMenu.state)
     {
@@ -387,7 +359,10 @@ u8 ListMenuInit(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16
 }
 
 // unused
-u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenuWindowRect *rect, u16 scrollOffset, u16 selectedRow)
+u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate,
+    struct ListMenuWindowRect *rect,
+    u16 scrollOffset,
+    u16 selectedRow)
 {
     s32 i;
 
@@ -395,11 +370,11 @@ u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenu
     for (i = 0; rect[i].palNum != 0xFF; i++)
     {
         PutWindowRectTilemapOverridePalette(listMenuTemplate->windowId,
-                                            rect[i].x,
-                                            rect[i].y,
-                                            rect[i].width,
-                                            rect[i].height,
-                                            rect[i].palNum);
+            rect[i].x,
+            rect[i].y,
+            rect[i].width,
+            rect[i].height,
+            rect[i].palNum);
     }
     CopyWindowToVram(listMenuTemplate->windowId, 2);
 
@@ -408,7 +383,7 @@ u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenu
 
 s32 ListMenu_ProcessInput(u8 listTaskId)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     if (gMain.newKeys & A_BUTTON)
     {
@@ -469,7 +444,7 @@ s32 ListMenu_ProcessInput(u8 listTaskId)
 
 void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     if (scrollOffset != NULL)
         *scrollOffset = list->scrollOffset;
@@ -484,7 +459,7 @@ void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 
 void RedrawListMenu(u8 listTaskId)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     FillWindowPixelBuffer(list->template.windowId, PIXEL_FILL(list->template.fillValue));
     ListMenuPrintEntries(list, list->scrollOffset, 0, list->template.maxShowed);
@@ -495,7 +470,7 @@ void RedrawListMenu(u8 listTaskId)
 // unused
 void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     list->template.cursorPal = cursorPal;
     list->template.fillValue = fillValue;
@@ -505,14 +480,19 @@ void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShad
 // unused
 void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     SetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT, x);
     SetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP, y);
 }
 
 // unused
-s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow)
+s32 ListMenuTestInput(struct ListMenuTemplate *template,
+    u32 scrollOffset,
+    u32 selectedRow,
+    u16 keys,
+    u16 *newScrollOffset,
+    u16 *newSelectedRow)
 {
     struct ListMenu list;
 
@@ -537,7 +517,7 @@ s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 s
 
 void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     if (arrayId != NULL)
         *arrayId = list->scrollOffset + list->selectedRow;
@@ -545,7 +525,7 @@ void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
 
 void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     if (scrollOffset != NULL)
         *scrollOffset = list->scrollOffset;
@@ -555,16 +535,18 @@ void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 
 u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
 {
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
-    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) +
+                     list->template.itemVerticalPadding;
 
     return list->selectedRow * yMultiplier + list->template.upText_Y;
 }
 
-static u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
+static u8 ListMenuInitInternal(
+    struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
 {
     u8 listTaskId = CreateTask(ListMenuDummyTask, 0);
-    struct ListMenu *list = (void*) gTasks[listTaskId].data;
+    struct ListMenu *list = (void *)gTasks[listTaskId].data;
 
     list->template = *listMenuTemplate;
     list->scrollOffset = scrollOffset;
@@ -601,10 +583,14 @@ static void ListMenuPrint(struct ListMenu *list, const u8 *str, u8 x, u8 y)
         colors[1] = gListMenuOverride.cursorPal;
         colors[2] = gListMenuOverride.cursorShadowPal;
         AddTextPrinterParameterized4(list->template.windowId,
-                                     gListMenuOverride.fontId,
-                                     x, y,
-                                     gListMenuOverride.lettersSpacing,
-                                     0, colors, TEXT_SPEED_FF, str);
+            gListMenuOverride.fontId,
+            x,
+            y,
+            gListMenuOverride.lettersSpacing,
+            0,
+            colors,
+            TEXT_SPEED_FF,
+            str);
 
         gListMenuOverride.enabled = FALSE;
     }
@@ -614,10 +600,14 @@ static void ListMenuPrint(struct ListMenu *list, const u8 *str, u8 x, u8 y)
         colors[1] = list->template.cursorPal;
         colors[2] = list->template.cursorShadowPal;
         AddTextPrinterParameterized4(list->template.windowId,
-                                     list->template.fontId,
-                                     x, y,
-                                     list->template.lettersSpacing,
-                                     0, colors, TEXT_SPEED_FF, str);
+            list->template.fontId,
+            x,
+            y,
+            list->template.lettersSpacing,
+            0,
+            colors,
+            TEXT_SPEED_FF,
+            str);
     }
 }
 
@@ -625,7 +615,8 @@ static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOff
 {
     s32 i;
     u8 x, y;
-    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) +
+                     list->template.itemVerticalPadding;
 
     for (i = 0; i < count; i++)
     {
@@ -636,7 +627,8 @@ static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOff
 
         y = (yOffset + i) * yMultiplier + list->template.upText_Y;
         if (list->template.itemPrintFunc != NULL)
-            list->template.itemPrintFunc(list->template.windowId, list->template.items[startIndex].id, y);
+            list->template.itemPrintFunc(
+                list->template.windowId, list->template.items[startIndex].id, y);
 
         ListMenuPrint(list, list->template.items[startIndex].name, x, y);
         startIndex++;
@@ -645,7 +637,8 @@ static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOff
 
 static void ListMenuDrawCursor(struct ListMenu *list)
 {
-    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) +
+                     list->template.itemVerticalPadding;
     u8 x = list->template.cursor_X;
     u8 y = list->selectedRow * yMultiplier + list->template.upText_Y;
     switch (list->template.cursorKind)
@@ -659,15 +652,17 @@ static void ListMenuDrawCursor(struct ListMenu *list)
         if (list->taskId == TASK_NONE)
             list->taskId = ListMenuAddCursorObject(list, 0);
         ListMenuUpdateCursorObject(list->taskId,
-                                   GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 - 1,
-                                   GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y - 1, 0);
+            GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 - 1,
+            GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y - 1,
+            0);
         break;
     case 3:
         if (list->taskId == TASK_NONE)
             list->taskId = ListMenuAddCursorObject(list, 1);
         ListMenuUpdateCursorObject(list->taskId,
-                                   GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 + x,
-                                   GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y, 1);
+            GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 + x,
+            GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y,
+            1);
         break;
     }
 }
@@ -694,15 +689,16 @@ static void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow)
     u8 cursorKind = list->template.cursorKind;
     if (cursorKind == 0)
     {
-        u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
-        u8 width  = GetMenuCursorDimensionByFont(list->template.fontId, 0);
+        u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) +
+                         list->template.itemVerticalPadding;
+        u8 width = GetMenuCursorDimensionByFont(list->template.fontId, 0);
         u8 height = GetMenuCursorDimensionByFont(list->template.fontId, 1);
         FillWindowPixelRect(list->template.windowId,
-                            PIXEL_FILL(list->template.fillValue),
-                            list->template.cursor_X,
-                            selectedRow * yMultiplier + list->template.upText_Y,
-                            width,
-                            height);
+            PIXEL_FILL(list->template.fillValue),
+            list->template.cursor_X,
+            selectedRow * yMultiplier + list->template.upText_Y,
+            width,
+            height);
     }
 }
 
@@ -718,7 +714,8 @@ static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, b
         if (list->template.maxShowed == 1)
             newRow = 0;
         else
-            newRow = list->template.maxShowed - ((list->template.maxShowed / 2) + (list->template.maxShowed % 2)) - 1;
+            newRow = list->template.maxShowed -
+                     ((list->template.maxShowed / 2) + (list->template.maxShowed % 2)) - 1;
 
         if (scrollOffset == 0)
         {
@@ -800,38 +797,51 @@ static void ListMenuScroll(struct ListMenu *list, u8 count, bool8 movingDown)
     }
     else
     {
-        u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+        u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) +
+                         list->template.itemVerticalPadding;
 
         if (!movingDown)
         {
             u16 y, width, height;
 
-            ScrollWindow(list->template.windowId, 1, count * yMultiplier, PIXEL_FILL(list->template.fillValue));
+            ScrollWindow(list->template.windowId,
+                1,
+                count * yMultiplier,
+                PIXEL_FILL(list->template.fillValue));
             ListMenuPrintEntries(list, list->scrollOffset, 0, count);
 
             y = (list->template.maxShowed * yMultiplier) + list->template.upText_Y;
             width = GetWindowAttribute(list->template.windowId, WINDOW_WIDTH) * 8;
             height = (GetWindowAttribute(list->template.windowId, WINDOW_HEIGHT) * 8) - y;
-            FillWindowPixelRect(list->template.windowId,
-                                PIXEL_FILL(list->template.fillValue),
-                                0, y, width, height);
+            FillWindowPixelRect(
+                list->template.windowId, PIXEL_FILL(list->template.fillValue), 0, y, width, height);
         }
         else
         {
             u16 width;
 
-            ScrollWindow(list->template.windowId, 0, count * yMultiplier, PIXEL_FILL(list->template.fillValue));
-            ListMenuPrintEntries(list, list->scrollOffset + (list->template.maxShowed - count), list->template.maxShowed - count, count);
+            ScrollWindow(list->template.windowId,
+                0,
+                count * yMultiplier,
+                PIXEL_FILL(list->template.fillValue));
+            ListMenuPrintEntries(list,
+                list->scrollOffset + (list->template.maxShowed - count),
+                list->template.maxShowed - count,
+                count);
 
             width = GetWindowAttribute(list->template.windowId, WINDOW_WIDTH) * 8;
             FillWindowPixelRect(list->template.windowId,
-                                PIXEL_FILL(list->template.fillValue),
-                                0, 0, width, list->template.upText_Y);
+                PIXEL_FILL(list->template.fillValue),
+                0,
+                0,
+                width,
+                list->template.upText_Y);
         }
     }
 }
 
-static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown)
+static bool8 ListMenuChangeSelection(
+    struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown)
 {
     u16 oldSelectedRow;
     u8 selectionChange, i, cursorCount;
@@ -881,7 +891,8 @@ static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAn
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit)
 {
     if (list->template.moveCursorFunc != NULL)
-        list->template.moveCursorFunc(list->template.items[list->scrollOffset + list->selectedRow].id, onInit, list);
+        list->template.moveCursorFunc(
+            list->template.items[list->scrollOffset + list->selectedRow].id, onInit, list);
 }
 
 // unused
@@ -902,7 +913,7 @@ void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu 
 // unused
 s32 ListMenuGetUnkIndicatorsStructFields(u8 taskId, u8 field)
 {
-    struct UnkIndicatorsStruct *data = (void*) gTasks[taskId].data;
+    struct UnkIndicatorsStruct *data = (void *)gTasks[taskId].data;
 
     switch (field)
     {
@@ -946,13 +957,13 @@ s32 ListMenuGetUnkIndicatorsStructFields(u8 taskId, u8 field)
 
 void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, s32 value)
 {
-    struct UnkIndicatorsStruct *data = (void*) &gTasks[taskId].data;
+    struct UnkIndicatorsStruct *data = (void *)&gTasks[taskId].data;
 
     switch (field)
     {
     case 0:
     case 1:
-        data->field_4 = (void*)(value);
+        data->field_4 = (void *)(value);
         break;
     case 2:
         data->field_C = value;
@@ -1002,12 +1013,12 @@ void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, s32 value)
     }
 }
 
-#define tState data[0]
-#define tAnimNum data[1]
-#define tBounceDir data[2]
+#define tState      data[0]
+#define tAnimNum    data[1]
+#define tBounceDir  data[2]
 #define tMultiplier data[3]
-#define tFrequency data[4]
-#define tSinePos data[5]
+#define tFrequency  data[4]
+#define tSinePos    data[5]
 
 static void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite)
 {
@@ -1088,7 +1099,7 @@ u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16
     }
 
     taskId = CreateTask(Task_ScrollIndicatorArrowPair, 0);
-    data = (void*) gTasks[taskId].data;
+    data = (void *)gTasks[taskId].data;
 
     data->field_0 = 0;
     data->scrollOffset = scrollOffset;
@@ -1096,8 +1107,16 @@ u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16
     data->fullyDownThreshold = arrowInfo->fullyDownThreshold;
     data->tileTag = arrowInfo->tileTag;
     data->palTag = arrowInfo->palTag;
-    data->topSpriteId = AddScrollIndicatorArrowObject(arrowInfo->firstArrowType, arrowInfo->firstX, arrowInfo->firstY, arrowInfo->tileTag, arrowInfo->palTag);
-    data->bottomSpriteId = AddScrollIndicatorArrowObject(arrowInfo->secondArrowType, arrowInfo->secondX, arrowInfo->secondY, arrowInfo->tileTag, arrowInfo->palTag);
+    data->topSpriteId = AddScrollIndicatorArrowObject(arrowInfo->firstArrowType,
+        arrowInfo->firstX,
+        arrowInfo->firstY,
+        arrowInfo->tileTag,
+        arrowInfo->palTag);
+    data->bottomSpriteId = AddScrollIndicatorArrowObject(arrowInfo->secondArrowType,
+        arrowInfo->secondX,
+        arrowInfo->secondY,
+        arrowInfo->tileTag,
+        arrowInfo->palTag);
 
     if (arrowInfo->palTag == SPRITE_INVALID_TAG)
     {
@@ -1108,7 +1127,14 @@ u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16
     return taskId;
 }
 
-u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 firstPos, s32 secondPos, s32 fullyDownThreshold, s32 tileTag, s32 palTag, u16 *scrollOffset)
+u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType,
+    s32 commonPos,
+    s32 firstPos,
+    s32 secondPos,
+    s32 fullyDownThreshold,
+    s32 tileTag,
+    s32 palTag,
+    u16 *scrollOffset)
 {
     if (arrowType == SCROLL_ARROW_UP || arrowType == SCROLL_ARROW_DOWN)
     {
@@ -1140,7 +1166,7 @@ u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 fi
 
 static void Task_ScrollIndicatorArrowPair(u8 taskId)
 {
-    struct ScrollIndicatorPair *data = (void*) gTasks[taskId].data;
+    struct ScrollIndicatorPair *data = (void *)gTasks[taskId].data;
     u16 currItem = (*data->scrollOffset);
 
     if (currItem == data->fullyUpThreshold && currItem != 0xFFFF)
@@ -1159,7 +1185,7 @@ static void Task_ScrollIndicatorArrowPair(u8 taskId)
 void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    struct ScrollIndicatorPair *scrollData = (void*) data;
+    struct ScrollIndicatorPair *scrollData = (void *)data;
 
     if (tIsScrolled)
     {
@@ -1177,7 +1203,7 @@ void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
 
 void RemoveScrollIndicatorArrowPair(u8 taskId)
 {
-    struct ScrollIndicatorPair *data = (void*) gTasks[taskId].data;
+    struct ScrollIndicatorPair *data = (void *)gTasks[taskId].data;
 
     if (data->tileTag != SPRITE_INVALID_TAG)
         FreeSpriteTilesByTag(data->tileTag);
@@ -1230,7 +1256,6 @@ static void ListMenuRemoveCursorObject(u8 taskId, u32 cursorKind)
 
 static void Task_RedOutlineCursor(u8 taskId)
 {
-
 }
 
 u8 ListMenuGetRedOutlineCursorSpriteCount(u16 rowWidth, u16 rowHeight)
@@ -1252,7 +1277,8 @@ u8 ListMenuGetRedOutlineCursorSpriteCount(u16 rowWidth, u16 rowHeight)
     return count;
 }
 
-void ListMenuSetUpRedOutlineCursorSpriteOamTable(u16 rowWidth, u16 rowHeight, struct Subsprite *subsprites)
+void ListMenuSetUpRedOutlineCursorSpriteOamTable(
+    u16 rowWidth, u16 rowHeight, struct Subsprite *subsprites)
 {
     s32 i, j, id = 0;
 
@@ -1334,13 +1360,16 @@ static u8 ListMenuAddRedOutlineCursorObject(struct CursorStruct *cursor)
     }
 
     taskId = CreateTask(Task_RedOutlineCursor, 0);
-    data = (void*) gTasks[taskId].data;
+    data = (void *)gTasks[taskId].data;
 
     data->tileTag = cursor->tileTag;
     data->palTag = cursor->palTag;
-    data->subspriteTable.subspriteCount = ListMenuGetRedOutlineCursorSpriteCount(cursor->rowWidth, cursor->rowHeight);
-    data->subspriteTable.subsprites = data->subspritesPtr = Alloc(data->subspriteTable.subspriteCount * 4);
-    ListMenuSetUpRedOutlineCursorSpriteOamTable(cursor->rowWidth, cursor->rowHeight, data->subspritesPtr);
+    data->subspriteTable.subspriteCount =
+        ListMenuGetRedOutlineCursorSpriteCount(cursor->rowWidth, cursor->rowHeight);
+    data->subspriteTable.subsprites = data->subspritesPtr =
+        Alloc(data->subspriteTable.subspriteCount * 4);
+    ListMenuSetUpRedOutlineCursorSpriteOamTable(
+        cursor->rowWidth, cursor->rowHeight, data->subspritesPtr);
 
     spriteTemplate = gDummySpriteTemplate;
     spriteTemplate.tileTag = cursor->tileTag;
@@ -1362,7 +1391,7 @@ static u8 ListMenuAddRedOutlineCursorObject(struct CursorStruct *cursor)
 
 static void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y)
 {
-    struct RedOutlineCursor *data = (void*) gTasks[taskId].data;
+    struct RedOutlineCursor *data = (void *)gTasks[taskId].data;
 
     gSprites[data->spriteId].pos1.x = x + 120;
     gSprites[data->spriteId].pos1.y = y + 120;
@@ -1370,7 +1399,7 @@ static void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y)
 
 static void ListMenuRemoveRedOutlineCursorObject(u8 taskId)
 {
-    struct RedOutlineCursor *data = (void*) gTasks[taskId].data;
+    struct RedOutlineCursor *data = (void *)gTasks[taskId].data;
 
     Free(data->subspritesPtr);
 
@@ -1391,7 +1420,6 @@ static void SpriteCallback_RedArrowCursor(struct Sprite *sprite)
 
 static void Task_RedArrowCursor(u8 taskId)
 {
-
 }
 
 static u8 ListMenuAddRedArrowCursorObject(struct CursorStruct *cursor)
@@ -1419,7 +1447,7 @@ static u8 ListMenuAddRedArrowCursorObject(struct CursorStruct *cursor)
     }
 
     taskId = CreateTask(Task_RedArrowCursor, 0);
-    data = (void*) gTasks[taskId].data;
+    data = (void *)gTasks[taskId].data;
 
     data->tileTag = cursor->tileTag;
     data->palTag = cursor->palTag;
@@ -1442,7 +1470,7 @@ static u8 ListMenuAddRedArrowCursorObject(struct CursorStruct *cursor)
 
 static void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
 {
-    struct RedArrowCursor *data = (void*) gTasks[taskId].data;
+    struct RedArrowCursor *data = (void *)gTasks[taskId].data;
 
     gSprites[data->spriteId].pos1.x = x;
     gSprites[data->spriteId].pos1.y = y;
@@ -1450,7 +1478,7 @@ static void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
 
 static void ListMenuRemoveRedArrowCursorObject(u8 taskId)
 {
-    struct RedArrowCursor *data = (void*) gTasks[taskId].data;
+    struct RedArrowCursor *data = (void *)gTasks[taskId].data;
 
     if (data->tileTag != SPRITE_INVALID_TAG)
         FreeSpriteTilesByTag(data->tileTag);

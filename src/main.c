@@ -36,8 +36,7 @@ const u8 gGameLanguage = GAME_LANGUAGE; // English
 
 const char BuildDateTime[] = "2005 02 21 11:10";
 
-const IntrFunc gIntrTableTemplate[] =
-{
+const IntrFunc gIntrTableTemplate[] = {
     VCountIntr, // V-count interrupt
     SerialIntr, // Serial interrupt
     Timer3Intr, // Timer 3 interrupt
@@ -54,7 +53,7 @@ const IntrFunc gIntrTableTemplate[] =
     IntrDummy,  // Game Pak interrupt
 };
 
-#define INTR_COUNT ((int)(sizeof(gIntrTableTemplate)/sizeof(IntrFunc)))
+#define INTR_COUNT ((int)(sizeof(gIntrTableTemplate) / sizeof(IntrFunc)))
 
 static u16 gUnknown_03000000;
 
@@ -70,12 +69,12 @@ s8 gPcmDmaCounter;
 
 static EWRAM_DATA u16 gTrainerId = 0;
 
-//EWRAM_DATA void (**gFlashTimerIntrFunc)(void) = NULL;
+// EWRAM_DATA void (**gFlashTimerIntrFunc)(void) = NULL;
 
 static void UpdateLinkAndCallCallbacks(void);
 static void InitMainCallbacks(void);
 static void CallCallbacks(void);
-//static void SeedRngWithRtc(void);
+// static void SeedRngWithRtc(void);
 static void ReadKeys(void);
 void InitIntrHandlers(void);
 static void WaitForVBlank(void);
@@ -101,11 +100,10 @@ void AgbMain()
         ".LCU0:\n"
         "\tstmia r1!, {r0, r3, r4, r5}\n"
         "\tcmp\tr1, r2\n"
-        "\tbcc\t.LCU0\n"
-    );
+        "\tbcc\t.LCU0\n");
 #else
     RegisterRamReset(RESET_ALL);
-#endif //MODERN
+#endif // MODERN
     *(vu16 *)BG_PLTT = 0x7FFF;
     InitGpuRegManager();
     REG_WAITCNT = WAITCNT_PREFETCH_ENABLE | WAITCNT_WS0_S_1 | WAITCNT_WS0_N_3;
@@ -118,7 +116,7 @@ void AgbMain()
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
-    //SeedRngWithRtc(); see comment at SeedRngWithRtc declaration below
+    // SeedRngWithRtc(); see comment at SeedRngWithRtc declaration below
     ClearDma3Requests();
     ResetBgs();
     SetDefaultFontsPointer();
@@ -136,9 +134,8 @@ void AgbMain()
     {
         ReadKeys();
 
-        if (gSoftResetDisabled == FALSE
-         && (gMain.heldKeysRaw & A_BUTTON)
-         && (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
+        if (gSoftResetDisabled == FALSE && (gMain.heldKeysRaw & A_BUTTON) &&
+            (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
         {
             rfu_REQ_stopMode();
             rfu_waitREQComplete();
@@ -230,7 +227,7 @@ void EnableVCountIntrAtLine150(void)
 }
 
 // oops! FRLG commented this out to remove RTC, however Emerald didnt undo this!
-//static void SeedRngWithRtc(void)
+// static void SeedRngWithRtc(void)
 //{
 //    u32 seed = RtcGetMinuteCount();
 //    seed = (seed >> 16) ^ (seed & 0xFFFF);
@@ -364,7 +361,8 @@ static void VBlankIntr(void)
     m4aSoundMain();
     sub_8033648();
 
-    if (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
+    if (!gMain.inBattle ||
+        !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
         Random();
 
     UpdateWirelessStatusIndicatorSprite();
@@ -407,7 +405,8 @@ static void SerialIntr(void)
 }
 
 static void IntrDummy(void)
-{}
+{
+}
 
 static void WaitForVBlank(void)
 {

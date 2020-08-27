@@ -29,7 +29,7 @@ static void sub_81D4170(void);
 static u16 sub_81D3EE8(u8);
 static void sub_81D413C(void);
 static void sub_81D414C(void);
-static void sub_81D3F1C(u32, u32*, u32*);
+static void sub_81D3F1C(u32, u32 *, u32 *);
 static void sub_81D3F68(void);
 
 static struct Unknown030012C8 gUnknown_030012C8;
@@ -396,7 +396,8 @@ static u8 sub_81D38D4(void)
     return (gSaveBlock1Ptr->trainerHill.unused + 1) % 256;
 }
 
-static bool32 Struct_EReaderTrainerHillTrainer_ValidateChecksum(struct EReaderTrainerHillTrainer *arg0)
+static bool32 Struct_EReaderTrainerHillTrainer_ValidateChecksum(
+    struct EReaderTrainerHillTrainer *arg0)
 {
     int checksum = CalcByteArraySum((u8 *)arg0, 0x270);
     if (checksum != arg0->checksum)
@@ -419,7 +420,8 @@ bool8 EReader_IsReceivedDataValid(struct EReaderTrainerHillSet *buffer)
             return FALSE;
     }
 
-    checksum = CalcByteArraySum((u8 *)buffer->unk_8, var0 * sizeof(struct EReaderTrainerHillTrainer));
+    checksum =
+        CalcByteArraySum((u8 *)buffer->unk_8, var0 * sizeof(struct EReaderTrainerHillTrainer));
     if (checksum != buffer->checksum)
         return FALSE;
 
@@ -433,7 +435,8 @@ static bool32 TrainerHill_VerifyChecksum(struct EReaderTrainerHillSet *buffer)
     if (var0 < 1 || var0 > 8)
         return FALSE;
 
-    checksum = CalcByteArraySum((u8 *)buffer->unk_8, sizeof(struct EReaderTrainerHillSet) - offsetof(struct EReaderTrainerHillSet, unk_8));
+    checksum = CalcByteArraySum((u8 *)buffer->unk_8,
+        sizeof(struct EReaderTrainerHillSet) - offsetof(struct EReaderTrainerHillSet, unk_8));
     if (checksum != buffer->checksum)
         return FALSE;
 
@@ -715,7 +718,8 @@ int EReaderHandleTransfer(u8 arg0, u32 arg1, u32 *arg2, u32 *arg3)
         break;
     }
 
-    return gUnknown_030012C8.unk0[2] | (gUnknown_030012C8.unk0[4] << 2) | (gUnknown_030012C8.unk0[3] << 4);
+    return gUnknown_030012C8.unk0[2] | (gUnknown_030012C8.unk0[4] << 2) |
+           (gUnknown_030012C8.unk0[3] << 4);
 }
 
 static u16 sub_81D3EE8(u8 arg0)

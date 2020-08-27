@@ -40,8 +40,7 @@ static void SpriteCb_JudgmentIcon(struct Sprite *sprite);
 static void ShowJudgmentSprite(u8 x, u8 y, u8 category, u8 battler);
 
 // Const rom data.
-static const s8 sMindRatings[] =
-{
+static const s8 sMindRatings[] = {
     [MOVE_NONE] = 0,
     [MOVE_POUND] = 1,
     [MOVE_KARATE_CHOP] = 1,
@@ -401,9 +400,7 @@ static const s8 sMindRatings[] =
 
 #define TAG_JUDGEMENT_ICON 1000
 
-static const struct OamData sJudgementIconOamData =
-{
-    .y = 0,
+static const struct OamData sJudgementIconOamData = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -415,43 +412,21 @@ static const struct OamData sJudgementIconOamData =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 15,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AnimCmd sJudgementIconAnimCmd0[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+
+static const union AnimCmd sJudgementIconAnimCmd1[] = { ANIMCMD_FRAME(4, 1), ANIMCMD_END };
+
+static const union AnimCmd sJudgementIconAnimCmd2[] = { ANIMCMD_FRAME(8, 1), ANIMCMD_END };
+
+static const union AnimCmd sJudgementIconAnimCmd3[] = { ANIMCMD_FRAME(12, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sJudgementIconAnimCmds[] = {
+    sJudgementIconAnimCmd0, sJudgementIconAnimCmd1, sJudgementIconAnimCmd2, sJudgementIconAnimCmd3
 };
 
-static const union AnimCmd sJudgementIconAnimCmd0[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sJudgementIconAnimCmd1[] =
-{
-    ANIMCMD_FRAME(4, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sJudgementIconAnimCmd2[] =
-{
-    ANIMCMD_FRAME(8, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sJudgementIconAnimCmd3[] =
-{
-    ANIMCMD_FRAME(12, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sJudgementIconAnimCmds[] =
-{
-    sJudgementIconAnimCmd0,
-    sJudgementIconAnimCmd1,
-    sJudgementIconAnimCmd2,
-    sJudgementIconAnimCmd3
-};
-
-static const struct SpriteTemplate sSpriteTemplate_JudgmentIcon =
-{
+static const struct SpriteTemplate sSpriteTemplate_JudgmentIcon = {
     .tileTag = TAG_JUDGEMENT_ICON,
     .paletteTag = 0xFFFF,
     .oam = &sJudgementIconOamData,
@@ -461,25 +436,21 @@ static const struct SpriteTemplate sSpriteTemplate_JudgmentIcon =
     .callback = SpriteCb_JudgmentIcon,
 };
 
-static const struct CompressedSpriteSheet sBattleArenaJudgementSymbolsSpriteSheet[] =
-{
-    {gBattleArenaJudgementSymbolsGfx, 0x200, TAG_JUDGEMENT_ICON},
-    {0}
+static const struct CompressedSpriteSheet sBattleArenaJudgementSymbolsSpriteSheet[] = {
+    { gBattleArenaJudgementSymbolsGfx, 0x200, TAG_JUDGEMENT_ICON }, { 0 }
 };
 
-static void (* const sArenaFunctions[])(void) =
-{
-    [BATTLE_ARENA_FUNC_INIT]             = InitArenaChallenge,
-    [BATTLE_ARENA_FUNC_GET_DATA]         = GetArenaData,
-    [BATTLE_ARENA_FUNC_SET_DATA]         = SetArenaData,
-    [BATTLE_ARENA_FUNC_SAVE]             = SaveArenaChallenge,
-    [BATTLE_ARENA_FUNC_SET_PRIZE]        = SetArenaPrize,
-    [BATTLE_ARENA_FUNC_GIVE_PRIZE]       = GiveArenaPrize,
+static void (*const sArenaFunctions[])(void) = {
+    [BATTLE_ARENA_FUNC_INIT] = InitArenaChallenge,
+    [BATTLE_ARENA_FUNC_GET_DATA] = GetArenaData,
+    [BATTLE_ARENA_FUNC_SET_DATA] = SetArenaData,
+    [BATTLE_ARENA_FUNC_SAVE] = SaveArenaChallenge,
+    [BATTLE_ARENA_FUNC_SET_PRIZE] = SetArenaPrize,
+    [BATTLE_ARENA_FUNC_GIVE_PRIZE] = GiveArenaPrize,
     [BATTLE_ARENA_FUNC_GET_TRAINER_NAME] = BufferArenaOpponentName,
 };
 
-static const u16 sShortStreakPrizeItems[] =
-{
+static const u16 sShortStreakPrizeItems[] = {
     ITEM_HP_UP,
     ITEM_PROTEIN,
     ITEM_IRON,
@@ -488,8 +459,7 @@ static const u16 sShortStreakPrizeItems[] =
     ITEM_ZINC,
 };
 
-static const u16 sLongStreakPrizeItems[] =
-{
+static const u16 sLongStreakPrizeItems[] = {
     ITEM_BRIGHT_POWDER,
     ITEM_WHITE_HERB,
     ITEM_QUICK_CLAW,
@@ -515,7 +485,9 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
     {
     case 0:
         BeginNormalPaletteFade(0x7FFFFF1C, 4, 0, 8, RGB_BLACK);
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3 | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+        SetGpuReg(REG_OFFSET_WININ,
+            WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3 | WININ_WIN0_OBJ | WININ_WIN0_CLR |
+                WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
         LoadCompressedSpriteSheet(sBattleArenaJudgementSymbolsSpriteSheet);
         LoadCompressedPalette(gBattleArenaJudgementSymbolsPalette, 0x1F0, 0x20);
         gBattle_WIN0H = 0xFF;
@@ -552,7 +524,9 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
     case 3:
         if (!IsDma3ManagerBusyWithBgCopy())
         {
-            SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL |
+                    WININ_WIN1_OBJ | WININ_WIN1_CLR);
             for (i = 0; i < 8; i++)
             {
                 u8 spriteId = CreateSprite(&sSpriteTemplate_JudgmentIcon, 64 + i * 16, 84, 0);
@@ -611,7 +585,9 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
         (*state)++;
         break;
     case 9:
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3 | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+        SetGpuReg(REG_OFFSET_WININ,
+            WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3 | WININ_WIN0_OBJ | WININ_WIN0_CLR |
+                WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
         HandleBattleWindow(5, 0, 24, 13, WINDOW_CLEAR);
         CopyBgTilemapBufferToVram(0);
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 256);
@@ -621,7 +597,9 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
     case 10:
         if (!gPaletteFade.active)
         {
-            SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL |
+                    WININ_WIN1_OBJ | WININ_WIN1_CLR);
             FreeSpriteTilesByTag(TAG_JUDGEMENT_ICON);
             ret = 1;
             (*state)++;
@@ -653,7 +631,8 @@ static void ShowJudgmentSprite(u8 x, u8 y, u8 category, u8 battler)
         break;
     case ARENA_CATEGORY_BODY:
         pointsPlayer = (gBattleMons[battler].hp * 100) / hpAtStart[battler];
-        pointsOpponent = (gBattleMons[BATTLE_OPPOSITE(battler)].hp * 100) / hpAtStart[BATTLE_OPPOSITE(battler)];
+        pointsOpponent =
+            (gBattleMons[BATTLE_OPPOSITE(battler)].hp * 100) / hpAtStart[BATTLE_OPPOSITE(battler)];
         break;
     }
 
@@ -725,7 +704,8 @@ void BattleArena_AddSkillPoints(u8 battler)
             if (!(gMoveResultFlags & MOVE_RESULT_MISSED) || gBattleCommunication[6] != 1)
                 skillPoints[battler] -= 2;
         }
-        else if ((gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE) && (gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE))
+        else if ((gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE) &&
+                 (gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE))
         {
             skillPoints[battler] += 1;
         }
@@ -869,9 +849,11 @@ static void SetArenaPrize(void)
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
     if (gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode] > 41)
-        gSaveBlock2Ptr->frontier.arenaPrize = sLongStreakPrizeItems[Random() % ARRAY_COUNT(sLongStreakPrizeItems)];
+        gSaveBlock2Ptr->frontier.arenaPrize =
+            sLongStreakPrizeItems[Random() % ARRAY_COUNT(sLongStreakPrizeItems)];
     else
-        gSaveBlock2Ptr->frontier.arenaPrize = sShortStreakPrizeItems[Random() % ARRAY_COUNT(sShortStreakPrizeItems)];
+        gSaveBlock2Ptr->frontier.arenaPrize =
+            sShortStreakPrizeItems[Random() % ARRAY_COUNT(sShortStreakPrizeItems)];
 }
 
 static void GiveArenaPrize(void)
@@ -898,22 +880,22 @@ void DrawArenaRefereeTextBox(void)
     u8 width = 27;
     u8 palNum = 7;
 
-    FillBgTilemapBufferRect(0, 0,    254, 14, 1,  6, palNum);
-    FillBgTilemapBufferRect(0, 0,    32,  14, 1,  6, palNum);
-    FillBgTilemapBufferRect(0, 0x31, 0,   14, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x33, 1,   14, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x34, 2,   14, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0, 254, 14, 1, 6, palNum);
+    FillBgTilemapBufferRect(0, 0, 32, 14, 1, 6, palNum);
+    FillBgTilemapBufferRect(0, 0x31, 0, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x33, 1, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x34, 2, 14, width, 1, palNum);
     width++;
-    FillBgTilemapBufferRect(0, 0x35, 28,  14, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x36, 29,  14, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x37, 0,   15, 1,  5, palNum);
-    FillBgTilemapBufferRect(0, 0x39, 1,   15, width, 5, palNum);
-    FillBgTilemapBufferRect(0, 0x3A, 29,  15, 1,  5, palNum);
-    FillBgTilemapBufferRect(0, 0x831, 0,  19, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x833, 1,  19, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x834, 2,  19, width - 2, 1, palNum);
-    FillBgTilemapBufferRect(0, 0x835, 28, 19, 1,  1, palNum);
-    FillBgTilemapBufferRect(0, 0x836, 29, 19, 1,  1, palNum);
+    FillBgTilemapBufferRect(0, 0x35, 28, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x36, 29, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x37, 0, 15, 1, 5, palNum);
+    FillBgTilemapBufferRect(0, 0x39, 1, 15, width, 5, palNum);
+    FillBgTilemapBufferRect(0, 0x3A, 29, 15, 1, 5, palNum);
+    FillBgTilemapBufferRect(0, 0x831, 0, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x833, 1, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x834, 2, 19, width - 2, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x835, 28, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x836, 29, 19, 1, 1, palNum);
 }
 
 void RemoveArenaRefereeTextBox(void)

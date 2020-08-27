@@ -13,8 +13,7 @@ static void AnimAcidPoisonDroplet(struct Sprite *);
 static void AnimBubbleEffect(struct Sprite *);
 static void AnimBubbleEffect_Step(struct Sprite *);
 
-static const union AnimCmd sAnim_ToxicBubble[] =
-{
+static const union AnimCmd sAnim_ToxicBubble[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_FRAME(16, 5),
@@ -22,13 +21,11 @@ static const union AnimCmd sAnim_ToxicBubble[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_ToxicBubble[] =
-{
+static const union AnimCmd *const sAnims_ToxicBubble[] = {
     sAnim_ToxicBubble,
 };
 
-const struct SpriteTemplate gToxicBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gToxicBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_TOXIC_BUBBLE,
     .paletteTag = ANIM_TAG_TOXIC_BUBBLE,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
@@ -38,65 +35,54 @@ const struct SpriteTemplate gToxicBubbleSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-static const union AnimCmd sAnim_PoisonProjectile[] =
-{
+static const union AnimCmd sAnim_PoisonProjectile[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_AcidPoisonDroplet[] =
-{
+static const union AnimCmd sAnim_AcidPoisonDroplet[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_SludgeBombHit[] =
-{
+static const union AnimCmd sAnim_SludgeBombHit[] = {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_PoisonProjectile[] =
-{
+static const union AnimCmd *const sAnims_PoisonProjectile[] = {
     sAnim_PoisonProjectile,
 };
 
-static const union AnimCmd *const sAnims_AcidPoisonDroplet[] =
-{
+static const union AnimCmd *const sAnims_AcidPoisonDroplet[] = {
     sAnim_AcidPoisonDroplet,
 };
 
-static const union AnimCmd *const sAnims_SludgeBombHit[] =
-{
+static const union AnimCmd *const sAnims_SludgeBombHit[] = {
     sAnim_SludgeBombHit,
 };
 
-static const union AffineAnimCmd sAffineAnim_PoisonProjectile[] =
-{
+static const union AffineAnimCmd sAffineAnim_PoisonProjectile[] = {
     AFFINEANIMCMD_FRAME(0x160, 0x160, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 10),
     AFFINEANIMCMD_FRAME(0xA, 0xA, 0, 10),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd sAffineAnim_SludgeBombHit[] =
-{
+static const union AffineAnimCmd sAffineAnim_SludgeBombHit[] = {
     AFFINEANIMCMD_FRAME(0xEC, 0xEC, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_PoisonProjectile[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_PoisonProjectile[] = {
     sAffineAnim_PoisonProjectile,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_SludgeBombHit[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_SludgeBombHit[] = {
     sAffineAnim_SludgeBombHit,
 };
 
-const struct SpriteTemplate gSludgeProjectileSpriteTemplate =
-{
+const struct SpriteTemplate gSludgeProjectileSpriteTemplate = {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
@@ -106,8 +92,7 @@ const struct SpriteTemplate gSludgeProjectileSpriteTemplate =
     .callback = AnimSludgeProjectile,
 };
 
-const struct SpriteTemplate gAcidPoisonBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gAcidPoisonBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
@@ -117,8 +102,7 @@ const struct SpriteTemplate gAcidPoisonBubbleSpriteTemplate =
     .callback = AnimAcidPoisonBubble,
 };
 
-const struct SpriteTemplate gSludgeBombHitParticleSpriteTemplate =
-{
+const struct SpriteTemplate gSludgeBombHitParticleSpriteTemplate = {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -128,20 +112,17 @@ const struct SpriteTemplate gSludgeBombHitParticleSpriteTemplate =
     .callback = AnimSludgeBombHitParticle,
 };
 
-static const union AffineAnimCmd sAffineAnim_AcidPoisonDroplet[] =
-{
+static const union AffineAnimCmd sAffineAnim_AcidPoisonDroplet[] = {
     AFFINEANIMCMD_FRAME(0xFFF0, 0x10, 0, 6),
     AFFINEANIMCMD_FRAME(0x10, 0xFFF0, 0, 6),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gAffineAnims_Droplet[] =
-{
+const union AffineAnimCmd *const gAffineAnims_Droplet[] = {
     sAffineAnim_AcidPoisonDroplet,
 };
 
-const struct SpriteTemplate gAcidPoisonDropletSpriteTemplate =
-{
+const struct SpriteTemplate gAcidPoisonDropletSpriteTemplate = {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
@@ -151,20 +132,17 @@ const struct SpriteTemplate gAcidPoisonDropletSpriteTemplate =
     .callback = AnimAcidPoisonDroplet,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bubble[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bubble[] = {
     AFFINEANIMCMD_FRAME(0x9C, 0x9C, 0, 0),
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 20),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_Bubble[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_Bubble[] = {
     sAffineAnim_Bubble,
 };
 
-const struct SpriteTemplate gPoisonBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gPoisonBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -174,8 +152,7 @@ const struct SpriteTemplate gPoisonBubbleSpriteTemplate =
     .callback = AnimBubbleEffect,
 };
 
-const struct SpriteTemplate gWaterBubbleSpriteTemplate =
-{
+const struct SpriteTemplate gWaterBubbleSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,

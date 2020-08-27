@@ -62,9 +62,8 @@ output_burst:
             return i;
         }
 
-        if (mp->server_type == MULTIBOOT_SERVER_TYPE_QUICK
-         && mp->probe_count > 0xe1
-         && MultiBootCheckComplete(mp) == 0)
+        if (mp->server_type == MULTIBOOT_SERVER_TYPE_QUICK && mp->probe_count > 0xe1 &&
+            MultiBootCheckComplete(mp) == 0)
         {
             MultiBootWaitSendDone();
             goto output_burst;
@@ -182,8 +181,7 @@ output_burst:
             mp->client_data[i - 1] = j;
             if (mp->probe_target_bit & (1 << i))
             {
-                if ((j >> 8) != MULTIBOOT_CLIENT_INFO
-                 && (j >> 8) != MULTIBOOT_CLIENT_DLREADY)
+                if ((j >> 8) != MULTIBOOT_CLIENT_INFO && (j >> 8) != MULTIBOOT_CLIENT_DLREADY)
                 {
                     MultiBootInit(mp);
                     return MULTIBOOT_ERROR_NO_DLREADY;
@@ -242,8 +240,8 @@ output_burst:
             if (mp->probe_target_bit & (1 << i))
             {
                 j = *(vu16 *)(REG_ADDR_SIOMULTI0 + i * 2);
-                if ((j >> 8) != (MULTIBOOT_MASTER_START_PROBE + 1 - (mp->probe_count >> 1))
-                 || ((j & 0xff) != (1 << i)))
+                if ((j >> 8) != (MULTIBOOT_MASTER_START_PROBE + 1 - (mp->probe_count >> 1)) ||
+                    ((j & 0xff) != (1 << i)))
                 {
                     mp->probe_target_bit ^= 1 << i;
                 }
@@ -269,9 +267,8 @@ output_burst:
         {
             goto output_master_info;
         }
-        i = MultiBootSend(mp,
-            (mp->masterp[mp->probe_count - 4 + 1] << 8)
-            | mp->masterp[mp->probe_count - 4]);
+        i = MultiBootSend(
+            mp, (mp->masterp[mp->probe_count - 4 + 1] << 8) | mp->masterp[mp->probe_count - 4]);
 
         if (i)
         {
@@ -316,13 +313,12 @@ void MultiBootStartProbe(struct MultiBootParam *mp)
     mp->probe_count = 1;
 }
 
-void MultiBootStartMaster(struct MultiBootParam *mp, const u8 *srcp, int length, u8 palette_color, s8 palette_speed)
+void MultiBootStartMaster(
+    struct MultiBootParam *mp, const u8 *srcp, int length, u8 palette_color, s8 palette_speed)
 {
     int i = 0;
 
-    if (mp->probe_count != 0
-     || mp->client_bit == 0
-     || mp->check_wait != 0)
+    if (mp->probe_count != 0 || mp->client_bit == 0 || mp->check_wait != 0)
     {
         MultiBootInit(mp);
         return;
@@ -391,8 +387,7 @@ static int MultiBootHandShake(struct MultiBootParam *mp)
         for (i = MULTIBOOT_NCHILD; i != 0; i--)
         {
             j = *(vu16 *)(REG_ADDR_SIOMULTI0 + i * 2);
-            if ((mp->client_bit & (1 << i))
-                && j != must_data)
+            if ((mp->client_bit & (1 << i)) && j != must_data)
             {
                 goto case_0xe0;
             }

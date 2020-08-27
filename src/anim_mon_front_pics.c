@@ -1,6 +1,7 @@
 #include "global.h"
 
-const u32 gMonFrontPic_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/anim_front.4bpp.lz");
+const u32 gMonFrontPic_CircledQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/circled/anim_front.4bpp.lz");
 
 const u32 gMonFrontPic_Bulbasaur[] = INCBIN_U32("graphics/pokemon/bulbasaur/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Ivysaur[] = INCBIN_U32("graphics/pokemon/ivysaur/anim_front.4bpp.lz");
@@ -255,7 +256,8 @@ const u32 gMonFrontPic_Lugia[] = INCBIN_U32("graphics/pokemon/lugia/anim_front.4
 const u32 gMonFrontPic_HoOh[] = INCBIN_U32("graphics/pokemon/ho_oh/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Celebi[] = INCBIN_U32("graphics/pokemon/celebi/anim_front.4bpp.lz");
 
-const u32 gMonFrontPic_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/anim_front.4bpp.lz");
+const u32 gMonFrontPic_DoubleQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/double/anim_front.4bpp.lz");
 
 const u32 gMonFrontPic_Treecko[] = INCBIN_U32("graphics/pokemon/treecko/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Grovyle[] = INCBIN_U32("graphics/pokemon/grovyle/anim_front.4bpp.lz");
@@ -420,5 +422,7 @@ const u32 gMonFrontPic_UnownW[] = INCBIN_U32("graphics/pokemon/unown/w/anim_fron
 const u32 gMonFrontPic_UnownX[] = INCBIN_U32("graphics/pokemon/unown/x/anim_front.4bpp.lz");
 const u32 gMonFrontPic_UnownY[] = INCBIN_U32("graphics/pokemon/unown/y/anim_front.4bpp.lz");
 const u32 gMonFrontPic_UnownZ[] = INCBIN_U32("graphics/pokemon/unown/z/anim_front.4bpp.lz");
-const u32 gMonFrontPic_UnownExclamationMark[] = INCBIN_U32("graphics/pokemon/unown/exclamation_mark/anim_front.4bpp.lz");
-const u32 gMonFrontPic_UnownQuestionMark[] = INCBIN_U32("graphics/pokemon/unown/question_mark/anim_front.4bpp.lz");
+const u32 gMonFrontPic_UnownExclamationMark[] =
+    INCBIN_U32("graphics/pokemon/unown/exclamation_mark/anim_front.4bpp.lz");
+const u32 gMonFrontPic_UnownQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/unown/question_mark/anim_front.4bpp.lz");

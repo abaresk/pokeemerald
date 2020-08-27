@@ -15,7 +15,7 @@
 #include "text_window.h"
 #include "constants/rgb.h"
 
-#define MSG_WIN_TOP 12
+#define MSG_WIN_TOP   12
 #define CLOCK_WIN_TOP (MSG_WIN_TOP - 4)
 
 extern const u8 gText_SaveFailedCheckingBackup[];
@@ -39,15 +39,13 @@ enum
     CLOCK_WIN_ID
 };
 
-EWRAM_DATA u16 gSaveFailedType = {0};
-EWRAM_DATA u16 gSaveFailedClockInfo[2] = {0};
-EWRAM_DATA u8 gSaveFailedUnused1[12] = {0};
-EWRAM_DATA u8 gSaveFailedWindowIds[2] = {0};
-EWRAM_DATA u8 gSaveFailedUnused2[4] = {0};
+EWRAM_DATA u16 gSaveFailedType = { 0 };
+EWRAM_DATA u16 gSaveFailedClockInfo[2] = { 0 };
+EWRAM_DATA u8 gSaveFailedUnused1[12] = { 0 };
+EWRAM_DATA u8 gSaveFailedWindowIds[2] = { 0 };
+EWRAM_DATA u8 gSaveFailedUnused2[4] = { 0 };
 
-static const struct OamData sClockOamData =
-{
-    .y = 160,
+static const struct OamData sClockOamData = { .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -59,11 +57,9 @@ static const struct OamData sClockOamData =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct BgTemplate gUnknown_085EFD88[3] =
-{
+static const struct BgTemplate gUnknown_085EFD88[3] = {
     {
         .bg = 0,
         .charBaseIndex = 2,
@@ -93,47 +89,37 @@ static const struct BgTemplate gUnknown_085EFD88[3] =
     },
 };
 
-static const struct WindowTemplate gUnknown_085EFD94[] =
-{
-    {
-        .bg = 255,
-        .tilemapLeft = 0,
-        .tilemapTop = 0,
-        .width = 0,
-        .height = 0,
-        .paletteNum = 0,
-        .baseBlock = 0,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFD94[] = { {
+    .bg = 255,
+    .tilemapLeft = 0,
+    .tilemapTop = 0,
+    .width = 0,
+    .height = 0,
+    .paletteNum = 0,
+    .baseBlock = 0,
+} };
 
-static const struct WindowTemplate gUnknown_085EFD9C[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 1,
-        .tilemapTop = 13,
-        .width = 28,
-        .height = 6,
-        .paletteNum = 15,
-        .baseBlock = 1,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFD9C[] = { {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 13,
+    .width = 28,
+    .height = 6,
+    .paletteNum = 15,
+    .baseBlock = 1,
+} };
 
-static const struct WindowTemplate gUnknown_085EFDA4[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 14,
-        .tilemapTop = 9,
-        .width = 2,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 169,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFDA4[] = { {
+    .bg = 0,
+    .tilemapLeft = 14,
+    .tilemapTop = 9,
+    .width = 2,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 169,
+} };
 
-static const u8 sClockFrames[8][3] =
-{
+static const u8 sClockFrames[8][3] = {
     { 1, 0, 0 },
     { 5, 0, 0 },
     { 9, 0, 0 },
@@ -164,7 +150,8 @@ static void SaveFailedScreenTextPrint(const u8 *text, u8 var1, u8 var2)
     color[0] = 0;
     color[1] = 15;
     color[2] = 3;
-    AddTextPrinterParameterized4(gSaveFailedWindowIds[TEXT_WIN_ID], 1, var1 * 8, var2 * 8 + 1, 0, 0, color, 0, text);
+    AddTextPrinterParameterized4(
+        gSaveFailedWindowIds[TEXT_WIN_ID], 1, var1 * 8, var2 * 8 + 1, 0, 0, color, 0, text);
 }
 
 void DoSaveFailedScreen(u8 saveType)
@@ -218,9 +205,11 @@ static void CB2_SaveFailedScreen(void)
         LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
         InitWindows(gUnknown_085EFD94);
         gSaveFailedWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFD9C);
-        SetWindowAttribute(gSaveFailedWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
+        SetWindowAttribute(
+            gSaveFailedWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
         gSaveFailedWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFDA4);
-        SetWindowAttribute(gSaveFailedWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
+        SetWindowAttribute(
+            gSaveFailedWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
         DeactivateAllTextPrinters();
         ResetSpriteData();
         ResetTasks();

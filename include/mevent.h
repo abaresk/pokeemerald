@@ -5,7 +5,7 @@ struct MEvent_Str_1
 {
     u16 unk_000;
     size_t unk_004;
-    const void * unk_008;
+    const void *unk_008;
 };
 
 struct MEvent_Str_2
@@ -54,10 +54,12 @@ void sub_801B580(struct MEventStruct_Unk1442CC *data, bool32 a1);
 bool32 sub_801B6A0(const struct MEventStruct_Unk1442CC *data, bool32 a1);
 u32 sub_801B6EC(const u16 *a0, const struct MEventStruct_Unk1442CC *a1, const void *unused);
 u32 sub_801B708(const u16 *a0, const struct MEventStruct_Unk1442CC *a1, const void *unused);
-bool32 MEventStruct_Unk1442CC_CompareField_unk_16(const struct MEventStruct_Unk1442CC *a0, const u16 *a1);
-u16 MEventStruct_Unk1442CC_GetValueNFrom_unk_20(const struct MEventStruct_Unk1442CC *a0, u32 command);
+bool32 MEventStruct_Unk1442CC_CompareField_unk_16(
+    const struct MEventStruct_Unk1442CC *a0, const u16 *a1);
+u16 MEventStruct_Unk1442CC_GetValueNFrom_unk_20(
+    const struct MEventStruct_Unk1442CC *a0, u32 command);
 u16 mevent_081445C0(u32 command);
 void ResetReceivedWonderCardFlag(void);
 bool32 MEventHandleReceivedWonderCard(u16 a0);
 
-#endif //GUARD_MEVENT_H
+#endif // GUARD_MEVENT_H

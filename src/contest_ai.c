@@ -146,10 +146,9 @@ static void ContestAICmd_check_user_has_move(void);
 static void ContestAICmd_if_user_has_move(void);
 static void ContestAICmd_if_user_doesnt_have_move(void);
 
-typedef void (* ContestAICmdFunc)(void);
+typedef void (*ContestAICmdFunc)(void);
 
-static const ContestAICmdFunc sContestAICmdTable[] =
-{
+static const ContestAICmdFunc sContestAICmdTable[] = {
     ContestAICmd_score,                               // 0x00
     ContestAICmd_get_appeal_num,                      // 0x01
     ContestAICmd_if_appeal_num_less_than,             // 0x02
@@ -341,40 +340,42 @@ static void ContestAI_DoAIProcessing(void)
 {
     while (eContestAI.aiState != CONTESTAI_FINISHED)
     {
-        switch(eContestAI.aiState)
+        switch (eContestAI.aiState)
         {
-            case CONTESTAI_DO_NOT_PROCESS:
-                break;
-            case CONTESTAI_SETTING_UP:
-                gAIScriptPtr = gContestAI_ScriptsTable[eContestAI.currentAIFlag];
+        case CONTESTAI_DO_NOT_PROCESS:
+            break;
+        case CONTESTAI_SETTING_UP:
+            gAIScriptPtr = gContestAI_ScriptsTable[eContestAI.currentAIFlag];
 
-                if (gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex] == MOVE_NONE)
-                    eContestAI.nextMove = MOVE_NONE; // don't process a move that doesn't exist.
+            if (gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex] == MOVE_NONE)
+                eContestAI.nextMove = MOVE_NONE; // don't process a move that doesn't exist.
+            else
+                eContestAI.nextMove =
+                    gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex];
+            eContestAI.aiState++;
+            break;
+        case CONTESTAI_PROCESSING:
+            if (eContestAI.nextMove != MOVE_NONE)
+            {
+                sContestAICmdTable[*gAIScriptPtr](); // run the command.
+            }
+            else
+            {
+                eContestAI.moveScores[eContestAI.nextMoveIndex] =
+                    0; // don't consider a move that doesn't exist.
+                eContestAI.aiAction |= 1;
+            }
+            if (eContestAI.aiAction & 1)
+            {
+                eContestAI.nextMoveIndex++;
+                if (eContestAI.nextMoveIndex < MAX_MON_MOVES)
+                    eContestAI.aiState = 0;
                 else
-                    eContestAI.nextMove = gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex];
-                eContestAI.aiState++;
-                break;
-            case CONTESTAI_PROCESSING:
-                if (eContestAI.nextMove != MOVE_NONE)
-                {
-                    sContestAICmdTable[*gAIScriptPtr](); // run the command.
-                }
-                else
-                {
-                    eContestAI.moveScores[eContestAI.nextMoveIndex] = 0; // don't consider a move that doesn't exist.
-                    eContestAI.aiAction |= 1;
-                }
-                if (eContestAI.aiAction & 1)
-                {
-                    eContestAI.nextMoveIndex++;
-                    if (eContestAI.nextMoveIndex < MAX_MON_MOVES)
-                        eContestAI.aiState = 0;
-                    else
-                        // aiState = CONTESTAI_FINISHED
-                        eContestAI.aiState++;
-                    eContestAI.aiAction &= 0xFE; // TODO: Define action flags
-                }
-                break;
+                    // aiState = CONTESTAI_FINISHED
+                    eContestAI.aiState++;
+                eContestAI.aiAction &= 0xFE; // TODO: Define action flags
+            }
+            break;
         }
     }
 }
@@ -708,7 +709,8 @@ static void ContestAICmd_if_contest_type_not_eq(void)
 
 static void ContestAICmd_get_move_excitement(void)
 {
-    eContestAI.scriptResult = Contest_GetMoveExcitement(gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex]);
+    eContestAI.scriptResult = Contest_GetMoveExcitement(
+        gContestMons[eContestAI.contestantId].moves[eContestAI.nextMoveIndex]);
     gAIScriptPtr += 1;
 }
 
@@ -1201,7 +1203,8 @@ static void ContestAICmd_get_used_combo_starter(void)
     u8 contestant = GetContestantIdByTurn(gAIScriptPtr[1]);
 
     if (IsContestantAllowedToCombo(contestant))
-        result = gContestMoves[eContestantStatus[contestant].prevMove].comboStarterId ? TRUE : FALSE;
+        result =
+            gContestMoves[eContestantStatus[contestant].prevMove].comboStarterId ? TRUE : FALSE;
 
     eContestAI.scriptResult = result;
     gAIScriptPtr += 2;
@@ -1309,7 +1312,8 @@ static void ContestAICmd_get_points_diff(void)
 {
     u8 contestant = GetContestantIdByTurn(gAIScriptPtr[1]);
 
-    eContestAI.scriptResult = eContestantStatus[contestant].pointTotal - eContestantStatus[eContestAI.contestantId].pointTotal;
+    eContestAI.scriptResult = eContestantStatus[contestant].pointTotal -
+                              eContestantStatus[eContestAI.contestantId].pointTotal;
     gAIScriptPtr += 2;
 }
 
@@ -1357,7 +1361,8 @@ static void ContestAICmd_get_preliminary_points_diff(void)
 {
     u8 contestant = GetContestantIdByTurn(gAIScriptPtr[1]);
 
-    eContestAI.scriptResult = gContestMonRound1Points[contestant] - gContestMonRound1Points[eContestAI.contestantId];
+    eContestAI.scriptResult =
+        gContestMonRound1Points[contestant] - gContestMonRound1Points[eContestAI.contestantId];
     gAIScriptPtr += 2;
 }
 
@@ -1732,7 +1737,7 @@ static void ContestAICmd_if_user_doesnt_have_exciting_move(void)
 
 // BUG: This is checking if the user has a specific move, but when it's used in the AI script
 //      they're checking for an effect. Checking for a specific effect would make more sense,
-//      but given that effects are normally read as a single byte and this reads 2 bytes, it 
+//      but given that effects are normally read as a single byte and this reads 2 bytes, it
 //      seems reading a move was intended and the AI script is using it incorrectly.
 //      In any case, to fix it to correctly check for effects replace the u16 move assignment with
 //      u16 move = gContestMoves[gContestMons[eContestAI.contestantId].moves[i]].effect;

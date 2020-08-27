@@ -401,9 +401,7 @@ const u8 gItemEffect_TamatoBerry[10] = {
     [9] = 2,
 };
 
-const u8 *const gItemEffectTable[] =
-{
-    [ITEM_POTION - ITEM_POTION] = gItemEffect_Potion,
+const u8 *const gItemEffectTable[] = { [ITEM_POTION - ITEM_POTION] = gItemEffect_Potion,
     [ITEM_ANTIDOTE - ITEM_POTION] = gItemEffect_Antidote,
     [ITEM_BURN_HEAL - ITEM_POTION] = gItemEffect_BurnHeal,
     [ITEM_ICE_HEAL - ITEM_POTION] = gItemEffect_IceHeal,
@@ -472,5 +470,4 @@ const u8 *const gItemEffectTable[] =
     [ITEM_HONDEW_BERRY - ITEM_POTION] = gItemEffect_HondewBerry,
     [ITEM_GREPA_BERRY - ITEM_POTION] = gItemEffect_GrepaBerry,
     [ITEM_TAMATO_BERRY - ITEM_POTION] = gItemEffect_TamatoBerry,
-    [LAST_BERRY_INDEX - ITEM_POTION] = NULL
-};
+    [LAST_BERRY_INDEX - ITEM_POTION] = NULL };

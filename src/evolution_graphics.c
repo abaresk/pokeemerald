@@ -11,7 +11,7 @@
 #include "constants/rgb.h"
 
 // this file's functions
-static void EvoSparkle_DummySpriteCb(struct Sprite* sprite);
+static void EvoSparkle_DummySpriteCb(struct Sprite *sprite);
 static void EvoTask_BeginPreSet1_FadeAndPlaySE(u8 taskID);
 static void EvoTask_CreatePreEvoSparkleSet1(u8 taskID);
 static void EvoTask_WaitForPre1SparklesToGoUp(u8 taskID);
@@ -35,20 +35,14 @@ static void sub_817C560(u8 taskID);
 static const u16 sEvoSparklePalette[] = INCBIN_U16("graphics/misc/evo_sparkle.gbapal");
 static const u32 sEvoSparkleTiles[] = INCBIN_U32("graphics/misc/evo_sparkle.4bpp.lz");
 
-static const struct CompressedSpriteSheet sEvoSparkleSpriteSheets[] =
-{
-    {sEvoSparkleTiles, 0x20, 1001},
-    {NULL, 0, 0}
+static const struct CompressedSpriteSheet sEvoSparkleSpriteSheets[] = {
+    { sEvoSparkleTiles, 0x20, 1001 }, { NULL, 0, 0 }
 };
 
-static const struct SpritePalette sEvoSparkleSpritePals[] =
-{
-    {sEvoSparklePalette, 1001},
-    {NULL, 0}
-};
+static const struct SpritePalette sEvoSparkleSpritePals[] = { { sEvoSparklePalette, 1001 },
+    { NULL, 0 } };
 
-static const struct OamData sOamData_EvoSparkle =
-{
+static const struct OamData sOamData_EvoSparkle = {
     .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -64,38 +58,51 @@ static const struct OamData sOamData_EvoSparkle =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_EvoSparkle[] =
-{
-    ANIMCMD_FRAME(0, 8),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_EvoSparkle[] = { ANIMCMD_FRAME(0, 8), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_EvoSparkle[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_EvoSparkle[] = {
     sSpriteAnim_EvoSparkle,
 };
 
-static const struct SpriteTemplate sEvoSparkleSpriteTemplate =
-{
-    .tileTag = 1001,
+static const struct SpriteTemplate sEvoSparkleSpriteTemplate = { .tileTag = 1001,
     .paletteTag = 1001,
     .oam = &sOamData_EvoSparkle,
     .anims = sSpriteAnimTable_EvoSparkle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = EvoSparkle_DummySpriteCb
-};
+    .callback = EvoSparkle_DummySpriteCb };
 
-static const s16 sEvoSparkleMatrices[] =
-{
-    0x3C0, 0x380, 0x340, 0x300, 0x2C0, 0x280, 0x240, 0x200, 0x1C0,
-    0x180, 0x140, 0x100, -4, 0x10, -3, 0x30, -2, 0x50,
-    -1, 0x70, 0x1, 0x70, 0x2, 0x50, 0x3, 0x30, 0x4, 0x10
-};
+static const s16 sEvoSparkleMatrices[] = { 0x3C0,
+    0x380,
+    0x340,
+    0x300,
+    0x2C0,
+    0x280,
+    0x240,
+    0x200,
+    0x1C0,
+    0x180,
+    0x140,
+    0x100,
+    -4,
+    0x10,
+    -3,
+    0x30,
+    -2,
+    0x50,
+    -1,
+    0x70,
+    0x1,
+    0x70,
+    0x2,
+    0x50,
+    0x3,
+    0x30,
+    0x4,
+    0x10 };
 
 static void EvoSparkle_DummySpriteCb(struct Sprite *sprite)
 {
-
 }
 
 static void SetEvoSparklesMatrices(void)
@@ -107,7 +114,7 @@ static void SetEvoSparklesMatrices(void)
     }
 }
 
-static void SpriteCB_PreEvoSparkleSet1(struct Sprite* sprite)
+static void SpriteCB_PreEvoSparkleSet1(struct Sprite *sprite)
 {
     if (sprite->pos1.y > 8)
     {
@@ -147,7 +154,7 @@ static void CreatePreEvoSparkleSet1(u8 arg0)
     }
 }
 
-static void SpriteCB_PreEvoSparkleSet2(struct Sprite* sprite)
+static void SpriteCB_PreEvoSparkleSet2(struct Sprite *sprite)
 {
     if (sprite->pos1.y < 88)
     {
@@ -176,7 +183,7 @@ static void CreatePreEvoSparkleSet2(u8 arg0)
     }
 }
 
-static void SpriteCB_PostEvoSparkleSet1(struct Sprite* sprite)
+static void SpriteCB_PostEvoSparkleSet1(struct Sprite *sprite)
 {
     if (sprite->data[5] > 8)
     {
@@ -205,7 +212,7 @@ static void CreatePostEvoSparkleSet1(u8 arg0, u8 arg1)
     }
 }
 
-static void SpriteCB_PostEvoSparkleSet2(struct Sprite* sprite)
+static void SpriteCB_PostEvoSparkleSet2(struct Sprite *sprite)
 {
     if (!(sprite->data[7] & 3))
         sprite->pos1.y++;
@@ -256,7 +263,7 @@ void LoadEvoSparkleSpriteAndPal(void)
     LoadSpritePalettes(sEvoSparkleSpritePals);
 }
 
-#define tFrameCounter   data[15]
+#define tFrameCounter data[15]
 
 u8 LaunchTask_PreEvoSparklesSet1(u16 arg0)
 {
@@ -467,14 +474,13 @@ static void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(u8 taskID)
 
 #undef tFrameCounter
 
-static void PokeEvoSprite_DummySpriteCB(struct Sprite* sprite)
+static void PokeEvoSprite_DummySpriteCB(struct Sprite *sprite)
 {
-
 }
 
-#define tPreEvoSpriteID     data[1]
-#define tPostEvoSpriteID    data[2]
-#define tEvoStopped         data[8]
+#define tPreEvoSpriteID  data[1]
+#define tPostEvoSpriteID data[2]
+#define tEvoStopped      data[8]
 
 u8 sub_817C3A0(u8 preEvoSpriteID, u8 postEvoSpriteID)
 {
@@ -551,7 +557,7 @@ static void sub_817C560(u8 taskID)
                 r6++;
             }
             if (gTasks[taskID].data[4] > 16 + gTasks[taskID].data[6])
-                gTasks[taskID].data[4]  -= gTasks[taskID].data[6];
+                gTasks[taskID].data[4] -= gTasks[taskID].data[6];
             else
             {
                 gTasks[taskID].data[4] = 16;
@@ -568,7 +574,7 @@ static void sub_817C560(u8 taskID)
                 r6++;
             }
             if (gTasks[taskID].data[3] > 16 + gTasks[taskID].data[6])
-                gTasks[taskID].data[3]  -= gTasks[taskID].data[6];
+                gTasks[taskID].data[3] -= gTasks[taskID].data[6];
             else
             {
                 gTasks[taskID].data[3] = 16;

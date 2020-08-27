@@ -23,16 +23,14 @@ static void Task_ContinueTaskAfterMessagePrints(u8 taskId);
 static void Task_CallYesOrNoCallback(u8 taskId);
 
 // EWRAM vars
-EWRAM_DATA static struct YesNoFuncTable gUnknown_0203A138 = {0};
+EWRAM_DATA static struct YesNoFuncTable gUnknown_0203A138 = { 0 };
 EWRAM_DATA static u8 gUnknown_0203A140 = 0;
 
 // IWRAM bss vars
 static TaskFunc gUnknown_0300117C;
 
 // const rom data
-static const struct OamData sOamData_859F4E8 =
-{
-    .y = 0,
+static const struct OamData sOamData_859F4E8 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -44,46 +42,23 @@ static const struct OamData sOamData_859F4E8 =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AnimCmd sSpriteAnim_859F4F0[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_859F4F8[] = { ANIMCMD_FRAME(4, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_859F500[] = { ANIMCMD_FRAME(0, 0, 1, 0), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_859F508[] = {
+    sSpriteAnim_859F4F0, sSpriteAnim_859F4F8, sSpriteAnim_859F500
 };
 
-static const union AnimCmd sSpriteAnim_859F4F0[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const struct CompressedSpriteSheet gUnknown_0859F514 = { gBagSwapLineGfx, 0x100, 109 };
 
-static const union AnimCmd sSpriteAnim_859F4F8[] =
-{
-    ANIMCMD_FRAME(4, 0),
-    ANIMCMD_END
-};
+static const struct CompressedSpritePalette gUnknown_0859F51C = { gBagSwapLinePal, 109 };
 
-static const union AnimCmd sSpriteAnim_859F500[] =
-{
-    ANIMCMD_FRAME(0, 0, 1, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sSpriteAnimTable_859F508[] =
-{
-    sSpriteAnim_859F4F0,
-    sSpriteAnim_859F4F8,
-    sSpriteAnim_859F500
-};
-
-static const struct CompressedSpriteSheet gUnknown_0859F514 =
-{
-    gBagSwapLineGfx, 0x100, 109
-};
-
-static const struct CompressedSpritePalette gUnknown_0859F51C =
-{
-    gBagSwapLinePal, 109
-};
-
-static const struct SpriteTemplate gUnknown_0859F524 =
-{
+static const struct SpriteTemplate gUnknown_0859F524 = {
     .tileTag = 109,
     .paletteTag = 109,
     .oam = &sOamData_859F4E8,
@@ -101,9 +76,9 @@ void ResetVramOamAndBgCntRegs(void)
     SetGpuReg(REG_OFFSET_BG2CNT, 0);
     SetGpuReg(REG_OFFSET_BG1CNT, 0);
     SetGpuReg(REG_OFFSET_BG0CNT, 0);
-    CpuFill16(0, (void*) VRAM, VRAM_SIZE);
-    CpuFill32(0, (void*) OAM, OAM_SIZE);
-    CpuFill16(0, (void*) PLTT, PLTT_SIZE);
+    CpuFill16(0, (void *)VRAM, VRAM_SIZE);
+    CpuFill32(0, (void *)OAM, OAM_SIZE);
+    CpuFill16(0, (void *)PLTT, PLTT_SIZE);
 }
 
 void ResetAllBgsCoordinates(void)
@@ -124,7 +99,14 @@ void SetVBlankHBlankCallbacksToNull(void)
     SetHBlankCallback(NULL);
 }
 
-void DisplayMessageAndContinueTask(u8 taskId, u8 windowId, u16 arg2, u8 arg3, u8 fontId, u8 textSpeed, const u8 *string, void *taskFunc)
+void DisplayMessageAndContinueTask(u8 taskId,
+    u8 windowId,
+    u16 arg2,
+    u8 arg3,
+    u8 fontId,
+    u8 textSpeed,
+    const u8 *string,
+    void *taskFunc)
 {
     gUnknown_0203A140 = windowId;
     DrawDialogFrameWithCustomTileAndPalette(windowId, TRUE, arg2, arg3);
@@ -156,7 +138,14 @@ void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *data)
     gTasks[taskId].func = Task_CallYesOrNoCallback;
 }
 
-void CreateYesNoMenuWithCallbacks(u8 taskId, const struct WindowTemplate *template, u8 arg2, u8 arg3, u8 arg4, u16 tileStart, u8 palette, const struct YesNoFuncTable *yesNo)
+void CreateYesNoMenuWithCallbacks(u8 taskId,
+    const struct WindowTemplate *template,
+    u8 arg2,
+    u8 arg3,
+    u8 arg4,
+    u16 tileStart,
+    u8 palette,
+    const struct YesNoFuncTable *yesNo)
 {
     CreateYesNoMenu(template, tileStart, palette, 0);
     gUnknown_0203A138 = *yesNo;
@@ -281,7 +270,8 @@ bool8 sub_8122148(u16 itemId)
 {
     if (itemId != ITEM_ENIGMA_BERRY)
         return TRUE;
-    else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(TRADE_CENTER) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(TRADE_CENTER))
+    else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(TRADE_CENTER) &&
+             gSaveBlock1Ptr->location.mapNum == MAP_NUM(TRADE_CENTER))
         return FALSE;
     else if (InUnionRoom() != TRUE)
         return TRUE;
@@ -325,7 +315,8 @@ bool8 MenuHelpers_CallLinkSomething(void)
         return TRUE;
 }
 
-void sub_812220C(struct ItemSlot *slots, u8 count, u8 *arg2, u8 *usedSlotsCount, u8 maxUsedSlotsCount)
+void sub_812220C(
+    struct ItemSlot *slots, u8 count, u8 *arg2, u8 *usedSlotsCount, u8 maxUsedSlotsCount)
 {
     u16 i;
     struct ItemSlot *slots_ = slots;

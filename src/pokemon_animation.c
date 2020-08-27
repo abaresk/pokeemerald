@@ -182,8 +182,7 @@ static u8 sUnknown_03001270;
 static bool32 sUnknown_03001274;
 
 // const rom data
-static const u8 sSpeciesToBackAnimSet[] =
-{
+static const u8 sSpeciesToBackAnimSet[] = {
     [SPECIES_BULBASAUR] = BACK_ANIM_DIP_RIGHT_SIDE,
     [SPECIES_IVYSAUR] = BACK_ANIM_H_SLIDE,
     [SPECIES_VENUSAUR] = BACK_ANIM_HORIZONTAL_SHAKE,
@@ -572,35 +571,24 @@ static const u8 sSpeciesToBackAnimSet[] =
     [SPECIES_CHIMECHO] = BACK_ANIM_CONCAVE_DOWN_ARC_SWAY_LARGE,
 };
 
-static const u8 sUnknown_0860AA64[][2] =
-{
-    {0, 5},
-    {1, 1},
-    {0, 15},
-    {1, 4},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {0, 0xFF}
-};
+static const u8 sUnknown_0860AA64[][2] = { { 0, 5 },
+    { 1, 1 },
+    { 0, 15 },
+    { 1, 4 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 0, 0xFF } };
 
-static const u8 sUnknown_0860AA80[][2] =
-{
-    {6,     30},
-    {0xFE,  15},
-    {6,     30},
-    {0xFF,  0}
-};
+static const u8 sUnknown_0860AA80[][2] = { { 6, 30 }, { 0xFE, 15 }, { 6, 30 }, { 0xFF, 0 } };
 
-static void (* const sMonAnimFunctions[])(struct Sprite *sprite) =
-{
-    pokemonanimfunc_00,
+static void (*const sMonAnimFunctions[])(struct Sprite *sprite) = { pokemonanimfunc_00,
     pokemonanimfunc_01,
     pokemonanimfunc_02,
     pokemonanimfunc_03,
@@ -750,41 +738,88 @@ static void (* const sMonAnimFunctions[])(struct Sprite *sprite) =
     pokemonanimfunc_93,
     pokemonanimfunc_94,
     pokemonanimfunc_95,
-    pokemonanimfunc_96
-};
+    pokemonanimfunc_96 };
 
 // counting from Id 1, because 0 in sSpeciesToBackAnimSet is used for mons with no back animation
-static const u8 sBackAnimationIds[] =
-{
-    0x60, 0x5f, 0x02, // 1
-    0x5e, 0x03, 0x46, // 2
-    0x6d, 0x3e, 0x6e, // 3
-    0x6f, 0x70, 0x3f, // 4
-    0x71, 0x13, 0x72, // 5
-    0x6c, 0x6b, 0x3a, // 6
-    0x64, 0x14, 0x4f, // 7
-    0x5d, 0x0f, 0x4c, // 8
-    0x61, 0x57, 0x58, // 9
-    0x67, 0x66, 0x59, // 0xA
-    0x74, 0x73, 0x5a, // 0xB
-    0x75, 0x76, 0x5b, // 0xC
-    0x77, 0x78, 0x65, // 0xD
-    0x63, 0x5c, 0x62, // 0xE
-    0x6a, 0x69, 0x68, // 0xF
-    0x7b, 0x7a, 0x79, // 0x10
-    0x7e, 0x7d, 0x7c, // 0x11
-    0x81, 0x80, 0x7f, // 0x12
-    0x84, 0x82, 0x83, // 0x13
-    0x85, 0x86, 0x87, // 0x14
-    0x88, 0x89, 0x8a, // 0x15
-    0x8b, 0x8c, 0x8d, // 0x16
-    0x8e, 0x8f, 0x90, // 0x17
-    0x91, 0x92, 0x93, // 0x18
-    0x94, 0x95, 0x96, // 0x19
+static const u8 sBackAnimationIds[] = {
+    0x60,
+    0x5f,
+    0x02, // 1
+    0x5e,
+    0x03,
+    0x46, // 2
+    0x6d,
+    0x3e,
+    0x6e, // 3
+    0x6f,
+    0x70,
+    0x3f, // 4
+    0x71,
+    0x13,
+    0x72, // 5
+    0x6c,
+    0x6b,
+    0x3a, // 6
+    0x64,
+    0x14,
+    0x4f, // 7
+    0x5d,
+    0x0f,
+    0x4c, // 8
+    0x61,
+    0x57,
+    0x58, // 9
+    0x67,
+    0x66,
+    0x59, // 0xA
+    0x74,
+    0x73,
+    0x5a, // 0xB
+    0x75,
+    0x76,
+    0x5b, // 0xC
+    0x77,
+    0x78,
+    0x65, // 0xD
+    0x63,
+    0x5c,
+    0x62, // 0xE
+    0x6a,
+    0x69,
+    0x68, // 0xF
+    0x7b,
+    0x7a,
+    0x79, // 0x10
+    0x7e,
+    0x7d,
+    0x7c, // 0x11
+    0x81,
+    0x80,
+    0x7f, // 0x12
+    0x84,
+    0x82,
+    0x83, // 0x13
+    0x85,
+    0x86,
+    0x87, // 0x14
+    0x88,
+    0x89,
+    0x8a, // 0x15
+    0x8b,
+    0x8c,
+    0x8d, // 0x16
+    0x8e,
+    0x8f,
+    0x90, // 0x17
+    0x91,
+    0x92,
+    0x93, // 0x18
+    0x94,
+    0x95,
+    0x96, // 0x19
 };
 
-static const u8 sBackAnimNatureModTable[NUM_NATURES] =
-{
+static const u8 sBackAnimNatureModTable[NUM_NATURES] = {
     [NATURE_HARDY] = 0x00,
     [NATURE_LONELY] = 0x02,
     [NATURE_BRAVE] = 0x00,
@@ -812,22 +847,16 @@ static const u8 sBackAnimNatureModTable[NUM_NATURES] =
     [NATURE_QUIRKY] = 0x01,
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_860AD48[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMDTYPE_END
+static const union AffineAnimCmd sSpriteAffineAnim_860AD48[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMDTYPE_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_860AD58[] =
-{
-    AFFINEANIMCMD_FRAME(-256, 256, 0, 0),
-    AFFINEANIMCMDTYPE_END
+static const union AffineAnimCmd sSpriteAffineAnim_860AD58[] = {
+    AFFINEANIMCMD_FRAME(-256, 256, 0, 0), AFFINEANIMCMDTYPE_END
 };
 
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_860AD68[] =
-{
-    sSpriteAffineAnim_860AD48,
-    sSpriteAffineAnim_860AD58
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_860AD68[] = {
+    sSpriteAffineAnim_860AD48, sSpriteAffineAnim_860AD58
 };
 
 // code
@@ -873,10 +902,12 @@ u8 GetSpeciesBackAnimSet(u16 species)
 // By dumb luck, this is not an issue in vanilla. However,
 // changing the link order revealed this bug.
 #if MODERN
-#define ANIM_SPRITE(taskId)   ((struct Sprite *)((gTasks[taskId].tPtrHi << 16) | ((u16)gTasks[taskId].tPtrLo)))
+#define ANIM_SPRITE(taskId)                                                                        \
+    ((struct Sprite *)((gTasks[taskId].tPtrHi << 16) | ((u16)gTasks[taskId].tPtrLo)))
 #else
-#define ANIM_SPRITE(taskId)   ((struct Sprite *)((gTasks[taskId].tPtrHi << 16) | (gTasks[taskId].tPtrLo)))
-#endif //MODERN
+#define ANIM_SPRITE(taskId)                                                                        \
+    ((struct Sprite *)((gTasks[taskId].tPtrHi << 16) | (gTasks[taskId].tPtrLo)))
+#endif // MODERN
 
 static void Task_HandleMonAnimation(u8 taskId)
 {
@@ -1246,18 +1277,17 @@ static void pokemonanimfunc_09(struct Sprite *sprite)
     sprite->data[2]++;
 }
 
-static const s8 sUnknown_0860AD70[][3] =
-{
-    {-1, -1, 6},
-    {2,   0, 6},
-    {-2,  2, 6},
-    {2,   0, 6},
-    {-2, -2, 6},
-    {2,   0, 6},
-    {-2,  2, 6},
-    {2,   0, 6},
-    {-1, -1, 6},
-    {0,   0, 0},
+static const s8 sUnknown_0860AD70[][3] = {
+    { -1, -1, 6 },
+    { 2, 0, 6 },
+    { -2, 2, 6 },
+    { 2, 0, 6 },
+    { -2, -2, 6 },
+    { 2, 0, 6 },
+    { -2, 2, 6 },
+    { 2, 0, 6 },
+    { -1, -1, 6 },
+    { 0, 0, 0 },
 };
 
 static void sub_817FC20(struct Sprite *sprite)
@@ -1869,28 +1899,23 @@ static void pokemonanimfunc_13(struct Sprite *sprite)
     sub_8180828(sprite);
 }
 
-static const s8 sUnknown_0860AD8E[][8][3] =
-{
-    {
-        {0,  8, 8},
-        {8, -8, 12},
-        {-8, 8, 12},
-        {8, -8, 12},
-        {-8, 8, 12},
-        {8, -8, 12},
-        {-8, 0, 12},
-        {0,  0, 0}
-    },
-    {
-        {0,  8, 16},
-        {8, -8, 24},
-        {-8, 8, 24},
-        {8, -8, 24},
-        {-8, 8, 24},
-        {8, -8, 24},
-        {-8, 0, 24},
-        {0,  0, 0}
-    },
+static const s8 sUnknown_0860AD8E[][8][3] = {
+    { { 0, 8, 8 },
+        { 8, -8, 12 },
+        { -8, 8, 12 },
+        { 8, -8, 12 },
+        { -8, 8, 12 },
+        { 8, -8, 12 },
+        { -8, 0, 12 },
+        { 0, 0, 0 } },
+    { { 0, 8, 16 },
+        { 8, -8, 24 },
+        { -8, 8, 24 },
+        { 8, -8, 24 },
+        { -8, 8, 24 },
+        { 8, -8, 24 },
+        { -8, 0, 24 },
+        { 0, 0, 0 } },
 };
 
 static void sub_8180900(struct Sprite *sprite)
@@ -2094,8 +2119,7 @@ static void sub_8180CE8(struct Sprite *sprite)
             subResult -= var;
             sprite->data[6]++;
             var++;
-        }
-        while (subResult > -8);
+        } while (subResult > -8);
 
         sprite->data[5] = 1;
         sprite->callback = sub_8180D44;
@@ -2377,7 +2401,8 @@ static void sub_81811A4(struct Sprite *sprite)
 {
     sub_817F70C(sprite);
     sprite->pos2.x++;
-    sprite->pos2.y--;;
+    sprite->pos2.y--;
+    ;
 
     if (sprite->pos2.x >= 0)
     {
@@ -2884,13 +2909,14 @@ static void sub_8181C2C(struct Sprite *sprite)
     }
     else
     {
-        #ifndef NONMATCHING
-            register s32 var asm("r4") = sUnknown_03001240[sprite->data[0]].field_8;
-        #else
-            s32 var = sUnknown_03001240[sprite->data[0]].field_8;
-        #endif
+#ifndef NONMATCHING
+        register s32 var asm("r4") = sUnknown_03001240[sprite->data[0]].field_8;
+#else
+        s32 var = sUnknown_03001240[sprite->data[0]].field_8;
+#endif
 
-        sprite->pos2.x = (var << 3) * (counter % 128) / 128 - (sUnknown_03001240[sprite->data[0]].field_8 * 8);
+        sprite->pos2.x =
+            (var << 3) * (counter % 128) / 128 - (sUnknown_03001240[sprite->data[0]].field_8 * 8);
         sprite->pos2.y = -(Sin(counter % 128, 8));
     }
 
@@ -3586,7 +3612,7 @@ static void pokemonanimfunc_42(struct Sprite *sprite)
     {
         s16 scale;
 
-        sprite->pos2.x = -(Sin(sprite->data[7] % 256 , 8));
+        sprite->pos2.x = -(Sin(sprite->data[7] % 256, 8));
         sprite->data[7] += 8;
         scale = Sin((sprite->data[7] % 256) / 2, 96);
         HandleSetAffineData(sprite, 256 + scale, 256 + scale, 0);
@@ -4359,13 +4385,12 @@ static void pokemonanimfunc_67(struct Sprite *sprite)
     sub_817F70C(sprite);
 }
 
-static const s8 sUnknown_0860ADBE[][3] =
-{
-//   x    y   timer
-    {1,   1, 12},
-    {-2,  0, 12},
-    {1,  -1, 12},
-    {0,  0,  0}
+static const s8 sUnknown_0860ADBE[][3] = {
+    //   x    y   timer
+    { 1, 1, 12 },
+    { -2, 0, 12 },
+    { 1, -1, 12 },
+    { 0, 0, 0 }
 };
 
 static void sub_8183B4C(struct Sprite *sprite)
@@ -4391,7 +4416,9 @@ static void sub_8183B4C(struct Sprite *sprite)
     {
         s32 amplitude = sprite->data[5];
         sprite->pos2.x += (sUnknown_0860ADBE[sprite->data[3]][0] * amplitude);
-        sprite->pos2.y += (sUnknown_0860ADBE[sprite->data[3]][1] * sprite->data[5]); // what's the point of the var if you're not reusing it?
+        sprite->pos2.y +=
+            (sUnknown_0860ADBE[sprite->data[3]][1] *
+                sprite->data[5]); // what's the point of the var if you're not reusing it?
         sprite->data[2]++;
         sub_817F70C(sprite);
     }
@@ -5198,67 +5225,55 @@ struct YellowBlendStruct
     u8 field_1;
 };
 
-static const struct YellowBlendStruct sUnknown_0860ADCC[] =
-{
-    {0, 1},
-    {1, 2},
-    {0, 15},
-    {1, 1},
-    {0, 15},
-    {1, 1},
-    {0, 15},
-    {1, 1},
-    {0, 1},
-    {1, 1},
-    {0, 1},
-    {1, 1},
-    {0, 1},
-    {1, 1},
-    {0, 1},
-    {1, 1},
-    {0, 1},
-    {1, 1},
-    {0, 1},
-    {0, 0xFF}
-};
+static const struct YellowBlendStruct sUnknown_0860ADCC[] = { { 0, 1 },
+    { 1, 2 },
+    { 0, 15 },
+    { 1, 1 },
+    { 0, 15 },
+    { 1, 1 },
+    { 0, 15 },
+    { 1, 1 },
+    { 0, 1 },
+    { 1, 1 },
+    { 0, 1 },
+    { 1, 1 },
+    { 0, 1 },
+    { 1, 1 },
+    { 0, 1 },
+    { 1, 1 },
+    { 0, 1 },
+    { 1, 1 },
+    { 0, 1 },
+    { 0, 0xFF } };
 
-static const struct YellowBlendStruct sUnknown_0860AE1C[] =
-{
-    {0, 5},
-    {1, 1},
-    {0, 15},
-    {1, 4},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {1, 2},
-    {0, 2},
-    {0, 0xFF}
-};
+static const struct YellowBlendStruct sUnknown_0860AE1C[] = { { 0, 5 },
+    { 1, 1 },
+    { 0, 15 },
+    { 1, 4 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 1, 2 },
+    { 0, 2 },
+    { 0, 0xFF } };
 
-static const struct YellowBlendStruct sUnknown_0860AE54[] =
-{
-    {0, 1},
-    {1, 1},
-    {0, 20},
-    {1, 1},
-    {0, 20},
-    {1, 1},
-    {0, 20},
-    {1, 1},
-    {0, 1},
-    {0, 0xFF}
-};
+static const struct YellowBlendStruct sUnknown_0860AE54[] = { { 0, 1 },
+    { 1, 1 },
+    { 0, 20 },
+    { 1, 1 },
+    { 0, 20 },
+    { 1, 1 },
+    { 0, 20 },
+    { 1, 1 },
+    { 0, 1 },
+    { 0, 0xFF } };
 
-static const struct YellowBlendStruct *const sUnknown_0860AE7C[] =
-{
-    sUnknown_0860ADCC,
-    sUnknown_0860AE1C,
-    sUnknown_0860AE54
+static const struct YellowBlendStruct *const sUnknown_0860AE7C[] = {
+    sUnknown_0860ADCC, sUnknown_0860AE1C, sUnknown_0860AE54
 };
 
 static void BackAnimBlendYellow(struct Sprite *sprite)
@@ -5339,10 +5354,7 @@ static void pokemonanimfunc_8D(struct Sprite *sprite)
 
 static void BackAnimBlend(struct Sprite *sprite)
 {
-    static const u16 sColors[] =
-    {
-        RGB_RED, RGB_GREEN, RGB_BLUE, RGB_BLACK
-    };
+    static const u16 sColors[] = { RGB_RED, RGB_GREEN, RGB_BLUE, RGB_BLACK };
 
     if (sprite->data[2] > 127)
     {

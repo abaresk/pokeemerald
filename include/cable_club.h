@@ -11,4 +11,4 @@ void sub_80B3AF8(u8 taskId);
 void Task_WaitForLinkPlayerConnection(u8 taskId);
 bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex);
 
-#endif //GUARD_CABLE_CLUB_H
+#endif // GUARD_CABLE_CLUB_H

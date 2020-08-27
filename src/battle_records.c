@@ -40,52 +40,37 @@ static const u32 sTrainerHillWindowTileset[] = INCBIN_U32("graphics/unknown/unkn
 static const u16 sTrainerHillWindowPalette[] = INCBIN_U16("graphics/unknown/unknown_5B3484.gbapal");
 static const u32 sTrainerHillWindowTilemap[] = INCBIN_U32("graphics/unknown/unknown_5B3564.bin");
 
-static const struct BgTemplate sTrainerHillRecordsBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+static const struct BgTemplate sTrainerHillRecordsBgTemplates[] = { { .bg = 0,
+                                                                        .charBaseIndex = 0,
+                                                                        .mapBaseIndex = 31,
+                                                                        .screenSize = 0,
+                                                                        .paletteMode = 0,
+                                                                        .priority = 0,
+                                                                        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const struct WindowTemplate sTrainerHillRecordsWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 1,
-        .width = 26,
-        .height = 18,
-        .paletteNum = 15,
-        .baseBlock = 20
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sTrainerHillRecordsWindowTemplates[] = { { .bg = 0,
+                                                                                .tilemapLeft = 2,
+                                                                                .tilemapTop = 1,
+                                                                                .width = 26,
+                                                                                .height = 18,
+                                                                                .paletteNum = 15,
+                                                                                .baseBlock = 20 },
+    DUMMY_WIN_TEMPLATE };
 
-static const struct WindowTemplate sLinkBattleRecordsWindow =
-{
-    .bg = 0,
+static const struct WindowTemplate sLinkBattleRecordsWindow = { .bg = 0,
     .tilemapLeft = 2,
     .tilemapTop = 1,
     .width = 26,
     .height = 17,
     .paletteNum = 15,
-    .baseBlock = 1
-};
+    .baseBlock = 1 };
 
 static const u8 sText_DashesNoPlayer[] = _("-------");
 static const u8 sText_DashesNoScore[] = _("----");
@@ -124,7 +109,8 @@ static s32 FindLinkBattleRecord(struct LinkBattleRecord *records, const u8 *name
 
     for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
     {
-        if (!StringCompareN(records[i].name, name, PLAYER_NAME_LENGTH) && records[i].trainerId == trainerId)
+        if (!StringCompareN(records[i].name, name, PLAYER_NAME_LENGTH) &&
+            records[i].trainerId == trainerId)
             return i;
     }
 
@@ -204,7 +190,11 @@ static void UpdateLinkBattleGameStats(s32 battleOutcome)
         IncrementGameStat(stat);
 }
 
-static void UpdateLinkBattleRecords(struct LinkBattleRecords *records, const u8 *name, u16 trainerId, s32 battleOutcome, u8 battlerId)
+static void UpdateLinkBattleRecords(struct LinkBattleRecords *records,
+    const u8 *name,
+    u16 trainerId,
+    s32 battleOutcome,
+    u8 battlerId)
 {
     s32 index;
 
@@ -264,8 +254,7 @@ void UpdatePlayerLinkBattleRecords(s32 battlerId)
     if (InUnionRoom() != TRUE)
     {
         UpdateTrainerCardWinsLosses(battlerId);
-        UpdateLinkBattleRecords(
-            &gSaveBlock1Ptr->linkBattleRecords,
+        UpdateLinkBattleRecords(&gSaveBlock1Ptr->linkBattleRecords,
             gTrainerCards[battlerId].playerName,
             gTrainerCards[battlerId].trainerId,
             gBattleOutcome,
@@ -277,9 +266,12 @@ static void PrintLinkBattleWinsLossesDraws(struct LinkBattleRecord *records)
 {
     s32 x;
 
-    ConvertIntToDecimalStringN(gStringVar1, GetGameStat(GAME_STAT_LINK_BATTLE_WINS), STR_CONV_MODE_LEFT_ALIGN, 4);
-    ConvertIntToDecimalStringN(gStringVar2, GetGameStat(GAME_STAT_LINK_BATTLE_LOSSES), STR_CONV_MODE_LEFT_ALIGN, 4);
-    ConvertIntToDecimalStringN(gStringVar3, GetGameStat(GAME_STAT_LINK_BATTLE_DRAWS), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(
+        gStringVar1, GetGameStat(GAME_STAT_LINK_BATTLE_WINS), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(
+        gStringVar2, GetGameStat(GAME_STAT_LINK_BATTLE_LOSSES), STR_CONV_MODE_LEFT_ALIGN, 4);
+    ConvertIntToDecimalStringN(
+        gStringVar3, GetGameStat(GAME_STAT_LINK_BATTLE_DRAWS), STR_CONV_MODE_LEFT_ALIGN, 4);
     StringExpandPlaceholders(gStringVar4, gText_TotalRecordWLD);
 
     x = GetStringCenterAlignXOffset(1, gStringVar4, 0xD0);
@@ -291,10 +283,14 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y, s32 lan
     if (record->wins == 0 && record->losses == 0 && record->draws == 0)
     {
         // empty slot
-        AddTextPrinterParameterized(gRecordsWindowId, 1, sText_DashesNoPlayer,   8, (y * 8) + 1, 0, NULL);
-        AddTextPrinterParameterized(gRecordsWindowId, 1, sText_DashesNoScore,  80, (y * 8) + 1, 0, NULL);
-        AddTextPrinterParameterized(gRecordsWindowId, 1, sText_DashesNoScore, 128, (y * 8) + 1, 0, NULL);
-        AddTextPrinterParameterized(gRecordsWindowId, 1, sText_DashesNoScore, 176, (y * 8) + 1, 0, NULL);
+        AddTextPrinterParameterized(
+            gRecordsWindowId, 1, sText_DashesNoPlayer, 8, (y * 8) + 1, 0, NULL);
+        AddTextPrinterParameterized(
+            gRecordsWindowId, 1, sText_DashesNoScore, 80, (y * 8) + 1, 0, NULL);
+        AddTextPrinterParameterized(
+            gRecordsWindowId, 1, sText_DashesNoScore, 128, (y * 8) + 1, 0, NULL);
+        AddTextPrinterParameterized(
+            gRecordsWindowId, 1, sText_DashesNoScore, 176, (y * 8) + 1, 0, NULL);
     }
     else
     {
@@ -305,7 +301,7 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y, s32 lan
         AddTextPrinterParameterized(gRecordsWindowId, 1, gStringVar1, 8, (y * 8) + 1, 0, NULL);
 
         ConvertIntToDecimalStringN(gStringVar1, record->wins, STR_CONV_MODE_RIGHT_ALIGN, 4);
-        AddTextPrinterParameterized(gRecordsWindowId, 1, gStringVar1,  80, (y * 8) + 1, 0, NULL);
+        AddTextPrinterParameterized(gRecordsWindowId, 1, gStringVar1, 80, (y * 8) + 1, 0, NULL);
 
         ConvertIntToDecimalStringN(gStringVar1, record->losses, STR_CONV_MODE_RIGHT_ALIGN, 4);
         AddTextPrinterParameterized(gRecordsWindowId, 1, gStringVar1, 128, (y * 8) + 1, 0, NULL);
@@ -333,7 +329,9 @@ void ShowLinkBattleRecords(void)
 
     for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
     {
-        PrintLinkBattleRecord(&gSaveBlock1Ptr->linkBattleRecords.entries[i], 7 + (i * 2), gSaveBlock1Ptr->linkBattleRecords.languages[i]);
+        PrintLinkBattleRecord(&gSaveBlock1Ptr->linkBattleRecords.entries[i],
+            7 + (i * 2),
+            gSaveBlock1Ptr->linkBattleRecords.languages[i]);
     }
 
     PutWindowTilemap(gRecordsWindowId);
@@ -391,7 +389,7 @@ static void RemoveTrainerHillRecordsWindow(u8 windowId)
 
 static void ClearVramOamPlttRegs(void)
 {
-    DmaClearLarge16(3, (void*)(VRAM), VRAM_SIZE, 0x1000);
+    DmaClearLarge16(3, (void *)(VRAM), VRAM_SIZE, 0x1000);
     DmaClear32(3, OAM, OAM_SIZE);
     DmaClear16(3, PLTT, PLTT_SIZE);
 
@@ -487,7 +485,8 @@ static void CB2_ShowTrainerHillRecords(void)
     case 2:
         sTilemapBuffer = AllocZeroed(0x800);
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sTrainerHillRecordsBgTemplates, ARRAY_COUNT(sTrainerHillRecordsBgTemplates));
+        InitBgsFromTemplates(
+            0, sTrainerHillRecordsBgTemplates, ARRAY_COUNT(sTrainerHillRecordsBgTemplates));
         SetBgTilemapBuffer(3, sTilemapBuffer);
         ResetBgCoordinates();
         gMain.state++;

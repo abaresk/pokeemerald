@@ -1,12 +1,12 @@
 #ifndef GUARD_BATTLE_UTIL_H
 #define GUARD_BATTLE_UTIL_H
 
-#define MOVE_LIMITATION_ZEROMOVE                (1 << 0)
-#define MOVE_LIMITATION_PP                      (1 << 1)
-#define MOVE_LIMITATION_DISABLED                (1 << 2)
-#define MOVE_LIMITATION_TORMENTED               (1 << 3)
-#define MOVE_LIMITATION_TAUNT                   (1 << 4)
-#define MOVE_LIMITATION_IMPRISON               (1 << 5)
+#define MOVE_LIMITATION_ZEROMOVE  (1 << 0)
+#define MOVE_LIMITATION_PP        (1 << 1)
+#define MOVE_LIMITATION_DISABLED  (1 << 2)
+#define MOVE_LIMITATION_TORMENTED (1 << 3)
+#define MOVE_LIMITATION_TAUNT     (1 << 4)
+#define MOVE_LIMITATION_IMPRISON  (1 << 5)
 
 #define ABILITYEFFECT_ON_SWITCHIN                0x0
 #define ABILITYEFFECT_ENDTURN                    0x1
@@ -30,16 +30,21 @@
 #define ABILITYEFFECT_CHECK_ON_FIELD             0x13
 #define ABILITYEFFECT_SWITCH_IN_WEATHER          0xFF
 
-#define ABILITY_ON_OPPOSING_FIELD(battlerId, abilityId)(AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, battlerId, abilityId, 0, 0))
-#define ABILITY_ON_FIELD(abilityId)(AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, abilityId, 0, 0))
-#define ABILITY_ON_FIELD2(abilityId)(AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, abilityId, 0, 0))
+#define ABILITY_ON_OPPOSING_FIELD(battlerId, abilityId)                                            \
+    (AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, battlerId, abilityId, 0, 0))
+#define ABILITY_ON_FIELD(abilityId)                                                                \
+    (AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, abilityId, 0, 0))
+#define ABILITY_ON_FIELD2(abilityId)                                                               \
+    (AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, abilityId, 0, 0))
 
-#define ITEMEFFECT_ON_SWITCH_IN                 0x0
-#define ITEMEFFECT_MOVE_END                     0x3
-#define ITEMEFFECT_KINGSROCK_SHELLBELL          0x4
+#define ITEMEFFECT_ON_SWITCH_IN        0x0
+#define ITEMEFFECT_MOVE_END            0x3
+#define ITEMEFFECT_KINGSROCK_SHELLBELL 0x4
 
-#define WEATHER_HAS_EFFECT ((!ABILITY_ON_FIELD(ABILITY_CLOUD_NINE) && !ABILITY_ON_FIELD(ABILITY_AIR_LOCK)))
-#define WEATHER_HAS_EFFECT2 ((!ABILITY_ON_FIELD2(ABILITY_CLOUD_NINE) && !ABILITY_ON_FIELD2(ABILITY_AIR_LOCK)))
+#define WEATHER_HAS_EFFECT                                                                         \
+    ((!ABILITY_ON_FIELD(ABILITY_CLOUD_NINE) && !ABILITY_ON_FIELD(ABILITY_AIR_LOCK)))
+#define WEATHER_HAS_EFFECT2                                                                        \
+    ((!ABILITY_ON_FIELD2(ABILITY_CLOUD_NINE) && !ABILITY_ON_FIELD2(ABILITY_AIR_LOCK)))
 
 u8 GetBattlerForBattleScript(u8 caseId);
 void PressurePPLose(u8 target, u8 attacker, u16 move);
@@ -54,7 +59,7 @@ void PrepareStringBattle(u16 stringId, u8 battlerId);
 void ResetSentPokesToOpponentValue(void);
 void OpponentSwitchInResetSentPokesToOpponentValue(u8 battlerId);
 void UpdateSentPokesToOpponentValue(u8 battlerId);
-void BattleScriptPush(const u8* bsPtr);
+void BattleScriptPush(const u8 *bsPtr);
 void BattleScriptPushCursor(void);
 void BattleScriptPop(void);
 u8 TrySetCantSelectMoveBattleScript(void);
@@ -70,8 +75,8 @@ u8 AtkCanceller_UnableToUseMove(void);
 bool8 HasNoMonsToSwitch(u8 battlerId, u8 r1, u8 r2);
 u8 CastformDataTypeChange(u8 battlerId);
 u8 AbilityBattleEffects(u8 caseID, u8 battlerId, u8 ability, u8 special, u16 moveArg);
-void BattleScriptExecute(const u8* BS_ptr);
-void BattleScriptPushCursorAndCallback(const u8* BS_ptr);
+void BattleScriptExecute(const u8 *BS_ptr);
+void BattleScriptPushCursorAndCallback(const u8 *BS_ptr);
 u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn);
 void ClearFuryCutterDestinyBondGrudge(u8 battlerId);
 void HandleAction_RunBattleScript(void);

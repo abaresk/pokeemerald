@@ -36,30 +36,25 @@ static void Task_ResetRtcScreen(u8 taskId);
 static void sub_809F048(void);
 
 // const rom data
-static const struct BgTemplate sBackgroundTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    }
-};
+static const struct BgTemplate sBackgroundTemplates[] = { { .bg = 0,
+    .charBaseIndex = 0,
+    .mapBaseIndex = 31,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0 } };
 
-static const struct WindowTemplate sUnknown_08510408[] =
-{
-    {0x00, 0x01, 0x01, 0x13, 0x09, 0x0f, 0x0155},
-    {0x00, 0x02, 0x0f, 0x1b, 0x04, 0x0f, 0x00e9},
+static const struct WindowTemplate sUnknown_08510408[] = {
+    { 0x00, 0x01, 0x01, 0x13, 0x09, 0x0f, 0x0155 },
+    { 0x00, 0x02, 0x0f, 0x1b, 0x04, 0x0f, 0x00e9 },
     DUMMY_WIN_TEMPLATE
 };
 
-static const struct WindowTemplate sUnknown_08510420 = {0x00, 0x04, 0x09, 0x15, 0x02, 0x0f, 0x00bf};
+static const struct WindowTemplate sUnknown_08510420 = {
+    0x00, 0x04, 0x09, 0x15, 0x02, 0x0f, 0x00bf
+};
 
-static const struct ResetRtcStruct sUnknown_08510428[5] =
-{
+static const struct ResetRtcStruct sUnknown_08510428[5] = {
     {
         .dataIndex = 3,
         .minVal = 1,
@@ -102,8 +97,7 @@ static const struct ResetRtcStruct sUnknown_08510428[5] =
     },
 };
 
-static const struct OamData sOamData_08510464 =
-{
+static const struct OamData sOamData_08510464 = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -119,48 +113,41 @@ static const struct OamData sOamData_08510464 =
     .affineParam = 0,
 };
 
-static const u8 sResetRtcScreen_DownArrowGfx[] = INCBIN_U8("graphics/misc/reset_rtc_screen_downarrow.4bpp");
-static const u8 sResetRtcScreen_RightArrowGfx[] = INCBIN_U8("graphics/misc/reset_rtc_screen_rightarrow.4bpp");
-static const u16 sResetRtcScreen_ArrowPal[] = INCBIN_U16("graphics/misc/reset_rtc_screen_arrow.gbapal");
+static const u8 sResetRtcScreen_DownArrowGfx[] =
+    INCBIN_U8("graphics/misc/reset_rtc_screen_downarrow.4bpp");
+static const u8 sResetRtcScreen_RightArrowGfx[] =
+    INCBIN_U8("graphics/misc/reset_rtc_screen_rightarrow.4bpp");
+static const u16 sResetRtcScreen_ArrowPal[] =
+    INCBIN_U16("graphics/misc/reset_rtc_screen_arrow.gbapal");
 
-static const struct SpriteFrameImage sSpriteImageTable_85104B4[] =
-{
-    obj_frame_tiles(sResetRtcScreen_DownArrowGfx),
-    obj_frame_tiles(sResetRtcScreen_RightArrowGfx)
+static const struct SpriteFrameImage sSpriteImageTable_85104B4[] = {
+    obj_frame_tiles(sResetRtcScreen_DownArrowGfx), obj_frame_tiles(sResetRtcScreen_RightArrowGfx)
 };
 
-static const struct SpritePalette sSpritePalette_Arrow =
-{
-    sResetRtcScreen_ArrowPal, 0x1000
-};
+static const struct SpritePalette sSpritePalette_Arrow = { sResetRtcScreen_ArrowPal, 0x1000 };
 
-static const union AnimCmd sSpriteAnim_85104CC[] =
-{
+static const union AnimCmd sSpriteAnim_85104CC[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_85104D4[] =
-{
+static const union AnimCmd sSpriteAnim_85104D4[] = {
     ANIMCMD_FRAME(0, 30, .vFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_85104DC[] =
-{
+static const union AnimCmd sSpriteAnim_85104DC[] = {
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_85104E4[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_85104E4[] = {
     sSpriteAnim_85104CC,
     sSpriteAnim_85104D4,
     sSpriteAnim_85104DC,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_85104F0 =
-{
+static const struct SpriteTemplate sSpriteTemplate_85104F0 = {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
     .oam = &sOamData_08510464,
@@ -423,7 +410,10 @@ static void Task_ResetRtc_1(u8 taskId)
             data[2] = 6;
         }
     }
-    else if (MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, gMain.newAndRepeatedKeys & (DPAD_UP | DPAD_DOWN)))
+    else if (MoveTimeUpDown(&data[selectionInfo->dataIndex],
+                 selectionInfo->minVal,
+                 selectionInfo->maxVal,
+                 gMain.newAndRepeatedKeys & (DPAD_UP | DPAD_DOWN)))
     {
         PlaySE(SE_SELECT);
         PrintTime(data[8], 0, 1, data[3], data[4], data[5], data[6]);
@@ -511,16 +501,9 @@ static void Task_ShowResetRtcPrompt(u8 taskId)
         DrawStdFrameWithCustomTileAndPalette(0, FALSE, 0x214, 0xE);
         AddTextPrinterParameterized(0, 1, gText_PresentTime, 0, 1, TEXT_SPEED_FF, 0);
         PrintTime(
-            0,
-            0,
-            17,
-            gLocalTime.days,
-            gLocalTime.hours,
-            gLocalTime.minutes,
-            gLocalTime.seconds);
+            0, 0, 17, gLocalTime.days, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
         AddTextPrinterParameterized(0, 1, gText_PreviousTime, 0, 33, TEXT_SPEED_FF, 0);
-        PrintTime(
-            0,
+        PrintTime(0,
             0,
             49,
             gSaveBlock2Ptr->lastBerryTreeUpdate.days,
@@ -595,10 +578,7 @@ static void Task_ResetRtcScreen(u8 taskId)
                 DestroyTask(data[1]);
                 RtcReset();
                 RtcCalcLocalTimeOffset(
-                    gLocalTime.days,
-                    gLocalTime.hours,
-                    gLocalTime.minutes,
-                    gLocalTime.seconds);
+                    gLocalTime.days, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
                 gSaveBlock2Ptr->lastBerryTreeUpdate = gLocalTime;
                 VarSet(VAR_DAYS, gLocalTime.days);
                 DisableResetRTC();

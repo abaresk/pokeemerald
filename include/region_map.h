@@ -16,7 +16,8 @@ enum
     MAP_INPUT_B_BUTTON,
 };
 
-enum {
+enum
+{
     MAPSECTYPE_NONE,
     MAPSECTYPE_ROUTE,
     MAPSECTYPE_CITY_CANFLY,
@@ -24,7 +25,8 @@ enum {
     MAPSECTYPE_BATTLE_FRONTIER
 };
 
-struct RegionMap {
+struct RegionMap
+{
     /*0x000*/ u16 mapSecId;
     /*0x002*/ u8 mapSecType;
     /*0x003*/ u8 posWithinMapSec;
@@ -91,7 +93,8 @@ struct RegionMapLocation
 // Exported RAM declarations
 
 // Exported ROM declarations
-void InitRegionMapData(struct RegionMap *regionMap, const struct BgTemplate *template, bool8 zoomed);
+void InitRegionMapData(
+    struct RegionMap *regionMap, const struct BgTemplate *template, bool8 zoomed);
 bool8 LoadRegionMapGfx(void);
 void UpdateRegionMapVideoRegs(void);
 void InitRegionMap(struct RegionMap *regionMap, u8 argument);
@@ -116,4 +119,4 @@ void SetRegionMapDataForZoom(void);
 
 extern const struct RegionMapLocation gRegionMapEntries[];
 
-#endif //GUARD_REGION_MAP_H
+#endif // GUARD_REGION_MAP_H

@@ -30,90 +30,62 @@ const u32 gUnknown_08623228[] = INCBIN_U32("graphics/pokenav/8623228.4bpp.lz");
 const u32 gUnknown_0862323C[] = INCBIN_U32("graphics/pokenav/862323C.bin.lz");
 const u16 gUnknown_08623338[] = INCBIN_U16("graphics/pokenav/8623338.gbapal");
 
-const struct BgTemplate gUnknown_08623358[3] = 
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 1,
-        .mapBaseIndex = 0x1F,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+const struct BgTemplate gUnknown_08623358[3] = { { .bg = 1,
+                                                     .charBaseIndex = 1,
+                                                     .mapBaseIndex = 0x1F,
+                                                     .screenSize = 0,
+                                                     .paletteMode = 0,
+                                                     .priority = 1,
+                                                     .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 3,
         .mapBaseIndex = 0x1D,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 2,
         .mapBaseIndex = 0x1E,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-const struct WindowTemplate gUnknown_08623364 = 
-{
-    .bg = 1,
+const struct WindowTemplate gUnknown_08623364 = { .bg = 1,
     .tilemapLeft = 13,
     .tilemapTop = 1,
     .width = 13,
     .height = 4,
     .paletteNum = 15,
-    .baseBlock = 2
-};
+    .baseBlock = 2 };
 
-const struct WindowTemplate gUnknown_0862336C = 
-{
-    .bg = 1,
+const struct WindowTemplate gUnknown_0862336C = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 6,
     .width = 7,
     .height = 2,
     .paletteNum = 15,
-    .baseBlock = 0x36
-};
+    .baseBlock = 0x36 };
 
-const struct WindowTemplate gUnknown_08623374 = 
-{
-    .bg = 1,
+const struct WindowTemplate gUnknown_08623374 = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 0x1C,
     .width = 5,
     .height = 2,
     .paletteNum = 15,
-    .baseBlock = 0x44
-};
+    .baseBlock = 0x44 };
 
-const struct WindowTemplate gUnknown_0862337C = 
-{
-    .bg = 1,
+const struct WindowTemplate gUnknown_0862337C = { .bg = 1,
     .tilemapLeft = 13,
     .tilemapTop = 0x1C,
     .width = 3,
     .height = 2,
     .paletteNum = 15,
-    .baseBlock = 0x44
-};
+    .baseBlock = 0x44 };
 
-const LoopedTask gUnknown_08623384[] =
-{
-    NULL,
-    sub_81CE37C,
-    sub_81CE2D0,
-    sub_81CE4D8,
-    sub_81CE5E4,
-    sub_81CE6BC,
-    sub_81CE700
+const LoopedTask gUnknown_08623384[] = {
+    NULL, sub_81CE37C, sub_81CE2D0, sub_81CE4D8, sub_81CE5E4, sub_81CE6BC, sub_81CE700
 };
 
 struct Pokenav7Struct
@@ -139,7 +111,8 @@ struct Pokenav7Struct
     u8 filler2[0x38ac - 0x2909];
 };
 
-extern s8 sub_81CDC84(void); // This function's declaration here is different than its definition in pokenav_unk_6. u8/s8
+extern s8 sub_81CDC84(void); // This function's declaration here is different than its definition in
+                             // pokenav_unk_6. u8/s8
 
 u32 sub_81CDE94(s32 state);
 u32 sub_81CDE80(void);
@@ -205,7 +178,9 @@ u32 sub_81CDE94(s32 state)
         ChangeBgY(2, 0, 0);
         ChangeBgX(3, 0, 0);
         ChangeBgY(3, 0, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP |
+                DISPCNT_BG0_ON | DISPCNT_BG3_ON);
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(11, 4));
         DecompressAndCopyTileDataToVram(3, gPokenavCondition_Gfx, 0, 0, 0);
@@ -216,7 +191,7 @@ u32 sub_81CDE94(s32 state)
         DecompressAndCopyTileDataToVram(2, gUnknown_08623228, 0, 0, 0);
         return LT_INC_AND_PAUSE;
     case 3:
-         if (FreeTempTileDataBuffersIfPossible())
+        if (FreeTempTileDataBuffersIfPossible())
             return LT_PAUSE;
 
         LZ77UnCompVram(gPokenavCondition_Tilemap, structPtr->tilemapBuffers[0]);
@@ -327,7 +302,8 @@ u32 sub_81CDE94(s32 state)
         {
             ResetConditionSparkleSprites(structPtr->unk28e0);
             if (sub_81CDD5C() == TRUE || sub_81CDC60() != sub_81CDC50())
-                CreateConditionSparkleSprites(structPtr->unk28e0, structPtr->unk1816, sub_81CDDB0());
+                CreateConditionSparkleSprites(
+                    structPtr->unk28e0, structPtr->unk1816, sub_81CDDB0());
 
             return LT_FINISH;
         }
@@ -821,7 +797,7 @@ void sub_81CED30(u8 var)
         {
             structPtr->unk1816 = spriteId;
             gSprites[structPtr->unk1816].callback = sub_81CED10;
-            structPtr->unk181C = (void*)(VRAM) + 0x10000 + (structPtr->unk181A * 32);
+            structPtr->unk181C = (void *)(VRAM) + 0x10000 + (structPtr->unk181A * 32);
             structPtr->unk1818 = (structPtr->unk1818 * 16) + 0x100;
         }
     }

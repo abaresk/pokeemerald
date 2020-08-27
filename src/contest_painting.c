@@ -85,8 +85,7 @@ const u8 gPictureFrameTilemap_3[] = INCBIN_U8("graphics/picture_frame/frame3_map
 const u8 gPictureFrameTilemap_4[] = INCBIN_U8("graphics/picture_frame/frame4_map.bin.rl");
 const u8 gPictureFrameTilemap_5[] = INCBIN_U8("graphics/picture_frame/frame5_map.bin.rl");
 
-static const u8 *const sContestCategoryNames_Unused[] =
-{
+static const u8 *const sContestCategoryNames_Unused[] = {
     gContestCoolness,
     gContestBeauty,
     gContestCuteness,
@@ -94,8 +93,7 @@ static const u8 *const sContestCategoryNames_Unused[] =
     gContestToughness,
 };
 
-static const u8 *const sContestRankNames[] =
-{
+static const u8 *const sContestRankNames[] = {
     gContestRankNormal,
     gContestRankSuper,
     gContestRankHyper,
@@ -103,8 +101,7 @@ static const u8 *const sContestRankNames[] =
     gContestLink,
 };
 
-static const struct BgTemplate sContestPaintingBgTemplates[] =
-{
+static const struct BgTemplate sContestPaintingBgTemplates[] = {
     {
         .bg = 1,
         .charBaseIndex = 1,
@@ -116,8 +113,7 @@ static const struct BgTemplate sContestPaintingBgTemplates[] =
     },
 };
 
-static const struct WindowTemplate sContestPaintingWindowTemplate =
-{
+static const struct WindowTemplate sContestPaintingWindowTemplate = {
     .bg = 1,
     .tilemapLeft = 2,
     .tilemapTop = 14,
@@ -127,8 +123,7 @@ static const struct WindowTemplate sContestPaintingWindowTemplate =
     .baseBlock = 1,
 };
 
-static const u8 *const sContestPaintingDescriptionPointers[] =
-{
+static const u8 *const sContestPaintingDescriptionPointers[] = {
     gContestPaintingCool1,
     gContestPaintingCool2,
     gContestPaintingCool3,
@@ -146,8 +141,7 @@ static const u8 *const sContestPaintingDescriptionPointers[] =
     gContestPaintingTough3,
 };
 
-static const struct OamData sContestPaintingMonOamData =
-{
+static const struct OamData sContestPaintingMonOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -161,16 +155,16 @@ static const struct OamData sContestPaintingMonOamData =
     .paletteNum = 0,
 };
 
-const u16 gUnknown_085B0838[] = {RGB(0, 0, 0), RGB(0, 0, 0)};
+const u16 gUnknown_085B0838[] = { RGB(0, 0, 0), RGB(0, 0, 0) };
 
 void SetContestWinnerForPainting(int contestWinnerId)
 {
     // probably fakematching
     u8 *ptr1 = &gUnknown_02039F5D;
     u8 *ptr2 = &gUnknown_02039F5C;
-	gCurContestWinner = gSaveBlock1Ptr->contestWinners[contestWinnerId - 1];
-	*ptr1 = contestWinnerId - 1;
-	*ptr2 = FALSE;
+    gCurContestWinner = gSaveBlock1Ptr->contestWinners[contestWinnerId - 1];
+    *ptr1 = contestWinnerId - 1;
+    *ptr2 = FALSE;
 }
 
 void CB2_ContestPainting(void)
@@ -231,7 +225,8 @@ static void ShowContestPainting(void)
         BeginFastPaletteFade(2);
         SetVBlankCallback(VBlankCB_ContestPainting);
         gContestPaintingState = 0;
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
         SetMainCallback2(CB2_HoldContestPainting);
         break;
     }
@@ -315,8 +310,12 @@ static void InitContestPaintingBg(void)
 {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     REG_IE |= INTR_FLAG_VBLANK;
-    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(12) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(12) | BGCNT_MOSAIC |
+            BGCNT_16COLOR | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC |
+            BGCNT_16COLOR | BGCNT_TXT256x256);
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
@@ -346,9 +345,13 @@ static void UpdateContestPaintingMosaicEffect(void)
     }
     else
     {
-        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG1CNT,
+            BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC |
+                BGCNT_16COLOR | BGCNT_TXT256x256);
         gContestPaintingMosaicVal = gContestPaintingFadeCounter / 2;
-        SetGpuReg(REG_OFFSET_MOSAIC, (gContestPaintingMosaicVal << 12) | (gContestPaintingMosaicVal << 8) | (gContestPaintingMosaicVal << 4) | (gContestPaintingMosaicVal << 0));
+        SetGpuReg(REG_OFFSET_MOSAIC,
+            (gContestPaintingMosaicVal << 12) | (gContestPaintingMosaicVal << 8) |
+                (gContestPaintingMosaicVal << 4) | (gContestPaintingMosaicVal << 0));
     }
 }
 
@@ -362,25 +365,26 @@ static void VBlankCB_ContestPainting(void)
 
 static void InitContestMonPixels(u16 species, u8 whichSprite)
 {
-    const void *pal = GetMonSpritePalFromSpeciesAndPersonality(species, gContestPaintingWinner->trainerId, gContestPaintingWinner->personality);
+    const void *pal = GetMonSpritePalFromSpeciesAndPersonality(
+        species, gContestPaintingWinner->trainerId, gContestPaintingWinner->personality);
     LZDecompressVram(pal, gContestPaintingMonPalette);
     if (whichSprite == 0)
     {
-        HandleLoadSpecialPokePic_DontHandleDeoxys(
-            &gMonFrontPicTable[species],
+        HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],
             gMonSpritesGfxPtr->sprites[1],
             species,
             gContestPaintingWinner->personality);
-        _InitContestMonPixels(gMonSpritesGfxPtr->sprites[1], gContestPaintingMonPalette, (void *)gContestMonPixels);
+        _InitContestMonPixels(
+            gMonSpritesGfxPtr->sprites[1], gContestPaintingMonPalette, (void *)gContestMonPixels);
     }
     else
     {
-        HandleLoadSpecialPokePic_DontHandleDeoxys(
-            &gMonBackPicTable[species],
+        HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonBackPicTable[species],
             gMonSpritesGfxPtr->sprites[0],
             species,
             gContestPaintingWinner->personality);
-        _InitContestMonPixels(gMonSpritesGfxPtr->sprites[0], gContestPaintingMonPalette, (void *)gContestMonPixels);
+        _InitContestMonPixels(
+            gMonSpritesGfxPtr->sprites[0], gContestPaintingMonPalette, (void *)gContestMonPixels);
     }
 }
 
@@ -397,13 +401,14 @@ static void _InitContestMonPixels(u8 *spriteGfx, u16 *palette, u16 (*destPixels)
             {
                 for (pixelX = 0; pixelX < 8; pixelX++)
                 {
-                    colorIndex = spriteGfx[((tileY * 8) + tileX) * 32 + (pixelY << 2) + (pixelX >> 1)];
+                    colorIndex =
+                        spriteGfx[((tileY * 8) + tileX) * 32 + (pixelY << 2) + (pixelX >> 1)];
                     if (pixelX & 1)
                         colorIndex >>= 4;
                     else
                         colorIndex &= 0xF; // %=16 works here too. Both match
 
-                    if (colorIndex == 0)   // transparent pixel
+                    if (colorIndex == 0) // transparent pixel
                         (*destPixels)[tileY * 8 + pixelY][tileX * 8 + pixelX] = 0x8000;
                     else
                         (*destPixels)[tileY * 8 + pixelY][tileX * 8 + pixelX] = palette[colorIndex];
@@ -413,7 +418,7 @@ static void _InitContestMonPixels(u8 *spriteGfx, u16 *palette, u16 (*destPixels)
     }
 }
 
-#define VRAM_PICTURE_DATA(x, y) (((u16 *)(BG_SCREEN_ADDR(12)))[(y) * 32 + (x)])
+#define VRAM_PICTURE_DATA(x, y) (((u16 *)(BG_SCREEN_ADDR(12)))[(y)*32 + (x)])
 
 static void LoadContestPaintingFrame(u8 contestWinnerId, bool8 arg1)
 {
@@ -501,16 +506,17 @@ static void LoadContestPaintingFrame(u8 contestWinnerId, bool8 arg1)
 
 static void InitPaintingMonOamData(u8 contestWinnerId)
 {
-    //Some hacks just to get the asm to match
+    // Some hacks just to get the asm to match
 #ifndef NONMATCHING
-    asm(""::"r"(contestWinnerId));
+    asm("" ::"r"(contestWinnerId));
 #endif
 
     gMain.oamBuffer[0] = sContestPaintingMonOamData;
     gMain.oamBuffer[0].tileNum = 0;
 
 #ifndef NONMATCHING
-    if (contestWinnerId) contestWinnerId = gMain.oamBuffer[0].tileNum;
+    if (contestWinnerId)
+        contestWinnerId = gMain.oamBuffer[0].tileNum;
 #endif
 
     gMain.oamBuffer[0].x = 88;
@@ -594,4 +600,3 @@ static void CreateContestPaintingPicture(u8 contestWinnerId, bool8 arg1)
     InitPaintingMonOamData(contestWinnerId);
     LoadContestPaintingFrame(contestWinnerId, arg1);
 }
-

@@ -9,9 +9,9 @@
 
 struct IntroCreditsSpriteMetadata
 {
-    u8 animNum:4;
-    u8 shape:2;
-    u8 size:2;
+    u8 animNum : 4;
+    u8 shape : 2;
+    u8 size : 2;
     u8 x;
     u8 y;
     u8 subpriority;
@@ -28,10 +28,12 @@ static const u16 gUnknown_085F0D5C[] = INCBIN_U16("graphics/intro/85F0D5C.gbapal
 static const u32 gUnknown_085F0DBC[] = INCBIN_U32("graphics/intro/intro2_bgclouds.4bpp.lz");
 static const u32 gUnknown_085F1398[] = INCBIN_U32("graphics/intro/intro2_bgclouds_map.bin.lz");
 static const u16 gUnknown_085F1668[] = INCBIN_U16("graphics/intro/intro2_bgclouds.gbapal");
-static const u16 gUnknown_085F1688[] = INCBIN_U16("graphics/intro/intro2_bgclouds_afternoon.gbapal");
+static const u16 gUnknown_085F1688[] =
+    INCBIN_U16("graphics/intro/intro2_bgclouds_afternoon.gbapal");
 static const u32 gUnknown_085F16A8[] = INCBIN_U32("graphics/intro/intro2_bgclouds2.4bpp.lz");
 static const u16 gUnknown_085F17E4[] = INCBIN_U16("graphics/intro/intro2_bgtrees2.gbapal");
-static const u16 gUnknown_085F1804[] = INCBIN_U16("graphics/intro/intro2_bgtrees2_afternoon.gbapal");
+static const u16 gUnknown_085F1804[] =
+    INCBIN_U16("graphics/intro/intro2_bgtrees2_afternoon.gbapal");
 static const u32 gUnknown_085F1824[] = INCBIN_U32("graphics/intro/intro2_bgtrees.4bpp.lz");
 static const u32 gUnknown_085F1EAC[] = INCBIN_U32("graphics/intro/intro2_bgtrees_map.bin.lz");
 static const u16 gUnknown_085F21B0[] = INCBIN_U16("graphics/intro/intro2_bgtrees.gbapal");
@@ -44,7 +46,7 @@ static const u32 gIntro2NightTiles[] = INCBIN_U32("graphics/intro/intro2_night.4
 static const u16 gIntro2BrendanPalette[] = INCBIN_U16("graphics/intro/intro2_brendan.gbapal");
 static const u32 gIntro2BrendanTiles[] = INCBIN_U32("graphics/intro/intro2_brendan.4bpp.lz");
 static const u16 gIntro2MayPalette[] = INCBIN_U16("graphics/intro/intro2_may.gbapal");
-static const u16 gUnknown_085F3490[0xF0] = {0};
+static const u16 gUnknown_085F3490[0xF0] = { 0 };
 static const u32 gIntro2MayTiles[] = INCBIN_U32("graphics/intro/intro2_may.4bpp.lz");
 static const u32 gIntro2BicycleTiles[] = INCBIN_U32("graphics/intro/intro2_bicycle.4bpp.lz");
 static const u16 gIntro2LatiosPalette[] = INCBIN_U16("graphics/intro/intro2_latios.gbapal");
@@ -57,181 +59,111 @@ static void nullsub_65(struct Sprite *sprite);
 static void sub_817B7C4(struct Sprite *sprite);
 static void nullsub_66(struct Sprite *sprite);
 
-static const struct SpriteTemplate gUnknown_085F504C =
-{
-    .tileTag = 2000,
+static const struct SpriteTemplate gUnknown_085F504C = { .tileTag = 2000,
     .paletteTag = 0xFFFF,
     .oam = &gDummyOamData,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_817B62C
+    .callback = sub_817B62C };
+
+static const struct CompressedSpriteSheet gUnknown_085F5064[] = {
+    { .data = gUnknown_085F16A8, .size = 0x400, .tag = 2000 }, {}
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F5064[] =
-{
-    {
-        .data = gUnknown_085F16A8,
-        .size = 0x400,
-        .tag = 2000
-    },
-    {}
+static const union AnimCmd gUnknown_085F5074[] = { ANIMCMD_FRAME(0, 30), ANIMCMD_END };
+
+static const union AnimCmd gUnknown_085F507C[] = { ANIMCMD_FRAME(16, 30), ANIMCMD_END };
+
+static const union AnimCmd gUnknown_085F5084[] = { ANIMCMD_FRAME(20, 30), ANIMCMD_END };
+
+static const union AnimCmd gUnknown_085F508C[] = { ANIMCMD_FRAME(22, 30), ANIMCMD_END };
+
+static const union AnimCmd *const gUnknown_085F5094[] = {
+    gUnknown_085F5074, gUnknown_085F507C, gUnknown_085F5084, gUnknown_085F508C
 };
 
-static const union AnimCmd gUnknown_085F5074[] =
-{
-    ANIMCMD_FRAME( 0, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd gUnknown_085F507C[] =
-{
-    ANIMCMD_FRAME(16, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd gUnknown_085F5084[] =
-{
-    ANIMCMD_FRAME(20, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd gUnknown_085F508C[] =
-{
-    ANIMCMD_FRAME(22, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const gUnknown_085F5094[] =
-{
-    gUnknown_085F5074,
-    gUnknown_085F507C,
-    gUnknown_085F5084,
-    gUnknown_085F508C
-};
-
-static const struct IntroCreditsSpriteMetadata gUnknown_085F50A4[] =
-{
-    {
-        .animNum = 0,
+static const struct IntroCreditsSpriteMetadata gUnknown_085F50A4[] = {
+    { .animNum = 0,
         .shape = SPRITE_SHAPE(32x32),
         .size = SPRITE_SIZE(32x32),
         .x = 72,
         .y = 32,
         .subpriority = 100,
-        .xOff = 0xc00
-    },
-    {
-        .animNum = 0,
+        .xOff = 0xc00 },
+    { .animNum = 0,
         .shape = SPRITE_SHAPE(32x32),
         .size = SPRITE_SIZE(32x32),
         .x = 158,
         .y = 32,
         .subpriority = 100,
-        .xOff = 0xc00
-    },
-    {
-        .animNum = 1,
+        .xOff = 0xc00 },
+    { .animNum = 1,
         .shape = SPRITE_SHAPE(16x16),
         .size = SPRITE_SIZE(16x16),
         .x = 192,
         .y = 40,
         .subpriority = 101,
-        .xOff = 0x800
-    },
-    {
-        .animNum = 1,
+        .xOff = 0x800 },
+    { .animNum = 1,
         .shape = SPRITE_SHAPE(16x16),
         .size = SPRITE_SIZE(16x16),
         .x = 56,
         .y = 40,
         .subpriority = 101,
-        .xOff = 0x800
-    },
-    {
-        .animNum = 2,
+        .xOff = 0x800 },
+    { .animNum = 2,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
         .x = 100,
         .y = 44,
         .subpriority = 102,
-        .xOff = 0x400
-    },
-    {
-        .animNum = 2,
+        .xOff = 0x400 },
+    { .animNum = 2,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
         .x = 152,
         .y = 44,
         .subpriority = 102,
-        .xOff = 0x400
-    },
-    {
-        .animNum = 3,
+        .xOff = 0x400 },
+    { .animNum = 3,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
         .x = 8,
         .y = 46,
         .subpriority = 103,
-        .xOff = 0x100
-    },
-    {
-        .animNum = 3,
+        .xOff = 0x100 },
+    { .animNum = 3,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
         .x = 56,
         .y = 46,
         .subpriority = 103,
-        .xOff = 0x100
-    },
-    {
-        .animNum = 3,
+        .xOff = 0x100 },
+    { .animNum = 3,
         .shape = SPRITE_SHAPE(16x8),
         .size = SPRITE_SIZE(16x8),
         .x = 240,
         .y = 46,
         .subpriority = 103,
-        .xOff = 0x100
-    },
+        .xOff = 0x100 },
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F50EC[] =
-{
-    {
-        .data = gIntro2TreeTiles,
-        .size = 0x400,
-        .tag = 2000
-    },
-    {}
+static const struct CompressedSpriteSheet gUnknown_085F50EC[] = {
+    { .data = gIntro2TreeTiles, .size = 0x400, .tag = 2000 }, {}
 };
 
-static const union AnimCmd gUnknown_085F50FC[] =
-{
-    ANIMCMD_FRAME( 0, 30),
-    ANIMCMD_END
+static const union AnimCmd gUnknown_085F50FC[] = { ANIMCMD_FRAME(0, 30), ANIMCMD_END };
+
+static const union AnimCmd gUnknown_085F5104[] = { ANIMCMD_FRAME(16, 30), ANIMCMD_END };
+
+static const union AnimCmd gUnknown_085F510C[] = { ANIMCMD_FRAME(24, 30), ANIMCMD_END };
+
+static const union AnimCmd *const gUnknown_085F5114[] = {
+    gUnknown_085F50FC, gUnknown_085F5104, gUnknown_085F510C
 };
 
-static const union AnimCmd gUnknown_085F5104[] =
-{
-    ANIMCMD_FRAME(16, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd gUnknown_085F510C[] =
-{
-    ANIMCMD_FRAME(24, 30),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const gUnknown_085F5114[] =
-{
-    gUnknown_085F50FC,
-    gUnknown_085F5104,
-    gUnknown_085F510C
-};
-
-static const struct IntroCreditsSpriteMetadata gUnknown_085F5120[] =
-{
+static const struct IntroCreditsSpriteMetadata gUnknown_085F5120[] = {
     {
         .animNum = 0,
         .shape = SPRITE_SHAPE(32x32),
@@ -342,29 +274,15 @@ static const struct IntroCreditsSpriteMetadata gUnknown_085F5120[] =
     }
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F5180[] =
-{
-    {
-        .data = gIntro2NightTiles,
-        .size = 0x400,
-        .tag = 2000
-    },
-    {}
+static const struct CompressedSpriteSheet gUnknown_085F5180[] = {
+    { .data = gIntro2NightTiles, .size = 0x400, .tag = 2000 }, {}
 };
 
-static const union AnimCmd gUnknown_085F5190[] =
-{
-    ANIMCMD_FRAME(0, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd gUnknown_085F5190[] = { ANIMCMD_FRAME(0, 30), ANIMCMD_END };
 
-static const union AnimCmd *const gUnknown_085F5198[] =
-{
-    gUnknown_085F5190
-};
+static const union AnimCmd *const gUnknown_085F5198[] = { gUnknown_085F5190 };
 
-static const struct IntroCreditsSpriteMetadata gUnknown_085F519C[] =
-{
+static const struct IntroCreditsSpriteMetadata gUnknown_085F519C[] = {
     {
         .animNum = 0,
         .shape = SPRITE_SHAPE(32x32),
@@ -421,278 +339,147 @@ static const struct IntroCreditsSpriteMetadata gUnknown_085F519C[] =
     }
 };
 
-static const struct OamData gOamData_85F51CC =
-{
-    .y = 160,
-    .shape = SPRITE_SHAPE(64x64),
-    .size = SPRITE_SIZE(64x64),
-    .priority = 1
+static const struct OamData gOamData_85F51CC = {
+    .y = 160, .shape = SPRITE_SHAPE(64x64), .size = SPRITE_SIZE(64x64), .priority = 1
 };
 
-static const union AnimCmd gUnknown_085F51D4[] =
-{
-    ANIMCMD_FRAME(  0, 8),
-    ANIMCMD_FRAME( 64, 8),
+static const union AnimCmd gUnknown_085F51D4[] = { ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(64, 8),
     ANIMCMD_FRAME(128, 8),
     ANIMCMD_FRAME(192, 8),
-    ANIMCMD_JUMP(0)
-};
+    ANIMCMD_JUMP(0) };
 
-static const union AnimCmd *const gUnknown_085F51E8[] =
-{
-    gUnknown_085F51D4
-};
+static const union AnimCmd *const gUnknown_085F51E8[] = { gUnknown_085F51D4 };
 
-static const struct SpriteTemplate gUnknown_085F51EC =
-{
-    .tileTag = 1002,
+static const struct SpriteTemplate gUnknown_085F51EC = { .tileTag = 1002,
     .paletteTag = 1002,
     .oam = &gOamData_85F51CC,
     .anims = gUnknown_085F51E8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = nullsub_65
-};
+    .callback = nullsub_65 };
 
-static const struct SpriteTemplate gUnknown_085F5204 =
-{
-    .tileTag = 1003,
+static const struct SpriteTemplate gUnknown_085F5204 = { .tileTag = 1003,
     .paletteTag = 1003,
     .oam = &gOamData_85F51CC,
     .anims = gUnknown_085F51E8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = nullsub_65
+    .callback = nullsub_65 };
+
+static const struct OamData gUnknown_085F521C = {
+    .y = 160, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .priority = 1
 };
 
-static const struct OamData gUnknown_085F521C =
-{
-    .y = 160,
-    .shape = SPRITE_SHAPE(64x32),
-    .size = SPRITE_SIZE(64x32),
-    .priority = 1
-};
+static const union AnimCmd gUnknown_085F5224[] = { ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(32, 8),
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_FRAME(96, 8),
+    ANIMCMD_JUMP(0) };
 
-static const union AnimCmd gUnknown_085F5224[] =
-{
-    ANIMCMD_FRAME(  0, 8),
-    ANIMCMD_FRAME( 32, 8),
-    ANIMCMD_FRAME( 64, 8),
-    ANIMCMD_FRAME( 96, 8),
-    ANIMCMD_JUMP(0)
-};
+static const union AnimCmd *const gUnknown_085F5238[] = { gUnknown_085F5224 };
 
-static const union AnimCmd *const gUnknown_085F5238[] =
-{
-    gUnknown_085F5224
-};
-
-static const struct SpriteTemplate gUnknown_085F523C =
-{
-    .tileTag = 1001,
+static const struct SpriteTemplate gUnknown_085F523C = { .tileTag = 1001,
     .paletteTag = 1002,
     .oam = &gUnknown_085F521C,
     .anims = gUnknown_085F5238,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_817B7C4
-};
+    .callback = sub_817B7C4 };
 
-static const struct SpriteTemplate gUnknown_085F5254 =
-{
-    .tileTag = 1001,
+static const struct SpriteTemplate gUnknown_085F5254 = { .tileTag = 1001,
     .paletteTag = 1003,
     .oam = &gUnknown_085F521C,
     .anims = gUnknown_085F5238,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_817B7C4
+    .callback = sub_817B7C4 };
+
+static const struct OamData gUnknown_085F526C = {
+    .y = 160, .shape = SPRITE_SHAPE(64x64), .size = SPRITE_SIZE(64x64), .priority = 1
 };
 
-static const struct OamData gUnknown_085F526C =
-{
-    .y = 160,
-    .shape = SPRITE_SHAPE(64x64),
-    .size = SPRITE_SIZE(64x64),
-    .priority = 1
-};
+static const union AnimCmd gUnknown_085F5274[] = { ANIMCMD_FRAME(0, 16), ANIMCMD_END };
 
-static const union AnimCmd gUnknown_085F5274[] =
-{
-    ANIMCMD_FRAME(  0, 16),
-    ANIMCMD_END
-};
+static const union AnimCmd gUnknown_085F527C[] = { ANIMCMD_FRAME(64, 16), ANIMCMD_END };
 
-static const union AnimCmd gUnknown_085F527C[] =
-{
-    ANIMCMD_FRAME( 64, 16),
-    ANIMCMD_END
-};
+static const union AnimCmd *const gUnknown_085F5284[] = { gUnknown_085F5274, gUnknown_085F527C };
 
-static const union AnimCmd *const gUnknown_085F5284[] =
-{
-    gUnknown_085F5274,
-    gUnknown_085F527C
-};
-
-static const struct SpriteTemplate gUnknown_085F528C =
-{
-    .tileTag = 1004,
+static const struct SpriteTemplate gUnknown_085F528C = { .tileTag = 1004,
     .paletteTag = 1004,
     .oam = &gUnknown_085F526C,
     .anims = gUnknown_085F5284,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = nullsub_66
-};
+    .callback = nullsub_66 };
 
-static const struct SpriteTemplate gUnknown_085F52A4 =
-{
-    .tileTag = 1005,
+static const struct SpriteTemplate gUnknown_085F52A4 = { .tileTag = 1005,
     .paletteTag = 1005,
     .oam = &gUnknown_085F526C,
     .anims = gUnknown_085F5284,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = nullsub_66
+    .callback = nullsub_66 };
+
+const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[] = {
+    { .data = gIntro2BrendanNoTurnGfx, .size = 0x2000, .tag = 1002 }, {}
 };
 
-const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[] =
-{
-    {
-        .data = gIntro2BrendanNoTurnGfx,
-        .size = 0x2000,
-        .tag = 1002
-    },
-    {}
+const struct CompressedSpriteSheet gIntro2MaySpriteSheet[] = {
+    { .data = gIntro2MayNoTurnGfx, .size = 0x2000, .tag = 1003 }, {}
 };
 
-const struct CompressedSpriteSheet gIntro2MaySpriteSheet[] =
-{
-    {
-        .data = gIntro2MayNoTurnGfx,
-        .size = 0x2000,
-        .tag = 1003
-    },
-    {}
+const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[] = {
+    { .data = gIntro2BicycleTiles, .size = 0x1000, .tag = 1001 }, {}
 };
 
-const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[] =
-{
-    {
-        .data = gIntro2BicycleTiles,
-        .size = 0x1000,
-        .tag = 1001
-    },
-    {}
+static const struct CompressedSpriteSheet gUnknown_085F52EC[] = {
+    { .data = gIntro2FlygonGfx, .size = 0x1000, .tag = 1004 }, {}
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F52EC[] =
-{
-    {
-        .data = gIntro2FlygonGfx,
-        .size = 0x1000,
-        .tag = 1004
-    },
-    {}
+const struct CompressedSpriteSheet gIntro2FlygonSpriteSheet[] = {
+    { .data = gIntro2FlygonGfx, .size = 0x1000, .tag = 1005 }, {}
 };
 
-const struct CompressedSpriteSheet gIntro2FlygonSpriteSheet[] =
-{
-    {
-        .data = gIntro2FlygonGfx,
-        .size = 0x1000,
-        .tag = 1005
-    },
-    {}
-};
-
-const struct SpritePalette gIntroBikeAndFlygonPalette[] =
-{
-    { .data = gIntro2BrendanNoTurnPal, .tag = 1002 },
+const struct SpritePalette gIntroBikeAndFlygonPalette[] = { { .data = gIntro2BrendanNoTurnPal,
+                                                                .tag = 1002 },
     { .data = gIntro2BrendanNoTurnPal, .tag = 1003 },
-    { .data = gIntro2FlygonPal,        .tag = 1004 },
-    { .data = gIntro2FlygonPal,        .tag = 1005 },
-    {}
+    { .data = gIntro2FlygonPal, .tag = 1004 },
+    { .data = gIntro2FlygonPal, .tag = 1005 },
+    {} };
+
+const struct CompressedSpriteSheet gUnknown_085F5334[] = {
+    { .data = gIntro2BrendanTiles, .size = 0x3800, .tag = 1002 }, {}
 };
 
-const struct CompressedSpriteSheet gUnknown_085F5334[] =
-{
-    {
-        .data = gIntro2BrendanTiles,
-        .size = 0x3800,
-        .tag = 1002
-    },
-    {}
+const struct CompressedSpriteSheet gUnknown_085F5344[] = {
+    { .data = gIntro2MayTiles, .size = 0x3800, .tag = 1003 }, {}
 };
 
-const struct CompressedSpriteSheet gUnknown_085F5344[] =
-{
-    {
-        .data = gIntro2MayTiles,
-        .size = 0x3800,
-        .tag = 1003
-    },
-    {}
+const struct CompressedSpriteSheet gUnknown_085F5354[] = {
+    { .data = gIntro2BicycleTiles, .size = 0x1000, .tag = 1001 }, {}
 };
 
-const struct CompressedSpriteSheet gUnknown_085F5354[] =
-{
-    {
-        .data = gIntro2BicycleTiles,
-        .size = 0x1000,
-        .tag = 1001
-    },
-    {}
+static const struct CompressedSpriteSheet gUnknown_085F5364[] = {
+    { .data = gIntro2LatiosTiles, .size = 0x1000, .tag = 1004 }, {}
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F5364[] =
-{
-    {
-        .data = gIntro2LatiosTiles,
-        .size = 0x1000,
-        .tag = 1004
-    },
-    {}
+static const struct CompressedSpriteSheet gUnknown_085F5374[] = {
+    { .data = gIntro2LatiasTiles, .size = 0x1000, .tag = 1005 }, {}
 };
 
-static const struct CompressedSpriteSheet gUnknown_085F5374[] =
-{
-    {
-        .data = gIntro2LatiasTiles,
-        .size = 0x1000,
-        .tag = 1005
-    },
-    {}
+const struct SpritePalette gUnknown_085F5384[] = { { .data = gIntro2BrendanPalette, .tag = 1002 },
+    { .data = gIntro2MayPalette, .tag = 1003 },
+    { .data = gIntro2LatiosPalette, .tag = 1004 },
+    { .data = gIntro2LatiasPalette, .tag = 1005 },
+    {} };
+
+const struct CompressedSpriteSheet gUnknown_085F53AC[] = {
+    { .data = gIntro2BrendanTiles, .size = 0x2000, .tag = 1002 }, {}
 };
 
-const struct SpritePalette gUnknown_085F5384[] =
-{
-    { .data = gIntro2BrendanPalette, .tag = 1002 },
-    { .data = gIntro2MayPalette,     .tag = 1003 },
-    { .data = gIntro2LatiosPalette,  .tag = 1004 },
-    { .data = gIntro2LatiasPalette,  .tag = 1005 },
-    {}
-};
-
-const struct CompressedSpriteSheet gUnknown_085F53AC[] =
-{
-    {
-        .data = gIntro2BrendanTiles,
-        .size = 0x2000,
-        .tag = 1002
-    },
-    {}
-};
-
-const struct CompressedSpriteSheet gUnknown_085F53BC[] =
-{
-    {
-        .data = gIntro2MayTiles,
-        .size = 0x2000,
-        .tag = 1003
-    },
-    {}
+const struct CompressedSpriteSheet gUnknown_085F53BC[] = {
+    { .data = gIntro2MayTiles, .size = 0x2000, .tag = 1003 }, {}
 };
 
 EWRAM_DATA u16 gUnknown_0203BD24 = 0;
@@ -740,73 +527,46 @@ void sub_817B150(u8 a)
     {
     default:
     case 0:
-        SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(6)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(7)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1)
-                                   | BGCNT_CHARBASE(1)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(15)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                    | DISPCNT_OBJ_1D_MAP
-                                    | DISPCNT_BG1_ON
-                                    | DISPCNT_BG2_ON
-                                    | DISPCNT_BG3_ON
-                                    | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG3CNT,
+            BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(6) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG2CNT,
+            BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(7) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG1CNT,
+            BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(15) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON |
+                DISPCNT_OBJ_ON);
         break;
     case 1:
-        SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(6)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(7)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1)
-                                   | BGCNT_CHARBASE(1)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(15)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                    | DISPCNT_OBJ_1D_MAP
-                                    | DISPCNT_BG1_ON
-                                    | DISPCNT_BG2_ON
-                                    | DISPCNT_BG3_ON
-                                    | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG3CNT,
+            BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(6) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG2CNT,
+            BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(7) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG1CNT,
+            BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(15) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON |
+                DISPCNT_OBJ_ON);
         break;
     case 2:
-        SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(6)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(7)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1)
-                                   | BGCNT_CHARBASE(1)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_SCREENBASE(15)
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                    | DISPCNT_OBJ_1D_MAP
-                                    | DISPCNT_BG1_ON
-                                    | DISPCNT_BG2_ON
-                                    | DISPCNT_BG3_ON
-                                    | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG3CNT,
+            BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(6) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG2CNT,
+            BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(7) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_BG1CNT,
+            BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(15) |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON |
+                DISPCNT_OBJ_ON);
         break;
     }
 }
@@ -864,25 +624,17 @@ void sub_817B1C8(u8 a)
 
 void sub_817B3A8(u8 a)
 {
-    SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3)
-                               | BGCNT_CHARBASE(0)
-                               | BGCNT_16COLOR
-                               | BGCNT_SCREENBASE(6)
-                               | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2)
-                               | BGCNT_CHARBASE(0)
-                               | BGCNT_16COLOR
-                               | BGCNT_SCREENBASE(7)
-                               | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1)
-                               | BGCNT_CHARBASE(1)
-                               | BGCNT_16COLOR
-                               | BGCNT_SCREENBASE(15)
-                               | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                | DISPCNT_OBJ_1D_MAP
-                                | DISPCNT_BG_ALL_ON
-                                | DISPCNT_OBJ_ON);
+    SetGpuReg(REG_OFFSET_BG3CNT,
+        BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(6) |
+            BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG2CNT,
+        BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(7) |
+            BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(15) |
+            BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_DISPCNT,
+        DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_ON);
 }
 
 u8 CreateBicycleAnimationTask(u8 a, u16 b, u16 c, u16 d)
@@ -953,42 +705,42 @@ void sub_817B540(u8 mode)
     u16 y;
     switch (mode)
     {
-        case 0:
-        default:
-            /* stuff */
-            if (gMain.vblankCounter1 & 3 || gPaletteFade.active)
-                break;
-            if (gMain.vblankCounter1 & 4)
-            {
-                x = gPlttBufferUnfaded[9];
-                y = gPlttBufferUnfaded[10];
-            }
-            else
-            {
-                x = gPlttBufferUnfaded[10];
-                y = gPlttBufferUnfaded[9];
-            }
-            LoadPalette(&x, 9, 2);
-            LoadPalette(&y, 10, 2);
+    case 0:
+    default:
+        /* stuff */
+        if (gMain.vblankCounter1 & 3 || gPaletteFade.active)
             break;
-        case 2:
-            if (gMain.vblankCounter1 & 3 || gPaletteFade.active)
-                break;
-            if (gMain.vblankCounter1 & 4)
-            {
-                x = 0x3D27;
-                y = 0x295;
-            }
-            else
-            {
-                x = 0x31C;
-                y = 0x3D27;
-            }
-            LoadPalette(&x, 12, 2);
-            LoadPalette(&y, 13, 2);
+        if (gMain.vblankCounter1 & 4)
+        {
+            x = gPlttBufferUnfaded[9];
+            y = gPlttBufferUnfaded[10];
+        }
+        else
+        {
+            x = gPlttBufferUnfaded[10];
+            y = gPlttBufferUnfaded[9];
+        }
+        LoadPalette(&x, 9, 2);
+        LoadPalette(&y, 10, 2);
+        break;
+    case 2:
+        if (gMain.vblankCounter1 & 3 || gPaletteFade.active)
             break;
-        case 1:
-            break;
+        if (gMain.vblankCounter1 & 4)
+        {
+            x = 0x3D27;
+            y = 0x295;
+        }
+        else
+        {
+            x = 0x31C;
+            y = 0x3D27;
+        }
+        LoadPalette(&x, 12, 2);
+        LoadPalette(&y, 13, 2);
+        break;
+    case 1:
+        break;
     }
 }
 
@@ -996,7 +748,7 @@ static void sub_817B62C(struct Sprite *sprite)
 {
     s32 var;
     s16 var2 = gUnknown_0203BD28;
-    
+
     if (var2 != 2)
     {
         switch (var2)
@@ -1019,11 +771,12 @@ static void sub_817B62C(struct Sprite *sprite)
     }
 }
 
-static void sub_817B698(u8 a, const struct IntroCreditsSpriteMetadata *b, const union AnimCmd *const *c, u8 d)
+static void sub_817B698(
+    u8 a, const struct IntroCreditsSpriteMetadata *b, const union AnimCmd *const *c, u8 d)
 {
     u8 i;
 
-    for(i = 0; i < d; i++)
+    for (i = 0; i < d; i++)
     {
         u8 sprite = CreateSprite(&gUnknown_085F504C, b[i].x, b[i].y, b[i].subpriority);
         CalcCenterToCornerVec(&gSprites[sprite], b[i].shape, b[i].size, ST_OAM_AFFINE_OFF);
@@ -1058,7 +811,7 @@ static void nullsub_65(struct Sprite *sprite)
 {
 }
 
-static void sub_817B7C4(struct Sprite* sprite)
+static void sub_817B7C4(struct Sprite *sprite)
 {
     sprite->invisible = gSprites[sprite->data[0]].invisible;
     sprite->pos1.x = gSprites[sprite->data[0]].pos1.x;
@@ -1087,7 +840,7 @@ static void nullsub_66(struct Sprite *sprite)
 {
 }
 
-static void sub_817B8E8(struct Sprite* sprite)
+static void sub_817B8E8(struct Sprite *sprite)
 {
     sprite->invisible = gSprites[sprite->data[0]].invisible;
     sprite->pos1.y = gSprites[sprite->data[0]].pos1.y;

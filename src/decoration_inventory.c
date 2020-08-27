@@ -5,10 +5,11 @@
 
 EWRAM_DATA struct DecorationInventory gDecorationInventories[DECORCAT_COUNT] = {};
 
-#define SET_DECOR_INV(i, ptr) {\
-    gDecorationInventories[i].items = ptr;\
-    gDecorationInventories[i].size = ARRAY_COUNT(ptr);\
-}
+#define SET_DECOR_INV(i, ptr)                                                                      \
+    {                                                                                              \
+        gDecorationInventories[i].items = ptr;                                                     \
+        gDecorationInventories[i].size = ARRAY_COUNT(ptr);                                         \
+    }
 
 void SetDecorationInventoriesPointers(void)
 {
@@ -26,7 +27,7 @@ void SetDecorationInventoriesPointers(void)
 static void ClearDecorationInventory(u8 category)
 {
     u8 i;
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
+    for (i = 0; i < gDecorationInventories[category].size; i++)
         gDecorationInventories[category].items[i] = DECOR_NONE;
 }
 
@@ -55,7 +56,7 @@ bool8 CheckHasDecoration(u8 decor)
     u8 category;
 
     category = gDecorations[decor].category;
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
+    for (i = 0; i < gDecorationInventories[category].size; i++)
     {
         if (gDecorationInventories[category].items[i] == decor)
             return TRUE;
@@ -97,7 +98,7 @@ s8 DecorationRemove(u8 decor)
     if (decor == DECOR_NONE)
         return 0;
 
-    for (i = 0; i < gDecorationInventories[gDecorations[decor].category].size; i ++)
+    for (i = 0; i < gDecorationInventories[gDecorations[decor].category].size; i++)
     {
         category = gDecorations[decor].category;
         if (gDecorationInventories[category].items[i] == decor)
@@ -117,14 +118,18 @@ void CondenseDecorationsInCategory(u8 category)
     u8 j;
     u8 tmp;
 
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
+    for (i = 0; i < gDecorationInventories[category].size; i++)
     {
-        for (j = i + 1; j < gDecorationInventories[category].size; j ++)
+        for (j = i + 1; j < gDecorationInventories[category].size; j++)
         {
-            if (gDecorationInventories[category].items[j] != DECOR_NONE && (gDecorationInventories[category].items[i] == DECOR_NONE || gDecorationInventories[category].items[i] > gDecorationInventories[category].items[j]))
+            if (gDecorationInventories[category].items[j] != DECOR_NONE &&
+                (gDecorationInventories[category].items[i] == DECOR_NONE ||
+                    gDecorationInventories[category].items[i] >
+                        gDecorationInventories[category].items[j]))
             {
                 tmp = gDecorationInventories[category].items[i];
-                gDecorationInventories[category].items[i] = gDecorationInventories[category].items[j];
+                gDecorationInventories[category].items[i] =
+                    gDecorationInventories[category].items[j];
                 gDecorationInventories[category].items[j] = tmp;
             }
         }

@@ -18,33 +18,28 @@ static void AnimMissileArc(struct Sprite *);
 static void AnimMissileArc_Step(struct Sprite *);
 static void AnimTailGlowOrb(struct Sprite *);
 
-static const union AffineAnimCmd sAffineAnim_MegahornHorn_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_0[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 30, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_MegahornHorn_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_1[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, -99, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_MegahornHorn_2[] =
-{
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_2[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 94, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_MegahornHorn[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_MegahornHorn[] = {
     sAffineAnim_MegahornHorn_0,
     sAffineAnim_MegahornHorn_1,
     sAffineAnim_MegahornHorn_2,
 };
 
-const struct SpriteTemplate gMegahornHornSpriteTemplate =
-{
+const struct SpriteTemplate gMegahornHornSpriteTemplate = {
     .tileTag = ANIM_TAG_HORN_HIT_2,
     .paletteTag = ANIM_TAG_HORN_HIT_2,
     .oam = &gOamData_AffineDouble_ObjNormal_32x16,
@@ -54,33 +49,28 @@ const struct SpriteTemplate gMegahornHornSpriteTemplate =
     .callback = AnimMegahornHorn,
 };
 
-static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_0[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -33, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_1[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_2[] =
-{
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_2[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_LeechLifeNeedle[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_LeechLifeNeedle[] = {
     sAffineAnim_LeechLifeNeedle_0,
     sAffineAnim_LeechLifeNeedle_1,
     sAffineAnim_LeechLifeNeedle_2,
 };
 
-const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate =
-{
+const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate = {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -90,8 +80,7 @@ const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate =
     .callback = AnimLeechLifeNeedle,
 };
 
-const struct SpriteTemplate gWebThreadSpriteTemplate =
-{
+const struct SpriteTemplate gWebThreadSpriteTemplate = {
     .tileTag = ANIM_TAG_WEB_THREAD,
     .paletteTag = ANIM_TAG_WEB_THREAD,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -101,8 +90,7 @@ const struct SpriteTemplate gWebThreadSpriteTemplate =
     .callback = AnimTranslateWebThread,
 };
 
-const struct SpriteTemplate gStringWrapSpriteTemplate =
-{
+const struct SpriteTemplate gStringWrapSpriteTemplate = {
     .tileTag = ANIM_TAG_STRING,
     .paletteTag = ANIM_TAG_STRING,
     .oam = &gOamData_AffineOff_ObjNormal_64x32,
@@ -112,20 +100,17 @@ const struct SpriteTemplate gStringWrapSpriteTemplate =
     .callback = AnimStringWrap,
 };
 
-static const union AffineAnimCmd sAffineAnim_SpiderWeb[] =
-{
+static const union AffineAnimCmd sAffineAnim_SpiderWeb[] = {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x6, 0x6, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_SpiderWeb[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_SpiderWeb[] = {
     sAffineAnim_SpiderWeb,
 };
 
-const struct SpriteTemplate gSpiderWebSpriteTemplate =
-{
+const struct SpriteTemplate gSpiderWebSpriteTemplate = {
     .tileTag = ANIM_TAG_SPIDER_WEB,
     .paletteTag = ANIM_TAG_SPIDER_WEB,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
@@ -135,8 +120,7 @@ const struct SpriteTemplate gSpiderWebSpriteTemplate =
     .callback = AnimSpiderWeb,
 };
 
-const struct SpriteTemplate gLinearStingerSpriteTemplate =
-{
+const struct SpriteTemplate gLinearStingerSpriteTemplate = {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -146,8 +130,7 @@ const struct SpriteTemplate gLinearStingerSpriteTemplate =
     .callback = AnimTranslateStinger,
 };
 
-const struct SpriteTemplate gPinMissileSpriteTemplate =
-{
+const struct SpriteTemplate gPinMissileSpriteTemplate = {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -157,8 +140,7 @@ const struct SpriteTemplate gPinMissileSpriteTemplate =
     .callback = AnimMissileArc,
 };
 
-const struct SpriteTemplate gIcicleSpearSpriteTemplate =
-{
+const struct SpriteTemplate gIcicleSpearSpriteTemplate = {
     .tileTag = ANIM_TAG_ICICLE_SPEAR,
     .paletteTag = ANIM_TAG_ICICLE_SPEAR,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -168,8 +150,7 @@ const struct SpriteTemplate gIcicleSpearSpriteTemplate =
     .callback = AnimMissileArc,
 };
 
-static const union AffineAnimCmd sAffineAnim_TailGlowOrb[] =
-{
+static const union AffineAnimCmd sAffineAnim_TailGlowOrb[] = {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 18),
     AFFINEANIMCMD_LOOP(0),
@@ -179,13 +160,11 @@ static const union AffineAnimCmd sAffineAnim_TailGlowOrb[] =
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_TailGlowOrb[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_TailGlowOrb[] = {
     sAffineAnim_TailGlowOrb,
 };
 
-const struct SpriteTemplate gTailGlowOrbSpriteTemplate =
-{
+const struct SpriteTemplate gTailGlowOrbSpriteTemplate = {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
@@ -381,8 +360,8 @@ static void AnimTranslateStinger(struct Sprite *sprite)
 
     if (!IsContest() && GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
-        if (GetBattlerPosition(gBattleAnimTarget) == B_POSITION_PLAYER_LEFT
-         || GetBattlerPosition(gBattleAnimTarget) == B_POSITION_OPPONENT_LEFT)
+        if (GetBattlerPosition(gBattleAnimTarget) == B_POSITION_PLAYER_LEFT ||
+            GetBattlerPosition(gBattleAnimTarget) == B_POSITION_OPPONENT_LEFT)
         {
             gBattleAnimArgs[2] *= -1;
             gBattleAnimArgs[0] *= -1;
@@ -451,8 +430,8 @@ static void AnimMissileArc_Step(struct Sprite *sprite)
 
         if (!TranslateAnimHorizontalArc(sprite))
         {
-            u16 rotation = ArcTan2Neg(sprite->pos1.x + sprite->pos2.x - xpos, //Isn't this zero lol
-                                  sprite->pos1.y + sprite->pos2.y - ypos);
+            u16 rotation = ArcTan2Neg(sprite->pos1.x + sprite->pos2.x - xpos, // Isn't this zero lol
+                sprite->pos1.y + sprite->pos2.y - ypos);
             rotation += 0xC000;
             TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, rotation);
 

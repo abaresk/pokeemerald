@@ -120,40 +120,29 @@ static const u16 gUnknown_08622700[] = INCBIN_U16("graphics/pokenav/8622700.gbap
 static const u16 gUnknown_08622720[] = INCBIN_U16("graphics/pokenav/pokeball_matchcall.gbapal");
 static const u32 gUnknown_08622760[] = INCBIN_U32("graphics/pokenav/pokeball_matchcall.4bpp.lz");
 
-const struct BgTemplate gUnknown_0862278C[3] = 
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 0x1F,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+const struct BgTemplate gUnknown_0862278C[3] = { { .bg = 1,
+                                                     .charBaseIndex = 3,
+                                                     .mapBaseIndex = 0x1F,
+                                                     .screenSize = 0,
+                                                     .paletteMode = 0,
+                                                     .priority = 1,
+                                                     .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 0x06,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0x80
-    },
-    {
-        .bg = 3,
+        .baseTile = 0x80 },
+    { .bg = 3,
         .charBaseIndex = 1,
         .mapBaseIndex = 0x07,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const LoopedTask sMatchCallLoopTaskFuncs[] = 
-{
-    [POKENAV_MC_FUNC_NONE] = NULL,
+static const LoopedTask sMatchCallLoopTaskFuncs[] = { [POKENAV_MC_FUNC_NONE] = NULL,
     [POKENAV_MC_FUNC_DOWN] = MatchCallListCursorDown,
     [POKENAV_MC_FUNC_UP] = MatchCallListCursorUp,
     [POKENAV_MC_FUNC_PG_DOWN] = MatchCallListPageDown,
@@ -168,64 +157,45 @@ static const LoopedTask sMatchCallLoopTaskFuncs[] =
     [POKENAV_MC_FUNC_CHECK_PAGE_UP] = ShowCheckPageUp,
     [POKENAV_MC_FUNC_CHECK_PAGE_DOWN] = ShowCheckPageDown,
     [POKENAV_MC_FUNC_EXIT_CHECK_PAGE] = ExitCheckPage,
-    [POKENAV_MC_FUNC_EXIT] = ExitMatchCall
-};
+    [POKENAV_MC_FUNC_EXIT] = ExitMatchCall };
 
-static const struct WindowTemplate sMatchCallLocationWindowTemplate = 
-{
-    .bg = 2,
+static const struct WindowTemplate sMatchCallLocationWindowTemplate = { .bg = 2,
     .tilemapLeft = 0,
     .tilemapTop = 5,
     .width = 11,
     .height = 2,
     .paletteNum = 2,
-    .baseBlock = 16
-};
+    .baseBlock = 16 };
 
-static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate = 
-{
-    .bg = 2,
+static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate = { .bg = 2,
     .tilemapLeft = 0,
     .tilemapTop = 9,
     .width = 11,
     .height = 8,
     .paletteNum = 2,
-    .baseBlock = 38
-};
+    .baseBlock = 38 };
 
-static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] = 
-{
-    [MATCH_CALL_OPTION_CALL]   = gText_Call,
-    [MATCH_CALL_OPTION_CHECK]  = gText_Check,
-    [MATCH_CALL_OPTION_CANCEL] = gText_Cancel6
-};
+static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] = { [MATCH_CALL_OPTION_CALL] =
+                                                                              gText_Call,
+    [MATCH_CALL_OPTION_CHECK] = gText_Check,
+    [MATCH_CALL_OPTION_CANCEL] = gText_Cancel6 };
 
 // The series of 5 dots that appear when someone is called with Match Call
 static const u8 sText_CallingDots[] = _("·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·\p");
 
-static const struct WindowTemplate sCallMsgBoxWindowTemplate = 
-{
-    .bg = 1,
+static const struct WindowTemplate sCallMsgBoxWindowTemplate = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 12,
     .width = 0x1C,
     .height = 0x04,
     .paletteNum = 1,
-    .baseBlock = 10
-};
+    .baseBlock = 10 };
 
-const struct CompressedSpriteSheet gUnknown_08622810[1] = 
-{
-    {gUnknown_086226B8, 0x40, 7}
-};
+const struct CompressedSpriteSheet gUnknown_08622810[1] = { { gUnknown_086226B8, 0x40, 7 } };
 
-const struct SpritePalette gUnknown_08622818[2] = 
-{
-    {gUnknown_08622698, 12}
-};
+const struct SpritePalette gUnknown_08622818[2] = { { gUnknown_08622698, 12 } };
 
-static const struct OamData sOptionsCursorOamData = 
-{
+static const struct OamData sOptionsCursorOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -236,10 +206,9 @@ static const struct OamData sOptionsCursorOamData =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-}; 
+};
 
-static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
-{
+static const struct SpriteTemplate sOptionsCursorSpriteTemplate = {
     .tileTag = 7,
     .paletteTag = 12,
     .oam = &sOptionsCursorOamData,
@@ -249,8 +218,7 @@ static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
     .callback = SpriteCB_OptionsCursor,
 };
 
-static const struct OamData sTrainerPicOamData = 
-{
+static const struct OamData sTrainerPicOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -263,8 +231,7 @@ static const struct OamData sTrainerPicOamData =
     .paletteNum = 0,
 };
 
-static const struct SpriteTemplate sTrainerPicSpriteTemplate =
-{
+static const struct SpriteTemplate sTrainerPicSpriteTemplate = {
     .tileTag = 8,
     .paletteTag = 13,
     .oam = &sTrainerPicOamData,
@@ -397,16 +364,16 @@ u32 MatchCallListCursorDown(s32 taskState)
     case 0:
         switch (MatchCall_MoveCursorDown())
         {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return 7;
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
         }
         break;
     case 1:
@@ -434,16 +401,16 @@ u32 MatchCallListCursorUp(s32 taskState)
     case 0:
         switch (MatchCall_MoveCursorUp())
         {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return 7;
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
         }
         break;
     case 1:
@@ -471,16 +438,16 @@ u32 MatchCallListPageDown(s32 taskState)
     case 0:
         switch (MatchCall_PageDown())
         {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return 7;
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
         }
         break;
     case 1:
@@ -508,16 +475,16 @@ u32 MatchCallListPageUp(s32 taskState)
     case 0:
         switch (MatchCall_PageUp())
         {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return 7;
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
         }
         break;
     case 1:
@@ -903,7 +870,12 @@ static void sub_81CBC64(u8 taskId)
         taskData[0] += 4;
         taskData[0] &= 0x7F;
         taskData[1] = gSineTable[taskData[0]] >> 4;
-        sub_81C79BC(gUnknown_08622720, gUnknown_08622720 + 0x10, 0x10, 0x10, taskData[1], gPlttBufferUnfaded + 0x50);
+        sub_81C79BC(gUnknown_08622720,
+            gUnknown_08622720 + 0x10,
+            0x10,
+            0x10,
+            taskData[1],
+            gPlttBufferUnfaded + 0x50);
         if (!gPaletteFade.active)
             CpuCopy32(gPlttBufferUnfaded + 0x50, gPlttBufferFaded + 0x50, 0x20);
     }
@@ -1007,7 +979,7 @@ static void PrintMatchCallLocation(struct Pokenav4Struct *state, int arg1)
         GetMapName(mapName, mapSec, 0);
     else
         StringCopy(mapName, gText_Unknown);
-    
+
     x = GetStringCenterAlignXOffset(7, mapName, 88);
     FillWindowPixelBuffer(state->locWindowId, PIXEL_FILL(1));
     AddTextPrinterParameterized(state->locWindowId, 7, mapName, x, 1, 0, NULL);
@@ -1024,7 +996,13 @@ static void PrintMatchCallSelectionOptions(struct Pokenav4Struct *state)
         if (optionText == MATCH_CALL_OPTION_COUNT)
             break;
 
-        AddTextPrinterParameterized(state->infoBoxWindowId, 7, sMatchCallOptionTexts[optionText], 16, i * 16 + 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(state->infoBoxWindowId,
+            7,
+            sMatchCallOptionTexts[optionText],
+            16,
+            i * 16 + 1,
+            TEXT_SPEED_FF,
+            NULL);
     }
 
     CopyWindowToVram(state->infoBoxWindowId, 2);

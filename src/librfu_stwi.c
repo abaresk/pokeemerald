@@ -10,7 +10,8 @@ static s32 STWI_reset_ClockCounter(void);
 
 struct STWIStatus *gSTWIStatus;
 
-void STWI_init_all(struct RfuIntrStruct *interruptStruct, IntrFunc *interrupt, bool8 copyInterruptToRam)
+void STWI_init_all(
+    struct RfuIntrStruct *interruptStruct, IntrFunc *interrupt, bool8 copyInterruptToRam)
 {
     // If we're copying our interrupt into RAM, DMA it to block1 and use
     // block2 for our STWIStatus, otherwise block1 holds the STWIStatus.
@@ -40,7 +41,7 @@ void STWI_init_all(struct RfuIntrStruct *interruptStruct, IntrFunc *interrupt, b
     gSTWIStatus->error = 0;
     gSTWIStatus->recoveryCount = 0;
     gSTWIStatus->sending = 0;
-    REG_RCNT = 0x100; // TODO: mystery bit? 
+    REG_RCNT = 0x100; // TODO: mystery bit?
     REG_SIOCNT = SIO_INTR_ENABLE | SIO_32BIT_MODE | SIO_115200_BPS;
     STWI_init_Callback_M();
     STWI_init_Callback_S();
@@ -118,7 +119,7 @@ void STWI_init_Callback_S(void)
     STWI_set_Callback_S(NULL);
 }
 
-// The callback can take 2 or 3 arguments. 
+// The callback can take 2 or 3 arguments.
 void STWI_set_Callback_M(void *callbackM)
 {
     gSTWIStatus->callbackM = callbackM;
@@ -129,7 +130,8 @@ void STWI_set_Callback_S(void (*callbackS)(u16))
     gSTWIStatus->callbackS = callbackS;
 }
 
-void STWI_set_Callback_ID(void (*func)(void)) // name in SDK, but is actually setting a function pointer
+void STWI_set_Callback_ID(
+    void (*func)(void)) // name in SDK, but is actually setting a function pointer
 {
     gSTWIStatus->callbackID = func;
 }
@@ -235,7 +237,7 @@ void STWI_send_SystemConfigREQ(u16 availSlotFlag, u8 maxMFrame, u8 mcTimer)
         packetBytes += sizeof(u32);
         *packetBytes++ = mcTimer;
         *packetBytes++ = maxMFrame;
-        *(u16*)packetBytes = availSlotFlag;
+        *(u16 *)packetBytes = availSlotFlag;
         STWI_start_Command();
     }
 }
@@ -330,7 +332,8 @@ void STWI_send_DataTxREQ(const void *in, u8 size)
         if (size & (sizeof(u32) - 1))
             reqLength += 1;
         gSTWIStatus->reqLength = reqLength;
-        CpuCopy32(in, gSTWIStatus->txPacket->rfuPacket32.data, gSTWIStatus->reqLength * sizeof(u32));
+        CpuCopy32(
+            in, gSTWIStatus->txPacket->rfuPacket32.data, gSTWIStatus->reqLength * sizeof(u32));
         STWI_start_Command();
     }
 }
@@ -343,7 +346,8 @@ void STWI_send_DataTxAndChangeREQ(const void *in, u8 size)
         if (size & (sizeof(u32) - 1))
             reqLength += 1;
         gSTWIStatus->reqLength = reqLength;
-        CpuCopy32(in, gSTWIStatus->txPacket->rfuPacket32.data, gSTWIStatus->reqLength * sizeof(u32));
+        CpuCopy32(
+            in, gSTWIStatus->txPacket->rfuPacket32.data, gSTWIStatus->reqLength * sizeof(u32));
         STWI_start_Command();
     }
 }
@@ -594,9 +598,10 @@ static s32 STWI_start_Command(void)
 {
     u16 imeTemp;
 
-    // equivalent to gSTWIStatus->txPacket->rfuPacket32.command, 
+    // equivalent to gSTWIStatus->txPacket->rfuPacket32.command,
     // but the cast here is required to avoid register issue
-    *(u32 *)gSTWIStatus->txPacket->rfuPacket8.data = 0x99660000 | (gSTWIStatus->reqLength << 8) | gSTWIStatus->reqActiveCommand;
+    *(u32 *)gSTWIStatus->txPacket->rfuPacket8.data =
+        0x99660000 | (gSTWIStatus->reqLength << 8) | gSTWIStatus->reqActiveCommand;
     REG_SIODATA32 = gSTWIStatus->txPacket->rfuPacket32.command;
     gSTWIStatus->state = 0; // master send req
     gSTWIStatus->reqNext = 1;
@@ -618,7 +623,10 @@ static s32 STWI_restart_Command(void)
     }
     else
     {
-        if (gSTWIStatus->reqActiveCommand == ID_MS_CHANGE_REQ || gSTWIStatus->reqActiveCommand == ID_DATA_TX_AND_CHANGE_REQ || gSTWIStatus->reqActiveCommand == ID_UNK35_REQ || gSTWIStatus->reqActiveCommand == ID_RESUME_RETRANSMIT_AND_CHANGE_REQ)
+        if (gSTWIStatus->reqActiveCommand == ID_MS_CHANGE_REQ ||
+            gSTWIStatus->reqActiveCommand == ID_DATA_TX_AND_CHANGE_REQ ||
+            gSTWIStatus->reqActiveCommand == ID_UNK35_REQ ||
+            gSTWIStatus->reqActiveCommand == ID_RESUME_RETRANSMIT_AND_CHANGE_REQ)
         {
             gSTWIStatus->error = ERR_REQ_CMD_CLOCK_DRIFT;
             gSTWIStatus->sending = 0;

@@ -3,8 +3,8 @@
 
 #include "siirtc.h"
 
-#define RTC_INIT_ERROR         0x0001
-#define RTC_INIT_WARNING       0x0002
+#define RTC_INIT_ERROR   0x0001
+#define RTC_INIT_WARNING 0x0002
 
 #define RTC_ERR_12HOUR_CLOCK   0x0010
 #define RTC_ERR_POWER_FAILURE  0x0020
@@ -15,7 +15,7 @@
 #define RTC_ERR_INVALID_MINUTE 0x0400
 #define RTC_ERR_INVALID_SECOND 0x0800
 
-#define RTC_ERR_FLAG_MASK      0x0FF0
+#define RTC_ERR_FLAG_MASK 0x0FF0
 
 extern struct Time gLocalTime;
 

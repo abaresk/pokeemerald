@@ -37,14 +37,14 @@
 #include "constants/rgb.h"
 
 #define HALL_OF_FAME_MAX_TEAMS 50
-#define TAG_CONFETTI 1001
+#define TAG_CONFETTI           1001
 
 struct HallofFameMon
 {
     u32 tid;
     u32 personality;
-    u16 species:9;
-    u16 lvl:7;
+    u16 species : 9;
+    u16 lvl : 7;
     u8 nick[POKEMON_NAME_LENGTH];
 };
 
@@ -99,82 +99,70 @@ static void Task_HofPC_HandlePaletteOnExit(u8 taskId);
 static void Task_HofPC_HandleExit(u8 taskId);
 static void Task_HofPC_ExitOnButtonPress(u8 taskId);
 static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite);
-static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 unused1, u8 unused2);
+static void HallOfFame_PrintMonInfo(struct HallofFameMon *currMon, u8 unused1, u8 unused2);
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2);
 static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2);
 static void Task_DoDomeConfetti(u8 taskId);
-static void SpriteCB_HofConfetti(struct Sprite* sprite);
+static void SpriteCB_HofConfetti(struct Sprite *sprite);
 
 // const rom data
-static const struct BgTemplate sHof_BgTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sHof_BgTemplates[] = {
+    { .bg = 0,
         .charBaseIndex = 2,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct WindowTemplate sHof_WindowTemplate = {0, 2, 2, 0xE, 6, 0xE, 1};
+static const struct WindowTemplate sHof_WindowTemplate = { 0, 2, 2, 0xE, 6, 0xE, 1 };
 
-static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
-static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+static const u8 sMonInfoTextColors[4] = {
+    TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY
+};
+static const u8 sPlayerInfoTextColors[4] = {
+    TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY
+};
 
-static const u8 sUnused_085E538C[] = {4, 5, 0, 0};
+static const u8 sUnused_085E538C[] = { 4, 5, 0, 0 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] =
-{
-    {.data = gConfetti_Gfx, .size = 0x220, .tag = TAG_CONFETTI},
+static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] = {
+    { .data = gConfetti_Gfx, .size = 0x220, .tag = TAG_CONFETTI },
     {},
 };
 
-static const struct CompressedSpritePalette sSpritePalette_Confetti[] =
-{
-    {.data = gConfetti_Pal, .tag = TAG_CONFETTI},
+static const struct CompressedSpritePalette sSpritePalette_Confetti[] = {
+    { .data = gConfetti_Pal, .tag = TAG_CONFETTI },
     {},
 };
 
-static const s16 sHallOfFame_MonFullTeamPositions[PARTY_SIZE][4] =
-{
-    {120,   210,    120,    40},
-    {326,   220,    56,     40},
-    {-86,   220,    184,    40},
-    {120,   -62,    120,    88},
-    {-70,   -92,    200,    88},
-    {310,   -92,    40,     88}
+static const s16 sHallOfFame_MonFullTeamPositions[PARTY_SIZE][4] = { { 120, 210, 120, 40 },
+    { 326, 220, 56, 40 },
+    { -86, 220, 184, 40 },
+    { 120, -62, 120, 88 },
+    { -70, -92, 200, 88 },
+    { 310, -92, 40, 88 } };
+
+static const s16 sHallOfFame_MonHalfTeamPositions[PARTY_SIZE / 2][4] = {
+    { 120, 234, 120, 64 }, { 326, 244, 56, 64 }, { -86, 244, 184, 64 }
 };
 
-static const s16 sHallOfFame_MonHalfTeamPositions[PARTY_SIZE / 2][4] =
-{
-    {120,   234,    120,    64},
-    {326,   244,    56,     64},
-    {-86,   244,    184,    64}
-};
-
-static const struct OamData sOamData_Confetti =
-{
+static const struct OamData sOamData_Confetti = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -190,159 +178,76 @@ static const struct OamData sOamData_Confetti =
     .affineParam = 0,
 };
 
-static const union AnimCmd sAnim_PinkConfettiA[] =
-{
-    ANIMCMD_FRAME(0, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_PinkConfettiA[] = { ANIMCMD_FRAME(0, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_RedConfettiA[] =
-{
-    ANIMCMD_FRAME(1, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_RedConfettiA[] = { ANIMCMD_FRAME(1, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_BlueConfettiA[] =
-{
-    ANIMCMD_FRAME(2, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_BlueConfettiA[] = { ANIMCMD_FRAME(2, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_RedConfettiB[] =
-{
-    ANIMCMD_FRAME(3, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_RedConfettiB[] = { ANIMCMD_FRAME(3, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_BlueConfettiB[] =
-{
-    ANIMCMD_FRAME(4, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_BlueConfettiB[] = { ANIMCMD_FRAME(4, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_YellowConfettiA[] =
-{
-    ANIMCMD_FRAME(5, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_YellowConfettiA[] = { ANIMCMD_FRAME(5, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_WhiteConfettiA[] =
-{
-    ANIMCMD_FRAME(6, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_WhiteConfettiA[] = { ANIMCMD_FRAME(6, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_GreenConfettiA[] =
-{
-    ANIMCMD_FRAME(7, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_GreenConfettiA[] = { ANIMCMD_FRAME(7, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_PinkConfettiB[] =
-{
-    ANIMCMD_FRAME(8, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_PinkConfettiB[] = { ANIMCMD_FRAME(8, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_BlueConfettiC[] =
-{
-    ANIMCMD_FRAME(9, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_BlueConfettiC[] = { ANIMCMD_FRAME(9, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_YellowConfettiB[] =
-{
-    ANIMCMD_FRAME(10, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_YellowConfettiB[] = { ANIMCMD_FRAME(10, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_WhiteConfettiB[] =
-{
-    ANIMCMD_FRAME(11, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_WhiteConfettiB[] = { ANIMCMD_FRAME(11, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_GreenConfettiB[] =
-{
-    ANIMCMD_FRAME(12, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_GreenConfettiB[] = { ANIMCMD_FRAME(12, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_PinkConfettiC[] =
-{
-    ANIMCMD_FRAME(13, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_PinkConfettiC[] = { ANIMCMD_FRAME(13, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_RedConfettiC[] =
-{
-    ANIMCMD_FRAME(14, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_RedConfettiC[] = { ANIMCMD_FRAME(14, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_YellowConfettiC[] =
-{
-    ANIMCMD_FRAME(15, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_YellowConfettiC[] = { ANIMCMD_FRAME(15, 30), ANIMCMD_END };
 
-static const union AnimCmd sAnim_WhiteConfettiC[] =
-{
-    ANIMCMD_FRAME(16, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sAnim_WhiteConfettiC[] = { ANIMCMD_FRAME(16, 30), ANIMCMD_END };
 
-static const union AnimCmd * const sAnims_Confetti[] =
-{
-    sAnim_PinkConfettiA, 
-    sAnim_RedConfettiA, 
-    sAnim_BlueConfettiA, 
+static const union AnimCmd *const sAnims_Confetti[] = { sAnim_PinkConfettiA,
+    sAnim_RedConfettiA,
+    sAnim_BlueConfettiA,
     sAnim_RedConfettiB,
-    sAnim_BlueConfettiB, 
-    sAnim_YellowConfettiA, 
-    sAnim_WhiteConfettiA, 
+    sAnim_BlueConfettiB,
+    sAnim_YellowConfettiA,
+    sAnim_WhiteConfettiA,
     sAnim_GreenConfettiA,
-    sAnim_PinkConfettiB, 
-    sAnim_BlueConfettiC, 
-    sAnim_YellowConfettiB, 
+    sAnim_PinkConfettiB,
+    sAnim_BlueConfettiC,
+    sAnim_YellowConfettiB,
     sAnim_WhiteConfettiB,
-    sAnim_GreenConfettiB, 
-    sAnim_PinkConfettiC, 
-    sAnim_RedConfettiC, 
+    sAnim_GreenConfettiB,
+    sAnim_PinkConfettiC,
+    sAnim_RedConfettiC,
     sAnim_YellowConfettiC,
-    sAnim_WhiteConfettiC
-};
+    sAnim_WhiteConfettiC };
 
-static const struct SpriteTemplate sSpriteTemplate_HofConfetti =
-{
-    .tileTag = TAG_CONFETTI,
+static const struct SpriteTemplate sSpriteTemplate_HofConfetti = { .tileTag = TAG_CONFETTI,
     .paletteTag = TAG_CONFETTI,
     .oam = &sOamData_Confetti,
     .anims = sAnims_Confetti,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_HofConfetti
-};
+    .callback = SpriteCB_HofConfetti };
 
 static const u16 sHallOfFame_Pal[] = INCBIN_U16("graphics/misc/japanese_hof.gbapal");
 
 static const u32 sHallOfFame_Gfx[] = INCBIN_U32("graphics/misc/japanese_hof.4bpp.lz");
 
-static const struct HallofFameMon sDummyFameMon =
-{
-    .tid = 0x3EA03EA, 
-    .personality = 0, 
-    .species = SPECIES_NONE, 
-    .lvl = 0, 
-    .nick = {0}
+static const struct HallofFameMon sDummyFameMon = {
+    .tid = 0x3EA03EA, .personality = 0, .species = SPECIES_NONE, .lvl = 0, .nick = { 0 }
 };
 
 // Unused, order of party slots on Hall of Fame screen
-static const u8 sHallOfFame_SlotOrder[] = {
-    2, 1, 3, 
-    6, 4, 5, 
-    0, 0
-};
+static const u8 sHallOfFame_SlotOrder[] = { 2, 1, 3, 6, 4, 5, 0, 0 };
 
 // code
 static void VBlankCB_HallOfFame(void)
@@ -404,12 +309,12 @@ static bool8 InitHallOfFameScreen(void)
     return TRUE;
 }
 
-#define tDontSaveData       data[0]
-#define tDisplayedMonId     data[1]
-#define tMonNumber          data[2]
-#define tFrameCount         data[3]
-#define tPlayerSpriteID     data[4]
-#define tMonSpriteId(i)     data[i + 5]
+#define tDontSaveData   data[0]
+#define tDisplayedMonId data[1]
+#define tMonNumber      data[2]
+#define tFrameCount     data[3]
+#define tPlayerSpriteID data[4]
+#define tMonSpriteId(i) data[i + 5]
 
 void CB2_DoHallOfFameScreen(void)
 {
@@ -481,7 +386,7 @@ static void Task_Hof_InitMonData(u8 taskId)
 static void Task_Hof_InitTeamSaveData(u8 taskId)
 {
     u16 i;
-    struct HallofFameTeam* lastSavedTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
+    struct HallofFameTeam *lastSavedTeam = (struct HallofFameTeam *)(gDecompressionBuffer);
 
     if (!gHasHallOfFameRecords)
     {
@@ -500,8 +405,8 @@ static void Task_Hof_InitTeamSaveData(u8 taskId)
     }
     if (i >= HALL_OF_FAME_MAX_TEAMS)
     {
-        struct HallofFameTeam *afterTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
-        struct HallofFameTeam *beforeTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
+        struct HallofFameTeam *afterTeam = (struct HallofFameTeam *)(gDecompressionBuffer);
+        struct HallofFameTeam *beforeTeam = (struct HallofFameTeam *)(gDecompressionBuffer);
         afterTeam++;
         for (i = 0; i < HALL_OF_FAME_MAX_TEAMS - 1; i++, beforeTeam++, afterTeam++)
         {
@@ -554,9 +459,9 @@ static void Task_Hof_SetMonDisplayTask(u8 taskId)
     gTasks[taskId].func = Task_Hof_DisplayMon;
 }
 
-#define tDestinationX  data[1]
-#define tDestinationY  data[2]
-#define tSpecies       data[7]
+#define tDestinationX data[1]
+#define tDestinationY data[2]
+#define tSpecies      data[7]
 
 static void Task_Hof_DisplayMon(u8 taskId)
 {
@@ -564,7 +469,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
     s16 startX, startY, destX, destY;
 
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
-    struct HallofFameMon* currMon = &sHofMonPtr->mon[currMonId];
+    struct HallofFameMon *currMon = &sHofMonPtr->mon[currMonId];
 
     if (gTasks[taskId].tMonNumber > PARTY_SIZE / 2)
     {
@@ -584,7 +489,8 @@ static void Task_Hof_DisplayMon(u8 taskId)
     if (currMon->species == SPECIES_EGG)
         destY += 10;
 
-    spriteId = CreatePicSprite2(currMon->species, currMon->tid, currMon->personality, 1, startX, startY, currMonId, 0xFFFF);
+    spriteId = CreatePicSprite2(
+        currMon->species, currMon->tid, currMon->personality, 1, startX, startY, currMonId, 0xFFFF);
     gSprites[spriteId].tDestinationX = destX;
     gSprites[spriteId].tDestinationY = destY;
     gSprites[spriteId].data[0] = 0;
@@ -598,7 +504,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
 static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 {
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
-    struct HallofFameMon* currMon = &sHofMonPtr->mon[currMonId];
+    struct HallofFameMon *currMon = &sHofMonPtr->mon[currMonId];
     struct Sprite *monSprite = &gSprites[gTasks[taskId].tMonSpriteId(currMonId)];
 
     if (monSprite->callback == SpriteCallbackDummy)
@@ -613,7 +519,7 @@ static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
 {
     u16 currPokeID = gTasks[taskId].tDisplayedMonId;
-    struct HallofFameMon* currMon = &sHofMonPtr->mon[currPokeID];
+    struct HallofFameMon *currMon = &sHofMonPtr->mon[currPokeID];
 
     if (gTasks[taskId].tFrameCount != 0)
     {
@@ -621,8 +527,10 @@ static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
     }
     else
     {
-        sHofFadePalettes |= (0x10000 << gSprites[gTasks[taskId].tMonSpriteId(currPokeID)].oam.paletteNum);
-        if (gTasks[taskId].tDisplayedMonId < PARTY_SIZE - 1 && currMon[1].species != SPECIES_NONE) // there is another pokemon to display
+        sHofFadePalettes |=
+            (0x10000 << gSprites[gTasks[taskId].tMonSpriteId(currPokeID)].oam.paletteNum);
+        if (gTasks[taskId].tDisplayedMonId < PARTY_SIZE - 1 &&
+            currMon[1].species != SPECIES_NONE) // there is another pokemon to display
         {
             gTasks[taskId].tDisplayedMonId++;
             BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, RGB(16, 29, 24));
@@ -658,7 +566,7 @@ static void Task_Hof_DoConfetti(u8 taskId)
     if (gTasks[taskId].tFrameCount != 0)
     {
         gTasks[taskId].tFrameCount--;
-        
+
         // Create new confetti every 4th frame for the first 290 frames
         // For the last 110 frames wait for the existing confetti to fall offscreen
         if ((gTasks[taskId].tFrameCount & 3) == 0 && gTasks[taskId].tFrameCount > 110)
@@ -699,7 +607,13 @@ static void Task_Hof_DisplayPlayer(u8 taskId)
     ShowBg(0);
     ShowBg(1);
     ShowBg(3);
-    gTasks[taskId].tPlayerSpriteID = CreateTrainerPicSprite(PlayerGenderToFrontTrainerPicId_Debug(gSaveBlock2Ptr->playerGender, TRUE), 1, 120, 72, 6, 0xFFFF);
+    gTasks[taskId].tPlayerSpriteID = CreateTrainerPicSprite(
+        PlayerGenderToFrontTrainerPicId_Debug(gSaveBlock2Ptr->playerGender, TRUE),
+        1,
+        120,
+        72,
+        6,
+        0xFFFF);
     AddWindow(&sHof_WindowTemplate);
     LoadWindowGfx(1, gSaveBlock2Ptr->optionsWindowFrameType, 0x21D, 0xD0);
     LoadPalette(GetTextWindowPalette(1), 0xE0, 0x20);
@@ -822,7 +736,7 @@ void CB2_DoHallOfFamePC(void)
     case 3:
         if (!sub_8175024())
         {
-            struct HallofFameTeam *fameTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
+            struct HallofFameTeam *fameTeam = (struct HallofFameTeam *)(gDecompressionBuffer);
             fameTeam->mon[0] = sDummyFameMon;
             ComputerScreenOpenEffect(0, 0, 0);
             SetVBlankCallback(VBlankCB_HallOfFame);
@@ -838,23 +752,23 @@ void CB2_DoHallOfFamePC(void)
             gMain.state++;
         break;
     case 5:
+    {
+        u8 taskId, i;
+
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 7));
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        taskId = CreateTask(Task_HofPC_CopySaveData, 0);
+
+        for (i = 0; i < PARTY_SIZE; i++)
         {
-            u8 taskId, i;
-
-            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 7));
-            SetGpuReg(REG_OFFSET_BLDY, 0);
-            taskId = CreateTask(Task_HofPC_CopySaveData, 0);
-
-            for (i = 0; i < PARTY_SIZE; i++)
-            {
-                gTasks[taskId].tMonSpriteId(i) = 0xFF;
-            }
-
-            sHofMonPtr = AllocZeroed(0x2000);
-            SetMainCallback2(CB2_HallOfFame);
+            gTasks[taskId].tMonSpriteId(i) = 0xFF;
         }
-        break;
+
+        sHofMonPtr = AllocZeroed(0x2000);
+        SetMainCallback2(CB2_HallOfFame);
+    }
+    break;
     }
 }
 
@@ -868,7 +782,7 @@ static void Task_HofPC_CopySaveData(u8 taskId)
     else
     {
         u16 i;
-        struct HallofFameTeam* savedTeams;
+        struct HallofFameTeam *savedTeams;
 
         CpuCopy16(gDecompressionBuffer, sHofMonPtr, 0x2000);
         savedTeams = sHofMonPtr;
@@ -891,8 +805,8 @@ static void Task_HofPC_CopySaveData(u8 taskId)
 
 static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
 {
-    struct HallofFameTeam* savedTeams = sHofMonPtr;
-    struct HallofFameMon* currMon;
+    struct HallofFameTeam *savedTeams = sHofMonPtr;
+    struct HallofFameMon *currMon;
     u16 i;
 
     for (i = 0; i < gTasks[taskId].tCurrTeamNo; i++)
@@ -932,7 +846,8 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
             if (currMon->species == SPECIES_EGG)
                 posY += 10;
 
-            spriteId = CreateMonPicSprite_HandleDeoxys(currMon->species, currMon->tid, currMon->personality, 1, posX, posY, i, 0xFFFF);
+            spriteId = CreateMonPicSprite_HandleDeoxys(
+                currMon->species, currMon->tid, currMon->personality, 1, posX, posY, i, 0xFFFF);
             gSprites[spriteId].oam.priority = 1;
             gTasks[taskId].tMonSpriteId(i) = spriteId;
         }
@@ -944,7 +859,8 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
 
     BlendPalettes(0xFFFF0000, 0xC, RGB(16, 29, 24));
 
-    ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tCurrPageNo, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    ConvertIntToDecimalStringN(
+        gStringVar1, gTasks[taskId].tCurrPageNo, STR_CONV_MODE_RIGHT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, gText_HOFNumber);
 
     if (gTasks[taskId].tCurrTeamNo <= 0)
@@ -957,8 +873,8 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
 
 static void Task_HofPC_PrintMonInfo(u8 taskId)
 {
-    struct HallofFameTeam* savedTeams = sHofMonPtr;
-    struct HallofFameMon* currMon;
+    struct HallofFameTeam *savedTeams = sHofMonPtr;
+    struct HallofFameMon *currMon;
     u16 i;
     u16 currMonID;
 
@@ -1034,7 +950,8 @@ static void Task_HofPC_HandleInput(u8 taskId)
         gTasks[taskId].tCurrMonId--;
         gTasks[taskId].func = Task_HofPC_PrintMonInfo;
     }
-    else if (gMain.newKeys & DPAD_DOWN && gTasks[taskId].tCurrMonId < gTasks[taskId].tMonNo - 1) // change mon +1
+    else if (gMain.newKeys & DPAD_DOWN &&
+             gTasks[taskId].tCurrMonId < gTasks[taskId].tMonNo - 1) // change mon +1
     {
         gTasks[taskId].tCurrMonId++;
         gTasks[taskId].func = Task_HofPC_PrintMonInfo;
@@ -1043,10 +960,10 @@ static void Task_HofPC_HandleInput(u8 taskId)
 
 static void Task_HofPC_HandlePaletteOnExit(u8 taskId)
 {
-    struct HallofFameTeam* fameTeam;
+    struct HallofFameTeam *fameTeam;
 
     CpuCopy16(gPlttBufferFaded, gPlttBufferUnfaded, 0x400);
-    fameTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
+    fameTeam = (struct HallofFameTeam *)(gDecompressionBuffer);
     fameTeam->mon[0] = sDummyFameMon;
     ComputerScreenCloseEffect(0, 0, 0);
     gTasks[taskId].func = Task_HofPC_HandleExit;
@@ -1112,11 +1029,17 @@ static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 {
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     PutWindowTilemap(0);
-    AddTextPrinterParameterized3(0, 1, GetStringCenterAlignXOffset(1, gText_WelcomeToHOF, 0xD0), 1, sMonInfoTextColors, 0, gText_WelcomeToHOF);
+    AddTextPrinterParameterized3(0,
+        1,
+        GetStringCenterAlignXOffset(1, gText_WelcomeToHOF, 0xD0),
+        1,
+        sMonInfoTextColors,
+        0,
+        gText_WelcomeToHOF);
     CopyWindowToVram(0, 3);
 }
 
-static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 unused1, u8 unused2)
+static void HallOfFame_PrintMonInfo(struct HallofFameMon *currMon, u8 unused1, u8 unused2)
 {
     u8 text[30];
     u8 *stringPtr;
@@ -1210,7 +1133,8 @@ static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2)
     AddTextPrinterParameterized3(1, 1, 0, 1, sPlayerInfoTextColors, -1, gText_Name);
 
     width = GetStringRightAlignXOffset(1, gSaveBlock2Ptr->playerName, 0x70);
-    AddTextPrinterParameterized3(1, 1, width, 1, sPlayerInfoTextColors, -1, gSaveBlock2Ptr->playerName);
+    AddTextPrinterParameterized3(
+        1, 1, width, 1, sPlayerInfoTextColors, -1, gSaveBlock2Ptr->playerName);
 
     trainerId = (gSaveBlock2Ptr->playerTrainerId[0]) | (gSaveBlock2Ptr->playerTrainerId[1] << 8);
     AddTextPrinterParameterized3(1, 1, 0, 0x11, sPlayerInfoTextColors, 0, gText_IDNumber);
@@ -1341,8 +1265,7 @@ static bool8 sub_8175024(void)
 
 static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite)
 {
-    if (sprite->pos1.x != sprite->tDestinationX
-        || sprite->pos1.y != sprite->tDestinationY)
+    if (sprite->pos1.x != sprite->tDestinationX || sprite->pos1.y != sprite->tDestinationY)
     {
         if (sprite->pos1.x < sprite->tDestinationX)
             sprite->pos1.x += 15;
@@ -1372,7 +1295,7 @@ static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite)
 #define sSineIdx data[0]
 #define sExtraY  data[1]
 
-static void SpriteCB_HofConfetti(struct Sprite* sprite)
+static void SpriteCB_HofConfetti(struct Sprite *sprite)
 {
     if (sprite->pos2.y > 120)
     {
@@ -1397,7 +1320,7 @@ static void SpriteCB_HofConfetti(struct Sprite* sprite)
 static bool8 CreateHofConfettiSprite(void)
 {
     u8 spriteID;
-    struct Sprite* sprite;
+    struct Sprite *sprite;
 
     s16 posX = Random() % 240;
     s16 posY = -(Random() % 8);
@@ -1503,13 +1426,13 @@ static void Task_DoDomeConfetti(u8 taskId)
         if (tTimer != 0 && tTimer % 3 == 0)
         {
             // Create new confetti every 3 frames
-            id = ConfettiUtil_AddNew(&sOamData_Confetti, 
-                              TAG_CONFETTI, 
-                              TAG_CONFETTI, 
-                              Random() % 240, 
-                              -(Random() % 8), 
-                              Random() % ARRAY_COUNT(sAnims_Confetti), 
-                              id);
+            id = ConfettiUtil_AddNew(&sOamData_Confetti,
+                TAG_CONFETTI,
+                TAG_CONFETTI,
+                Random() % 240,
+                -(Random() % 8),
+                Random() % ARRAY_COUNT(sAnims_Confetti),
+                id);
             if (id != 0xFF)
             {
                 ConfettiUtil_SetCallback(id, UpdateDomeConfetti);

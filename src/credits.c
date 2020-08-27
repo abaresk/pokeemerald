@@ -86,7 +86,7 @@ enum
     PAGE_COUNT
 };
 
-#define COLOR_DARK_GREEN RGB(7, 11, 6)
+#define COLOR_DARK_GREEN  RGB(7, 11, 6)
 #define COLOR_LIGHT_GREEN RGB(13, 20, 12)
 
 enum
@@ -98,7 +98,7 @@ enum
     TDA_4 = 4,
     TDA_PLAYER_CYCLIST = 5,
     TDA_RIVAL_CYCLIST = 6,
-    TDA_7 = 7, // Has something to do with the bike scene
+    TDA_7 = 7,   // Has something to do with the bike scene
     TDA_11 = 11, // Gets set depending on whether the bike or the grass scene should be shown
     TDA_12 = 12,
     TDA_13 = 13,
@@ -132,13 +132,14 @@ enum
 struct CreditsData
 {
     u16 monToShow[NUM_MON_SLIDES]; // List of Pokemon species ids that will show during the credits
-    u16 imgCounter; //how many mon images have been shown
-    u16 nextImgPos; //if the next image spawns left/center/right
-    u16 currShownMon; //index into monToShow
-    u16 numMonToShow; //number of pokemon to show, always NUM_MON_SLIDES after determine function
-    u16 caughtMonIds[NATIONAL_DEX_COUNT]; //temporary location to hold a condensed array of all caught pokemon
-    u16 numCaughtMon; //count of filled spaces in caughtMonIds
-    u16 unk39C[7]; // unused padding?
+    u16 imgCounter;                // how many mon images have been shown
+    u16 nextImgPos;                // if the next image spawns left/center/right
+    u16 currShownMon;              // index into monToShow
+    u16 numMonToShow; // number of pokemon to show, always NUM_MON_SLIDES after determine function
+    u16 caughtMonIds[NATIONAL_DEX_COUNT]; // temporary location to hold a condensed array of all
+                                          // caught pokemon
+    u16 numCaughtMon; // count of filled spaces in caughtMonIds
+    u16 unk39C[7];    // unused padding?
 };
 
 struct CreditsEntry
@@ -152,63 +153,108 @@ static EWRAM_DATA s16 gUnknown_0203BCE0 = 0;
 static EWRAM_DATA u16 gUnknown_0203BCE2 = 0; // TASK A
 EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
 static EWRAM_DATA u8 gUnknown_0203BCE5 = 0;
-static EWRAM_DATA struct CreditsData *sCreditsData = {0};
+static EWRAM_DATA struct CreditsData *sCreditsData = { 0 };
 
-static const u16 gUnknown_085E56F0[][16] =
-{
+static const u16 gUnknown_085E56F0[][16] = {
     INCBIN_U16("graphics/credits/credits_1.gbapal"),
     INCBIN_U16("graphics/credits/credits_2.gbapal"),
     INCBIN_U16("graphics/credits/credits_3.gbapal"),
     INCBIN_U16("graphics/credits/credits_4.gbapal"),
 };
 
-static const u32 gCreditsCopyrightEnd_Gfx[] = INCBIN_U32("graphics/credits/the_end_copyright.4bpp.lz");
+static const u32 gCreditsCopyrightEnd_Gfx[] =
+    INCBIN_U32("graphics/credits/the_end_copyright.4bpp.lz");
 
 static void sub_81772B8(struct Sprite *sprite);
 
-static const u8 sTheEnd_LetterTMap[] =
-{
-    0,    1, 0,
-    0xFF, 1, 0xFF,
-    0xFF, 1, 0xFF,
-    0xFF, 1, 0xFF,
-    0xFF, 1, 0xFF,
+static const u8 sTheEnd_LetterTMap[] = {
+    0,
+    1,
+    0,
+    0xFF,
+    1,
+    0xFF,
+    0xFF,
+    1,
+    0xFF,
+    0xFF,
+    1,
+    0xFF,
+    0xFF,
+    1,
+    0xFF,
 };
 
-static const u8 sTheEnd_LetterHMap[] =
-{
-    1, 0xFF, 1,
-    1, 0xFF, 1,
-    1, 2,    1,
-    1, 0xFF, 1,
-    1, 0xFF, 1,
+static const u8 sTheEnd_LetterHMap[] = {
+    1,
+    0xFF,
+    1,
+    1,
+    0xFF,
+    1,
+    1,
+    2,
+    1,
+    1,
+    0xFF,
+    1,
+    1,
+    0xFF,
+    1,
 };
 
-static const u8 sTheEnd_LetterEMap[] =
-{
-    1, 0, 0,
-    1, 0xFF, 0xFF,
-    1, 2,    2,
-    1, 0xFF, 0xFF,
-    1, 0x80, 0x80,
+static const u8 sTheEnd_LetterEMap[] = {
+    1,
+    0,
+    0,
+    1,
+    0xFF,
+    0xFF,
+    1,
+    2,
+    2,
+    1,
+    0xFF,
+    0xFF,
+    1,
+    0x80,
+    0x80,
 };
 
-static const u8 sTheEnd_LetterNMap[] =
-{
-    1, 3, 1,
-    1, 4, 1,
-    1, 5, 1,
-    1, 0xC4, 1,
-    1, 0xC3, 1,
+static const u8 sTheEnd_LetterNMap[] = {
+    1,
+    3,
+    1,
+    1,
+    4,
+    1,
+    1,
+    5,
+    1,
+    1,
+    0xC4,
+    1,
+    1,
+    0xC3,
+    1,
 };
 
-static const u8 sTheEnd_LetterDMap[] =
-{
-    1, 6, 7,
-    1, 8, 9,
-    1, 0xFF, 1,
-    1, 0x88, 0x89,
-    1, 0x86, 0x87,
+static const u8 sTheEnd_LetterDMap[] = {
+    1,
+    6,
+    7,
+    1,
+    8,
+    9,
+    1,
+    0xFF,
+    1,
+    1,
+    0x88,
+    0x89,
+    1,
+    0x86,
+    0x87,
 };
 
 static const u8 gCreditsText_EmptyString[] = _("");
@@ -365,181 +411,467 @@ static const u8 gCreditsText_NationalFederationBlind[] = _("National Federation 
 static const u8 gCreditsText_PatriciaAMaurer[] = _("Patricia A. Maurer");
 static const u8 gCreditsText_EuropeanBlindUnion[] = _("European Blind Union");
 static const u8 gCreditsText_AustralianBrailleAuthority[] = _("Australian Braille Authority");
-static const u8 gCreditsText_RoyalNewZealandFederationBlind[] = _("Royal New Zealand Federation for the Blind");
+static const u8 gCreditsText_RoyalNewZealandFederationBlind[] =
+    _("Royal New Zealand Federation for the Blind");
 static const u8 gCreditsText_MotoyasuTojima[] = _("Motoyasu Tojima");
 static const u8 gCreditsText_NicolaPrattBarlow[] = _("Nicola Pratt-Barlow");
 static const u8 gCreditsText_ShellieDow[] = _("Shellie Dow");
 static const u8 gCreditsText_ErikJohnson[] = _("Erik Johnson");
-static const struct CreditsEntry gCreditsEntry_EmptyString[] = {0, FALSE, gCreditsText_EmptyString};
-static const struct CreditsEntry gCreditsEntry_PkmnEmeraldVersion[] = {7, TRUE, gCreditsText_PkmnEmeraldVersion};
-static const struct CreditsEntry gCreditsEntry_Credits[] = {11, TRUE, gCreditsText_Credits};
-static const struct CreditsEntry gCreditsEntry_ExecutiveDirector[] = {8, TRUE, gCreditsText_ExecutiveDirector};
-static const struct CreditsEntry gCreditsEntry_Director[] = {12, TRUE, gCreditsText_Director};
-static const struct CreditsEntry gCreditsEntry_ArtDirector[] = {10, TRUE, gCreditsText_ArtDirector};
-static const struct CreditsEntry gCreditsEntry_BattleDirector[] = {10, TRUE, gCreditsText_BattleDirector};
-static const struct CreditsEntry gCreditsEntry_MainProgrammer[] = {10, TRUE, gCreditsText_MainProgrammer};
-static const struct CreditsEntry gCreditsEntry_BattleSystemPgrms[] = {8, TRUE, gCreditsText_BattleSystemPgrms};
-static const struct CreditsEntry gCreditsEntry_FieldSystemPgrms[] = {7, TRUE, gCreditsText_FieldSystemPgrms};
-static const struct CreditsEntry gCreditsEntry_Programmers[] = {12, TRUE, gCreditsText_Programmers};
-static const struct CreditsEntry gCreditsEntry_MainGraphicDesigner[] = {7, TRUE, gCreditsText_MainGraphicDesigner};
-static const struct CreditsEntry gCreditsEntry_GraphicDesigners[] = {9, TRUE, gCreditsText_GraphicDesigners};
-static const struct CreditsEntry gCreditsEntry_PkmnDesigners[] = {10, TRUE, gCreditsText_PkmnDesigners};
-static const struct CreditsEntry gCreditsEntry_MusicComposition[] = {13, TRUE, gCreditsText_MusicComposition};
-static const struct CreditsEntry gCreditsEntry_SoundEffectsAndPkmnVoices[] = {4, TRUE, gCreditsText_SoundEffectsAndPkmnVoices};
-static const struct CreditsEntry gCreditsEntry_GameDesigners[] = {11, TRUE, gCreditsText_GameDesigners};
-static const struct CreditsEntry gCreditsEntry_ScenarioPlot[] = {11, TRUE, gCreditsText_ScenarioPlot};
-static const struct CreditsEntry gCreditsEntry_Scenario[] = {13, TRUE, gCreditsText_Scenario};
-static const struct CreditsEntry gCreditsEntry_ScriptDesigners[] = {10, TRUE, gCreditsText_ScriptDesigners};
-static const struct CreditsEntry gCreditsEntry_MapDesigners[] = {11, TRUE, gCreditsText_MapDesigners};
-static const struct CreditsEntry gCreditsEntry_MapDataDesigners[] = {9, TRUE, gCreditsText_MapDataDesigners};
-static const struct CreditsEntry gCreditsEntry_ParametricDesigners[] = {9, TRUE, gCreditsText_ParametricDesigners};
-static const struct CreditsEntry gCreditsEntry_PokedexText[] = {11, TRUE, gCreditsText_PokedexText};
-static const struct CreditsEntry gCreditsEntry_EnvAndToolPgrms[] = {6, TRUE, gCreditsText_EnvAndToolPgrms};
-static const struct CreditsEntry gCreditsEntry_NCLProductTesting[] = {11, TRUE, gCreditsText_NCLProductTesting};
-static const struct CreditsEntry gCreditsEntry_SpecialThanks[] = {10, TRUE, gCreditsText_SpecialThanks};
-static const struct CreditsEntry gCreditsEntry_Coordinators[] = {11, TRUE, gCreditsText_Coordinators};
-static const struct CreditsEntry gCreditsEntry_Producers[] = {11, TRUE, gCreditsText_Producers};
-static const struct CreditsEntry gCreditsEntry_ExecProducers[] = {7, TRUE, gCreditsText_ExecProducers};
-static const struct CreditsEntry gCreditsEntry_InfoSupervisors[] = {10, TRUE, gCreditsText_InfoSupervisors};
-static const struct CreditsEntry gCreditsEntry_TaskManagers[] = {8, TRUE, gCreditsText_TaskManagers};
-static const struct CreditsEntry gCreditsEntry_BrailleCodeCheck[] = {10, TRUE, gCreditsText_BrailleCodeCheck};
-static const struct CreditsEntry gCreditsEntry_WorldDirector[] = {10, TRUE, gCreditsText_WorldDirector};
-static const struct CreditsEntry gCreditsEntry_BattleFrontierData[] = {8, TRUE, gCreditsText_BattleFrontierData};
-static const struct CreditsEntry gCreditsEntry_SupportProgrammers[] = {10, TRUE, gCreditsText_SupportProgrammers};
-static const struct CreditsEntry gCreditsEntry_Artwork[] = {12, TRUE, gCreditsText_Artwork};
-static const struct CreditsEntry gCreditsEntry_LeadProgrammer[] = {10, TRUE, gCreditsText_LeadProgrammer};
-static const struct CreditsEntry gCreditsEntry_LeadGraphicArtist[] = {9, TRUE, gCreditsText_LeadGraphicArtist};
-static const struct CreditsEntry gCreditsEntry_SatoshiTajiri[] = {11, FALSE, gCreditsText_SatoshiTajiri};
-static const struct CreditsEntry gCreditsEntry_JunichiMasuda[] = {11, FALSE, gCreditsText_JunichiMasuda};
-static const struct CreditsEntry gCreditsEntry_KenSugimori[] = {11, FALSE, gCreditsText_KenSugimori};
-static const struct CreditsEntry gCreditsEntry_ShigekiMorimoto[] = {11, FALSE, gCreditsText_ShigekiMorimoto};
-static const struct CreditsEntry gCreditsEntry_TetsuyaWatanabe[] = {11, FALSE, gCreditsText_TetsuyaWatanabe};
-static const struct CreditsEntry gCreditsEntry_HisashiSogabe[] = {11, FALSE, gCreditsText_HisashiSogabe};
-static const struct CreditsEntry gCreditsEntry_SosukeTamada[] = {11, FALSE, gCreditsText_SosukeTamada};
-static const struct CreditsEntry gCreditsEntry_AkitoMori[] = {11, FALSE, gCreditsText_AkitoMori};
-static const struct CreditsEntry gCreditsEntry_KeitaKagaya[] = {11, FALSE, gCreditsText_KeitaKagaya};
-static const struct CreditsEntry gCreditsEntry_YoshinoriMatsuda[] = {11, FALSE, gCreditsText_YoshinoriMatsuda};
-static const struct CreditsEntry gCreditsEntry_HiroyukiNakamura[] = {11, FALSE, gCreditsText_HiroyukiNakamura};
-static const struct CreditsEntry gCreditsEntry_MasaoTaya[] = {11, FALSE, gCreditsText_MasaoTaya};
-static const struct CreditsEntry gCreditsEntry_SatoshiNohara[] = {11, FALSE, gCreditsText_SatoshiNohara};
-static const struct CreditsEntry gCreditsEntry_TomomichiOhta[] = {11, FALSE, gCreditsText_TomomichiOhta};
-static const struct CreditsEntry gCreditsEntry_MiyukiIwasawa[] = {11, FALSE, gCreditsText_MiyukiIwasawa};
-static const struct CreditsEntry gCreditsEntry_TakenoriOhta[] = {11, FALSE, gCreditsText_TakenoriOhta};
-static const struct CreditsEntry gCreditsEntry_HironobuYoshida[] = {11, FALSE, gCreditsText_HironobuYoshida};
-static const struct CreditsEntry gCreditsEntry_MotofumiFujiwara[] = {11, FALSE, gCreditsText_MotofumiFujiwara};
-static const struct CreditsEntry gCreditsEntry_SatoshiOhta[] = {11, FALSE, gCreditsText_SatoshiOhta};
-static const struct CreditsEntry gCreditsEntry_AsukaIwashita[] = {11, FALSE, gCreditsText_AsukaIwashita};
-static const struct CreditsEntry gCreditsEntry_AimiTomita[] = {11, FALSE, gCreditsText_AimiTomita};
-static const struct CreditsEntry gCreditsEntry_TakaoUnno[] = {11, FALSE, gCreditsText_TakaoUnno};
-static const struct CreditsEntry gCreditsEntry_KanakoEo[] = {11, FALSE, gCreditsText_KanakoEo};
-static const struct CreditsEntry gCreditsEntry_JunOkutani[] = {11, FALSE, gCreditsText_JunOkutani};
-static const struct CreditsEntry gCreditsEntry_AtsukoNishida[] = {11, FALSE, gCreditsText_AtsukoNishida};
-static const struct CreditsEntry gCreditsEntry_MuneoSaito[] = {11, FALSE, gCreditsText_MuneoSaito};
-static const struct CreditsEntry gCreditsEntry_RenaYoshikawa[] = {11, FALSE, gCreditsText_RenaYoshikawa};
-static const struct CreditsEntry gCreditsEntry_GoIchinose[] = {11, FALSE, gCreditsText_GoIchinose};
-static const struct CreditsEntry gCreditsEntry_MorikazuAoki[] = {11, FALSE, gCreditsText_MorikazuAoki};
-static const struct CreditsEntry gCreditsEntry_KojiNishino[] = {11, FALSE, gCreditsText_KojiNishino};
-static const struct CreditsEntry gCreditsEntry_KenjiMatsushima[] = {11, FALSE, gCreditsText_KenjiMatsushima};
-static const struct CreditsEntry gCreditsEntry_TetsujiOhta[] = {11, FALSE, gCreditsText_TetsujiOhta};
-static const struct CreditsEntry gCreditsEntry_HitomiSato[] = {11, FALSE, gCreditsText_HitomiSato};
-static const struct CreditsEntry gCreditsEntry_TakeshiKawachimaru[] = {11, FALSE, gCreditsText_TakeshiKawachimaru};
-static const struct CreditsEntry gCreditsEntry_TeruyukiShimoyamada[] = {11, FALSE, gCreditsText_TeruyukiShimoyamada};
-static const struct CreditsEntry gCreditsEntry_ShigeruOhmori[] = {11, FALSE, gCreditsText_ShigeruOhmori};
-static const struct CreditsEntry gCreditsEntry_TadashiTakahashi[] = {11, FALSE, gCreditsText_TadashiTakahashi};
-static const struct CreditsEntry gCreditsEntry_ToshinobuMatsumiya[] = {11, FALSE, gCreditsText_ToshinobuMatsumiya};
-static const struct CreditsEntry gCreditsEntry_AkihitoTomisawa[] = {11, FALSE, gCreditsText_AkihitoTomisawa};
-static const struct CreditsEntry gCreditsEntry_HirokiEnomoto[] = {11, FALSE, gCreditsText_HirokiEnomoto};
-static const struct CreditsEntry gCreditsEntry_KazuyukiTerada[] = {11, FALSE, gCreditsText_KazuyukiTerada};
-static const struct CreditsEntry gCreditsEntry_YuriSakurai[] = {11, FALSE, gCreditsText_YuriSakurai};
-static const struct CreditsEntry gCreditsEntry_HiromiSagawa[] = {11, FALSE, gCreditsText_HiromiSagawa};
-static const struct CreditsEntry gCreditsEntry_KenjiTominaga[] = {11, FALSE, gCreditsText_KenjiTominaga};
-static const struct CreditsEntry gCreditsEntry_YoshioTajiri[] = {11, FALSE, gCreditsText_YoshioTajiri};
-static const struct CreditsEntry gCreditsEntry_TeikoSasaki[] = {11, FALSE, gCreditsText_TeikoSasaki};
-static const struct CreditsEntry gCreditsEntry_SachikoHamano[] = {11, FALSE, gCreditsText_SachikoHamano};
-static const struct CreditsEntry gCreditsEntry_ChieMatsumiya[] = {11, FALSE, gCreditsText_ChieMatsumiya};
-static const struct CreditsEntry gCreditsEntry_AkikoShinozaki[] = {11, FALSE, gCreditsText_AkikoShinozaki};
-static const struct CreditsEntry gCreditsEntry_AstukoFujii[] = {11, FALSE, gCreditsText_AstukoFujii};
-static const struct CreditsEntry gCreditsEntry_NozomuSaito[] = {11, FALSE, gCreditsText_NozomuSaito};
-static const struct CreditsEntry gCreditsEntry_KenkichiToyama[] = {11, FALSE, gCreditsText_KenkichiToyama};
-static const struct CreditsEntry gCreditsEntry_SuguruNakatsui[] = {11, FALSE, gCreditsText_SuguruNakatsui};
-static const struct CreditsEntry gCreditsEntry_YumiFunasaka[] = {11, FALSE, gCreditsText_YumiFunasaka};
-static const struct CreditsEntry gCreditsEntry_NaokoYanase[] = {11, FALSE, gCreditsText_NaokoYanase};
-static const struct CreditsEntry gCreditsEntry_NCLSuperMarioClub[] = {11, FALSE, gCreditsText_NCLSuperMarioClub};
-static const struct CreditsEntry gCreditsEntry_AtsushiTada[] = {11, FALSE, gCreditsText_AtsushiTada};
-static const struct CreditsEntry gCreditsEntry_TakahiroOhnishi[] = {11, FALSE, gCreditsText_TakahiroOhnishi};
-static const struct CreditsEntry gCreditsEntry_NorihideOkamura[] = {11, FALSE, gCreditsText_NorihideOkamura};
-static const struct CreditsEntry gCreditsEntry_HiroNakamura[] = {11, FALSE, gCreditsText_HiroNakamura};
-static const struct CreditsEntry gCreditsEntry_HiroyukiUesugi[] = {11, FALSE, gCreditsText_HiroyukiUesugi};
-static const struct CreditsEntry gCreditsEntry_TerukiMurakawa[] = {11, FALSE, gCreditsText_TerukiMurakawa};
-static const struct CreditsEntry gCreditsEntry_AkiraKinashi[] = {11, FALSE, gCreditsText_AkiraKinashi};
-static const struct CreditsEntry gCreditsEntry_MichikoTakizawa[] = {11, FALSE, gCreditsText_MichikoTakizawa};
-static const struct CreditsEntry gCreditsEntry_MakikoTakada[] = {11, FALSE, gCreditsText_MakikoTakada};
-static const struct CreditsEntry gCreditsEntry_TakanaoKondo[] = {11, FALSE, gCreditsText_TakanaoKondo};
-static const struct CreditsEntry gCreditsEntry_AiMashima[] = {11, FALSE, gCreditsText_AiMashima};
-static const struct CreditsEntry gCreditsEntry_GakujiNomoto[] = {11, FALSE, gCreditsText_GakujiNomoto};
-static const struct CreditsEntry gCreditsEntry_TakehiroIzushi[] = {11, FALSE, gCreditsText_TakehiroIzushi};
-static const struct CreditsEntry gCreditsEntry_HitoshiYamagami[] = {11, FALSE, gCreditsText_HitoshiYamagami};
-static const struct CreditsEntry gCreditsEntry_KyokoWatanabe[] = {11, FALSE, gCreditsText_KyokoWatanabe};
-static const struct CreditsEntry gCreditsEntry_TakaoNakano[] = {11, FALSE, gCreditsText_TakaoNakano};
-static const struct CreditsEntry gCreditsEntry_HiroyukiJinnai[] = {11, FALSE, gCreditsText_HiroyukiJinnai};
-static const struct CreditsEntry gCreditsEntry_HiroakiTsuru[] = {11, FALSE, gCreditsText_HiroakiTsuru};
-static const struct CreditsEntry gCreditsEntry_TsunekazIshihara[] = {11, FALSE, gCreditsText_TsunekazIshihara};
-static const struct CreditsEntry gCreditsEntry_SatoruIwata[] = {11, FALSE, gCreditsText_SatoruIwata};
-static const struct CreditsEntry gCreditsEntry_KazuyaSuyama[] = {11, FALSE, gCreditsText_KazuyaSuyama};
-static const struct CreditsEntry gCreditsEntry_SatoshiMitsuhara[] = {11, FALSE, gCreditsText_SatoshiMitsuhara};
-static const struct CreditsEntry gCreditsEntry_JapanBrailleLibrary[] = {9, FALSE, gCreditsText_JapanBrailleLibrary};
-static const struct CreditsEntry gCreditsEntry_TomotakaKomura[] = {11, FALSE, gCreditsText_TomotakaKomura};
-static const struct CreditsEntry gCreditsEntry_MikikoOhhashi[] = {11, FALSE, gCreditsText_MikikoOhhashi};
-static const struct CreditsEntry gCreditsEntry_DaisukeHoshino[] = {11, FALSE, gCreditsText_DaisukeHoshino};
-static const struct CreditsEntry gCreditsEntry_KenjiroIto[] = {11, FALSE, gCreditsText_KenjiroIto};
-static const struct CreditsEntry gCreditsEntry_RuiKawaguchi[] = {11, FALSE, gCreditsText_RuiKawaguchi};
-static const struct CreditsEntry gCreditsEntry_ShunsukeKohori[] = {11, FALSE, gCreditsText_ShunsukeKohori};
-static const struct CreditsEntry gCreditsEntry_SachikoNakamichi[] = {11, FALSE, gCreditsText_SachikoNakamichi};
-static const struct CreditsEntry gCreditsEntry_FujikoNomura[] = {11, FALSE, gCreditsText_FujikoNomura};
-static const struct CreditsEntry gCreditsEntry_KazukiYoshihara[] = {11, FALSE, gCreditsText_KazukiYoshihara};
-static const struct CreditsEntry gCreditsEntry_RetsujiNomoto[] = {11, FALSE, gCreditsText_RetsujiNomoto};
-static const struct CreditsEntry gCreditsEntry_AzusaTajima[] = {11, FALSE, gCreditsText_AzusaTajima};
-static const struct CreditsEntry gCreditsEntry_ShusakuEgami[] = {11, FALSE, gCreditsText_ShusakuEgami};
-static const struct CreditsEntry gCreditsEntry_PackageAndManual[] = {0, TRUE, gCreditsText_PackageAndManual};
-static const struct CreditsEntry gCreditsEntry_EnglishVersion[] = {0, TRUE, gCreditsText_EnglishVersion};
-static const struct CreditsEntry gCreditsEntry_Translator[] = {0, TRUE, gCreditsText_Translator};
-static const struct CreditsEntry gCreditsEntry_TextEditor[] = {0, TRUE, gCreditsText_TextEditor};
-static const struct CreditsEntry gCreditsEntry_NCLCoordinator[] = {0, TRUE, gCreditsText_NCLCoordinator};
-static const struct CreditsEntry gCreditsEntry_GraphicDesigner[] = {0, TRUE, gCreditsText_GraphicDesigner};
-static const struct CreditsEntry gCreditsEntry_NOAProductTesting[] = {0, TRUE, gCreditsText_NOAProductTesting};
-static const struct CreditsEntry gCreditsEntry_HideyukiNakajima[] = {0, FALSE, gCreditsText_HideyukiNakajima};
-static const struct CreditsEntry gCreditsEntry_HidenoriSaeki[] = {0, FALSE, gCreditsText_HidenoriSaeki};
-static const struct CreditsEntry gCreditsEntry_YokoWatanabe[] = {0, FALSE, gCreditsText_YokoWatanabe};
-static const struct CreditsEntry gCreditsEntry_SakaeKimura[] = {0, FALSE, gCreditsText_SakaeKimura};
-static const struct CreditsEntry gCreditsEntry_ChiakiShinkai[] = {0, FALSE, gCreditsText_ChiakiShinkai};
-static const struct CreditsEntry gCreditsEntry_SethMcMahill[] = {0, FALSE, gCreditsText_SethMcMahill};
-static const struct CreditsEntry gCreditsEntry_NobOgasawara[] = {0, FALSE, gCreditsText_NobOgasawara};
-static const struct CreditsEntry gCreditsEntry_TeresaLillygren[] = {0, FALSE, gCreditsText_TeresaLillygren};
-static const struct CreditsEntry gCreditsEntry_KimikoNakamichi[] = {0, FALSE, gCreditsText_KimikoNakamichi};
-static const struct CreditsEntry gCreditsEntry_SouichiYamamoto[] = {0, FALSE, gCreditsText_SouichiYamamoto};
-static const struct CreditsEntry gCreditsEntry_YuichiroIto[] = {0, FALSE, gCreditsText_YuichiroIto};
-static const struct CreditsEntry gCreditsEntry_ThomasHertzog[] = {0, FALSE, gCreditsText_ThomasHertzog};
-static const struct CreditsEntry gCreditsEntry_MikaKurosawa[] = {0, FALSE, gCreditsText_MikaKurosawa};
-static const struct CreditsEntry gCreditsEntry_NationalFederationBlind[] = {0, FALSE, gCreditsText_NationalFederationBlind};
-static const struct CreditsEntry gCreditsEntry_PatriciaAMaurer[] = {0, FALSE, gCreditsText_PatriciaAMaurer};
-static const struct CreditsEntry gCreditsEntry_EuropeanBlindUnion[] = {0, FALSE, gCreditsText_EuropeanBlindUnion};
-static const struct CreditsEntry gCreditsEntry_AustralianBrailleAuthority[] = {0, FALSE, gCreditsText_AustralianBrailleAuthority};
-static const struct CreditsEntry gCreditsEntry_RoyalNewZealandFederationBlind[] = {0, FALSE, gCreditsText_RoyalNewZealandFederationBlind};
-static const struct CreditsEntry gCreditsEntry_MotoyasuTojima[] = {0, FALSE, gCreditsText_MotoyasuTojima};
-static const struct CreditsEntry gCreditsEntry_NicolaPrattBarlow[] = {0, FALSE, gCreditsText_NicolaPrattBarlow};
-static const struct CreditsEntry gCreditsEntry_ShellieDow[] = {0, FALSE, gCreditsText_ShellieDow};
-static const struct CreditsEntry gCreditsEntry_ErikJohnson[] = {0, FALSE, gCreditsText_ErikJohnson};
+static const struct CreditsEntry gCreditsEntry_EmptyString[] = {
+    0, FALSE, gCreditsText_EmptyString
+};
+static const struct CreditsEntry gCreditsEntry_PkmnEmeraldVersion[] = {
+    7, TRUE, gCreditsText_PkmnEmeraldVersion
+};
+static const struct CreditsEntry gCreditsEntry_Credits[] = { 11, TRUE, gCreditsText_Credits };
+static const struct CreditsEntry gCreditsEntry_ExecutiveDirector[] = {
+    8, TRUE, gCreditsText_ExecutiveDirector
+};
+static const struct CreditsEntry gCreditsEntry_Director[] = { 12, TRUE, gCreditsText_Director };
+static const struct CreditsEntry gCreditsEntry_ArtDirector[] = {
+    10, TRUE, gCreditsText_ArtDirector
+};
+static const struct CreditsEntry gCreditsEntry_BattleDirector[] = {
+    10, TRUE, gCreditsText_BattleDirector
+};
+static const struct CreditsEntry gCreditsEntry_MainProgrammer[] = {
+    10, TRUE, gCreditsText_MainProgrammer
+};
+static const struct CreditsEntry gCreditsEntry_BattleSystemPgrms[] = {
+    8, TRUE, gCreditsText_BattleSystemPgrms
+};
+static const struct CreditsEntry gCreditsEntry_FieldSystemPgrms[] = {
+    7, TRUE, gCreditsText_FieldSystemPgrms
+};
+static const struct CreditsEntry gCreditsEntry_Programmers[] = {
+    12, TRUE, gCreditsText_Programmers
+};
+static const struct CreditsEntry gCreditsEntry_MainGraphicDesigner[] = {
+    7, TRUE, gCreditsText_MainGraphicDesigner
+};
+static const struct CreditsEntry gCreditsEntry_GraphicDesigners[] = {
+    9, TRUE, gCreditsText_GraphicDesigners
+};
+static const struct CreditsEntry gCreditsEntry_PkmnDesigners[] = {
+    10, TRUE, gCreditsText_PkmnDesigners
+};
+static const struct CreditsEntry gCreditsEntry_MusicComposition[] = {
+    13, TRUE, gCreditsText_MusicComposition
+};
+static const struct CreditsEntry gCreditsEntry_SoundEffectsAndPkmnVoices[] = {
+    4, TRUE, gCreditsText_SoundEffectsAndPkmnVoices
+};
+static const struct CreditsEntry gCreditsEntry_GameDesigners[] = {
+    11, TRUE, gCreditsText_GameDesigners
+};
+static const struct CreditsEntry gCreditsEntry_ScenarioPlot[] = {
+    11, TRUE, gCreditsText_ScenarioPlot
+};
+static const struct CreditsEntry gCreditsEntry_Scenario[] = { 13, TRUE, gCreditsText_Scenario };
+static const struct CreditsEntry gCreditsEntry_ScriptDesigners[] = {
+    10, TRUE, gCreditsText_ScriptDesigners
+};
+static const struct CreditsEntry gCreditsEntry_MapDesigners[] = {
+    11, TRUE, gCreditsText_MapDesigners
+};
+static const struct CreditsEntry gCreditsEntry_MapDataDesigners[] = {
+    9, TRUE, gCreditsText_MapDataDesigners
+};
+static const struct CreditsEntry gCreditsEntry_ParametricDesigners[] = {
+    9, TRUE, gCreditsText_ParametricDesigners
+};
+static const struct CreditsEntry gCreditsEntry_PokedexText[] = {
+    11, TRUE, gCreditsText_PokedexText
+};
+static const struct CreditsEntry gCreditsEntry_EnvAndToolPgrms[] = {
+    6, TRUE, gCreditsText_EnvAndToolPgrms
+};
+static const struct CreditsEntry gCreditsEntry_NCLProductTesting[] = {
+    11, TRUE, gCreditsText_NCLProductTesting
+};
+static const struct CreditsEntry gCreditsEntry_SpecialThanks[] = {
+    10, TRUE, gCreditsText_SpecialThanks
+};
+static const struct CreditsEntry gCreditsEntry_Coordinators[] = {
+    11, TRUE, gCreditsText_Coordinators
+};
+static const struct CreditsEntry gCreditsEntry_Producers[] = { 11, TRUE, gCreditsText_Producers };
+static const struct CreditsEntry gCreditsEntry_ExecProducers[] = {
+    7, TRUE, gCreditsText_ExecProducers
+};
+static const struct CreditsEntry gCreditsEntry_InfoSupervisors[] = {
+    10, TRUE, gCreditsText_InfoSupervisors
+};
+static const struct CreditsEntry gCreditsEntry_TaskManagers[] = {
+    8, TRUE, gCreditsText_TaskManagers
+};
+static const struct CreditsEntry gCreditsEntry_BrailleCodeCheck[] = {
+    10, TRUE, gCreditsText_BrailleCodeCheck
+};
+static const struct CreditsEntry gCreditsEntry_WorldDirector[] = {
+    10, TRUE, gCreditsText_WorldDirector
+};
+static const struct CreditsEntry gCreditsEntry_BattleFrontierData[] = {
+    8, TRUE, gCreditsText_BattleFrontierData
+};
+static const struct CreditsEntry gCreditsEntry_SupportProgrammers[] = {
+    10, TRUE, gCreditsText_SupportProgrammers
+};
+static const struct CreditsEntry gCreditsEntry_Artwork[] = { 12, TRUE, gCreditsText_Artwork };
+static const struct CreditsEntry gCreditsEntry_LeadProgrammer[] = {
+    10, TRUE, gCreditsText_LeadProgrammer
+};
+static const struct CreditsEntry gCreditsEntry_LeadGraphicArtist[] = {
+    9, TRUE, gCreditsText_LeadGraphicArtist
+};
+static const struct CreditsEntry gCreditsEntry_SatoshiTajiri[] = {
+    11, FALSE, gCreditsText_SatoshiTajiri
+};
+static const struct CreditsEntry gCreditsEntry_JunichiMasuda[] = {
+    11, FALSE, gCreditsText_JunichiMasuda
+};
+static const struct CreditsEntry gCreditsEntry_KenSugimori[] = {
+    11, FALSE, gCreditsText_KenSugimori
+};
+static const struct CreditsEntry gCreditsEntry_ShigekiMorimoto[] = {
+    11, FALSE, gCreditsText_ShigekiMorimoto
+};
+static const struct CreditsEntry gCreditsEntry_TetsuyaWatanabe[] = {
+    11, FALSE, gCreditsText_TetsuyaWatanabe
+};
+static const struct CreditsEntry gCreditsEntry_HisashiSogabe[] = {
+    11, FALSE, gCreditsText_HisashiSogabe
+};
+static const struct CreditsEntry gCreditsEntry_SosukeTamada[] = {
+    11, FALSE, gCreditsText_SosukeTamada
+};
+static const struct CreditsEntry gCreditsEntry_AkitoMori[] = { 11, FALSE, gCreditsText_AkitoMori };
+static const struct CreditsEntry gCreditsEntry_KeitaKagaya[] = {
+    11, FALSE, gCreditsText_KeitaKagaya
+};
+static const struct CreditsEntry gCreditsEntry_YoshinoriMatsuda[] = {
+    11, FALSE, gCreditsText_YoshinoriMatsuda
+};
+static const struct CreditsEntry gCreditsEntry_HiroyukiNakamura[] = {
+    11, FALSE, gCreditsText_HiroyukiNakamura
+};
+static const struct CreditsEntry gCreditsEntry_MasaoTaya[] = { 11, FALSE, gCreditsText_MasaoTaya };
+static const struct CreditsEntry gCreditsEntry_SatoshiNohara[] = {
+    11, FALSE, gCreditsText_SatoshiNohara
+};
+static const struct CreditsEntry gCreditsEntry_TomomichiOhta[] = {
+    11, FALSE, gCreditsText_TomomichiOhta
+};
+static const struct CreditsEntry gCreditsEntry_MiyukiIwasawa[] = {
+    11, FALSE, gCreditsText_MiyukiIwasawa
+};
+static const struct CreditsEntry gCreditsEntry_TakenoriOhta[] = {
+    11, FALSE, gCreditsText_TakenoriOhta
+};
+static const struct CreditsEntry gCreditsEntry_HironobuYoshida[] = {
+    11, FALSE, gCreditsText_HironobuYoshida
+};
+static const struct CreditsEntry gCreditsEntry_MotofumiFujiwara[] = {
+    11, FALSE, gCreditsText_MotofumiFujiwara
+};
+static const struct CreditsEntry gCreditsEntry_SatoshiOhta[] = {
+    11, FALSE, gCreditsText_SatoshiOhta
+};
+static const struct CreditsEntry gCreditsEntry_AsukaIwashita[] = {
+    11, FALSE, gCreditsText_AsukaIwashita
+};
+static const struct CreditsEntry gCreditsEntry_AimiTomita[] = {
+    11, FALSE, gCreditsText_AimiTomita
+};
+static const struct CreditsEntry gCreditsEntry_TakaoUnno[] = { 11, FALSE, gCreditsText_TakaoUnno };
+static const struct CreditsEntry gCreditsEntry_KanakoEo[] = { 11, FALSE, gCreditsText_KanakoEo };
+static const struct CreditsEntry gCreditsEntry_JunOkutani[] = {
+    11, FALSE, gCreditsText_JunOkutani
+};
+static const struct CreditsEntry gCreditsEntry_AtsukoNishida[] = {
+    11, FALSE, gCreditsText_AtsukoNishida
+};
+static const struct CreditsEntry gCreditsEntry_MuneoSaito[] = {
+    11, FALSE, gCreditsText_MuneoSaito
+};
+static const struct CreditsEntry gCreditsEntry_RenaYoshikawa[] = {
+    11, FALSE, gCreditsText_RenaYoshikawa
+};
+static const struct CreditsEntry gCreditsEntry_GoIchinose[] = {
+    11, FALSE, gCreditsText_GoIchinose
+};
+static const struct CreditsEntry gCreditsEntry_MorikazuAoki[] = {
+    11, FALSE, gCreditsText_MorikazuAoki
+};
+static const struct CreditsEntry gCreditsEntry_KojiNishino[] = {
+    11, FALSE, gCreditsText_KojiNishino
+};
+static const struct CreditsEntry gCreditsEntry_KenjiMatsushima[] = {
+    11, FALSE, gCreditsText_KenjiMatsushima
+};
+static const struct CreditsEntry gCreditsEntry_TetsujiOhta[] = {
+    11, FALSE, gCreditsText_TetsujiOhta
+};
+static const struct CreditsEntry gCreditsEntry_HitomiSato[] = {
+    11, FALSE, gCreditsText_HitomiSato
+};
+static const struct CreditsEntry gCreditsEntry_TakeshiKawachimaru[] = {
+    11, FALSE, gCreditsText_TakeshiKawachimaru
+};
+static const struct CreditsEntry gCreditsEntry_TeruyukiShimoyamada[] = {
+    11, FALSE, gCreditsText_TeruyukiShimoyamada
+};
+static const struct CreditsEntry gCreditsEntry_ShigeruOhmori[] = {
+    11, FALSE, gCreditsText_ShigeruOhmori
+};
+static const struct CreditsEntry gCreditsEntry_TadashiTakahashi[] = {
+    11, FALSE, gCreditsText_TadashiTakahashi
+};
+static const struct CreditsEntry gCreditsEntry_ToshinobuMatsumiya[] = {
+    11, FALSE, gCreditsText_ToshinobuMatsumiya
+};
+static const struct CreditsEntry gCreditsEntry_AkihitoTomisawa[] = {
+    11, FALSE, gCreditsText_AkihitoTomisawa
+};
+static const struct CreditsEntry gCreditsEntry_HirokiEnomoto[] = {
+    11, FALSE, gCreditsText_HirokiEnomoto
+};
+static const struct CreditsEntry gCreditsEntry_KazuyukiTerada[] = {
+    11, FALSE, gCreditsText_KazuyukiTerada
+};
+static const struct CreditsEntry gCreditsEntry_YuriSakurai[] = {
+    11, FALSE, gCreditsText_YuriSakurai
+};
+static const struct CreditsEntry gCreditsEntry_HiromiSagawa[] = {
+    11, FALSE, gCreditsText_HiromiSagawa
+};
+static const struct CreditsEntry gCreditsEntry_KenjiTominaga[] = {
+    11, FALSE, gCreditsText_KenjiTominaga
+};
+static const struct CreditsEntry gCreditsEntry_YoshioTajiri[] = {
+    11, FALSE, gCreditsText_YoshioTajiri
+};
+static const struct CreditsEntry gCreditsEntry_TeikoSasaki[] = {
+    11, FALSE, gCreditsText_TeikoSasaki
+};
+static const struct CreditsEntry gCreditsEntry_SachikoHamano[] = {
+    11, FALSE, gCreditsText_SachikoHamano
+};
+static const struct CreditsEntry gCreditsEntry_ChieMatsumiya[] = {
+    11, FALSE, gCreditsText_ChieMatsumiya
+};
+static const struct CreditsEntry gCreditsEntry_AkikoShinozaki[] = {
+    11, FALSE, gCreditsText_AkikoShinozaki
+};
+static const struct CreditsEntry gCreditsEntry_AstukoFujii[] = {
+    11, FALSE, gCreditsText_AstukoFujii
+};
+static const struct CreditsEntry gCreditsEntry_NozomuSaito[] = {
+    11, FALSE, gCreditsText_NozomuSaito
+};
+static const struct CreditsEntry gCreditsEntry_KenkichiToyama[] = {
+    11, FALSE, gCreditsText_KenkichiToyama
+};
+static const struct CreditsEntry gCreditsEntry_SuguruNakatsui[] = {
+    11, FALSE, gCreditsText_SuguruNakatsui
+};
+static const struct CreditsEntry gCreditsEntry_YumiFunasaka[] = {
+    11, FALSE, gCreditsText_YumiFunasaka
+};
+static const struct CreditsEntry gCreditsEntry_NaokoYanase[] = {
+    11, FALSE, gCreditsText_NaokoYanase
+};
+static const struct CreditsEntry gCreditsEntry_NCLSuperMarioClub[] = {
+    11, FALSE, gCreditsText_NCLSuperMarioClub
+};
+static const struct CreditsEntry gCreditsEntry_AtsushiTada[] = {
+    11, FALSE, gCreditsText_AtsushiTada
+};
+static const struct CreditsEntry gCreditsEntry_TakahiroOhnishi[] = {
+    11, FALSE, gCreditsText_TakahiroOhnishi
+};
+static const struct CreditsEntry gCreditsEntry_NorihideOkamura[] = {
+    11, FALSE, gCreditsText_NorihideOkamura
+};
+static const struct CreditsEntry gCreditsEntry_HiroNakamura[] = {
+    11, FALSE, gCreditsText_HiroNakamura
+};
+static const struct CreditsEntry gCreditsEntry_HiroyukiUesugi[] = {
+    11, FALSE, gCreditsText_HiroyukiUesugi
+};
+static const struct CreditsEntry gCreditsEntry_TerukiMurakawa[] = {
+    11, FALSE, gCreditsText_TerukiMurakawa
+};
+static const struct CreditsEntry gCreditsEntry_AkiraKinashi[] = {
+    11, FALSE, gCreditsText_AkiraKinashi
+};
+static const struct CreditsEntry gCreditsEntry_MichikoTakizawa[] = {
+    11, FALSE, gCreditsText_MichikoTakizawa
+};
+static const struct CreditsEntry gCreditsEntry_MakikoTakada[] = {
+    11, FALSE, gCreditsText_MakikoTakada
+};
+static const struct CreditsEntry gCreditsEntry_TakanaoKondo[] = {
+    11, FALSE, gCreditsText_TakanaoKondo
+};
+static const struct CreditsEntry gCreditsEntry_AiMashima[] = { 11, FALSE, gCreditsText_AiMashima };
+static const struct CreditsEntry gCreditsEntry_GakujiNomoto[] = {
+    11, FALSE, gCreditsText_GakujiNomoto
+};
+static const struct CreditsEntry gCreditsEntry_TakehiroIzushi[] = {
+    11, FALSE, gCreditsText_TakehiroIzushi
+};
+static const struct CreditsEntry gCreditsEntry_HitoshiYamagami[] = {
+    11, FALSE, gCreditsText_HitoshiYamagami
+};
+static const struct CreditsEntry gCreditsEntry_KyokoWatanabe[] = {
+    11, FALSE, gCreditsText_KyokoWatanabe
+};
+static const struct CreditsEntry gCreditsEntry_TakaoNakano[] = {
+    11, FALSE, gCreditsText_TakaoNakano
+};
+static const struct CreditsEntry gCreditsEntry_HiroyukiJinnai[] = {
+    11, FALSE, gCreditsText_HiroyukiJinnai
+};
+static const struct CreditsEntry gCreditsEntry_HiroakiTsuru[] = {
+    11, FALSE, gCreditsText_HiroakiTsuru
+};
+static const struct CreditsEntry gCreditsEntry_TsunekazIshihara[] = {
+    11, FALSE, gCreditsText_TsunekazIshihara
+};
+static const struct CreditsEntry gCreditsEntry_SatoruIwata[] = {
+    11, FALSE, gCreditsText_SatoruIwata
+};
+static const struct CreditsEntry gCreditsEntry_KazuyaSuyama[] = {
+    11, FALSE, gCreditsText_KazuyaSuyama
+};
+static const struct CreditsEntry gCreditsEntry_SatoshiMitsuhara[] = {
+    11, FALSE, gCreditsText_SatoshiMitsuhara
+};
+static const struct CreditsEntry gCreditsEntry_JapanBrailleLibrary[] = {
+    9, FALSE, gCreditsText_JapanBrailleLibrary
+};
+static const struct CreditsEntry gCreditsEntry_TomotakaKomura[] = {
+    11, FALSE, gCreditsText_TomotakaKomura
+};
+static const struct CreditsEntry gCreditsEntry_MikikoOhhashi[] = {
+    11, FALSE, gCreditsText_MikikoOhhashi
+};
+static const struct CreditsEntry gCreditsEntry_DaisukeHoshino[] = {
+    11, FALSE, gCreditsText_DaisukeHoshino
+};
+static const struct CreditsEntry gCreditsEntry_KenjiroIto[] = {
+    11, FALSE, gCreditsText_KenjiroIto
+};
+static const struct CreditsEntry gCreditsEntry_RuiKawaguchi[] = {
+    11, FALSE, gCreditsText_RuiKawaguchi
+};
+static const struct CreditsEntry gCreditsEntry_ShunsukeKohori[] = {
+    11, FALSE, gCreditsText_ShunsukeKohori
+};
+static const struct CreditsEntry gCreditsEntry_SachikoNakamichi[] = {
+    11, FALSE, gCreditsText_SachikoNakamichi
+};
+static const struct CreditsEntry gCreditsEntry_FujikoNomura[] = {
+    11, FALSE, gCreditsText_FujikoNomura
+};
+static const struct CreditsEntry gCreditsEntry_KazukiYoshihara[] = {
+    11, FALSE, gCreditsText_KazukiYoshihara
+};
+static const struct CreditsEntry gCreditsEntry_RetsujiNomoto[] = {
+    11, FALSE, gCreditsText_RetsujiNomoto
+};
+static const struct CreditsEntry gCreditsEntry_AzusaTajima[] = {
+    11, FALSE, gCreditsText_AzusaTajima
+};
+static const struct CreditsEntry gCreditsEntry_ShusakuEgami[] = {
+    11, FALSE, gCreditsText_ShusakuEgami
+};
+static const struct CreditsEntry gCreditsEntry_PackageAndManual[] = {
+    0, TRUE, gCreditsText_PackageAndManual
+};
+static const struct CreditsEntry gCreditsEntry_EnglishVersion[] = {
+    0, TRUE, gCreditsText_EnglishVersion
+};
+static const struct CreditsEntry gCreditsEntry_Translator[] = { 0, TRUE, gCreditsText_Translator };
+static const struct CreditsEntry gCreditsEntry_TextEditor[] = { 0, TRUE, gCreditsText_TextEditor };
+static const struct CreditsEntry gCreditsEntry_NCLCoordinator[] = {
+    0, TRUE, gCreditsText_NCLCoordinator
+};
+static const struct CreditsEntry gCreditsEntry_GraphicDesigner[] = {
+    0, TRUE, gCreditsText_GraphicDesigner
+};
+static const struct CreditsEntry gCreditsEntry_NOAProductTesting[] = {
+    0, TRUE, gCreditsText_NOAProductTesting
+};
+static const struct CreditsEntry gCreditsEntry_HideyukiNakajima[] = {
+    0, FALSE, gCreditsText_HideyukiNakajima
+};
+static const struct CreditsEntry gCreditsEntry_HidenoriSaeki[] = {
+    0, FALSE, gCreditsText_HidenoriSaeki
+};
+static const struct CreditsEntry gCreditsEntry_YokoWatanabe[] = {
+    0, FALSE, gCreditsText_YokoWatanabe
+};
+static const struct CreditsEntry gCreditsEntry_SakaeKimura[] = {
+    0, FALSE, gCreditsText_SakaeKimura
+};
+static const struct CreditsEntry gCreditsEntry_ChiakiShinkai[] = {
+    0, FALSE, gCreditsText_ChiakiShinkai
+};
+static const struct CreditsEntry gCreditsEntry_SethMcMahill[] = {
+    0, FALSE, gCreditsText_SethMcMahill
+};
+static const struct CreditsEntry gCreditsEntry_NobOgasawara[] = {
+    0, FALSE, gCreditsText_NobOgasawara
+};
+static const struct CreditsEntry gCreditsEntry_TeresaLillygren[] = {
+    0, FALSE, gCreditsText_TeresaLillygren
+};
+static const struct CreditsEntry gCreditsEntry_KimikoNakamichi[] = {
+    0, FALSE, gCreditsText_KimikoNakamichi
+};
+static const struct CreditsEntry gCreditsEntry_SouichiYamamoto[] = {
+    0, FALSE, gCreditsText_SouichiYamamoto
+};
+static const struct CreditsEntry gCreditsEntry_YuichiroIto[] = {
+    0, FALSE, gCreditsText_YuichiroIto
+};
+static const struct CreditsEntry gCreditsEntry_ThomasHertzog[] = {
+    0, FALSE, gCreditsText_ThomasHertzog
+};
+static const struct CreditsEntry gCreditsEntry_MikaKurosawa[] = {
+    0, FALSE, gCreditsText_MikaKurosawa
+};
+static const struct CreditsEntry gCreditsEntry_NationalFederationBlind[] = {
+    0, FALSE, gCreditsText_NationalFederationBlind
+};
+static const struct CreditsEntry gCreditsEntry_PatriciaAMaurer[] = {
+    0, FALSE, gCreditsText_PatriciaAMaurer
+};
+static const struct CreditsEntry gCreditsEntry_EuropeanBlindUnion[] = {
+    0, FALSE, gCreditsText_EuropeanBlindUnion
+};
+static const struct CreditsEntry gCreditsEntry_AustralianBrailleAuthority[] = {
+    0, FALSE, gCreditsText_AustralianBrailleAuthority
+};
+static const struct CreditsEntry gCreditsEntry_RoyalNewZealandFederationBlind[] = {
+    0, FALSE, gCreditsText_RoyalNewZealandFederationBlind
+};
+static const struct CreditsEntry gCreditsEntry_MotoyasuTojima[] = {
+    0, FALSE, gCreditsText_MotoyasuTojima
+};
+static const struct CreditsEntry gCreditsEntry_NicolaPrattBarlow[] = {
+    0, FALSE, gCreditsText_NicolaPrattBarlow
+};
+static const struct CreditsEntry gCreditsEntry_ShellieDow[] = { 0, FALSE, gCreditsText_ShellieDow };
+static const struct CreditsEntry gCreditsEntry_ErikJohnson[] = {
+    0, FALSE, gCreditsText_ErikJohnson
+};
 
 #define _ gCreditsEntry_EmptyString
-static const struct CreditsEntry *const gCreditsEntryPointerTable[][5] =
-{
-    {
-        _,
-        gCreditsEntry_PkmnEmeraldVersion,
-        gCreditsEntry_Credits,
-        _,
-        _
-    },
+static const struct CreditsEntry *const gCreditsEntryPointerTable[][5] = {
+    { _, gCreditsEntry_PkmnEmeraldVersion, gCreditsEntry_Credits, _, _ },
     {
         _,
         gCreditsEntry_Director,
@@ -935,40 +1267,32 @@ static const struct CreditsEntry *const gCreditsEntryPointerTable[][5] =
 };
 #undef _
 
-static const struct BgTemplate sBackgroundTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sBackgroundTemplates[] = {
+    { .bg = 0,
         .charBaseIndex = 2,
         .mapBaseIndex = 28,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
-static const struct WindowTemplate sWindowTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct WindowTemplate sWindowTemplates[] = {
+    { .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 9,
         .width = 30,
         .height = 12,
         .paletteNum = 8,
-        .baseBlock = 1
-    },
+        .baseBlock = 1 },
     DUMMY_WIN_TEMPLATE,
 };
-static const u8 sMonSpritePos[][2] =
-{
-    {104, 36},
-    {120, 36},
-    {136, 36},
+static const u8 sMonSpritePos[][2] = {
+    { 104, 36 },
+    { 120, 36 },
+    { 136, 36 },
 };
 
-static const union AnimCmd gUnknown_085E6F84[] =
-{
+static const union AnimCmd gUnknown_085E6F84[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(64, 8),
     ANIMCMD_FRAME(128, 8),
@@ -976,8 +1300,7 @@ static const union AnimCmd gUnknown_085E6F84[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gUnknown_085E6F98[] =
-{
+static const union AnimCmd gUnknown_085E6F98[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
     ANIMCMD_FRAME(128, 4),
@@ -985,16 +1308,14 @@ static const union AnimCmd gUnknown_085E6F98[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gUnknown_085E6FAC[] =
-{
+static const union AnimCmd gUnknown_085E6FAC[] = {
     ANIMCMD_FRAME(256, 4),
     ANIMCMD_FRAME(320, 4),
     ANIMCMD_FRAME(384, 4),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gUnknown_085E6FBC[] =
-{
+static const union AnimCmd gUnknown_085E6FBC[] = {
     ANIMCMD_FRAME(384, 30),
     ANIMCMD_FRAME(320, 30),
     ANIMCMD_FRAME(256, 30),
@@ -1002,16 +1323,14 @@ static const union AnimCmd gUnknown_085E6FBC[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gUnknown_085E6FD0[] =
-{
+static const union AnimCmd *const gUnknown_085E6FD0[] = {
     gUnknown_085E6F84,
     gUnknown_085E6F98,
     gUnknown_085E6FAC,
     gUnknown_085E6FBC,
 };
 
-static const union AnimCmd gUnknown_085E6FE0[] =
-{
+static const union AnimCmd gUnknown_085E6FE0[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(64, 8),
     ANIMCMD_FRAME(128, 8),
@@ -1019,8 +1338,7 @@ static const union AnimCmd gUnknown_085E6FE0[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gUnknown_085E6FF4[] =
-{
+static const union AnimCmd gUnknown_085E6FF4[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
     ANIMCMD_FRAME(128, 4),
@@ -1028,14 +1346,12 @@ static const union AnimCmd gUnknown_085E6FF4[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gUnknown_085E7008[] =
-{
+static const union AnimCmd gUnknown_085E7008[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gUnknown_085E7010[] =
-{
+static const union AnimCmd *const gUnknown_085E7010[] = {
     gUnknown_085E6FE0,
     gUnknown_085E6FF4,
     gUnknown_085E7008,
@@ -1050,8 +1366,7 @@ static const struct SpritePalette gUnknown_085E702C[] = {
     { NULL },
 };
 
-static const struct OamData gUnknown_085E703C =
-{
+static const struct OamData gUnknown_085E703C = {
     .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -1067,33 +1382,28 @@ static const struct OamData gUnknown_085E703C =
     .affineParam = 0,
 };
 
-static const union AnimCmd gUnknown_085E7044[] =
-{
+static const union AnimCmd gUnknown_085E7044[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gUnknown_085E704C[] =
-{
+static const union AnimCmd gUnknown_085E704C[] = {
     ANIMCMD_FRAME(64, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gUnknown_085E7054[] =
-{
+static const union AnimCmd gUnknown_085E7054[] = {
     ANIMCMD_FRAME(128, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gUnknown_085E705C[] =
-{
+static const union AnimCmd *const gUnknown_085E705C[] = {
     gUnknown_085E7044,
     gUnknown_085E704C,
     gUnknown_085E7054,
 };
 
-static const struct SpriteTemplate gUnknown_085E7068 =
-{
+static const struct SpriteTemplate gUnknown_085E7068 = {
     .tileTag = 1001,
     .paletteTag = 1001,
     .oam = &gUnknown_085E703C,
@@ -1143,9 +1453,8 @@ static void CB2_RunCreditsSequence(void)
     RunTasks();
     AnimateSprites();
 
-    if ((gMain.heldKeys & B_BUTTON)
-     && gHasHallOfFameRecords != 0
-     && gTasks[gUnknown_0203BCE2].func == Task_ProgressCreditTasks)
+    if ((gMain.heldKeys & B_BUTTON) && gHasHallOfFameRecords != 0 &&
+        gTasks[gUnknown_0203BCE2].func == Task_ProgressCreditTasks)
     {
         CreditsVBlankCallback();
         RunTasks();
@@ -1375,16 +1684,11 @@ static void Task_CreditsLoadGrassScene(u8 taskIdA)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
         SetGpuReg(REG_OFFSET_BG3HOFS, 0);
         SetGpuReg(REG_OFFSET_BG3VOFS, 32);
-        SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3)
-                                   | BGCNT_CHARBASE(0)
-                                   | BGCNT_SCREENBASE(7)
-                                   | BGCNT_16COLOR
-                                   | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                    | DISPCNT_OBJ_1D_MAP
-                                    | DISPCNT_BG0_ON
-                                    | DISPCNT_BG3_ON
-                                    | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG3CNT,
+            BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7) | BGCNT_16COLOR |
+                BGCNT_TXT256x256);
+        SetGpuReg(REG_OFFSET_DISPCNT,
+            DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON);
 
         gMain.state = 0;
         gUnknown_0203BD28 = 0;
@@ -1423,17 +1727,14 @@ static void Task_CreditsTheEnd3(u8 taskIdA)
     FreeAllSpritePalettes();
     BeginNormalPaletteFade(0xFFFFFFFF, 8, 16, 0, RGB_BLACK);
 
-    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
-                               | BGCNT_CHARBASE(0)
-                               | BGCNT_SCREENBASE(7)
-                               | BGCNT_16COLOR
-                               | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7) | BGCNT_16COLOR |
+            BGCNT_TXT256x256);
     EnableInterrupts(INTR_FLAG_VBLANK);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                | DISPCNT_OBJ_1D_MAP
-                                | DISPCNT_BG0_ON);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON);
 
-    gTasks[taskIdA].data[TDA_0] = 235; //set this to 215 to actually show "THE END" in time to the last song beat
+    gTasks[taskIdA].data[TDA_0] =
+        235; // set this to 215 to actually show "THE END" in time to the last song beat
     gTasks[taskIdA].func = Task_CreditsTheEnd4;
 }
 
@@ -1547,8 +1848,9 @@ static void sub_8175DA0(u8 taskIdB)
                 for (i = 0; i < 5; i++)
                     PrintCreditsText(
                         gCreditsEntryPointerTable[gTasks[taskIdB].data[TDB_CURRENT_PAGE]][i]->text,
-                         5 + i * 16, 
-                         gCreditsEntryPointerTable[gTasks[taskIdB].data[TDB_CURRENT_PAGE]][i]->isTitle);
+                        5 + i * 16,
+                        gCreditsEntryPointerTable[gTasks[taskIdB].data[TDB_CURRENT_PAGE]][i]
+                            ->isTitle);
 
                 CopyWindowToVram(0, 2);
 
@@ -1582,7 +1884,8 @@ static void sub_8175DA0(u8 taskIdB)
             return;
         }
 
-        if (CheckChangeScene((u8)gTasks[taskIdB].data[TDB_CURRENT_PAGE], (u8)gTasks[taskIdB].data[TDB_TASK_A_ID]))
+        if (CheckChangeScene((u8)gTasks[taskIdB].data[TDB_CURRENT_PAGE],
+                (u8)gTasks[taskIdB].data[TDB_TASK_A_ID]))
         {
             gTasks[taskIdB].data[TDB_0] += 1;
             return;
@@ -1684,14 +1987,19 @@ static void sub_81760FC(u8 taskIdD)
     case 0:
         break;
     case 1:
-        if (sCreditsData->nextImgPos == 0 && gTasks[gTasks[taskIdD].data[TDD_TASK_A_ID]].data[TDA_14] == 0)
+        if (sCreditsData->nextImgPos == 0 &&
+            gTasks[gTasks[taskIdD].data[TDD_TASK_A_ID]].data[TDA_14] == 0)
             break;
         gTasks[taskIdD].data[TDD_STATE]++;
         break;
     case 2:
-        if (sCreditsData->imgCounter == NUM_MON_SLIDES || gTasks[gTasks[taskIdD].data[TDD_TASK_A_ID]].func != Task_ProgressCreditTasks)
+        if (sCreditsData->imgCounter == NUM_MON_SLIDES ||
+            gTasks[gTasks[taskIdD].data[TDD_TASK_A_ID]].func != Task_ProgressCreditTasks)
             break;
-        r2 = MakeMonSprite(sCreditsData->monToShow[sCreditsData->currShownMon], sMonSpritePos[sCreditsData->nextImgPos][0], sMonSpritePos[sCreditsData->nextImgPos][1], sCreditsData->nextImgPos);
+        r2 = MakeMonSprite(sCreditsData->monToShow[sCreditsData->currShownMon],
+            sMonSpritePos[sCreditsData->nextImgPos][0],
+            sMonSpritePos[sCreditsData->nextImgPos][1],
+            sCreditsData->nextImgPos);
         if (sCreditsData->currShownMon < sCreditsData->numMonToShow - 1)
         {
             sCreditsData->currShownMon++;
@@ -1813,9 +2121,11 @@ static void sub_817651C(u8 taskIdE)
         if (gTasks[taskIdE].data[TDE_1] != 0x7FFF)
         {
 
-            if (gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_B_ID]].data[TDB_CURRENT_PAGE] == 2)
+            if (gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_B_ID]]
+                    .data[TDB_CURRENT_PAGE] == 2)
             {
-                gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_C_ID]].data[TDC_0] = 20;
+                gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_C_ID]]
+                    .data[TDC_0] = 20;
                 gTasks[taskIdE].data[TDE_1] = 0x7FFF;
             }
         }
@@ -1844,7 +2154,8 @@ static void sub_817651C(u8 taskIdE)
 
             if (gTasks[taskIdE].data[TDE_1] == 0x248)
             {
-                gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_C_ID]].data[TDC_0] = 10;
+                gTasks[gTasks[gTasks[taskIdE].data[TDE_TASK_A_ID]].data[TDA_TASK_C_ID]]
+                    .data[TDC_0] = 10;
                 gTasks[taskIdE].data[TDE_1] = 0x7FFF;
             }
             else
@@ -1929,8 +2240,10 @@ static void sub_817664C(u8 data, u8 taskIdA)
     gTasks[taskIdA].data[TDA_TASK_C_ID] = CreateTask(sub_817624C, 0);
     gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_0] = 0;
     gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_1] = taskIdA;
-    gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_2] = gTasks[taskIdA].data[TDA_PLAYER_CYCLIST];
-    gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_3] = gTasks[taskIdA].data[TDA_RIVAL_CYCLIST];
+    gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_2] =
+        gTasks[taskIdA].data[TDA_PLAYER_CYCLIST];
+    gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_3] =
+        gTasks[taskIdA].data[TDA_RIVAL_CYCLIST];
     gTasks[gTasks[taskIdA].data[TDA_TASK_C_ID]].data[TDC_4] = 0;
 
     if (data == 2)
@@ -2050,7 +2363,7 @@ static void LoadTheEndScreen(u16 arg0, u16 arg1, u16 arg2)
     baseTile = (arg2 / 16) << 12;
 
     for (i = 0; i < 32 * 32; i++)
-        ((u16 *) (VRAM + arg1))[i] = baseTile + 1;
+        ((u16 *)(VRAM + arg1))[i] = baseTile + 1;
 }
 
 static u16 sub_8176D78(u8 arg0)
@@ -2076,7 +2389,8 @@ static void sub_8176DBC(const u8 arg0[], u8 baseX, u8 baseY, u16 arg3, u16 palet
     for (y = 0; y < 5; y++)
     {
         for (x = 0; x < 3; x++)
-            ((u16 *) (VRAM + arg3 + (baseY + y) * 64))[baseX + x] = tileOffset + sub_8176D78(arg0[y * 3 + x]);
+            ((u16 *)(VRAM + arg3 + (baseY + y) * 64))[baseX + x] =
+                tileOffset + sub_8176D78(arg0[y * 3 + x]);
     }
 }
 
@@ -2086,7 +2400,7 @@ static void sub_8176E40(u16 arg0, u16 palette)
     u16 baseTile = (palette / 16) << 12;
 
     for (pos = 0; pos < 32 * 32; pos++)
-        ((u16 *) (VRAM + arg0))[pos] = baseTile + 1;
+        ((u16 *)(VRAM + arg0))[pos] = baseTile + 1;
 
     sub_8176DBC(sTheEnd_LetterTMap, 3, 7, arg0, palette);
     sub_8176DBC(sTheEnd_LetterHMap, 7, 7, arg0, palette);
@@ -2194,7 +2508,8 @@ static void sub_8177050(struct Sprite *sprite)
         if (sprite->data[2] < 256)
         {
             sprite->data[2] += 8;
-            SetOamMatrix(sprite->data[1], 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
+            SetOamMatrix(
+                sprite->data[1], 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
         }
         else
         {
@@ -2223,7 +2538,9 @@ static void sub_8177050(struct Sprite *sprite)
         }
         else
         {
-            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3);
+            SetGpuReg(REG_OFFSET_BLDCNT,
+                BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 |
+                    BLDCNT_TGT2_BG3);
             SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
             sprite->data[3] = 16;
@@ -2269,7 +2586,8 @@ static u8 MakeMonSprite(u16 nationalDexNum, s16 x, s16 y, u16 position)
     gSprites[spriteId].callback = sub_8177050;
     gSprites[spriteId].data[6] = spriteId;
 
-    spriteId2 = CreateSprite(&gUnknown_085E7068, gSprites[spriteId].pos1.x, gSprites[spriteId].pos1.y, 1);
+    spriteId2 =
+        CreateSprite(&gUnknown_085E7068, gSprites[spriteId].pos1.x, gSprites[spriteId].pos1.y, 1);
     gSprites[spriteId2].data[0] = spriteId;
 
     StartSpriteAnimIfDifferent(&gSprites[spriteId2], position);
@@ -2299,7 +2617,7 @@ static void DeterminePokemonToShow(void)
     u16 page;
     u16 dexNum;
     u16 j;
-    
+
     // Go through the Pokedex, and anything that has gotten caught we put into our massive array.
     // This basically packs all of the caught pokemon into the front of the array
     for (dexNum = 1, j = 0; dexNum < NATIONAL_DEX_COUNT; dexNum++)
@@ -2315,35 +2633,39 @@ static void DeterminePokemonToShow(void)
     for (dexNum = j; dexNum < NATIONAL_DEX_COUNT; dexNum++)
         sCreditsData->caughtMonIds[dexNum] = 0;
 
-    // Cap the number of pokemon we care about to NUM_MON_SLIDES, the max we show in the credits scene (-1 for the starter)
+    // Cap the number of pokemon we care about to NUM_MON_SLIDES, the max we show in the credits
+    // scene (-1 for the starter)
     sCreditsData->numCaughtMon = j;
     if (sCreditsData->numCaughtMon < NUM_MON_SLIDES)
         sCreditsData->numMonToShow = j;
     else
         sCreditsData->numMonToShow = NUM_MON_SLIDES;
 
-    // Loop through our list of caught pokemon and select randomly from it to fill the images to show
+    // Loop through our list of caught pokemon and select randomly from it to fill the images to
+    // show
     j = 0;
     do
     {
         // Select a random mon, insert into array
         page = Random() % sCreditsData->numCaughtMon;
         sCreditsData->monToShow[j] = sCreditsData->caughtMonIds[page];
-        
+
         // Remove the select mon from the array, and condense array entries
         j++;
         sCreditsData->caughtMonIds[page] = 0;
         sCreditsData->numCaughtMon--;
         if (page != sCreditsData->numCaughtMon)
         {
-            // Instead of looping through and moving everything down, just take from the end. Order doesn't matter after all.
-            sCreditsData->caughtMonIds[page] = sCreditsData->caughtMonIds[sCreditsData->numCaughtMon];
+            // Instead of looping through and moving everything down, just take from the end. Order
+            // doesn't matter after all.
+            sCreditsData->caughtMonIds[page] =
+                sCreditsData->caughtMonIds[sCreditsData->numCaughtMon];
             sCreditsData->caughtMonIds[sCreditsData->numCaughtMon] = 0;
         }
-    }
-    while (sCreditsData->numCaughtMon != 0 && j < NUM_MON_SLIDES);
+    } while (sCreditsData->numCaughtMon != 0 && j < NUM_MON_SLIDES);
 
-    // If we don't have enough pokemon in the dex to fill everything, copy the selected mon into the end of the array, so it loops
+    // If we don't have enough pokemon in the dex to fill everything, copy the selected mon into the
+    // end of the array, so it loops
     if (sCreditsData->numMonToShow < NUM_MON_SLIDES)
     {
         for (j = sCreditsData->numMonToShow, page = 0; j < NUM_MON_SLIDES; j++)
@@ -2355,23 +2677,25 @@ static void DeterminePokemonToShow(void)
                 page = 0;
         }
         // Ensure the last pokemon is our starter
-        sCreditsData->monToShow[NUM_MON_SLIDES-1] = starter;
+        sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
     }
     else
     {
         // Check to see if our starter has already appeared in this list, break if it has
-        for (dexNum = 0; sCreditsData->monToShow[dexNum] != starter && dexNum < NUM_MON_SLIDES; dexNum++);
+        for (dexNum = 0; sCreditsData->monToShow[dexNum] != starter && dexNum < NUM_MON_SLIDES;
+             dexNum++)
+            ;
 
         // If it has, swap it with the last pokemon, to ensure our starter is the last image
         if (dexNum < sCreditsData->numMonToShow - 1)
         {
-            sCreditsData->monToShow[dexNum] = sCreditsData->monToShow[NUM_MON_SLIDES-1];
-            sCreditsData->monToShow[NUM_MON_SLIDES-1] = starter;
+            sCreditsData->monToShow[dexNum] = sCreditsData->monToShow[NUM_MON_SLIDES - 1];
+            sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
         }
         else
         {
             // Ensure the last pokemon is our starter
-            sCreditsData->monToShow[NUM_MON_SLIDES-1] = starter;
+            sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
         }
     }
     sCreditsData->numMonToShow = NUM_MON_SLIDES;

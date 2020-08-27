@@ -8,4 +8,4 @@ s8 FieldAnimateDoorOpen(u32, u32);
 bool8 FieldIsDoorAnimationRunning(void);
 u32 GetDoorSoundEffect(u32 x, u32 y);
 
-#endif //GUARD_FIELD_DOOR_H
+#endif // GUARD_FIELD_DOOR_H

@@ -162,8 +162,8 @@ static void Sio32IDIntr(void)
     else
         gRfuSIO32Id.send_id = RFU_ID;
     gRfuSIO32Id.recv_id = ~regSIODATA32;
-    REG_SIODATA32 = (gRfuSIO32Id.send_id << 16 * (1 - gRfuSIO32Id.MS_mode))
-                  + (gRfuSIO32Id.recv_id << 16 * gRfuSIO32Id.MS_mode);
+    REG_SIODATA32 = (gRfuSIO32Id.send_id << 16 * (1 - gRfuSIO32Id.MS_mode)) +
+                    (gRfuSIO32Id.recv_id << 16 * gRfuSIO32Id.MS_mode);
     if (gRfuSIO32Id.MS_mode == AGB_CLK_MASTER && (gRfuSIO32Id.count != 0 || regSIODATA32 == 0x494e))
     {
         for (delay = 0; delay < 600; ++delay)

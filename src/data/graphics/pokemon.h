@@ -72,7 +72,7 @@ const u32 gMonStillFrontPic_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/fro
 const u32 gMonPalette_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/normal.gbapal.lz");
 const u32 gMonBackPic_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/back.4bpp.lz");
 const u32 gMonShinyPalette_Metapod[] = INCBIN_U32("graphics/pokemon/metapod/shiny.gbapal.lz");
-const u8 gMonIcon_Metapod[] = INCBIN_U8( "graphics/pokemon/metapod/icon.4bpp");
+const u8 gMonIcon_Metapod[] = INCBIN_U8("graphics/pokemon/metapod/icon.4bpp");
 const u8 gMonFootprint_Metapod[] = INCBIN_U8("graphics/pokemon/metapod/footprint.1bpp");
 
 const u32 gMonStillFrontPic_Butterfree[] = INCBIN_U32("graphics/pokemon/butterfree/front.4bpp.lz");
@@ -1754,10 +1754,14 @@ const u32 gMonShinyPalette_Celebi[] = INCBIN_U32("graphics/pokemon/celebi/shiny.
 const u8 gMonIcon_Celebi[] = INCBIN_U8("graphics/pokemon/celebi/icon.4bpp");
 const u8 gMonFootprint_Celebi[] = INCBIN_U8("graphics/pokemon/celebi/footprint.1bpp");
 
-const u32 gMonStillFrontPic_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/front.4bpp.lz");
-const u32 gMonPalette_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/normal.gbapal.lz");
-const u32 gMonBackPic_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/back.4bpp.lz");
-const u32 gMonShinyPalette_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/shiny.gbapal.lz");
+const u32 gMonStillFrontPic_DoubleQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/double/front.4bpp.lz");
+const u32 gMonPalette_DoubleQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/double/normal.gbapal.lz");
+const u32 gMonBackPic_DoubleQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/double/back.4bpp.lz");
+const u32 gMonShinyPalette_DoubleQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/question_mark/double/shiny.gbapal.lz");
 
 const u32 gMonStillFrontPic_Treecko[] = INCBIN_U32("graphics/pokemon/treecko/front.4bpp.lz");
 const u32 gMonPalette_Treecko[] = INCBIN_U32("graphics/pokemon/treecko/normal.gbapal.lz");
@@ -2699,7 +2703,7 @@ const u8 gMonIcon_DeoxysSpeed[] = INCBIN_U8("graphics/pokemon/deoxys/icon_speed.
 const u8 gMonIcon_DeoxysSpeedWide[] = INCBIN_U8("graphics/unused/deoxys_speed_icon_wide.4bpp");
 
 // Probably the leftover space from the other Deoxys forms
-static const u8 sEmpty[0x6800] = {0};
+static const u8 sEmpty[0x6800] = { 0 };
 
 const u16 gUnknown_D437F8[] = INCBIN_U16("graphics/unknown/unknown_D437F8.bin");
 
@@ -2815,10 +2819,15 @@ const u32 gMonStillFrontPic_UnownZ[] = INCBIN_U32("graphics/pokemon/unown/z/fron
 const u32 gMonBackPic_UnownZ[] = INCBIN_U32("graphics/pokemon/unown/z/back.4bpp.lz");
 const u8 gMonIcon_UnownZ[] = INCBIN_U8("graphics/pokemon/unown/z/icon.4bpp");
 
-const u32 gMonStillFrontPic_UnownExclamationMark[] = INCBIN_U32("graphics/pokemon/unown/exclamation_mark/front.4bpp.lz");
-const u32 gMonBackPic_UnownExclamationMark[] = INCBIN_U32("graphics/pokemon/unown/exclamation_mark/back.4bpp.lz");
-const u8 gMonIcon_UnownExclamationMark[] = INCBIN_U8("graphics/pokemon/unown/exclamation_mark/icon.4bpp");
+const u32 gMonStillFrontPic_UnownExclamationMark[] =
+    INCBIN_U32("graphics/pokemon/unown/exclamation_mark/front.4bpp.lz");
+const u32 gMonBackPic_UnownExclamationMark[] =
+    INCBIN_U32("graphics/pokemon/unown/exclamation_mark/back.4bpp.lz");
+const u8 gMonIcon_UnownExclamationMark[] =
+    INCBIN_U8("graphics/pokemon/unown/exclamation_mark/icon.4bpp");
 
-const u32 gMonStillFrontPic_UnownQuestionMark[] = INCBIN_U32("graphics/pokemon/unown/question_mark/front.4bpp.lz");
-const u32 gMonBackPic_UnownQuestionMark[] = INCBIN_U32("graphics/pokemon/unown/question_mark/back.4bpp.lz");
+const u32 gMonStillFrontPic_UnownQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/unown/question_mark/front.4bpp.lz");
+const u32 gMonBackPic_UnownQuestionMark[] =
+    INCBIN_U32("graphics/pokemon/unown/question_mark/back.4bpp.lz");
 const u8 gMonIcon_UnownQuestionMark[] = INCBIN_U8("graphics/pokemon/unown/question_mark/icon.4bpp");

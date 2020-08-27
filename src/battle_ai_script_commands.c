@@ -26,7 +26,7 @@
 #define AI_ACTION_UNK8          0x0080
 
 #define AI_THINKING_STRUCT ((struct AI_ThinkingStruct *)(gBattleResources->ai))
-#define BATTLE_HISTORY ((struct BattleHistory *)(gBattleResources->battleHistory))
+#define BATTLE_HISTORY     ((struct BattleHistory *)(gBattleResources->battleHistory))
 
 // AI states
 enum
@@ -161,112 +161,109 @@ EWRAM_DATA static u8 sBattler_AI = 0;
 // const rom data
 typedef void (*BattleAICmdFunc)(void);
 
-static const BattleAICmdFunc sBattleAICmdTable[] =
-{
-    Cmd_if_random_less_than,                        // 0x0
-    Cmd_if_random_greater_than,                     // 0x1
-    Cmd_if_random_equal,                            // 0x2
-    Cmd_if_random_not_equal,                        // 0x3
-    Cmd_score,                                      // 0x4
-    Cmd_if_hp_less_than,                            // 0x5
-    Cmd_if_hp_more_than,                            // 0x6
-    Cmd_if_hp_equal,                                // 0x7
-    Cmd_if_hp_not_equal,                            // 0x8
-    Cmd_if_status,                                  // 0x9
-    Cmd_if_not_status,                              // 0xA
-    Cmd_if_status2,                                 // 0xB
-    Cmd_if_not_status2,                             // 0xC
-    Cmd_if_status3,                                 // 0xD
-    Cmd_if_not_status3,                             // 0xE
-    Cmd_if_side_affecting,                          // 0xF
-    Cmd_if_not_side_affecting,                      // 0x10
-    Cmd_if_less_than,                               // 0x11
-    Cmd_if_more_than,                               // 0x12
-    Cmd_if_equal,                                   // 0x13
-    Cmd_if_not_equal,                               // 0x14
-    Cmd_if_less_than_ptr,                           // 0x15
-    Cmd_if_more_than_ptr,                           // 0x16
-    Cmd_if_equal_ptr,                               // 0x17
-    Cmd_if_not_equal_ptr,                           // 0x18
-    Cmd_if_move,                                    // 0x19
-    Cmd_if_not_move,                                // 0x1A
-    Cmd_if_in_bytes,                                // 0x1B
-    Cmd_if_not_in_bytes,                            // 0x1C
-    Cmd_if_in_hwords,                               // 0x1D
-    Cmd_if_not_in_hwords,                           // 0x1E
-    Cmd_if_user_has_attacking_move,                 // 0x1F
-    Cmd_if_user_has_no_attacking_moves,             // 0x20
-    Cmd_get_turn_count,                             // 0x21
-    Cmd_get_type,                                   // 0x22
-    Cmd_get_considered_move_power,                  // 0x23
-    Cmd_get_how_powerful_move_is,                   // 0x24
-    Cmd_get_last_used_battler_move,                 // 0x25
-    Cmd_if_equal_,                                  // 0x26
-    Cmd_if_not_equal_,                              // 0x27
-    Cmd_if_user_goes,                               // 0x28
-    Cmd_if_user_doesnt_go,                          // 0x29
-    Cmd_nullsub_2A,                                 // 0x2A
-    Cmd_nullsub_2B,                                 // 0x2B
-    Cmd_count_usable_party_mons,                    // 0x2C
-    Cmd_get_considered_move,                        // 0x2D
-    Cmd_get_considered_move_effect,                 // 0x2E
-    Cmd_get_ability,                                // 0x2F
-    Cmd_get_highest_type_effectiveness,             // 0x30
-    Cmd_if_type_effectiveness,                      // 0x31
-    Cmd_nullsub_32,                                 // 0x32
-    Cmd_nullsub_33,                                 // 0x33
-    Cmd_if_status_in_party,                         // 0x34
-    Cmd_if_status_not_in_party,                     // 0x35
-    Cmd_get_weather,                                // 0x36
-    Cmd_if_effect,                                  // 0x37
-    Cmd_if_not_effect,                              // 0x38
-    Cmd_if_stat_level_less_than,                    // 0x39
-    Cmd_if_stat_level_more_than,                    // 0x3A
-    Cmd_if_stat_level_equal,                        // 0x3B
-    Cmd_if_stat_level_not_equal,                    // 0x3C
-    Cmd_if_can_faint,                               // 0x3D
-    Cmd_if_cant_faint,                              // 0x3E
-    Cmd_if_has_move,                                // 0x3F
-    Cmd_if_doesnt_have_move,                        // 0x40
-    Cmd_if_has_move_with_effect,                    // 0x41
-    Cmd_if_doesnt_have_move_with_effect,            // 0x42
-    Cmd_if_any_move_disabled_or_encored,            // 0x43
-    Cmd_if_curr_move_disabled_or_encored,           // 0x44
-    Cmd_flee,                                       // 0x45
-    Cmd_if_random_safari_flee,                      // 0x46
-    Cmd_watch,                                      // 0x47
-    Cmd_get_hold_effect,                            // 0x48
-    Cmd_get_gender,                                 // 0x49
-    Cmd_is_first_turn_for,                          // 0x4A
-    Cmd_get_stockpile_count,                        // 0x4B
-    Cmd_is_double_battle,                           // 0x4C
-    Cmd_get_used_held_item,                         // 0x4D
-    Cmd_get_move_type_from_result,                  // 0x4E
-    Cmd_get_move_power_from_result,                 // 0x4F
-    Cmd_get_move_effect_from_result,                // 0x50
-    Cmd_get_protect_count,                          // 0x51
-    Cmd_nullsub_52,                                 // 0x52
-    Cmd_nullsub_53,                                 // 0x53
-    Cmd_nullsub_54,                                 // 0x54
-    Cmd_nullsub_55,                                 // 0x55
-    Cmd_nullsub_56,                                 // 0x56
-    Cmd_nullsub_57,                                 // 0x57
-    Cmd_call,                                       // 0x58
-    Cmd_goto,                                       // 0x59
-    Cmd_end,                                        // 0x5A
-    Cmd_if_level_cond,                              // 0x5B
-    Cmd_if_target_taunted,                          // 0x5C
-    Cmd_if_target_not_taunted,                      // 0x5D
-    Cmd_if_target_is_ally,                          // 0x5E
-    Cmd_is_of_type,                                 // 0x5F
-    Cmd_check_ability,                              // 0x60
-    Cmd_if_flash_fired,                             // 0x61
-    Cmd_if_holds_item,                              // 0x62
+static const BattleAICmdFunc sBattleAICmdTable[] = {
+    Cmd_if_random_less_than,              // 0x0
+    Cmd_if_random_greater_than,           // 0x1
+    Cmd_if_random_equal,                  // 0x2
+    Cmd_if_random_not_equal,              // 0x3
+    Cmd_score,                            // 0x4
+    Cmd_if_hp_less_than,                  // 0x5
+    Cmd_if_hp_more_than,                  // 0x6
+    Cmd_if_hp_equal,                      // 0x7
+    Cmd_if_hp_not_equal,                  // 0x8
+    Cmd_if_status,                        // 0x9
+    Cmd_if_not_status,                    // 0xA
+    Cmd_if_status2,                       // 0xB
+    Cmd_if_not_status2,                   // 0xC
+    Cmd_if_status3,                       // 0xD
+    Cmd_if_not_status3,                   // 0xE
+    Cmd_if_side_affecting,                // 0xF
+    Cmd_if_not_side_affecting,            // 0x10
+    Cmd_if_less_than,                     // 0x11
+    Cmd_if_more_than,                     // 0x12
+    Cmd_if_equal,                         // 0x13
+    Cmd_if_not_equal,                     // 0x14
+    Cmd_if_less_than_ptr,                 // 0x15
+    Cmd_if_more_than_ptr,                 // 0x16
+    Cmd_if_equal_ptr,                     // 0x17
+    Cmd_if_not_equal_ptr,                 // 0x18
+    Cmd_if_move,                          // 0x19
+    Cmd_if_not_move,                      // 0x1A
+    Cmd_if_in_bytes,                      // 0x1B
+    Cmd_if_not_in_bytes,                  // 0x1C
+    Cmd_if_in_hwords,                     // 0x1D
+    Cmd_if_not_in_hwords,                 // 0x1E
+    Cmd_if_user_has_attacking_move,       // 0x1F
+    Cmd_if_user_has_no_attacking_moves,   // 0x20
+    Cmd_get_turn_count,                   // 0x21
+    Cmd_get_type,                         // 0x22
+    Cmd_get_considered_move_power,        // 0x23
+    Cmd_get_how_powerful_move_is,         // 0x24
+    Cmd_get_last_used_battler_move,       // 0x25
+    Cmd_if_equal_,                        // 0x26
+    Cmd_if_not_equal_,                    // 0x27
+    Cmd_if_user_goes,                     // 0x28
+    Cmd_if_user_doesnt_go,                // 0x29
+    Cmd_nullsub_2A,                       // 0x2A
+    Cmd_nullsub_2B,                       // 0x2B
+    Cmd_count_usable_party_mons,          // 0x2C
+    Cmd_get_considered_move,              // 0x2D
+    Cmd_get_considered_move_effect,       // 0x2E
+    Cmd_get_ability,                      // 0x2F
+    Cmd_get_highest_type_effectiveness,   // 0x30
+    Cmd_if_type_effectiveness,            // 0x31
+    Cmd_nullsub_32,                       // 0x32
+    Cmd_nullsub_33,                       // 0x33
+    Cmd_if_status_in_party,               // 0x34
+    Cmd_if_status_not_in_party,           // 0x35
+    Cmd_get_weather,                      // 0x36
+    Cmd_if_effect,                        // 0x37
+    Cmd_if_not_effect,                    // 0x38
+    Cmd_if_stat_level_less_than,          // 0x39
+    Cmd_if_stat_level_more_than,          // 0x3A
+    Cmd_if_stat_level_equal,              // 0x3B
+    Cmd_if_stat_level_not_equal,          // 0x3C
+    Cmd_if_can_faint,                     // 0x3D
+    Cmd_if_cant_faint,                    // 0x3E
+    Cmd_if_has_move,                      // 0x3F
+    Cmd_if_doesnt_have_move,              // 0x40
+    Cmd_if_has_move_with_effect,          // 0x41
+    Cmd_if_doesnt_have_move_with_effect,  // 0x42
+    Cmd_if_any_move_disabled_or_encored,  // 0x43
+    Cmd_if_curr_move_disabled_or_encored, // 0x44
+    Cmd_flee,                             // 0x45
+    Cmd_if_random_safari_flee,            // 0x46
+    Cmd_watch,                            // 0x47
+    Cmd_get_hold_effect,                  // 0x48
+    Cmd_get_gender,                       // 0x49
+    Cmd_is_first_turn_for,                // 0x4A
+    Cmd_get_stockpile_count,              // 0x4B
+    Cmd_is_double_battle,                 // 0x4C
+    Cmd_get_used_held_item,               // 0x4D
+    Cmd_get_move_type_from_result,        // 0x4E
+    Cmd_get_move_power_from_result,       // 0x4F
+    Cmd_get_move_effect_from_result,      // 0x50
+    Cmd_get_protect_count,                // 0x51
+    Cmd_nullsub_52,                       // 0x52
+    Cmd_nullsub_53,                       // 0x53
+    Cmd_nullsub_54,                       // 0x54
+    Cmd_nullsub_55,                       // 0x55
+    Cmd_nullsub_56,                       // 0x56
+    Cmd_nullsub_57,                       // 0x57
+    Cmd_call,                             // 0x58
+    Cmd_goto,                             // 0x59
+    Cmd_end,                              // 0x5A
+    Cmd_if_level_cond,                    // 0x5B
+    Cmd_if_target_taunted,                // 0x5C
+    Cmd_if_target_not_taunted,            // 0x5D
+    Cmd_if_target_is_ally,                // 0x5E
+    Cmd_is_of_type,                       // 0x5F
+    Cmd_check_ability,                    // 0x60
+    Cmd_if_flash_fired,                   // 0x61
+    Cmd_if_holds_item,                    // 0x62
 };
 
-static const u16 sDiscouragedPowerfulMoveEffects[] =
-{
-    EFFECT_EXPLOSION,
+static const u16 sDiscouragedPowerfulMoveEffects[] = { EFFECT_EXPLOSION,
     EFFECT_DREAM_EATER,
     EFFECT_RAZOR_WIND,
     EFFECT_SKY_ATTACK,
@@ -278,8 +275,7 @@ static const u16 sDiscouragedPowerfulMoveEffects[] =
     EFFECT_SUPERPOWER,
     EFFECT_ERUPTION,
     EFFECT_OVERHEAT,
-    0xFFFF
-};
+    0xFFFF };
 
 // code
 void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves)
@@ -291,18 +287,18 @@ void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves)
         data[i] = 0;
 
     // Items are allowed to use in ONLY trainer battles.
-    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-        && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_BATTLE_TOWER
-                               | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_SECRET_BASE | BATTLE_TYPE_FRONTIER
-                               | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_x2000000)
-            )
-       )
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) &&
+        !(gBattleTypeFlags &
+            (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_BATTLE_TOWER |
+                BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_SECRET_BASE | BATTLE_TYPE_FRONTIER |
+                BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_x2000000)))
     {
         for (i = 0; i < MAX_TRAINER_ITEMS; i++)
         {
             if (gTrainers[gTrainerBattleOpponent_A].items[i] != 0)
             {
-                BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent_A].items[i];
+                BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] =
+                    gTrainers[gTrainerBattleOpponent_A].items[i];
                 BATTLE_HISTORY->itemsNo++;
             }
         }
@@ -370,15 +366,19 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
         AI_THINKING_STRUCT->aiFlags = AI_SCRIPT_FIRST_BATTLE;
     else if (gBattleTypeFlags & BATTLE_TYPE_FACTORY)
         AI_THINKING_STRUCT->aiFlags = GetAiScriptsInBattleFactory();
-    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE))
-        AI_THINKING_STRUCT->aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_TRY_TO_FAINT;
+    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER |
+                                    BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE))
+        AI_THINKING_STRUCT->aiFlags =
+            AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_TRY_TO_FAINT;
     else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
-        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags | gTrainers[gTrainerBattleOpponent_B].aiFlags;
+        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags |
+                                      gTrainers[gTrainerBattleOpponent_B].aiFlags;
     else
-       AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
+        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
 
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-        AI_THINKING_STRUCT->aiFlags |= AI_SCRIPT_DOUBLE_BATTLE; // act smart in doubles and don't attack your partner
+        AI_THINKING_STRUCT->aiFlags |=
+            AI_SCRIPT_DOUBLE_BATTLE; // act smart in doubles and don't attack your partner
 }
 
 u8 BattleAI_ChooseMoveOrAction(void)
@@ -568,42 +568,45 @@ static void BattleAI_DoAIProcessing(void)
     {
         switch (AI_THINKING_STRUCT->aiState)
         {
-            case AIState_DoNotProcess: // Needed to match.
-                break;
-            case AIState_SettingUp:
-                gAIScriptPtr = gBattleAI_ScriptsTable[AI_THINKING_STRUCT->aiLogicId]; // set AI ptr to logic ID.
-                if (gBattleMons[sBattler_AI].pp[AI_THINKING_STRUCT->movesetIndex] == 0)
-                {
-                    AI_THINKING_STRUCT->moveConsidered = 0;
-                }
-                else
-                {
-                    AI_THINKING_STRUCT->moveConsidered = gBattleMons[sBattler_AI].moves[AI_THINKING_STRUCT->movesetIndex];
-                }
-                AI_THINKING_STRUCT->aiState++;
-                break;
-            case AIState_Processing:
-                if (AI_THINKING_STRUCT->moveConsidered != 0)
-                {
-                    sBattleAICmdTable[*gAIScriptPtr](); // Run AI command.
-                }
-                else
-                {
-                    AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] = 0;
-                    AI_THINKING_STRUCT->aiAction |= AI_ACTION_DONE;
-                }
-                if (AI_THINKING_STRUCT->aiAction & AI_ACTION_DONE)
-                {
-                   AI_THINKING_STRUCT->movesetIndex++;
+        case AIState_DoNotProcess: // Needed to match.
+            break;
+        case AIState_SettingUp:
+            gAIScriptPtr =
+                gBattleAI_ScriptsTable[AI_THINKING_STRUCT->aiLogicId]; // set AI ptr to logic ID.
+            if (gBattleMons[sBattler_AI].pp[AI_THINKING_STRUCT->movesetIndex] == 0)
+            {
+                AI_THINKING_STRUCT->moveConsidered = 0;
+            }
+            else
+            {
+                AI_THINKING_STRUCT->moveConsidered =
+                    gBattleMons[sBattler_AI].moves[AI_THINKING_STRUCT->movesetIndex];
+            }
+            AI_THINKING_STRUCT->aiState++;
+            break;
+        case AIState_Processing:
+            if (AI_THINKING_STRUCT->moveConsidered != 0)
+            {
+                sBattleAICmdTable[*gAIScriptPtr](); // Run AI command.
+            }
+            else
+            {
+                AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] = 0;
+                AI_THINKING_STRUCT->aiAction |= AI_ACTION_DONE;
+            }
+            if (AI_THINKING_STRUCT->aiAction & AI_ACTION_DONE)
+            {
+                AI_THINKING_STRUCT->movesetIndex++;
 
-                    if (AI_THINKING_STRUCT->movesetIndex < MAX_MON_MOVES && !(AI_THINKING_STRUCT->aiAction & AI_ACTION_DO_NOT_ATTACK))
-                        AI_THINKING_STRUCT->aiState = AIState_SettingUp;
-                    else
-                        AI_THINKING_STRUCT->aiState++;
+                if (AI_THINKING_STRUCT->movesetIndex < MAX_MON_MOVES &&
+                    !(AI_THINKING_STRUCT->aiAction & AI_ACTION_DO_NOT_ATTACK))
+                    AI_THINKING_STRUCT->aiState = AIState_SettingUp;
+                else
+                    AI_THINKING_STRUCT->aiState++;
 
-                    AI_THINKING_STRUCT->aiAction &= ~(AI_ACTION_DONE);
-                }
-                break;
+                AI_THINKING_STRUCT->aiAction &= ~(AI_ACTION_DONE);
+            }
+            break;
         }
     }
 }
@@ -616,8 +619,10 @@ static void RecordLastUsedMoveByTarget(void)
     {
         if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == gLastMoves[gBattlerTarget])
             break;
-        if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] != gLastMoves[gBattlerTarget]  // HACK: This redundant condition is a hack to make the asm match.
-         && BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == MOVE_NONE)
+        if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] !=
+                gLastMoves[gBattlerTarget] // HACK: This redundant condition is a hack to make the
+                                           // asm match.
+            && BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] == MOVE_NONE)
         {
             BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] = gLastMoves[gBattlerTarget];
             break;
@@ -695,9 +700,11 @@ static void Cmd_if_random_not_equal(void)
 
 static void Cmd_score(void)
 {
-    AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] += gAIScriptPtr[1]; // Add the result to the array of the move consider's score.
+    AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] +=
+        gAIScriptPtr[1]; // Add the result to the array of the move consider's score.
 
-    if (AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] < 0) // If the score is negative, flatten it to 0.
+    if (AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] <
+        0) // If the score is negative, flatten it to 0.
         AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] = 0;
 
     gAIScriptPtr += 2; // AI return.
@@ -1071,8 +1078,8 @@ static void Cmd_if_user_has_attacking_move(void)
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        if (gBattleMons[sBattler_AI].moves[i] != 0
-            && gBattleMoves[gBattleMons[sBattler_AI].moves[i]].power != 0)
+        if (gBattleMons[sBattler_AI].moves[i] != 0 &&
+            gBattleMoves[gBattleMons[sBattler_AI].moves[i]].power != 0)
             break;
     }
 
@@ -1088,8 +1095,8 @@ static void Cmd_if_user_has_no_attacking_moves(void)
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        if (gBattleMons[sBattler_AI].moves[i] != 0
-         && gBattleMoves[gBattleMons[sBattler_AI].moves[i]].power != 0)
+        if (gBattleMons[sBattler_AI].moves[i] != 0 &&
+            gBattleMoves[gBattleMons[sBattler_AI].moves[i]].power != 0)
             break;
     }
 
@@ -1171,12 +1178,13 @@ static void Cmd_get_how_powerful_move_is(void)
 
     for (i = 0; sDiscouragedPowerfulMoveEffects[i] != 0xFFFF; i++)
     {
-        if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].effect == sDiscouragedPowerfulMoveEffects[i])
+        if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].effect ==
+            sDiscouragedPowerfulMoveEffects[i])
             break;
     }
 
-    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power > 1
-        && sDiscouragedPowerfulMoveEffects[i] == 0xFFFF)
+    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power > 1 &&
+        sDiscouragedPowerfulMoveEffects[i] == 0xFFFF)
     {
         gDynamicBasePower = 0;
         *(&gBattleStruct->dynamicMoveType) = 0;
@@ -1188,18 +1196,20 @@ static void Cmd_get_how_powerful_move_is(void)
         {
             for (i = 0; sDiscouragedPowerfulMoveEffects[i] != 0xFFFF; i++)
             {
-                if (gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect == sDiscouragedPowerfulMoveEffects[i])
+                if (gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect ==
+                    sDiscouragedPowerfulMoveEffects[i])
                     break;
             }
 
-            if (gBattleMons[sBattler_AI].moves[checkedMove] != MOVE_NONE
-                && sDiscouragedPowerfulMoveEffects[i] == 0xFFFF
-                && gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].power > 1)
+            if (gBattleMons[sBattler_AI].moves[checkedMove] != MOVE_NONE &&
+                sDiscouragedPowerfulMoveEffects[i] == 0xFFFF &&
+                gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].power > 1)
             {
                 gCurrentMove = gBattleMons[sBattler_AI].moves[checkedMove];
                 AI_CalcDmg(sBattler_AI, gBattlerTarget);
                 TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
-                moveDmgs[checkedMove] = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[checkedMove] / 100;
+                moveDmgs[checkedMove] =
+                    gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[checkedMove] / 100;
                 if (moveDmgs[checkedMove] == 0)
                     moveDmgs[checkedMove] = 1;
             }
@@ -1222,7 +1232,8 @@ static void Cmd_get_how_powerful_move_is(void)
     }
     else
     {
-        AI_THINKING_STRUCT->funcResult = MOVE_POWER_DISCOURAGED; // Highly discouraged in terms of power.
+        AI_THINKING_STRUCT->funcResult =
+            MOVE_POWER_DISCOURAGED; // Highly discouraged in terms of power.
     }
 
     gAIScriptPtr++;
@@ -1312,10 +1323,10 @@ static void Cmd_count_usable_party_mons(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (i != battlerOnField1 && i != battlerOnField2
-         && GetMonData(&party[i], MON_DATA_HP) != 0
-         && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_NONE
-         && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG)
+        if (i != battlerOnField1 && i != battlerOnField2 &&
+            GetMonData(&party[i], MON_DATA_HP) != 0 &&
+            GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_NONE &&
+            GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG)
         {
             AI_THINKING_STRUCT->funcResult++;
         }
@@ -1355,9 +1366,9 @@ static void Cmd_get_ability(void)
         }
 
         // abilities that prevent fleeing.
-        if (gBattleMons[battlerId].ability == ABILITY_SHADOW_TAG
-        || gBattleMons[battlerId].ability == ABILITY_MAGNET_PULL
-        || gBattleMons[battlerId].ability == ABILITY_ARENA_TRAP)
+        if (gBattleMons[battlerId].ability == ABILITY_SHADOW_TAG ||
+            gBattleMons[battlerId].ability == ABILITY_MAGNET_PULL ||
+            gBattleMons[battlerId].ability == ABILITY_ARENA_TRAP)
         {
             AI_THINKING_STRUCT->funcResult = gBattleMons[battlerId].ability;
             gAIScriptPtr += 2;
@@ -1370,18 +1381,24 @@ static void Cmd_get_ability(void)
             {
                 // AI has no knowledge of opponent, so it guesses which ability.
                 if (Random() & 1)
-                    AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[0];
+                    AI_THINKING_STRUCT->funcResult =
+                        gBaseStats[gBattleMons[battlerId].species].abilities[0];
                 else
-                    AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[1];
+                    AI_THINKING_STRUCT->funcResult =
+                        gBaseStats[gBattleMons[battlerId].species].abilities[1];
             }
             else
             {
-                AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[0]; // It's definitely ability 1.
+                AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species]
+                                                     .abilities[0]; // It's definitely ability 1.
             }
         }
         else
         {
-            AI_THINKING_STRUCT->funcResult = gBaseStats[gBattleMons[battlerId].species].abilities[1]; // AI can't actually reach this part since no pokemon has ability 2 and no ability 1.
+            AI_THINKING_STRUCT->funcResult =
+                gBaseStats[gBattleMons[battlerId].species]
+                    .abilities[1]; // AI can't actually reach this part since no pokemon has ability
+                                   // 2 and no ability 1.
         }
     }
     else
@@ -1406,9 +1423,9 @@ static void Cmd_check_ability(void)
             AI_THINKING_STRUCT->funcResult = ability;
         }
         // Abilities that prevent fleeing.
-        else if (gBattleMons[battlerId].ability == ABILITY_SHADOW_TAG
-        || gBattleMons[battlerId].ability == ABILITY_MAGNET_PULL
-        || gBattleMons[battlerId].ability == ABILITY_ARENA_TRAP)
+        else if (gBattleMons[battlerId].ability == ABILITY_SHADOW_TAG ||
+                 gBattleMons[battlerId].ability == ABILITY_MAGNET_PULL ||
+                 gBattleMons[battlerId].ability == ABILITY_ARENA_TRAP)
         {
             ability = gBattleMons[battlerId].ability;
         }
@@ -1417,8 +1434,9 @@ static void Cmd_check_ability(void)
             if (gBaseStats[gBattleMons[battlerId].species].abilities[1] != ABILITY_NONE)
             {
                 u8 abilityDummyVariable = ability; // Needed to match.
-                if (gBaseStats[gBattleMons[battlerId].species].abilities[0] != abilityDummyVariable
-                && gBaseStats[gBattleMons[battlerId].species].abilities[1] != abilityDummyVariable)
+                if (gBaseStats[gBattleMons[battlerId].species].abilities[0] !=
+                        abilityDummyVariable &&
+                    gBaseStats[gBattleMons[battlerId].species].abilities[1] != abilityDummyVariable)
                 {
                     ability = gBaseStats[gBattleMons[battlerId].species].abilities[0];
                 }
@@ -1434,7 +1452,9 @@ static void Cmd_check_ability(void)
         }
         else
         {
-            ability = gBaseStats[gBattleMons[battlerId].species].abilities[1]; // AI can't actually reach this part since no pokemon has ability 2 and no ability 1.
+            ability = gBaseStats[gBattleMons[battlerId].species]
+                          .abilities[1]; // AI can't actually reach this part since no pokemon has
+                                         // ability 2 and no ability 1.
         }
     }
     else
@@ -1566,7 +1586,8 @@ static void Cmd_if_status_in_party(void)
         u16 hp = GetMonData(&party[i], MON_DATA_HP);
         u32 status = GetMonData(&party[i], MON_DATA_STATUS);
 
-        if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 && status == statusToCompareTo)
+        if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 &&
+            status == statusToCompareTo)
         {
             gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 6);
             return;
@@ -1583,7 +1604,7 @@ static void Cmd_if_status_not_in_party(void)
     u32 statusToCompareTo;
     u8 battlerId;
 
-    switch(gAIScriptPtr[1])
+    switch (gAIScriptPtr[1])
     {
     case 1:
         battlerId = sBattler_AI;
@@ -1603,9 +1624,11 @@ static void Cmd_if_status_not_in_party(void)
         u16 hp = GetMonData(&party[i], MON_DATA_HP);
         u32 status = GetMonData(&party[i], MON_DATA_STATUS);
 
-        if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 && status == statusToCompareTo)
+        if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 &&
+            status == statusToCompareTo)
         {
-            gAIScriptPtr += 10; // UB: Still bugged in Emerald. Uncomment the return statement to fix.
+            gAIScriptPtr +=
+                10; // UB: Still bugged in Emerald. Uncomment the return statement to fix.
             // return;
         }
     }
@@ -1720,7 +1743,8 @@ static void Cmd_if_can_faint(void)
     AI_CalcDmg(sBattler_AI, gBattlerTarget);
     TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
 
-    gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
+    gBattleMoveDamage = gBattleMoveDamage *
+                        AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
 
     // Moves always do at least 1 damage.
     if (gBattleMoveDamage == 0)
@@ -1749,7 +1773,8 @@ static void Cmd_if_cant_faint(void)
     AI_CalcDmg(sBattler_AI, gBattlerTarget);
     TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
 
-    gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
+    gBattleMoveDamage = gBattleMoveDamage *
+                        AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
 
     // This macro is missing the damage 0 = 1 assumption.
 
@@ -1816,7 +1841,7 @@ static void Cmd_if_doesnt_have_move(void)
     s32 i;
     const u16 *movePtr = (u16 *)(gAIScriptPtr + 2);
 
-    switch(gAIScriptPtr[1])
+    switch (gAIScriptPtr[1])
     {
     case AI_USER:
     case AI_USER_PARTNER: // UB: no separate check for user partner.
@@ -1855,7 +1880,8 @@ static void Cmd_if_has_move_with_effect(void)
     case AI_USER_PARTNER:
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
-            if (gBattleMons[sBattler_AI].moves[i] != 0 && gBattleMoves[gBattleMons[sBattler_AI].moves[i]].effect == gAIScriptPtr[2])
+            if (gBattleMons[sBattler_AI].moves[i] != 0 &&
+                gBattleMoves[gBattleMons[sBattler_AI].moves[i]].effect == gAIScriptPtr[2])
                 break;
         }
         if (i == MAX_MON_MOVES)
@@ -1868,7 +1894,9 @@ static void Cmd_if_has_move_with_effect(void)
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
             // UB: checks sBattler_AI instead of gBattlerTarget.
-            if (gBattleMons[sBattler_AI].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect == gAIScriptPtr[2])
+            if (gBattleMons[sBattler_AI].moves[i] != 0 &&
+                gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect ==
+                    gAIScriptPtr[2])
                 break;
         }
         if (i == MAX_MON_MOVES)
@@ -1889,7 +1917,8 @@ static void Cmd_if_doesnt_have_move_with_effect(void)
     case AI_USER_PARTNER:
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
-            if(gBattleMons[sBattler_AI].moves[i] != 0 && gBattleMoves[gBattleMons[sBattler_AI].moves[i]].effect == gAIScriptPtr[2])
+            if (gBattleMons[sBattler_AI].moves[i] != 0 &&
+                gBattleMoves[gBattleMons[sBattler_AI].moves[i]].effect == gAIScriptPtr[2])
                 break;
         }
         if (i != MAX_MON_MOVES)
@@ -1901,7 +1930,9 @@ static void Cmd_if_doesnt_have_move_with_effect(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
-            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect == gAIScriptPtr[2])
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i] &&
+                gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget].moves[i]].effect ==
+                    gAIScriptPtr[2])
                 break;
         }
         if (i != MAX_MON_MOVES)
@@ -1993,7 +2024,8 @@ static void Cmd_get_hold_effect(void)
         battlerId = gBattlerTarget;
 
     if (gActiveBattler != battlerId)
-        AI_THINKING_STRUCT->funcResult = ItemId_GetHoldEffect(BATTLE_HISTORY->itemEffects[battlerId]);
+        AI_THINKING_STRUCT->funcResult =
+            ItemId_GetHoldEffect(BATTLE_HISTORY->itemEffects[battlerId]);
     else
         AI_THINKING_STRUCT->funcResult = ItemId_GetHoldEffect(gBattleMons[battlerId].item);
 
@@ -2030,7 +2062,8 @@ static void Cmd_get_gender(void)
     else
         battlerId = gBattlerTarget;
 
-    AI_THINKING_STRUCT->funcResult = GetGenderFromSpeciesAndPersonality(gBattleMons[battlerId].species, gBattleMons[battlerId].personality);
+    AI_THINKING_STRUCT->funcResult = GetGenderFromSpeciesAndPersonality(
+        gBattleMons[battlerId].species, gBattleMons[battlerId].personality);
 
     gAIScriptPtr += 2;
 }
@@ -2079,12 +2112,14 @@ static void Cmd_get_used_held_item(void)
     else
         battlerId = gBattlerTarget;
 
-    // This is likely a leftover from Ruby's code and its ugly ewram access.
-    #ifdef NONMATCHING
-        AI_THINKING_STRUCT->funcResult = gBattleStruct->usedHeldItems[battlerId];
-    #else
-        AI_THINKING_STRUCT->funcResult = *(u8*)((u8*)(gBattleStruct) + offsetof(struct BattleStruct, usedHeldItems) + (battlerId * 2));
-    #endif // NONMATCHING
+// This is likely a leftover from Ruby's code and its ugly ewram access.
+#ifdef NONMATCHING
+    AI_THINKING_STRUCT->funcResult = gBattleStruct->usedHeldItems[battlerId];
+#else
+    AI_THINKING_STRUCT->funcResult =
+        *(u8 *)((u8 *)(gBattleStruct) + offsetof(struct BattleStruct, usedHeldItems) +
+                (battlerId * 2));
+#endif // NONMATCHING
 
     gAIScriptPtr += 2;
 }
@@ -2231,7 +2266,8 @@ static void AIStackPushVar(const u8 *var)
 
 static void AIStackPushVar_cursor(void)
 {
-    gBattleResources->AI_ScriptsStack->ptr[gBattleResources->AI_ScriptsStack->size++] = gAIScriptPtr;
+    gBattleResources->AI_ScriptsStack->ptr[gBattleResources->AI_ScriptsStack->size++] =
+        gAIScriptPtr;
 }
 
 static bool8 AIStackPop(void)
@@ -2239,7 +2275,8 @@ static bool8 AIStackPop(void)
     if (gBattleResources->AI_ScriptsStack->size != 0)
     {
         --gBattleResources->AI_ScriptsStack->size;
-        gAIScriptPtr = gBattleResources->AI_ScriptsStack->ptr[gBattleResources->AI_ScriptsStack->size];
+        gAIScriptPtr =
+            gBattleResources->AI_ScriptsStack->ptr[gBattleResources->AI_ScriptsStack->size];
         return TRUE;
     }
     else

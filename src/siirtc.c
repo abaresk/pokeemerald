@@ -30,10 +30,10 @@
 #define INFO_BUF(info, index) (*((u8 *)(info) + (index)))
 
 #define DATETIME_BUF(info, index) INFO_BUF(info, OFFSET_YEAR + index)
-#define DATETIME_BUF_LEN (OFFSET_SECOND - OFFSET_YEAR + 1)
+#define DATETIME_BUF_LEN          (OFFSET_SECOND - OFFSET_YEAR + 1)
 
 #define TIME_BUF(info, index) INFO_BUF(info, OFFSET_HOUR + index)
-#define TIME_BUF_LEN (OFFSET_SECOND - OFFSET_HOUR + 1)
+#define TIME_BUF_LEN          (OFFSET_SECOND - OFFSET_HOUR + 1)
 
 #define WR 0 // command for writing data
 #define RD 1 // command for reading data
@@ -46,9 +46,9 @@
 #define CMD_TIME     CMD(3)
 #define CMD_ALARM    CMD(4)
 
-#define SCK_HI      1
-#define SIO_HI      2
-#define CS_HI       4
+#define SCK_HI 1
+#define SIO_HI 2
+#define CS_HI  4
 
 #define DIR_0_IN    0
 #define DIR_0_OUT   1
@@ -98,8 +98,8 @@ u8 SiiRtcProbe(void)
 
     errorCode = 0;
 
-    if ((rtc.status & (SIIRTCINFO_POWER | SIIRTCINFO_24HOUR)) == SIIRTCINFO_POWER
-     || (rtc.status & (SIIRTCINFO_POWER | SIIRTCINFO_24HOUR)) == 0)
+    if ((rtc.status & (SIIRTCINFO_POWER | SIIRTCINFO_24HOUR)) == SIIRTCINFO_POWER ||
+        (rtc.status & (SIIRTCINFO_POWER | SIIRTCINFO_24HOUR)) == 0)
     {
         // The RTC is in 12-hour mode. Reset it and switch to 24-hour mode.
 
@@ -178,10 +178,9 @@ bool8 SiiRtcGetStatus(struct SiiRtcInfo *rtc)
 
     statusData = ReadData();
 
-    rtc->status = (statusData & (STATUS_POWER | STATUS_24HOUR))
-                | ((statusData & STATUS_INTAE) >> 3)
-                | ((statusData & STATUS_INTME) >> 2)
-                | ((statusData & STATUS_INTFE) >> 1);
+    rtc->status = (statusData & (STATUS_POWER | STATUS_24HOUR)) |
+                  ((statusData & STATUS_INTAE) >> 3) | ((statusData & STATUS_INTME) >> 2) |
+                  ((statusData & STATUS_INTFE) >> 1);
 
     GPIO_PORT_DATA = SCK_HI;
     GPIO_PORT_DATA = SCK_HI;
@@ -203,10 +202,8 @@ bool8 SiiRtcSetStatus(struct SiiRtcInfo *rtc)
     GPIO_PORT_DATA = SCK_HI;
     GPIO_PORT_DATA = SCK_HI | CS_HI;
 
-    statusData = STATUS_24HOUR
-               | ((rtc->status & SIIRTCINFO_INTAE) << 3)
-               | ((rtc->status & SIIRTCINFO_INTME) << 2)
-               | ((rtc->status & SIIRTCINFO_INTFE) << 1);
+    statusData = STATUS_24HOUR | ((rtc->status & SIIRTCINFO_INTAE) << 3) |
+                 ((rtc->status & SIIRTCINFO_INTME) << 2) | ((rtc->status & SIIRTCINFO_INTFE) << 1);
 
     GPIO_PORT_DIRECTION = DIR_ALL_OUT;
 

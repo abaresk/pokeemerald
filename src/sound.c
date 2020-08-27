@@ -15,7 +15,7 @@ struct Fanfare
 };
 
 // ewram
-EWRAM_DATA struct MusicPlayerInfo* gMPlay_PokemonCry = NULL;
+EWRAM_DATA struct MusicPlayerInfo *gMPlay_PokemonCry = NULL;
 EWRAM_DATA u8 gPokemonCryBGMDuckingCounter = 0;
 
 // iwram bss
@@ -41,27 +41,27 @@ static void Task_DuckBGMForPokemonCry(u8 taskId);
 static void RestoreBGMVolumeAfterPokemonCry(void);
 
 static const struct Fanfare sFanfares[] = {
-    { MUS_FANFA1,        80 },
-    { MUS_FANFA4,       160 },
-    { MUS_FANFA5,       220 },
-    { MUS_ME_WAZA,      220 },
-    { MUS_ME_ASA,       160 },
-    { MUS_ME_BACHI,     340 },
-    { MUS_ME_WASURE,    180 },
-    { MUS_ME_KINOMI,    120 },
-    { MUS_ME_TAMA,      710 },
-    { MUS_ME_B_BIG,     250 },
-    { MUS_ME_B_SMALL,   150 },
-    { MUS_ME_ZANNEN,    160 },
-    { MUS_RG_POKEFUE,   450 },
-    { MUS_RG_FAN5,      170 },
-    { MUS_RG_FAN2,      196 },
-    { MUS_ME_POINTGET,  313 },
+    { MUS_FANFA1, 80 },
+    { MUS_FANFA4, 160 },
+    { MUS_FANFA5, 220 },
+    { MUS_ME_WAZA, 220 },
+    { MUS_ME_ASA, 160 },
+    { MUS_ME_BACHI, 340 },
+    { MUS_ME_WASURE, 180 },
+    { MUS_ME_KINOMI, 120 },
+    { MUS_ME_TAMA, 710 },
+    { MUS_ME_B_BIG, 250 },
+    { MUS_ME_B_SMALL, 150 },
+    { MUS_ME_ZANNEN, 160 },
+    { MUS_RG_POKEFUE, 450 },
+    { MUS_RG_FAN5, 170 },
+    { MUS_RG_FAN2, 196 },
+    { MUS_ME_POINTGET, 313 },
     { MUS_ME_SYMBOLGET, 318 },
-    { MUS_ME_TORE_EYE,  135 },
+    { MUS_ME_TORE_EYE, 135 },
 };
 
-#define CRY_VOLUME  120 // was 125 in R/S
+#define CRY_VOLUME 120 // was 125 in R/S
 
 void InitMapMusic(void)
 {
@@ -473,20 +473,20 @@ void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
     switch (table)
     {
     case 0:
-        gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
+        gMPlay_PokemonCry =
+            SetPokemonCryTone(v0 ? &gCryTable2[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
         break;
     case 1:
-        gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
+        gMPlay_PokemonCry =
+            SetPokemonCryTone(v0 ? &gCryTable2[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
         break;
     case 2:
-        gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
+        gMPlay_PokemonCry =
+            SetPokemonCryTone(v0 ? &gCryTable2[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
         break;
     case 3:
-        gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
+        gMPlay_PokemonCry =
+            SetPokemonCryTone(v0 ? &gCryTable2[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
         break;
     }
 }
@@ -602,9 +602,11 @@ void SE12PanpotControl(s8 pan)
 
 bool8 IsSEPlaying(void)
 {
-    if ((gMPlayInfo_SE1.status & MUSICPLAYER_STATUS_PAUSE) && (gMPlayInfo_SE2.status & MUSICPLAYER_STATUS_PAUSE))
+    if ((gMPlayInfo_SE1.status & MUSICPLAYER_STATUS_PAUSE) &&
+        (gMPlayInfo_SE2.status & MUSICPLAYER_STATUS_PAUSE))
         return FALSE;
-    if (!(gMPlayInfo_SE1.status & MUSICPLAYER_STATUS_TRACK) && !(gMPlayInfo_SE2.status & MUSICPLAYER_STATUS_TRACK))
+    if (!(gMPlayInfo_SE1.status & MUSICPLAYER_STATUS_TRACK) &&
+        !(gMPlayInfo_SE2.status & MUSICPLAYER_STATUS_TRACK))
         return FALSE;
     return TRUE;
 }

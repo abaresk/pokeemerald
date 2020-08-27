@@ -19,7 +19,7 @@ const struct BardSound *GetWordSounds(u16 word)
 {
     u32 category;
     u32 subword;
-    const struct BardSound (*ptr)[6];
+    const struct BardSound(*ptr)[6];
 
     if (ECWord_CheckIfOutsideOfValidRange(word))
     {
@@ -29,17 +29,17 @@ const struct BardSound *GetWordSounds(u16 word)
     subword = word & 0x1ff;
     switch (category)
     {
-        case EC_GROUP_POKEMON:
-        case EC_GROUP_POKEMON_2:
-            ptr = gBardSounds_Pokemon;
-            break;
-        case EC_GROUP_MOVE_1:
-        case EC_GROUP_MOVE_2:
-            ptr = gBardSounds_Moves;
-            break;
-        default:
-            ptr = gBardSoundsTable[category];
-            break;
+    case EC_GROUP_POKEMON:
+    case EC_GROUP_POKEMON_2:
+        ptr = gBardSounds_Pokemon;
+        break;
+    case EC_GROUP_MOVE_1:
+    case EC_GROUP_MOVE_2:
+        ptr = gBardSounds_Moves;
+        break;
+    default:
+        ptr = gBardSoundsTable[category];
+        break;
     }
     ptr += subword;
     return *ptr;
@@ -51,7 +51,7 @@ void GetWordPhonemes(struct BardSong *song, u16 word)
     const struct BardSound *sound;
 
     song->length = 0;
-    for (i = 0; i < 6; i ++)
+    for (i = 0; i < 6; i++)
     {
         sound = &song->sound[i];
         if (sound->var00 != 0xFF)

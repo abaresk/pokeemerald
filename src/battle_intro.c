@@ -22,8 +22,7 @@ static void BattleIntroSlide3(u8);
 static void BattleIntroSlideLink(u8);
 static void BattleIntroSlidePartner(u8);
 
-static const TaskFunc sBattleIntroSlideFuncs[] =
-{
+static const TaskFunc sBattleIntroSlideFuncs[] = {
     BattleIntroSlide1, // BATTLE_TERRAIN_GRASS
     BattleIntroSlide1, // BATTLE_TERRAIN_LONG_GRASS
     BattleIntroSlide2, // BATTLE_TERRAIN_SAND
@@ -103,7 +102,8 @@ void HandleIntroSlide(u8 terrain)
 {
     u8 taskId;
 
-    if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) && gPartnerTrainerId != TRAINER_STEVEN_PARTNER)
+    if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) &&
+        gPartnerTrainerId != TRAINER_STEVEN_PARTNER)
     {
         taskId = CreateTask(BattleIntroSlidePartner, 0);
     }
@@ -144,8 +144,12 @@ void sub_811828C(u8 taskId)
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
-    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+    SetGpuReg(REG_OFFSET_WININ,
+        WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ |
+            WININ_WIN1_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT,
+        WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL |
+            WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
 }
 
 static void BattleIntroSlide1(u8 taskId)
@@ -223,8 +227,12 @@ static void BattleIntroSlide1(u8 taskId)
             CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE);
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
             SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT256x512);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
         }
         break;
     case 4:
@@ -298,7 +306,8 @@ static void BattleIntroSlide2(u8 taskId)
         {
             if (--gTasks[taskId].data[3] == 0)
             {
-                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ);
+                SetGpuReg(REG_OFFSET_BLDCNT,
+                    BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ);
                 SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(15, 0));
                 SetGpuReg(REG_OFFSET_BLDY, 0);
             }
@@ -332,8 +341,12 @@ static void BattleIntroSlide2(u8 taskId)
             CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE);
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
             SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT256x512);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
         }
         break;
     case 4:
@@ -353,7 +366,8 @@ static void BattleIntroSlide3(u8 taskId)
     switch (gTasks[taskId].data[0])
     {
     case 0:
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ);
+        SetGpuReg(REG_OFFSET_BLDCNT,
+            BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
         SetGpuReg(REG_OFFSET_BLDY, 0);
         gTasks[taskId].data[4] = BLDALPHA_BLEND(8, 8);
@@ -420,8 +434,12 @@ static void BattleIntroSlide3(u8 taskId)
             CpuFill32(0, (void *)BG_SCREEN_ADDR(28), BG_SCREEN_SIZE);
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
             SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT256x512);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
         }
         break;
     case 4:
@@ -468,7 +486,9 @@ static void BattleIntroSlideLink(u8 taskId)
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].oam.objMode = ST_OAM_OBJ_WINDOW;
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].callback = sub_8038B74;
             SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2);
+            SetGpuReg(REG_OFFSET_WINOUT,
+                WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG1 |
+                    WINOUT_WIN01_BG2);
         }
         break;
     case 2:
@@ -501,8 +521,12 @@ static void BattleIntroSlideLink(u8 taskId)
             gTasks[taskId].data[0]++;
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
             SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT256x512);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
         }
         break;
     case 4:
@@ -523,11 +547,20 @@ static void BattleIntroSlidePartner(u8 taskId)
         if (--gTasks[taskId].data[2] == 0)
         {
             gTasks[taskId].data[0]++;
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT512x256);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
-            SetGpuReg(REG_OFFSET_DISPCNT, GetGpuReg(REG_OFFSET_DISPCNT) | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJWIN_ON);
-            SetGpuReg(REG_OFFSET_WININ, WININ_WIN1_BG1 | WININ_WIN1_BG2 | WININ_WIN1_BG3 | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_DISPCNT,
+                GetGpuReg(REG_OFFSET_DISPCNT) | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON |
+                    DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJWIN_ON);
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN1_BG1 | WININ_WIN1_BG2 | WININ_WIN1_BG3 | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            SetGpuReg(REG_OFFSET_WINOUT,
+                WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL |
+                    WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
             gBattle_BG0_Y = -48;
             gBattle_BG1_X = 240;
             gBattle_BG2_X = -240;
@@ -569,8 +602,12 @@ static void BattleIntroSlidePartner(u8 taskId)
             SetGpuReg(REG_OFFSET_DISPCNT, GetGpuReg(REG_OFFSET_DISPCNT) & ~DISPCNT_WIN1_ON);
             SetBgAttribute(1, BG_ATTR_CHARBASEINDEX, 0);
             SetBgAttribute(2, BG_ATTR_CHARBASEINDEX, 0);
-            SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) | BGCNT_TXT256x512);
-            SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT512x256);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(28) |
+                    BGCNT_TXT256x512);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) |
+                    BGCNT_TXT512x256);
             gScanlineEffect.state = 3;
             gTasks[taskId].data[0]++;
         }
@@ -581,12 +618,16 @@ static void BattleIntroSlidePartner(u8 taskId)
     }
 }
 
-void sub_8118FBC(int bgId, u8 arg1, u8 arg2, u8 battlerPosition, u8 arg4, u8 *arg5, u16 *arg6, u16 tilesOffset)
+void sub_8118FBC(
+    int bgId, u8 arg1, u8 arg2, u8 battlerPosition, u8 arg4, u8 *arg5, u16 *arg6, u16 tilesOffset)
 {
     int i, j;
     u8 battler = GetBattlerAtPosition(battlerPosition);
     int offset = tilesOffset;
-    CpuCopy16(gMonSpritesGfxPtr->sprites[battlerPosition] + BG_SCREEN_SIZE * gBattleMonForms[battler], arg5, BG_SCREEN_SIZE);
+    CpuCopy16(
+        gMonSpritesGfxPtr->sprites[battlerPosition] + BG_SCREEN_SIZE * gBattleMonForms[battler],
+        arg5,
+        BG_SCREEN_SIZE);
     LoadBgTiles(bgId, arg5, 0x1000, tilesOffset);
     for (i = arg2; i < arg2 + 8; i++)
     {
@@ -600,11 +641,15 @@ void sub_8118FBC(int bgId, u8 arg1, u8 arg2, u8 battlerPosition, u8 arg4, u8 *ar
     LoadBgTilemap(bgId, arg6, BG_SCREEN_SIZE, 0);
 }
 
-void unref_sub_8119094(u8 arg0, u8 arg1, u8 battlerPosition, u8 arg3, u8 arg4, u16 arg5, u8 arg6, u8 arg7)
+void unref_sub_8119094(
+    u8 arg0, u8 arg1, u8 battlerPosition, u8 arg3, u8 arg4, u16 arg5, u8 arg6, u8 arg7)
 {
     int i, j, offset;
 
-    DmaCopy16(3, gMonSpritesGfxPtr->sprites[battlerPosition] + BG_SCREEN_SIZE * arg3, (void *)BG_SCREEN_ADDR(0) + arg5, BG_SCREEN_SIZE);
+    DmaCopy16(3,
+        gMonSpritesGfxPtr->sprites[battlerPosition] + BG_SCREEN_SIZE * arg3,
+        (void *)BG_SCREEN_ADDR(0) + arg5,
+        BG_SCREEN_SIZE);
     offset = (arg5 >> 5) - (arg7 << 9);
     for (i = arg1; i < arg1 + 8; i++)
     {

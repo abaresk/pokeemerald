@@ -87,8 +87,7 @@ static void DuoFightEnd(u8 taskId, s8 palDelay);
 static void sub_81D9868(struct Sprite *sprite, u8 animNum, s16 x, s16 y);
 
 // const rom data
-static const TaskFunc sTasksForAnimations[] =
-{
+static const TaskFunc sTasksForAnimations[] = {
     [RAY_ANIM_DUO_FIGHT_PRE] = Task_DuoFightAnim,
     [RAY_ANIM_DUO_FIGHT] = Task_DuoFightAnim,
     [RAY_ANIM_TAKES_FLIGHT] = Task_RayTakesFlightAnim,
@@ -98,9 +97,7 @@ static const TaskFunc sTasksForAnimations[] =
     [RAY_ANIM_END] = Task_EndAfterFadeScreen,
 };
 
-static const struct OamData sOamData_862A6BC =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6BC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -112,12 +109,9 @@ static const struct OamData sOamData_862A6BC =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6C4 =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6C4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -129,12 +123,9 @@ static const struct OamData sOamData_862A6C4 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6CC =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6CC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -146,12 +137,9 @@ static const struct OamData sOamData_862A6CC =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6D4 =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6D4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -163,12 +151,9 @@ static const struct OamData sOamData_862A6D4 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6DC =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6DC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -180,12 +165,9 @@ static const struct OamData sOamData_862A6DC =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6E4 =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6E4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -197,12 +179,9 @@ static const struct OamData sOamData_862A6E4 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6EC =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6EC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -214,12 +193,9 @@ static const struct OamData sOamData_862A6EC =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_862A6F4 =
-{
-    .y = 0,
+static const struct OamData sOamData_862A6F4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -231,11 +207,9 @@ static const struct OamData sOamData_862A6F4 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_862A6FC[] =
-{
+static const union AnimCmd sSpriteAnim_862A6FC[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(64, 30),
     ANIMCMD_FRAME(128, 30),
@@ -243,8 +217,7 @@ static const union AnimCmd sSpriteAnim_862A6FC[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A710[] =
-{
+static const union AnimCmd sSpriteAnim_862A710[] = {
     ANIMCMD_FRAME(192, 30),
     ANIMCMD_FRAME(256, 30),
     ANIMCMD_FRAME(320, 30),
@@ -252,14 +225,10 @@ static const union AnimCmd sSpriteAnim_862A710[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862A724[] =
-{
-    sSpriteAnim_862A6FC,
-    sSpriteAnim_862A710
-};
+static const union AnimCmd *const sSpriteAnimTable_862A724[] = { sSpriteAnim_862A6FC,
+    sSpriteAnim_862A710 };
 
-static const struct SpriteTemplate sUnknown_0862A72C =
-{
+static const struct SpriteTemplate sUnknown_0862A72C = {
     .tileTag = 30505,
     .paletteTag = 30505,
     .oam = &sOamData_862A6BC,
@@ -269,19 +238,11 @@ static const struct SpriteTemplate sUnknown_0862A72C =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A744[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A744[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862A74C[] =
-{
-    sSpriteAnim_862A744
-};
+static const union AnimCmd *const sSpriteAnimTable_862A74C[] = { sSpriteAnim_862A744 };
 
-static const struct SpriteTemplate sUnknown_0862A750 =
-{
+static const struct SpriteTemplate sUnknown_0862A750 = {
     .tileTag = 30506,
     .paletteTag = 30505,
     .oam = &sOamData_862A6C4,
@@ -291,19 +252,11 @@ static const struct SpriteTemplate sUnknown_0862A750 =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A768[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A768[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862A770[] =
-{
-    sSpriteAnim_862A768
-};
+static const union AnimCmd *const sSpriteAnimTable_862A770[] = { sSpriteAnim_862A768 };
 
-static const struct SpriteTemplate sUnknown_0862A774 =
-{
+static const struct SpriteTemplate sUnknown_0862A774 = {
     .tileTag = 30507,
     .paletteTag = 30505,
     .oam = &sOamData_862A6CC,
@@ -313,44 +266,19 @@ static const struct SpriteTemplate sUnknown_0862A774 =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A78C[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A78C[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A794[] =
-{
-    ANIMCMD_FRAME(8, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A794[] = { ANIMCMD_FRAME(8, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A79C[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A79C[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A7A4[] =
-{
-    ANIMCMD_FRAME(24, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A7A4[] = { ANIMCMD_FRAME(24, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A7AC[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A7AC[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A7B4[] =
-{
-    ANIMCMD_FRAME(40, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A7B4[] = { ANIMCMD_FRAME(40, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A7BC[] =
-{
+static const union AnimCmd sSpriteAnim_862A7BC[] = {
     ANIMCMD_FRAME(48, 36),
     ANIMCMD_FRAME(64, 36),
     ANIMCMD_FRAME(80, 36),
@@ -358,8 +286,7 @@ static const union AnimCmd sSpriteAnim_862A7BC[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A7D0[] =
-{
+static const union AnimCmd sSpriteAnim_862A7D0[] = {
     ANIMCMD_FRAME(56, 36),
     ANIMCMD_FRAME(72, 36),
     ANIMCMD_FRAME(88, 36),
@@ -367,8 +294,7 @@ static const union AnimCmd sSpriteAnim_862A7D0[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A7E4[] =
-{
+static const union AnimCmd sSpriteAnim_862A7E4[] = {
     ANIMCMD_FRAME(96, 36),
     ANIMCMD_FRAME(104, 36),
     ANIMCMD_FRAME(112, 36),
@@ -376,9 +302,7 @@ static const union AnimCmd sSpriteAnim_862A7E4[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862A7F8[] =
-{
-    sSpriteAnim_862A78C,
+static const union AnimCmd *const sSpriteAnimTable_862A7F8[] = { sSpriteAnim_862A78C,
     sSpriteAnim_862A794,
     sSpriteAnim_862A79C,
     sSpriteAnim_862A7A4,
@@ -386,11 +310,9 @@ static const union AnimCmd *const sSpriteAnimTable_862A7F8[] =
     sSpriteAnim_862A7B4,
     sSpriteAnim_862A7BC,
     sSpriteAnim_862A7D0,
-    sSpriteAnim_862A7E4
-};
+    sSpriteAnim_862A7E4 };
 
-static const struct SpriteTemplate sUnknown_0862A81C =
-{
+static const struct SpriteTemplate sUnknown_0862A81C = {
     .tileTag = 30508,
     .paletteTag = 30508,
     .oam = &sOamData_862A6D4,
@@ -400,8 +322,7 @@ static const struct SpriteTemplate sUnknown_0862A81C =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A834[] =
-{
+static const union AnimCmd sSpriteAnim_862A834[] = {
     ANIMCMD_FRAME(0, 36),
     ANIMCMD_FRAME(2, 36),
     ANIMCMD_FRAME(4, 36),
@@ -409,13 +330,9 @@ static const union AnimCmd sSpriteAnim_862A834[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862A848[] =
-{
-    sSpriteAnim_862A834
-};
+static const union AnimCmd *const sSpriteAnimTable_862A848[] = { sSpriteAnim_862A834 };
 
-static const struct SpriteTemplate sUnknown_0862A84C =
-{
+static const struct SpriteTemplate sUnknown_0862A84C = {
     .tileTag = 30509,
     .paletteTag = 30508,
     .oam = &sOamData_862A6DC,
@@ -425,8 +342,7 @@ static const struct SpriteTemplate sUnknown_0862A84C =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862A864 =
-{
+static const struct SpriteTemplate sUnknown_0862A864 = {
     .tileTag = 30510,
     .paletteTag = 30508,
     .oam = &sOamData_862A6C4,
@@ -436,46 +352,35 @@ static const struct SpriteTemplate sUnknown_0862A864 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct ScanlineEffectParams sUnknown_0862A87C =
-{
-    .dmaDest = (vu16 *)REG_ADDR_BG1HOFS,
-    .dmaControl = 0xA2600001,
-    .initState = 1
+static const struct ScanlineEffectParams sUnknown_0862A87C = {
+    .dmaDest = (vu16 *)REG_ADDR_BG1HOFS, .dmaControl = 0xA2600001, .initState = 1
 };
 
-static const struct BgTemplate sUnknown_0862A888[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sUnknown_0862A888[] = {
+    { .bg = 0,
         .charBaseIndex = 0,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const union AnimCmd sSpriteAnim_862A894[] =
-{
+static const union AnimCmd sSpriteAnim_862A894[] = {
     ANIMCMD_FRAME(0, 20),
     ANIMCMD_FRAME(64, 20),
     ANIMCMD_FRAME(128, 20),
@@ -483,8 +388,7 @@ static const union AnimCmd sSpriteAnim_862A894[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A8A8[] =
-{
+static const union AnimCmd sSpriteAnim_862A8A8[] = {
     ANIMCMD_FRAME(192, 20),
     ANIMCMD_FRAME(256, 20),
     ANIMCMD_FRAME(320, 20),
@@ -492,24 +396,16 @@ static const union AnimCmd sSpriteAnim_862A8A8[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862A8BC[] =
-{
-    sSpriteAnim_862A894,
-    sSpriteAnim_862A8A8
-};
+static const union AnimCmd *const sSpriteAnimTable_862A8BC[] = { sSpriteAnim_862A894,
+    sSpriteAnim_862A8A8 };
 
-static const struct CompressedSpriteSheet sUnknown_0862A8C4 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862A8C4 = {
     gRaySceneGroudon_Gfx, 0x3000, 30505
 };
 
-static const struct CompressedSpritePalette sUnknown_0862A8CC =
-{
-    gRaySceneGroudon_Pal, 30505
-};
+static const struct CompressedSpritePalette sUnknown_0862A8CC = { gRaySceneGroudon_Pal, 30505 };
 
-static const struct SpriteTemplate sUnknown_0862A8D4 =
-{
+static const struct SpriteTemplate sUnknown_0862A8D4 = {
     .tileTag = 30505,
     .paletteTag = 30505,
     .oam = &sOamData_862A6BC,
@@ -519,24 +415,15 @@ static const struct SpriteTemplate sUnknown_0862A8D4 =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A8EC[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A8EC[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862A8F4[] =
-{
-    sSpriteAnim_862A8EC
-};
+static const union AnimCmd *const sSpriteAnimTable_862A8F4[] = { sSpriteAnim_862A8EC };
 
-static const struct CompressedSpriteSheet sUnknown_0862A8F8 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862A8F8 = {
     gRaySceneGroudon2_Gfx, 0x200, 30506
 };
 
-static const struct SpriteTemplate sUnknown_0862A900 =
-{
+static const struct SpriteTemplate sUnknown_0862A900 = {
     .tileTag = 30506,
     .paletteTag = 30505,
     .oam = &sOamData_862A6C4,
@@ -546,24 +433,15 @@ static const struct SpriteTemplate sUnknown_0862A900 =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A918[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A918[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862A920[] =
-{
-    sSpriteAnim_862A918
-};
+static const union AnimCmd *const sSpriteAnimTable_862A920[] = { sSpriteAnim_862A918 };
 
-static const struct CompressedSpriteSheet sUnknown_0862A924 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862A924 = {
     gRaySceneGroudon3_Gfx, 0x400, 30507
 };
 
-static const struct SpriteTemplate sUnknown_0862A92C =
-{
+static const struct SpriteTemplate sUnknown_0862A92C = {
     .tileTag = 30507,
     .paletteTag = 30505,
     .oam = &sOamData_862A6CC,
@@ -573,44 +451,19 @@ static const struct SpriteTemplate sUnknown_0862A92C =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A944[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A944[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A94C[] =
-{
-    ANIMCMD_FRAME(8, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A94C[] = { ANIMCMD_FRAME(8, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A954[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A954[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A95C[] =
-{
-    ANIMCMD_FRAME(24, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A95C[] = { ANIMCMD_FRAME(24, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A964[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A964[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A96C[] =
-{
-    ANIMCMD_FRAME(40, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862A96C[] = { ANIMCMD_FRAME(40, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862A974[] =
-{
+static const union AnimCmd sSpriteAnim_862A974[] = {
     ANIMCMD_FRAME(48, 24),
     ANIMCMD_FRAME(64, 24),
     ANIMCMD_FRAME(80, 24),
@@ -618,8 +471,7 @@ static const union AnimCmd sSpriteAnim_862A974[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A988[] =
-{
+static const union AnimCmd sSpriteAnim_862A988[] = {
     ANIMCMD_FRAME(56, 24),
     ANIMCMD_FRAME(72, 24),
     ANIMCMD_FRAME(88, 24),
@@ -627,8 +479,7 @@ static const union AnimCmd sSpriteAnim_862A988[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sSpriteAnim_862A99C[] =
-{
+static const union AnimCmd sSpriteAnim_862A99C[] = {
     ANIMCMD_FRAME(96, 24),
     ANIMCMD_FRAME(104, 24),
     ANIMCMD_FRAME(112, 24),
@@ -636,9 +487,7 @@ static const union AnimCmd sSpriteAnim_862A99C[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862A9B0[] =
-{
-    sSpriteAnim_862A944,
+static const union AnimCmd *const sSpriteAnimTable_862A9B0[] = { sSpriteAnim_862A944,
     sSpriteAnim_862A94C,
     sSpriteAnim_862A954,
     sSpriteAnim_862A95C,
@@ -646,21 +495,13 @@ static const union AnimCmd *const sSpriteAnimTable_862A9B0[] =
     sSpriteAnim_862A96C,
     sSpriteAnim_862A974,
     sSpriteAnim_862A988,
-    sSpriteAnim_862A99C
-};
+    sSpriteAnim_862A99C };
 
-static const struct CompressedSpriteSheet sUnknown_0862A9D4 =
-{
-    gRaySceneKyogre_Gfx, 0xF00, 30508
-};
+static const struct CompressedSpriteSheet sUnknown_0862A9D4 = { gRaySceneKyogre_Gfx, 0xF00, 30508 };
 
-static const struct CompressedSpritePalette sUnknown_0862A9DC =
-{
-    gRaySceneKyogre_Pal, 30508
-};
+static const struct CompressedSpritePalette sUnknown_0862A9DC = { gRaySceneKyogre_Pal, 30508 };
 
-static const struct SpriteTemplate sUnknown_0862A9E4 =
-{
+static const struct SpriteTemplate sUnknown_0862A9E4 = {
     .tileTag = 30508,
     .paletteTag = 30508,
     .oam = &sOamData_862A6D4,
@@ -670,8 +511,7 @@ static const struct SpriteTemplate sUnknown_0862A9E4 =
     .callback = SpriteCallbackDummy,
 };
 
-static const union AnimCmd sSpriteAnim_862A9FC[] =
-{
+static const union AnimCmd sSpriteAnim_862A9FC[] = {
     ANIMCMD_FRAME(0, 24),
     ANIMCMD_FRAME(2, 24),
     ANIMCMD_FRAME(4, 24),
@@ -679,18 +519,11 @@ static const union AnimCmd sSpriteAnim_862A9FC[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862AA10[] =
-{
-    sSpriteAnim_862A9FC
-};
+static const union AnimCmd *const sSpriteAnimTable_862AA10[] = { sSpriteAnim_862A9FC };
 
-static const struct CompressedSpriteSheet sUnknown_0862AA14 =
-{
-    gRaySceneKyogre2_Gfx, 0xC0, 30509
-};
+static const struct CompressedSpriteSheet sUnknown_0862AA14 = { gRaySceneKyogre2_Gfx, 0xC0, 30509 };
 
-static const struct SpriteTemplate sUnknown_0862AA1C =
-{
+static const struct SpriteTemplate sUnknown_0862AA1C = {
     .tileTag = 30509,
     .paletteTag = 30508,
     .oam = &sOamData_862A6DC,
@@ -700,13 +533,11 @@ static const struct SpriteTemplate sUnknown_0862AA1C =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AA34 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AA34 = {
     gRaySceneKyogre3_Gfx, 0x200, 30510
 };
 
-static const struct SpriteTemplate sUnknown_0862AA3C =
-{
+static const struct SpriteTemplate sUnknown_0862AA3C = {
     .tileTag = 30510,
     .paletteTag = 30508,
     .oam = &sOamData_862A6C4,
@@ -716,73 +547,47 @@ static const struct SpriteTemplate sUnknown_0862AA3C =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct BgTemplate sUnknown_0862AA54[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+static const struct BgTemplate sUnknown_0862AA54[] = { { .bg = 0,
+                                                           .charBaseIndex = 2,
+                                                           .mapBaseIndex = 31,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 0,
+                                                           .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 1,
         .mapBaseIndex = 29,
         .screenSize = 1,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const union AnimCmd sSpriteAnim_862AA60[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862AA60[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862AA68[] =
-{
-    sSpriteAnim_862AA60
-};
+static const union AnimCmd *const sSpriteAnimTable_862AA68[] = { sSpriteAnim_862AA60 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_862AA6C[] =
-{
-    AFFINEANIMCMD_FRAME(-64, -64, 0, 1),
+static const union AffineAnimCmd sSpriteAffineAnim_862AA6C[] = { AFFINEANIMCMD_FRAME(
+                                                                     -64, -64, 0, 1),
     AFFINEANIMCMD_FRAME(32, 32, 0, 14),
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_JUMP(0)
-};
+    AFFINEANIMCMD_JUMP(0) };
 
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_862AA8C[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_862AA8C[] = {
     sSpriteAffineAnim_862AA6C
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AA90 =
-{
-    gRaySceneSmoke_Gfx, 0x100, 30555
-};
+static const struct CompressedSpriteSheet sUnknown_0862AA90 = { gRaySceneSmoke_Gfx, 0x100, 30555 };
 
-static const struct CompressedSpritePalette sUnknown_0862AA98 =
-{
-    gRaySceneSmoke_Pal, 30555
-};
+static const struct CompressedSpritePalette sUnknown_0862AA98 = { gRaySceneSmoke_Pal, 30555 };
 
-static const struct SpriteTemplate sUnknown_0862AAA0 =
-{
+static const struct SpriteTemplate sUnknown_0862AAA0 = {
     .tileTag = 30555,
     .paletteTag = 30555,
     .oam = &sOamData_862A6D4,
@@ -792,101 +597,73 @@ static const struct SpriteTemplate sUnknown_0862AAA0 =
     .callback = sub_81D8260,
 };
 
-static const s8 sUnknown_0862AAB8[][2] =
-{
-    {-1,    5},
-    {-3,    -4},
-    {5,     -3},
-    {-7,    2},
-    {-9,    -1},
-    {1,     -5},
-    {3,     4},
-    {-5,    3},
-    {7,     -2},
-    {9,     1}
-};
+static const s8 sUnknown_0862AAB8[][2] = { { -1, 5 },
+    { -3, -4 },
+    { 5, -3 },
+    { -7, 2 },
+    { -9, -1 },
+    { 1, -5 },
+    { 3, 4 },
+    { -5, 3 },
+    { 7, -2 },
+    { 9, 1 } };
 
-static const struct BgTemplate sUnknown_0862AACC[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+static const struct BgTemplate sUnknown_0862AACC[] = { { .bg = 0,
+                                                           .charBaseIndex = 0,
+                                                           .mapBaseIndex = 31,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 0,
+                                                           .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 1,
         .mapBaseIndex = 28,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const union AnimCmd sSpriteAnim_862AADC[] =
-{
+static const union AnimCmd sSpriteAnim_862AADC[] = {
     ANIMCMD_FRAME(0, 32),
     ANIMCMD_FRAME(64, 32),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862AAE8[] =
-{
-    sSpriteAnim_862AADC
-};
+static const union AnimCmd *const sSpriteAnimTable_862AAE8[] = { sSpriteAnim_862AADC };
 
-static const union AnimCmd sSpriteAnim_862AAEC[] =
-{
+static const union AnimCmd sSpriteAnim_862AAEC[] = {
     ANIMCMD_FRAME(0, 32),
     ANIMCMD_FRAME(8, 32),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862AAF8[] =
-{
-    sSpriteAnim_862AAEC
-};
+static const union AnimCmd *const sSpriteAnimTable_862AAF8[] = { sSpriteAnim_862AAEC };
 
-static const struct CompressedSpriteSheet sUnknown_0862AAFC =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AAFC = {
     gRaySceneRayquazaFly1_Gfx, 0x1000, 30556
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AB04 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AB04 = {
     gRaySceneRayquazaTail_Gfx, 0x200, 30557
 };
 
-static const struct CompressedSpritePalette sUnknown_0862AB0C =
-{
-    gRaySceneRayquaza_Pal, 30556
-};
+static const struct CompressedSpritePalette sUnknown_0862AB0C = { gRaySceneRayquaza_Pal, 30556 };
 
-static const struct SpriteTemplate sUnknown_0862AB14 =
-{
+static const struct SpriteTemplate sUnknown_0862AB14 = {
     .tileTag = 30556,
     .paletteTag = 30556,
     .oam = &sOamData_862A6BC,
@@ -896,8 +673,7 @@ static const struct SpriteTemplate sUnknown_0862AB14 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862AB2C =
-{
+static const struct SpriteTemplate sUnknown_0862AB2C = {
     .tileTag = 30557,
     .paletteTag = 30556,
     .oam = &sOamData_862A6E4,
@@ -907,235 +683,128 @@ static const struct SpriteTemplate sUnknown_0862AB2C =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct BgTemplate sUnknown_0862AB44[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+static const struct BgTemplate sUnknown_0862AB44[] = { { .bg = 0,
+                                                           .charBaseIndex = 2,
+                                                           .mapBaseIndex = 31,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 0,
+                                                           .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 3,
         .mapBaseIndex = 28,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const union AnimCmd sSpriteAnim_862AB54[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862AB54[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_862AB5C[] =
-{
-    ANIMCMD_FRAME(0, 48),
+static const union AnimCmd sSpriteAnim_862AB5C[] = { ANIMCMD_FRAME(0, 48),
     ANIMCMD_FRAME(64, 32),
     ANIMCMD_FRAME(0, 48),
     ANIMCMD_FRAME(128, 32),
-    ANIMCMD_JUMP(0)
-};
+    ANIMCMD_JUMP(0) };
 
-static const union AnimCmd *const sSpriteAnimTable_862AB70[] =
-{
-    sSpriteAnim_862AB54,
-    sSpriteAnim_862AB5C
-};
+static const union AnimCmd *const sSpriteAnimTable_862AB70[] = { sSpriteAnim_862AB54,
+    sSpriteAnim_862AB5C };
 
-static const union AnimCmd sSpriteAnim_862AB78[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_862AB78[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_862AB80[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_862AB80[] = {
     sSpriteAnim_862AB78,
 };
 
-static const union AnimCmd sSpriteAnim_862AB84[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_862AB84[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862AB8C[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862AB94[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_862AB9C[] = {
+    sSpriteAnim_862AB84, sSpriteAnim_862AB8C, sSpriteAnim_862AB94
 };
 
-static const union AnimCmd sSpriteAnim_862AB8C[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_862ABA8[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABB0[] = { ANIMCMD_FRAME(64, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABB8[] = { ANIMCMD_FRAME(128, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABC0[] = { ANIMCMD_FRAME(192, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_862ABC8[] = {
+    sSpriteAnim_862ABA8, sSpriteAnim_862ABB0, sSpriteAnim_862ABB8, sSpriteAnim_862ABC0
 };
 
-static const union AnimCmd sSpriteAnim_862AB94[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_862ABD8[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABE0[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABE8[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_862ABF0[] = { ANIMCMD_FRAME(48, 1), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_862ABF8[] = {
+    sSpriteAnim_862ABD8, sSpriteAnim_862ABE0, sSpriteAnim_862ABE8, sSpriteAnim_862ABF0
 };
 
-static const union AnimCmd *const sSpriteAnimTable_862AB9C[] =
-{
-    sSpriteAnim_862AB84,
-    sSpriteAnim_862AB8C,
-    sSpriteAnim_862AB94
-};
-
-static const union AnimCmd sSpriteAnim_862ABA8[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABB0[] =
-{
-    ANIMCMD_FRAME(64, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABB8[] =
-{
-    ANIMCMD_FRAME(128, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABC0[] =
-{
-    ANIMCMD_FRAME(192, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sSpriteAnimTable_862ABC8[] =
-{
-    sSpriteAnim_862ABA8,
-    sSpriteAnim_862ABB0,
-    sSpriteAnim_862ABB8,
-    sSpriteAnim_862ABC0
-};
-
-static const union AnimCmd sSpriteAnim_862ABD8[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABE0[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABE8[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_862ABF0[] =
-{
-    ANIMCMD_FRAME(48, 1),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sSpriteAnimTable_862ABF8[] =
-{
-    sSpriteAnim_862ABD8,
-    sSpriteAnim_862ABE0,
-    sSpriteAnim_862ABE8,
-    sSpriteAnim_862ABF0
-};
-
-static const union AnimCmd sSpriteAnim_862AC08[] =
-{
-    ANIMCMD_FRAME(0, 8),
+static const union AnimCmd sSpriteAnim_862AC08[] = { ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(4, 8),
     ANIMCMD_FRAME(8, 8),
     ANIMCMD_FRAME(12, 8),
     ANIMCMD_FRAME(16, 8),
     ANIMCMD_FRAME(20, 8),
-    ANIMCMD_JUMP(0)
-};
+    ANIMCMD_JUMP(0) };
 
-static const union AnimCmd *const sSpriteAnimTable_862AC24[] =
-{
-    sSpriteAnim_862AC08
-};
+static const union AnimCmd *const sSpriteAnimTable_862AC24[] = { sSpriteAnim_862AC08 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC28 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AC28 = {
     gRaySceneGroudonLeft_Gfx, 0x1800, 30565
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC30 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AC30 = {
     gRaySceneGroudonTail_Gfx, 0x80, 30566
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC38 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AC38 = {
     gRaySceneKyogreRight_Gfx, 0x600, 30568
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC40 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AC40 = {
     gRaySceneRayquazaHover_Gfx, 0x2000, 30569
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC48 =
-{
+static const struct CompressedSpriteSheet sUnknown_0862AC48 = {
     gRaySceneRayquazaFlyIn_Gfx, 0x800, 30570
 };
 
-static const struct CompressedSpriteSheet sUnknown_0862AC50 =
-{
-    gRaySceneSplash_Gfx, 0x300, 30571
-};
+static const struct CompressedSpriteSheet sUnknown_0862AC50 = { gRaySceneSplash_Gfx, 0x300, 30571 };
 
-static const struct CompressedSpritePalette sUnknown_0862AC58 =
-{
-    gRaySceneGroudonLeft_Pal, 30565
-};
+static const struct CompressedSpritePalette sUnknown_0862AC58 = { gRaySceneGroudonLeft_Pal, 30565 };
 
-static const struct CompressedSpritePalette sUnknown_0862AC60 =
-{
-    gRaySceneKyogreRight_Pal, 30568
-};
+static const struct CompressedSpritePalette sUnknown_0862AC60 = { gRaySceneKyogreRight_Pal, 30568 };
 
-static const struct CompressedSpritePalette sUnknown_0862AC68 =
-{
-    gRaySceneRayquazaHover_Pal, 30569
-};
+static const struct CompressedSpritePalette sUnknown_0862AC68 = { gRaySceneRayquazaHover_Pal,
+    30569 };
 
-static const struct CompressedSpritePalette sUnknown_0862AC70 =
-{
-    gRaySceneSplash_Pal, 30571
-};
+static const struct CompressedSpritePalette sUnknown_0862AC70 = { gRaySceneSplash_Pal, 30571 };
 
-static const struct SpriteTemplate sUnknown_0862AC78 =
-{
+static const struct SpriteTemplate sUnknown_0862AC78 = {
     .tileTag = 30565,
     .paletteTag = 30565,
     .oam = &sOamData_862A6BC,
@@ -1145,8 +814,7 @@ static const struct SpriteTemplate sUnknown_0862AC78 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862AC90 =
-{
+static const struct SpriteTemplate sUnknown_0862AC90 = {
     .tileTag = 30566,
     .paletteTag = 30565,
     .oam = &sOamData_862A6EC,
@@ -1156,8 +824,7 @@ static const struct SpriteTemplate sUnknown_0862AC90 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862ACA8 =
-{
+static const struct SpriteTemplate sUnknown_0862ACA8 = {
     .tileTag = 30568,
     .paletteTag = 30568,
     .oam = &sOamData_862A6C4,
@@ -1167,8 +834,7 @@ static const struct SpriteTemplate sUnknown_0862ACA8 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862ACC0 =
-{
+static const struct SpriteTemplate sUnknown_0862ACC0 = {
     .tileTag = 30569,
     .paletteTag = 30569,
     .oam = &sOamData_862A6BC,
@@ -1178,8 +844,7 @@ static const struct SpriteTemplate sUnknown_0862ACC0 =
     .callback = sub_81D961C,
 };
 
-static const struct SpriteTemplate sUnknown_0862ACD8 =
-{
+static const struct SpriteTemplate sUnknown_0862ACD8 = {
     .tileTag = 30570,
     .paletteTag = 30569,
     .oam = &sOamData_862A6C4,
@@ -1189,8 +854,7 @@ static const struct SpriteTemplate sUnknown_0862ACD8 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sUnknown_0862ACF0 =
-{
+static const struct SpriteTemplate sUnknown_0862ACF0 = {
     .tileTag = 30571,
     .paletteTag = 30571,
     .oam = &sOamData_862A6F4,
@@ -1200,36 +864,27 @@ static const struct SpriteTemplate sUnknown_0862ACF0 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct BgTemplate sUnknown_0862AD08[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 1,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+static const struct BgTemplate sUnknown_0862AD08[] = { { .bg = 0,
+                                                           .charBaseIndex = 1,
+                                                           .mapBaseIndex = 31,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 1,
+                                                           .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
 // code
 void DoRayquazaScene(u8 animId, bool8 onlyOneAnim, void (*callback)(void))
@@ -1522,7 +1177,8 @@ static void sub_81D706C(void)
 {
     ResetTempTileDataBuffers();
     DecompressAndCopyTileDataToVram(0, gRaySceneClouds_Gfx, 0, 0, 0);
-    while (FreeTempTileDataBuffersIfPossible());
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
 
     LZDecompressWram(gRaySceneClouds2_Tilemap, sRayScene->tilemapBuffers[0]);
     LZDecompressWram(gRaySceneClouds1_Tilemap, sRayScene->tilemapBuffers[1]);
@@ -1654,7 +1310,8 @@ static void Task_HandleDuoFight(u8 taskId)
                 DuoFightEnd(taskId, 2);
                 return;
             case 380:
-                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND);
+                SetGpuReg(
+                    REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND);
                 gTasks[data[1]].func = sub_81D752C;
                 gTasks[data[1]].data[0] = 0;
                 gTasks[data[1]].data[2] = data[2];
@@ -1937,7 +1594,8 @@ static void sub_81D7E9C(void)
     DecompressAndCopyTileDataToVram(0, gRaySceneClouds_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(1, gRaySceneOvercast_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(2, gRaySceneRayquaza_Gfx, 0, 0, 0);
-    while (FreeTempTileDataBuffersIfPossible());
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
 
     LZDecompressWram(gRaySceneClouds2_Tilemap, sRayScene->tilemapBuffers[0]);
     LZDecompressWram(gRaySceneOvercast_Tilemap, sRayScene->tilemapBuffers[1]);
@@ -2041,9 +1699,9 @@ static void sub_81D81A4(u8 taskId)
     if ((data[1] & 3) == 0)
     {
         u8 spriteId = CreateSprite(&sUnknown_0862AAA0,
-                                   (sUnknown_0862AAB8[data[0]][0] * 4) + 120,
-                                   (sUnknown_0862AAB8[data[0]][1] * 4) + 80,
-                                   0);
+            (sUnknown_0862AAB8[data[0]][0] * 4) + 120,
+            (sUnknown_0862AAB8[data[0]][1] * 4) + 80,
+            0);
         gSprites[spriteId].data[0] = (s8)(data[0]);
         gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
         gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
@@ -2107,7 +1765,8 @@ static void sub_81D8358(void)
     ResetTempTileDataBuffers();
     DecompressAndCopyTileDataToVram(0, gRaySceneRayquazaLight_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(1, gRaySceneOvercast2_Gfx, 0, 0, 0);
-    while (FreeTempTileDataBuffersIfPossible());
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
 
     LZDecompressWram(gRaySceneRayquazaLight_Tilemap, sRayScene->tilemapBuffers[0]);
     LZDecompressWram(gRaySceneOvercast2_Tilemap, sRayScene->tilemapBuffers[3]);
@@ -2152,7 +1811,9 @@ static void Task_RayDescendsAnim(u8 taskId)
     s16 *data = gTasks[taskId].data;
     sub_81D82B0();
     sub_81D8358();
-    SetGpuRegBits(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_EFFECT_BLEND);
+    SetGpuRegBits(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ |
+            BLDCNT_EFFECT_BLEND);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
     BlendPalettes(-1, 0x10, 0);
     SetVBlankCallback(VBlankCB_RayquazaScene);
@@ -2330,7 +1991,8 @@ static void sub_81D88D0(void)
     DecompressAndCopyTileDataToVram(1, gRaySceneRayquazaChase_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(2, gRaySceneChaseStreaks_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(3, gRaySceneChaseBg_Gfx, 0, 0, 0);
-    while (FreeTempTileDataBuffersIfPossible());
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
 
     LZDecompressWram(gRayChaseRayquazaChase2_Tilemap, sRayScene->tilemapBuffers[0]);
     LZDecompressWram(gRayChaseRayquazaChase_Tilemap, sRayScene->tilemapBuffers[1]);
@@ -2483,7 +2145,8 @@ static void sub_81D8CC4(void)
     ResetTempTileDataBuffers();
     DecompressAndCopyTileDataToVram(2, gRaySceneHushRing_Gfx, 0, 0, 0);
     DecompressAndCopyTileDataToVram(0, gRaySceneHushBg_Gfx, 0, 0, 0);
-    while (FreeTempTileDataBuffersIfPossible());
+    while (FreeTempTileDataBuffersIfPossible())
+        ;
 
     LZDecompressWram(gRaySceneHushRing_Tilemap, sRayScene->tilemapBuffers[1]);
     LZDecompressWram(gRaySceneHushBg_Tilemap, sRayScene->tilemapBuffers[0]);
@@ -2717,7 +2380,7 @@ static void sub_81D9420(struct Sprite *sprite)
         if (sprite->animDelayCounter % 12 == 0)
         {
             sprite->pos1.x -= 2;
-            gSprites[sprite->data[0]].pos1.x -=2;
+            gSprites[sprite->data[0]].pos1.x -= 2;
         }
         gSprites[sprite->data[0]].pos2.y = 0;
         break;

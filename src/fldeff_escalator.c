@@ -73,7 +73,7 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
     s16 i;
     s16 j;
 
-    // Check all the escalator sections and only progress the selected one to the next stage    
+    // Check all the escalator sections and only progress the selected one to the next stage
     if (!gTasks[taskId].tGoingUp)
     {
         for (i = 0; i < 3; i++)
@@ -85,7 +85,8 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
                 if (metatileIds[transitionStage] == metatileId)
                 {
                     if (transitionStage != LAST_ESCALATOR_STAGE)
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[transitionStage + 1]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[transitionStage + 1]);
                     else
                         MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[0]);
                 }
@@ -103,9 +104,11 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
                 if (metatileIds[LAST_ESCALATOR_STAGE - transitionStage] == metatileId)
                 {
                     if (transitionStage != LAST_ESCALATOR_STAGE)
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[1 - transitionStage]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[1 - transitionStage]);
                     else
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[LAST_ESCALATOR_STAGE]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[LAST_ESCALATOR_STAGE]);
                 }
             }
         }
@@ -121,27 +124,27 @@ static void Task_DrawEscalator(u8 taskId)
     // Set tile for each section of the escalator in sequence for current transition stage
     switch (tState)
     {
-        case 0:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_0, 0);
-            break;
-        case 1:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_1, 0);
-            break;
-        case 2:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_2, METATILE_COLLISION_MASK);
-            break;
-        case 3:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_3, 0);
-            break;
-        case 4:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_0, METATILE_COLLISION_MASK);
-            break;
-        case 5:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_1, 0);
-            break;
-        case 6:
-            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_2, 0);
-            break;
+    case 0:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_0, 0);
+        break;
+    case 1:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_1, 0);
+        break;
+    case 2:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_2, METATILE_COLLISION_MASK);
+        break;
+    case 3:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_3, 0);
+        break;
+    case 4:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_0, METATILE_COLLISION_MASK);
+        break;
+    case 5:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_1, 0);
+        break;
+    case 6:
+        SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_2, 0);
+        break;
     }
 
     tState = (tState + 1) & 7;
@@ -180,8 +183,8 @@ void StopEscalator(void)
 
 bool8 IsEscalatorMoving(void)
 {
-    if (gTasks[sEscalatorAnim_TaskId].tDrawingEscalator == FALSE 
-     && gTasks[sEscalatorAnim_TaskId].tTransitionStage == LAST_ESCALATOR_STAGE)
+    if (gTasks[sEscalatorAnim_TaskId].tDrawingEscalator == FALSE &&
+        gTasks[sEscalatorAnim_TaskId].tTransitionStage == LAST_ESCALATOR_STAGE)
         return FALSE;
     else
         return TRUE;

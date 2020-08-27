@@ -296,108 +296,407 @@ static void TruncateToFirstWordOnly(u8 *str);
 EWRAM_DATA static struct PokemonJump1 *gUnknown_02022CFC = NULL;
 EWRAM_DATA static struct PokemonJump2 *gUnknown_02022D00 = NULL;
 
-static const struct PokemonJumpMons gPkmnJumpSpecies[] =
-{
-    { .species = SPECIES_BULBASAUR,  .unk2 = 2, },
-    { .species = SPECIES_CHARMANDER, .unk2 = 1, },
-    { .species = SPECIES_SQUIRTLE,   .unk2 = 0, },
-    { .species = SPECIES_CATERPIE,   .unk2 = 1, },
-    { .species = SPECIES_METAPOD,    .unk2 = 1, },
-    { .species = SPECIES_WEEDLE,     .unk2 = 1, },
-    { .species = SPECIES_KAKUNA,     .unk2 = 1, },
-    { .species = SPECIES_RATTATA,    .unk2 = 1, },
-    { .species = SPECIES_RATICATE,   .unk2 = 1, },
-    { .species = SPECIES_PIKACHU,    .unk2 = 0, },
-    { .species = SPECIES_SANDSHREW,  .unk2 = 0, },
-    { .species = SPECIES_NIDORAN_F,  .unk2 = 0, },
-    { .species = SPECIES_NIDORAN_M,  .unk2 = 0, },
-    { .species = SPECIES_CLEFAIRY,   .unk2 = 0, },
-    { .species = SPECIES_VULPIX,     .unk2 = 0, },
-    { .species = SPECIES_JIGGLYPUFF, .unk2 = 2, },
-    { .species = SPECIES_ODDISH,     .unk2 = 2, },
-    { .species = SPECIES_PARAS,      .unk2 = 1, },
-    { .species = SPECIES_MEOWTH,     .unk2 = 0, },
-    { .species = SPECIES_PSYDUCK,    .unk2 = 2, },
-    { .species = SPECIES_MANKEY,     .unk2 = 1, },
-    { .species = SPECIES_GROWLITHE,  .unk2 = 1, },
-    { .species = SPECIES_POLIWAG,    .unk2 = 2, },
-    { .species = SPECIES_BELLSPROUT, .unk2 = 2, },
-    { .species = SPECIES_SHELLDER,   .unk2 = 1, },
-    { .species = SPECIES_KRABBY,     .unk2 = 1, },
-    { .species = SPECIES_EXEGGCUTE,  .unk2 = 2, },
-    { .species = SPECIES_CUBONE,     .unk2 = 0, },
-    { .species = SPECIES_DITTO,      .unk2 = 2, },
-    { .species = SPECIES_EEVEE,      .unk2 = 0, },
-    { .species = SPECIES_OMANYTE,    .unk2 = 1, },
-    { .species = SPECIES_KABUTO,     .unk2 = 1, },
-    { .species = SPECIES_CHIKORITA,  .unk2 = 2, },
-    { .species = SPECIES_CYNDAQUIL,  .unk2 = 1, },
-    { .species = SPECIES_TOTODILE,   .unk2 = 0, },
-    { .species = SPECIES_SPINARAK,   .unk2 = 1, },
-    { .species = SPECIES_PICHU,      .unk2 = 0, },
-    { .species = SPECIES_CLEFFA,     .unk2 = 0, },
-    { .species = SPECIES_IGGLYBUFF,  .unk2 = 2, },
-    { .species = SPECIES_TOGEPI,     .unk2 = 2, },
-    { .species = SPECIES_MAREEP,     .unk2 = 0, },
-    { .species = SPECIES_BELLOSSOM,  .unk2 = 2, },
-    { .species = SPECIES_MARILL,     .unk2 = 2, },
-    { .species = SPECIES_SUNKERN,    .unk2 = 2, },
-    { .species = SPECIES_WOOPER,     .unk2 = 2, },
-    { .species = SPECIES_PINECO,     .unk2 = 2, },
-    { .species = SPECIES_SNUBBULL,   .unk2 = 0, },
-    { .species = SPECIES_SHUCKLE,    .unk2 = 2, },
-    { .species = SPECIES_TEDDIURSA,  .unk2 = 0, },
-    { .species = SPECIES_SLUGMA,     .unk2 = 2, },
-    { .species = SPECIES_SWINUB,     .unk2 = 0, },
-    { .species = SPECIES_HOUNDOUR,   .unk2 = 1, },
-    { .species = SPECIES_PHANPY,     .unk2 = 0, },
-    { .species = SPECIES_PORYGON2,   .unk2 = 0, },
-    { .species = SPECIES_TYROGUE,    .unk2 = 1, },
-    { .species = SPECIES_SMOOCHUM,   .unk2 = 2, },
-    { .species = SPECIES_ELEKID,     .unk2 = 1, },
-    { .species = SPECIES_MAGBY,      .unk2 = 1, },
-    { .species = SPECIES_LARVITAR,   .unk2 = 1, },
-    { .species = SPECIES_TREECKO,    .unk2 = 1, },
-    { .species = SPECIES_TORCHIC,    .unk2 = 2, },
-    { .species = SPECIES_MUDKIP,     .unk2 = 0, },
-    { .species = SPECIES_MARSHTOMP,  .unk2 = 0, },
-    { .species = SPECIES_POOCHYENA,  .unk2 = 1, },
-    { .species = SPECIES_ZIGZAGOON,  .unk2 = 0, },
-    { .species = SPECIES_LINOONE,    .unk2 = 0, },
-    { .species = SPECIES_WURMPLE,    .unk2 = 1, },
-    { .species = SPECIES_SILCOON,    .unk2 = 2, },
-    { .species = SPECIES_CASCOON,    .unk2 = 2, },
-    { .species = SPECIES_LOTAD,      .unk2 = 2, },
-    { .species = SPECIES_SEEDOT,     .unk2 = 1, },
-    { .species = SPECIES_RALTS,      .unk2 = 0, },
-    { .species = SPECIES_KIRLIA,     .unk2 = 0, },
-    { .species = SPECIES_SURSKIT,    .unk2 = 2, },
-    { .species = SPECIES_SHROOMISH,  .unk2 = 2, },
-    { .species = SPECIES_NINCADA,    .unk2 = 1, },
-    { .species = SPECIES_WHISMUR,    .unk2 = 0, },
-    { .species = SPECIES_AZURILL,    .unk2 = 2, },
-    { .species = SPECIES_SKITTY,     .unk2 = 0, },
-    { .species = SPECIES_SABLEYE,    .unk2 = 0, },
-    { .species = SPECIES_MAWILE,     .unk2 = 0, },
-    { .species = SPECIES_ARON,       .unk2 = 1, },
-    { .species = SPECIES_MEDITITE,   .unk2 = 2, },
-    { .species = SPECIES_ELECTRIKE,  .unk2 = 1, },
-    { .species = SPECIES_PLUSLE,     .unk2 = 1, },
-    { .species = SPECIES_MINUN,      .unk2 = 1, },
-    { .species = SPECIES_VOLBEAT,    .unk2 = 0, },
-    { .species = SPECIES_ILLUMISE,   .unk2 = 0, },
-    { .species = SPECIES_ROSELIA,    .unk2 = 2, },
-    { .species = SPECIES_GULPIN,     .unk2 = 2, },
-    { .species = SPECIES_NUMEL,      .unk2 = 2, },
-    { .species = SPECIES_TORKOAL,    .unk2 = 2, },
-    { .species = SPECIES_SPOINK,     .unk2 = 0, },
-    { .species = SPECIES_TRAPINCH,   .unk2 = 2, },
-    { .species = SPECIES_CACNEA,     .unk2 = 2, },
-    { .species = SPECIES_ANORITH,    .unk2 = 1, },
-    { .species = SPECIES_WYNAUT,     .unk2 = 0, },
-    { .species = SPECIES_SNORUNT,    .unk2 = 0, },
-    { .species = SPECIES_CLAMPERL,   .unk2 = 1, },
-    { .species = SPECIES_BAGON,      .unk2 = 1, },
+static const struct PokemonJumpMons gPkmnJumpSpecies[] = {
+    {
+        .species = SPECIES_BULBASAUR,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_CHARMANDER,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_SQUIRTLE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_CATERPIE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_METAPOD,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_WEEDLE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_KAKUNA,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_RATTATA,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_RATICATE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_PIKACHU,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SANDSHREW,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_NIDORAN_F,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_NIDORAN_M,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_CLEFAIRY,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_VULPIX,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_JIGGLYPUFF,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_ODDISH,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_PARAS,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_MEOWTH,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_PSYDUCK,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_MANKEY,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_GROWLITHE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_POLIWAG,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_BELLSPROUT,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SHELLDER,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_KRABBY,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_EXEGGCUTE,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_CUBONE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_DITTO,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_EEVEE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_OMANYTE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_KABUTO,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_CHIKORITA,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_CYNDAQUIL,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_TOTODILE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SPINARAK,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_PICHU,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_CLEFFA,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_IGGLYBUFF,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_TOGEPI,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_MAREEP,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_BELLOSSOM,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_MARILL,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SUNKERN,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_WOOPER,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_PINECO,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SNUBBULL,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SHUCKLE,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_TEDDIURSA,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SLUGMA,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SWINUB,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_HOUNDOUR,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_PHANPY,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_PORYGON2,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_TYROGUE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_SMOOCHUM,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_ELEKID,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_MAGBY,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_LARVITAR,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_TREECKO,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_TORCHIC,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_MUDKIP,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_MARSHTOMP,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_POOCHYENA,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_ZIGZAGOON,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_LINOONE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_WURMPLE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_SILCOON,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_CASCOON,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_LOTAD,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SEEDOT,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_RALTS,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_KIRLIA,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SURSKIT,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SHROOMISH,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_NINCADA,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_WHISMUR,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_AZURILL,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SKITTY,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SABLEYE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_MAWILE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_ARON,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_MEDITITE,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_ELECTRIKE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_PLUSLE,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_MINUN,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_VOLBEAT,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_ILLUMISE,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_ROSELIA,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_GULPIN,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_NUMEL,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_TORKOAL,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_SPOINK,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_TRAPINCH,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_CACNEA,
+        .unk2 = 2,
+    },
+    {
+        .species = SPECIES_ANORITH,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_WYNAUT,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_SNORUNT,
+        .unk2 = 0,
+    },
+    {
+        .species = SPECIES_CLAMPERL,
+        .unk2 = 1,
+    },
+    {
+        .species = SPECIES_BAGON,
+        .unk2 = 1,
+    },
 };
 
 void StartPokemonJump(u16 partyIndex, MainCallback callback)
@@ -415,7 +714,8 @@ void StartPokemonJump(u16 partyIndex, MainCallback callback)
             gUnknown_02022CFC->returnCallback = callback;
             gUnknown_02022CFC->unk4 = taskId;
             gUnknown_02022CFC->unk6 = GetMultiplayerId();
-            sub_802AC2C(&gUnknown_02022CFC->unk82A8[gUnknown_02022CFC->unk6], &gPlayerParty[partyIndex]);
+            sub_802AC2C(
+                &gUnknown_02022CFC->unk82A8[gUnknown_02022CFC->unk6], &gPlayerParty[partyIndex]);
             sub_802AA60(gUnknown_02022CFC);
             SetWordTaskArg(taskId, 2, (u32)gUnknown_02022CFC);
             SetMainCallback2(sub_802AC6C);
@@ -658,7 +958,8 @@ static void sub_802AEA4(void)
             gUnknown_02022CFC->unk82E4[i].unk12 = var0;
         }
 
-        if (gUnknown_02022CFC->unk82E4[i].unk18 && gUnknown_02022CFC->unk8B[i] == gUnknown_02022CFC->unk70.unk0)
+        if (gUnknown_02022CFC->unk82E4[i].unk18 &&
+            gUnknown_02022CFC->unk8B[i] == gUnknown_02022CFC->unk70.unk0)
             count++;
     }
 
@@ -666,8 +967,7 @@ static void sub_802AEA4(void)
         gUnknown_02022CFC->unk49 = 1;
 }
 
-static bool32 (* const gUnknown_082FB5F4[])(void) =
-{
+static bool32 (*const gUnknown_082FB5F4[])(void) = {
     sub_802B248,
     sub_802B2D4,
     sub_802B368,
@@ -732,8 +1032,8 @@ static void sub_802B078(void)
     var0 = gUnknown_02022CFC->unk82E4[0].unk10;
     if (sub_802E1BC(gUnknown_02022CFC->unk82E4, &sp0))
     {
-        if (gUnknown_02022CFC->unk82E4[gUnknown_02022CFC->unk6].unk18 == 1
-         && sp0.unk0 != gUnknown_02022CFC->unk70.unk0)
+        if (gUnknown_02022CFC->unk82E4[gUnknown_02022CFC->unk6].unk18 == 1 &&
+            sp0.unk0 != gUnknown_02022CFC->unk70.unk0)
         {
             sub_802B044(sp0.unk0);
         }
@@ -765,8 +1065,7 @@ static void sub_802B078(void)
     }
 }
 
-static bool32 (* const gUnknown_082FB618[])(void) =
-{
+static bool32 (*const gUnknown_082FB618[])(void) = {
     sub_802B29C,
     sub_802B31C,
     sub_802B3B4,
@@ -798,7 +1097,9 @@ static void sub_802B194(u8 taskId)
 static void sub_802B1FC(void)
 {
     if (!gUnknown_02022CFC->unk2C)
-        sub_802E234(&gUnknown_02022CFC->unk82E4[gUnknown_02022CFC->unk6], gUnknown_02022CFC->unk70.unk0, gUnknown_02022CFC->unk42);
+        sub_802E234(&gUnknown_02022CFC->unk82E4[gUnknown_02022CFC->unk6],
+            gUnknown_02022CFC->unk70.unk0,
+            gUnknown_02022CFC->unk42);
 
     if (gUnknown_02022CFC->unk30 != 0x1111)
     {
@@ -990,7 +1291,9 @@ static bool32 sub_802B4CC(void)
     case 1:
         if (!sub_802BB84())
         {
-            sub_802E354(gUnknown_02022CFC->unk70.unk8, gUnknown_02022CFC->unk70.unk4, gUnknown_02022CFC->unk70.unk2);
+            sub_802E354(gUnknown_02022CFC->unk70.unk8,
+                gUnknown_02022CFC->unk70.unk4,
+                gUnknown_02022CFC->unk70.unk2);
             gUnknown_02022CFC->unk8++;
         }
         break;
@@ -1024,7 +1327,9 @@ static bool32 sub_802B568(void)
     case 1:
         if (!sub_802BB84())
         {
-            sub_802E354(gUnknown_02022CFC->unk70.unk8, gUnknown_02022CFC->unk70.unk4, gUnknown_02022CFC->unk70.unk2);
+            sub_802E354(gUnknown_02022CFC->unk70.unk8,
+                gUnknown_02022CFC->unk70.unk4,
+                gUnknown_02022CFC->unk70.unk2);
             gUnknown_02022CFC->unk42 = gUnknown_02022CFC->unk45;
             return FALSE;
         }
@@ -1134,7 +1439,9 @@ static bool32 sub_802B720(void)
     switch (gUnknown_02022CFC->unk8)
     {
     case 0:
-        sub_802E354(gUnknown_02022CFC->unk70.unk8, gUnknown_02022CFC->unk70.unk4, gUnknown_02022CFC->unk70.unk2);
+        sub_802E354(gUnknown_02022CFC->unk70.unk8,
+            gUnknown_02022CFC->unk70.unk4,
+            gUnknown_02022CFC->unk70.unk2);
         sub_802D0C8(5);
         gUnknown_02022CFC->unk8++;
         break;
@@ -1321,7 +1628,8 @@ static bool32 sub_802BA58(void)
     switch (gUnknown_02022CFC->unkA)
     {
     case 0:
-        sub_802C808(gUnknown_02022CFC->unk70.unk2, &gUnknown_02022CFC->unk3E, &gUnknown_02022CFC->unk40);
+        sub_802C808(
+            gUnknown_02022CFC->unk70.unk2, &gUnknown_02022CFC->unk3E, &gUnknown_02022CFC->unk40);
         sub_802D7E8(gUnknown_02022CFC->unk3E, gUnknown_02022CFC->unk40);
         gUnknown_02022CFC->unkA++;
         break;
@@ -1345,8 +1653,10 @@ static bool32 sub_802BA58(void)
     case 3:
         if (!sub_802DA44())
         {
-            gUnknown_02022CFC->unk40 = sub_802C880(gUnknown_02022CFC->unk3E, gUnknown_02022CFC->unk40);
-            if (gUnknown_02022CFC->unk40 && AddBagItem(gUnknown_02022CFC->unk3E, gUnknown_02022CFC->unk40))
+            gUnknown_02022CFC->unk40 =
+                sub_802C880(gUnknown_02022CFC->unk3E, gUnknown_02022CFC->unk40);
+            if (gUnknown_02022CFC->unk40 &&
+                AddBagItem(gUnknown_02022CFC->unk3E, gUnknown_02022CFC->unk40))
             {
                 if (!CheckBagHasSpace(gUnknown_02022CFC->unk3E, 1))
                 {
@@ -1601,8 +1911,8 @@ static int sub_802BF48(void)
     return result;
 }
 
-static const u16 gUnknown_082FB63C[] = {0x1a, 0x1f, 0x24, 0x29, 0x2e, 0x33, 0x38, 0x3d};
-static const u16 gUnknown_082FB64C[] = {0, 1, 1, 2};
+static const u16 gUnknown_082FB63C[] = { 0x1a, 0x1f, 0x24, 0x29, 0x2e, 0x33, 0x38, 0x3d };
+static const u16 gUnknown_082FB64C[] = { 0, 1, 1, 2 };
 
 static void sub_802BF7C(void)
 {
@@ -1631,8 +1941,10 @@ static void sub_802BF7C(void)
     {
         if (!(gUnknown_02022CFC->unk50 & 8))
         {
-            gUnknown_02022CFC->unk28 = gUnknown_082FB63C[gUnknown_02022CFC->unk50] + (gUnknown_02022CFC->unk51 * 7);
-            gUnknown_02022CFC->unk4E = gUnknown_082FB64C[sub_802C098() % ARRAY_COUNT(gUnknown_082FB64C)] + 2;
+            gUnknown_02022CFC->unk28 =
+                gUnknown_082FB63C[gUnknown_02022CFC->unk50] + (gUnknown_02022CFC->unk51 * 7);
+            gUnknown_02022CFC->unk4E =
+                gUnknown_082FB64C[sub_802C098() % ARRAY_COUNT(gUnknown_082FB64C)] + 2;
             gUnknown_02022CFC->unk50++;
         }
         else
@@ -1721,7 +2033,7 @@ static void sub_802C1BC(void)
     gUnknown_02022CFC->unk83AC->unk10 = 0;
 }
 
-static const u16 gUnknown_082FB654[] = {SE_REGI, SE_REAPOKE, SE_W234, SE_RG_EXCELLENT};
+static const u16 gUnknown_082FB654[] = { SE_REGI, SE_REAPOKE, SE_W234, SE_RG_EXCELLENT };
 
 static void sub_802C1DC(void)
 {
@@ -1772,7 +2084,8 @@ static void sub_802C280(void)
             sub_802DC80(i, 0);
             break;
         case 1:
-            if (gUnknown_02022CFC->unk82E4[i].unk12 != 1 || gUnknown_02022CFC->unk82E4[i].unkE != gUnknown_02022CFC->unk9A[i])
+            if (gUnknown_02022CFC->unk82E4[i].unk12 != 1 ||
+                gUnknown_02022CFC->unk82E4[i].unkE != gUnknown_02022CFC->unk9A[i])
             {
                 if (i == gUnknown_02022CFC->unk6)
                     gUnknown_02022CFC->unk82E4[i].unk12 = 1;
@@ -1803,17 +2116,108 @@ static void sub_802C280(void)
         PlaySE(SE_DANSA);
 }
 
-static const s8 gUnknown_082FB65C[][48] =
-{
-    {-3, -6, -8, -10, -13, -15, -17, -19, -21, -23, -25, -27, -28, -29, -30, -30, -30, -28, -27,
-    -26, -25, -23, -22, -20, -18, -17, -15, -13, -11, -8, -6, -4, -1},
+static const s8 gUnknown_082FB65C[][48] = {
+    { -3,
+        -6,
+        -8,
+        -10,
+        -13,
+        -15,
+        -17,
+        -19,
+        -21,
+        -23,
+        -25,
+        -27,
+        -28,
+        -29,
+        -30,
+        -30,
+        -30,
+        -28,
+        -27,
+        -26,
+        -25,
+        -23,
+        -22,
+        -20,
+        -18,
+        -17,
+        -15,
+        -13,
+        -11,
+        -8,
+        -6,
+        -4,
+        -1 },
 
-    {-3, -6, -9, -11, -14, -16, -18, -20, -22, -24, -26, -28, -29, -30, -30, -28, -26, -24, -22,
-    -20, -18, -16, -14, -11, -9, -6, -4, -1},
+    { -3,
+        -6,
+        -9,
+        -11,
+        -14,
+        -16,
+        -18,
+        -20,
+        -22,
+        -24,
+        -26,
+        -28,
+        -29,
+        -30,
+        -30,
+        -28,
+        -26,
+        -24,
+        -22,
+        -20,
+        -18,
+        -16,
+        -14,
+        -11,
+        -9,
+        -6,
+        -4,
+        -1 },
 
-    {-3, -6, -9, -11, -13, -15, -17, -19, -21, -23, -25, -27, -28, -29, -30, -30, -30, -30, -29,
-    -29, -28, -28, -27, -27, -26, -25, -24, -22, -20, -18, -16, -14,
-    -12, -11, -9, -6, -4, -1},
+    { -3,
+        -6,
+        -9,
+        -11,
+        -13,
+        -15,
+        -17,
+        -19,
+        -21,
+        -23,
+        -25,
+        -27,
+        -28,
+        -29,
+        -30,
+        -30,
+        -30,
+        -30,
+        -29,
+        -29,
+        -28,
+        -28,
+        -27,
+        -27,
+        -26,
+        -25,
+        -24,
+        -22,
+        -20,
+        -18,
+        -16,
+        -14,
+        -12,
+        -11,
+        -9,
+        -6,
+        -4,
+        -1 },
 };
 
 static void sub_802C398(int multiplayerId)
@@ -1885,7 +2289,9 @@ static void sub_802C43C(void)
             if (gUnknown_02022CFC->unk54 > 1)
             {
                 gUnknown_02022CFC->unk64 = 1;
-                memcpy(gUnknown_02022CFC->unk86, gUnknown_02022CFC->unk81, sizeof(u8) * MAX_RFU_PLAYERS);
+                memcpy(gUnknown_02022CFC->unk86,
+                    gUnknown_02022CFC->unk81,
+                    sizeof(u8) * MAX_RFU_PLAYERS);
             }
 
             sub_802C780();
@@ -1914,7 +2320,8 @@ static void sub_802C43C(void)
         if (var1 > gUnknown_02022CFC->unk54)
         {
             gUnknown_02022CFC->unk54 = var1;
-            memcpy(gUnknown_02022CFC->unk81, gUnknown_02022CFC->unk7C, sizeof(u8) * MAX_RFU_PLAYERS);
+            memcpy(
+                gUnknown_02022CFC->unk81, gUnknown_02022CFC->unk7C, sizeof(u8) * MAX_RFU_PLAYERS);
         }
     }
 }
@@ -1936,9 +2343,8 @@ static bool32 sub_802C538(void)
         }
     }
 
-    if (gUnknown_02022CFC->unk14 == 7
-     && gUnknown_02022CFC->unk18 == 6
-     && gUnknown_02022CFC->unk83AC->unk10 != 2)
+    if (gUnknown_02022CFC->unk14 == 7 && gUnknown_02022CFC->unk18 == 6 &&
+        gUnknown_02022CFC->unk83AC->unk10 != 2)
     {
         gUnknown_02022CFC->unk83AC->unk14 = 1;
         sub_802AE14(3);
@@ -2057,7 +2463,7 @@ static void sub_802C780(void)
     gUnknown_02022CFC->unk44 = 0;
 }
 
-static const int gUnknown_082FB6EC[] = {0, 0, 0x32, 0x64, 0xc8, 0x1f4};
+static const int gUnknown_082FB6EC[] = { 0, 0, 0x32, 0x64, 0xc8, 0x1f4 };
 
 static int sub_802C790(int arg0)
 {
@@ -2070,14 +2476,13 @@ static void sub_802C7A0(u16 arg0)
         gUnknown_02022CFC->unkE = arg0;
 }
 
-static const u16 gUnknown_082FB704[] = {0x8a, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93};
-static const u32 gUnknown_082FB714[][2] =
-{
-    {0x1388, 1},
-    {0x1f40, 2},
-    {0x2ee0, 3},
-    {0x3e80, 4},
-    {0x4e20, 5},
+static const u16 gUnknown_082FB704[] = { 0x8a, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93 };
+static const u32 gUnknown_082FB714[][2] = {
+    { 0x1388, 1 },
+    { 0x1f40, 2 },
+    { 0x2ee0, 3 },
+    { 0x3e80, 4 },
+    { 0x4e20, 5 },
 };
 
 static bool32 sub_802C7BC(void)
@@ -2189,19 +2594,17 @@ static const u32 gPkmnJumpRopeGfx4[] = INCBIN_U32("graphics/link_games/pkmnjump_
 
 static const u32 gPkmnJumpStarGfx[] = INCBIN_U32("graphics/link_games/pkmnjump_star.4bpp.lz");
 
-static const struct CompressedSpriteSheet gUnknown_082FBE08[] =
-{
-    {gPkmnJumpRopeGfx1, 0x600, 5},
-    {gPkmnJumpRopeGfx2, 0x0c00, 6},
-    {gPkmnJumpRopeGfx3, 0x0600, 7},
-    {gPkmnJumpRopeGfx4, 0x0600, 8},
-    {gPkmnJumpStarGfx, 0x0200, 10},
+static const struct CompressedSpriteSheet gUnknown_082FBE08[] = {
+    { gPkmnJumpRopeGfx1, 0x600, 5 },
+    { gPkmnJumpRopeGfx2, 0x0c00, 6 },
+    { gPkmnJumpRopeGfx3, 0x0600, 7 },
+    { gPkmnJumpRopeGfx4, 0x0600, 8 },
+    { gPkmnJumpStarGfx, 0x0200, 10 },
 };
 
-static const struct SpritePalette gUnknown_082FBE30[] =
-{
-    {gPkmnJumpPal1, 5},
-    {gPkmnJumpPal2, 6},
+static const struct SpritePalette gUnknown_082FBE30[] = {
+    { gPkmnJumpPal1, 5 },
+    { gPkmnJumpPal2, 6 },
 };
 
 // Forward declarations.
@@ -2211,8 +2614,7 @@ static const struct SpriteTemplate gUnknown_082FBF90;
 static const struct SpriteTemplate gUnknown_082FBFA8;
 static const struct SpriteTemplate gUnknown_082FBFC0;
 
-static const struct SpriteTemplate gUnknown_082FBE40 =
-{
+static const struct SpriteTemplate gUnknown_082FBE40 = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &sOamData_82FBEC8,
@@ -2222,27 +2624,23 @@ static const struct SpriteTemplate gUnknown_082FBE40 =
     .callback = SpriteCallbackDummy,
 };
 
-static const s16 gUnknown_082FBE58[][10] =
-{
-    {0x60, 0x60, 0x60, 0x72, 0x78, 0x78, 0x78, 0x72, 0x60, 0x60},
-    {0x46, 0x50, 0x60, 0x72, 0x78, 0x80, 0x78, 0x72, 0x60, 0x50},
-    {0x32, 0x48, 0x60, 0x72, 0x80, 0x88, 0x80, 0x72, 0x60, 0x48},
-    {0x2a, 0x48, 0x60, 0x72, 0x80, 0x88, 0x80, 0x72, 0x60, 0x48},
+static const s16 gUnknown_082FBE58[][10] = {
+    { 0x60, 0x60, 0x60, 0x72, 0x78, 0x78, 0x78, 0x72, 0x60, 0x60 },
+    { 0x46, 0x50, 0x60, 0x72, 0x78, 0x80, 0x78, 0x72, 0x60, 0x50 },
+    { 0x32, 0x48, 0x60, 0x72, 0x80, 0x88, 0x80, 0x72, 0x60, 0x48 },
+    { 0x2a, 0x48, 0x60, 0x72, 0x80, 0x88, 0x80, 0x72, 0x60, 0x48 },
 };
 
-static const s16 gUnknown_082FBEA8[] = {0x10, 0x28, 0x48, 0x68, 0x88, 0xa8, 0xc8, 0xe0};
+static const s16 gUnknown_082FBEA8[] = { 0x10, 0x28, 0x48, 0x68, 0x88, 0xa8, 0xc8, 0xe0 };
 
-static const struct SpriteTemplate *const gUnknown_082FBEB8[] =
-{
+static const struct SpriteTemplate *const gUnknown_082FBEB8[] = {
     &gUnknown_082FBF78,
     &gUnknown_082FBF90,
     &gUnknown_082FBFA8,
     &gUnknown_082FBFC0,
 };
 
-static const struct OamData sOamData_82FBEC8 =
-{
-    .y = 0,
+static const struct OamData sOamData_82FBEC8 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -2254,12 +2652,9 @@ static const struct OamData sOamData_82FBEC8 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_82FBED0 =
-{
-    .y = 0,
+static const struct OamData sOamData_82FBED0 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -2271,12 +2666,9 @@ static const struct OamData sOamData_82FBED0 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_82FBED8 =
-{
-    .y = 0,
+static const struct OamData sOamData_82FBED8 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -2288,12 +2680,9 @@ static const struct OamData sOamData_82FBED8 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_82FBEE0 =
-{
-    .y = 0,
+static const struct OamData sOamData_82FBEE0 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -2305,103 +2694,47 @@ static const struct OamData sOamData_82FBEE0 =
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_82FBEE8[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBEE8[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBEF0[] =
-{
-    ANIMCMD_FRAME(8, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBEF0[] = { ANIMCMD_FRAME(8, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBEF8[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBEF8[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF00[] =
-{
-    ANIMCMD_FRAME(24, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF00[] = { ANIMCMD_FRAME(24, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF08[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF08[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF10[] =
-{
-    ANIMCMD_FRAME(40, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF10[] = { ANIMCMD_FRAME(40, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF18[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF18[] = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF20[] =
-{
-    ANIMCMD_FRAME(16, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF20[] = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF28[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF28[] = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF30[] =
-{
-    ANIMCMD_FRAME(48, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF30[] = { ANIMCMD_FRAME(48, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF38[] =
-{
-    ANIMCMD_FRAME(64, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF38[] = { ANIMCMD_FRAME(64, 1), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBF40[] =
-{
-    ANIMCMD_FRAME(80, 1),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBF40[] = { ANIMCMD_FRAME(80, 1), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_82FBF48[] =
-{
-    sSpriteAnim_82FBEE8,
+static const union AnimCmd *const sSpriteAnimTable_82FBF48[] = { sSpriteAnim_82FBEE8,
     sSpriteAnim_82FBEF0,
     sSpriteAnim_82FBEF8,
     sSpriteAnim_82FBF00,
     sSpriteAnim_82FBF08,
-    sSpriteAnim_82FBF10
-};
+    sSpriteAnim_82FBF10 };
 
-static const union AnimCmd *const sSpriteAnimTable_82FBF60[] =
-{
-    sSpriteAnim_82FBF18,
+static const union AnimCmd *const sSpriteAnimTable_82FBF60[] = { sSpriteAnim_82FBF18,
     sSpriteAnim_82FBF20,
     sSpriteAnim_82FBF28,
     sSpriteAnim_82FBF30,
     sSpriteAnim_82FBF38,
-    sSpriteAnim_82FBF40
-};
+    sSpriteAnim_82FBF40 };
 
-static const struct SpriteTemplate gUnknown_082FBF78 =
-{
+static const struct SpriteTemplate gUnknown_082FBF78 = {
     .tileTag = 5,
     .paletteTag = 5,
     .oam = &sOamData_82FBED0,
@@ -2411,8 +2744,7 @@ static const struct SpriteTemplate gUnknown_082FBF78 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate gUnknown_082FBF90 =
-{
+static const struct SpriteTemplate gUnknown_082FBF90 = {
     .tileTag = 6,
     .paletteTag = 5,
     .oam = &sOamData_82FBED8,
@@ -2422,8 +2754,7 @@ static const struct SpriteTemplate gUnknown_082FBF90 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate gUnknown_082FBFA8 =
-{
+static const struct SpriteTemplate gUnknown_082FBFA8 = {
     .tileTag = 7,
     .paletteTag = 5,
     .oam = &sOamData_82FBEE0,
@@ -2433,8 +2764,7 @@ static const struct SpriteTemplate gUnknown_082FBFA8 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate gUnknown_082FBFC0 =
-{
+static const struct SpriteTemplate gUnknown_082FBFC0 = {
     .tileTag = 8,
     .paletteTag = 5,
     .oam = &sOamData_82FBEE0,
@@ -2444,9 +2774,7 @@ static const struct SpriteTemplate gUnknown_082FBFC0 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct OamData sOamData_82FBFD8 =
-{
-    .y = 0,
+static const struct OamData sOamData_82FBFD8 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -2458,34 +2786,22 @@ static const struct OamData sOamData_82FBFD8 =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_82FBFE0[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_82FBFE0[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_82FBFE8[] =
-{
-    ANIMCMD_FRAME(0, 4),
+static const union AnimCmd sSpriteAnim_82FBFE8[] = { ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(4, 4),
     ANIMCMD_FRAME(8, 4),
     ANIMCMD_FRAME(12, 4),
     ANIMCMD_LOOP(1),
     ANIMCMD_FRAME(0, 4),
-    ANIMCMD_END
-};
+    ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_82FC004[] =
-{
-    sSpriteAnim_82FBFE0,
-    sSpriteAnim_82FBFE8
-};
+static const union AnimCmd *const sSpriteAnimTable_82FC004[] = { sSpriteAnim_82FBFE0,
+    sSpriteAnim_82FBFE8 };
 
-static const struct SpriteTemplate gUnknown_082FC00C =
-{
+static const struct SpriteTemplate gUnknown_082FC00C = {
     .tileTag = 10,
     .paletteTag = 5,
     .oam = &sOamData_82FBFD8,
@@ -2517,7 +2833,8 @@ static void sub_802C9BC(struct Sprite *sprite)
         sprite->data[i] = 0;
 }
 
-static void sub_802C9D4(struct PokemonJump2 *arg0, struct PokemonJump1_MonInfo *jumpMon, s16 x, s16 y, u8 multiplayerId)
+static void sub_802C9D4(
+    struct PokemonJump2 *arg0, struct PokemonJump1_MonInfo *jumpMon, s16 x, s16 y, u8 multiplayerId)
 {
     struct SpriteTemplate spriteTemplate;
     struct SpriteSheet spriteSheet;
@@ -2537,8 +2854,7 @@ static void sub_802C9D4(struct PokemonJump2 *arg0, struct PokemonJump1_MonInfo *
 
     if (buffer && unusedBuffer)
     {
-        HandleLoadSpecialPokePic(
-            &gMonStillFrontPicTable[jumpMon->species],
+        HandleLoadSpecialPokePic(&gMonStillFrontPicTable[jumpMon->species],
             buffer,
             jumpMon->species,
             jumpMon->personality);
@@ -2548,7 +2864,8 @@ static void sub_802C9D4(struct PokemonJump2 *arg0, struct PokemonJump1_MonInfo *
         spriteSheet.size = 0x800;
         LoadSpriteSheet(&spriteSheet);
 
-        spritePalette.data = GetMonSpritePalFromSpeciesAndPersonality(jumpMon->species, jumpMon->otId, jumpMon->personality);
+        spritePalette.data = GetMonSpritePalFromSpeciesAndPersonality(
+            jumpMon->species, jumpMon->otId, jumpMon->personality);
         spritePalette.tag = multiplayerId;
         LoadCompressedSpritePalette(&spritePalette);
 
@@ -2742,14 +3059,16 @@ static void sub_802CE9C(struct PokemonJump2 *arg0)
     count = 0;
     for (i = 0; i < 4; i++)
     {
-        spriteId = CreateSprite(gUnknown_082FBEB8[i], gUnknown_082FBEA8[count], gUnknown_082FBE58[i][0], 2);
+        spriteId = CreateSprite(
+            gUnknown_082FBEB8[i], gUnknown_082FBEA8[count], gUnknown_082FBE58[i][0], 2);
         arg0->unk81D0[count] = &gSprites[spriteId];
         count++;
     }
 
     for (i = 3; i >= 0; i--)
     {
-        spriteId = CreateSprite(gUnknown_082FBEB8[i], gUnknown_082FBEA8[count], gUnknown_082FBE58[i][0], 2);
+        spriteId = CreateSprite(
+            gUnknown_082FBEB8[i], gUnknown_082FBEA8[count], gUnknown_082FBE58[i][0], 2);
         arg0->unk81D0[count] = &gSprites[spriteId];
         arg0->unk81D0[count]->hFlip = 1;
         count++;
@@ -2812,7 +3131,7 @@ static void sub_802D074(struct PokemonJump2 *arg0)
     sub_802D0BC(gUnknown_02022D00);
     taskId = CreateTask(sub_802D12C, 3);
     gUnknown_02022D00->unk6 = taskId;
-    SetWordTaskArg(gUnknown_02022D00->unk6, 2, (u32) gUnknown_02022D00);
+    SetWordTaskArg(gUnknown_02022D00->unk6, 2, (u32)gUnknown_02022D00);
     sub_802D108(sub_802D150);
 }
 
@@ -2836,56 +3155,50 @@ static const u16 gPkmnJumpBgPal[] = INCBIN_U16("graphics/link_games/pkmnjump_bg.
 static const u32 gPkmnJumpBgGfx[] = INCBIN_U32("graphics/link_games/pkmnjump_bg.4bpp.lz");
 static const u32 gPkmnJumpBgTilemap[] = INCBIN_U32("graphics/link_games/pkmnjump_bg.bin.lz");
 
-static const u16 gPkmnJumpVenusaurPal[] = INCBIN_U16("graphics/link_games/pkmnjump_venusaur.gbapal");
-static const u32 gPkmnJumpVenusaurGfx[] = INCBIN_U32("graphics/link_games/pkmnjump_venusaur.4bpp.lz");
-static const u32 gPkmnJumpVenusaurTilemap[] = INCBIN_U32("graphics/link_games/pkmnjump_venusaur.bin.lz");
+static const u16 gPkmnJumpVenusaurPal[] =
+    INCBIN_U16("graphics/link_games/pkmnjump_venusaur.gbapal");
+static const u32 gPkmnJumpVenusaurGfx[] =
+    INCBIN_U32("graphics/link_games/pkmnjump_venusaur.4bpp.lz");
+static const u32 gPkmnJumpVenusaurTilemap[] =
+    INCBIN_U32("graphics/link_games/pkmnjump_venusaur.bin.lz");
 
 static const u16 gPkmnJumpResultsPal[] = INCBIN_U16("graphics/link_games/pkmnjump_results.gbapal");
 static const u32 gPkmnJumpResultsGfx[] = INCBIN_U32("graphics/link_games/pkmnjump_results.4bpp.lz");
-static const u32 gPkmnJumpResultsTilemap[] = INCBIN_U32("graphics/link_games/pkmnjump_results.bin.lz");
+static const u32 gPkmnJumpResultsTilemap[] =
+    INCBIN_U32("graphics/link_games/pkmnjump_results.bin.lz");
 
-static const struct BgTemplate gUnknown_082FE164[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate gUnknown_082FE164[] = {
+    { .bg = 0,
         .charBaseIndex = 0,
         .mapBaseIndex = 27,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 2,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 2,
         .mapBaseIndex = 12,
         .screenSize = 3,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 3,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct WindowTemplate gUnknown_082FE174[] =
-{
+static const struct WindowTemplate gUnknown_082FE174[] = {
     {
         .bg = 0,
         .tilemapLeft = 19,
@@ -2911,18 +3224,17 @@ struct
 {
     int id;
     void (*func)(void);
-} static const gUnknown_082FE18C[] =
-{
-    {0x00, sub_802D150},
-    {0x01, sub_802D2E4},
-    {0x02, sub_802D350},
-    {0x03, sub_802D3BC},
-    {0x04, sub_802D448},
-    {0x05, sub_802D4F4},
-    {0x06, sub_802D598},
-    {0x07, sub_802D5E4},
-    {0x09, sub_802D72C},
-    {0x08, sub_802D688},
+} static const gUnknown_082FE18C[] = {
+    { 0x00, sub_802D150 },
+    { 0x01, sub_802D2E4 },
+    { 0x02, sub_802D350 },
+    { 0x03, sub_802D3BC },
+    { 0x04, sub_802D448 },
+    { 0x05, sub_802D4F4 },
+    { 0x06, sub_802D598 },
+    { 0x07, sub_802D5E4 },
+    { 0x09, sub_802D72C },
+    { 0x08, sub_802D688 },
 };
 
 static void sub_802D0C8(int arg0)
@@ -2943,7 +3255,7 @@ static bool32 sub_802D0F0(void)
 
 static void sub_802D108(void (*func)(void))
 {
-    SetWordTaskArg(gUnknown_02022D00->unk6, 0, (u32) func);
+    SetWordTaskArg(gUnknown_02022D00->unk6, 0, (u32)func);
     gUnknown_02022D00->unk4 = 0;
     gUnknown_02022D00->unk0 = 0;
 }
@@ -3099,7 +3411,8 @@ static void sub_802D448(void)
     {
     case 0:
         gUnknown_02022D00->unk12 = sub_802DA9C(1, 8, 20, 2);
-        AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gText_WantToPlayAgain2, 0, 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            gUnknown_02022D00->unk12, 1, gText_WantToPlayAgain2, 0, 1, TEXT_SPEED_FF, NULL);
         CopyWindowToVram(gUnknown_02022D00->unk12, 2);
         gUnknown_02022D00->unk4++;
         break;
@@ -3126,7 +3439,8 @@ static void sub_802D4F4(void)
     {
     case 0:
         gUnknown_02022D00->unk12 = sub_802DA9C(2, 7, 26, 4);
-        AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gText_SavingDontTurnOffPower, 0, 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            gUnknown_02022D00->unk12, 1, gText_SavingDontTurnOffPower, 0, 1, TEXT_SPEED_FF, NULL);
         CopyWindowToVram(gUnknown_02022D00->unk12, 2);
         gUnknown_02022D00->unk4++;
         break;
@@ -3169,7 +3483,8 @@ static void sub_802D5E4(void)
     {
     case 0:
         gUnknown_02022D00->unk12 = sub_802DA9C(2, 8, 22, 4);
-        AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gText_SomeoneDroppedOut2, 0, 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            gUnknown_02022D00->unk12, 1, gText_SomeoneDroppedOut2, 0, 1, TEXT_SPEED_FF, NULL);
         CopyWindowToVram(gUnknown_02022D00->unk12, 2);
         gUnknown_02022D00->unk4++;
         break;
@@ -3195,7 +3510,8 @@ static void sub_802D688(void)
     {
     case 0:
         gUnknown_02022D00->unk12 = sub_802DA9C(7, 10, 16, 2);
-        AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gText_CommunicationStandby4, 0, 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            gUnknown_02022D00->unk12, 1, gText_CommunicationStandby4, 0, 1, TEXT_SPEED_FF, NULL);
         CopyWindowToVram(gUnknown_02022D00->unk12, 2);
         gUnknown_02022D00->unk4++;
         break;
@@ -3267,13 +3583,16 @@ static bool32 sub_802D788(void)
 static void sub_802D7E8(u16 itemId, u16 quantity)
 {
     CopyItemNameHandlePlural(itemId, gUnknown_02022D00->txtBuff[0], quantity);
-    ConvertIntToDecimalStringN(gUnknown_02022D00->txtBuff[1], quantity, STR_CONV_MODE_LEFT_ALIGN, 1);
+    ConvertIntToDecimalStringN(
+        gUnknown_02022D00->txtBuff[1], quantity, STR_CONV_MODE_LEFT_ALIGN, 1);
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gUnknown_02022D00->txtBuff[0]);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gUnknown_02022D00->txtBuff[1]);
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(gUnknown_02022D00->strBuff, gText_AwesomeWonF701F700);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(
+        gUnknown_02022D00->strBuff, gText_AwesomeWonF701F700);
     gUnknown_02022D00->unk12 = sub_802DA9C(4, 8, 22, 4);
-    AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
+    AddTextPrinterParameterized(
+        gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
     CopyWindowToVram(gUnknown_02022D00->unk12, 2);
     gUnknown_02022D00->unk14 = MUS_FANFA1;
     gUnknown_02022D00->unkD = 0;
@@ -3284,9 +3603,11 @@ static void sub_802D884(u16 itemId)
     CopyItemName(itemId, gUnknown_02022D00->txtBuff[0]);
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gUnknown_02022D00->txtBuff[0]);
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(gUnknown_02022D00->strBuff, gText_FilledStorageSpace2);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(
+        gUnknown_02022D00->strBuff, gText_FilledStorageSpace2);
     gUnknown_02022D00->unk12 = sub_802DA9C(4, 8, 22, 4);
-    AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
+    AddTextPrinterParameterized(
+        gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
     CopyWindowToVram(gUnknown_02022D00->unk12, 2);
     gUnknown_02022D00->unk14 = 0;
     gUnknown_02022D00->unkD = 0;
@@ -3299,7 +3620,8 @@ static void sub_802D8FC(u16 itemId)
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gUnknown_02022D00->txtBuff[0]);
     DynamicPlaceholderTextUtil_ExpandPlaceholders(gUnknown_02022D00->strBuff, gText_CantHoldMore);
     gUnknown_02022D00->unk12 = sub_802DA9C(4, 9, 22, 2);
-    AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
+    AddTextPrinterParameterized(
+        gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, TEXT_SPEED_FF, NULL);
     CopyWindowToVram(gUnknown_02022D00->unk12, 2);
     gUnknown_02022D00->unk14 = 0;
     gUnknown_02022D00->unkD = 0;
@@ -3415,7 +3737,7 @@ static void sub_802DB18(u16 left, u16 top, u8 cursorPos)
 
 static void sub_802DB8C(void)
 {
-    u8 color[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+    u8 color[] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY };
 
     PutWindowTilemap(0);
     PutWindowTilemap(1);
@@ -3425,31 +3747,31 @@ static void sub_802DB8C(void)
     AddTextPrinterParameterized3(1, 0, 0, 1, color, 0, gText_SpaceTimes3);
 }
 
-static const u8 gUnknown_082FE1DF[] = {2, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0, 0, 0};
+static const u8 gUnknown_082FE1DF[] = { 2, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0, 0, 0 };
 
-static const struct CompressedSpriteSheet gUnknown_082FE1EC = {gUnknown_082FF1F8, 0, 0x320};
-static const struct SpritePalette gUnknown_082FE1F4 = {gUnknown_082FF1D8, 0x320};
+static const struct CompressedSpriteSheet gUnknown_082FE1EC = { gUnknown_082FF1F8, 0, 0x320 };
+static const struct SpritePalette gUnknown_082FE1F4 = { gUnknown_082FF1D8, 0x320 };
 
-static const u16 gUnknown_082FE1FC[] = {0x06, 0x08, 0x10, 0x08};
-static const u16 gUnknown_082FE204[] = {0x06, 0x08, 0x0b, 0x06, 0x10, 0x08};
-static const u16 gUnknown_082FE210[] = {0x02, 0x06, 0x06, 0x08, 0x10, 0x08, 0x14, 0x06};
-static const u16 gUnknown_082FE220[] = {0x02, 0x06, 0x06, 0x08, 0x0b, 0x06, 0x10, 0x08, 0x14, 0x06};
+static const u16 gUnknown_082FE1FC[] = { 0x06, 0x08, 0x10, 0x08 };
+static const u16 gUnknown_082FE204[] = { 0x06, 0x08, 0x0b, 0x06, 0x10, 0x08 };
+static const u16 gUnknown_082FE210[] = { 0x02, 0x06, 0x06, 0x08, 0x10, 0x08, 0x14, 0x06 };
+static const u16 gUnknown_082FE220[] = {
+    0x02, 0x06, 0x06, 0x08, 0x0b, 0x06, 0x10, 0x08, 0x14, 0x06
+};
 
-static const u16 *const gUnknown_082FE234[] =
-{
+static const u16 *const gUnknown_082FE234[] = {
     gUnknown_082FE1FC,
     gUnknown_082FE204,
     gUnknown_082FE210,
     gUnknown_082FE220,
 };
 
-static const s16 gUnknown_082FE244[] = {0x0058, 0x0098};
-static const s16 gUnknown_082FE248[] = {0x0058, 0x0078, 0x0098};
-static const s16 gUnknown_082FE24E[] = {0x0038, 0x0058, 0x0098, 0x00b8};
-static const s16 gUnknown_082FE256[] = {0x0038, 0x0058, 0x0078, 0x0098, 0x00b8};
+static const s16 gUnknown_082FE244[] = { 0x0058, 0x0098 };
+static const s16 gUnknown_082FE248[] = { 0x0058, 0x0078, 0x0098 };
+static const s16 gUnknown_082FE24E[] = { 0x0038, 0x0058, 0x0098, 0x00b8 };
+static const s16 gUnknown_082FE256[] = { 0x0038, 0x0058, 0x0078, 0x0098, 0x00b8 };
 
-static const s16 *const gUnknown_082FE260[] =
-{
+static const s16 *const gUnknown_082FE260[] = {
     gUnknown_082FE244,
     gUnknown_082FE248,
     gUnknown_082FE24E,
@@ -3504,7 +3826,8 @@ static int sub_802DCCC(u8 flags)
 static void sub_802DD08(void)
 {
     struct DigitObjUtilTemplate template;
-    struct DigitObjUtilTemplate *ptr = &template; // This temp variable is needed to match, don't ask me why.
+    struct DigitObjUtilTemplate *ptr =
+        &template; // This temp variable is needed to match, don't ask me why.
 
     ptr->shape = SPRITE_SHAPE(8x8);
     ptr->size = SPRITE_SIZE(8x8);
@@ -3514,7 +3837,7 @@ static void sub_802DD08(void)
     ptr->xDelta = 8;
     ptr->x = 108;
     ptr->y = 6;
-    ptr->spriteSheet = (void*) &gUnknown_082FE1EC;
+    ptr->spriteSheet = (void *)&gUnknown_082FE1EC;
     ptr->spritePal = &gUnknown_082FE1F4;
 
     DigitObjUtil_Init(2);
@@ -3599,12 +3922,13 @@ static void sub_802DE1C(void)
 static void sub_802DED8(int multiplayerId, u8 clr1, u8 clr2, u8 clr3)
 {
     u32 x;
-    u8 colors[3] = {clr1, clr2, clr3};
+    u8 colors[3] = { clr1, clr2, clr3 };
 
     FillWindowPixelBuffer(gUnknown_02022D00->unk1C[multiplayerId], 0);
     x = 64 - GetStringWidth(1, sub_802C8E8(multiplayerId), -1);
     x /= 2;
-    AddTextPrinterParameterized3(gUnknown_02022D00->unk1C[multiplayerId], 1, x, 1, colors, -1, sub_802C8E8(multiplayerId));
+    AddTextPrinterParameterized3(
+        gUnknown_02022D00->unk1C[multiplayerId], 1, x, 1, colors, -1, sub_802C8E8(multiplayerId));
     CopyWindowToVram(gUnknown_02022D00->unk1C[multiplayerId], 2);
 }
 
@@ -3680,11 +4004,8 @@ struct MonInfoPacket
 static void sub_802E0AC(struct PokemonJump1_MonInfo *arg0)
 {
     struct MonInfoPacket packet;
-    packet.id = 1,
-    packet.species = arg0->species,
-    packet.otId = arg0->otId,
-    packet.personality = arg0->personality,
-    sub_800FE50(&packet);
+    packet.id = 1, packet.species = arg0->species, packet.otId = arg0->otId,
+    packet.personality = arg0->personality, sub_800FE50(&packet);
 }
 
 static bool32 sub_802E0D0(int multiplayerId, struct PokemonJump1_MonInfo *arg0)
@@ -3726,12 +4047,12 @@ struct UnkPacket3
     u8 id; // packet id
     u8 unk1;
     u8 unk2;
-    u8 unk3_0:5;
-    u8 unk3_1:3;
+    u8 unk3_0 : 5;
+    u8 unk3_1 : 3;
     u16 unk4;
     u16 unk6;
-    u32 unk8_0:15;
-    u32 unk8_1:17;
+    u32 unk8_0 : 15;
+    u32 unk8_1 : 17;
 };
 
 static void sub_802E138(struct PokemonJump1_82E4 *arg0, struct PokemonJump1Sub *arg1)
@@ -3877,8 +4198,7 @@ void ShowPokemonJumpRecords(void)
     Task_ShowPokemonJumpRecords(taskId);
 }
 
-static const struct WindowTemplate gUnknown_082FE270 =
-{
+static const struct WindowTemplate gUnknown_082FE270 = {
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 1,
@@ -3888,7 +4208,9 @@ static const struct WindowTemplate gUnknown_082FE270 =
     .baseBlock = 0x1,
 };
 
-static const u8 *const gUnknown_082FE278[] = {gText_JumpsInARow, gText_BestScore2, gText_ExcellentsInARow};
+static const u8 *const gUnknown_082FE278[] = {
+    gText_JumpsInARow, gText_BestScore2, gText_ExcellentsInARow
+};
 
 static void Task_ShowPokemonJumpRecords(u8 taskId)
 {
@@ -3952,21 +4274,29 @@ static void sub_802E500(u16 windowId, int width)
     LoadUserWindowBorderGfx_(windowId, 0x21D, 0xD0);
     DrawTextBorderOuter(windowId, 0x21D, 0xD);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-    AddTextPrinterParameterized(windowId, 1, gText_PkmnJumpRecords, GetStringCenterAlignXOffset(1, gText_PkmnJumpRecords, width * 8), 1, TEXT_SPEED_FF, NULL);
+    AddTextPrinterParameterized(windowId,
+        1,
+        gText_PkmnJumpRecords,
+        GetStringCenterAlignXOffset(1, gText_PkmnJumpRecords, width * 8),
+        1,
+        TEXT_SPEED_FF,
+        NULL);
     for (i = 0; i < ARRAY_COUNT(gUnknown_082FE278); i++)
     {
-        AddTextPrinterParameterized(windowId, 1, gUnknown_082FE278[i], 0, 25 + (i * 16), TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            windowId, 1, gUnknown_082FE278[i], 0, 25 + (i * 16), TEXT_SPEED_FF, NULL);
         ConvertIntToDecimalStringN(gStringVar1, results[i], STR_CONV_MODE_LEFT_ALIGN, 5);
         TruncateToFirstWordOnly(gStringVar1);
         x = (width * 8) - GetStringWidth(1, gStringVar1, 0);
-        AddTextPrinterParameterized(windowId, 1, gStringVar1, x, 25 + (i * 16), TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            windowId, 1, gStringVar1, x, 25 + (i * 16), TEXT_SPEED_FF, NULL);
     }
     PutWindowTilemap(windowId);
 }
 
 static void TruncateToFirstWordOnly(u8 *str)
 {
-    for (;*str != EOS; str++)
+    for (; *str != EOS; str++)
     {
         if (*str == CHAR_SPACE)
         {

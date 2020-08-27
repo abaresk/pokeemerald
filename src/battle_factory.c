@@ -43,143 +43,241 @@ static u16 GetFactoryMonId(u8 lvlMode, u8 challengeNum, bool8 arg2);
 static u8 GetMoveBattleStyle(u16 move);
 
 // Const rom data.
-static const u8 sRequiredMoveCounts[] = {3, 3, 3, 2, 2, 2, 2};
+static const u8 sRequiredMoveCounts[] = { 3, 3, 3, 2, 2, 2, 2 };
 
-static const u16 sMoves_TotalPreparation[] =
-{
-    MOVE_SWORDS_DANCE, MOVE_GROWTH, MOVE_MEDITATE, MOVE_AGILITY, MOVE_DOUBLE_TEAM, MOVE_HARDEN,
-    MOVE_MINIMIZE, MOVE_WITHDRAW, MOVE_DEFENSE_CURL, MOVE_BARRIER, MOVE_FOCUS_ENERGY, MOVE_AMNESIA,
-    MOVE_ACID_ARMOR, MOVE_SHARPEN, MOVE_CONVERSION, MOVE_CONVERSION_2, MOVE_BELLY_DRUM, MOVE_PSYCH_UP,
-    MOVE_CHARGE, MOVE_SNATCH, MOVE_TAIL_GLOW, MOVE_COSMIC_POWER, MOVE_IRON_DEFENSE, MOVE_HOWL, MOVE_BULK_UP, MOVE_CALM_MIND, MOVE_DRAGON_DANCE,
-    MOVE_NONE
-};
+static const u16 sMoves_TotalPreparation[] = { MOVE_SWORDS_DANCE,
+    MOVE_GROWTH,
+    MOVE_MEDITATE,
+    MOVE_AGILITY,
+    MOVE_DOUBLE_TEAM,
+    MOVE_HARDEN,
+    MOVE_MINIMIZE,
+    MOVE_WITHDRAW,
+    MOVE_DEFENSE_CURL,
+    MOVE_BARRIER,
+    MOVE_FOCUS_ENERGY,
+    MOVE_AMNESIA,
+    MOVE_ACID_ARMOR,
+    MOVE_SHARPEN,
+    MOVE_CONVERSION,
+    MOVE_CONVERSION_2,
+    MOVE_BELLY_DRUM,
+    MOVE_PSYCH_UP,
+    MOVE_CHARGE,
+    MOVE_SNATCH,
+    MOVE_TAIL_GLOW,
+    MOVE_COSMIC_POWER,
+    MOVE_IRON_DEFENSE,
+    MOVE_HOWL,
+    MOVE_BULK_UP,
+    MOVE_CALM_MIND,
+    MOVE_DRAGON_DANCE,
+    MOVE_NONE };
 
-static const u16 sMoves_ImpossibleToPredict[] =
-{
-    MOVE_MIMIC, MOVE_METRONOME, MOVE_MIRROR_MOVE, MOVE_TRANSFORM, MOVE_SUBSTITUTE, MOVE_SKETCH, MOVE_CURSE,
-    MOVE_PRESENT, MOVE_FOLLOW_ME, MOVE_TRICK, MOVE_ROLE_PLAY, MOVE_ASSIST, MOVE_SKILL_SWAP, MOVE_CAMOUFLAGE,
-    MOVE_NONE
-};
+static const u16 sMoves_ImpossibleToPredict[] = { MOVE_MIMIC,
+    MOVE_METRONOME,
+    MOVE_MIRROR_MOVE,
+    MOVE_TRANSFORM,
+    MOVE_SUBSTITUTE,
+    MOVE_SKETCH,
+    MOVE_CURSE,
+    MOVE_PRESENT,
+    MOVE_FOLLOW_ME,
+    MOVE_TRICK,
+    MOVE_ROLE_PLAY,
+    MOVE_ASSIST,
+    MOVE_SKILL_SWAP,
+    MOVE_CAMOUFLAGE,
+    MOVE_NONE };
 
-static const u16 sMoves_WeakeningTheFoe[] =
-{
-    MOVE_SAND_ATTACK, MOVE_TAIL_WHIP, MOVE_LEER, MOVE_GROWL, MOVE_STRING_SHOT, MOVE_SCREECH, MOVE_SMOKESCREEN, MOVE_KINESIS,
-    MOVE_FLASH, MOVE_COTTON_SPORE, MOVE_SPITE, MOVE_SCARY_FACE, MOVE_CHARM, MOVE_KNOCK_OFF, MOVE_SWEET_SCENT, MOVE_FEATHER_DANCE,
-    MOVE_FAKE_TEARS, MOVE_METAL_SOUND, MOVE_TICKLE,
-    MOVE_NONE
-};
+static const u16 sMoves_WeakeningTheFoe[] = { MOVE_SAND_ATTACK,
+    MOVE_TAIL_WHIP,
+    MOVE_LEER,
+    MOVE_GROWL,
+    MOVE_STRING_SHOT,
+    MOVE_SCREECH,
+    MOVE_SMOKESCREEN,
+    MOVE_KINESIS,
+    MOVE_FLASH,
+    MOVE_COTTON_SPORE,
+    MOVE_SPITE,
+    MOVE_SCARY_FACE,
+    MOVE_CHARM,
+    MOVE_KNOCK_OFF,
+    MOVE_SWEET_SCENT,
+    MOVE_FEATHER_DANCE,
+    MOVE_FAKE_TEARS,
+    MOVE_METAL_SOUND,
+    MOVE_TICKLE,
+    MOVE_NONE };
 
-static const u16 sMoves_HighRiskHighReturn[] =
-{
-    MOVE_GUILLOTINE, MOVE_HORN_DRILL, MOVE_DOUBLE_EDGE, MOVE_HYPER_BEAM, MOVE_COUNTER, MOVE_FISSURE,
-    MOVE_BIDE, MOVE_SELF_DESTRUCT, MOVE_SKY_ATTACK, MOVE_EXPLOSION, MOVE_FLAIL, MOVE_REVERSAL, MOVE_DESTINY_BOND,
-    MOVE_PERISH_SONG, MOVE_PAIN_SPLIT, MOVE_MIRROR_COAT, MOVE_MEMENTO, MOVE_GRUDGE, MOVE_FACADE, MOVE_FOCUS_PUNCH,
-    MOVE_BLAST_BURN, MOVE_HYDRO_CANNON, MOVE_OVERHEAT, MOVE_FRENZY_PLANT, MOVE_PSYCHO_BOOST, MOVE_VOLT_TACKLE,
-    MOVE_NONE
-};
+static const u16 sMoves_HighRiskHighReturn[] = { MOVE_GUILLOTINE,
+    MOVE_HORN_DRILL,
+    MOVE_DOUBLE_EDGE,
+    MOVE_HYPER_BEAM,
+    MOVE_COUNTER,
+    MOVE_FISSURE,
+    MOVE_BIDE,
+    MOVE_SELF_DESTRUCT,
+    MOVE_SKY_ATTACK,
+    MOVE_EXPLOSION,
+    MOVE_FLAIL,
+    MOVE_REVERSAL,
+    MOVE_DESTINY_BOND,
+    MOVE_PERISH_SONG,
+    MOVE_PAIN_SPLIT,
+    MOVE_MIRROR_COAT,
+    MOVE_MEMENTO,
+    MOVE_GRUDGE,
+    MOVE_FACADE,
+    MOVE_FOCUS_PUNCH,
+    MOVE_BLAST_BURN,
+    MOVE_HYDRO_CANNON,
+    MOVE_OVERHEAT,
+    MOVE_FRENZY_PLANT,
+    MOVE_PSYCHO_BOOST,
+    MOVE_VOLT_TACKLE,
+    MOVE_NONE };
 
-static const u16 sMoves_Endurance[] =
-{
-    MOVE_MIST, MOVE_RECOVER, MOVE_LIGHT_SCREEN, MOVE_HAZE, MOVE_REFLECT, MOVE_SOFT_BOILED, MOVE_REST, MOVE_PROTECT,
-    MOVE_DETECT, MOVE_ENDURE, MOVE_MILK_DRINK, MOVE_HEAL_BELL, MOVE_SAFEGUARD, MOVE_BATON_PASS, MOVE_MORNING_SUN,
-    MOVE_SYNTHESIS, MOVE_MOONLIGHT, MOVE_SWALLOW, MOVE_WISH, MOVE_INGRAIN, MOVE_MAGIC_COAT, MOVE_RECYCLE, MOVE_REFRESH,
-    MOVE_MUD_SPORT, MOVE_SLACK_OFF, MOVE_AROMATHERAPY, MOVE_WATER_SPORT,
-    MOVE_NONE
-};
+static const u16 sMoves_Endurance[] = { MOVE_MIST,
+    MOVE_RECOVER,
+    MOVE_LIGHT_SCREEN,
+    MOVE_HAZE,
+    MOVE_REFLECT,
+    MOVE_SOFT_BOILED,
+    MOVE_REST,
+    MOVE_PROTECT,
+    MOVE_DETECT,
+    MOVE_ENDURE,
+    MOVE_MILK_DRINK,
+    MOVE_HEAL_BELL,
+    MOVE_SAFEGUARD,
+    MOVE_BATON_PASS,
+    MOVE_MORNING_SUN,
+    MOVE_SYNTHESIS,
+    MOVE_MOONLIGHT,
+    MOVE_SWALLOW,
+    MOVE_WISH,
+    MOVE_INGRAIN,
+    MOVE_MAGIC_COAT,
+    MOVE_RECYCLE,
+    MOVE_REFRESH,
+    MOVE_MUD_SPORT,
+    MOVE_SLACK_OFF,
+    MOVE_AROMATHERAPY,
+    MOVE_WATER_SPORT,
+    MOVE_NONE };
 
-static const u16 sMoves_SlowAndSteady[] =
-{
-    MOVE_SING, MOVE_SUPERSONIC, MOVE_DISABLE, MOVE_LEECH_SEED, MOVE_POISON_POWDER, MOVE_STUN_SPORE, MOVE_SLEEP_POWDER,
-    MOVE_THUNDER_WAVE, MOVE_TOXIC, MOVE_HYPNOSIS, MOVE_CONFUSE_RAY, MOVE_GLARE, MOVE_POISON_GAS, MOVE_LOVELY_KISS, MOVE_SPORE,
-    MOVE_SPIDER_WEB, MOVE_SWEET_KISS, MOVE_SPIKES, MOVE_SWAGGER, MOVE_MEAN_LOOK, MOVE_ATTRACT, MOVE_ENCORE, MOVE_TORMENT,
-    MOVE_FLATTER, MOVE_WILL_O_WISP, MOVE_TAUNT, MOVE_YAWN, MOVE_IMPRISON, MOVE_SNATCH, MOVE_TEETER_DANCE, MOVE_GRASS_WHISTLE, MOVE_BLOCK,
-    MOVE_NONE
-};
+static const u16 sMoves_SlowAndSteady[] = { MOVE_SING,
+    MOVE_SUPERSONIC,
+    MOVE_DISABLE,
+    MOVE_LEECH_SEED,
+    MOVE_POISON_POWDER,
+    MOVE_STUN_SPORE,
+    MOVE_SLEEP_POWDER,
+    MOVE_THUNDER_WAVE,
+    MOVE_TOXIC,
+    MOVE_HYPNOSIS,
+    MOVE_CONFUSE_RAY,
+    MOVE_GLARE,
+    MOVE_POISON_GAS,
+    MOVE_LOVELY_KISS,
+    MOVE_SPORE,
+    MOVE_SPIDER_WEB,
+    MOVE_SWEET_KISS,
+    MOVE_SPIKES,
+    MOVE_SWAGGER,
+    MOVE_MEAN_LOOK,
+    MOVE_ATTRACT,
+    MOVE_ENCORE,
+    MOVE_TORMENT,
+    MOVE_FLATTER,
+    MOVE_WILL_O_WISP,
+    MOVE_TAUNT,
+    MOVE_YAWN,
+    MOVE_IMPRISON,
+    MOVE_SNATCH,
+    MOVE_TEETER_DANCE,
+    MOVE_GRASS_WHISTLE,
+    MOVE_BLOCK,
+    MOVE_NONE };
 
-static const u16 sMoves_DependsOnTheBattlesFlow[] =
-{
-    MOVE_SANDSTORM, MOVE_RAIN_DANCE, MOVE_SUNNY_DAY, MOVE_HAIL, MOVE_WEATHER_BALL,
-    MOVE_NONE
+static const u16 sMoves_DependsOnTheBattlesFlow[] = {
+    MOVE_SANDSTORM, MOVE_RAIN_DANCE, MOVE_SUNNY_DAY, MOVE_HAIL, MOVE_WEATHER_BALL, MOVE_NONE
 };
 
 // Excludes FACTORY_STYLE_NONE
-static const u16 *const sMoveStyles[FACTORY_NUM_STYLES - 1] =
-{
-    [FACTORY_STYLE_PREPARATION - 1]   = sMoves_TotalPreparation,
-    [FACTORY_STYLE_SLOW_STEADY - 1]   = sMoves_SlowAndSteady,
-    [FACTORY_STYLE_ENDURANCE - 1]     = sMoves_Endurance,
-    [FACTORY_STYLE_HIGH_RISK - 1]     = sMoves_HighRiskHighReturn,
-    [FACTORY_STYLE_WEAKENING - 1]     = sMoves_WeakeningTheFoe,
+static const u16 *const sMoveStyles[FACTORY_NUM_STYLES - 1] = {
+    [FACTORY_STYLE_PREPARATION - 1] = sMoves_TotalPreparation,
+    [FACTORY_STYLE_SLOW_STEADY - 1] = sMoves_SlowAndSteady,
+    [FACTORY_STYLE_ENDURANCE - 1] = sMoves_Endurance,
+    [FACTORY_STYLE_HIGH_RISK - 1] = sMoves_HighRiskHighReturn,
+    [FACTORY_STYLE_WEAKENING - 1] = sMoves_WeakeningTheFoe,
     [FACTORY_STYLE_UNPREDICTABLE - 1] = sMoves_ImpossibleToPredict,
-    [FACTORY_STYLE_WEATHER - 1]       = sMoves_DependsOnTheBattlesFlow,
+    [FACTORY_STYLE_WEATHER - 1] = sMoves_DependsOnTheBattlesFlow,
 };
 
-static void (* const sBattleFactoryFunctions[])(void) =
-{
-    [BATTLE_FACTORY_FUNC_INIT]                   = InitFactoryChallenge,
-    [BATTLE_FACTORY_FUNC_GET_DATA]               = GetBattleFactoryData,
-    [BATTLE_FACTORY_FUNC_SET_DATA]               = SetBattleFactoryData,
-    [BATTLE_FACTORY_FUNC_SAVE]                   = SaveFactoryChallenge,
-    [BATTLE_FACTORY_FUNC_NULL]                   = nullsub_75,
-    [BATTLE_FACTORY_FUNC_NULL2]                  = nullsub_123,
-    [BATTLE_FACTORY_FUNC_SELECT_RENT_MONS]       = SelectInitialRentalMons,
-    [BATTLE_FACTORY_FUNC_SWAP_RENT_MONS]         = SwapRentalMons,
-    [BATTLE_FACTORY_FUNC_SET_SWAPPED]            = SetPerformedRentalSwap,
-    [BATTLE_FACTORY_FUNC_SET_OPPONENT_MONS]      = SetRentalsToOpponentParty,
-    [BATTLE_FACTORY_FUNC_SET_PARTIES]            = SetPlayerAndOpponentParties,
-    [BATTLE_FACTORY_FUNC_SET_OPPONENT_GFX]       = SetOpponentGfxVar,
+static void (*const sBattleFactoryFunctions[])(void) = {
+    [BATTLE_FACTORY_FUNC_INIT] = InitFactoryChallenge,
+    [BATTLE_FACTORY_FUNC_GET_DATA] = GetBattleFactoryData,
+    [BATTLE_FACTORY_FUNC_SET_DATA] = SetBattleFactoryData,
+    [BATTLE_FACTORY_FUNC_SAVE] = SaveFactoryChallenge,
+    [BATTLE_FACTORY_FUNC_NULL] = nullsub_75,
+    [BATTLE_FACTORY_FUNC_NULL2] = nullsub_123,
+    [BATTLE_FACTORY_FUNC_SELECT_RENT_MONS] = SelectInitialRentalMons,
+    [BATTLE_FACTORY_FUNC_SWAP_RENT_MONS] = SwapRentalMons,
+    [BATTLE_FACTORY_FUNC_SET_SWAPPED] = SetPerformedRentalSwap,
+    [BATTLE_FACTORY_FUNC_SET_OPPONENT_MONS] = SetRentalsToOpponentParty,
+    [BATTLE_FACTORY_FUNC_SET_PARTIES] = SetPlayerAndOpponentParties,
+    [BATTLE_FACTORY_FUNC_SET_OPPONENT_GFX] = SetOpponentGfxVar,
     [BATTLE_FACTORY_FUNC_GENERATE_OPPONENT_MONS] = GenerateOpponentMons,
-    [BATTLE_FACTORY_FUNC_GENERATE_RENTAL_MONS]   = GenerateInitialRentalMons,
-    [BATTLE_FACTORY_FUNC_GET_OPPONENT_MON_TYPE]  = GetOpponentMostCommonMonType,
-    [BATTLE_FACTORY_FUNC_GET_OPPONENT_STYLE]     = GetOpponentBattleStyle,
-    [BATTLE_FACTORY_FUNC_RESET_HELD_ITEMS]       = RestorePlayerPartyHeldItems,
+    [BATTLE_FACTORY_FUNC_GENERATE_RENTAL_MONS] = GenerateInitialRentalMons,
+    [BATTLE_FACTORY_FUNC_GET_OPPONENT_MON_TYPE] = GetOpponentMostCommonMonType,
+    [BATTLE_FACTORY_FUNC_GET_OPPONENT_STYLE] = GetOpponentBattleStyle,
+    [BATTLE_FACTORY_FUNC_RESET_HELD_ITEMS] = RestorePlayerPartyHeldItems,
 };
 
-static const u32 sWinStreakFlags[][2] =
-{
-    {STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN},
-    {STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN},
+static const u32 sWinStreakFlags[][2] = {
+    { STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN },
+    { STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN },
 };
 
-static const u32 sWinStreakMasks[][2] =
-{
-    {~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN)},
-    {~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN)},
+static const u32 sWinStreakMasks[][2] = {
+    { ~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN) },
+    { ~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN) },
 };
 
-static const u8 sFixedIVTable[][2] =
-{
-    {3, 6},
-    {6, 9},
-    {9, 12},
-    {12, 15},
-    {15, 18},
-    {21, 31},
-    {31, 31},
-    {31, 31},
+static const u8 sFixedIVTable[][2] = {
+    { 3, 6 },
+    { 6, 9 },
+    { 9, 12 },
+    { 12, 15 },
+    { 15, 18 },
+    { 21, 31 },
+    { 31, 31 },
+    { 31, 31 },
 };
 
-static const u16 sInitialRentalMonRanges[][2] =
-{
+static const u16 sInitialRentalMonRanges[][2] = {
     // Level 50
-    {FRONTIER_MON_GRIMER,     FRONTIER_MON_FURRET_1},   // 110 - 199
-    {FRONTIER_MON_DELCATTY_1, FRONTIER_MON_CLOYSTER_1}, // 162 - 266
-    {FRONTIER_MON_DELCATTY_2, FRONTIER_MON_CLOYSTER_2}, // 267 - 371
-    {FRONTIER_MON_DUGTRIO_1,  FRONTIER_MON_SLAKING_1},  // 372 - 467
-    {FRONTIER_MON_DUGTRIO_2,  FRONTIER_MON_SLAKING_2},  // 468 - 563
-    {FRONTIER_MON_DUGTRIO_3,  FRONTIER_MON_SLAKING_3},  // 564 - 659
-    {FRONTIER_MON_DUGTRIO_4,  FRONTIER_MON_SLAKING_4},  // 660 - 755
-    {FRONTIER_MON_DUGTRIO_1,  FRONTIER_MONS_HIGH_TIER}, // 372 - 849
+    { FRONTIER_MON_GRIMER, FRONTIER_MON_FURRET_1 },       // 110 - 199
+    { FRONTIER_MON_DELCATTY_1, FRONTIER_MON_CLOYSTER_1 }, // 162 - 266
+    { FRONTIER_MON_DELCATTY_2, FRONTIER_MON_CLOYSTER_2 }, // 267 - 371
+    { FRONTIER_MON_DUGTRIO_1, FRONTIER_MON_SLAKING_1 },   // 372 - 467
+    { FRONTIER_MON_DUGTRIO_2, FRONTIER_MON_SLAKING_2 },   // 468 - 563
+    { FRONTIER_MON_DUGTRIO_3, FRONTIER_MON_SLAKING_3 },   // 564 - 659
+    { FRONTIER_MON_DUGTRIO_4, FRONTIER_MON_SLAKING_4 },   // 660 - 755
+    { FRONTIER_MON_DUGTRIO_1, FRONTIER_MONS_HIGH_TIER },  // 372 - 849
 
     // Open level
-    {FRONTIER_MON_DUGTRIO_1, FRONTIER_MON_SLAKING_1}, // 372 - 467
-    {FRONTIER_MON_DUGTRIO_2, FRONTIER_MON_SLAKING_2}, // 468 - 563
-    {FRONTIER_MON_DUGTRIO_3, FRONTIER_MON_SLAKING_3}, // 564 - 659
-    {FRONTIER_MON_DUGTRIO_4, FRONTIER_MON_SLAKING_4}, // 660 - 755
-    {FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1},  // 372 - 881
-    {FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1},  // 372 - 881
-    {FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1},  // 372 - 881
-    {FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1},  // 372 - 881
+    { FRONTIER_MON_DUGTRIO_1, FRONTIER_MON_SLAKING_1 }, // 372 - 467
+    { FRONTIER_MON_DUGTRIO_2, FRONTIER_MON_SLAKING_2 }, // 468 - 563
+    { FRONTIER_MON_DUGTRIO_3, FRONTIER_MON_SLAKING_3 }, // 564 - 659
+    { FRONTIER_MON_DUGTRIO_4, FRONTIER_MON_SLAKING_4 }, // 660 - 755
+    { FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1 },  // 372 - 881
+    { FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1 },  // 372 - 881
+    { FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1 },  // 372 - 881
+    { FRONTIER_MON_DUGTRIO_1, NUM_FRONTIER_MONS - 1 },  // 372 - 881
 };
 
 // code
@@ -225,7 +323,8 @@ static void GetBattleFactoryData(void)
         gSpecialVar_Result = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode];
         break;
     case FACTORY_DATA_WIN_STREAK_ACTIVE:
-        gSpecialVar_Result = ((gSaveBlock2Ptr->frontier.winStreakActiveFlags & sWinStreakFlags[battleMode][lvlMode]) != 0);
+        gSpecialVar_Result = ((gSaveBlock2Ptr->frontier.winStreakActiveFlags &
+                                  sWinStreakFlags[battleMode][lvlMode]) != 0);
         break;
     case FACTORY_DATA_WIN_STREAK_SWAPS:
         gSpecialVar_Result = gSaveBlock2Ptr->frontier.factoryRentsCount[battleMode][lvlMode];
@@ -269,12 +368,10 @@ static void SaveFactoryChallenge(void)
 
 static void nullsub_75(void)
 {
-
 }
 
 static void nullsub_123(void)
 {
-
 }
 
 static void SelectInitialRentalMons(void)
@@ -308,7 +405,8 @@ static void GenerateOpponentMons(void)
 
     do
     {
-        trainerId = GetRandomScaledFrontierTrainerId(challengeNum, gSaveBlock2Ptr->frontier.curChallengeBattleNum);
+        trainerId = GetRandomScaledFrontierTrainerId(
+            challengeNum, gSaveBlock2Ptr->frontier.curChallengeBattleNum);
         for (i = 0; i < gSaveBlock2Ptr->frontier.curChallengeBattleNum; i++)
         {
             if (gSaveBlock2Ptr->frontier.trainerIds[i] == trainerId)
@@ -318,7 +416,8 @@ static void GenerateOpponentMons(void)
 
     gTrainerBattleOpponent_A = trainerId;
     if (gSaveBlock2Ptr->frontier.curChallengeBattleNum < 6)
-        gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] = trainerId;
+        gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] =
+            trainerId;
 
     i = 0;
     while (i != FRONTIER_PARTY_SIZE)
@@ -329,7 +428,8 @@ static void GenerateOpponentMons(void)
 
         for (j = 0; j < 6; j++)
         {
-            if (gFacilityTrainerMons[monId].species == gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)
+            if (gFacilityTrainerMons[monId].species ==
+                gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)
                 break;
         }
         if (j != 6)
@@ -348,7 +448,8 @@ static void GenerateOpponentMons(void)
 
         for (k = firstMonId; k < firstMonId + i; k++)
         {
-            if (heldItems[k] != 0 && heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            if (heldItems[k] != 0 &&
+                heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
                 break;
         }
         if (k != firstMonId + i)
@@ -378,10 +479,15 @@ static void SetRentalsToOpponentParty(void)
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
         gSaveBlock2Ptr->frontier.rentalMons[i + 3].monId = gUnknown_03006298[i];
-        gSaveBlock2Ptr->frontier.rentalMons[i + 3].ivs = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ATK_IV, NULL);
-        gSaveBlock2Ptr->frontier.rentalMons[i + 3].personality = GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY, NULL);
-        gSaveBlock2Ptr->frontier.rentalMons[i + 3].abilityNum = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ABILITY_NUM, NULL);
-        SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[gUnknown_03006298[i]].itemTableId]);
+        gSaveBlock2Ptr->frontier.rentalMons[i + 3].ivs =
+            GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ATK_IV, NULL);
+        gSaveBlock2Ptr->frontier.rentalMons[i + 3].personality =
+            GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY, NULL);
+        gSaveBlock2Ptr->frontier.rentalMons[i + 3].abilityNum =
+            GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ABILITY_NUM, NULL);
+        SetMonData(&gEnemyParty[i],
+            MON_DATA_HELD_ITEM,
+            &gBattleFrontierHeldItems[gFacilityTrainerMons[gUnknown_03006298[i]].itemTableId]);
     }
 }
 
@@ -418,11 +524,13 @@ static void SetPlayerAndOpponentParties(void)
             monId = gSaveBlock2Ptr->frontier.rentalMons[i].monId;
             ivs = gSaveBlock2Ptr->frontier.rentalMons[i].ivs;
             CreateMon(&gPlayerParty[i],
-                      gFacilityTrainerMons[monId].species,
-                      monLevel,
-                      ivs,
-                      TRUE, gSaveBlock2Ptr->frontier.rentalMons[i].personality,
-                      OT_ID_PLAYER_ID, 0);
+                gFacilityTrainerMons[monId].species,
+                monLevel,
+                ivs,
+                TRUE,
+                gSaveBlock2Ptr->frontier.rentalMons[i].personality,
+                OT_ID_PLAYER_ID,
+                0);
 
             count = 0;
             bits = gFacilityTrainerMons[monId].evSpread;
@@ -445,8 +553,12 @@ static void SetPlayerAndOpponentParties(void)
             for (k = 0; k < MAX_MON_MOVES; k++)
                 SetMonMoveAvoidReturn(&gPlayerParty[i], gFacilityTrainerMons[monId].moves[k], k);
             SetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP, &friendship);
-            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
-            SetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM, &gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum);
+            SetMonData(&gPlayerParty[i],
+                MON_DATA_HELD_ITEM,
+                &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+            SetMonData(&gPlayerParty[i],
+                MON_DATA_ABILITY_NUM,
+                &gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum);
         }
     }
 
@@ -459,11 +571,13 @@ static void SetPlayerAndOpponentParties(void)
             monId = gSaveBlock2Ptr->frontier.rentalMons[i + 3].monId;
             ivs = gSaveBlock2Ptr->frontier.rentalMons[i + 3].ivs;
             CreateMon(&gEnemyParty[i],
-                      gFacilityTrainerMons[monId].species,
-                      monLevel,
-                      ivs,
-                      TRUE, gSaveBlock2Ptr->frontier.rentalMons[i + 3].personality,
-                      OT_ID_PLAYER_ID, 0);
+                gFacilityTrainerMons[monId].species,
+                monLevel,
+                ivs,
+                TRUE,
+                gSaveBlock2Ptr->frontier.rentalMons[i + 3].personality,
+                OT_ID_PLAYER_ID,
+                0);
 
             count = 0;
             bits = gFacilityTrainerMons[monId].evSpread;
@@ -484,8 +598,12 @@ static void SetPlayerAndOpponentParties(void)
             CalculateMonStats(&gEnemyParty[i]);
             for (k = 0; k < MAX_MON_MOVES; k++)
                 SetMonMoveAvoidReturn(&gEnemyParty[i], gFacilityTrainerMons[monId].moves[k], k);
-            SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
-            SetMonData(&gEnemyParty[i], MON_DATA_ABILITY_NUM, &gSaveBlock2Ptr->frontier.rentalMons[i + 3].abilityNum);
+            SetMonData(&gEnemyParty[i],
+                MON_DATA_HELD_ITEM,
+                &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+            SetMonData(&gEnemyParty[i],
+                MON_DATA_ABILITY_NUM,
+                &gSaveBlock2Ptr->frontier.rentalMons[i + 3].abilityNum);
         }
         break;
     }
@@ -539,7 +657,8 @@ static void GenerateInitialRentalMons(void)
     i = 0;
     while (i != PARTY_SIZE)
     {
-        if (i < rentalRank) // The more times the player has rented, the more initial rentals are generated from a better set of pokemon
+        if (i < rentalRank) // The more times the player has rented, the more initial rentals are
+                            // generated from a better set of pokemon
             monId = GetFactoryMonId(factoryLvlMode, challengeNum, TRUE);
         else
             monId = GetFactoryMonId(factoryLvlMode, challengeNum, FALSE);
@@ -567,7 +686,8 @@ static void GenerateInitialRentalMons(void)
         // Cannot have two same held items.
         for (j = firstMonId; j < firstMonId + i; j++)
         {
-            if (heldItems[j] != 0 && heldItems[j] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            if (heldItems[j] != 0 &&
+                heldItems[j] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
             {
                 if (gFacilityTrainerMons[monId].species == currSpecies)
                     currSpecies = SPECIES_NONE;
@@ -614,7 +734,8 @@ static void GetOpponentMostCommonMonType(void)
     }
 
     gSpecialVar_Result = gSpecialVar_Result; // Needed to match. Don't ask me why.
-    if (typesCount[usedType[0]] != 0 && (typesCount[usedType[0]] > typesCount[usedType[1]] || usedType[0] == usedType[1]))
+    if (typesCount[usedType[0]] != 0 &&
+        (typesCount[usedType[0]] > typesCount[usedType[1]] || usedType[0] == usedType[1]))
         gSpecialVar_Result = usedType[0];
     else
         gSpecialVar_Result = NUMBER_OF_MON_TYPES;
@@ -673,8 +794,8 @@ static u8 GetMoveBattleStyle(u16 move)
 
 bool8 InBattleFactory(void)
 {
-    return gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
-        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM;
+    return gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM ||
+           gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM;
 }
 
 static void RestorePlayerPartyHeldItems(void)
@@ -689,8 +810,9 @@ static void RestorePlayerPartyHeldItems(void)
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
         SetMonData(&gPlayerParty[i],
-                   MON_DATA_HELD_ITEM,
-                   &gBattleFrontierHeldItems[gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[i].monId].itemTableId]);
+            MON_DATA_HELD_ITEM,
+            &gBattleFrontierHeldItems
+                [gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[i].monId].itemTableId]);
     }
 }
 
@@ -752,7 +874,8 @@ void FillFactoryBrainParty(void)
 
         for (k = 0; k < i; k++)
         {
-            if (heldItems[k] != 0 && heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            if (heldItems[k] != 0 &&
+                heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
                 break;
         }
         if (k != i)
@@ -761,18 +884,20 @@ void FillFactoryBrainParty(void)
         species[i] = gFacilityTrainerMons[monId].species;
         heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
         CreateMonWithEVSpreadNatureOTID(&gEnemyParty[i],
-                                             gFacilityTrainerMons[monId].species,
-                                             monLevel,
-                                             gFacilityTrainerMons[monId].nature,
-                                             fixedIV,
-                                             gFacilityTrainerMons[monId].evSpread,
-                                             otId);
+            gFacilityTrainerMons[monId].species,
+            monLevel,
+            gFacilityTrainerMons[monId].nature,
+            fixedIV,
+            gFacilityTrainerMons[monId].evSpread,
+            otId);
 
         friendship = 0;
         for (k = 0; k < MAX_MON_MOVES; k++)
             SetMonMoveAvoidReturn(&gEnemyParty[i], gFacilityTrainerMons[monId].moves[k], k);
         SetMonData(&gEnemyParty[i], MON_DATA_FRIENDSHIP, &friendship);
-        SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+        SetMonData(&gEnemyParty[i],
+            MON_DATA_HELD_ITEM,
+            &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
         i++;
     }
 }
@@ -791,13 +916,17 @@ static u16 GetFactoryMonId(u8 lvlMode, u8 challengeNum, bool8 useBetterRange)
     {
         if (useBetterRange)
         {
-            numMons = (sInitialRentalMonRanges[adder + challengeNum + 1][1] - sInitialRentalMonRanges[adder + challengeNum + 1][0]) + 1;
+            numMons = (sInitialRentalMonRanges[adder + challengeNum + 1][1] -
+                          sInitialRentalMonRanges[adder + challengeNum + 1][0]) +
+                      1;
             monId = Random() % numMons;
             monId += sInitialRentalMonRanges[adder + challengeNum + 1][0];
         }
         else
         {
-            numMons = (sInitialRentalMonRanges[adder + challengeNum][1] - sInitialRentalMonRanges[adder + challengeNum][0]) + 1;
+            numMons = (sInitialRentalMonRanges[adder + challengeNum][1] -
+                          sInitialRentalMonRanges[adder + challengeNum][0]) +
+                      1;
             monId = Random() % numMons;
             monId += sInitialRentalMonRanges[adder + challengeNum][0];
         }
@@ -808,7 +937,9 @@ static u16 GetFactoryMonId(u8 lvlMode, u8 challengeNum, bool8 useBetterRange)
         if (challenge != 7)
             challenge = 7; // why bother assigning it above at all
 
-        numMons = (sInitialRentalMonRanges[adder + challenge][1] - sInitialRentalMonRanges[adder + challenge][0]) + 1;
+        numMons = (sInitialRentalMonRanges[adder + challenge][1] -
+                      sInitialRentalMonRanges[adder + challenge][0]) +
+                  1;
         monId = Random() % numMons;
         monId += sInitialRentalMonRanges[adder + challenge][0];
     }

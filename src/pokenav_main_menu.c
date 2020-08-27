@@ -31,7 +31,7 @@ struct PokenavMainMenuResources
 // Needed to match LoadLeftHeaderGfxForSubMenu.
 struct CompressedSpriteSheetNoSize
 {
-    const u32 *data;  // LZ77 compressed palette data
+    const u32 *data; // LZ77 compressed palette data
     u32 tag;
 };
 
@@ -50,72 +50,58 @@ static void InitHelpBar(void);
 static u32 LoopedTask_ScrollMenuHeaderDown(s32 a0);
 static u32 LoopedTask_ScrollMenuHeaderUp(s32 a0);
 static void DrawHelpBar(u32 windowId);
-static void SpriteCB_SpinningPokenav(struct Sprite* sprite);
+static void SpriteCB_SpinningPokenav(struct Sprite *sprite);
 static u32 LoopedTask_InitPokenavMenu(s32 a0);
 
 const u16 gSpinningPokenavPaletteData[] = INCBIN_U16("graphics/pokenav/icon2.gbapal");
 const u32 gSpinningPokenavGfx[] = INCBIN_U32("graphics/pokenav/icon2.4bpp.lz");
 const u32 gUnused_SpinningPokenavGfx2[] = INCBIN_U32("graphics/pokenav/icon2_unused.4bpp.lz");
 
-const struct BgTemplate gPokenavMainMenuBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 5,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0,
-    }
-};
+const struct BgTemplate gPokenavMainMenuBgTemplates[] = { {
+    .bg = 0,
+    .charBaseIndex = 0,
+    .mapBaseIndex = 5,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0,
+} };
 
-static const struct WindowTemplate sHelpBarWindowTemplate[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 1,
-        .tilemapTop = 22,
-        .width = 16,
-        .height = 2,
-        .paletteNum = 0,
-        .baseBlock = 0x36,
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sHelpBarWindowTemplate[] = { {
+                                                                    .bg = 0,
+                                                                    .tilemapLeft = 1,
+                                                                    .tilemapTop = 22,
+                                                                    .width = 16,
+                                                                    .height = 2,
+                                                                    .paletteNum = 0,
+                                                                    .baseBlock = 0x36,
+                                                                },
+    DUMMY_WIN_TEMPLATE };
 
-static const u8 *const sHelpBarTexts[HELPBAR_COUNT] =
-{
-    [HELPBAR_NONE]                 = gText_Pokenav_ClearButtonList,
-    [HELPBAR_MAP_ZOOMED_OUT]       = gText_PokenavMap_ZoomedOutButtons,
-    [HELPBAR_MAP_ZOOMED_IN]        = gText_PokenavMap_ZoomedInButtons,
-    [HELPBAR_CONDITION_MON_LIST]   = gText_PokenavCondition_MonListButtons,
+static const u8 *const sHelpBarTexts[HELPBAR_COUNT] = {
+    [HELPBAR_NONE] = gText_Pokenav_ClearButtonList,
+    [HELPBAR_MAP_ZOOMED_OUT] = gText_PokenavMap_ZoomedOutButtons,
+    [HELPBAR_MAP_ZOOMED_IN] = gText_PokenavMap_ZoomedInButtons,
+    [HELPBAR_CONDITION_MON_LIST] = gText_PokenavCondition_MonListButtons,
     [HELPBAR_CONDITION_MON_STATUS] = gText_PokenavCondition_MonStatusButtons,
-    [HELPBAR_CONDITION_MARKINGS]   = gText_PokenavCondition_MarkingButtons,
-    [HELPBAR_MC_TRAINER_LIST]      = gText_PokenavMatchCall_TrainerListButtons,
-    [HELPBAR_MC_CALL_MENU]         = gText_PokenavMatchCall_CallMenuButtons,
-    [HELPBAR_MC_CHECK_PAGE]        = gText_PokenavMatchCall_CheckTrainerButtons,
-    [HELPBAR_RIBBONS_MON_LIST]     = gText_PokenavRibbons_MonListButtons,
-    [HELPBAR_RIBBONS_LIST]         = gText_PokenavRibbons_RibbonListButtons,
-    [HELPBAR_RIBBONS_CHECK]        = gText_PokenavRibbons_RibbonCheckButtons,
+    [HELPBAR_CONDITION_MARKINGS] = gText_PokenavCondition_MarkingButtons,
+    [HELPBAR_MC_TRAINER_LIST] = gText_PokenavMatchCall_TrainerListButtons,
+    [HELPBAR_MC_CALL_MENU] = gText_PokenavMatchCall_CallMenuButtons,
+    [HELPBAR_MC_CHECK_PAGE] = gText_PokenavMatchCall_CheckTrainerButtons,
+    [HELPBAR_RIBBONS_MON_LIST] = gText_PokenavRibbons_MonListButtons,
+    [HELPBAR_RIBBONS_LIST] = gText_PokenavRibbons_RibbonListButtons,
+    [HELPBAR_RIBBONS_CHECK] = gText_PokenavRibbons_RibbonCheckButtons,
 };
 
-static const u8 sHelpBarTextColors[3] =
-{
-    TEXT_COLOR_RED, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY
-};
+static const u8 sHelpBarTextColors[3] = { TEXT_COLOR_RED, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY };
 
-static const struct CompressedSpriteSheet gSpinningPokenavSpriteSheet[] =
-{
-    {
-        .data = gSpinningPokenavGfx,
-        .size = 0x1000,
-        .tag = 0,
-    }
-};
+static const struct CompressedSpriteSheet gSpinningPokenavSpriteSheet[] = { {
+    .data = gSpinningPokenavGfx,
+    .size = 0x1000,
+    .tag = 0,
+} };
 
-static const struct SpritePalette gSpinningNavgearPalettes[] =
-{
+static const struct SpritePalette gSpinningNavgearPalettes[] = {
     {
         .data = gSpinningPokenavPaletteData,
         .tag = 0,
@@ -123,81 +109,45 @@ static const struct SpritePalette gSpinningNavgearPalettes[] =
     {}
 };
 
-static const struct CompressedSpriteSheet sPokenavHoennMapLeftHeaderSpriteSheet =
-{
-    .data = gPokenavLeftHeaderHoennMap_Gfx,
-    .size = 0xC00,
-    .tag = 2
+static const struct CompressedSpriteSheet sPokenavHoennMapLeftHeaderSpriteSheet = {
+    .data = gPokenavLeftHeaderHoennMap_Gfx, .size = 0xC00, .tag = 2
 };
 
-static const struct CompressedSpriteSheet sPokenavMenuLeftHeaderSpriteSheets[] =
-{
-    [POKENAV_GFX_MAIN_MENU] = {
-        .data = gPokenavLeftHeaderMainMenu_Gfx,
+static const struct CompressedSpriteSheet sPokenavMenuLeftHeaderSpriteSheets[] = {
+    [POKENAV_GFX_MAIN_MENU] = { .data = gPokenavLeftHeaderMainMenu_Gfx, .size = 0x20, .tag = 3 },
+    [POKENAV_GFX_CONDITION_MENU] = { .data = gPokenavLeftHeaderCondition_Gfx,
         .size = 0x20,
-        .tag = 3
-    },
-    [POKENAV_GFX_CONDITION_MENU] = {
-        .data = gPokenavLeftHeaderCondition_Gfx,
+        .tag = 1 },
+    [POKENAV_GFX_RIBBONS_MENU] = { .data = gPokenavLeftHeaderRibbons_Gfx, .size = 0x20, .tag = 2 },
+    [POKENAV_GFX_MATCH_CALL_MENU] = { .data = gPokenavLeftHeaderMatchCall_Gfx,
         .size = 0x20,
-        .tag = 1
-    },
-    [POKENAV_GFX_RIBBONS_MENU] = {
-        .data = gPokenavLeftHeaderRibbons_Gfx,
+        .tag = 4 },
+    [POKENAV_GFX_MAP_MENU_ZOOMED_OUT] = { .data = gPokenavLeftHeaderHoennMap_Gfx,
         .size = 0x20,
-        .tag = 2
-    },
-    [POKENAV_GFX_MATCH_CALL_MENU] = {
-        .data = gPokenavLeftHeaderMatchCall_Gfx,
-        .size = 0x20,
-        .tag = 4
-    },
-    [POKENAV_GFX_MAP_MENU_ZOOMED_OUT] = {
-        .data = gPokenavLeftHeaderHoennMap_Gfx,
-        .size = 0x20,
-        .tag = 0
-    },
-    [POKENAV_GFX_MAP_MENU_ZOOMED_IN] = {
-        .data = gPokenavLeftHeaderHoennMap_Gfx,
+        .tag = 0 },
+    [POKENAV_GFX_MAP_MENU_ZOOMED_IN] = { .data = gPokenavLeftHeaderHoennMap_Gfx,
         .size = 0x40,
-        .tag = 0
-    }
+        .tag = 0 }
 };
 
-static const struct CompressedSpriteSheetNoSize sPokenavSubMenuLeftHeaderSpriteSheets[] =
-{
-    [POKENAV_GFX_PARTY_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderParty_Gfx,
-        .tag = 1
-    },
-    [POKENAV_GFX_SEARCH_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderSearch_Gfx,
-        .tag = 1
-    },
-    [POKENAV_GFX_COOL_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderCool_Gfx,
-        .tag = 4
-    },
-    [POKENAV_GFX_BEAUTY_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderBeauty_Gfx,
-        .tag = 1
-    },
-    [POKENAV_GFX_CUTE_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderCute_Gfx,
-        .tag = 2
-    },
-    [POKENAV_GFX_SMART_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderSmart_Gfx,
-        .tag = 0
-    },
-    [POKENAV_GFX_TOUGH_MENU - POKENAV_GFX_SUBMENUS_START] = {
-        .data = gPokenavLeftHeaderTough_Gfx,
-        .tag = 0
-    }
+static const struct CompressedSpriteSheetNoSize sPokenavSubMenuLeftHeaderSpriteSheets[] = {
+    [POKENAV_GFX_PARTY_MENU - POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderParty_Gfx,
+        .tag = 1 },
+    [POKENAV_GFX_SEARCH_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderSearch_Gfx, .tag = 1 },
+    [POKENAV_GFX_COOL_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderCool_Gfx, .tag = 4 },
+    [POKENAV_GFX_BEAUTY_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderBeauty_Gfx, .tag = 1 },
+    [POKENAV_GFX_CUTE_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderCute_Gfx, .tag = 2 },
+    [POKENAV_GFX_SMART_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderSmart_Gfx, .tag = 0 },
+    [POKENAV_GFX_TOUGH_MENU -
+        POKENAV_GFX_SUBMENUS_START] = { .data = gPokenavLeftHeaderTough_Gfx, .tag = 0 }
 };
 
-static const struct OamData sSpinningPokenavSpriteOam =
-{
+static const struct OamData sSpinningPokenavSpriteOam = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -210,9 +160,7 @@ static const struct OamData sSpinningPokenavSpriteOam =
     .paletteNum = 0,
 };
 
-static const union AnimCmd sSpinningPokenavAnims[] =
-{
-    ANIMCMD_FRAME(0, 8),
+static const union AnimCmd sSpinningPokenavAnims[] = { ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(16, 8),
     ANIMCMD_FRAME(32, 8),
     ANIMCMD_FRAME(48, 8),
@@ -220,27 +168,19 @@ static const union AnimCmd sSpinningPokenavAnims[] =
     ANIMCMD_FRAME(80, 8),
     ANIMCMD_FRAME(96, 8),
     ANIMCMD_FRAME(112, 8),
-    ANIMCMD_JUMP(0)
-};
+    ANIMCMD_JUMP(0) };
 
-static const union AnimCmd *const sSpinningPokenavAnimTable[] =
-{
-    sSpinningPokenavAnims
-};
+static const union AnimCmd *const sSpinningPokenavAnimTable[] = { sSpinningPokenavAnims };
 
-static const struct SpriteTemplate sSpinningPokenavSpriteTemplate =
-{
-    .tileTag = 0,
+static const struct SpriteTemplate sSpinningPokenavSpriteTemplate = { .tileTag = 0,
     .paletteTag = 0,
     .oam = &sSpinningPokenavSpriteOam,
     .anims = sSpinningPokenavAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_SpinningPokenav
-};
+    .callback = SpriteCB_SpinningPokenav };
 
-static const struct OamData sPokenavLeftHeaderHoennMapSpriteOam =
-{
+static const struct OamData sPokenavLeftHeaderHoennMapSpriteOam = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -253,8 +193,7 @@ static const struct OamData sPokenavLeftHeaderHoennMapSpriteOam =
     .paletteNum = 0,
 };
 
-static const struct OamData sUnknown_0861FB24 =
-{
+static const struct OamData sUnknown_0861FB24 = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -268,32 +207,26 @@ static const struct OamData sUnknown_0861FB24 =
     .paletteNum = 0,
 };
 
-static const struct SpriteTemplate sPokenavLeftHeaderHoennMapSpriteTemplate =
-{
-    .tileTag = 2,
+static const struct SpriteTemplate sPokenavLeftHeaderHoennMapSpriteTemplate = { .tileTag = 2,
     .paletteTag = 1,
     .oam = &sPokenavLeftHeaderHoennMapSpriteOam,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct SpriteTemplate sUnknown_0861FB44 =
-{
-    .tileTag = 2,
+static const struct SpriteTemplate sUnknown_0861FB44 = { .tileTag = 2,
     .paletteTag = 2,
     .oam = &sUnknown_0861FB24,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
 bool32 InitPokenavMainMenu(void)
 {
     struct PokenavMainMenuResources *structPtr;
-    
+
     structPtr = AllocSubstruct(0, sizeof(struct PokenavMainMenuResources));
     if (structPtr == NULL)
         return FALSE;
@@ -340,7 +273,8 @@ static u32 LoopedTask_InitPokenavMenu(s32 a0)
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
         FreeAllWindowBuffers();
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, gPokenavMainMenuBgTemplates, ARRAY_COUNT(gPokenavMainMenuBgTemplates));
+        InitBgsFromTemplates(
+            0, gPokenavMainMenuBgTemplates, ARRAY_COUNT(gPokenavMainMenuBgTemplates));
         ResetBgPositions();
         ResetTempTileDataBuffers();
         return LT_INC_AND_CONTINUE;
@@ -662,7 +596,8 @@ void PrintHelpBarText(u32 textId)
     struct PokenavMainMenuResources *structPtr = GetSubstructPtr(0);
 
     DrawHelpBar(structPtr->helpBarWindowId);
-    AddTextPrinterParameterized3(structPtr->helpBarWindowId, 1, 0, 1, sHelpBarTextColors, 0, sHelpBarTexts[textId]);
+    AddTextPrinterParameterized3(
+        structPtr->helpBarWindowId, 1, 0, 1, sHelpBarTextColors, 0, sHelpBarTexts[textId]);
 }
 
 bool32 WaitForHelpBar(void)
@@ -781,8 +716,10 @@ static void LoadLeftHeaderGfxForMenu(u32 menuGfxId)
     size = GetDecompressedDataSize(sPokenavMenuLeftHeaderSpriteSheets[menuGfxId].data);
     LoadPalette(&gPokenavLeftHeader_Pal[tag * 16], (IndexOfSpritePaletteTag(1) * 16) + 0x100, 0x20);
     LZ77UnCompWram(sPokenavMenuLeftHeaderSpriteSheets[menuGfxId].data, gDecompressionBuffer);
-    RequestDma3Copy(gDecompressionBuffer, (void *)VRAM + 0x10000 + (GetSpriteTileStartByTag(2) * 32), size, 1);
-    structPtr->leftHeaderSprites[1]->oam.tileNum = GetSpriteTileStartByTag(2) + sPokenavMenuLeftHeaderSpriteSheets[menuGfxId].size;
+    RequestDma3Copy(
+        gDecompressionBuffer, (void *)VRAM + 0x10000 + (GetSpriteTileStartByTag(2) * 32), size, 1);
+    structPtr->leftHeaderSprites[1]->oam.tileNum =
+        GetSpriteTileStartByTag(2) + sPokenavMenuLeftHeaderSpriteSheets[menuGfxId].size;
 
     if (menuGfxId == POKENAV_GFX_MAP_MENU_ZOOMED_OUT || menuGfxId == POKENAV_GFX_MAP_MENU_ZOOMED_IN)
         structPtr->leftHeaderSprites[1]->pos2.x = 56;
@@ -800,8 +737,12 @@ static void LoadLeftHeaderGfxForSubMenu(u32 menuGfxId)
     tag = sPokenavSubMenuLeftHeaderSpriteSheets[menuGfxId].tag;
     size = GetDecompressedDataSize(sPokenavSubMenuLeftHeaderSpriteSheets[menuGfxId].data);
     LoadPalette(&gPokenavLeftHeader_Pal[tag * 16], (IndexOfSpritePaletteTag(2) * 16) + 0x100, 0x20);
-    LZ77UnCompWram(sPokenavSubMenuLeftHeaderSpriteSheets[menuGfxId].data, &gDecompressionBuffer[0x1000]);
-    RequestDma3Copy(&gDecompressionBuffer[0x1000], (void *)VRAM + 0x10800 + (GetSpriteTileStartByTag(2) * 32), size, 1);
+    LZ77UnCompWram(
+        sPokenavSubMenuLeftHeaderSpriteSheets[menuGfxId].data, &gDecompressionBuffer[0x1000]);
+    RequestDma3Copy(&gDecompressionBuffer[0x1000],
+        (void *)VRAM + 0x10800 + (GetSpriteTileStartByTag(2) * 32),
+        size,
+        1);
 }
 
 void sub_81C7FA0(u32 menuGfxId, bool32 arg1, bool32 arg2)
@@ -843,7 +784,8 @@ bool32 sub_81C8010(void)
 {
     struct PokenavMainMenuResources *structPtr = GetSubstructPtr(0);
 
-    if (structPtr->leftHeaderSprites[0]->callback == SpriteCallbackDummy && structPtr->submenuLeftHeaderSprites[0]->callback == SpriteCallbackDummy)
+    if (structPtr->leftHeaderSprites[0]->callback == SpriteCallbackDummy &&
+        structPtr->submenuLeftHeaderSprites[0]->callback == SpriteCallbackDummy)
         return FALSE;
     else
         return TRUE;

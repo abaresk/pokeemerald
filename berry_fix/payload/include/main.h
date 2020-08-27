@@ -42,4 +42,4 @@ extern u8 gSharedMem[0x8000];
 
 extern const IntrFunc gIntrFuncPointers[];
 
-#endif //GUARD_MAIN_H
+#endif // GUARD_MAIN_H

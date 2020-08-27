@@ -102,8 +102,7 @@ static bool32 sub_81D4E60(void)
     REG_IME = 0;
     *(u64 *)sp4 = *(u64 *)gLink.tempRecvBuffer;
     REG_IME = backupIME;
-    if (sp4[0] == 0xB9A0 && sp4[1] == 0xCCD0
-     && sp4[2] == 0xFFFF && sp4[3] == 0xFFFF)
+    if (sp4[0] == 0xB9A0 && sp4[1] == 0xCCD0 && sp4[2] == 0xFFFF && sp4[3] == 0xFFFF)
     {
         return TRUE;
     }
@@ -241,7 +240,7 @@ static bool32 sub_81D5064(u16 *arg0, u16 arg1)
         *arg0 = 0;
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
@@ -330,7 +329,9 @@ static void sub_81D5084(u8 taskId)
     case 8:
         AddTextPrinterToWindow1(gJPText_Connecting);
         // XXX: This (u32*) cast is discarding the const qualifier from gUnknown_089A3470
-        sub_81D4D50(&gUnknown_03006370, gMultiBootProgram_BerryGlitchFix_Start - gUnknown_089A3470, (u32*)gUnknown_089A3470);
+        sub_81D4D50(&gUnknown_03006370,
+            gMultiBootProgram_BerryGlitchFix_Start - gUnknown_089A3470,
+            (u32 *)gUnknown_089A3470);
         data->unk8 = 9;
         break;
     case 9:
@@ -367,26 +368,26 @@ static void sub_81D5084(u8 taskId)
     case 13:
         switch (sub_81D4EE4(&data->unk9, &data->unk0))
         {
-            case 0:
-                break;
-            case 2:
-                AddTextPrinterToWindow1(gJPText_Connecting);
-                data->unk8 = 14;
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                CloseLink();
-                data->unk8 = 23;
-                break;
-            case 5:
-                CloseLink();
-                data->unk8 = 21;
-                break;
-            case 3:
-            case 4:
-                CloseLink();
-                data->unk8 = 20;
-                break;
+        case 0:
+            break;
+        case 2:
+            AddTextPrinterToWindow1(gJPText_Connecting);
+            data->unk8 = 14;
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            CloseLink();
+            data->unk8 = 23;
+            break;
+        case 5:
+            CloseLink();
+            data->unk8 = 21;
+            break;
+        case 3:
+        case 4:
+            CloseLink();
+            data->unk8 = 20;
+            break;
         }
         break;
     case 14:
@@ -402,7 +403,8 @@ static void sub_81D5084(u8 taskId)
         }
         break;
     case 15:
-        data->unkE = EReader_IsReceivedDataValid((struct EReaderTrainerHillSet *)gDecompressionBuffer);
+        data->unkE =
+            EReader_IsReceivedDataValid((struct EReaderTrainerHillSet *)gDecompressionBuffer);
         SetCloseLinkCallbackAndType(data->unkE);
         data->unk8 = 16;
         break;

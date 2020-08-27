@@ -13,4 +13,4 @@ struct PCScreenEffectStruct
     /*0x10*/ u32 selectedPalettes;
 };
 
-#endif //GUARD_PC_SCREEN_EFFECT_H
+#endif // GUARD_PC_SCREEN_EFFECT_H

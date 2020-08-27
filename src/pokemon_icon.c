@@ -23,8 +23,7 @@ static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *, s16, s16, u8);
 
 // .rodata
 
-const u8 *const gMonIconTable[] =
-{
+const u8 *const gMonIconTable[] = {
     [SPECIES_NONE] = gMonIcon_Bulbasaur,
     [SPECIES_BULBASAUR] = gMonIcon_Bulbasaur,
     [SPECIES_IVYSAUR] = gMonIcon_Ivysaur,
@@ -467,8 +466,7 @@ const u8 *const gMonIconTable[] =
     [SPECIES_UNOWN_QMARK] = gMonIcon_UnownQuestionMark,
 };
 
-const u8 gMonIconPaletteIndices[] =
-{
+const u8 gMonIconPaletteIndices[] = {
     [SPECIES_NONE] = 0,
     [SPECIES_BULBASAUR] = 1,
     [SPECIES_IVYSAUR] = 1,
@@ -911,21 +909,19 @@ const u8 gMonIconPaletteIndices[] =
     [SPECIES_UNOWN_QMARK] = 0,
 };
 
-const struct SpritePalette gMonIconPaletteTable[] =
-{
+const struct SpritePalette gMonIconPaletteTable[] = {
     { gMonIconPalettes[0], POKE_ICON_BASE_PAL_TAG + 0 },
     { gMonIconPalettes[1], POKE_ICON_BASE_PAL_TAG + 1 },
     { gMonIconPalettes[2], POKE_ICON_BASE_PAL_TAG + 2 },
 
-// There are only 3 actual palettes. The following are unused
-// and don't point to valid data.
+    // There are only 3 actual palettes. The following are unused
+    // and don't point to valid data.
     { gMonIconPalettes[3], POKE_ICON_BASE_PAL_TAG + 3 },
     { gMonIconPalettes[4], POKE_ICON_BASE_PAL_TAG + 4 },
     { gMonIconPalettes[5], POKE_ICON_BASE_PAL_TAG + 5 },
 };
 
-const struct OamData sMonIconOamData =
-{
+const struct OamData sMonIconOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -940,43 +936,37 @@ const struct OamData sMonIconOamData =
 
 // fastest to slowest
 
-static const union AnimCmd sAnim_0[] =
-{
+static const union AnimCmd sAnim_0[] = {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_1[] =
-{
+static const union AnimCmd sAnim_1[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(1, 8),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_2[] =
-{
+static const union AnimCmd sAnim_2[] = {
     ANIMCMD_FRAME(0, 14),
     ANIMCMD_FRAME(1, 14),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_3[] =
-{
+static const union AnimCmd sAnim_3[] = {
     ANIMCMD_FRAME(0, 22),
     ANIMCMD_FRAME(1, 22),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_4[] =
-{
+static const union AnimCmd sAnim_4[] = {
     ANIMCMD_FRAME(0, 29),
     ANIMCMD_FRAME(0, 29), // frame 0 is repeated
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const sMonIconAnims[] =
-{
+const union AnimCmd *const sMonIconAnims[] = {
     sAnim_0,
     sAnim_1,
     sAnim_2,
@@ -984,20 +974,17 @@ const union AnimCmd *const sMonIconAnims[] =
     sAnim_4,
 };
 
-static const union AffineAnimCmd sAffineAnim_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_0[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 10),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_1[] = {
     AFFINEANIMCMD_FRAME(-2, -2, 0, 122),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const sMonIconAffineAnims[] =
-{
+const union AffineAnimCmd *const sMonIconAffineAnims[] = {
     sAffineAnim_0,
     sAffineAnim_1,
 };
@@ -1027,11 +1014,16 @@ const u16 sSpriteImageSizes[3][4] =
     },
 };
 
-u8 CreateMonIcon(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority, u32 personality, bool32 handleDeoxys)
+u8 CreateMonIcon(u16 species,
+    void (*callback)(struct Sprite *),
+    s16 x,
+    s16 y,
+    u8 subpriority,
+    u32 personality,
+    bool32 handleDeoxys)
 {
     u8 spriteId;
-    struct MonIconSpriteTemplate iconTemplate =
-    {
+    struct MonIconSpriteTemplate iconTemplate = {
         .oam = &sMonIconOamData,
         .image = GetMonIconPtr(species, personality, handleDeoxys),
         .anims = sMonIconAnims,
@@ -1050,11 +1042,11 @@ u8 CreateMonIcon(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u
     return spriteId;
 }
 
-u8 sub_80D2D78(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority, bool32 extra)
+u8 sub_80D2D78(
+    u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority, bool32 extra)
 {
     u8 spriteId;
-    struct MonIconSpriteTemplate iconTemplate =
-    {
+    struct MonIconSpriteTemplate iconTemplate = {
         .oam = &sMonIconOamData,
         .image = NULL,
         .anims = sMonIconAnims,
@@ -1100,7 +1092,9 @@ u16 GetUnownLetterByPersonality(u32 personality)
     if (!personality)
         return 0;
     else
-        return (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) | ((personality & 0x300) >> 6) | (personality & 0x3)) % 0x1C;
+        return (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) |
+                   ((personality & 0x300) >> 6) | (personality & 0x3)) %
+               0x1C;
 }
 
 u16 sub_80D2E84(u16 species)
@@ -1187,12 +1181,14 @@ void SpriteCB_MonIcon(struct Sprite *sprite)
     UpdateMonIconFrame(sprite);
 }
 
-const u8* GetMonIconTiles(u16 species, bool32 handleDeoxys)
+const u8 *GetMonIconTiles(u16 species, bool32 handleDeoxys)
 {
-    const u8* iconSprite = gMonIconTable[species];
+    const u8 *iconSprite = gMonIconTable[species];
     if (species == SPECIES_DEOXYS && handleDeoxys == TRUE)
     {
-        iconSprite = (const u8*)(0x400 + (u32)iconSprite); // use the specific Deoxys form icon (Speed in this case)
+        iconSprite =
+            (const u8 *)(0x400 +
+                         (u32)iconSprite); // use the specific Deoxys form icon (Speed in this case)
     }
     return iconSprite;
 }
@@ -1200,12 +1196,12 @@ const u8* GetMonIconTiles(u16 species, bool32 handleDeoxys)
 void sub_80D304C(u16 offset)
 {
     s32 i;
-    const struct SpritePalette* monIconPalettePtr;
+    const struct SpritePalette *monIconPalettePtr;
 
     if (offset <= 0xA0)
     {
         monIconPalettePtr = gMonIconPaletteTable;
-        for(i = 5; i >= 0; i--)
+        for (i = 5; i >= 0; i--)
         {
             LoadPalette(monIconPalettePtr->data, offset, 0x20);
             offset += 0x10;
@@ -1226,7 +1222,7 @@ u8 GetMonIconPaletteIndexFromSpecies(u16 species)
     return gMonIconPaletteIndices[species];
 }
 
-const u16* GetValidMonIconPalettePtr(u16 species)
+const u16 *GetValidMonIconPalettePtr(u16 species)
 {
     if (species > NUM_SPECIES)
         species = 260;
@@ -1250,13 +1246,15 @@ u8 UpdateMonIconFrame(struct Sprite *sprite)
             break;
         default:
             RequestSpriteCopy(
-                // pointer arithmetic is needed to get the correct pointer to perform the sprite copy on.
-                // because sprite->images is a struct def, it has to be casted to (u8 *) before any
-                // arithmetic can be performed.
-                (u8 *)sprite->images + (sSpriteImageSizes[sprite->oam.shape][sprite->oam.size] * frame),
+                // pointer arithmetic is needed to get the correct pointer to perform the sprite
+                // copy on. because sprite->images is a struct def, it has to be casted to (u8 *)
+                // before any arithmetic can be performed.
+                (u8 *)sprite->images +
+                    (sSpriteImageSizes[sprite->oam.shape][sprite->oam.size] * frame),
                 (u8 *)(OBJ_VRAM0 + sprite->oam.tileNum * TILE_SIZE_4BPP),
                 sSpriteImageSizes[sprite->oam.shape][sprite->oam.size]);
-            sprite->animDelayCounter = sprite->anims[sprite->animNum][sprite->animCmdIndex].frame.duration & 0xFF;
+            sprite->animDelayCounter =
+                sprite->anims[sprite->animNum][sprite->animCmdIndex].frame.duration & 0xFF;
             sprite->animCmdIndex++;
             result = sprite->animCmdIndex;
             break;
@@ -1269,14 +1267,15 @@ u8 UpdateMonIconFrame(struct Sprite *sprite)
     return result;
 }
 
-static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
+static u8 CreateMonIconSprite(
+    struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
 {
     u8 spriteId;
 
-    struct SpriteFrameImage image = { NULL, sSpriteImageSizes[iconTemplate->oam->shape][iconTemplate->oam->size] };
+    struct SpriteFrameImage image = { NULL,
+        sSpriteImageSizes[iconTemplate->oam->shape][iconTemplate->oam->size] };
 
-    struct SpriteTemplate spriteTemplate =
-    {
+    struct SpriteTemplate spriteTemplate = {
         .tileTag = 0xFFFF,
         .paletteTag = iconTemplate->paletteTag,
         .oam = iconTemplate->oam,
@@ -1295,7 +1294,8 @@ static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x,
 
 void sub_80D328C(struct Sprite *sprite)
 {
-    struct SpriteFrameImage image = { NULL, sSpriteImageSizes[sprite->oam.shape][sprite->oam.size] };
+    struct SpriteFrameImage image = { NULL,
+        sSpriteImageSizes[sprite->oam.shape][sprite->oam.size] };
     sprite->images = &image;
     DestroySprite(sprite);
 }

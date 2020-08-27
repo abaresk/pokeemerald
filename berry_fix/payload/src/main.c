@@ -23,10 +23,8 @@ void dummy_intr_0(void);
 void dummy_intr_1(void);
 void main_callback(u32 *, void *, void *);
 
-
 const char gBerryFixGameCode[] = "AGBJ";
-const IntrFunc gIntrFuncPointers[] = {
-    dummy_intr_0,
+const IntrFunc gIntrFuncPointers[] = { dummy_intr_0,
     dummy_intr_1,
     dummy_intr_0,
     dummy_intr_0,
@@ -38,24 +36,13 @@ const IntrFunc gIntrFuncPointers[] = {
     dummy_intr_0,
     NULL,
     NULL,
-    NULL
-};
+    NULL };
 const char gVersionData[][2] = {
-    {'J', 1},
-    {'E', 2},
-    {'D', 1},
-    {'F', 1},
-    {'I', 1},
-    {'S', 1}
+    { 'J', 1 }, { 'E', 2 }, { 'D', 1 }, { 'F', 1 }, { 'I', 1 }, { 'S', 1 }
 };
 const char gRubyTitleAndCode[] = "POKEMON RUBYAXV";
 const char gSapphireTitleAndCode[] = "POKEMON SAPPAXP";
-const u16 sDebugPals[20] = {
-    RGB(00, 00, 00),
-    RGB(31, 00, 00),
-    RGB(00, 31, 00),
-    RGB(00, 00, 31)
-};
+const u16 sDebugPals[20] = { RGB(00, 00, 00), RGB(31, 00, 00), RGB(00, 31, 00), RGB(00, 00, 31) };
 const u16 sDebugDigitsGfx[] = INCBIN_U16("graphics/debug_digits.4bpp");
 
 void AgbMain(void)
@@ -81,10 +68,12 @@ void AgbMain(void)
 }
 
 void dummy_intr_1(void)
-{}
+{
+}
 
 void dummy_intr_0(void)
-{}
+{
+}
 
 void ReadKeys(void)
 {
@@ -93,14 +82,14 @@ void ReadKeys(void)
     gHeldKeys = keyInput;
 }
 
-void fill_palette(const u8 * src, u16 * dest, u8 value)
+void fill_palette(const u8 *src, u16 *dest, u8 value)
 {
     s32 i;
     for (i = 0; src[i] != 0; i++)
         dest[i] = src[i] | value << 12;
 }
 
-bool32 berry_fix_memcmp(const char * src1, const char * src2, size_t size)
+bool32 berry_fix_memcmp(const char *src1, const char *src2, size_t size)
 {
     s32 i;
     for (i = 0; i < size; i++)
@@ -166,111 +155,111 @@ s32 validate_rom_header(void)
         return INVALID;
 }
 
-void main_callback(u32 * state, void * unused1, void * unused2)
+void main_callback(u32 *state, void *unused1, void *unused2)
 {
     u8 year;
     switch (*state)
     {
-        case MAINCB_INIT:
-            msg_display(MSGBOX_WILL_NOW_UPDATE);
-            if (++gInitialWaitTimer >= 180)
+    case MAINCB_INIT:
+        msg_display(MSGBOX_WILL_NOW_UPDATE);
+        if (++gInitialWaitTimer >= 180)
+        {
+            gInitialWaitTimer = 0;
+            gUpdateSuccessful = 0;
+            switch (validate_rom_header())
             {
-                gInitialWaitTimer = 0;
-                gUpdateSuccessful = 0;
-                switch (validate_rom_header())
-                {
-                    case SAPPHIRE_UPDATABLE:
-                    case RUBY_UPDATABLE: // Should Update Ruby
-                        ++(*state); // MAINCB_CHECK_RTC
-                        break;
-                    case INVALID: // Invalid header
-                        *state = MAINCB_ERROR;
-                        break;
-                    case SAPPHIRE_NONEED: // Should not update Sapphire
-                    case RUBY_NONEED: // Should not update Ruby
-                        *state = MAINCB_NO_NEED_TO_FIX;
-                        break;
-                }
-            }
-            break;
-        case MAINCB_CHECK_RTC:
-            if (!rtc_maincb_is_rtc_working())
+            case SAPPHIRE_UPDATABLE:
+            case RUBY_UPDATABLE: // Should Update Ruby
+                ++(*state);      // MAINCB_CHECK_RTC
+                break;
+            case INVALID: // Invalid header
                 *state = MAINCB_ERROR;
-            else
-                ++(*state); // MAINCB_CHECK_FLASH
-            break;
-        case MAINCB_CHECK_FLASH:
-            if (flash_maincb_ident_is_valid() == TRUE)
-                ++(*state); // MAINCB_READ_SAVE
-            else
-                *state = MAINCB_ERROR;
-            break;
-        case MAINCB_READ_SAVE:
-            if (flash_maincb_read_save(0) == SAVE_STATUS_OK)
-                ++(*state); // MAINCB_CHECK_TIME
-            else
-                *state = MAINCB_ERROR;
-            break;
-        case MAINCB_CHECK_TIME:
-            if (rtc_maincb_is_time_since_last_berry_update_positive(&year) == TRUE)
-            {
-                if (year == 0)
-                    ++(*state); // MAINCB_FIX_DATE
-                else
-                    *state = MAINCB_CHECK_PACIFIDLOG_TM;
-            }
-            else
-            {
-                if (year != 1)
-                    *state = MAINCB_YEAR_MAKES_NO_SENSE;
-                else
-                    ++(*state); // MAINCB_FIX_DATE
-            }
-            break;
-        case MAINCB_FIX_DATE:
-            rtc_maincb_fix_date();
-            gUpdateSuccessful |= 1;
-            *state = MAINCB_CHECK_PACIFIDLOG_TM;
-            break;
-        case MAINCB_CHECK_PACIFIDLOG_TM:
-            if (flash_maincb_check_need_reset_pacifidlog_tm() == TRUE)
-                *state = MAINCB_FINISHED;
-            else
-                *state = MAINCB_FIX_PACIFIDLOG_TM;
-            break;
-        case MAINCB_FIX_PACIFIDLOG_TM:
-            msg_display(MSGBOX_UPDATING);
-            if (flash_maincb_reset_pacifidlog_tm() == TRUE)
-            {
-                gUpdateSuccessful |= 1;
-                *state = MAINCB_FINISHED;
-            }
-            else
-                *state = MAINCB_ERROR;
-            break;
-        case MAINCB_FINISHED:
-            if (gUpdateSuccessful == 0)
+                break;
+            case SAPPHIRE_NONEED: // Should not update Sapphire
+            case RUBY_NONEED:     // Should not update Ruby
                 *state = MAINCB_NO_NEED_TO_FIX;
+                break;
+            }
+        }
+        break;
+    case MAINCB_CHECK_RTC:
+        if (!rtc_maincb_is_rtc_working())
+            *state = MAINCB_ERROR;
+        else
+            ++(*state); // MAINCB_CHECK_FLASH
+        break;
+    case MAINCB_CHECK_FLASH:
+        if (flash_maincb_ident_is_valid() == TRUE)
+            ++(*state); // MAINCB_READ_SAVE
+        else
+            *state = MAINCB_ERROR;
+        break;
+    case MAINCB_READ_SAVE:
+        if (flash_maincb_read_save(0) == SAVE_STATUS_OK)
+            ++(*state); // MAINCB_CHECK_TIME
+        else
+            *state = MAINCB_ERROR;
+        break;
+    case MAINCB_CHECK_TIME:
+        if (rtc_maincb_is_time_since_last_berry_update_positive(&year) == TRUE)
+        {
+            if (year == 0)
+                ++(*state); // MAINCB_FIX_DATE
             else
-                msg_display(MSGBOX_HAS_BEEN_UPDATED);
-            break;
-        case MAINCB_NO_NEED_TO_FIX:
-            msg_display(MSGBOX_NO_NEED_TO_UPDATE);
-            break;
-        case MAINCB_YEAR_MAKES_NO_SENSE:
-            msg_display(MSGBOX_UNABLE_TO_UPDATE);
-            break;
-        case MAINCB_ERROR:
-            msg_display(MSGBOX_UNABLE_TO_UPDATE);
-            break;
+                *state = MAINCB_CHECK_PACIFIDLOG_TM;
+        }
+        else
+        {
+            if (year != 1)
+                *state = MAINCB_YEAR_MAKES_NO_SENSE;
+            else
+                ++(*state); // MAINCB_FIX_DATE
+        }
+        break;
+    case MAINCB_FIX_DATE:
+        rtc_maincb_fix_date();
+        gUpdateSuccessful |= 1;
+        *state = MAINCB_CHECK_PACIFIDLOG_TM;
+        break;
+    case MAINCB_CHECK_PACIFIDLOG_TM:
+        if (flash_maincb_check_need_reset_pacifidlog_tm() == TRUE)
+            *state = MAINCB_FINISHED;
+        else
+            *state = MAINCB_FIX_PACIFIDLOG_TM;
+        break;
+    case MAINCB_FIX_PACIFIDLOG_TM:
+        msg_display(MSGBOX_UPDATING);
+        if (flash_maincb_reset_pacifidlog_tm() == TRUE)
+        {
+            gUpdateSuccessful |= 1;
+            *state = MAINCB_FINISHED;
+        }
+        else
+            *state = MAINCB_ERROR;
+        break;
+    case MAINCB_FINISHED:
+        if (gUpdateSuccessful == 0)
+            *state = MAINCB_NO_NEED_TO_FIX;
+        else
+            msg_display(MSGBOX_HAS_BEEN_UPDATED);
+        break;
+    case MAINCB_NO_NEED_TO_FIX:
+        msg_display(MSGBOX_NO_NEED_TO_UPDATE);
+        break;
+    case MAINCB_YEAR_MAKES_NO_SENSE:
+        msg_display(MSGBOX_UNABLE_TO_UPDATE);
+        break;
+    case MAINCB_ERROR:
+        msg_display(MSGBOX_UNABLE_TO_UPDATE);
+        break;
     }
 }
 
 void DBG_LoadDigitsPal(void)
 {
-    const u16 * src;
+    const u16 *src;
     s32 i;
-    register vu16 * dest asm("r3") = (vu16 *)BG_PLTT + 1;
+    register vu16 *dest asm("r3") = (vu16 *)BG_PLTT + 1;
     DmaFill16(3, RGB(31, 31, 31), (vu16 *)BG_PLTT, BG_PLTT_SIZE);
     src = sDebugPals;
     for (i = 0; i < 4; i++)

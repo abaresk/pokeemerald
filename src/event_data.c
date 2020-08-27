@@ -7,10 +7,10 @@
 #define NUM_DAILY_FLAGS   (DAILY_FLAGS_END - DAILY_FLAGS_START + 1)
 #define NUM_TEMP_VARS     (TEMP_VARS_END - TEMP_VARS_START + 1)
 
-#define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
-#define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
-#define DAILY_FLAGS_SIZE    (NUM_DAILY_FLAGS / 8)
-#define TEMP_VARS_SIZE      (NUM_TEMP_VARS * 2)      // 1/2 var per byte
+#define SPECIAL_FLAGS_SIZE (NUM_SPECIAL_FLAGS / 8) // 8 flags per byte
+#define TEMP_FLAGS_SIZE    (NUM_TEMP_FLAGS / 8)
+#define DAILY_FLAGS_SIZE   (NUM_DAILY_FLAGS / 8)
+#define TEMP_VARS_SIZE     (NUM_TEMP_VARS * 2) // 1/2 var per byte
 
 EWRAM_DATA u16 gSpecialVar_0x8000 = 0;
 EWRAM_DATA u16 gSpecialVar_0x8001 = 0;
@@ -30,7 +30,7 @@ EWRAM_DATA u16 gSpecialVar_Facing = 0;
 EWRAM_DATA u16 gSpecialVar_MonBoxId = 0;
 EWRAM_DATA u16 gSpecialVar_MonBoxPos = 0;
 EWRAM_DATA u16 gSpecialVar_Unused_0x8014 = 0;
-EWRAM_DATA static u8 gSpecialFlags[SPECIAL_FLAGS_SIZE] = {0};
+EWRAM_DATA static u8 gSpecialFlags[SPECIAL_FLAGS_SIZE] = { 0 };
 
 extern u16 *const gSpecialVars[];
 
@@ -78,7 +78,8 @@ void EnableNationalPokedex(void)
 
 bool32 IsNationalPokedexEnabled(void)
 {
-    if (gSaveBlock2Ptr->pokedex.nationalMagic == 0xDA && VarGet(VAR_NATIONAL_DEX) == 0x302 && FlagGet(FLAG_SYS_NATIONAL_DEX))
+    if (gSaveBlock2Ptr->pokedex.nationalMagic == 0xDA && VarGet(VAR_NATIONAL_DEX) == 0x302 &&
+        FlagGet(FLAG_SYS_NATIONAL_DEX))
         return TRUE;
     else
         return FALSE;

@@ -3,7 +3,6 @@
 
 // Exported type declarations
 
-
 struct BardSound
 {
     /*0x00*/ u8 var00;
@@ -43,4 +42,4 @@ extern const u16 gUnknown_085FA1D4;
 const struct BardSound *GetWordSounds(u16 word);
 void GetWordPhonemes(struct BardSong *song, u16 word);
 
-#endif //GUARD_BARD_MUSIC_H
+#endif // GUARD_BARD_MUSIC_H

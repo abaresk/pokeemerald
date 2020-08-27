@@ -139,8 +139,8 @@ struct PokemonStorageSystemData
     s16 wallpaperScrollSpeed;
     u16 field_2D0;
     u8 field_2D2;
-    u8 field_2D3; // Written to, but never read.
-    u8 field_2D4; // Written to, but never read.
+    u8 field_2D3;  // Written to, but never read.
+    u8 field_2D4;  // Written to, but never read.
     u16 field_2D6; // Written to, but never read.
     s16 field_2D8; // Written to, but never read.
     u16 field_2DA; // Written to, but never read.
@@ -161,7 +161,7 @@ struct PokemonStorageSystemData
     struct Sprite *field_730[2];
     u32 field_738;
     u8 field_73C[80]; // Unused
-    u16 field_78C; // Written to, but never read.
+    u16 field_78C;    // Written to, but never read.
     s16 wallpaperSetId;
     s16 wallpaperId;
     u16 field_792[360];
@@ -422,26 +422,26 @@ enum
     CURSOR_AREA_BUTTONS, // Party Pokemon and Close Box
 };
 
-#define TAG_PAL_WAVEFORM    0xDACA
-#define TAG_PAL_DAC8        0xDAC8
-#define TAG_PAL_DAC6        0xDAC6
-#define TAG_PAL_DACE        0xDACE
-#define TAG_PAL_DAC7        0xDAC7
-#define TAG_PAL_DAC9        0xDAC9
-#define TAG_PAL_DAC0        0xDAC0
-#define TAG_PAL_DACB        0xDACB
+#define TAG_PAL_WAVEFORM 0xDACA
+#define TAG_PAL_DAC8     0xDAC8
+#define TAG_PAL_DAC6     0xDAC6
+#define TAG_PAL_DACE     0xDACE
+#define TAG_PAL_DAC7     0xDAC7
+#define TAG_PAL_DAC9     0xDAC9
+#define TAG_PAL_DAC0     0xDAC0
+#define TAG_PAL_DACB     0xDACB
 
-#define TAG_TILE_WAVEFORM   0x5
-#define TAG_TILE_10         0x10
-#define TAG_TILE_2          0x2
-#define TAG_TILE_D          0xD
-#define TAG_TILE_A          0xA
-#define TAG_TILE_3          0x3
-#define TAG_TILE_4          0x4
-#define TAG_TILE_12         0x12
-#define TAG_TILE_7          0x7
-#define TAG_TILE_0          0x0
-#define TAG_TILE_1          0x1
+#define TAG_TILE_WAVEFORM 0x5
+#define TAG_TILE_10       0x10
+#define TAG_TILE_2        0x2
+#define TAG_TILE_D        0xD
+#define TAG_TILE_A        0xA
+#define TAG_TILE_3        0x3
+#define TAG_TILE_4        0x4
+#define TAG_TILE_12       0x12
+#define TAG_TILE_7        0x7
+#define TAG_TILE_0        0x0
+#define TAG_TILE_1        0x1
 
 // IWRAM bss
 static u32 gUnknown_03000F78[98];
@@ -456,7 +456,7 @@ EWRAM_DATA static u8 gUnknown_02039D0E = 0;
 EWRAM_DATA static u8 sWhichToReshow = 0;
 EWRAM_DATA static u8 sLastUsedBox = 0;
 EWRAM_DATA static u16 sMovingItemId = 0;
-EWRAM_DATA static struct Pokemon gUnknown_02039D14 = {0};
+EWRAM_DATA static struct Pokemon gUnknown_02039D14 = { 0 };
 EWRAM_DATA static s8 sBoxCursorArea = 0;
 EWRAM_DATA static s8 sBoxCursorPosition = 0;
 EWRAM_DATA static bool8 sIsMonBeingMoved = 0;
@@ -652,7 +652,8 @@ static void SetMenuText(u8 textId);
 static void sub_80D0D8C(u8 cursorArea, u8 cursorPos);
 static void sub_80D0E50(u8 cursorArea, u8 cursorPos);
 static void sub_80D0F38(u16 item);
-static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
+static struct Sprite *CreateMonIconSprite(
+    u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
 static void DestroyBoxMonIcon(struct Sprite *sprite);
 static void SetBoxSpeciesAndPersonalities(u8 boxId);
 static void sub_80CB9D0(struct Sprite *sprite, u16 partyId);
@@ -716,17 +717,14 @@ static void sub_80D2B88(struct UnkStruct_2000028 *unkStruct);
 static void sub_80D2C1C(struct UnkStruct_2000028 *unkStruct);
 
 // static const rom data
-static const struct PSS_MenuStringPtrs gUnknown_085716C0[] =
-{
-    {gText_WithdrawPokemon, gText_WithdrawMonDescription},
-    {gText_DepositPokemon, gText_DepositMonDescription},
-    {gText_MovePokemon, gText_MoveMonDescription},
-    {gText_MoveItems, gText_MoveItemsDescription},
-    {gText_SeeYa, gText_SeeYaDescription}
-};
+static const struct PSS_MenuStringPtrs gUnknown_085716C0[] = { { gText_WithdrawPokemon,
+                                                                   gText_WithdrawMonDescription },
+    { gText_DepositPokemon, gText_DepositMonDescription },
+    { gText_MovePokemon, gText_MoveMonDescription },
+    { gText_MoveItems, gText_MoveItemsDescription },
+    { gText_SeeYa, gText_SeeYaDescription } };
 
-static const struct WindowTemplate gUnknown_085716E8 =
-{
+static const struct WindowTemplate gUnknown_085716E8 = {
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 1,
@@ -736,84 +734,147 @@ static const struct WindowTemplate gUnknown_085716E8 =
     .baseBlock = 0x1,
 };
 
-static const union AnimCmd sSpriteAnim_85716F0[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_85716F0[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_85716F8[] = { ANIMCMD_FRAME(4, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571700[] = { ANIMCMD_FRAME(6, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571708[] = { ANIMCMD_FRAME(10, 5), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_8571710[] = {
+    sSpriteAnim_85716F0, sSpriteAnim_85716F8, sSpriteAnim_8571700, sSpriteAnim_8571708
 };
 
-static const union AnimCmd sSpriteAnim_85716F8[] =
-{
-    ANIMCMD_FRAME(4, 5),
-    ANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_8571720[] = {
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_8571700[] =
-{
-    ANIMCMD_FRAME(6, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_8571708[] =
-{
-    ANIMCMD_FRAME(10, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sSpriteAnimTable_8571710[] =
-{
-    sSpriteAnim_85716F0,
-    sSpriteAnim_85716F8,
-    sSpriteAnim_8571700,
-    sSpriteAnim_8571708
-};
-
-static const union AffineAnimCmd sSpriteAffineAnim_8571720[] =
-{
-    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_8571730[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_8571730[] = {
     sSpriteAffineAnim_8571720
 };
 
-static const u8 sBoxInfoTextColors[] = {TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
+static const u8 sBoxInfoTextColors[] = {
+    TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5
+};
 static const u8 sText_OutOf30[] = _("/30");
 
 static const u16 gBoxSelectionPopupPalette[] = INCBIN_U16("graphics/unknown/unknown_57173C.gbapal");
-static const u8 gBoxSelectionPopupCenterTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
-static const u8 gBoxSelectionPopupSidesTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
-static const u32 gPokemonStorageScrollingBGTileset[] = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.4bpp.lz");
-static const u32 gPokemonStorageScrollingBGTilemap[] = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
+static const u8 gBoxSelectionPopupCenterTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
+static const u8 gBoxSelectionPopupSidesTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
+static const u32 gPokemonStorageScrollingBGTileset[] =
+    INCBIN_U32("graphics/pokemon_storage/scrolling_bg.4bpp.lz");
+static const u32 gPokemonStorageScrollingBGTilemap[] =
+    INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
 static const u32 gUnknown_08572280[] = INCBIN_U32("graphics/unknown/unknown_572280.gbapal");
 static const u32 gUnknown_085722A0[] = INCBIN_U32("graphics/unknown/unknown_5722A0.bin.lz");
 
-static const u16 gUnknown_0857239C[] =
-{
-    0x0101, 0x0102, 0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108, 0x0111, 0x0112, 0x0113, 0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
-    0x2101, 0x2102, 0x2103, 0x2104, 0x2105, 0x2106, 0x2107, 0x2108, 0x2111, 0x2112, 0x2113, 0x2114, 0x2115, 0x2116, 0x2117, 0x2118,
+static const u16 gUnknown_0857239C[] = {
+    0x0101,
+    0x0102,
+    0x0103,
+    0x0104,
+    0x0105,
+    0x0106,
+    0x0107,
+    0x0108,
+    0x0111,
+    0x0112,
+    0x0113,
+    0x0114,
+    0x0115,
+    0x0116,
+    0x0117,
+    0x0118,
+    0x2101,
+    0x2102,
+    0x2103,
+    0x2104,
+    0x2105,
+    0x2106,
+    0x2107,
+    0x2108,
+    0x2111,
+    0x2112,
+    0x2113,
+    0x2114,
+    0x2115,
+    0x2116,
+    0x2117,
+    0x2118,
 };
 
-static const u16 gUnknown_085723DC[] = INCBIN_U16("graphics/unknown/unknown_5723DC.gbapal"); // Left-most part and Close Box.
+static const u16 gUnknown_085723DC[] =
+    INCBIN_U16("graphics/unknown/unknown_5723DC.gbapal"); // Left-most part and Close Box.
 static const u16 gUnknown_085723FC[] = INCBIN_U16("graphics/unknown/unknown_5723FC.gbapal");
 static const u16 gUnknown_0857241C[] = INCBIN_U16("graphics/unknown/unknown_57241C.gbapal");
 static const u16 gUnknown_0857243C[] = INCBIN_U16("graphics/unknown/unknown_57243C.gbapal");
 
-static const u16 gUnknown_0857245C[] =
-{
-    0x014c, 0x014d, 0x014e, 0x014f, 0x0170, 0x0171, 0x0172, 0x0173, 0x0174, 0x015c, 0x015d, 0x015e, 0x015f, 0x0180, 0x0181, 0x0182,
-    0x0183, 0x0184, 0x0175, 0x0176, 0x0177, 0x0178, 0x0179, 0x017a, 0x017b, 0x017c, 0x017d, 0x0185, 0x0186, 0x0187, 0x0188, 0x0189,
-    0x018a, 0x018b, 0x018c, 0x018d
+static const u16 gUnknown_0857245C[] = { 0x014c,
+    0x014d,
+    0x014e,
+    0x014f,
+    0x0170,
+    0x0171,
+    0x0172,
+    0x0173,
+    0x0174,
+    0x015c,
+    0x015d,
+    0x015e,
+    0x015f,
+    0x0180,
+    0x0181,
+    0x0182,
+    0x0183,
+    0x0184,
+    0x0175,
+    0x0176,
+    0x0177,
+    0x0178,
+    0x0179,
+    0x017a,
+    0x017b,
+    0x017c,
+    0x017d,
+    0x0185,
+    0x0186,
+    0x0187,
+    0x0188,
+    0x0189,
+    0x018a,
+    0x018b,
+    0x018c,
+    0x018d };
+static const u16 gUnknown_085724A4[] = {
+    0x1140,
+    0x1141,
+    0x1141,
+    0x1142,
+    0x1150,
+    0x1151,
+    0x1151,
+    0x1152,
+    0x1160,
+    0x1161,
+    0x1161,
+    0x1162,
 };
-static const u16 gUnknown_085724A4[] =
-{
-    0x1140, 0x1141, 0x1141, 0x1142, 0x1150, 0x1151, 0x1151, 0x1152, 0x1160, 0x1161, 0x1161, 0x1162,
-};
-static const u16 gUnknown_085724BC[] =
-{
-    0x1143, 0x1144, 0x1144, 0x1145, 0x1153, 0x1154, 0x1154, 0x1155, 0x1163, 0x1164, 0x1164, 0x1165,
+static const u16 gUnknown_085724BC[] = {
+    0x1143,
+    0x1144,
+    0x1144,
+    0x1145,
+    0x1153,
+    0x1154,
+    0x1154,
+    0x1155,
+    0x1163,
+    0x1164,
+    0x1164,
+    0x1165,
 };
 
 static const u16 gWaveformPalette[] = INCBIN_U16("graphics/pokemon_storage/waveform.gbapal");
@@ -821,18 +882,18 @@ static const u32 gWaveformTiles[] = INCBIN_U32("graphics/pokemon_storage/wavefor
 static const u32 gUnknown_085726B4[] = INCBIN_U32("graphics/unused/unknown_5726B4.gbapal");
 static const u32 gUnknown_085726F4[] = INCBIN_U32("graphics/unknown/unknown_5726F4.gbapal");
 
-static const struct WindowTemplate gUnknown_08572714[] =
-{
-    { // 0
-        .bg = 1,
-        .tilemapLeft = 0,
-        .tilemapTop = 11,
-        .width = 9,
-        .height = 7,
-        .paletteNum = 3,
-        .baseBlock = 0xC0,
-    },
-    { // 1
+static const struct WindowTemplate gUnknown_08572714[] = { {
+                                                               // 0
+                                                               .bg = 1,
+                                                               .tilemapLeft = 0,
+                                                               .tilemapTop = 11,
+                                                               .width = 9,
+                                                               .height = 7,
+                                                               .paletteNum = 3,
+                                                               .baseBlock = 0xC0,
+                                                           },
+    {
+        // 1
         .bg = 0,
         .tilemapLeft = 11,
         .tilemapTop = 17,
@@ -841,7 +902,8 @@ static const struct WindowTemplate gUnknown_08572714[] =
         .paletteNum = 15,
         .baseBlock = 0x14,
     },
-    { // 2
+    {
+        // 2
         .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 13,
@@ -850,62 +912,47 @@ static const struct WindowTemplate gUnknown_08572714[] =
         .paletteNum = 15,
         .baseBlock = 0x14,
     },
-    DUMMY_WIN_TEMPLATE
-};
+    DUMMY_WIN_TEMPLATE };
 
-static const struct BgTemplate gUnknown_08572734[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate gUnknown_08572734[] = {
+    { .bg = 0,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0x100
-    },
-    {
-        .bg = 2,
+        .baseTile = 0x100 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 27,
         .screenSize = 1,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 3,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct SpritePalette gWaveformSpritePalette =
-{
-    gWaveformPalette, TAG_PAL_WAVEFORM
-};
+static const struct SpritePalette gWaveformSpritePalette = { gWaveformPalette, TAG_PAL_WAVEFORM };
 
-static const struct SpriteSheet gWaveformSpriteSheet =
-{
+static const struct SpriteSheet gWaveformSpriteSheet = {
     gWaveformTiles, sizeof(gWaveformTiles), TAG_TILE_WAVEFORM
 };
 
 static const struct OamData sOamData_857286C;
-static const struct SpriteTemplate sSpriteTemplate_CursorMon =
-{
+static const struct SpriteTemplate sSpriteTemplate_CursorMon = {
     .tileTag = TAG_TILE_2,
     .paletteTag = TAG_PAL_DAC6,
     .oam = &sOamData_857286C,
@@ -915,43 +962,41 @@ static const struct SpriteTemplate sSpriteTemplate_CursorMon =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct StorageAction gPCStorageActionTexts[] =
-{
-    [PC_TEXT_EXIT_BOX] = {gText_ExitFromBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WHAT_YOU_DO] = {gText_WhatDoYouWantToDo, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PICK_A_THEME] = {gText_PleasePickATheme, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PICK_A_WALLPAPER] = {gText_PickTheWallpaper, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_IS_SELECTED] = {gText_PkmnIsSelected, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_JUMP_TO_WHICH_BOX] = {gText_JumpToWhichBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_DEPOSIT_IN_WHICH_BOX] = {gText_DepositInWhichBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WAS_DEPOSITED] = {gText_PkmnWasDeposited, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_BOX_IS_FULL] = {gText_BoxIsFull2, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_RELEASE_POKE] = {gText_ReleaseThisPokemon, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WAS_RELEASED] = {gText_PkmnWasReleased, PC_TEXT_FMT_MON_NAME_4},
-    [PC_TEXT_BYE_BYE] = {gText_ByeByePkmn, PC_TEXT_FMT_MON_NAME_6},
-    [PC_TEXT_MARK_POKE] = {gText_MarkYourPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_LAST_POKE] = {gText_ThatsYourLastPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PARTY_FULL] = {gText_YourPartysFull, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_HOLDING_POKE] = {gText_YoureHoldingAPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WHICH_ONE_WILL_TAKE] = {gText_WhichOneWillYouTake, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CANT_RELEASE_EGG] = {gText_YouCantReleaseAnEgg, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CONTINUE_BOX] = {gText_ContinueBoxOperations, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CAME_BACK] = {gText_PkmnCameBack, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_WORRIED] = {gText_WasItWorriedAboutYou, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_SURPRISE] = {gText_FourEllipsesExclamation, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PLEASE_REMOVE_MAIL] = {gText_PleaseRemoveTheMail, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_IS_SELECTED2] = {gText_PkmnIsSelected, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_GIVE_TO_MON] = {gText_GiveToAPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PLACED_IN_BAG] = {gText_PlacedItemInBag, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_BAG_FULL] = {gText_BagIsFull2, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PUT_IN_BAG] = {gText_PutItemInBag, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_ITEM_IS_HELD] = {gText_ItemIsNowHeld, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_CHANGED_TO_ITEM] = {gText_ChangedToNewItem, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_CANT_STORE_MAIL] = {gText_MailCantBeStored, PC_TEXT_FMT_NORMAL},
+static const struct StorageAction gPCStorageActionTexts[] = {
+    [PC_TEXT_EXIT_BOX] = { gText_ExitFromBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WHAT_YOU_DO] = { gText_WhatDoYouWantToDo, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PICK_A_THEME] = { gText_PleasePickATheme, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PICK_A_WALLPAPER] = { gText_PickTheWallpaper, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_IS_SELECTED] = { gText_PkmnIsSelected, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_JUMP_TO_WHICH_BOX] = { gText_JumpToWhichBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_DEPOSIT_IN_WHICH_BOX] = { gText_DepositInWhichBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WAS_DEPOSITED] = { gText_PkmnWasDeposited, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_BOX_IS_FULL] = { gText_BoxIsFull2, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_RELEASE_POKE] = { gText_ReleaseThisPokemon, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WAS_RELEASED] = { gText_PkmnWasReleased, PC_TEXT_FMT_MON_NAME_4 },
+    [PC_TEXT_BYE_BYE] = { gText_ByeByePkmn, PC_TEXT_FMT_MON_NAME_6 },
+    [PC_TEXT_MARK_POKE] = { gText_MarkYourPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_LAST_POKE] = { gText_ThatsYourLastPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PARTY_FULL] = { gText_YourPartysFull, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_HOLDING_POKE] = { gText_YoureHoldingAPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WHICH_ONE_WILL_TAKE] = { gText_WhichOneWillYouTake, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CANT_RELEASE_EGG] = { gText_YouCantReleaseAnEgg, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CONTINUE_BOX] = { gText_ContinueBoxOperations, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CAME_BACK] = { gText_PkmnCameBack, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_WORRIED] = { gText_WasItWorriedAboutYou, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_SURPRISE] = { gText_FourEllipsesExclamation, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PLEASE_REMOVE_MAIL] = { gText_PleaseRemoveTheMail, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_IS_SELECTED2] = { gText_PkmnIsSelected, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_GIVE_TO_MON] = { gText_GiveToAPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PLACED_IN_BAG] = { gText_PlacedItemInBag, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_BAG_FULL] = { gText_BagIsFull2, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PUT_IN_BAG] = { gText_PutItemInBag, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_ITEM_IS_HELD] = { gText_ItemIsNowHeld, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_CHANGED_TO_ITEM] = { gText_ChangedToNewItem, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_CANT_STORE_MAIL] = { gText_MailCantBeStored, PC_TEXT_FMT_NORMAL },
 };
 
-static const struct WindowTemplate sYesNoWindowTemplate =
-{
+static const struct WindowTemplate sYesNoWindowTemplate = {
     .bg = 0,
     .tilemapLeft = 24,
     .tilemapTop = 11,
@@ -961,9 +1006,7 @@ static const struct WindowTemplate sYesNoWindowTemplate =
     .baseBlock = 0x5C,
 };
 
-static const struct OamData sOamData_857286C =
-{
-    .y = 0,
+static const struct OamData sOamData_857286C = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -975,12 +1018,9 @@ static const struct OamData sOamData_857286C =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_8572874 =
-{
-    .y = 0,
+static const struct OamData sOamData_8572874 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -992,47 +1032,25 @@ static const struct OamData sOamData_8572874 =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AnimCmd sSpriteAnim_857287C[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8572884[] = {
+    ANIMCMD_FRAME(2, 8), ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(6, 8), ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sSpriteAnim_857287C[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_8572894[] = { ANIMCMD_FRAME(8, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857289C[] = {
+    ANIMCMD_FRAME(10, 8), ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(12, 8), ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sSpriteAnim_8572884[] =
-{
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(6, 8),
-    ANIMCMD_JUMP(0)
+static const union AnimCmd *const sSpriteAnimTable_85728AC[] = {
+    sSpriteAnim_857287C, sSpriteAnim_8572884, sSpriteAnim_8572894, sSpriteAnim_857289C
 };
 
-static const union AnimCmd sSpriteAnim_8572894[] =
-{
-    ANIMCMD_FRAME(8, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857289C[] =
-{
-    ANIMCMD_FRAME(10, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(12, 8),
-    ANIMCMD_JUMP(0)
-};
-
-static const union AnimCmd *const sSpriteAnimTable_85728AC[] =
-{
-    sSpriteAnim_857287C,
-    sSpriteAnim_8572884,
-    sSpriteAnim_8572894,
-    sSpriteAnim_857289C
-};
-
-static const struct SpriteTemplate sSpriteTemplate_Waveform =
-{
+static const struct SpriteTemplate sSpriteTemplate_Waveform = {
     .tileTag = TAG_TILE_WAVEFORM,
     .paletteTag = TAG_PAL_WAVEFORM,
     .oam = &sOamData_8572874,
@@ -1043,8 +1061,7 @@ static const struct SpriteTemplate sSpriteTemplate_Waveform =
 };
 
 static const struct OamData sOamData_85728EC;
-static const struct SpriteTemplate gUnknown_085728D4 =
-{
+static const struct SpriteTemplate gUnknown_085728D4 = {
     .tileTag = TAG_TILE_12,
     .paletteTag = TAG_PAL_DAC0,
     .oam = &sOamData_85728EC,
@@ -1054,9 +1071,7 @@ static const struct SpriteTemplate gUnknown_085728D4 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct OamData sOamData_85728EC =
-{
-    .y = 0,
+static const struct OamData sOamData_85728EC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -1068,149 +1083,134 @@ static const struct OamData sOamData_85728EC =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AffineAnimCmd gSpriteAffineAnim_85728F4[] = {
+    AFFINEANIMCMD_FRAME(-2, -2, 0, 120), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_85728F4[] =
-{
-    AFFINEANIMCMD_FRAME(-2, -2, 0, 120),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd gSpriteAffineAnim_8572904[] = {
+    AFFINEANIMCMD_FRAME(16, 16, 0, 0), AFFINEANIMCMD_FRAME(16, 16, 0, 15), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_8572904[] =
-{
-    AFFINEANIMCMD_FRAME(16, 16, 0, 0),
-    AFFINEANIMCMD_FRAME(16, 16, 0, 15),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd *const gSpriteAffineAnimTable_857291C[] = {
+    gSpriteAffineAnim_85728F4, gSpriteAffineAnim_8572904
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_857291C[] =
-{
-    gSpriteAffineAnim_85728F4,
-    gSpriteAffineAnim_8572904
-};
-
-static const u16 gWallpaperPalettes_Forest[][16] =
-{
+static const u16 gWallpaperPalettes_Forest[][16] = {
     INCBIN_U16("graphics/pokemon_storage/forest_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/forest_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Forest[] = INCBIN_U32("graphics/pokemon_storage/forest.4bpp.lz");
 static const u32 gWallpaperTilemap_Forest[] = INCBIN_U32("graphics/pokemon_storage/forest.bin.lz");
 
-static const u16 gWallpaperPalettes_City[][16] =
-{
+static const u16 gWallpaperPalettes_City[][16] = {
     INCBIN_U16("graphics/pokemon_storage/city_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/city_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_City[] = INCBIN_U32("graphics/pokemon_storage/city.4bpp.lz");
 static const u32 gWallpaperTilemap_City[] = INCBIN_U32("graphics/pokemon_storage/city.bin.lz");
 
-static const u16 gWallpaperPalettes_Desert[][16] =
-{
+static const u16 gWallpaperPalettes_Desert[][16] = {
     INCBIN_U16("graphics/pokemon_storage/desert_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/desert_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Desert[] = INCBIN_U32("graphics/pokemon_storage/desert.4bpp.lz");
 static const u32 gWallpaperTilemap_Desert[] = INCBIN_U32("graphics/pokemon_storage/desert.bin.lz");
 
-static const u16 gWallpaperPalettes_Savanna[][16] =
-{
+static const u16 gWallpaperPalettes_Savanna[][16] = {
     INCBIN_U16("graphics/pokemon_storage/savanna_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/savanna_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Savanna[] = INCBIN_U32("graphics/pokemon_storage/savanna.4bpp.lz");
-static const u32 gWallpaperTilemap_Savanna[] = INCBIN_U32("graphics/pokemon_storage/savanna.bin.lz");
+static const u32 gWallpaperTilemap_Savanna[] =
+    INCBIN_U32("graphics/pokemon_storage/savanna.bin.lz");
 
-static const u16 gWallpaperPalettes_Crag[][16] =
-{
+static const u16 gWallpaperPalettes_Crag[][16] = {
     INCBIN_U16("graphics/pokemon_storage/crag_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/crag_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Crag[] = INCBIN_U32("graphics/pokemon_storage/crag.4bpp.lz");
 static const u32 gWallpaperTilemap_Crag[] = INCBIN_U32("graphics/pokemon_storage/crag.bin.lz");
 
-static const u16 gWallpaperPalettes_Volcano[][16] =
-{
+static const u16 gWallpaperPalettes_Volcano[][16] = {
     INCBIN_U16("graphics/pokemon_storage/volcano_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/volcano_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Volcano[] = INCBIN_U32("graphics/pokemon_storage/volcano.4bpp.lz");
-static const u32 gWallpaperTilemap_Volcano[] = INCBIN_U32("graphics/pokemon_storage/volcano.bin.lz");
+static const u32 gWallpaperTilemap_Volcano[] =
+    INCBIN_U32("graphics/pokemon_storage/volcano.bin.lz");
 
-static const u16 gWallpaperPalettes_Snow[][16] =
-{
+static const u16 gWallpaperPalettes_Snow[][16] = {
     INCBIN_U16("graphics/pokemon_storage/snow_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/snow_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Snow[] = INCBIN_U32("graphics/pokemon_storage/snow.4bpp.lz");
 static const u32 gWallpaperTilemap_Snow[] = INCBIN_U32("graphics/pokemon_storage/snow.bin.lz");
 
-static const u16 gWallpaperPalettes_Cave[][16] =
-{
+static const u16 gWallpaperPalettes_Cave[][16] = {
     INCBIN_U16("graphics/pokemon_storage/cave_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/cave_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Cave[] = INCBIN_U32("graphics/pokemon_storage/cave.4bpp.lz");
 static const u32 gWallpaperTilemap_Cave[] = INCBIN_U32("graphics/pokemon_storage/cave.bin.lz");
 
-static const u16 gWallpaperPalettes_Beach[][16] =
-{
+static const u16 gWallpaperPalettes_Beach[][16] = {
     INCBIN_U16("graphics/pokemon_storage/beach_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/beach_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Beach[] = INCBIN_U32("graphics/pokemon_storage/beach.4bpp.lz");
 static const u32 gWallpaperTilemap_Beach[] = INCBIN_U32("graphics/pokemon_storage/beach.bin.lz");
 
-static const u16 gWallpaperPalettes_Seafloor[][16] =
-{
+static const u16 gWallpaperPalettes_Seafloor[][16] = {
     INCBIN_U16("graphics/pokemon_storage/seafloor_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/seafloor_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Seafloor[] = INCBIN_U32("graphics/pokemon_storage/seafloor.4bpp.lz");
-static const u32 gWallpaperTilemap_Seafloor[] = INCBIN_U32("graphics/pokemon_storage/seafloor.bin.lz");
+static const u32 gWallpaperTiles_Seafloor[] =
+    INCBIN_U32("graphics/pokemon_storage/seafloor.4bpp.lz");
+static const u32 gWallpaperTilemap_Seafloor[] =
+    INCBIN_U32("graphics/pokemon_storage/seafloor.bin.lz");
 
-static const u16 gWallpaperPalettes_River[][16] =
-{
+static const u16 gWallpaperPalettes_River[][16] = {
     INCBIN_U16("graphics/pokemon_storage/river_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/river_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_River[] = INCBIN_U32("graphics/pokemon_storage/river.4bpp.lz");
 static const u32 gWallpaperTilemap_River[] = INCBIN_U32("graphics/pokemon_storage/river.bin.lz");
-static const u16 gWallpaperPalettes_Sky[][16] =
-{
+static const u16 gWallpaperPalettes_Sky[][16] = {
     INCBIN_U16("graphics/pokemon_storage/sky_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/sky_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Sky[] = INCBIN_U32("graphics/pokemon_storage/sky.4bpp.lz");
 static const u32 gWallpaperTilemap_Sky[] = INCBIN_U32("graphics/pokemon_storage/sky.bin.lz");
 
-static const u16 gWallpaperPalettes_PolkaDot[][16] =
-{
+static const u16 gWallpaperPalettes_PolkaDot[][16] = {
     INCBIN_U16("graphics/pokemon_storage/polkadot_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/polkadot_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_PolkaDot[] = INCBIN_U32("graphics/pokemon_storage/polkadot.4bpp.lz");
-static const u32 gWallpaperTilemap_PolkaDot[] = INCBIN_U32("graphics/pokemon_storage/polkadot.bin.lz");
+static const u32 gWallpaperTiles_PolkaDot[] =
+    INCBIN_U32("graphics/pokemon_storage/polkadot.4bpp.lz");
+static const u32 gWallpaperTilemap_PolkaDot[] =
+    INCBIN_U32("graphics/pokemon_storage/polkadot.bin.lz");
 
-static const u16 gWallpaperPalettes_Pokecenter[][16] =
-{
+static const u16 gWallpaperPalettes_Pokecenter[][16] = {
     INCBIN_U16("graphics/pokemon_storage/pokecenter_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pokecenter_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Pokecenter[] = INCBIN_U32("graphics/pokemon_storage/pokecenter.4bpp.lz");
-static const u32 gWallpaperTilemap_Pokecenter[] = INCBIN_U32("graphics/pokemon_storage/pokecenter.bin.lz");
+static const u32 gWallpaperTiles_Pokecenter[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter.4bpp.lz");
+static const u32 gWallpaperTilemap_Pokecenter[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter.bin.lz");
 
-static const u16 gWallpaperPalettes_Machine[][16] =
-{
+static const u16 gWallpaperPalettes_Machine[][16] = {
     INCBIN_U16("graphics/pokemon_storage/machine_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/machine_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Machine[] = INCBIN_U32("graphics/pokemon_storage/machine.4bpp.lz");
-static const u32 gWallpaperTilemap_Machine[] = INCBIN_U32("graphics/pokemon_storage/machine.bin.lz");
+static const u32 gWallpaperTilemap_Machine[] =
+    INCBIN_U32("graphics/pokemon_storage/machine.bin.lz");
 
-static const u16 gWallpaperPalettes_Plain[][16] =
-{
+static const u16 gWallpaperPalettes_Plain[][16] = {
     INCBIN_U16("graphics/pokemon_storage/plain_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/plain_bg.gbapal"),
 };
@@ -1220,31 +1220,30 @@ static const u32 gWallpaperTilemap_Plain[] = INCBIN_U32("graphics/pokemon_storag
 // 12x18 tilemap
 static const u32 gUnknown_085773C4[] = INCBIN_U32("graphics/unused/tilemap_5773C4.bin");
 
-static const u16 gUnknown_08577574[][2] =
-{
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF}
-};
+static const u16 gUnknown_08577574[][2] = { { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF } };
 
-#define WALLPAPER_ENTRY(name) {gWallpaperTiles_##name, gWallpaperTilemap_##name, gWallpaperPalettes_##name[0]}
+#define WALLPAPER_ENTRY(name)                                                                      \
+    {                                                                                              \
+        gWallpaperTiles_##name, gWallpaperTilemap_##name, gWallpaperPalettes_##name[0]             \
+    }
 
-static const struct WallpaperTable gWallpaperTable[] =
-{
+static const struct WallpaperTable gWallpaperTable[] = {
     [WALLPAPER_FOREST] = WALLPAPER_ENTRY(Forest),
     [WALLPAPER_CITY] = WALLPAPER_ENTRY(City),
     [WALLPAPER_DESERT] = WALLPAPER_ENTRY(Desert),
@@ -1265,148 +1264,168 @@ static const struct WallpaperTable gWallpaperTable[] =
 
 static const u8 gPCGfx_Arrow[] = INCBIN_U8("graphics/pokemon_storage/arrow.4bpp");
 
-static const u16 gWallpaperPalettes_Zigzagoon[][16] =
-{
+static const u16 gWallpaperPalettes_Zigzagoon[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/zigzagoon_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Zigzagoon[] = INCBIN_U32("graphics/pokemon_storage/zigzagoon.4bpp.lz");
-static const u32 gWallpaperTilemap_Zigzagoon[] = INCBIN_U32("graphics/pokemon_storage/zigzagoon.bin.lz");
+static const u32 gWallpaperTiles_Zigzagoon[] =
+    INCBIN_U32("graphics/pokemon_storage/zigzagoon.4bpp.lz");
+static const u32 gWallpaperTilemap_Zigzagoon[] =
+    INCBIN_U32("graphics/pokemon_storage/zigzagoon.bin.lz");
 
-static const u16 gWallpaperPalettes_Screen[][16] =
-{
+static const u16 gWallpaperPalettes_Screen[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/screen_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Screen[] = INCBIN_U32("graphics/pokemon_storage/screen.4bpp.lz");
 static const u32 gWallpaperTilemap_Screen[] = INCBIN_U32("graphics/pokemon_storage/screen.bin.lz");
 
-static const u16 gWallpaperPalettes_Diagonal[][16] =
-{
+static const u16 gWallpaperPalettes_Diagonal[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/diagonal_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Diagonal[] = INCBIN_U32("graphics/pokemon_storage/diagonal.4bpp.lz");
-static const u32 gWallpaperTilemap_Diagonal[] = INCBIN_U32("graphics/pokemon_storage/diagonal.bin.lz");
+static const u32 gWallpaperTiles_Diagonal[] =
+    INCBIN_U32("graphics/pokemon_storage/diagonal.4bpp.lz");
+static const u32 gWallpaperTilemap_Diagonal[] =
+    INCBIN_U32("graphics/pokemon_storage/diagonal.bin.lz");
 
-static const u16 gWallpaperPalettes_Block[][16] =
-{
+static const u16 gWallpaperPalettes_Block[][16] = {
     INCBIN_U16("graphics/pokemon_storage/block_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/block_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Block[] = INCBIN_U32("graphics/pokemon_storage/block.4bpp.lz");
 static const u32 gWallpaperTilemap_Block[] = INCBIN_U32("graphics/pokemon_storage/block.bin.lz");
 
-static const u16 gWallpaperPalettes_Pokecenter2[][16] =
-{
+static const u16 gWallpaperPalettes_Pokecenter2[][16] = {
     INCBIN_U16("graphics/pokemon_storage/pokecenter2_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pokecenter2_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Pokecenter2[] = INCBIN_U32("graphics/pokemon_storage/pokecenter2.4bpp.lz");
-static const u32 gWallpaperTilemap_Pokecenter2[] = INCBIN_U32("graphics/pokemon_storage/pokecenter2.bin.lz");
+static const u32 gWallpaperTiles_Pokecenter2[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter2.4bpp.lz");
+static const u32 gWallpaperTilemap_Pokecenter2[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter2.bin.lz");
 
-static const u16 gWallpaperPalettes_Frame[][16] =
-{
+static const u16 gWallpaperPalettes_Frame[][16] = {
     INCBIN_U16("graphics/pokemon_storage/frame_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/frame_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Frame[] = INCBIN_U32("graphics/pokemon_storage/frame.4bpp.lz");
 static const u32 gWallpaperTilemap_Frame[] = INCBIN_U32("graphics/pokemon_storage/frame.bin.lz");
 
-static const u16 gWallpaperPalettes_Blank[][16] =
-{
+static const u16 gWallpaperPalettes_Blank[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/zigzagoon_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Blank[] = INCBIN_U32("graphics/pokemon_storage/blank.4bpp.lz");
 static const u32 gWallpaperTilemap_Blank[] = INCBIN_U32("graphics/pokemon_storage/blank.bin.lz");
 
-static const u16 gWallpaperPalettes_Circles[][16] =
-{
+static const u16 gWallpaperPalettes_Circles[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/circles_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Circles[] = INCBIN_U32("graphics/pokemon_storage/circles.4bpp.lz");
-static const u32 gWallpaperTilemap_Circles[] = INCBIN_U32("graphics/pokemon_storage/circles.bin.lz");
+static const u32 gWallpaperTilemap_Circles[] =
+    INCBIN_U32("graphics/pokemon_storage/circles.bin.lz");
 
-static const u16 gWallpaperPalettes_Azumarill[][16] =
-{
+static const u16 gWallpaperPalettes_Azumarill[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/azumarill_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Azumarill[] = INCBIN_U32("graphics/pokemon_storage/azumarill.4bpp.lz");
-static const u32 gWallpaperTilemap_Azumarill[] = INCBIN_U32("graphics/pokemon_storage/azumarill.bin.lz");
+static const u32 gWallpaperTiles_Azumarill[] =
+    INCBIN_U32("graphics/pokemon_storage/azumarill.4bpp.lz");
+static const u32 gWallpaperTilemap_Azumarill[] =
+    INCBIN_U32("graphics/pokemon_storage/azumarill.bin.lz");
 
-static const u16 gWallpaperPalettes_Pikachu[][16] =
-{
+static const u16 gWallpaperPalettes_Pikachu[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pikachu_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Pikachu[] = INCBIN_U32("graphics/pokemon_storage/pikachu.4bpp.lz");
-static const u32 gWallpaperTilemap_Pikachu[] = INCBIN_U32("graphics/pokemon_storage/pikachu.bin.lz");
+static const u32 gWallpaperTilemap_Pikachu[] =
+    INCBIN_U32("graphics/pokemon_storage/pikachu.bin.lz");
 
-static const u16 gWallpaperPalettes_Legendary[][16] =
-{
+static const u16 gWallpaperPalettes_Legendary[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/legendary_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Legendary[] = INCBIN_U32("graphics/pokemon_storage/legendary.4bpp.lz");
-static const u32 gWallpaperTilemap_Legendary[] = INCBIN_U32("graphics/pokemon_storage/legendary.bin.lz");
+static const u32 gWallpaperTiles_Legendary[] =
+    INCBIN_U32("graphics/pokemon_storage/legendary.4bpp.lz");
+static const u32 gWallpaperTilemap_Legendary[] =
+    INCBIN_U32("graphics/pokemon_storage/legendary.bin.lz");
 
-static const u16 gWallpaperPalettes_Dusclops[][16] =
-{
+static const u16 gWallpaperPalettes_Dusclops[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/dusclops_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Dusclops[] = INCBIN_U32("graphics/pokemon_storage/dusclops.4bpp.lz");
-static const u32 gWallpaperTilemap_Dusclops[] = INCBIN_U32("graphics/pokemon_storage/dusclops.bin.lz");
+static const u32 gWallpaperTiles_Dusclops[] =
+    INCBIN_U32("graphics/pokemon_storage/dusclops.4bpp.lz");
+static const u32 gWallpaperTilemap_Dusclops[] =
+    INCBIN_U32("graphics/pokemon_storage/dusclops.bin.lz");
 
-static const u16 gWallpaperPalettes_Ludicolo[][16] =
-{
+static const u16 gWallpaperPalettes_Ludicolo[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/ludicolo_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Ludicolo[] = INCBIN_U32("graphics/pokemon_storage/ludicolo.4bpp.lz");
-static const u32 gWallpaperTilemap_Ludicolo[] = INCBIN_U32("graphics/pokemon_storage/ludicolo.bin.lz");
+static const u32 gWallpaperTiles_Ludicolo[] =
+    INCBIN_U32("graphics/pokemon_storage/ludicolo.4bpp.lz");
+static const u32 gWallpaperTilemap_Ludicolo[] =
+    INCBIN_U32("graphics/pokemon_storage/ludicolo.bin.lz");
 
-static const u16 gWallpaperPalettes_Whiscash[][16] =
-{
+static const u16 gWallpaperPalettes_Whiscash[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/whiscash_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Whiscash[] = INCBIN_U32("graphics/pokemon_storage/whiscash.4bpp.lz");
-static const u32 gWallpaperTilemap_Whiscash[] = INCBIN_U32("graphics/pokemon_storage/whiscash.bin.lz");
+static const u32 gWallpaperTiles_Whiscash[] =
+    INCBIN_U32("graphics/pokemon_storage/whiscash.4bpp.lz");
+static const u32 gWallpaperTilemap_Whiscash[] =
+    INCBIN_U32("graphics/pokemon_storage/whiscash.bin.lz");
 
 static const u32 gWallpaperIcon_Aqua[] = INCBIN_U32("graphics/pokemon_storage/aqua_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Heart[] = INCBIN_U32("graphics/pokemon_storage/heart_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FiveStar[] = INCBIN_U32("graphics/pokemon_storage/five_star_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FiveStar[] =
+    INCBIN_U32("graphics/pokemon_storage/five_star_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Brick[] = INCBIN_U32("graphics/pokemon_storage/brick_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FourStar[] = INCBIN_U32("graphics/pokemon_storage/four_star_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Asterisk[] = INCBIN_U32("graphics/pokemon_storage/asterisk_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FourStar[] =
+    INCBIN_U32("graphics/pokemon_storage/four_star_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Asterisk[] =
+    INCBIN_U32("graphics/pokemon_storage/asterisk_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Dot[] = INCBIN_U32("graphics/pokemon_storage/dot_icon.4bpp.lz");
-static const u32 gWallpaperIcon_LineCircle[] = INCBIN_U32("graphics/pokemon_storage/line_circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_PokeBall[] = INCBIN_U32("graphics/pokemon_storage/pokeball_icon.4bpp.lz");
+static const u32 gWallpaperIcon_LineCircle[] =
+    INCBIN_U32("graphics/pokemon_storage/line_circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_PokeBall[] =
+    INCBIN_U32("graphics/pokemon_storage/pokeball_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Maze[] = INCBIN_U32("graphics/pokemon_storage/maze_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Footprint[] = INCBIN_U32("graphics/pokemon_storage/footprint_icon.4bpp.lz");
-static const u32 gWallpaperIcon_BigAsterisk[] = INCBIN_U32("graphics/pokemon_storage/big_asterisk_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Circle[] = INCBIN_U32("graphics/pokemon_storage/circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Koffing[] = INCBIN_U32("graphics/pokemon_storage/koffing_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Ribbon[] = INCBIN_U32("graphics/pokemon_storage/ribbon_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FourCircles[] = INCBIN_U32("graphics/pokemon_storage/four_circles_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Footprint[] =
+    INCBIN_U32("graphics/pokemon_storage/footprint_icon.4bpp.lz");
+static const u32 gWallpaperIcon_BigAsterisk[] =
+    INCBIN_U32("graphics/pokemon_storage/big_asterisk_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Circle[] =
+    INCBIN_U32("graphics/pokemon_storage/circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Koffing[] =
+    INCBIN_U32("graphics/pokemon_storage/koffing_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Ribbon[] =
+    INCBIN_U32("graphics/pokemon_storage/ribbon_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FourCircles[] =
+    INCBIN_U32("graphics/pokemon_storage/four_circles_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Lotad[] = INCBIN_U32("graphics/pokemon_storage/lotad_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Crystal[] = INCBIN_U32("graphics/pokemon_storage/crystal_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Crystal[] =
+    INCBIN_U32("graphics/pokemon_storage/crystal_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Pichu[] = INCBIN_U32("graphics/pokemon_storage/pichu_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Diglett[] = INCBIN_U32("graphics/pokemon_storage/diglett_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Luvdisc[] = INCBIN_U32("graphics/pokemon_storage/luvdisc_icon.4bpp.lz");
-static const u32 gWallpaperIcon_StarInCircle[] = INCBIN_U32("graphics/pokemon_storage/star_in_circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Spinda[] = INCBIN_U32("graphics/pokemon_storage/spinda_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Diglett[] =
+    INCBIN_U32("graphics/pokemon_storage/diglett_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Luvdisc[] =
+    INCBIN_U32("graphics/pokemon_storage/luvdisc_icon.4bpp.lz");
+static const u32 gWallpaperIcon_StarInCircle[] =
+    INCBIN_U32("graphics/pokemon_storage/star_in_circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Spinda[] =
+    INCBIN_U32("graphics/pokemon_storage/spinda_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Latis[] = INCBIN_U32("graphics/pokemon_storage/latis_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Minun[] = INCBIN_U32("graphics/pokemon_storage/minun_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Togepi[] = INCBIN_U32("graphics/pokemon_storage/togepi_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Togepi[] =
+    INCBIN_U32("graphics/pokemon_storage/togepi_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Magma[] = INCBIN_U32("graphics/pokemon_storage/magma_icon.4bpp.lz");
 
-static const struct WallpaperTable gFriendsWallpaperTable[] =
-{
+static const struct WallpaperTable gFriendsWallpaperTable[] = {
     WALLPAPER_ENTRY(Zigzagoon),
     WALLPAPER_ENTRY(Screen),
     WALLPAPER_ENTRY(Horizontal),
@@ -1425,8 +1444,7 @@ static const struct WallpaperTable gFriendsWallpaperTable[] =
     WALLPAPER_ENTRY(Whiscash),
 };
 
-static const u32 *const gFriendsIcons[] =
-{
+static const u32 *const gFriendsIcons[] = {
     gWallpaperIcon_Aqua,
     gWallpaperIcon_Heart,
     gWallpaperIcon_FiveStar,
@@ -1462,98 +1480,66 @@ static const u32 *const gFriendsIcons[] =
 // Unknown Unused data.
 static const u16 gUnknown_0857B07C = 0x23BA;
 
-static const struct SpriteSheet gUnknown_0857B080 = {gPCGfx_Arrow, 0x80, 6};
+static const struct SpriteSheet gUnknown_0857B080 = { gPCGfx_Arrow, 0x80, 6 };
 
-static const struct OamData gOamData_83BB298 =
-{
-    .shape = SPRITE_SHAPE(32x16),
-    .size = SPRITE_SIZE(32x16),
-    .priority = 2
+static const struct OamData gOamData_83BB298 = {
+    .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .priority = 2
 };
 
-static const union AnimCmd gSpriteAnim_83BB2A0[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2A0[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2A8[] =
-{
-    ANIMCMD_FRAME(8, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2A8[] = { ANIMCMD_FRAME(8, 5), ANIMCMD_END };
 
-static const union AnimCmd *const gSpriteAnimTable_83BB2B0[] =
-{
-    gSpriteAnim_83BB2A0,
-    gSpriteAnim_83BB2A8
-};
+static const union AnimCmd *const gSpriteAnimTable_83BB2B0[] = { gSpriteAnim_83BB2A0,
+    gSpriteAnim_83BB2A8 };
 
-static const struct SpriteTemplate gSpriteTemplate_857B0A8 =
-{
-    TAG_TILE_3,
+static const struct SpriteTemplate gSpriteTemplate_857B0A8 = { TAG_TILE_3,
     TAG_PAL_DAC9,
     &gOamData_83BB298,
     gSpriteAnimTable_83BB2B0,
     NULL,
     gDummySpriteAffineAnimTable,
-    SpriteCallbackDummy
+    SpriteCallbackDummy };
+
+static const struct OamData gOamData_83BB2D0 = {
+    .shape = SPRITE_SHAPE(8x16), .size = SPRITE_SIZE(8x16), .priority = 2
 };
 
-static const struct OamData gOamData_83BB2D0 =
-{
-    .shape = SPRITE_SHAPE(8x16),
-    .size = SPRITE_SIZE(8x16),
-    .priority = 2
-};
+static const union AnimCmd gSpriteAnim_83BB2D8[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2D8[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2E0[] = { ANIMCMD_FRAME(2, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2E0[] =
-{
-    ANIMCMD_FRAME(2, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd *const gSpriteAnimTable_83BB2E8[] = { gSpriteAnim_83BB2D8,
+    gSpriteAnim_83BB2E0 };
 
-static const union AnimCmd *const gSpriteAnimTable_83BB2E8[] =
-{
-    gSpriteAnim_83BB2D8,
-    gSpriteAnim_83BB2E0
-};
-
-static const struct SpriteTemplate gUnknown_0857B0E0 =
-{
-    6,
+static const struct SpriteTemplate gUnknown_0857B0E0 = { 6,
     TAG_PAL_WAVEFORM,
     &gOamData_83BB2D0,
     gSpriteAnimTable_83BB2E8,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_80CD210
-};
+    sub_80CD210 };
 
 static const u16 gHandCursorPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor.gbapal");
 static const u8 gHandCursorTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor.4bpp");
-static const u8 gHandCursorShadowTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
+static const u8 gHandCursorShadowTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
 
 // code
-void DrawTextWindowAndBufferTiles(const u8 *string, void *dst, u8 zero1, u8 zero2, s32 bytesToBuffer)
+void DrawTextWindowAndBufferTiles(
+    const u8 *string, void *dst, u8 zero1, u8 zero2, s32 bytesToBuffer)
 {
     s32 i, tileBytesToBuffer, remainingBytes;
     u16 windowId;
     u8 txtColor[3];
     u8 *tileData1, *tileData2;
-    struct WindowTemplate winTemplate = {0};
+    struct WindowTemplate winTemplate = { 0 };
 
     winTemplate.width = 24;
     winTemplate.height = 2;
     windowId = AddWindow(&winTemplate);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(zero2));
-    tileData1 = (u8*) GetWindowAttribute(windowId, WINDOW_TILE_DATA);
+    tileData1 = (u8 *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
     tileData2 = (winTemplate.width * 32) + tileData1;
 
     if (!zero1)
@@ -1582,7 +1568,7 @@ void DrawTextWindowAndBufferTiles(const u8 *string, void *dst, u8 zero1, u8 zero
 
     // Never used. bytesToBuffer is always passed <= 6, so remainingBytes is always <= 0 here
     if (remainingBytes > 0)
-        CpuFill16((zero2 << 4) | zero2, dst, (u32)(remainingBytes) * 0x100);
+        CpuFill16((zero2 << 4) | zero2, dst, (u32)(remainingBytes)*0x100);
 
     RemoveWindow(windowId);
 }
@@ -1594,14 +1580,14 @@ void sub_80C6EAC(const u8 *string, void *dst, u16 arg2, u8 arg3, u8 clr2, u8 clr
     u8 windowId;
     u8 txtColor[3];
     u8 *tileData1, *tileData2;
-    struct WindowTemplate winTemplate = {0};
+    struct WindowTemplate winTemplate = { 0 };
 
     winTemplate.width = StringLength_Multibyte(string);
     winTemplate.height = 2;
     var = winTemplate.width * 32;
     windowId = AddWindow(&winTemplate);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(arg3));
-    tileData1 = (u8*) GetWindowAttribute(windowId, WINDOW_TILE_DATA);
+    tileData1 = (u8 *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
     tileData2 = (winTemplate.width * 32) + tileData1;
     txtColor[0] = arg3;
     txtColor[1] = clr2;
@@ -1644,8 +1630,8 @@ u8 CountPartyNonEggMons(void)
 
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
-            && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE &&
+            !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
         {
             count++;
         }
@@ -1660,10 +1646,9 @@ u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore)
 
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (i != slotToIgnore
-            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
-            && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
-            && GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
+        if (i != slotToIgnore && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE &&
+            !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) &&
+            GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
         {
             count++;
         }
@@ -1703,7 +1688,15 @@ u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n)
     return str;
 }
 
-static void sub_80C7128(u16 *dest, u16 dest_left, u16 dest_top, const u16 *src, u16 src_left, u16 src_top, u16 dest_width, u16 dest_height, u16 src_width)
+static void sub_80C7128(u16 *dest,
+    u16 dest_left,
+    u16 dest_top,
+    const u16 *src,
+    u16 src_left,
+    u16 src_top,
+    u16 dest_width,
+    u16 dest_height,
+    u16 src_width)
 {
     u16 i;
 
@@ -1739,7 +1732,8 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
         LoadMessageBoxAndBorderGfx();
         DrawDialogueFrame(0, 0);
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, TEXT_SPEED_FF, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(
+            0, 1, gUnknown_085716C0[task->data[1]].desc, TEXT_SPEED_FF, NULL, 2, 1, 3);
         CopyWindowToVram(0, 3);
         CopyWindowToVram(task->data[15], 3);
         task->data[0]++;
@@ -1752,7 +1746,7 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
         break;
     case 2:
         task->data[2] = Menu_ProcessInput();
-        switch(task->data[2])
+        switch (task->data[2])
         {
         case MENU_NOTHING_CHOSEN:
             task->data[3] = task->data[1];
@@ -1765,11 +1759,12 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
             {
                 task->data[1] = task->data[3];
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                AddTextPrinterParameterized2(
+                    0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
             }
             break;
         case MENU_B_PRESSED:
-        case  4:
+        case 4:
             ClearStdWindowAndFrame(task->data[15], TRUE);
             ScriptContext2_Disable();
             EnableBothScriptContexts();
@@ -1801,7 +1796,8 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
         if (gMain.newKeys & (A_BUTTON | B_BUTTON))
         {
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(
+                0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         else if (gMain.newKeys & DPAD_UP)
@@ -1811,7 +1807,8 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
             Menu_MoveCursor(-1);
             task->data[1] = Menu_GetCursorPos();
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(
+                0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         else if (gMain.newKeys & DPAD_DOWN)
@@ -1821,7 +1818,8 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
             Menu_MoveCursor(1);
             task->data[1] = Menu_GetCursorPos();
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(
+                0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         break;
@@ -1863,12 +1861,14 @@ static void CreatePCMenu(u8 whichMenu, s16 *windowIdPtr)
 {
     s16 windowId;
     struct WindowTemplate winTemplate = gUnknown_085716E8;
-    winTemplate.width = GetMaxWidthInMenuTable((void *)gUnknown_085716C0, ARRAY_COUNT(gUnknown_085716C0));
+    winTemplate.width =
+        GetMaxWidthInMenuTable((void *)gUnknown_085716C0, ARRAY_COUNT(gUnknown_085716C0));
     windowId = AddWindow(&winTemplate);
 
     DrawStdWindowFrame(windowId, FALSE);
     PrintMenuTable(windowId, ARRAY_COUNT(gUnknown_085716C0), (void *)gUnknown_085716C0);
-    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(windowId, ARRAY_COUNT(gUnknown_085716C0), whichMenu);
+    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(
+        windowId, ARRAY_COUNT(gUnknown_085716C0), whichMenu);
     *windowIdPtr = windowId;
 }
 
@@ -1903,7 +1903,8 @@ static s16 StorageSystemGetNextMonIndex(struct BoxPokemon *box, s8 startIdx, u8 
     {
         for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
         {
-            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0 && !GetBoxMonData(box + i, MON_DATA_IS_EGG))
+            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0 &&
+                !GetBoxMonData(box + i, MON_DATA_IS_EGG))
                 return i;
         }
     }
@@ -1932,18 +1933,13 @@ void ResetPokemonStorageSystem(void)
     ResetWaldaWallpaper();
 }
 
-static void sub_80C77E8(struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3, bool32 loadPal)
+static void sub_80C77E8(
+    struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3, bool32 loadPal)
 {
-    struct SpritePalette palette =
-    {
-        gBoxSelectionPopupPalette, palTag
-    };
-    struct SpriteSheet sheets[] =
-    {
-        {gBoxSelectionPopupCenterTiles, 0x800, tileTag},
-        {gBoxSelectionPopupSidesTiles,  0x180, tileTag + 1},
-        {}
-    };
+    struct SpritePalette palette = { gBoxSelectionPopupPalette, palTag };
+    struct SpriteSheet sheets[] = { { gBoxSelectionPopupCenterTiles, 0x800, tileTag },
+        { gBoxSelectionPopupSidesTiles, 0x180, tileTag + 1 },
+        {} };
 
     if (loadPal)
         LoadSpritePalette(&palette);
@@ -2007,9 +2003,13 @@ static void sub_80C7958(u8 curBox)
     struct OamData oamData = {};
     oamData.size = SPRITE_SIZE(64x64);
     oamData.paletteNum = 1;
-    template = (struct SpriteTemplate){
-        0, 0, &oamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-    };
+    template = (struct SpriteTemplate){ 0,
+        0,
+        &oamData,
+        gDummySpriteAnimTable,
+        NULL,
+        gDummySpriteAffineAnimTable,
+        SpriteCallbackDummy };
 
     gUnknown_02039D04->curBox = curBox;
     template.tileTag = gUnknown_02039D04->unk_0240;
@@ -2043,7 +2043,8 @@ static void sub_80C7958(u8 curBox)
     }
     for (i = 0; i < 2; i++)
     {
-        gUnknown_02039D04->unk_0020[i] = sub_80CD2E8(72 * i + 0x7c, 0x58, i, 0, gUnknown_02039D04->unk_0246);
+        gUnknown_02039D04->unk_0020[i] =
+            sub_80CD2E8(72 * i + 0x7c, 0x58, i, 0, gUnknown_02039D04->unk_0246);
         if (gUnknown_02039D04->unk_0020[i])
         {
             gUnknown_02039D04->unk_0020[i]->data[0] = (i == 0 ? -1 : 1);
@@ -2085,7 +2086,8 @@ static void sub_80C7B80(void)
 
 static void sub_80C7BB4(void)
 {
-    gUnknown_02039D04->curBox = (gUnknown_02039D04->curBox == 0 ? TOTAL_BOXES_COUNT - 1 : gUnknown_02039D04->curBox - 1);
+    gUnknown_02039D04->curBox =
+        (gUnknown_02039D04->curBox == 0 ? TOTAL_BOXES_COUNT - 1 : gUnknown_02039D04->curBox - 1);
     sub_80C7BE4();
 }
 
@@ -2107,15 +2109,19 @@ static void sub_80C7BE4(void)
     FillWindowPixelBuffer(windowId, PIXEL_FILL(4));
 
     center = GetStringCenterAlignXOffset(1, boxName, 64);
-    AddTextPrinterParameterized3(windowId, 1, center, 1, sBoxInfoTextColors, TEXT_SPEED_FF, boxName);
+    AddTextPrinterParameterized3(
+        windowId, 1, center, 1, sBoxInfoTextColors, TEXT_SPEED_FF, boxName);
 
     ConvertIntToDecimalStringN(numBoxMonsText, nPokemonInBox, STR_CONV_MODE_RIGHT_ALIGN, 2);
     StringAppend(numBoxMonsText, sText_OutOf30);
     center = GetStringCenterAlignXOffset(1, numBoxMonsText, 64);
-    AddTextPrinterParameterized3(windowId, 1, center, 17, sBoxInfoTextColors, TEXT_SPEED_FF, numBoxMonsText);
+    AddTextPrinterParameterized3(
+        windowId, 1, center, 17, sBoxInfoTextColors, TEXT_SPEED_FF, numBoxMonsText);
 
     winTileData = GetWindowAttribute(windowId, WINDOW_TILE_DATA);
-    CpuCopy32((void *)winTileData, (void *)OBJ_VRAM0 + 0x100 + (GetSpriteTileStartByTag(gUnknown_02039D04->unk_0240) * 32), 0x400);
+    CpuCopy32((void *)winTileData,
+        (void *)OBJ_VRAM0 + 0x100 + (GetSpriteTileStartByTag(gUnknown_02039D04->unk_0240) * 32),
+        0x400);
 
     RemoveWindow(windowId);
 }
@@ -2418,7 +2424,8 @@ static void Cb_MainPSS(u8 taskId)
             sPSSData->state = 1;
             break;
         case 5:
-            if (sPSSData->boxOption != BOX_OPTION_MOVE_MONS && sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+            if (sPSSData->boxOption != BOX_OPTION_MOVE_MONS &&
+                sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
             {
                 PrintStorageActionText(PC_TEXT_WHICH_ONE_WILL_TAKE);
                 sPSSData->state = 3;
@@ -2737,7 +2744,7 @@ static void Cb_OnSelectedMon(u8 taskId)
         switch (sub_80D00AC())
         {
         case -1:
-        case  0:
+        case 0:
             ClearBottomWindow();
             SetPSSCallback(Cb_MainPSS);
             break;
@@ -3056,11 +3063,11 @@ static void Cb_ReleaseMon(u8 taskId)
         switch (Menu_ProcessInputNoWrapClearOnChoose())
         {
         case MENU_B_PRESSED:
-        case  1:
+        case 1:
             ClearBottomWindow();
             SetPSSCallback(Cb_MainPSS);
             break;
-        case  0:
+        case 0:
             ClearBottomWindow();
             InitCanRelaseMonVars();
             sub_80CE250();
@@ -3213,7 +3220,8 @@ static void Cb_TakeItemForMoving(u8 taskId)
         break;
     case 1:
         sub_80CFE54(2);
-        Item_FromMonToMoving((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
+        Item_FromMonToMoving((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+            GetBoxCursorPosition());
         sPSSData->state++;
         break;
     case 2:
@@ -3243,7 +3251,8 @@ static void Cb_GiveMovingItemToMon(u8 taskId)
         break;
     case 1:
         sub_80CFE54(2);
-        Item_GiveMovingToMon((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
+        Item_GiveMovingToMon((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+            GetBoxCursorPosition());
         sPSSData->state++;
         break;
     case 2:
@@ -3284,7 +3293,8 @@ static void Cb_ItemToBag(u8 taskId)
         else
         {
             PlaySE(SE_SELECT);
-            Item_TakeMons((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
+            Item_TakeMons((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+                GetBoxCursorPosition());
             sPSSData->state = 1;
         }
         break;
@@ -3335,7 +3345,9 @@ static void Cb_SwitchSelectedItem(u8 taskId)
         break;
     case 1:
         sub_80CFE54(2);
-        Item_SwitchMonsWithMoving((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
+        Item_SwitchMonsWithMoving(
+            (sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+            GetBoxCursorPosition());
         sPSSData->state++;
         break;
     case 2:
@@ -3524,7 +3536,7 @@ static void Cb_HandleBoxOptions(u8 taskId)
         switch (sub_80D00AC())
         {
         case -1:
-        case  0:
+        case 0:
             sub_80CD1A8(TRUE);
             ClearBottomWindow();
             SetPSSCallback(Cb_MainPSS);
@@ -3559,7 +3571,7 @@ static void Cb_HandleWallpapers(u8 taskId)
         break;
     case 1:
         if (!sub_80D00A8())
-             sPSSData->state++;
+            sPSSData->state++;
         break;
     case 2:
         sPSSData->wallpaperSetId = sub_80D00AC();
@@ -3888,7 +3900,8 @@ static void Cb_ChangeScreen(u8 taskId)
         break;
     case SCREEN_CHANGE_NAME_BOX:
         FreePSSData();
-        DoNamingScreen(NAMING_SCREEN_BOX, GetBoxNamePtr(StorageGetCurrentBox()), 0, 0, 0, Cb2_ReturnToPSS);
+        DoNamingScreen(
+            NAMING_SCREEN_BOX, GetBoxNamePtr(StorageGetCurrentBox()), 0, 0, 0, Cb2_ReturnToPSS);
         break;
     case SCREEN_CHANGE_ITEM_FROM_BAG:
         FreePSSData();
@@ -3926,7 +3939,8 @@ static void FreePSSData(void)
 
 static void SetScrollingBackground(void)
 {
-    SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
+    SetGpuReg(REG_OFFSET_BG3CNT,
+        BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
     DecompressAndLoadBgGfxUsingHeap(3, gPokemonStorageScrollingBGTileset, 0, 0, 0);
     LZ77UnCompVram(gPokemonStorageScrollingBGTilemap, (void *)BG_SCREEN_ADDR(31));
 }
@@ -3975,7 +3989,8 @@ static void sub_80CA0D8(void)
     else
         LoadPalette(gUnknown_0857243C, 0x30, 0x20);
 
-    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
     LoadCursorMonSprite();
     sub_80CA154();
     sub_80CA1C4();
@@ -3989,7 +4004,7 @@ static void sub_80CA154(void)
     sPSSData->field_D94->subpriority = 1;
     sPSSData->field_D94->pos1.x = 40;
     sPSSData->field_D94->pos1.y = 150;
-    sPSSData->field_DA0 = (void*) OBJ_VRAM0 + 32 * GetSpriteTileStartByTag(TAG_TILE_10);
+    sPSSData->field_DA0 = (void *)OBJ_VRAM0 + 32 * GetSpriteTileStartByTag(TAG_TILE_10);
 }
 
 static void sub_80CA1C4(void)
@@ -4022,7 +4037,8 @@ static void BoxSetMosaic(void)
         sPSSData->cursorMonSprite->data[0] = 10;
         sPSSData->cursorMonSprite->data[1] = 1;
         sPSSData->cursorMonSprite->callback = sub_80CA2D0;
-        SetGpuReg(REG_OFFSET_MOSAIC, (sPSSData->cursorMonSprite->data[0] << 12) | (sPSSData->cursorMonSprite->data[0] << 8));
+        SetGpuReg(REG_OFFSET_MOSAIC,
+            (sPSSData->cursorMonSprite->data[0] << 12) | (sPSSData->cursorMonSprite->data[0] << 8));
     }
 }
 
@@ -4050,8 +4066,8 @@ static void LoadCursorMonSprite(void)
     u16 tileStart;
     u8 palSlot;
     u8 spriteId;
-    struct SpriteSheet sheet = {sPSSData->field_22C4, 0x800, TAG_TILE_2};
-    struct SpritePalette palette = {sPSSData->field_2244, TAG_PAL_DAC6};
+    struct SpriteSheet sheet = { sPSSData->field_22C4, 0x800, TAG_TILE_2 };
+    struct SpritePalette palette = { sPSSData->field_2244, TAG_PAL_DAC6 };
     struct SpriteTemplate template = sSpriteTemplate_CursorMon;
 
     for (i = 0; i < 0x800; i++)
@@ -4077,7 +4093,7 @@ static void LoadCursorMonSprite(void)
 
         sPSSData->cursorMonSprite = &gSprites[spriteId];
         sPSSData->field_223A = palSlot * 16 + 0x100;
-        sPSSData->field_223C = (void*) OBJ_VRAM0 + tileStart * 32;
+        sPSSData->field_223C = (void *)OBJ_VRAM0 + tileStart * 32;
     } while (0);
 
     if (sPSSData->cursorMonSprite == NULL)
@@ -4112,16 +4128,20 @@ static void PrintCursorMonInfo(void)
     if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
     {
         AddTextPrinterParameterized(0, 1, sPSSData->cursorMonNickText, 6, 0, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonSpeciesName, 6, 15, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonGenderLvlText, 10, 29, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonSpeciesName, 6, 15, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonGenderLvlText, 10, 29, TEXT_SPEED_FF, NULL);
         AddTextPrinterParameterized(0, 0, sPSSData->cursorMonItemName, 6, 43, TEXT_SPEED_FF, NULL);
     }
     else
     {
         AddTextPrinterParameterized(0, 0, sPSSData->cursorMonItemName, 6, 0, TEXT_SPEED_FF, NULL);
         AddTextPrinterParameterized(0, 1, sPSSData->cursorMonNickText, 6, 13, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonSpeciesName, 6, 28, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonGenderLvlText, 10, 42, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonSpeciesName, 6, 28, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonGenderLvlText, 10, 42, TEXT_SPEED_FF, NULL);
     }
 
     CopyWindowToVram(0, 2);
@@ -4416,7 +4436,8 @@ static void PrintStorageActionText(u8 id)
         break;
     }
 
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(sPSSData->field_2190, gPCStorageActionTexts[id].text);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(
+        sPSSData->field_2190, gPCStorageActionTexts[id].text);
     FillWindowPixelBuffer(1, PIXEL_FILL(1));
     AddTextPrinterParameterized(1, 1, sPSSData->field_2190, 0, 1, TEXT_SPEED_FF, NULL);
     DrawTextBorderOuter(1, 2, 14);
@@ -4554,7 +4575,8 @@ static void sub_80CB028(u8 boxId)
             if (species != SPECIES_NONE)
             {
                 personality = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
-                sPSSData->boxMonsSprites[count] = CreateMonIconSprite(species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
+                sPSSData->boxMonsSprites[count] = CreateMonIconSprite(
+                    species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
             }
             else
             {
@@ -4585,7 +4607,8 @@ static void sub_80CB140(u8 boxPosition)
         s16 y = 8 * (3 * (boxPosition / IN_BOX_ROWS)) + 44;
         u32 personality = GetCurrentBoxMonData(boxPosition, MON_DATA_PERSONALITY);
 
-        sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_ROWS));
+        sPSSData->boxMonsSprites[boxPosition] =
+            CreateMonIconSprite(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_ROWS));
         if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
             sPSSData->boxMonsSprites[boxPosition]->oam.objMode = ST_OAM_OBJ_BLEND;
     }
@@ -4668,9 +4691,13 @@ static u8 sub_80CB2F8(u8 row, u16 times, s16 xDelta)
         {
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
             {
-                sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
-                                                                                        sPSSData->boxPersonalities[boxPosition],
-                                                                                        x, y, 2, subpriority);
+                sPSSData->boxMonsSprites[boxPosition] =
+                    CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
+                        sPSSData->boxPersonalities[boxPosition],
+                        x,
+                        y,
+                        2,
+                        subpriority);
                 if (sPSSData->boxMonsSprites[boxPosition] != NULL)
                 {
                     sPSSData->boxMonsSprites[boxPosition]->data[1] = times;
@@ -4690,9 +4717,13 @@ static u8 sub_80CB2F8(u8 row, u16 times, s16 xDelta)
         {
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
             {
-                sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
-                                                                                        sPSSData->boxPersonalities[boxPosition],
-                                                                                        x, y, 2, subpriority);
+                sPSSData->boxMonsSprites[boxPosition] =
+                    CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
+                        sPSSData->boxPersonalities[boxPosition],
+                        x,
+                        y,
+                        2,
+                        subpriority);
                 if (sPSSData->boxMonsSprites[boxPosition] != NULL)
                 {
                     sPSSData->boxMonsSprites[boxPosition]->data[1] = times;
@@ -4748,9 +4779,10 @@ static bool8 sub_80CB584(void)
         break;
     case 1:
         sPSSData->field_C62 += sPSSData->field_C64;
-        sPSSData->field_C66 += sub_80CB2F8(sPSSData->field_C68, sPSSData->field_C60, sPSSData->field_C64);
-        if ((sPSSData->field_C69 > 0 && sPSSData->field_C68 == IN_BOX_ROWS - 1)
-            || (sPSSData->field_C69 < 0 && sPSSData->field_C68 == 0))
+        sPSSData->field_C66 +=
+            sub_80CB2F8(sPSSData->field_C68, sPSSData->field_C60, sPSSData->field_C64);
+        if ((sPSSData->field_C69 > 0 && sPSSData->field_C68 == IN_BOX_ROWS - 1) ||
+            (sPSSData->field_C69 < 0 && sPSSData->field_C68 == 0))
         {
             sPSSData->field_C6A++;
         }
@@ -4783,9 +4815,11 @@ static void SetBoxSpeciesAndPersonalities(u8 boxId)
     {
         for (j = 0; j < IN_BOX_ROWS; j++)
         {
-            sPSSData->boxSpecies[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES2);
+            sPSSData->boxSpecies[boxPosition] =
+                GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES2);
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
-                sPSSData->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+                sPSSData->boxPersonalities[boxPosition] =
+                    GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
             boxPosition++;
         }
     }
@@ -4824,7 +4858,8 @@ static void CreatePartyMonsSprites(bool8 arg0)
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
-            sPSSData->partySprites[i] = CreateMonIconSprite(species, personality, 152,  8 * (3 * (i - 1)) + 16, 1, 12);
+            sPSSData->partySprites[i] =
+                CreateMonIconSprite(species, personality, 152, 8 * (3 * (i - 1)) + 16, 1, 12);
             count++;
         }
         else
@@ -4846,7 +4881,8 @@ static void CreatePartyMonsSprites(bool8 arg0)
     {
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (sPSSData->partySprites[i] != NULL && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == 0)
+            if (sPSSData->partySprites[i] != NULL &&
+                GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == 0)
                 sPSSData->partySprites[i]->oam.objMode = ST_OAM_OBJ_BLEND;
         }
     }
@@ -4941,7 +4977,8 @@ static void sub_80CBAF0(s16 yDelta)
         if (sPSSData->partySprites[i] != NULL)
         {
             sPSSData->partySprites[i]->pos1.y += yDelta;
-            posY = sPSSData->partySprites[i]->pos1.y + sPSSData->partySprites[i]->pos2.y + sPSSData->partySprites[i]->centerToCornerVecY;
+            posY = sPSSData->partySprites[i]->pos1.y + sPSSData->partySprites[i]->pos2.y +
+                   sPSSData->partySprites[i]->centerToCornerVecY;
             posY += 16;
             if (posY > 192)
                 sPSSData->partySprites[i]->invisible = TRUE;
@@ -5170,7 +5207,7 @@ static u16 sub_80CC124(u16 species)
     sPSSData->field_B58[i] = species;
     sPSSData->field_B08[i]++;
     var = 16 * i;
-    CpuCopy32(GetMonIconTiles(species, TRUE), (void*)(OBJ_VRAM0) + var * 32, 0x200);
+    CpuCopy32(GetMonIconTiles(species, TRUE), (void *)(OBJ_VRAM0) + var * 32, 0x200);
 
     return var;
 }
@@ -5190,7 +5227,8 @@ static void sub_80CC1E0(u16 species)
     }
 }
 
-static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
+static struct Sprite *CreateMonIconSprite(
+    u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
     u16 tileNum;
     u8 spriteId;
@@ -5261,7 +5299,8 @@ static void sub_80CC370(u8 taskId)
         sub_80CCB50(task->data[2]);
         sub_80CD02C();
         sub_80CB028(task->data[2]);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(27) | BGCNT_TXT512x256);
+        SetGpuReg(REG_OFFSET_BG2CNT,
+            BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(27) | BGCNT_TXT512x256);
         break;
     case 4:
         DestroyTask(taskId);
@@ -5410,7 +5449,9 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         if (sPSSData->field_6FB != 0)
             LoadPalette(wallpaperGfx->palettes, (sPSSData->field_2D2 * 32) + 0x40, 0x40);
         else
-            CpuCopy16(wallpaperGfx->palettes, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
+            CpuCopy16(wallpaperGfx->palettes,
+                &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40],
+                0x40);
 
         sPSSData->wallpaperTiles = malloc_and_decompress(wallpaperGfx->tiles, &size1);
         LoadBgTiles(2, sPSSData->wallpaperTiles, size1, sPSSData->field_2D2 << 8);
@@ -5428,7 +5469,8 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         if (sPSSData->field_6FB != 0)
             LoadPalette(sPSSData->field_792, (sPSSData->field_2D2 * 32) + 0x40, 0x40);
         else
-            CpuCopy16(sPSSData->field_792, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
+            CpuCopy16(
+                sPSSData->field_792, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
 
         sPSSData->wallpaperTiles = malloc_and_decompress(wallpaperGfx->tiles, &size1);
         iconGfx = malloc_and_decompress(gFriendsIcons[GetWaldaWallpaperIconId()], &size2);
@@ -5458,12 +5500,14 @@ static void sub_80CCA3C(const void *tilemap, s8 direction, u8 arg2)
     s16 var = (arg2 * 2) + 3;
     s16 x = ((sPSSData->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
 
-    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 0x14, 0x12, x, 2, 0x14, 0x12, 0x11, arg2 << 8, var);
+    CopyRectToBgTilemapBufferRect(
+        2, tilemap, 0, 0, 0x14, 0x12, x, 2, 0x14, 0x12, 0x11, arg2 << 8, var);
 
     if (direction == 0)
         return;
     else if (direction > 0)
-        x *= 1, x += 0x14; // x * 1 is needed to match, but can be safely removed as it makes no functional difference
+        x *= 1, x += 0x14; // x * 1 is needed to match, but can be safely removed as it makes no
+                           // functional difference
     else
         x -= 4;
 
@@ -5498,11 +5542,8 @@ static void sub_80CCB50(u8 boxId)
     s16 r6;
     u16 i;
 
-    struct SpriteSheet spriteSheet = {sPSSData->field_2F8, 0x200, TAG_TILE_3};
-    struct SpritePalette palettes[] = {
-        {sPSSData->field_6FC, TAG_PAL_DAC9},
-        {}
-    };
+    struct SpriteSheet spriteSheet = { sPSSData->field_2F8, 0x200, TAG_TILE_3 };
+    struct SpritePalette palettes[] = { { sPSSData->field_6FC, TAG_PAL_DAC9 }, {} };
 
     u16 wallpaperId = GetBoxWallpaper(boxId);
 
@@ -5538,7 +5579,7 @@ static void sub_80CCCFC(u8 boxId, s8 direction)
     u16 r8;
     s16 x, x2;
     u16 i;
-    struct SpriteSheet spriteSheet = {sPSSData->field_2F8, 0x200, TAG_TILE_3};
+    struct SpriteSheet spriteSheet = { sPSSData->field_2F8, 0x200, TAG_TILE_3 };
     struct SpriteTemplate template = gSpriteTemplate_857B0A8;
 
     sPSSData->field_6F8 = (sPSSData->field_6F8 == 0);
@@ -5802,7 +5843,7 @@ static void sub_80CD444(u8 cursorArea, u8 cursorPosition, u16 *x, u16 *y)
     {
     case CURSOR_AREA_IN_BOX:
         *x = (cursorPosition % IN_BOX_ROWS) * 24 + 100;
-        *y = (cursorPosition / IN_BOX_ROWS) * 24 +  32;
+        *y = (cursorPosition / IN_BOX_ROWS) * 24 + 32;
         break;
     case CURSOR_AREA_IN_PARTY:
         if (cursorPosition == 0)
@@ -5924,28 +5965,28 @@ static void sub_80CD70C(void)
 
     switch (sPSSData->field_CD2)
     {
-        default:
-            r7 = sPSSData->field_CCE - sPSSData->field_CB4->pos1.y;
-            break;
-        case -1:
-            r7 = sPSSData->field_CCE - 0xc0 - sPSSData->field_CB4->pos1.y;
-            break;
-        case 1:
-            r7 = sPSSData->field_CCE + 0xc0 - sPSSData->field_CB4->pos1.y;
-            break;
+    default:
+        r7 = sPSSData->field_CCE - sPSSData->field_CB4->pos1.y;
+        break;
+    case -1:
+        r7 = sPSSData->field_CCE - 0xc0 - sPSSData->field_CB4->pos1.y;
+        break;
+    case 1:
+        r7 = sPSSData->field_CCE + 0xc0 - sPSSData->field_CB4->pos1.y;
+        break;
     }
 
     switch (sPSSData->field_CD3)
     {
-        default:
-            r0 = sPSSData->field_CCC - sPSSData->field_CB4->pos1.x;
-            break;
-        case -1:
-            r0 = sPSSData->field_CCC - 0xc0 - sPSSData->field_CB4->pos1.x;
-            break;
-        case 1:
-            r0 = sPSSData->field_CCC + 0xc0 - sPSSData->field_CB4->pos1.x;
-            break;
+    default:
+        r0 = sPSSData->field_CCC - sPSSData->field_CB4->pos1.x;
+        break;
+    case -1:
+        r0 = sPSSData->field_CCC - 0xc0 - sPSSData->field_CB4->pos1.x;
+        break;
+    case 1:
+        r0 = sPSSData->field_CCC + 0xc0 - sPSSData->field_CB4->pos1.x;
+        break;
     }
 
     r7 <<= 8;
@@ -6099,8 +6140,7 @@ static u8 sub_80CDC2C(void)
 
 static void InitMonPlaceChange(u8 a0)
 {
-    static bool8 (*const placeChangeFuncs[])(void) =
-    {
+    static bool8 (*const placeChangeFuncs[])(void) = {
         MonPlaceChange_Move,
         MonPlaceChange_Place,
         MonPlaceChange_Shift,
@@ -6444,14 +6484,21 @@ struct
     s8 mapGroup;
     s8 mapNum;
     u16 move;
-} static const gUnknown_0857B9A4[] =
-{
-    {MAP_GROUPS_COUNT, 0, MOVE_SURF},
-    {MAP_GROUPS_COUNT, 0, MOVE_DIVE},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_STRENGTH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_ROCK_SMASH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_STRENGTH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_ROCK_SMASH},
+} static const gUnknown_0857B9A4[] = {
+    { MAP_GROUPS_COUNT, 0, MOVE_SURF },
+    { MAP_GROUPS_COUNT, 0, MOVE_DIVE },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MOVE_STRENGTH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MOVE_ROCK_SMASH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MOVE_STRENGTH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MOVE_ROCK_SMASH },
 };
 
 static void sub_80CE350(u16 *moves)
@@ -6460,8 +6507,9 @@ static void sub_80CE350(u16 *moves)
 
     for (i = 0; i < ARRAY_COUNT(gUnknown_0857B9A4); i++)
     {
-        if (gUnknown_0857B9A4[i].mapGroup == MAP_GROUPS_COUNT
-            || (gUnknown_0857B9A4[i].mapGroup == gSaveBlock1Ptr->location.mapGroup && gUnknown_0857B9A4[i].mapNum == gSaveBlock1Ptr->location.mapNum))
+        if (gUnknown_0857B9A4[i].mapGroup == MAP_GROUPS_COUNT ||
+            (gUnknown_0857B9A4[i].mapGroup == gSaveBlock1Ptr->location.mapGroup &&
+                gUnknown_0857B9A4[i].mapNum == gSaveBlock1Ptr->location.mapNum))
         {
             *moves = gUnknown_0857B9A4[i].move;
             moves++;
@@ -6502,7 +6550,8 @@ static void InitCanRelaseMonVars(void)
     }
 
     sub_80CE350(sPSSData->field_2176);
-    sPSSData->field_2174 = GetMonData(&sPSSData->field_2108, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
+    sPSSData->field_2174 =
+        GetMonData(&sPSSData->field_2108, MON_DATA_KNOWN_MOVES, (u8 *)sPSSData->field_2176);
     if (sPSSData->field_2174 != 0)
     {
         sPSSData->field_216D = 0;
@@ -6560,7 +6609,8 @@ static s8 RunCanReleaseMon(void)
         {
             if (sPSSData->field_2170 != TOTAL_BOXES_COUNT || sPSSData->field_2171 != i)
             {
-                knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
+                knownMoves =
+                    GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, (u8 *)sPSSData->field_2176);
                 sPSSData->field_2174 &= ~(knownMoves);
             }
         }
@@ -6579,9 +6629,12 @@ static s8 RunCanReleaseMon(void)
     case 1:
         for (i = 0; i < IN_BOX_COUNT; i++)
         {
-            knownMoves = GetAndCopyBoxMonDataAt(sPSSData->field_216E, sPSSData->field_216F, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
-            if (knownMoves != 0
-                && !(sPSSData->field_2170 == sPSSData->field_216E && sPSSData->field_2171 == sPSSData->field_216F))
+            knownMoves = GetAndCopyBoxMonDataAt(sPSSData->field_216E,
+                sPSSData->field_216F,
+                MON_DATA_KNOWN_MOVES,
+                (u8 *)sPSSData->field_2176);
+            if (knownMoves != 0 && !(sPSSData->field_2170 == sPSSData->field_216E &&
+                                       sPSSData->field_2171 == sPSSData->field_216F))
             {
                 sPSSData->field_2174 &= ~(knownMoves);
                 if (sPSSData->field_2174 == 0)
@@ -6701,7 +6754,8 @@ static void SetMonMarkings(u8 markings)
 
 static bool8 CanMovePartyMon(void)
 {
-    if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && !sIsMonBeingMoved && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+    if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && !sIsMonBeingMoved &&
+        CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         return TRUE;
     else
         return FALSE;
@@ -6711,7 +6765,8 @@ static bool8 CanShiftMon(void)
 {
     if (sIsMonBeingMoved)
     {
-        if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+        if (sBoxCursorArea == CURSOR_AREA_IN_PARTY &&
+            CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         {
             if (sPSSData->cursorMonIsEgg || GetMonData(&sPSSData->movingMon, MON_DATA_HP) == 0)
                 return FALSE;
@@ -6820,14 +6875,15 @@ static void SetCursorMonData(void *pokemon, u8 mode)
             else
                 sPSSData->cursorMonIsEgg = GetBoxMonData(boxMon, MON_DATA_IS_EGG);
 
-
             GetBoxMonData(boxMon, MON_DATA_NICKNAME, sPSSData->cursorMonNick);
             StringGetEnd10(sPSSData->cursorMonNick);
             sPSSData->cursorMonLevel = GetLevelFromBoxMonExp(boxMon);
             sPSSData->cursorMonMarkings = GetBoxMonData(boxMon, MON_DATA_MARKINGS);
             sPSSData->cursorMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
-            sPSSData->cursorMonPalette = GetMonSpritePalFromSpeciesAndPersonality(sPSSData->cursorMonSpecies, otId, sPSSData->cursorMonPersonality);
-            gender = GetGenderFromSpeciesAndPersonality(sPSSData->cursorMonSpecies, sPSSData->cursorMonPersonality);
+            sPSSData->cursorMonPalette = GetMonSpritePalFromSpeciesAndPersonality(
+                sPSSData->cursorMonSpecies, otId, sPSSData->cursorMonPersonality);
+            gender = GetGenderFromSpeciesAndPersonality(
+                sPSSData->cursorMonSpecies, sPSSData->cursorMonPersonality);
             sPSSData->cursorMonItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
         }
     }
@@ -6858,7 +6914,8 @@ static void SetCursorMonData(void *pokemon, u8 mode)
     }
     else
     {
-        if (sPSSData->cursorMonSpecies == SPECIES_NIDORAN_F || sPSSData->cursorMonSpecies == SPECIES_NIDORAN_M)
+        if (sPSSData->cursorMonSpecies == SPECIES_NIDORAN_F ||
+            sPSSData->cursorMonSpecies == SPECIES_NIDORAN_M)
             gender = MON_GENDERLESS;
 
         StringCopyPadded(sPSSData->cursorMonNickText, sPSSData->cursorMonNick, CHAR_SPACE, 5);
@@ -6901,12 +6958,16 @@ static void SetCursorMonData(void *pokemon, u8 mode)
         *(txtPtr++) = CHAR_EXTRA_SYMBOL;
         *(txtPtr++) = CHAR_LV_2;
 
-        txtPtr = ConvertIntToDecimalStringN(txtPtr, sPSSData->cursorMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+        txtPtr = ConvertIntToDecimalStringN(
+            txtPtr, sPSSData->cursorMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
         txtPtr[0] = CHAR_SPACE;
         txtPtr[1] = EOS;
 
         if (sPSSData->cursorMonItem != 0)
-            StringCopyPadded(sPSSData->cursorMonItemName, ItemId_GetName(sPSSData->cursorMonItem), CHAR_SPACE, 8);
+            StringCopyPadded(sPSSData->cursorMonItemName,
+                ItemId_GetName(sPSSData->cursorMonItem),
+                CHAR_SPACE,
+                8);
         else
             StringFill(sPSSData->cursorMonItemName, CHAR_SPACE, 8);
     }
@@ -7436,7 +7497,7 @@ static u8 HandleInput_OnButtons(void)
             sPSSData->field_CD2 = -1;
             if (sBoxCursorPosition == 0)
                 cursorPosition = IN_BOX_COUNT - 1 - 5;
-            else 
+            else
                 cursorPosition = IN_BOX_COUNT - 1;
             sPSSData->field_CD7 = 1;
             break;
@@ -7491,14 +7552,12 @@ static u8 HandleInput(void)
     {
         u8 (*func)(void);
         s8 area;
-    }
-    static const inputFuncs[] =
-    {
-        {HandleInput_InBox, CURSOR_AREA_IN_BOX},
-        {HandleInput_InParty, CURSOR_AREA_IN_PARTY},
-        {HandleInput_OnBox, CURSOR_AREA_BOX},
-        {HandleInput_OnButtons, CURSOR_AREA_BUTTONS},
-        {NULL, 0},
+    } static const inputFuncs[] = {
+        { HandleInput_InBox, CURSOR_AREA_IN_BOX },
+        { HandleInput_InParty, CURSOR_AREA_IN_PARTY },
+        { HandleInput_OnBox, CURSOR_AREA_BOX },
+        { HandleInput_OnButtons, CURSOR_AREA_BUTTONS },
+        { NULL, 0 },
     };
 
     u16 i = 0;
@@ -7641,64 +7700,35 @@ static void sub_80CFC14(void)
     u16 x, y;
     u8 spriteId;
     u8 priority, subpriority;
-    struct SpriteSheet spriteSheets[] =
-    {
-        {gHandCursorTiles, 0x800, 0},
-        {gHandCursorShadowTiles, 0x80, 1},
-        {}
+    struct SpriteSheet spriteSheets[] = {
+        { gHandCursorTiles, 0x800, 0 }, { gHandCursorShadowTiles, 0x80, 1 }, {}
     };
 
-    struct SpritePalette spritePalettes[] =
-    {
-        {gHandCursorPalette, TAG_PAL_DAC7},
-        {}
-    };
+    struct SpritePalette spritePalettes[] = { { gHandCursorPalette, TAG_PAL_DAC7 }, {} };
 
-    static const struct OamData sOamData_857BA0C =
-    {
+    static const struct OamData sOamData_857BA0C = {
         .shape = SPRITE_SHAPE(32x32),
         .size = SPRITE_SIZE(32x32),
         .priority = 1,
     };
-    static const struct OamData sOamData_857BA14 =
-    {
+    static const struct OamData sOamData_857BA14 = {
         .shape = SPRITE_SHAPE(16x16),
         .size = SPRITE_SIZE(16x16),
         .priority = 1,
     };
 
-    static const union AnimCmd sSpriteAnim_857BA1C[] =
-    {
-        ANIMCMD_FRAME(0, 30),
-        ANIMCMD_FRAME(16, 30),
-        ANIMCMD_JUMP(0)
+    static const union AnimCmd sSpriteAnim_857BA1C[] = {
+        ANIMCMD_FRAME(0, 30), ANIMCMD_FRAME(16, 30), ANIMCMD_JUMP(0)
     };
-    static const union AnimCmd sSpriteAnim_857BA28[] =
-    {
-        ANIMCMD_FRAME(0, 5),
-        ANIMCMD_END
-    };
-    static const union AnimCmd sSpriteAnim_857BA30[] =
-    {
-        ANIMCMD_FRAME(32, 5),
-        ANIMCMD_END
-    };
-    static const union AnimCmd sSpriteAnim_857BA38[] =
-    {
-        ANIMCMD_FRAME(48, 5),
-        ANIMCMD_END
+    static const union AnimCmd sSpriteAnim_857BA28[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+    static const union AnimCmd sSpriteAnim_857BA30[] = { ANIMCMD_FRAME(32, 5), ANIMCMD_END };
+    static const union AnimCmd sSpriteAnim_857BA38[] = { ANIMCMD_FRAME(48, 5), ANIMCMD_END };
+
+    static const union AnimCmd *const sSpriteAnimTable_857BA40[] = {
+        sSpriteAnim_857BA1C, sSpriteAnim_857BA28, sSpriteAnim_857BA30, sSpriteAnim_857BA38
     };
 
-    static const union AnimCmd *const sSpriteAnimTable_857BA40[] =
-    {
-        sSpriteAnim_857BA1C,
-        sSpriteAnim_857BA28,
-        sSpriteAnim_857BA30,
-        sSpriteAnim_857BA38
-    };
-
-    static const struct SpriteTemplate gSpriteTemplate_857BA50 =
-    {
+    static const struct SpriteTemplate gSpriteTemplate_857BA50 = {
         .tileTag = TAG_TILE_0,
         .paletteTag = TAG_PAL_WAVEFORM,
         .oam = &sOamData_857BA0C,
@@ -7708,8 +7738,7 @@ static void sub_80CFC14(void)
         .callback = SpriteCallbackDummy,
     };
 
-    static const struct SpriteTemplate gSpriteTemplate_857BA68 =
-    {
+    static const struct SpriteTemplate gSpriteTemplate_857BA68 = {
         .tileTag = TAG_TILE_1,
         .paletteTag = TAG_PAL_WAVEFORM,
         .oam = &sOamData_857BA14,
@@ -7825,8 +7854,7 @@ static void InitMenu(void)
     sPSSData->menuWindow.baseBlock = 92;
 }
 
-static const u8 *const gUnknown_0857BA80[] =
-{
+static const u8 *const gUnknown_0857BA80[] = {
     gPCText_Cancel,
     gPCText_Store,
     gPCText_Withdraw,
@@ -7902,8 +7930,9 @@ static void AddMenu(void)
     sPSSData->field_CB0 = AddWindow(&sPSSData->menuWindow);
     ClearWindowTilemap(sPSSData->field_CB0);
     DrawStdFrameWithCustomTileAndPalette(sPSSData->field_CB0, FALSE, 11, 14);
-    PrintMenuTable(sPSSData->field_CB0, sPSSData->menuItemsCount, (void*)sPSSData->menuItems);
-    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(sPSSData->field_CB0, sPSSData->menuItemsCount, 0);
+    PrintMenuTable(sPSSData->field_CB0, sPSSData->menuItemsCount, (void *)sPSSData->menuItems);
+    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(
+        sPSSData->field_CB0, sPSSData->menuItemsCount, 0);
     ScheduleBgCopyTilemapToVram(0);
     sPSSData->field_CAE = 0;
 }
@@ -7961,8 +7990,7 @@ static void sub_80D013C(void)
 // The icons are converted to background 0 which coordinates are changed while moving mons.
 // There is also a bit of math involved in determining how many column/rows of mons to grab/move.
 
-static const struct WindowTemplate gUnknown_0857BB1C =
-{
+static const struct WindowTemplate gUnknown_0857BB1C = {
     .bg = 0,
     .tilemapLeft = 10,
     .tilemapTop = 3,
@@ -7990,8 +8018,7 @@ EWRAM_DATA static struct
     u16 bgY;
     u16 field_10;
     struct BoxPokemon boxMons[IN_BOX_COUNT];
-}
-*sMoveMonsPtr = NULL;
+} *sMoveMonsPtr = NULL;
 
 static bool8 sub_80D0164(void)
 {
@@ -8249,8 +8276,10 @@ static bool8 sub_80D0580(u8 arg0)
 
 static void sub_80D062C(void)
 {
-    s16 var = (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->field_6)) - (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->toRow));
-    s16 var2 = (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->field_7)) - (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->toColumn));
+    s16 var = (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->field_6)) -
+              (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->toRow));
+    s16 var2 = (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->field_7)) -
+               (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->toColumn));
 
     if (var > 0)
         sub_80D06D0(sMoveMonsPtr->field_6, sMoveMonsPtr->fromColumn, sMoveMonsPtr->toColumn);
@@ -8338,17 +8367,8 @@ static void sub_80D07B0(u8 arg0, u8 arg1)
         const u8 *iconGfx = GetMonIconPtr(species, personality, 1);
         u8 index = GetValidMonIconPalIndex(species) + 8;
 
-        BlitBitmapRectToWindow4BitTo8Bit(sPSSData->field_2200,
-                                         iconGfx,
-                                         0,
-                                         0,
-                                         32,
-                                         32,
-                                         24 * arg0,
-                                         24 * arg1,
-                                         32,
-                                         32,
-                                         index);
+        BlitBitmapRectToWindow4BitTo8Bit(
+            sPSSData->field_2200, iconGfx, 0, 0, 32, 32, 24 * arg0, 24 * arg1, 32, 32, index);
     }
 }
 
@@ -8359,12 +8379,7 @@ static void sub_80D0834(u8 arg0, u8 arg1)
 
     if (species != SPECIES_NONE)
     {
-        FillWindowPixelRect8Bit(sPSSData->field_2200,
-                                PIXEL_FILL(0),
-                                24 * arg0,
-                                24 * arg1,
-                                32,
-                                32);
+        FillWindowPixelRect8Bit(sPSSData->field_2200, PIXEL_FILL(0), 24 * arg0, 24 * arg1, 32, 32);
     }
 }
 
@@ -8503,8 +8518,8 @@ static bool8 sub_80D0BC0(void)
         u8 boxPosition = (IN_BOX_ROWS * i) + sMoveMonsPtr->minRow;
         for (j = sMoveMonsPtr->minRow; j < rowCount; j++)
         {
-            if (GetBoxMonData(&sMoveMonsPtr->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES)
-                && GetCurrentBoxMonData(boxPosition, MON_DATA_SANITY_HAS_SPECIES))
+            if (GetBoxMonData(&sMoveMonsPtr->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES) &&
+                GetCurrentBoxMonData(boxPosition, MON_DATA_SANITY_HAS_SPECIES))
                 return FALSE;
 
             monArrayId++;
@@ -8517,9 +8532,7 @@ static bool8 sub_80D0BC0(void)
 
 static const u32 gUnknown_0857BB24[] = INCBIN_U32("graphics/pokemon_storage/unknown_frame.4bpp");
 
-static const struct OamData sOamData_857BBA4 =
-{
-    .y = 0,
+static const struct OamData sOamData_857BBA4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -8531,60 +8544,41 @@ static const struct OamData sOamData_857BBA4 =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AffineAnimCmd sSpriteAffineAnim_857BBAC[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBAC[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BBBC[] = {
+    AFFINEANIMCMD_FRAME(88, 88, 0, 0), AFFINEANIMCMD_FRAME(5, 5, 0, 8), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBBC[] =
-{
-    AFFINEANIMCMD_FRAME(88, 88, 0, 0),
-    AFFINEANIMCMD_FRAME(5, 5, 0, 8),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BBD4[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_FRAME(-5, -5, 0, 8), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBD4[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_FRAME(-5, -5, 0, 8),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd sSpriteAffineAnim_857BBEC[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+static const union AffineAnimCmd sSpriteAffineAnim_857BBEC[] = { AFFINEANIMCMD_FRAME(
+                                                                     128, 128, 0, 0),
     AFFINEANIMCMD_FRAME(10, 10, 0, 12),
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
+    AFFINEANIMCMD_END };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC0C[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+static const union AffineAnimCmd sSpriteAffineAnim_857BC0C[] = { AFFINEANIMCMD_FRAME(
+                                                                     256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(-10, -10, 0, 12),
     AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_END
+    AFFINEANIMCMD_END };
+
+static const union AffineAnimCmd sSpriteAffineAnim_857BC2C[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_FRAME(-5, -5, 0, 16), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC2C[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_FRAME(-5, -5, 0, 16),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BC44[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC44[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] = {
     sSpriteAffineAnim_857BBAC,
     sSpriteAffineAnim_857BBBC,
     sSpriteAffineAnim_857BBD4,
@@ -8594,8 +8588,7 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] =
     sSpriteAffineAnim_857BC44
 };
 
-static const struct SpriteTemplate gSpriteTemplate_857BC70 =
-{
+static const struct SpriteTemplate gSpriteTemplate_857BC70 = {
     .tileTag = TAG_TILE_7,
     .paletteTag = TAG_PAL_DACB,
     .oam = &sOamData_857BBA4,
@@ -8622,7 +8615,8 @@ static void sub_80D0C60(void)
         {
             spriteSheet.tag = TAG_TILE_7 + i;
             LoadCompressedSpriteSheet(&spriteSheet);
-            sPSSData->field_2204[i].tiles = GetSpriteTileStartByTag(spriteSheet.tag) * 32 + (void*)(OBJ_VRAM0);
+            sPSSData->field_2204[i].tiles =
+                GetSpriteTileStartByTag(spriteSheet.tag) * 32 + (void *)(OBJ_VRAM0);
             sPSSData->field_2204[i].palIndex = AllocSpritePalette(TAG_PAL_DACB + i);
             sPSSData->field_2204[i].palIndex *= 16;
             sPSSData->field_2204[i].palIndex += 0x100;
@@ -8673,7 +8667,8 @@ static void sub_80D0D8C(u8 cursorArea, u8 cursorPos)
         heldItem = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
         break;
     case CURSOR_AREA_IN_PARTY:
-        if (cursorPos >= PARTY_SIZE || !GetMonData(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
+        if (cursorPos >= PARTY_SIZE ||
+            !GetMonData(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
             return;
         heldItem = GetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
         break;
@@ -8719,7 +8714,7 @@ static void Item_FromMonToMoving(u8 cursorArea, u8 cursorPos)
     sub_80D15D4(id, 3);
     sub_80D1604(id, 1, cursorArea, cursorPos);
     sub_80D140C(id, 2, 0);
-    if (cursorArea  == CURSOR_AREA_IN_BOX)
+    if (cursorArea == CURSOR_AREA_IN_BOX)
     {
         SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &item);
         SetBoxMonIconObjMode(cursorPos, 1);
@@ -8810,7 +8805,7 @@ static void Item_TakeMons(u8 cursorArea, u8 cursorPos)
     id = sub_80D1370(cursorArea, cursorPos);
     sub_80D15D4(id, 2);
     sub_80D1604(id, 0, cursorArea, cursorPos);
-    if (cursorArea  == CURSOR_AREA_IN_BOX)
+    if (cursorArea == CURSOR_AREA_IN_BOX)
     {
         SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &item);
         SetBoxMonIconObjMode(cursorPos, 1);
@@ -8854,9 +8849,11 @@ static bool8 sub_80D1218(void)
     {
         if (sPSSData->field_2204[i].unk10)
         {
-            if (!sPSSData->field_2204[i].sprite->affineAnimEnded && sPSSData->field_2204[i].sprite->affineAnimBeginning)
+            if (!sPSSData->field_2204[i].sprite->affineAnimEnded &&
+                sPSSData->field_2204[i].sprite->affineAnimBeginning)
                 return TRUE;
-            if (sPSSData->field_2204[i].sprite->callback != SpriteCallbackDummy && sPSSData->field_2204[i].sprite->callback != sub_80D1AD8)
+            if (sPSSData->field_2204[i].sprite->callback != SpriteCallbackDummy &&
+                sPSSData->field_2204[i].sprite->callback != sub_80D1AD8)
                 return TRUE;
         }
     }
@@ -8912,9 +8909,8 @@ static bool32 sub_80D1324(u8 cursorArea, u8 cursorPos)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].unk8 == cursorArea
-            && sPSSData->field_2204[i].unk9 == cursorPos)
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].unk8 == cursorArea &&
+            sPSSData->field_2204[i].unk9 == cursorPos)
             return TRUE;
     }
 
@@ -8927,9 +8923,8 @@ static u8 sub_80D1370(u8 cursorArea, u8 cursorPos)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].unk8 == cursorArea
-            && sPSSData->field_2204[i].unk9 == cursorPos)
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].unk8 == cursorArea &&
+            sPSSData->field_2204[i].unk9 == cursorPos)
             return i;
     }
 
@@ -8942,8 +8937,7 @@ static u8 sub_80D13C4(struct Sprite *sprite)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].sprite == sprite)
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].sprite == sprite)
             return i;
     }
 
@@ -9099,7 +9093,14 @@ static bool8 sub_80D184C(void)
     var = 0x15 - sPSSData->field_2236;
     for (i = 0; i < var; i++)
     {
-        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i, i, 13, 1, 7, 15, 21);
+        WriteSequenceToBgTilemapBuffer(0,
+            GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i,
+            i,
+            13,
+            1,
+            7,
+            15,
+            21);
     }
 
     sub_80D19B4(var);
@@ -9120,7 +9121,14 @@ static bool8 sub_80D18E4(void)
     var = 0x15 - sPSSData->field_2236;
     for (i = 0; i < var; i++)
     {
-        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i, i, 13, 1, 7, 15, 21);
+        WriteSequenceToBgTilemapBuffer(0,
+            GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i,
+            i,
+            13,
+            1,
+            7,
+            15,
+            21);
     }
 
     if (var >= 0)
@@ -9273,12 +9281,10 @@ static void sub_80D1CCC(struct Sprite *sprite)
 
 void nullsub_pss(void)
 {
-
 }
 
 void nullsub_98(void)
 {
-
 }
 
 // Functions here are general utility functions.
@@ -9330,10 +9336,11 @@ u32 GetBoxMonLevelAt(u8 boxId, u8 boxPosition)
     u32 lvl;
 
     // BUG: Missed 'else' statement.
-    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT &&
+        GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
         lvl = GetLevelFromBoxMonExp(&gPokemonStoragePtr->boxes[boxId][boxPosition]);
     // else
-        lvl = 0;
+    lvl = 0;
 
     return lvl;
 }
@@ -9364,16 +9371,26 @@ void CopyBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *dst)
         *dst = gPokemonStoragePtr->boxes[boxId][boxPosition];
 }
 
-void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID)
+void CreateBoxMonAt(u8 boxId,
+    u8 boxPosition,
+    u16 species,
+    u8 level,
+    u8 fixedIV,
+    u8 hasFixedPersonality,
+    u32 personality,
+    u8 otIDType,
+    u32 otID)
 {
     if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
     {
         CreateBoxMon(&gPokemonStoragePtr->boxes[boxId][boxPosition],
-                     species,
-                     level,
-                     fixedIV,
-                     hasFixedPersonality, personality,
-                     otIDType, otID);
+            species,
+            level,
+            fixedIV,
+            hasFixedPersonality,
+            personality,
+            otIDType,
+            otID);
     }
 }
 
@@ -9439,8 +9456,8 @@ s16 sub_80D214C(struct BoxPokemon *boxMons, u8 currIndex, u8 maxIndex, u8 arg3)
     {
         for (i = (s8)currIndex + adder; i >= 0 && i <= maxIndex; i += adder)
         {
-            if (GetBoxMonData(&boxMons[i], MON_DATA_SPECIES) != SPECIES_NONE
-                && !GetBoxMonData(&boxMons[i], MON_DATA_IS_EGG))
+            if (GetBoxMonData(&boxMons[i], MON_DATA_SPECIES) != SPECIES_NONE &&
+                !GetBoxMonData(&boxMons[i], MON_DATA_IS_EGG))
                 return i;
         }
     }
@@ -9466,11 +9483,11 @@ bool8 CheckFreePokemonStorageSpace(void)
 
 bool32 CheckBoxMonSanityAt(u32 boxId, u32 boxPosition)
 {
-    if (boxId < TOTAL_BOXES_COUNT
-        && boxPosition < IN_BOX_COUNT
-        && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES)
-        && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_EGG)
-        && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_BAD_EGG))
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT &&
+        GetBoxMonData(
+            &gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES) &&
+        !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_EGG) &&
+        !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_BAD_EGG))
         return TRUE;
     else
         return FALSE;
@@ -9485,8 +9502,8 @@ u32 CountStorageNonEggMons(void)
     {
         for (j = 0; j < IN_BOX_COUNT; j++)
         {
-            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
-                && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES) &&
+                !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
                 count++;
         }
     }
@@ -9503,8 +9520,8 @@ u32 CountAllStorageMons(void)
     {
         for (j = 0; j < IN_BOX_COUNT; j++)
         {
-            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
-                || GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES) ||
+                GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
                 count++;
         }
     }
@@ -9514,16 +9531,16 @@ u32 CountAllStorageMons(void)
 
 bool32 AnyStorageMonWithMove(u16 moveId)
 {
-    u16 moves[] = {moveId, MOVES_COUNT};
+    u16 moves[] = { moveId, MOVES_COUNT };
     s32 i, j;
 
     for (i = 0; i < TOTAL_BOXES_COUNT; i++)
     {
         for (j = 0; j < IN_BOX_COUNT; j++)
         {
-            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
-                && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG)
-                && GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_KNOWN_MOVES, (u8*)moves))
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES) &&
+                !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG) &&
+                GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_KNOWN_MOVES, (u8 *)moves))
                 return TRUE;
         }
     }
@@ -9638,20 +9655,18 @@ struct
 {
     u16 a;
     u16 b;
-}
-static const sUnkVars[][4] =
-{
+} static const sUnkVars[][4] = {
     {
-        {0x0100, 0x0100},
-        {0x0200, 0x0100},
-        {0x0100, 0x0200},
-        {0x0200, 0x0200},
+        { 0x0100, 0x0100 },
+        { 0x0200, 0x0100 },
+        { 0x0100, 0x0200 },
+        { 0x0200, 0x0200 },
     },
     {
-        {0x0080, 0x0080},
-        {0x0100, 0x0100},
-        {0x0200, 0x0200},
-        {0x0400, 0x0400},
+        { 0x0080, 0x0080 },
+        { 0x0100, 0x0100 },
+        { 0x0200, 0x0200 },
+        { 0x0400, 0x0400 },
     },
 };
 
@@ -9769,17 +9784,18 @@ static void sub_80D2960(u8 id)
 {
     s32 i;
     u32 adder = gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_20;
-    const void *tiles = (gUnknown_02039D84[id].field_18 + (adder * gUnknown_02039D84[id].field_0[0].field_A))
-                      + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[0].field_8);
+    const void *tiles =
+        (gUnknown_02039D84[id].field_18 + (adder * gUnknown_02039D84[id].field_0[0].field_A)) +
+        (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[0].field_8);
 
     for (i = 0; i < gUnknown_02039D84[id].field_0[0].field_6; i++)
     {
         CopyToBgTilemapBufferRect(gUnknown_02039D84[id].field_2B,
-                                  tiles,
-                                  gUnknown_02039D84[id].field_0[0].field_8,
-                                  gUnknown_02039D84[id].field_0[0].field_A + i,
-                                  gUnknown_02039D84[id].field_0[0].field_4,
-                                  1);
+            tiles,
+            gUnknown_02039D84[id].field_0[0].field_8,
+            gUnknown_02039D84[id].field_0[0].field_A + i,
+            gUnknown_02039D84[id].field_0[0].field_4,
+            1);
         tiles += adder;
     }
 }
@@ -9788,17 +9804,18 @@ static void sub_80D29F8(u8 id)
 {
     s32 i;
     u32 adder = gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_24;
-    const void *tiles = (gUnknown_02039D84[id].field_1C + (adder * gUnknown_02039D84[id].field_0[1].field_2))
-                      + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[1].field_0);
+    const void *tiles =
+        (gUnknown_02039D84[id].field_1C + (adder * gUnknown_02039D84[id].field_0[1].field_2)) +
+        (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[1].field_0);
 
     for (i = 0; i < gUnknown_02039D84[id].field_0[1].field_6; i++)
     {
         CopyToBgTilemapBufferRect(gUnknown_02039D84[id].field_2B,
-                                  tiles,
-                                  gUnknown_02039D84[id].field_0[1].field_8,
-                                  gUnknown_02039D84[id].field_0[1].field_A + i,
-                                  gUnknown_02039D84[id].field_0[1].field_4,
-                                  1);
+            tiles,
+            gUnknown_02039D84[id].field_0[1].field_8,
+            gUnknown_02039D84[id].field_0[1].field_A + i,
+            gUnknown_02039D84[id].field_0[1].field_4,
+            1);
         tiles += adder;
     }
 }
@@ -9829,7 +9846,15 @@ static void sub_80D2AA4(void)
     }
 }
 
-static bool8 sub_80D2AEC(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height, u16 unkArg)
+static bool8 sub_80D2AEC(u8 *dest,
+    u16 dLeft,
+    u16 dTop,
+    const u8 *src,
+    u16 sLeft,
+    u16 sTop,
+    u16 width,
+    u16 height,
+    u16 unkArg)
 {
     struct UnkStruct_2000028 *unkStruct;
 

@@ -46,10 +46,7 @@ static const struct WindowTemplate sWindowTemplate_LinkPlayerCount = {
 };
 
 static const u8 *const sTrainerCardColorNames[] = {
-    gText_BronzeCard,
-    gText_CopperCard,
-    gText_SilverCard,
-    gText_GoldCard
+    gText_BronzeCard, gText_CopperCard, gText_SilverCard, gText_GoldCard
 };
 
 static void Task_LinkupStart(u8 taskId);
@@ -71,8 +68,7 @@ static void Task_ReestablishLinkAwaitConnection(u8 taskId);
 static void Task_ReestablishLinkLeader(u8 taskId);
 static void Task_ReestablishLinkAwaitConfirmation(u8 taskId);
 
-#define tState      data[0]
-
+#define tState data[0]
 
 #define tMinPlayers data[1]
 #define tMaxPlayers data[2]
@@ -141,7 +137,8 @@ static u32 ExchangeDataAndGetLinkupStatus(u8 minPlayers, u8 maxPlayers)
     case EXCHANGE_PARTNER_NOT_READY:
         return LINKUP_PARTNER_NOT_READY;
     case EXCHANGE_WRONG_NUM_PLAYERS:
-        ConvertIntToDecimalStringN(gStringVar1, GetLinkPlayerCount_2(), STR_CONV_MODE_LEFT_ALIGN, 1);
+        ConvertIntToDecimalStringN(
+            gStringVar1, GetLinkPlayerCount_2(), STR_CONV_MODE_LEFT_ALIGN, 1);
         return LINKUP_WRONG_NUM_PLAYERS;
     case EXCHANGE_STAT_7:
         return LINKUP_FAILED_CONTEST_GMODE;
@@ -163,8 +160,7 @@ static bool32 CheckLinkErrored(u8 taskId)
 
 static bool32 CheckLinkCanceledBeforeConnection(u8 taskId)
 {
-    if ((gMain.newKeys & B_BUTTON)
-     && IsLinkConnectionEstablished() == FALSE)
+    if ((gMain.newKeys & B_BUTTON) && IsLinkConnectionEstablished() == FALSE)
     {
         gLinkType = 0;
         gTasks[taskId].func = Task_LinkupFailed;
@@ -230,9 +226,8 @@ static void Task_LinkupAwaitConnection(u8 taskId)
 {
     u32 playerCount = GetLinkPlayerCount_2();
 
-    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
-     || CheckLinkCanceled(taskId) == TRUE
-     || playerCount < 2)
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE || CheckLinkCanceled(taskId) == TRUE ||
+        playerCount < 2)
         return;
 
     SetSuppressLinkErrorMessage(TRUE);
@@ -253,9 +248,8 @@ static void Task_LinkupAwaitConnection(u8 taskId)
 
 static void Task_LinkupConfirmWhenReady(u8 taskId)
 {
-    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
-     || sub_80B25CC(taskId) == TRUE
-     || CheckLinkErrored(taskId) == TRUE)
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE || sub_80B25CC(taskId) == TRUE ||
+        CheckLinkErrored(taskId) == TRUE)
         return;
 
     if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
@@ -270,9 +264,8 @@ static void Task_LinkupAwaitConfirmation(u8 taskId)
     s16 *data = gTasks[taskId].data;
     s32 linkPlayerCount = GetLinkPlayerCount_2();
 
-    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
-     || sub_80B25CC(taskId) == TRUE
-     || CheckLinkErrored(taskId) == TRUE)
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE || sub_80B25CC(taskId) == TRUE ||
+        CheckLinkErrored(taskId) == TRUE)
         return;
 
     UpdateLinkPlayerCountDisplay(taskId, linkPlayerCount);
@@ -292,9 +285,8 @@ static void Task_LinkupAwaitConfirmation(u8 taskId)
 
 static void Task_LinkupTryConfirmation(u8 taskId)
 {
-    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
-     || sub_80B25CC(taskId) == TRUE
-     || CheckLinkErrored(taskId) == TRUE)
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE || sub_80B25CC(taskId) == TRUE ||
+        CheckLinkErrored(taskId) == TRUE)
         return;
 
     if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
@@ -323,8 +315,7 @@ static void Task_LinkupConfirm(u8 taskId)
     u8 minPlayers = gTasks[taskId].tMinPlayers;
     u8 maxPlayers = gTasks[taskId].tMaxPlayers;
 
-    if (CheckLinkErrored(taskId) == TRUE
-     || TryLinkTimeout(taskId) == TRUE)
+    if (CheckLinkErrored(taskId) == TRUE || TryLinkTimeout(taskId) == TRUE)
         return;
 
     if (GetLinkPlayerCount_2() != GetSavedPlayerCount())
@@ -347,22 +338,21 @@ static void Task_LinkupExchangeDataWithLeader(u8 taskId)
     minPlayers = gTasks[taskId].tMinPlayers;
     maxPlayers = gTasks[taskId].tMaxPlayers;
 
-    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
-     || CheckLinkErrored(taskId) == TRUE)
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE || CheckLinkErrored(taskId) == TRUE)
         return;
 
     gSpecialVar_Result = ExchangeDataAndGetLinkupStatus(minPlayers, maxPlayers);
     if (gSpecialVar_Result == LINKUP_ONGOING)
         return;
-    if (gSpecialVar_Result == LINKUP_DIFF_SELECTIONS 
-     || gSpecialVar_Result == LINKUP_WRONG_NUM_PLAYERS)
+    if (gSpecialVar_Result == LINKUP_DIFF_SELECTIONS ||
+        gSpecialVar_Result == LINKUP_WRONG_NUM_PLAYERS)
     {
         SetCloseLinkCallback();
         HideFieldMessageBox();
         gTasks[taskId].func = Task_StopLinkup;
     }
-    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY 
-          || gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
+    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY ||
+             gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
     {
         CloseLink();
         HideFieldMessageBox();
@@ -375,8 +365,10 @@ static void Task_LinkupExchangeDataWithLeader(u8 taskId)
         SaveLinkPlayers(gFieldLinkPlayerCount);
         card = (struct TrainerCard *)gBlockSendBuffer;
         TrainerCard_GenerateCardForPlayer(card);
-        card->monSpecies[0] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[0] - 1], MON_DATA_SPECIES, NULL);
-        card->monSpecies[1] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[1] - 1], MON_DATA_SPECIES, NULL);
+        card->monSpecies[0] =
+            GetMonData(&gPlayerParty[gSelectedOrderFromParty[0] - 1], MON_DATA_SPECIES, NULL);
+        card->monSpecies[1] =
+            GetMonData(&gPlayerParty[gSelectedOrderFromParty[1] - 1], MON_DATA_SPECIES, NULL);
         gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
     }
 }
@@ -409,8 +401,8 @@ static void Task_LinkupCheckStatusAfterConfirm(u8 taskId)
         HideFieldMessageBox();
         gTasks[taskId].func = Task_StopLinkup;
     }
-    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY 
-          || gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
+    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY ||
+             gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
     {
         CloseLink();
         HideFieldMessageBox();
@@ -423,8 +415,10 @@ static void Task_LinkupCheckStatusAfterConfirm(u8 taskId)
         SaveLinkPlayers(gFieldLinkPlayerCount);
         card = (struct TrainerCard *)gBlockSendBuffer;
         TrainerCard_GenerateCardForPlayer(card);
-        card->monSpecies[0] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[0] - 1], MON_DATA_SPECIES, NULL);
-        card->monSpecies[1] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[1] - 1], MON_DATA_SPECIES, NULL);
+        card->monSpecies[0] =
+            GetMonData(&gPlayerParty[gSelectedOrderFromParty[0] - 1], MON_DATA_SPECIES, NULL);
+        card->monSpecies[1] =
+            GetMonData(&gPlayerParty[gSelectedOrderFromParty[1] - 1], MON_DATA_SPECIES, NULL);
         gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
         SendBlockRequest(2);
     }
@@ -477,7 +471,8 @@ static void FinishLinkup(u16 *linkupStatus, u32 taskId)
     {
         if (gLinkType == LINKTYPE_BATTLE_TOWER_50 || gLinkType == LINKTYPE_BATTLE_TOWER_OPEN)
         {
-            if (AreBattleTowerLinkSpeciesSame(trainerCards[0].monSpecies, trainerCards[1].monSpecies))
+            if (AreBattleTowerLinkSpeciesSame(
+                    trainerCards[0].monSpecies, trainerCards[1].monSpecies))
             {
                 // Unsuccessful battle tower linkup
                 *linkupStatus = LINKUP_FAILED_BATTLE_TOWER;
@@ -521,7 +516,8 @@ static void Task_LinkupAwaitTrainerCardData(u8 taskId)
 
     for (index = 0; index < GetLinkPlayerCount(); index++)
     {
-        CopyTrainerCardData(&gTrainerCards[index], gBlockRecvBuffer[index], gLinkPlayers[index].version);
+        CopyTrainerCardData(
+            &gTrainerCards[index], gBlockRecvBuffer[index], gLinkPlayers[index].version);
     }
 
     SetSuppressLinkErrorMessage(FALSE);
@@ -797,8 +793,7 @@ static void Task_ReestablishLinkLeader(u8 taskId)
 
 static void Task_ReestablishLinkAwaitConfirmation(u8 taskId)
 {
-    if (gReceivedRemoteLinkPlayers == TRUE
-     && IsLinkPlayerDataExchangeComplete() == TRUE)
+    if (gReceivedRemoteLinkPlayers == TRUE && IsLinkPlayerDataExchangeComplete() == TRUE)
     {
         CheckLinkPlayersMatchSaved();
         StartSendingKeysToLink();
@@ -824,10 +819,12 @@ static void SetLinkBattleTypeFlags(int linkService)
         break;
     case USING_MULTI_BATTLE:
         ReducePlayerPartyToSelectedMons();
-        gBattleTypeFlags = BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
+        gBattleTypeFlags =
+            BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
         break;
     case USING_BATTLE_TOWER:
-        gBattleTypeFlags = BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
+        gBattleTypeFlags = BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK |
+                           BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
         break;
     }
 }
@@ -836,7 +833,7 @@ static void SetLinkBattleTypeFlags(int linkService)
 
 static void Task_StartWiredCableClubBattle(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
 
     switch (task->tState)
     {
@@ -882,7 +879,7 @@ static void Task_StartWiredCableClubBattle(u8 taskId)
 static void Task_StartWirelessCableClubBattle(u8 taskId)
 {
     int i;
-    s16* data = gTasks[taskId].data;
+    s16 *data = gTasks[taskId].data;
 
     switch (tState)
     {
@@ -1007,10 +1004,12 @@ void CB2_ReturnFromCableClubBattle(void)
             switch (gBattleOutcome)
             {
             case B_OUTCOME_WON:
-                RecordIdOfWonderCardSenderByEventType(0, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
+                RecordIdOfWonderCardSenderByEventType(
+                    0, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
                 break;
             case B_OUTCOME_LOST:
-                RecordIdOfWonderCardSenderByEventType(1, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
+                RecordIdOfWonderCardSenderByEventType(
+                    1, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
                 break;
             }
         }
@@ -1026,10 +1025,8 @@ void CB2_ReturnFromCableClubBattle(void)
 
 void CleanupLinkRoomState(void)
 {
-    if (gSpecialVar_0x8004 == USING_SINGLE_BATTLE 
-     || gSpecialVar_0x8004 == USING_DOUBLE_BATTLE 
-     || gSpecialVar_0x8004 == USING_MULTI_BATTLE 
-     || gSpecialVar_0x8004 == USING_BATTLE_TOWER)
+    if (gSpecialVar_0x8004 == USING_SINGLE_BATTLE || gSpecialVar_0x8004 == USING_DOUBLE_BATTLE ||
+        gSpecialVar_0x8004 == USING_MULTI_BATTLE || gSpecialVar_0x8004 == USING_BATTLE_TOWER)
     {
         LoadPlayerParty();
         SavePlayerBag();
@@ -1045,7 +1042,7 @@ void ExitLinkRoom(void)
 // Note: gSpecialVar_0x8005 contains the id of the seat the player entered
 static void Task_EnterCableClubSeat(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
 
     switch (task->tState)
     {
@@ -1175,7 +1172,6 @@ static void CreateTask_StartWiredTrade(void)
 
 void nullsub_37(void)
 {
-
 }
 
 void ColosseumPlayerSpotTriggered(void)

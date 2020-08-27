@@ -69,7 +69,8 @@ void sub_80A477C(bool8);
 
 // battle_intro.c
 void SetAnimBgAttribute(u8 bgId, u8 attributeId, u8 value);
-void sub_8118FBC(int bgId, u8 arg1, u8 arg2, u8 battlerPosition, u8 arg4, u8 *arg5, u16 *arg6, u16 arg7);
+void sub_8118FBC(
+    int bgId, u8 arg1, u8 arg2, u8 battlerPosition, u8 arg4, u8 *arg5, u16 *arg6, u16 arg7);
 void HandleIntroSlide(u8 terrainId);
 int GetAnimBgAttribute(u8 bgId, u8 attributeId);
 
@@ -108,8 +109,8 @@ u8 GetBattlerSpriteBGPriority(u8 battlerId);
 void *LoadPointerFromVars(s16 bottom, s16 top);
 void StorePointerInVars(s16 *bottom, s16 *top, const void *ptr);
 void sub_80A8278(void);
-void sub_80A6B30(struct BattleAnimBgData*);
-void sub_80A6B90(struct BattleAnimBgData*, u32 arg1);
+void sub_80A6B30(struct BattleAnimBgData *);
+void sub_80A6B90(struct BattleAnimBgData *, u32 arg1);
 u8 GetBattlerSpriteSubpriority(u8 battlerId);
 bool8 TranslateAnimHorizontalArc(struct Sprite *sprite);
 void sub_80A6630(struct Sprite *sprite);
@@ -123,10 +124,10 @@ u32 sub_80A75AC(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
 u32 sub_80A76C4(u8 a1, u8 a2, u8 a3, u8 a4);
 u8 sub_80A77AC(u8 a1);
 s16 CloneBattlerSpriteWithBlend(u8);
-void obj_delete_but_dont_free_vram(struct Sprite*);
+void obj_delete_but_dont_free_vram(struct Sprite *);
 u8 sub_80A89C8(int, u8, int);
-void AnimLoadCompressedBgTilemapHandleContest(struct BattleAnimBgData*, const void*, u32);
-void AnimLoadCompressedBgGfx(u32, const u32*, u32);
+void AnimLoadCompressedBgTilemapHandleContest(struct BattleAnimBgData *, const void *, u32);
+void AnimLoadCompressedBgGfx(u32, const u32 *, u32);
 void sub_80A6DAC(bool8);
 void TranslateSpriteInGrowingCircleOverDuration(struct Sprite *);
 void sub_80A653C(struct Sprite *);
@@ -144,11 +145,21 @@ void AnimSpriteOnMonPos(struct Sprite *sprite);
 void sub_80A7000(struct Sprite *sprite);
 void TranslateSpriteInCircleOverDuration(struct Sprite *sprite);
 void SetGreyscaleOrOriginalPalette(u16 palNum, bool8 restoreOriginal);
-void PrepareAffineAnimInTaskData(struct Task *task, u8 spriteId, const union AffineAnimCmd *affineAnimCmds);
+void PrepareAffineAnimInTaskData(
+    struct Task *task, u8 spriteId, const union AffineAnimCmd *affineAnimCmds);
 bool8 RunAffineAnimFromTaskData(struct Task *task);
 void AnimThrowProjectile(struct Sprite *sprite);
 void sub_80A6BFC(struct BattleAnimBgData *unk, u8 unused);
-u8 sub_80A8394(u16 species, bool8 isBackpic, u8 a3, s16 x, s16 y, u8 subpriority, u32 personality, u32 trainerId, u32 battlerId, u32 a10);
+u8 sub_80A8394(u16 species,
+    bool8 isBackpic,
+    u8 a3,
+    s16 x,
+    s16 y,
+    u8 subpriority,
+    u32 personality,
+    u32 trainerId,
+    u32 battlerId,
+    u32 a10);
 void sub_80A749C(struct Sprite *sprite);
 void TradeMenuBouncePartySprites(struct Sprite *sprite);
 void DestroyAnimVisualTaskAndDisableBlend(u8 taskId);
@@ -188,18 +199,18 @@ u8 GetAnimBattlerSpriteId(u8 wantedBattler);
 bool8 IsDoubleBattle(void);
 u8 GetBattleBgPaletteNum(void);
 u8 GetBattlerSpriteBGPriorityRank(u8 battlerId);
-void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*spriteCallback)(struct Sprite*));
+void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*spriteCallback)(struct Sprite *));
 void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite);
 u8 GetBattlerSpriteDefault_Y(u8 battlerId);
 u8 GetSubstituteSpriteDefault_Y(u8 battlerId);
 
 // battle_anim_status_effects.c
-#define STAT_ANIM_PLUS1  15
-#define STAT_ANIM_PLUS2  39
-#define STAT_ANIM_MINUS1 22
-#define STAT_ANIM_MINUS2 46
-#define STAT_ANIM_MULTIPLE_PLUS1 55
-#define STAT_ANIM_MULTIPLE_PLUS2 56
+#define STAT_ANIM_PLUS1           15
+#define STAT_ANIM_PLUS2           39
+#define STAT_ANIM_MINUS1          22
+#define STAT_ANIM_MINUS2          46
+#define STAT_ANIM_MULTIPLE_PLUS1  55
+#define STAT_ANIM_MULTIPLE_PLUS2  56
 #define STAT_ANIM_MULTIPLE_MINUS1 57
 #define STAT_ANIM_MULTIPLE_MINUS2 58
 void LaunchStatusAnimation(u8 battlerId, u8 statusAnimId);
@@ -215,11 +226,21 @@ u8 LaunchBallFadeMonTask(bool8 unFadeLater, u8 battlerId, u32 selectedPalettes, 
 
 // battle_anim_utility_funcs.c
 void sub_8116EB4(u8);
-void sub_8117854(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5, u8 arg6, u8 arg7, const u32 *arg8, const u32 *arg9, const u32 *palette);
+void sub_8117854(u8 taskId,
+    int unused,
+    u16 arg2,
+    u8 battler1,
+    u8 arg4,
+    u8 arg5,
+    u8 arg6,
+    u8 arg7,
+    const u32 *arg8,
+    const u32 *arg9,
+    const u32 *palette);
 
 // battle_anim_effects_1.c
-void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite);
-void AnimMoveTwisterParticle(struct Sprite* sprite);
+void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
+void AnimMoveTwisterParticle(struct Sprite *sprite);
 void AnimParticleBurst(struct Sprite *);
 
 // battle_anim_water.c

@@ -42,20 +42,17 @@ static void AnimGrudgeFlame(struct Sprite *);
 static void sub_8112F60(struct Sprite *);
 static void sub_8112FB8(struct Sprite *);
 
-static const union AffineAnimCmd sAffineAnim_ConfuseRayBallBounce[] =
-{
+static const union AffineAnimCmd sAffineAnim_ConfuseRayBallBounce[] = {
     AFFINEANIMCMD_FRAME(0x1E, 0x1E, 10, 5),
     AFFINEANIMCMD_FRAME(0xFFE2, 0xFFE2, 10, 5),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_ConfuseRayBallBounce[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_ConfuseRayBallBounce[] = {
     sAffineAnim_ConfuseRayBallBounce,
 };
 
-const struct SpriteTemplate gConfuseRayBallBounceSpriteTemplate =
-{
+const struct SpriteTemplate gConfuseRayBallBounceSpriteTemplate = {
     .tileTag = ANIM_TAG_YELLOW_BALL,
     .paletteTag = ANIM_TAG_YELLOW_BALL,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
@@ -65,8 +62,7 @@ const struct SpriteTemplate gConfuseRayBallBounceSpriteTemplate =
     .callback = AnimConfuseRayBallBounce,
 };
 
-const struct SpriteTemplate gConfuseRayBallSpiralSpriteTemplate =
-{
+const struct SpriteTemplate gConfuseRayBallSpiralSpriteTemplate = {
     .tileTag = ANIM_TAG_YELLOW_BALL,
     .paletteTag = ANIM_TAG_YELLOW_BALL,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
@@ -76,19 +72,16 @@ const struct SpriteTemplate gConfuseRayBallSpiralSpriteTemplate =
     .callback = AnimConfuseRayBallSpiral,
 };
 
-static const union AffineAnimCmd sAffineAnim_ShadowBall[] =
-{
+static const union AffineAnimCmd sAffineAnim_ShadowBall[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_ShadowBall[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_ShadowBall[] = {
     sAffineAnim_ShadowBall,
 };
 
-const struct SpriteTemplate gShadowBallSpriteTemplate =
-{
+const struct SpriteTemplate gShadowBallSpriteTemplate = {
     .tileTag = ANIM_TAG_SHADOW_BALL,
     .paletteTag = ANIM_TAG_SHADOW_BALL,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -98,8 +91,7 @@ const struct SpriteTemplate gShadowBallSpriteTemplate =
     .callback = AnimShadowBall,
 };
 
-static const union AnimCmd sAnim_Lick[] =
-{
+static const union AnimCmd sAnim_Lick[] = {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
     ANIMCMD_FRAME(16, 2),
@@ -108,13 +100,11 @@ static const union AnimCmd sAnim_Lick[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_Lick[] =
-{
+static const union AnimCmd *const sAnims_Lick[] = {
     sAnim_Lick,
 };
 
-const struct SpriteTemplate gLickSpriteTemplate =
-{
+const struct SpriteTemplate gLickSpriteTemplate = {
     .tileTag = ANIM_TAG_LICK,
     .paletteTag = ANIM_TAG_LICK,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
@@ -124,20 +114,17 @@ const struct SpriteTemplate gLickSpriteTemplate =
     .callback = AnimLick,
 };
 
-static const union AffineAnimCmd gUnknown_08596DA4[] =
-{
+static const union AffineAnimCmd gUnknown_08596DA4[] = {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_END,
 };
 
 // Unused
-static const union AffineAnimCmd *const gUnknown_08596DB4[] =
-{
+static const union AffineAnimCmd *const gUnknown_08596DB4[] = {
     gUnknown_08596DA4,
 };
 
-const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate =
-{
+const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate = {
     .tileTag = ANIM_TAG_WHITE_SHADOW,
     .paletteTag = ANIM_TAG_WHITE_SHADOW,
     .oam = &gOamData_AffineOff_ObjBlend_64x32,
@@ -147,8 +134,7 @@ const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate =
     .callback = AnimDestinyBondWhiteShadow,
 };
 
-const struct SpriteTemplate gCurseNailSpriteTemplate =
-{
+const struct SpriteTemplate gCurseNailSpriteTemplate = {
     .tileTag = ANIM_TAG_NAIL,
     .paletteTag = ANIM_TAG_NAIL,
     .oam = &gOamData_AffineOff_ObjBlend_32x16,
@@ -158,8 +144,7 @@ const struct SpriteTemplate gCurseNailSpriteTemplate =
     .callback = AnimCurseNail,
 };
 
-const struct SpriteTemplate gCurseGhostSpriteTemplate =
-{
+const struct SpriteTemplate gCurseGhostSpriteTemplate = {
     .tileTag = ANIM_TAG_GHOSTLY_SPIRIT,
     .paletteTag = ANIM_TAG_GHOSTLY_SPIRIT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
@@ -169,8 +154,7 @@ const struct SpriteTemplate gCurseGhostSpriteTemplate =
     .callback = AnimGhostStatusSprite,
 };
 
-const struct SpriteTemplate gNightmareDevilSpriteTemplate =
-{
+const struct SpriteTemplate gNightmareDevilSpriteTemplate = {
     .tileTag = ANIM_TAG_DEVIL,
     .paletteTag = ANIM_TAG_DEVIL,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
@@ -180,8 +164,7 @@ const struct SpriteTemplate gNightmareDevilSpriteTemplate =
     .callback = AnimGhostStatusSprite,
 };
 
-static const union AnimCmd sAnim_GrudgeFlame[] =
-{
+static const union AnimCmd sAnim_GrudgeFlame[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(8, 4),
     ANIMCMD_FRAME(16, 4),
@@ -189,13 +172,11 @@ static const union AnimCmd sAnim_GrudgeFlame[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sAnims_GrudgeFlame[] =
-{
+static const union AnimCmd *const sAnims_GrudgeFlame[] = {
     sAnim_GrudgeFlame,
 };
 
-const struct SpriteTemplate gGrudgeFlameSpriteTemplate =
-{
+const struct SpriteTemplate gGrudgeFlameSpriteTemplate = {
     .tileTag = ANIM_TAG_PURPLE_FLAME,
     .paletteTag = ANIM_TAG_PURPLE_FLAME,
     .oam = &gOamData_AffineOff_ObjBlend_16x32,
@@ -206,8 +187,7 @@ const struct SpriteTemplate gGrudgeFlameSpriteTemplate =
 };
 
 // Unused
-const struct SpriteTemplate gUnknown_08596E48 =
-{
+const struct SpriteTemplate gUnknown_08596E48 = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -338,7 +318,8 @@ static void AnimConfuseRayBallSpiral_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-// Creates a large transparent clone of the attacker centered on their position which shrinks to original size
+// Creates a large transparent clone of the attacker centered on their position which shrinks to
+// original size
 void AnimTask_NightShadeClone(u8 taskId)
 {
     u8 spriteId;
@@ -363,7 +344,8 @@ static void AnimTask_NightShadeClone_Step1(u8 taskId)
         gTasks[taskId].data[10] = 0;
         gTasks[taskId].data[2] += 1;
         gTasks[taskId].data[3] -= 1;
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[2], gTasks[taskId].data[3]));
+        SetGpuReg(
+            REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[2], gTasks[taskId].data[3]));
         if (gTasks[taskId].data[2] != 9)
             return;
 
@@ -627,17 +609,20 @@ static void AnimTask_SpiteTargetShadow_Step1(u8 taskId)
                 gSprites[task->data[0]].oam.paletteNum = task->data[14];
                 gSprites[task->data[0]].oam.objMode = ST_OAM_OBJ_NORMAL;
                 gSprites[task->data[0]].oam.priority = 3;
-                gSprites[task->data[0]].invisible = (gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].invisible);
+                gSprites[task->data[0]].invisible =
+                    (gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].invisible);
                 task->data[1] = 0;
                 task->data[2] = 0;
                 task->data[3] = 16;
                 task->data[13] = GetAnimBattlerSpriteId(ANIM_TARGET);
                 task->data[4] = (gSprites[task->data[13]].oam.paletteNum + 16) * 16;
-                if (position == 1) {
+                if (position == 1)
+                {
                     u16 mask = DISPCNT_BG1_ON;
                     mask2 = mask;
                 }
-                else {
+                else
+                {
                     u16 mask = DISPCNT_BG2_ON;
                     mask2 = mask;
                 }
@@ -818,9 +803,8 @@ void AnimTask_DestinyBondWhiteShadow(u8 taskId)
     {
         for (battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
         {
-            if (battler != gBattleAnimAttacker
-             && battler != (gBattleAnimAttacker ^ 2)
-             && IsBattlerSpriteVisible(battler))
+            if (battler != gBattleAnimAttacker && battler != (gBattleAnimAttacker ^ 2) &&
+                IsBattlerSpriteVisible(battler))
             {
                 spriteId = CreateSprite(&gDestinyBondWhiteShadowSpriteTemplate, baseX, baseY, 55);
                 if (spriteId != MAX_SPRITES)
@@ -950,10 +934,12 @@ void AnimTask_CurseStretchingBlackBg(u8 taskId)
 
     gBattle_WIN0H = 0;
     gBattle_WIN0V = 0;
-    SetGpuReg(REG_OFFSET_WININ, ((WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR) |
-                                    (WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR)));
-    SetGpuReg(REG_OFFSET_WINOUT, ((WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ) |
-                                    (WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR)));
+    SetGpuReg(REG_OFFSET_WININ,
+        ((WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR) |
+            (WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR)));
+    SetGpuReg(REG_OFFSET_WINOUT,
+        ((WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ) |
+            (WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR)));
     SetGpuReg(REG_OFFSET_BLDCNT, (BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_DARKEN));
     SetGpuReg(REG_OFFSET_BLDY, 0x10);
 
@@ -998,9 +984,9 @@ static void AnimTask_CurseStretchingBlackBg_Step1(u8 taskId)
 
     if (step < 16)
     {
-        left   = startX - (leftDistance   * 0.0625) * step;
-        right  = startX + (rightDistance  * 0.0625) * step;
-        top    = startY - (topDistance    * 0.0625) * step;
+        left = startX - (leftDistance * 0.0625) * step;
+        right = startX + (rightDistance * 0.0625) * step;
+        top = startY - (topDistance * 0.0625) * step;
         bottom = startY + (bottomDistance * 0.0625) * step;
     }
     else
@@ -1015,7 +1001,7 @@ static void AnimTask_CurseStretchingBlackBg_Step1(u8 taskId)
     }
 
     gBattle_WIN0H = (left << 8) | right;
-    gBattle_WIN0V = (top  << 8) | bottom;
+    gBattle_WIN0V = (top << 8) | bottom;
 }
 
 static void AnimTask_CurseStretchingBlackBg_Step2(u8 taskId)
@@ -1024,10 +1010,12 @@ static void AnimTask_CurseStretchingBlackBg_Step2(u8 taskId)
     {
         gBattle_WIN0H = 0;
         gBattle_WIN0V = 0;
-        SetGpuReg(REG_OFFSET_WININ, ((WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR) |
-                                        (WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR)));
-        SetGpuReg(REG_OFFSET_WINOUT, ((WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR) |
-                                        (WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR)));
+        SetGpuReg(REG_OFFSET_WININ,
+            ((WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR) |
+                (WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR)));
+        SetGpuReg(REG_OFFSET_WINOUT,
+            ((WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR) |
+                (WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR)));
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuReg(REG_OFFSET_BLDY, 0);
         DestroyAnimVisualTask(taskId);
@@ -1182,7 +1170,8 @@ void AnimTask_GrudgeFlames(u8 taskId)
     task->data[1] = 16;
     task->data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     task->data[10] = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
-    task->data[11] = (GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_WIDTH) / 2) + 8;
+    task->data[11] =
+        (GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_WIDTH) / 2) + 8;
     task->data[7] = 0;
     task->data[5] = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
     task->data[6] = GetBattlerSpriteSubpriority(gBattleAnimAttacker) - 2;
@@ -1205,7 +1194,8 @@ static void AnimTask_GrudgeFlames_Step(u8 taskId)
     case 0:
         for (i = 0; i < 6; i++)
         {
-            spriteId = CreateSprite(&gGrudgeFlameSpriteTemplate, task->data[9], task->data[10], task->data[6]);
+            spriteId = CreateSprite(
+                &gGrudgeFlameSpriteTemplate, task->data[9], task->data[10], task->data[6]);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].data[0] = taskId;

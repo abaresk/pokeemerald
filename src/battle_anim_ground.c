@@ -27,30 +27,25 @@ static void AnimTask_ShakeBattlers(u8);
 static void SetBattlersXOffsetForShake(struct Task *);
 static void sub_81156D0(u8);
 
-static const union AffineAnimCmd sAffineAnim_Bonemerang[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bonemerang[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 15, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd sAffineAnim_SpinningBone[] =
-{
+static const union AffineAnimCmd sAffineAnim_SpinningBone[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 20, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_Bonemerang[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_Bonemerang[] = {
     sAffineAnim_Bonemerang,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_SpinningBone[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_SpinningBone[] = {
     sAffineAnim_SpinningBone,
 };
 
-const struct SpriteTemplate gBonemerangSpriteTemplate =
-{
+const struct SpriteTemplate gBonemerangSpriteTemplate = {
     .tileTag = ANIM_TAG_BONE,
     .paletteTag = ANIM_TAG_BONE,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -60,8 +55,7 @@ const struct SpriteTemplate gBonemerangSpriteTemplate =
     .callback = AnimBonemerangProjectile,
 };
 
-const struct SpriteTemplate gSpinningBoneSpriteTemplate =
-{
+const struct SpriteTemplate gSpinningBoneSpriteTemplate = {
     .tileTag = ANIM_TAG_BONE,
     .paletteTag = ANIM_TAG_BONE,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -71,8 +65,7 @@ const struct SpriteTemplate gSpinningBoneSpriteTemplate =
     .callback = AnimBoneHitProjectile,
 };
 
-const struct SpriteTemplate gSandAttackDirtSpriteTemplate =
-{
+const struct SpriteTemplate gSandAttackDirtSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -82,19 +75,16 @@ const struct SpriteTemplate gSandAttackDirtSpriteTemplate =
     .callback = AnimDirtScatter,
 };
 
-static const union AnimCmd sAnim_MudSlapMud[] =
-{
+static const union AnimCmd sAnim_MudSlapMud[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_MudSlapMud[] =
-{
+static const union AnimCmd *const sAnims_MudSlapMud[] = {
     sAnim_MudSlapMud,
 };
 
-const struct SpriteTemplate gMudSlapMudSpriteTemplate =
-{
+const struct SpriteTemplate gMudSlapMudSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -104,8 +94,7 @@ const struct SpriteTemplate gMudSlapMudSpriteTemplate =
     .callback = AnimDirtScatter,
 };
 
-const struct SpriteTemplate gMudsportMudSpriteTemplate =
-{
+const struct SpriteTemplate gMudsportMudSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -115,8 +104,7 @@ const struct SpriteTemplate gMudsportMudSpriteTemplate =
     .callback = AnimMudSportDirt,
 };
 
-const struct SpriteTemplate gDirtPlumeSpriteTemplate =
-{
+const struct SpriteTemplate gDirtPlumeSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -126,8 +114,7 @@ const struct SpriteTemplate gDirtPlumeSpriteTemplate =
     .callback = AnimDirtPlumeParticle,
 };
 
-const struct SpriteTemplate gDirtMoundSpriteTemplate =
-{
+const struct SpriteTemplate gDirtMoundSpriteTemplate = {
     .tileTag = ANIM_TAG_DIRT_MOUND,
     .paletteTag = ANIM_TAG_DIRT_MOUND,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
@@ -186,7 +173,7 @@ static void AnimBoneHitProjectile(struct Sprite *sprite)
     InitSpritePosToAnimTarget(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
-    
+
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
@@ -428,7 +415,7 @@ static void AnimTask_DigRiseUpFromHole(u8 taskId)
         else
             task->data[12] = gBattle_BG2_X;
 
-        var0 =  GetBattlerYCoordWithElevation(gBattleAnimAttacker);
+        var0 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
         task->data[14] = var0 - 32;
         task->data[15] = var0 + 32;
         task->data[0]++;
@@ -557,7 +544,6 @@ static void AnimDigDirtMound(struct Sprite *sprite)
     sprite->callback = WaitAnimForDuration;
 }
 
-
 #define tState               data[0]
 #define tDelay               data[1]
 #define tTimer               data[2]
@@ -568,10 +554,10 @@ static void AnimDigDirtMound(struct Sprite *sprite)
 #define tHorizOffset         data[14]
 #define tInitHorizOffset     data[15]
 
-// Shakes battler(s) or the battle terrain back and forth horizontally. Used by e.g. Earthquake, Eruption
-// arg0: What to shake. 0-3 for any specific battler, MAX_BATTLERS_COUNT for all battlers, MAX_BATTLERS_COUNT + 1 for the terrain
-// arg1: Shake intensity, used to calculate horizontal pixel offset (if 0, use move power instead)
-// arg2: Length of time to shake for
+// Shakes battler(s) or the battle terrain back and forth horizontally. Used by e.g. Earthquake,
+// Eruption arg0: What to shake. 0-3 for any specific battler, MAX_BATTLERS_COUNT for all battlers,
+// MAX_BATTLERS_COUNT + 1 for the terrain arg1: Shake intensity, used to calculate horizontal pixel
+// offset (if 0, use move power instead) arg2: Length of time to shake for
 void AnimTask_HorizontalShake(u8 taskId)
 {
     u16 i;
