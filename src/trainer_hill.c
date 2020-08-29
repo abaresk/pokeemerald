@@ -35,10 +35,10 @@
 #include "constants/trainer_hill.h"
 #include "constants/trainer_types.h"
 
-#define HILL_TAG_NORMAL 0
+#define HILL_TAG_NORMAL  0
 #define HILL_TAG_VARIETY 1
-#define HILL_TAG_UNIQUE 2
-#define HILL_TAG_EXPERT 3
+#define HILL_TAG_UNIQUE  2
+#define HILL_TAG_EXPERT  3
 
 #define HILL_MAX_TIME 215999 // 60 * 60 * 60 - 1
 
@@ -88,125 +88,170 @@ struct
 {
     u8 trainerClass;
     u8 musicId;
-} static const sTrainerClassesAndMusic[] =
-{
-    {TRAINER_CLASS_TEAM_AQUA, TRAINER_ENCOUNTER_MUSIC_AQUA},
-    {TRAINER_CLASS_AQUA_ADMIN, TRAINER_ENCOUNTER_MUSIC_AQUA},
-    {TRAINER_CLASS_AQUA_LEADER, TRAINER_ENCOUNTER_MUSIC_AQUA},
-    {TRAINER_CLASS_AROMA_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_BATTLE_GIRL, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_SWIMMER_F, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_POKEFAN, TRAINER_ENCOUNTER_MUSIC_TWINS},
-    {TRAINER_CLASS_DRAGON_TAMER, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_COOLTRAINER, TRAINER_ENCOUNTER_MUSIC_COOL},
-    {TRAINER_CLASS_GUITARIST, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_SAILOR, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_TWINS, TRAINER_ENCOUNTER_MUSIC_TWINS},
-    {TRAINER_CLASS_INTERVIEWER, TRAINER_ENCOUNTER_MUSIC_INTERVIEWER},
-    {TRAINER_CLASS_RUIN_MANIAC, TRAINER_ENCOUNTER_MUSIC_HIKER},
-    {TRAINER_CLASS_GENTLEMAN, TRAINER_ENCOUNTER_MUSIC_RICH},
-    {TRAINER_CLASS_SWIMMER_M, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_POKEMANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS},
-    {TRAINER_CLASS_BLACK_BELT, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_OLD_COUPLE, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_BUG_MANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS},
-    {TRAINER_CLASS_CAMPER, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_KINDLER, TRAINER_ENCOUNTER_MUSIC_HIKER},
-    {TRAINER_CLASS_TEAM_MAGMA, TRAINER_ENCOUNTER_MUSIC_MAGMA},
-    {TRAINER_CLASS_MAGMA_ADMIN, TRAINER_ENCOUNTER_MUSIC_MAGMA},
-    {TRAINER_CLASS_MAGMA_LEADER, TRAINER_ENCOUNTER_MUSIC_MAGMA},
-    {TRAINER_CLASS_LASS, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_BUG_CATCHER, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_NINJA_BOY, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS},
-    {TRAINER_CLASS_RICH_BOY, TRAINER_ENCOUNTER_MUSIC_RICH},
-    {TRAINER_CLASS_HEX_MANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS},
-    {TRAINER_CLASS_BEAUTY, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_PARASOL_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_PICNICKER, TRAINER_ENCOUNTER_MUSIC_GIRL},
-    {TRAINER_CLASS_PKMN_BREEDER, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_COLLECTOR, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS},
-    {TRAINER_CLASS_PKMN_RANGER, TRAINER_ENCOUNTER_MUSIC_COOL},
-    {TRAINER_CLASS_PKMN_TRAINER_3, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_YOUNG_COUPLE, TRAINER_ENCOUNTER_MUSIC_GIRL},
-    {TRAINER_CLASS_PSYCHIC, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_SR_AND_JR, TRAINER_ENCOUNTER_MUSIC_TWINS},
-    {TRAINER_CLASS_ELITE_FOUR, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_YOUNGSTER, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_EXPERT, TRAINER_ENCOUNTER_MUSIC_INTENSE},
-    {TRAINER_CLASS_TRIATHLETE, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_BIRD_KEEPER, TRAINER_ENCOUNTER_MUSIC_COOL},
-    {TRAINER_CLASS_FISHERMAN, TRAINER_ENCOUNTER_MUSIC_HIKER},
-    {TRAINER_CLASS_CHAMPION, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_TUBER_M, TRAINER_ENCOUNTER_MUSIC_MALE},
-    {TRAINER_CLASS_TUBER_F, TRAINER_ENCOUNTER_MUSIC_GIRL},
-    {TRAINER_CLASS_SIS_AND_BRO, TRAINER_ENCOUNTER_MUSIC_SWIMMER},
-    {TRAINER_CLASS_HIKER, TRAINER_ENCOUNTER_MUSIC_HIKER},
-    {TRAINER_CLASS_LEADER, TRAINER_ENCOUNTER_MUSIC_FEMALE},
-    {TRAINER_CLASS_SCHOOL_KID, TRAINER_ENCOUNTER_MUSIC_MALE},
+} static const sTrainerClassesAndMusic[] = {
+    { TRAINER_CLASS_TEAM_AQUA, TRAINER_ENCOUNTER_MUSIC_AQUA },
+    { TRAINER_CLASS_AQUA_ADMIN, TRAINER_ENCOUNTER_MUSIC_AQUA },
+    { TRAINER_CLASS_AQUA_LEADER, TRAINER_ENCOUNTER_MUSIC_AQUA },
+    { TRAINER_CLASS_AROMA_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_BATTLE_GIRL, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_SWIMMER_F, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_POKEFAN, TRAINER_ENCOUNTER_MUSIC_TWINS },
+    { TRAINER_CLASS_DRAGON_TAMER, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_COOLTRAINER, TRAINER_ENCOUNTER_MUSIC_COOL },
+    { TRAINER_CLASS_GUITARIST, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_SAILOR, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_TWINS, TRAINER_ENCOUNTER_MUSIC_TWINS },
+    { TRAINER_CLASS_INTERVIEWER, TRAINER_ENCOUNTER_MUSIC_INTERVIEWER },
+    { TRAINER_CLASS_RUIN_MANIAC, TRAINER_ENCOUNTER_MUSIC_HIKER },
+    { TRAINER_CLASS_GENTLEMAN, TRAINER_ENCOUNTER_MUSIC_RICH },
+    { TRAINER_CLASS_SWIMMER_M, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_POKEMANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS },
+    { TRAINER_CLASS_BLACK_BELT, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_OLD_COUPLE, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_BUG_MANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS },
+    { TRAINER_CLASS_CAMPER, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_KINDLER, TRAINER_ENCOUNTER_MUSIC_HIKER },
+    { TRAINER_CLASS_TEAM_MAGMA, TRAINER_ENCOUNTER_MUSIC_MAGMA },
+    { TRAINER_CLASS_MAGMA_ADMIN, TRAINER_ENCOUNTER_MUSIC_MAGMA },
+    { TRAINER_CLASS_MAGMA_LEADER, TRAINER_ENCOUNTER_MUSIC_MAGMA },
+    { TRAINER_CLASS_LASS, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_BUG_CATCHER, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_NINJA_BOY, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS },
+    { TRAINER_CLASS_RICH_BOY, TRAINER_ENCOUNTER_MUSIC_RICH },
+    { TRAINER_CLASS_HEX_MANIAC, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS },
+    { TRAINER_CLASS_BEAUTY, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_PARASOL_LADY, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_PICNICKER, TRAINER_ENCOUNTER_MUSIC_GIRL },
+    { TRAINER_CLASS_PKMN_BREEDER, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_COLLECTOR, TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS },
+    { TRAINER_CLASS_PKMN_RANGER, TRAINER_ENCOUNTER_MUSIC_COOL },
+    { TRAINER_CLASS_PKMN_TRAINER_3, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_YOUNG_COUPLE, TRAINER_ENCOUNTER_MUSIC_GIRL },
+    { TRAINER_CLASS_PSYCHIC, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_SR_AND_JR, TRAINER_ENCOUNTER_MUSIC_TWINS },
+    { TRAINER_CLASS_ELITE_FOUR, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_YOUNGSTER, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_EXPERT, TRAINER_ENCOUNTER_MUSIC_INTENSE },
+    { TRAINER_CLASS_TRIATHLETE, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_BIRD_KEEPER, TRAINER_ENCOUNTER_MUSIC_COOL },
+    { TRAINER_CLASS_FISHERMAN, TRAINER_ENCOUNTER_MUSIC_HIKER },
+    { TRAINER_CLASS_CHAMPION, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_TUBER_M, TRAINER_ENCOUNTER_MUSIC_MALE },
+    { TRAINER_CLASS_TUBER_F, TRAINER_ENCOUNTER_MUSIC_GIRL },
+    { TRAINER_CLASS_SIS_AND_BRO, TRAINER_ENCOUNTER_MUSIC_SWIMMER },
+    { TRAINER_CLASS_HIKER, TRAINER_ENCOUNTER_MUSIC_HIKER },
+    { TRAINER_CLASS_LEADER, TRAINER_ENCOUNTER_MUSIC_FEMALE },
+    { TRAINER_CLASS_SCHOOL_KID, TRAINER_ENCOUNTER_MUSIC_MALE },
 };
 
-static const u16 sPrizeListRareCandy1[]  = {ITEM_RARE_CANDY,       ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListLuxuryBall1[] = {ITEM_LUXURY_BALL,      ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListMaxRevive1[]  = {ITEM_MAX_REVIVE,       ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListMaxEther1[]   = {ITEM_MAX_ETHER,        ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListElixir1[]     = {ITEM_ELIXIR,           ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListRoar[]        = {ITEM_TM05_ROAR,        ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListSludgeBomb[]  = {ITEM_TM36_SLUDGE_BOMB, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListToxic[]       = {ITEM_TM06_TOXIC,       ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListSunnyDay[]    = {ITEM_TM11_SUNNY_DAY,   ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListEarthQuake[]  = {ITEM_TM26_EARTHQUAKE,  ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
+static const u16 sPrizeListRareCandy1[] = {
+    ITEM_RARE_CANDY, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListLuxuryBall1[] = {
+    ITEM_LUXURY_BALL, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListMaxRevive1[] = {
+    ITEM_MAX_REVIVE, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListMaxEther1[] = {
+    ITEM_MAX_ETHER, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListElixir1[] = {
+    ITEM_ELIXIR, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListRoar[] = {
+    ITEM_TM05_ROAR, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListSludgeBomb[] = { ITEM_TM36_SLUDGE_BOMB,
+    ITEM_ETHER,
+    ITEM_MAX_POTION,
+    ITEM_REVIVE,
+    ITEM_FLUFFY_TAIL,
+    ITEM_GREAT_BALL };
+static const u16 sPrizeListToxic[] = {
+    ITEM_TM06_TOXIC, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListSunnyDay[] = {
+    ITEM_TM11_SUNNY_DAY, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListEarthQuake[] = { ITEM_TM26_EARTHQUAKE,
+    ITEM_ETHER,
+    ITEM_MAX_POTION,
+    ITEM_REVIVE,
+    ITEM_FLUFFY_TAIL,
+    ITEM_GREAT_BALL };
 
-static const u16 sPrizeListRareCandy2[]  = {ITEM_RARE_CANDY,       ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListLuxuryBall2[] = {ITEM_LUXURY_BALL,      ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListMaxRevive2[]  = {ITEM_MAX_REVIVE,       ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListMaxEther2[]   = {ITEM_MAX_ETHER,        ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListElixir2[]     = {ITEM_ELIXIR,           ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListBrickBreak[]  = {ITEM_TM31_BRICK_BREAK, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListTorment[]     = {ITEM_TM41_TORMENT,     ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListSkillSwap[]   = {ITEM_TM48_SKILL_SWAP,  ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListGigaDrain[]   = {ITEM_TM19_GIGA_DRAIN,  ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-static const u16 sPrizeListAttract[]     = {ITEM_TM45_ATTRACT,     ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL};
-
-static const u16 *const sPrizeLists1[NUM_TRAINER_HILL_PRIZE_LISTS] =
-{
-	sPrizeListRareCandy1,
-	sPrizeListLuxuryBall1,
-	sPrizeListMaxRevive1,
-	sPrizeListMaxEther1,
-	sPrizeListElixir1,
-	sPrizeListRoar,
-	sPrizeListSludgeBomb,
-	sPrizeListToxic,
-	sPrizeListSunnyDay,
-	sPrizeListEarthQuake
+static const u16 sPrizeListRareCandy2[] = {
+    ITEM_RARE_CANDY, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListLuxuryBall2[] = {
+    ITEM_LUXURY_BALL, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListMaxRevive2[] = {
+    ITEM_MAX_REVIVE, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListMaxEther2[] = {
+    ITEM_MAX_ETHER, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListElixir2[] = {
+    ITEM_ELIXIR, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListBrickBreak[] = { ITEM_TM31_BRICK_BREAK,
+    ITEM_ETHER,
+    ITEM_MAX_POTION,
+    ITEM_REVIVE,
+    ITEM_FLUFFY_TAIL,
+    ITEM_GREAT_BALL };
+static const u16 sPrizeListTorment[] = {
+    ITEM_TM41_TORMENT, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
+};
+static const u16 sPrizeListSkillSwap[] = { ITEM_TM48_SKILL_SWAP,
+    ITEM_ETHER,
+    ITEM_MAX_POTION,
+    ITEM_REVIVE,
+    ITEM_FLUFFY_TAIL,
+    ITEM_GREAT_BALL };
+static const u16 sPrizeListGigaDrain[] = { ITEM_TM19_GIGA_DRAIN,
+    ITEM_ETHER,
+    ITEM_MAX_POTION,
+    ITEM_REVIVE,
+    ITEM_FLUFFY_TAIL,
+    ITEM_GREAT_BALL };
+static const u16 sPrizeListAttract[] = {
+    ITEM_TM45_ATTRACT, ITEM_ETHER, ITEM_MAX_POTION, ITEM_REVIVE, ITEM_FLUFFY_TAIL, ITEM_GREAT_BALL
 };
 
-static const u16 *const sPrizeLists2[NUM_TRAINER_HILL_PRIZE_LISTS] =
-{
-	sPrizeListRareCandy2,
-	sPrizeListLuxuryBall2,
-	sPrizeListMaxRevive2,
-	sPrizeListMaxEther2,
-	sPrizeListElixir2,
-	sPrizeListBrickBreak,
-	sPrizeListTorment,
-	sPrizeListSkillSwap,
-	sPrizeListGigaDrain,
-	sPrizeListAttract
-};
+static const u16 *const sPrizeLists1[NUM_TRAINER_HILL_PRIZE_LISTS] = { sPrizeListRareCandy1,
+    sPrizeListLuxuryBall1,
+    sPrizeListMaxRevive1,
+    sPrizeListMaxEther1,
+    sPrizeListElixir1,
+    sPrizeListRoar,
+    sPrizeListSludgeBomb,
+    sPrizeListToxic,
+    sPrizeListSunnyDay,
+    sPrizeListEarthQuake };
 
-static const u16 *const *const sPrizeListSets[] =
-{
-    sPrizeLists1,
-    sPrizeLists2
-};
+static const u16 *const sPrizeLists2[NUM_TRAINER_HILL_PRIZE_LISTS] = { sPrizeListRareCandy2,
+    sPrizeListLuxuryBall2,
+    sPrizeListMaxRevive2,
+    sPrizeListMaxEther2,
+    sPrizeListElixir2,
+    sPrizeListBrickBreak,
+    sPrizeListTorment,
+    sPrizeListSkillSwap,
+    sPrizeListGigaDrain,
+    sPrizeListAttract };
+
+static const u16 *const *const sPrizeListSets[] = { sPrizeLists1, sPrizeLists2 };
 
 static const u16 sEReader_Pal[] = INCBIN_U16("graphics/misc/trainer_hill_ereader.gbapal");
-static const u8 sRecordWinColors[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+static const u8 sRecordWinColors[] = {
+    TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY
+};
 
-static const struct TrHillTag *const sDataPerTag[] =
-{
+static const struct TrHillTag *const sDataPerTag[] = {
     &sDataTagNormal,
     &sDataTagVariety,
     &sDataTagUnique,
@@ -214,46 +259,42 @@ static const struct TrHillTag *const sDataPerTag[] =
 };
 
 // Unused.
-static const u8 *const sFloorStrings[] =
-{
+static const u8 *const sFloorStrings[] = {
     gText_TrainerHill1F,
     gText_TrainerHill2F,
     gText_TrainerHill3F,
     gText_TrainerHill4F,
 };
 
-static void (* const sHillFunctions[])(void) =
-{
-    [TRAINER_HILL_FUNC_START]                 = TrainerHillStartChallenge,
-    [TRAINER_HILL_FUNC_GET_OWNER_STATE]       = GetOwnerState,
-    [TRAINER_HILL_FUNC_GIVE_PRIZE]            = GiveChallengePrize,
-    [TRAINER_HILL_FUNC_CHECK_FINAL_TIME]      = CheckFinalTime,
-    [TRAINER_HILL_FUNC_RESUME_TIMER]          = TrainerHillResumeTimer,
-    [TRAINER_HILL_FUNC_SET_LOST]              = TrainerHillSetPlayerLost,
-    [TRAINER_HILL_FUNC_GET_CHALLENGE_STATUS]  = TrainerHillGetChallengeStatus,
-    [TRAINER_HILL_FUNC_GET_CHALLENGE_TIME]    = BufferChallengeTime,
-    [TRAINER_HILL_FUNC_GET_ALL_FLOORS_USED]   = GetAllFloorsUsed,
-    [TRAINER_HILL_FUNC_GET_IN_EREADER_MODE]   = GetInEReaderMode,
-    [TRAINER_HILL_FUNC_IN_CHALLENGE]          = IsTrainerHillChallengeActive,
-    [TRAINER_HILL_FUNC_POST_BATTLE_TEXT]      = ShowTrainerHillPostBattleText,
+static void (*const sHillFunctions[])(void) = {
+    [TRAINER_HILL_FUNC_START] = TrainerHillStartChallenge,
+    [TRAINER_HILL_FUNC_GET_OWNER_STATE] = GetOwnerState,
+    [TRAINER_HILL_FUNC_GIVE_PRIZE] = GiveChallengePrize,
+    [TRAINER_HILL_FUNC_CHECK_FINAL_TIME] = CheckFinalTime,
+    [TRAINER_HILL_FUNC_RESUME_TIMER] = TrainerHillResumeTimer,
+    [TRAINER_HILL_FUNC_SET_LOST] = TrainerHillSetPlayerLost,
+    [TRAINER_HILL_FUNC_GET_CHALLENGE_STATUS] = TrainerHillGetChallengeStatus,
+    [TRAINER_HILL_FUNC_GET_CHALLENGE_TIME] = BufferChallengeTime,
+    [TRAINER_HILL_FUNC_GET_ALL_FLOORS_USED] = GetAllFloorsUsed,
+    [TRAINER_HILL_FUNC_GET_IN_EREADER_MODE] = GetInEReaderMode,
+    [TRAINER_HILL_FUNC_IN_CHALLENGE] = IsTrainerHillChallengeActive,
+    [TRAINER_HILL_FUNC_POST_BATTLE_TEXT] = ShowTrainerHillPostBattleText,
     [TRAINER_HILL_FUNC_SET_ALL_TRAINER_FLAGS] = SetAllTrainerFlags,
-    [TRAINER_HILL_FUNC_GET_GAME_SAVED]        = GetGameSaved,
-    [TRAINER_HILL_FUNC_SET_GAME_SAVED]        = SetGameSaved,
-    [TRAINER_HILL_FUNC_CLEAR_GAME_SAVED]      = ClearGameSaved,
-    [TRAINER_HILL_FUNC_GET_WON]               = GetChallengeWon,
-    [TRAINER_HILL_FUNC_SET_TAG]               = TrainerHillSetTag,
+    [TRAINER_HILL_FUNC_GET_GAME_SAVED] = GetGameSaved,
+    [TRAINER_HILL_FUNC_SET_GAME_SAVED] = SetGameSaved,
+    [TRAINER_HILL_FUNC_CLEAR_GAME_SAVED] = ClearGameSaved,
+    [TRAINER_HILL_FUNC_GET_WON] = GetChallengeWon,
+    [TRAINER_HILL_FUNC_SET_TAG] = TrainerHillSetTag,
 };
 
-static const u8 *const sTagMatchStrings[] =
-{
+static const u8 *const sTagMatchStrings[] = {
     gText_NormalTagMatch,
     gText_VarietyTagMatch,
     gText_UniqueTagMatch,
     gText_ExpertTagMatch,
 };
 
-static const struct ObjectEventTemplate sTrainerObjectEventTemplate =
-{
+static const struct ObjectEventTemplate sTrainerObjectEventTemplate = {
     .graphicsId = OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL,
     .elevation = 3,
     .movementType = MOVEMENT_TYPE_LOOK_AROUND,
@@ -262,18 +303,11 @@ static const struct ObjectEventTemplate sTrainerObjectEventTemplate =
     .trainerType = TRAINER_TYPE_NORMAL,
 };
 
-static const u32 sNextFloorMapNum[NUM_TRAINER_HILL_FLOORS] = 
-{
-    MAP_NUM(TRAINER_HILL_2F), 
-    MAP_NUM(TRAINER_HILL_3F), 
-    MAP_NUM(TRAINER_HILL_4F), 
-    MAP_NUM(TRAINER_HILL_ROOF)
-};
-static const u8 sTrainerPartySlots[][PARTY_SIZE / 2] = 
-{
-    {0, 1, 2}, 
-    {3, 4, 5}
-};
+static const u32 sNextFloorMapNum[NUM_TRAINER_HILL_FLOORS] = { MAP_NUM(TRAINER_HILL_2F),
+    MAP_NUM(TRAINER_HILL_3F),
+    MAP_NUM(TRAINER_HILL_4F),
+    MAP_NUM(TRAINER_HILL_ROOF) };
+static const u8 sTrainerPartySlots[][PARTY_SIZE / 2] = { { 0, 1, 2 }, { 3, 4, 5 } };
 
 // code
 void CallTrainerHillFunction(void)
@@ -340,7 +374,8 @@ void InitTrainerHillBattleStruct(void)
         {
             sRoomTrainers->name[i][j] = sHillData->floors[sHillData->floorId].trainers[i].name[j];
         }
-        sRoomTrainers->facilityClass[i] = sHillData->floors[sHillData->floorId].trainers[i].facilityClass;
+        sRoomTrainers->facilityClass[i] =
+            sHillData->floors[sHillData->floorId].trainers[i].facilityClass;
     }
     SetTrainerHillVBlankCounter(&gSaveBlock1Ptr->trainerHill.timer);
     FreeDataStruct();
@@ -358,7 +393,9 @@ static void SetUpDataStruct(void)
     {
         sHillData = AllocZeroed(sizeof(struct TrHillStruct2));
         sHillData->floorId = gMapHeader.mapLayoutId - LAYOUT_TRAINER_HILL_1F;
-        CpuCopy32(sDataPerTag[gSaveBlock1Ptr->trainerHill.tag], &sHillData->tag, sizeof(sHillData->tag) + 4 * sizeof(struct TrHillFloor));
+        CpuCopy32(sDataPerTag[gSaveBlock1Ptr->trainerHill.tag],
+            &sHillData->tag,
+            sizeof(sHillData->tag) + 4 * sizeof(struct TrHillFloor));
         nullsub_2();
     }
 }
@@ -379,18 +416,18 @@ void CopyTrainerHillTrainerText(u8 which, u16 trainerId)
 
     switch (which)
     {
-    case TRAINER_HILL_TEXT_INTRO:
-        FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechBefore);
-        break;
-    case TRAINER_HILL_TEXT_PLAYER_LOST:
-        FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechWin);
-        break;
-    case TRAINER_HILL_TEXT_PLAYER_WON:
-        FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechLose);
-        break;
-    case TRAINER_HILL_TEXT_AFTER:
-        FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechAfter);
-        break;
+        case TRAINER_HILL_TEXT_INTRO:
+            FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechBefore);
+            break;
+        case TRAINER_HILL_TEXT_PLAYER_LOST:
+            FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechWin);
+            break;
+        case TRAINER_HILL_TEXT_PLAYER_WON:
+            FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechLose);
+            break;
+        case TRAINER_HILL_TEXT_AFTER:
+            FrontierSpeechToString(sHillData->floors[floorId].trainers[id].speechAfter);
+            break;
     }
 
     FreeDataStruct();
@@ -431,7 +468,8 @@ static void GiveChallengePrize(void)
 {
     u16 itemId = GetPrizeItemId();
 
-    if (sHillData->tag.numFloors != NUM_TRAINER_HILL_FLOORS || gSaveBlock1Ptr->trainerHill.receivedPrize)
+    if (sHillData->tag.numFloors != NUM_TRAINER_HILL_FLOORS
+        || gSaveBlock1Ptr->trainerHill.receivedPrize)
     {
         gSpecialVar_Result = 2;
     }
@@ -456,10 +494,12 @@ static void CheckFinalTime(void)
     {
         gSpecialVar_Result = 2;
     }
-    else if (GetTimerValue(&gSaveBlock1Ptr->trainerHill.bestTime) > gSaveBlock1Ptr->trainerHill.timer)
+    else if (GetTimerValue(&gSaveBlock1Ptr->trainerHill.bestTime)
+             > gSaveBlock1Ptr->trainerHill.timer)
     {
         SetTimerValue(&gSaveBlock1Ptr->trainerHill.bestTime, gSaveBlock1Ptr->trainerHill.timer);
-        gSaveBlock1Ptr->trainerHillTimes[gSaveBlock1Ptr->trainerHill.tag] = gSaveBlock1Ptr->trainerHill.bestTime;
+        gSaveBlock1Ptr->trainerHillTimes[gSaveBlock1Ptr->trainerHill.tag] =
+            gSaveBlock1Ptr->trainerHill.bestTime;
         gSpecialVar_Result = 0;
     }
     else
@@ -534,7 +574,8 @@ static void GetAllFloorsUsed(void)
     SetUpDataStruct();
     if (sHillData->tag.numFloors != NUM_TRAINER_HILL_FLOORS)
     {
-        ConvertIntToDecimalStringN(gStringVar1, sHillData->tag.numFloors, STR_CONV_MODE_LEFT_ALIGN, 1);
+        ConvertIntToDecimalStringN(
+            gStringVar1, sHillData->tag.numFloors, STR_CONV_MODE_LEFT_ALIGN, 1);
         gSpecialVar_Result = FALSE;
     }
     else
@@ -546,7 +587,8 @@ static void GetAllFloorsUsed(void)
 }
 
 // May have been dummied. Every time this is called a conditional for var result occurs afterwards
-// Relation to E-Reader is an assumption, most dummied Trainer Hill code seems to be JP E-Reader mode related
+// Relation to E-Reader is an assumption, most dummied Trainer Hill code seems to be JP E-Reader
+// mode related
 static void GetInEReaderMode(void)
 {
     SetUpDataStruct();
@@ -576,12 +618,10 @@ static void IsTrainerHillChallengeActive(void)
 
 void nullsub_129(void)
 {
-
 }
 
 static void nullsub_2(void)
 {
-
 }
 
 void PrintOnTrainerHillRecordsWindow(void)
@@ -597,7 +637,8 @@ void PrintOnTrainerHillRecordsWindow(void)
     y = 18;
     for (i = 0; i < 4; i++)
     {
-        AddTextPrinterParameterized3(0, 1, 0, y, sRecordWinColors, TEXT_SPEED_FF, sTagMatchStrings[i]);
+        AddTextPrinterParameterized3(
+            0, 1, 0, y, sRecordWinColors, TEXT_SPEED_FF, sTagMatchStrings[i]);
         y += 15;
         total = GetTimerValue(&gSaveBlock1Ptr->trainerHillTimes[i]);
         minutes = total / (60 * 60);
@@ -642,7 +683,8 @@ void LoadTrainerHillObjectEventTemplates(void)
     SetUpDataStruct();
     for (i = 0; i < 2; i++)
         gSaveBlock2Ptr->frontier.trainerIds[i] = 0xFFFF;
-    CpuFill32(0, gSaveBlock1Ptr->objectEventTemplates, sizeof(gSaveBlock1Ptr->objectEventTemplates));
+    CpuFill32(
+        0, gSaveBlock1Ptr->objectEventTemplates, sizeof(gSaveBlock1Ptr->objectEventTemplates));
 
     floorId = GetFloorId();
     for (i = 0; i < 2; i++)
@@ -651,12 +693,15 @@ void LoadTrainerHillObjectEventTemplates(void)
 
         eventTemplates[i] = sTrainerObjectEventTemplate;
         eventTemplates[i].localId = i + 1;
-        eventTemplates[i].graphicsId = FacilityClassToGraphicsId(sHillData->floors[floorId].trainers[i].facilityClass);
+        eventTemplates[i].graphicsId =
+            FacilityClassToGraphicsId(sHillData->floors[floorId].trainers[i].facilityClass);
         eventTemplates[i].x = sHillData->floors[floorId].display.coords[i] & 0xF;
         eventTemplates[i].y = ((sHillData->floors[floorId].display.coords[i] >> 4) & 0xF) + 5;
         bits = i << 2;
-        eventTemplates[i].movementType = ((sHillData->floors[floorId].display.direction >> bits) & 0xF) + MOVEMENT_TYPE_FACE_UP;
-        eventTemplates[i].trainerRange_berryTreeId = (sHillData->floors[floorId].display.range >> bits) & 0xF;
+        eventTemplates[i].movementType =
+            ((sHillData->floors[floorId].display.direction >> bits) & 0xF) + MOVEMENT_TYPE_FACE_UP;
+        eventTemplates[i].trainerRange_berryTreeId =
+            (sHillData->floors[floorId].display.range >> bits) & 0xF;
         eventTemplates[i].script = TrainerHill_EventScript_TrainerBattle;
         gSaveBlock2Ptr->frontier.trainerIds[i] = i + 1;
     }
@@ -675,11 +720,12 @@ bool32 LoadTrainerHillFloorObjectEventScripts(void)
 static u32 sub_81D5F58(u8 floorId, u32 bit, u32 arg2, u32 arg3)
 {
     u16 var0, var1;
-    #ifndef NONMATCHING
-    register u16 var2 asm("r3"); //compiler keeps wanting to "mov r3, 0x80" instead of "mov r2 0x80" and then later "add r3, r2, 0"
-    #else
+#ifndef NONMATCHING
+    register u16 var2 asm("r3"); // compiler keeps wanting to "mov r3, 0x80" instead of "mov r2
+                                 // 0x80" and then later "add r3, r2, 0"
+#else
     u16 var2;
-    #endif
+#endif
     u16 var3;
 
     var0 = (sHillData->floors[floorId].display.unk3A0[arg2] >> (15 - bit) & 1);
@@ -785,16 +831,17 @@ static bool32 OnTrainerHillRoof(void)
     return onRoof;
 }
 
-const struct WarpEvent* SetWarpDestinationTrainerHill4F(void)
+const struct WarpEvent *SetWarpDestinationTrainerHill4F(void)
 {
-    const struct MapHeader *header = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(TRAINER_HILL_4F), MAP_NUM(TRAINER_HILL_4F));
+    const struct MapHeader *header =
+        Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(TRAINER_HILL_4F), MAP_NUM(TRAINER_HILL_4F));
 
     return &header->events->warps[1];
 }
 
 // For warping from the roof in challenges where the 4F is not the final challenge floor
 // This would only occur in the JP-exclusive Default and E-Reader challenges
-const struct WarpEvent* SetWarpDestinationTrainerHillFinalFloor(u8 warpEventId)
+const struct WarpEvent *SetWarpDestinationTrainerHillFinalFloor(u8 warpEventId)
 {
     u8 numFloors;
     const struct MapHeader *header;
@@ -806,7 +853,8 @@ const struct WarpEvent* SetWarpDestinationTrainerHillFinalFloor(u8 warpEventId)
     if (numFloors == 0 || numFloors > NUM_TRAINER_HILL_FLOORS)
         numFloors = NUM_TRAINER_HILL_FLOORS;
 
-    header = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(TRAINER_HILL_4F), sNextFloorMapNum[numFloors - 1]);
+    header = Overworld_GetMapHeaderByGroupAndId(
+        MAP_GROUP(TRAINER_HILL_4F), sNextFloorMapNum[numFloors - 1]);
     return &header->events->warps[0];
 }
 

@@ -36,7 +36,7 @@ void HealPlayerParty(void)
     u8 arg[4];
 
     // restore HP.
-    for(i = 0; i < gPlayerPartyCount; i++)
+    for (i = 0; i < gPlayerPartyCount; i++)
     {
         u16 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
         arg[0] = maxHP;
@@ -45,13 +45,15 @@ void HealPlayerParty(void)
         ppBonuses = GetMonData(&gPlayerParty[i], MON_DATA_PP_BONUSES);
 
         // restore PP.
-        for(j = 0; j < MAX_MON_MOVES; j++)
+        for (j = 0; j < MAX_MON_MOVES; j++)
         {
-            arg[0] = CalculatePPWithBonus(GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + j), ppBonuses, j);
+            arg[0] = CalculatePPWithBonus(
+                GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + j), ppBonuses, j);
             SetMonData(&gPlayerParty[i], MON_DATA_PP1 + j, arg);
         }
 
-        // since status is u32, the four 0 assignments here are probably for safety to prevent undefined data from reaching SetMonData.
+        // since status is u32, the four 0 assignments here are probably for safety to prevent
+        // undefined data from reaching SetMonData.
         arg[0] = 0;
         arg[1] = 0;
         arg[2] = 0;
@@ -74,13 +76,13 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 unused1, u32 unused2, u8 u
     sentToPc = GiveMonToPlayer(&mon);
     nationalDexNum = SpeciesToNationalPokedexNum(species);
 
-    switch(sentToPc)
+    switch (sentToPc)
     {
-    case 0:
-    case 1:
-        GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
-        GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
-        break;
+        case 0:
+        case 1:
+            GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
+            GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
+            break;
     }
     return sentToPc;
 }
@@ -101,15 +103,15 @@ void HasEnoughMonsForDoubleBattle(void)
 {
     switch (GetMonsStateToDoubles())
     {
-    case PLAYER_HAS_TWO_USABLE_MONS:
-        gSpecialVar_Result = PLAYER_HAS_TWO_USABLE_MONS;
-        break;
-    case PLAYER_HAS_ONE_MON:
-        gSpecialVar_Result = PLAYER_HAS_ONE_MON;
-        break;
-    case PLAYER_HAS_ONE_USABLE_MON:
-        gSpecialVar_Result = PLAYER_HAS_ONE_USABLE_MON;
-        break;
+        case PLAYER_HAS_TWO_USABLE_MONS:
+            gSpecialVar_Result = PLAYER_HAS_TWO_USABLE_MONS;
+            break;
+        case PLAYER_HAS_ONE_MON:
+            gSpecialVar_Result = PLAYER_HAS_ONE_MON;
+            break;
+        case PLAYER_HAS_ONE_USABLE_MON:
+            gSpecialVar_Result = PLAYER_HAS_ONE_USABLE_MON;
+            break;
     }
 }
 
@@ -117,10 +119,11 @@ static bool8 CheckPartyMonHasHeldItem(u16 item)
 {
     int i;
 
-    for(i = 0; i < PARTY_SIZE; i++)
+    for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
-        if (species != SPECIES_NONE && species != SPECIES_EGG && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == item)
+        if (species != SPECIES_NONE && species != SPECIES_EGG
+            && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == item)
             return TRUE;
     }
     return FALSE;
@@ -170,12 +173,12 @@ static void CB2_ReturnFromChooseHalfParty(void)
 {
     switch (gSelectedOrderFromParty[0])
     {
-    case 0:
-        gSpecialVar_Result = FALSE;
-        break;
-    default:
-        gSpecialVar_Result = TRUE;
-        break;
+        case 0:
+            gSpecialVar_Result = FALSE;
+            break;
+        default:
+            gSpecialVar_Result = TRUE;
+            break;
     }
 
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -191,12 +194,12 @@ static void CB2_ReturnFromChooseBattleFrontierParty(void)
 {
     switch (gSelectedOrderFromParty[0])
     {
-    case 0:
-        gSpecialVar_Result = FALSE;
-        break;
-    default:
-        gSpecialVar_Result = TRUE;
-        break;
+        case 0:
+            gSpecialVar_Result = FALSE;
+            break;
+        default:
+            gSpecialVar_Result = TRUE;
+            break;
     }
 
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -211,8 +214,10 @@ void ReducePlayerPartyToSelectedMons(void)
 
     // copy the selected pokemon according to the order.
     for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
-        if (gSelectedOrderFromParty[i]) // as long as the order keeps going (did the player select 1 mon? 2? 3?), do not stop
-            party[i] = gPlayerParty[gSelectedOrderFromParty[i] - 1]; // index is 0 based, not literal
+        if (gSelectedOrderFromParty[i]) // as long as the order keeps going (did the player select 1
+                                        // mon? 2? 3?), do not stop
+            party[i] =
+                gPlayerParty[gSelectedOrderFromParty[i] - 1]; // index is 0 based, not literal
 
     CpuFill32(0, gPlayerParty, sizeof gPlayerParty);
 

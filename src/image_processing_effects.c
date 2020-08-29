@@ -28,14 +28,14 @@ static void ApplyImageEffect_PersonalityColor(u8);
 static void ApplyImageEffect_RedChannelGrayscale(u8);
 static void ApplyImageEffect_RedChannelGrayscaleHighlight(u8);
 static void AddPointillismPoints(u16);
-static u16 ConvertColorToGrayscale(u16*);
-static u16 QuantizePixel_Blur(u16*, u16*, u16*);
-static u16 QuantizePixel_PersonalityColor(u16*, u8);
-static u16 QuantizePixel_BlackAndWhite(u16*);
-static u16 QuantizePixel_BlackOutline(u16*, u16*);
-static u16 QuantizePixel_Invert(u16*);
-static u16 QuantizePixel_BlurHard(u16*, u16*, u16*);
-static u16 QuantizePixel_MotionBlur(u16*, u16*);
+static u16 ConvertColorToGrayscale(u16 *);
+static u16 QuantizePixel_Blur(u16 *, u16 *, u16 *);
+static u16 QuantizePixel_PersonalityColor(u16 *, u8);
+static u16 QuantizePixel_BlackAndWhite(u16 *);
+static u16 QuantizePixel_BlackOutline(u16 *, u16 *);
+static u16 QuantizePixel_Invert(u16 *);
+static u16 QuantizePixel_BlurHard(u16 *, u16 *, u16 *);
+static u16 QuantizePixel_MotionBlur(u16 *, u16 *);
 static u16 GetColorFromPersonality(u8);
 static void QuantizePalette_Standard(bool8);
 static void SetPresetPalette_PrimaryColors(void);
@@ -46,10 +46,10 @@ static void SetPresetPalette_GrayscaleSmall(void);
 static void QuantizePalette_GrayscaleSmall(void);
 static void SetPresetPalette_BlackAndWhite(void);
 static void QuantizePalette_BlackAndWhite(void);
-static u16 QuantizePixel_Standard(u16*);
-static u16 QuantizePixel_GrayscaleSmall(u16*);
-static u16 QuantizePixel_Grayscale(u16*);
-static u16 QuantizePixel_PrimaryColors(u16*);
+static u16 QuantizePixel_Standard(u16 *);
+static u16 QuantizePixel_GrayscaleSmall(u16 *);
+static u16 QuantizePixel_Grayscale(u16 *);
+static u16 QuantizePixel_PrimaryColors(u16 *);
 
 extern const u8 gPointillismPoints[][3];
 
@@ -66,56 +66,56 @@ void ApplyImageProcessingEffects(struct ImageProcessingContext *context)
 
     switch (context->effect)
     {
-    case IMAGE_EFFECT_POINTILLISM:
-        ApplyImageEffect_Pointillism();
-        break;
-    case IMAGE_EFFECT_BLUR:
-        ApplyImageEffect_Blur();
-        break;
-    case IMAGE_EFFECT_OUTLINE_COLORED:
-        ApplyImageEffect_BlackOutline();
-        ApplyImageEffect_PersonalityColor(gCanvasMonPersonality);
-        break;
-    case IMAGE_EFFECT_INVERT_BLACK_WHITE:
-        ApplyImageEffect_BlackOutline();
-        ApplyImageEffect_Invert();
-        ApplyImageEffect_BlackAndWhite();
-    case IMAGE_EFFECT_INVERT:
-        ApplyImageEffect_Invert();
-        break;
-    case IMAGE_EFFECT_THICK_BLACK_WHITE:
-        ApplyImageEffect_BlackOutline();
-        ApplyImageEffect_BlurRight();
-        ApplyImageEffect_BlurRight();
-        ApplyImageEffect_BlurDown();
-        ApplyImageEffect_BlackAndWhite();
-        break;
-    case IMAGE_EFFECT_SHIMMER:
-        ApplyImageEffect_Shimmer();
-        break;
-    case IMAGE_EFFECT_OUTLINE:
-        ApplyImageEffect_BlackOutline();
-        break;
-    case IMAGE_EFFECT_BLUR_RIGHT:
-        ApplyImageEffect_BlurRight();
-        break;
-    case IMAGE_EFFECT_BLUR_DOWN:
-        ApplyImageEffect_BlurDown();
-        break;
-    case IMAGE_EFFECT_GRAYSCALE_LIGHT:
-        ApplyImageEffect_Grayscale();
-        ApplyImageEffect_RedChannelGrayscale(3);
-        break;
-    case IMAGE_EFFECT_CHARCOAL:
-        ApplyImageEffect_BlackOutline();
-        ApplyImageEffect_BlurRight();
-        ApplyImageEffect_BlurDown();
-        ApplyImageEffect_BlackAndWhite();
-        ApplyImageEffect_Blur();
-        ApplyImageEffect_Blur();
-        ApplyImageEffect_RedChannelGrayscale(2);
-        ApplyImageEffect_RedChannelGrayscaleHighlight(4);
-        break;
+        case IMAGE_EFFECT_POINTILLISM:
+            ApplyImageEffect_Pointillism();
+            break;
+        case IMAGE_EFFECT_BLUR:
+            ApplyImageEffect_Blur();
+            break;
+        case IMAGE_EFFECT_OUTLINE_COLORED:
+            ApplyImageEffect_BlackOutline();
+            ApplyImageEffect_PersonalityColor(gCanvasMonPersonality);
+            break;
+        case IMAGE_EFFECT_INVERT_BLACK_WHITE:
+            ApplyImageEffect_BlackOutline();
+            ApplyImageEffect_Invert();
+            ApplyImageEffect_BlackAndWhite();
+        case IMAGE_EFFECT_INVERT:
+            ApplyImageEffect_Invert();
+            break;
+        case IMAGE_EFFECT_THICK_BLACK_WHITE:
+            ApplyImageEffect_BlackOutline();
+            ApplyImageEffect_BlurRight();
+            ApplyImageEffect_BlurRight();
+            ApplyImageEffect_BlurDown();
+            ApplyImageEffect_BlackAndWhite();
+            break;
+        case IMAGE_EFFECT_SHIMMER:
+            ApplyImageEffect_Shimmer();
+            break;
+        case IMAGE_EFFECT_OUTLINE:
+            ApplyImageEffect_BlackOutline();
+            break;
+        case IMAGE_EFFECT_BLUR_RIGHT:
+            ApplyImageEffect_BlurRight();
+            break;
+        case IMAGE_EFFECT_BLUR_DOWN:
+            ApplyImageEffect_BlurDown();
+            break;
+        case IMAGE_EFFECT_GRAYSCALE_LIGHT:
+            ApplyImageEffect_Grayscale();
+            ApplyImageEffect_RedChannelGrayscale(3);
+            break;
+        case IMAGE_EFFECT_CHARCOAL:
+            ApplyImageEffect_BlackOutline();
+            ApplyImageEffect_BlurRight();
+            ApplyImageEffect_BlurDown();
+            ApplyImageEffect_BlackAndWhite();
+            ApplyImageEffect_Blur();
+            ApplyImageEffect_Blur();
+            ApplyImageEffect_RedChannelGrayscale(2);
+            ApplyImageEffect_RedChannelGrayscaleHighlight(4);
+            break;
     }
 }
 
@@ -455,42 +455,42 @@ static void AddPointillismPoints(u16 arg0)
 
             switch (colorType)
             {
-            case 0:
-            case 1:
-                switch (((gPointillismPoints[arg0][2] >> 3) & 7) % 3)
-                {
                 case 0:
-                    if (red >= points[i].delta)
-                        red -= points[i].delta;
-                    else
-                        red = 0;
-                    break;
                 case 1:
-                    if (green >= points[i].delta)
-                        green -= points[i].delta;
-                    else
-                        green = 0;
+                    switch (((gPointillismPoints[arg0][2] >> 3) & 7) % 3)
+                    {
+                        case 0:
+                            if (red >= points[i].delta)
+                                red -= points[i].delta;
+                            else
+                                red = 0;
+                            break;
+                        case 1:
+                            if (green >= points[i].delta)
+                                green -= points[i].delta;
+                            else
+                                green = 0;
+                            break;
+                        case 2:
+                            if (blue >= points[i].delta)
+                                blue -= points[i].delta;
+                            else
+                                blue = 0;
+                            break;
+                    }
                     break;
                 case 2:
-                    if (blue >= points[i].delta)
-                        blue -= points[i].delta;
-                    else
-                        blue = 0;
+                case 3:
+                    red += points[i].delta;
+                    green += points[i].delta;
+                    blue += points[i].delta;
+                    if (red > 31)
+                        red = 31;
+                    if (green > 31)
+                        green = 31;
+                    if (blue > 31)
+                        blue = 31;
                     break;
-                }
-                break;
-            case 2:
-            case 3:
-                red += points[i].delta;
-                green += points[i].delta;
-                blue += points[i].delta;
-                if (red > 31)
-                    red = 31;
-                if (green > 31)
-                    green = 31;
-                if (blue > 31)
-                    blue = 31;
-                break;
             }
 
             *pixel = RGB2(red, green, blue);
@@ -534,42 +534,42 @@ static u16 GetColorFromPersonality(u8 personality)
 
     switch (colorType)
     {
-    case 0:
-        // Teal color
-        green = 21 - strength;
-        blue = green;
-        red = 0;
-        break;
-    case 1:
-        // Yellow color
-        blue = 0;
-        red = 21 - strength;
-        green = red;
-        break;
-    case 2:
-        // Purple color
-        blue = 21 - strength;
-        green = 0;
-        red = blue;
-        break;
-    case 3:
-        // Red color
-        blue = 0;
-        green = 0;
-        red = 23 - strength;
-        break;
-    case 4:
-        // Blue color
-        blue = 23 - strength;
-        green = 0;
-        red = 0;
-        break;
-    case 5:
-        // Green color
-        blue = 0;
-        green = 23 - strength;
-        red = 0;
-        break;
+        case 0:
+            // Teal color
+            green = 21 - strength;
+            blue = green;
+            red = 0;
+            break;
+        case 1:
+            // Yellow color
+            blue = 0;
+            red = 21 - strength;
+            green = red;
+            break;
+        case 2:
+            // Purple color
+            blue = 21 - strength;
+            green = 0;
+            red = blue;
+            break;
+        case 3:
+            // Red color
+            blue = 0;
+            green = 0;
+            red = 23 - strength;
+            break;
+        case 4:
+            // Blue color
+            blue = 23 - strength;
+            green = 0;
+            red = 0;
+            break;
+        case 5:
+            // Green color
+            blue = 0;
+            green = 23 - strength;
+            red = 0;
+            break;
     }
 
     return RGB2(red, green, blue);
@@ -626,12 +626,12 @@ static u16 QuantizePixel_MotionBlur(u16 *prevPixel, u16 *curPixel)
     if (*prevPixel == *curPixel)
         return *curPixel;
 
-    pixelChannels[0][0] = (*prevPixel >> 0)  & 0x1F;
-    pixelChannels[0][1] = (*prevPixel >> 5)  & 0x1F;
+    pixelChannels[0][0] = (*prevPixel >> 0) & 0x1F;
+    pixelChannels[0][1] = (*prevPixel >> 5) & 0x1F;
     pixelChannels[0][2] = (*prevPixel >> 10) & 0x1F;
-    pixelChannels[1][0] = (*curPixel  >> 0)  & 0x1F;
-    pixelChannels[1][1] = (*curPixel  >> 5)  & 0x1F;
-    pixelChannels[1][2] = (*curPixel  >> 10) & 0x1F;
+    pixelChannels[1][0] = (*curPixel >> 0) & 0x1F;
+    pixelChannels[1][1] = (*curPixel >> 5) & 0x1F;
+    pixelChannels[1][2] = (*curPixel >> 10) & 0x1F;
 
     // Don't blur light colors.
     if (pixelChannels[0][0] > 25 && pixelChannels[0][1] > 25 && pixelChannels[0][2] > 25)
@@ -667,9 +667,9 @@ static u16 QuantizePixel_MotionBlur(u16 *prevPixel, u16 *curPixel)
             largestDiff = diffs[0];
     }
 
-    red =   (pixelChannels[1][0] * (31 - largestDiff / 2)) / 31;
+    red = (pixelChannels[1][0] * (31 - largestDiff / 2)) / 31;
     green = (pixelChannels[1][1] * (31 - largestDiff / 2)) / 31;
-    blue =  (pixelChannels[1][2] * (31 - largestDiff / 2)) / 31;
+    blue = (pixelChannels[1][2] * (31 - largestDiff / 2)) / 31;
     return RGB2(red, green, blue);
 }
 
@@ -684,13 +684,16 @@ static u16 QuantizePixel_Blur(u16 *prevPixel, u16 *curPixel, u16 *nextPixel)
     if (*prevPixel == *curPixel && *nextPixel == *curPixel)
         return *curPixel;
 
-    red   = (*curPixel >> 0)  & 0x1F;
-    green = (*curPixel >> 5)  & 0x1F;
-    blue  = (*curPixel >> 10) & 0x1F;
+    red = (*curPixel >> 0) & 0x1F;
+    green = (*curPixel >> 5) & 0x1F;
+    blue = (*curPixel >> 10) & 0x1F;
 
-    prevAvg = (((*prevPixel >> 0) & 0x1F) + ((*prevPixel >> 5) & 0x1F) + ((*prevPixel >> 10) & 0x1F)) / 3;
-    curAvg  = (((*curPixel  >> 0) & 0x1F) + ((*curPixel  >> 5) & 0x1F) + ((*curPixel  >> 10) & 0x1F)) / 3;
-    nextAvg = (((*nextPixel >> 0) & 0x1F) + ((*nextPixel >> 5) & 0x1F) + ((*nextPixel >> 10) & 0x1F)) / 3;
+    prevAvg =
+        (((*prevPixel >> 0) & 0x1F) + ((*prevPixel >> 5) & 0x1F) + ((*prevPixel >> 10) & 0x1F)) / 3;
+    curAvg =
+        (((*curPixel >> 0) & 0x1F) + ((*curPixel >> 5) & 0x1F) + ((*curPixel >> 10) & 0x1F)) / 3;
+    nextAvg =
+        (((*nextPixel >> 0) & 0x1F) + ((*nextPixel >> 5) & 0x1F) + ((*nextPixel >> 10) & 0x1F)) / 3;
 
     if (prevAvg == curAvg && nextAvg == curAvg)
         return *curPixel;
@@ -711,9 +714,9 @@ static u16 QuantizePixel_Blur(u16 *prevPixel, u16 *curPixel, u16 *nextPixel)
         diff = nextDiff;
 
     factor = 31 - diff / 2;
-    red   = (red   * factor) / 31;
+    red = (red * factor) / 31;
     green = (green * factor) / 31;
-    blue  = (blue  * factor) / 31;
+    blue = (blue * factor) / 31;
     return RGB2(red, green, blue);
 }
 
@@ -728,13 +731,16 @@ static u16 QuantizePixel_BlurHard(u16 *prevPixel, u16 *curPixel, u16 *nextPixel)
     if (*prevPixel == *curPixel && *nextPixel == *curPixel)
         return *curPixel;
 
-    red   = (*curPixel >> 0)  & 0x1F;
-    green = (*curPixel >> 5)  & 0x1F;
-    blue  = (*curPixel >> 10) & 0x1F;
+    red = (*curPixel >> 0) & 0x1F;
+    green = (*curPixel >> 5) & 0x1F;
+    blue = (*curPixel >> 10) & 0x1F;
 
-    prevAvg = (((*prevPixel >> 0) & 0x1F) + ((*prevPixel >> 5) & 0x1F) + ((*prevPixel >> 10) & 0x1F)) / 3;
-    curAvg  = (((*curPixel  >> 0) & 0x1F) + ((*curPixel  >> 5) & 0x1F) + ((*curPixel  >> 10) & 0x1F)) / 3;
-    nextAvg = (((*nextPixel >> 0) & 0x1F) + ((*nextPixel >> 5) & 0x1F) + ((*nextPixel >> 10) & 0x1F)) / 3;
+    prevAvg =
+        (((*prevPixel >> 0) & 0x1F) + ((*prevPixel >> 5) & 0x1F) + ((*prevPixel >> 10) & 0x1F)) / 3;
+    curAvg =
+        (((*curPixel >> 0) & 0x1F) + ((*curPixel >> 5) & 0x1F) + ((*curPixel >> 10) & 0x1F)) / 3;
+    nextAvg =
+        (((*nextPixel >> 0) & 0x1F) + ((*nextPixel >> 5) & 0x1F) + ((*nextPixel >> 10) & 0x1F)) / 3;
 
     if (prevAvg == curAvg && nextAvg == curAvg)
         return *curPixel;
@@ -755,9 +761,9 @@ static u16 QuantizePixel_BlurHard(u16 *prevPixel, u16 *curPixel, u16 *nextPixel)
         diff = nextDiff;
 
     factor = 31 - diff;
-    red   = (red   * factor) / 31;
+    red = (red * factor) / 31;
     green = (green * factor) / 31;
-    blue  = (blue  * factor) / 31;
+    blue = (blue * factor) / 31;
     return RGB2(red, green, blue);
 }
 
@@ -824,43 +830,43 @@ void ApplyImageProcessingQuantization(struct ImageProcessingContext *context)
 
     switch (context->quantizeEffect)
     {
-    case QUANTIZE_EFFECT_STANDARD:
-        QuantizePalette_Standard(FALSE);
-        break;
-    case QUANTIZE_EFFECT_STANDARD_LIMITED_COLORS:
-        QuantizePalette_Standard(TRUE);
-        break;
-    case QUANTIZE_EFFECT_PRIMARY_COLORS:
-        SetPresetPalette_PrimaryColors();
-        QuantizePalette_PrimaryColors();
-        break;
-    case QUANTIZE_EFFECT_GRAYSCALE:
-        SetPresetPalette_Grayscale();
-        QuantizePalette_Grayscale();
-        break;
-    case QUANTIZE_EFFECT_GRAYSCALE_SMALL:
-        SetPresetPalette_GrayscaleSmall();
-        QuantizePalette_GrayscaleSmall();
-        break;
-    case QUANTIZE_EFFECT_BLACK_WHITE:
-        SetPresetPalette_BlackAndWhite();
-        QuantizePalette_BlackAndWhite();
-        break;
+        case QUANTIZE_EFFECT_STANDARD:
+            QuantizePalette_Standard(FALSE);
+            break;
+        case QUANTIZE_EFFECT_STANDARD_LIMITED_COLORS:
+            QuantizePalette_Standard(TRUE);
+            break;
+        case QUANTIZE_EFFECT_PRIMARY_COLORS:
+            SetPresetPalette_PrimaryColors();
+            QuantizePalette_PrimaryColors();
+            break;
+        case QUANTIZE_EFFECT_GRAYSCALE:
+            SetPresetPalette_Grayscale();
+            QuantizePalette_Grayscale();
+            break;
+        case QUANTIZE_EFFECT_GRAYSCALE_SMALL:
+            SetPresetPalette_GrayscaleSmall();
+            QuantizePalette_GrayscaleSmall();
+            break;
+        case QUANTIZE_EFFECT_BLACK_WHITE:
+            SetPresetPalette_BlackAndWhite();
+            QuantizePalette_BlackAndWhite();
+            break;
     }
 }
 
 static void SetPresetPalette_PrimaryColors(void)
 {
-    gCanvasPalette[0]  = RGB2(0, 0, 0);
-    gCanvasPalette[1]  = RGB2(6, 6, 6);
-    gCanvasPalette[2]  = RGB2(29, 29, 29);
-    gCanvasPalette[3]  = RGB2(11, 11, 11);
-    gCanvasPalette[4]  = RGB2(29, 6, 6);
-    gCanvasPalette[5]  = RGB2(6, 29, 6);
-    gCanvasPalette[6]  = RGB2(6, 6, 29);
-    gCanvasPalette[7]  = RGB2(29, 29, 6);
-    gCanvasPalette[8]  = RGB2(29, 6, 29);
-    gCanvasPalette[9]  = RGB2(6, 29, 29);
+    gCanvasPalette[0] = RGB2(0, 0, 0);
+    gCanvasPalette[1] = RGB2(6, 6, 6);
+    gCanvasPalette[2] = RGB2(29, 29, 29);
+    gCanvasPalette[3] = RGB2(11, 11, 11);
+    gCanvasPalette[4] = RGB2(29, 6, 6);
+    gCanvasPalette[5] = RGB2(6, 29, 6);
+    gCanvasPalette[6] = RGB2(6, 6, 29);
+    gCanvasPalette[7] = RGB2(29, 29, 6);
+    gCanvasPalette[8] = RGB2(29, 6, 29);
+    gCanvasPalette[9] = RGB2(6, 29, 29);
     gCanvasPalette[10] = RGB2(29, 11, 6);
     gCanvasPalette[11] = RGB2(11, 29, 6);
     gCanvasPalette[12] = RGB2(6, 11, 29);
@@ -1089,7 +1095,7 @@ static u16 QuantizePixel_Standard(u16 *pixel)
     return RGB2(red, green, blue);
 }
 
-static u16 QuantizePixel_PrimaryColors(u16* color)
+static u16 QuantizePixel_PrimaryColors(u16 *color)
 {
     u16 red = *color & 0x1F;
     u16 green = (*color >> 5) & 0x1F;

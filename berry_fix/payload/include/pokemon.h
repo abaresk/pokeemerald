@@ -37,38 +37,39 @@ struct PokemonSubstruct3
     /*0x00*/ u8 pokerus;
     /*0x01*/ u8 metLocation;
 
-    /*0x02*/ u16 metLevel:7;
-    /*0x02*/ u16 metGame:4;
-    /*0x03*/ u16 pokeball:4;
-    /*0x03*/ u16 otGender:1;
+    /*0x02*/ u16 metLevel : 7;
+    /*0x02*/ u16 metGame : 4;
+    /*0x03*/ u16 pokeball : 4;
+    /*0x03*/ u16 otGender : 1;
 
-    /*0x04*/ u32 hpIV:5;
-    /*0x04*/ u32 attackIV:5;
-    /*0x05*/ u32 defenseIV:5;
-    /*0x05*/ u32 speedIV:5;
-    /*0x05*/ u32 spAttackIV:5;
-    /*0x06*/ u32 spDefenseIV:5;
-    /*0x07*/ u32 isEgg:1;
-    /*0x07*/ u32 altAbility:1;
+    /*0x04*/ u32 hpIV : 5;
+    /*0x04*/ u32 attackIV : 5;
+    /*0x05*/ u32 defenseIV : 5;
+    /*0x05*/ u32 speedIV : 5;
+    /*0x05*/ u32 spAttackIV : 5;
+    /*0x06*/ u32 spDefenseIV : 5;
+    /*0x07*/ u32 isEgg : 1;
+    /*0x07*/ u32 altAbility : 1;
 
-    /*0x08*/ u32 coolRibbon:3;
-    /*0x08*/ u32 beautyRibbon:3;
-    /*0x08*/ u32 cuteRibbon:3;
-    /*0x09*/ u32 smartRibbon:3;
-    /*0x09*/ u32 toughRibbon:3;
-    /*0x09*/ u32 championRibbon:1;
-    /*0x0A*/ u32 winningRibbon:1;
-    /*0x0A*/ u32 victoryRibbon:1;
-    /*0x0A*/ u32 artistRibbon:1;
-    /*0x0A*/ u32 effortRibbon:1;
-    /*0x0A*/ u32 giftRibbon1:1;
-    /*0x0A*/ u32 giftRibbon2:1;
-    /*0x0A*/ u32 giftRibbon3:1;
-    /*0x0A*/ u32 giftRibbon4:1;
-    /*0x0B*/ u32 giftRibbon5:1;
-    /*0x0B*/ u32 giftRibbon6:1;
-    /*0x0B*/ u32 giftRibbon7:1;
-    /*0x0B*/ u32 fatefulEncounter:5; // unused in Ruby/Sapphire, but the high bit must be set for Mew/Deoxys to obey in FR/LG/Emerald
+    /*0x08*/ u32 coolRibbon : 3;
+    /*0x08*/ u32 beautyRibbon : 3;
+    /*0x08*/ u32 cuteRibbon : 3;
+    /*0x09*/ u32 smartRibbon : 3;
+    /*0x09*/ u32 toughRibbon : 3;
+    /*0x09*/ u32 championRibbon : 1;
+    /*0x0A*/ u32 winningRibbon : 1;
+    /*0x0A*/ u32 victoryRibbon : 1;
+    /*0x0A*/ u32 artistRibbon : 1;
+    /*0x0A*/ u32 effortRibbon : 1;
+    /*0x0A*/ u32 giftRibbon1 : 1;
+    /*0x0A*/ u32 giftRibbon2 : 1;
+    /*0x0A*/ u32 giftRibbon3 : 1;
+    /*0x0A*/ u32 giftRibbon4 : 1;
+    /*0x0B*/ u32 giftRibbon5 : 1;
+    /*0x0B*/ u32 giftRibbon6 : 1;
+    /*0x0B*/ u32 giftRibbon7 : 1;
+    /*0x0B*/ u32 fatefulEncounter : 5; // unused in Ruby/Sapphire, but the high bit must be set for
+                                       // Mew/Deoxys to obey in FR/LG/Emerald
 };
 
 union PokemonSubstruct
@@ -86,9 +87,9 @@ struct BoxPokemon
     /*0x04*/ u32 otId;
     /*0x08*/ u8 nickname[POKEMON_NAME_LENGTH];
     /*0x12*/ u8 language;
-    /*0x13*/ u8 isBadEgg:1;
-             u8 hasSpecies:1;
-             u8 isEgg:1;
+    /*0x13*/ u8 isBadEgg : 1;
+    u8 hasSpecies : 1;
+    u8 isEgg : 1;
     /*0x14*/ u8 otName[OT_NAME_LENGTH];
     /*0x1B*/ u8 markings;
     /*0x1C*/ u16 checksum;
@@ -118,29 +119,29 @@ struct Pokemon
 
 struct BattleTowerPokemon
 {
-    /*0x00*/u16 species;
-    /*0x02*/u16 heldItem;
-    /*0x04*/u16 moves[4];
-    /*0x0C*/u8 level;
-    /*0x0D*/u8 ppBonuses;
-    /*0x0E*/u8 hpEV;
-    /*0x0F*/u8 attackEV;
-    /*0x10*/u8 defenseEV;
-    /*0x11*/u8 speedEV;
-    /*0x12*/u8 spAttackEV;
-    /*0x13*/u8 spDefenseEV;
-    /*0x14*/u32 otId;
-    /*0x18*/u32 hpIV:5;
-    /*0x18*/u32 attackIV:5;
-    /*0x19*/u32 defenseIV:5;
-    /*0x19*/u32 speedIV:5;
-    /*0x1A*/u32 spAttackIV:5;
-    /*0x1A*/u32 spDefenseIV:5;
-    /*0x1B*/u32 gap:1;
-    /*0x1B*/u32 altAbility:1;
-    /*0x1C*/u32 personality;
-    /*0x20*/u8 nickname[POKEMON_NAME_LENGTH + 1];
-    /*0x2B*/u8 friendship;
+    /*0x00*/ u16 species;
+    /*0x02*/ u16 heldItem;
+    /*0x04*/ u16 moves[4];
+    /*0x0C*/ u8 level;
+    /*0x0D*/ u8 ppBonuses;
+    /*0x0E*/ u8 hpEV;
+    /*0x0F*/ u8 attackEV;
+    /*0x10*/ u8 defenseEV;
+    /*0x11*/ u8 speedEV;
+    /*0x12*/ u8 spAttackEV;
+    /*0x13*/ u8 spDefenseEV;
+    /*0x14*/ u32 otId;
+    /*0x18*/ u32 hpIV : 5;
+    /*0x18*/ u32 attackIV : 5;
+    /*0x19*/ u32 defenseIV : 5;
+    /*0x19*/ u32 speedIV : 5;
+    /*0x1A*/ u32 spAttackIV : 5;
+    /*0x1A*/ u32 spDefenseIV : 5;
+    /*0x1B*/ u32 gap : 1;
+    /*0x1B*/ u32 altAbility : 1;
+    /*0x1C*/ u32 personality;
+    /*0x20*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
+    /*0x2B*/ u8 friendship;
 };
 
 struct PokemonStorage

@@ -1,7 +1,8 @@
 #ifndef GUARD_MATCH_CALL_H
 #define GUARD_MATCH_CALL_H
 
-enum {
+enum
+{
     MATCH_CALL_TYPE_NON_TRAINER,
     MATCH_CALL_TYPE_TRAINER,
     MATCH_CALL_TYPE_WALLY,
@@ -20,4 +21,4 @@ bool32 SelectMatchCallMessage(int, u8 *);
 void sub_8197184(u32 windowId, u32 destOffset, u32 paletteId);
 void sub_81971C4(u32 windowId, u32 tileOffset, u32 paletteId);
 
-#endif //GUARD_MATCH_CALL_H
+#endif // GUARD_MATCH_CALL_H

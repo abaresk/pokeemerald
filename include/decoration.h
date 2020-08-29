@@ -65,4 +65,4 @@ void CopyDecorationCategoryName(u8 *dest, u8 decorCat);
 bool8 IsSelectedDecorInThePC(void);
 u8 AddDecorationIconObject(u8 decor, s16 x, s16 y, u8 priority, u16 tilesTag, u16 paletteTag);
 
-#endif //GUARD_DECORATION_H
+#endif // GUARD_DECORATION_H

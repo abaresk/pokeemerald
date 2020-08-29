@@ -153,7 +153,8 @@ void SoundTask_PlayCryHighPitch(u8 taskId)
             battlerId = BATTLE_PARTNER(gBattleAnimTarget);
 
         // Check if battler is visible.
-        if ((gBattleAnimArgs[0] == ANIM_TARGET || gBattleAnimArgs[0] == ANIM_DEF_PARTNER) && !IsBattlerSpriteVisible(battlerId))
+        if ((gBattleAnimArgs[0] == ANIM_TARGET || gBattleAnimArgs[0] == ANIM_DEF_PARTNER)
+            && !IsBattlerSpriteVisible(battlerId))
         {
             DestroyAnimVisualTask(taskId);
             return;
@@ -199,7 +200,8 @@ void SoundTask_PlayDoubleCry(u8 taskId)
             battlerId = BATTLE_PARTNER(gBattleAnimTarget);
 
         // Check if battler is visible.
-        if ((gBattleAnimArgs[0] == ANIM_TARGET || gBattleAnimArgs[0] == ANIM_DEF_PARTNER) && !IsBattlerSpriteVisible(battlerId))
+        if ((gBattleAnimArgs[0] == ANIM_TARGET || gBattleAnimArgs[0] == ANIM_DEF_PARTNER)
+            && !IsBattlerSpriteVisible(battlerId))
         {
             DestroyAnimVisualTask(taskId);
             return;
@@ -304,30 +306,30 @@ static void SoundTask_PlayCryWithEcho_Step(u8 taskId)
 
     switch (gTasks[taskId].data[9])
     {
-    case 2:
-        PlayCry6(species, pan, 4);
-        gTasks[taskId].data[9]++;
-        break;
-    case 1:
-    case 3:
-    case 4:
-        gTasks[taskId].data[9]++;
-        break;
-    case 5:
-        if (IsCryPlaying())
+        case 2:
+            PlayCry6(species, pan, 4);
+            gTasks[taskId].data[9]++;
             break;
-    case 0:
-        StopCryAndClearCrySongs();
-        gTasks[taskId].data[9]++;
-        break;
-    default:
-        if (gTasks[taskId].data[10] == 0)
-            PlayCry6(species, pan, 6);
-        else
-            PlayCry3(species, pan, 6);
+        case 1:
+        case 3:
+        case 4:
+            gTasks[taskId].data[9]++;
+            break;
+        case 5:
+            if (IsCryPlaying())
+                break;
+        case 0:
+            StopCryAndClearCrySongs();
+            gTasks[taskId].data[9]++;
+            break;
+        default:
+            if (gTasks[taskId].data[10] == 0)
+                PlayCry6(species, pan, 6);
+            else
+                PlayCry3(species, pan, 6);
 
-        DestroyAnimVisualTask(taskId);
-        break;
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 // task end
@@ -350,7 +352,7 @@ void SoundTask_PlaySE2WithPanning(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-// Adjusts panning and assigns it to gAnimCustomPanning. Doesnt play sound. 
+// Adjusts panning and assigns it to gAnimCustomPanning. Doesnt play sound.
 // Used by Confuse Ray and Will-O-Wisp (see uses of gAnimCustomPanning)
 void SoundTask_AdjustPanningVar(u8 taskId)
 {
@@ -382,7 +384,7 @@ static void SoundTask_AdjustPanningVar_Step(u8 taskId)
         u16 oldPan;
         gTasks[taskId].data[10] = 0;
         oldPan = gTasks[taskId].data[11];
-        gTasks[taskId].data[11] = panIncrement + oldPan; 
+        gTasks[taskId].data[11] = panIncrement + oldPan;
         gTasks[taskId].data[11] = KeepPanInRange(gTasks[taskId].data[11], oldPan);
     }
 
@@ -390,4 +392,3 @@ static void SoundTask_AdjustPanningVar_Step(u8 taskId)
     if (gTasks[taskId].data[11] == gTasks[taskId].data[2])
         DestroyAnimVisualTask(taskId);
 }
-

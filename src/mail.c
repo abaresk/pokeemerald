@@ -62,9 +62,9 @@ extern const u8 gMailTilemap_Retro[];
 
 struct UnkMailStruct
 {
-    u32 numEasyChatWords:2;
-    u32 xOffset:6;
-    u32 lineHeight:8;
+    u32 numEasyChatWords : 2;
+    u32 xOffset : 6;
+    u32 lineHeight : 8;
 };
 
 struct MailLayout
@@ -102,8 +102,8 @@ struct MailRead
     /*0x021c*/ u8 monIconSprite;
     /*0x021d*/ u8 language;
     /*0x021e*/ bool8 playerIsSender;
-    /*0x0220*/ u8 * (*parserSingle)(u8 *dest, u16 word);
-    /*0x0224*/ u8 * (*parserMultiple)(u8 *dest, const u16 *src, u16 length1, u16 length2);
+    /*0x0220*/ u8 *(*parserSingle)(u8 *dest, u16 word);
+    /*0x0224*/ u8 *(*parserMultiple)(u8 *dest, const u16 *src, u16 length1, u16 length2);
     /*0x0228*/ const struct MailLayout *layout;
     /*0x022c*/ u8 bg1TilemapBuffer[0x1000];
     /*0x122c*/ u8 bg2TilemapBuffer[0x1000];
@@ -127,81 +127,45 @@ static void CB2_ExitMailReadFreeVars(void);
 // .rodata
 
 static const struct BgTemplate sUnknown_0859F290[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .priority = 0
-    }, {
-        .bg = 1,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 30,
-        .priority = 1
-    }, {
-        .bg = 2,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 29,
-        .priority = 2
-    }
+    { .bg = 0, .charBaseIndex = 2, .mapBaseIndex = 31, .priority = 0 },
+    { .bg = 1, .charBaseIndex = 0, .mapBaseIndex = 30, .priority = 1 },
+    { .bg = 2, .charBaseIndex = 0, .mapBaseIndex = 29, .priority = 2 }
 };
 
-static const struct WindowTemplate sUnknown_0859F29C[] = {
-    {
-        .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 3,
-        .width = 26,
-        .height = 15,
-        .paletteNum = 15,
-        .baseBlock = 1
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sUnknown_0859F29C[] = { { .bg = 0,
+                                                               .tilemapLeft = 2,
+                                                               .tilemapTop = 3,
+                                                               .width = 26,
+                                                               .height = 15,
+                                                               .paletteNum = 15,
+                                                               .baseBlock = 1 },
+    DUMMY_WIN_TEMPLATE };
 
 static const u8 sTextColors[] = {
-    TEXT_COLOR_TRANSPARENT,
-    TEXT_DYNAMIC_COLOR_1,
-    TEXT_DYNAMIC_COLOR_2
+    TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_2
 };
 
-static const u16 sUnknown_0859F2B0[][2] = {
-    { 0x6ACD, 0x51A5 },
-    { 0x45FC, 0x38D4 }
-};
+static const u16 sUnknown_0859F2B0[][2] = { { 0x6ACD, 0x51A5 }, { 0x45FC, 0x38D4 } };
 
 static const struct MailGraphics sUnknown_0859F2B8[] = {
-    {
-        gMailPalette_Orange, gMailTiles_Orange, gMailTilemap_Orange, 0x02c0, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Harbor, gMailTiles_Harbor, gMailTilemap_Harbor, 0x02e0, 0, 0x7fff, 0x4631
-    }, {
-        gMailPalette_Glitter, gMailTiles_Glitter, gMailTilemap_Glitter, 0x0400, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Mech, gMailTiles_Mech, gMailTilemap_Mech, 0x01e0, 0, 0x7fff, 0x4631
-    }, {
-        gMailPalette_Wood, gMailTiles_Wood, gMailTilemap_Wood, 0x02e0, 0, 0x7fff, 0x4631
-    }, {
-        gMailPalette_Wave, gMailTiles_Wave, gMailTilemap_Wave, 0x0300, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Bead, gMailTiles_Bead, gMailTilemap_Bead, 0x0140, 0, 0x7fff, 0x4631
-    }, {
-        gMailPalette_Shadow, gMailTiles_Shadow, gMailTilemap_Shadow, 0x0300, 0, 0x7fff, 0x4631
-    }, {
-        gMailPalette_Tropic, gMailTiles_Tropic, gMailTilemap_Tropic, 0x0220, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Dream, gMailTiles_Dream, gMailTilemap_Dream, 0x0340, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Fab, gMailTiles_Fab, gMailTilemap_Fab, 0x02a0, 0, 0x294a, 0x6739
-    }, {
-        gMailPalette_Retro, gMailTiles_Retro, gMailTilemap_Retro, 0x0520, 0, 0x294a, 0x6739
-    }
+    { gMailPalette_Orange, gMailTiles_Orange, gMailTilemap_Orange, 0x02c0, 0, 0x294a, 0x6739 },
+    { gMailPalette_Harbor, gMailTiles_Harbor, gMailTilemap_Harbor, 0x02e0, 0, 0x7fff, 0x4631 },
+    { gMailPalette_Glitter, gMailTiles_Glitter, gMailTilemap_Glitter, 0x0400, 0, 0x294a, 0x6739 },
+    { gMailPalette_Mech, gMailTiles_Mech, gMailTilemap_Mech, 0x01e0, 0, 0x7fff, 0x4631 },
+    { gMailPalette_Wood, gMailTiles_Wood, gMailTilemap_Wood, 0x02e0, 0, 0x7fff, 0x4631 },
+    { gMailPalette_Wave, gMailTiles_Wave, gMailTilemap_Wave, 0x0300, 0, 0x294a, 0x6739 },
+    { gMailPalette_Bead, gMailTiles_Bead, gMailTilemap_Bead, 0x0140, 0, 0x7fff, 0x4631 },
+    { gMailPalette_Shadow, gMailTiles_Shadow, gMailTilemap_Shadow, 0x0300, 0, 0x7fff, 0x4631 },
+    { gMailPalette_Tropic, gMailTiles_Tropic, gMailTilemap_Tropic, 0x0220, 0, 0x294a, 0x6739 },
+    { gMailPalette_Dream, gMailTiles_Dream, gMailTilemap_Dream, 0x0340, 0, 0x294a, 0x6739 },
+    { gMailPalette_Fab, gMailTiles_Fab, gMailTilemap_Fab, 0x02a0, 0, 0x294a, 0x6739 },
+    { gMailPalette_Retro, gMailTiles_Retro, gMailTilemap_Retro, 0x0520, 0, 0x294a, 0x6739 }
 };
 
-static const struct UnkMailStruct Unknown_0859F3A8[] = {
+static const struct UnkMailStruct Unknown_0859F3A8[] = { { .numEasyChatWords = 3,
+                                                             .lineHeight = 16 },
     { .numEasyChatWords = 3, .lineHeight = 16 },
-    { .numEasyChatWords = 3, .lineHeight = 16 },
-    { .numEasyChatWords = 3, .lineHeight = 16 }
-};
+    { .numEasyChatWords = 3, .lineHeight = 16 } };
 
 static const struct MailLayout sUnknown_0859F3B4[] = {
     { 0x03, 0x00, 0x00, 0x02, 0x04, Unknown_0859F3A8 },
@@ -218,13 +182,12 @@ static const struct MailLayout sUnknown_0859F3B4[] = {
     { 0x03, 0x00, 0x00, 0x02, 0x00, Unknown_0859F3A8 }
 };
 
-static const struct UnkMailStruct Unknown_0859F444[] = {
+static const struct UnkMailStruct Unknown_0859F444[] = { { .numEasyChatWords = 2,
+                                                             .lineHeight = 16 },
     { .numEasyChatWords = 2, .lineHeight = 16 },
     { .numEasyChatWords = 2, .lineHeight = 16 },
     { .numEasyChatWords = 2, .lineHeight = 16 },
-    { .numEasyChatWords = 2, .lineHeight = 16 },
-    { .numEasyChatWords = 1, .lineHeight = 16 }
-};
+    { .numEasyChatWords = 1, .lineHeight = 16 } };
 
 static const struct MailLayout sUnknown_0859F458[] = {
     { 0x05, 0x07, 0x58, 0x0b, 0x1e, Unknown_0859F444 },
@@ -332,7 +295,7 @@ static bool8 MailReadBuildGraphics(void)
             SetGpuReg(REG_OFFSET_BG2HOFS, 0);
             SetGpuReg(REG_OFFSET_BG3HOFS, 0);
             SetGpuReg(REG_OFFSET_BG3VOFS, 0);
-            SetGpuReg(REG_OFFSET_BLDCNT,  0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
             SetGpuReg(REG_OFFSET_BLDALPHA, 0);
             break;
         case 6:
@@ -346,7 +309,8 @@ static bool8 MailReadBuildGraphics(void)
             DeactivateAllTextPrinters();
             break;
         case 8:
-            DecompressAndCopyTileDataToVram(1, sUnknown_0859F2B8[sMailRead->mailType].tiles, 0, 0, 0);
+            DecompressAndCopyTileDataToVram(
+                1, sUnknown_0859F2B8[sMailRead->mailType].tiles, 0, 0, 0);
             break;
         case 9:
             if (FreeTempTileDataBuffersIfPossible())
@@ -405,11 +369,13 @@ static bool8 MailReadBuildGraphics(void)
             {
                 case 1:
                     LoadMonIconPalette(icon);
-                    sMailRead->monIconSprite = sub_80D2D78(icon, SpriteCallbackDummy, 0x60, 0x80, 0, 0);
+                    sMailRead->monIconSprite =
+                        sub_80D2D78(icon, SpriteCallbackDummy, 0x60, 0x80, 0, 0);
                     break;
                 case 2:
                     LoadMonIconPalette(icon);
-                    sMailRead->monIconSprite = sub_80D2D78(icon, SpriteCallbackDummy, 0x28, 0x80, 0, 0);
+                    sMailRead->monIconSprite =
+                        sub_80D2D78(icon, SpriteCallbackDummy, 0x28, 0x80, 0, 0);
                     break;
             }
             break;
@@ -448,16 +414,20 @@ static void sub_8121A1C(void)
     u8 *ptr;
 
     total = 0;
-    for (i = 0; i < sMailRead->layout->numSubStructs; i ++)
+    for (i = 0; i < sMailRead->layout->numSubStructs; i++)
     {
-        ConvertEasyChatWordsToString(sMailRead->strbuf[i], &sMailRead->mail->words[total], sMailRead->layout->var8[i].numEasyChatWords, 1);
+        ConvertEasyChatWordsToString(sMailRead->strbuf[i],
+            &sMailRead->mail->words[total],
+            sMailRead->layout->var8[i].numEasyChatWords,
+            1);
         total += sMailRead->layout->var8[i].numEasyChatWords;
     }
     ptr = StringCopy(sMailRead->playerName, sMailRead->mail->playerName);
     if (!sMailRead->playerIsSender)
     {
         StringCopy(ptr, gText_FromSpace);
-        sMailRead->signatureWidth = sMailRead->layout->signatureWidth - (StringLength(sMailRead->playerName) * 8 - 0x60);
+        sMailRead->signatureWidth =
+            sMailRead->layout->signatureWidth - (StringLength(sMailRead->playerName) * 8 - 0x60);
     }
     else
     {
@@ -480,13 +450,19 @@ static void sub_8121B1C(void)
     PutWindowTilemap(1);
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     FillWindowPixelBuffer(1, PIXEL_FILL(0));
-    for (i = 0; i < sMailRead->layout->numSubStructs; i ++)
+    for (i = 0; i < sMailRead->layout->numSubStructs; i++)
     {
         if (sMailRead->strbuf[i][0] == EOS || sMailRead->strbuf[i][0] == CHAR_SPACE)
         {
             continue;
         }
-        AddTextPrinterParameterized3(0, 1, sMailRead->layout->var8[i].xOffset + sMailRead->layout->wordsYPos, y + sMailRead->layout->wordsXPos, sTextColors, 0, sMailRead->strbuf[i]);
+        AddTextPrinterParameterized3(0,
+            1,
+            sMailRead->layout->var8[i].xOffset + sMailRead->layout->wordsYPos,
+            y + sMailRead->layout->wordsXPos,
+            sTextColors,
+            0,
+            sMailRead->strbuf[i]);
         y += sMailRead->layout->var8[i].lineHeight;
     }
     bufptr = StringCopy(strbuf, gText_FromSpace);

@@ -10,4 +10,4 @@ void ExitTraderMenu(u8 taskId);
 void TraderSetup(void);
 void Trader_ResetFlag(void);
 
-#endif //GUARD_TRADER_H
+#endif // GUARD_TRADER_H

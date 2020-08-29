@@ -13,9 +13,7 @@ EWRAM_DATA void *gItemIcon4x4Buffer = NULL;
 // const rom data
 #include "data/item_icon_table.h"
 
-static const struct OamData sOamData_ItemIcon =
-{
-    .y = 0,
+static const struct OamData sOamData_ItemIcon = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -27,22 +25,13 @@ static const struct OamData sOamData_ItemIcon =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 2,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_ItemIcon[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ItemIcon[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_ItemIcon[] =
-{
-    sSpriteAnim_ItemIcon
-};
+static const union AnimCmd *const sSpriteAnimTable_ItemIcon[] = { sSpriteAnim_ItemIcon };
 
-const struct SpriteTemplate gItemIconSpriteTemplate =
-{
+const struct SpriteTemplate gItemIconSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &sOamData_ItemIcon,
@@ -122,7 +111,8 @@ u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
     }
 }
 
-u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, u16 itemId)
+u8 AddCustomItemIconSprite(
+    const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, u16 itemId)
 {
     if (!AllocItemIconTemporaryBuffers())
     {

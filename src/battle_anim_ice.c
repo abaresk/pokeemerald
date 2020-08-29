@@ -13,11 +13,12 @@
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 
-struct HailStruct {
-    s32 x:10;
-    s32 y:10;
-    s32 bPosition:8;
-    s32 unk3:4;
+struct HailStruct
+{
+    s32 x : 10;
+    s32 y : 10;
+    s32 bPosition : 8;
+    s32 unk3 : 4;
 };
 
 static void sub_810B6C4(struct Sprite *);
@@ -49,21 +50,18 @@ static void AnimTask_OverlayFogTiles(u8);
 static void AnimTask_Hail2(u8);
 static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c);
 
-static const union AnimCmd gUnknown_08595A48[] =
-{
+static const union AnimCmd gUnknown_08595A48[] = {
     ANIMCMD_FRAME(0, 5, .hFlip = TRUE),
     ANIMCMD_FRAME(1, 5, .hFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const gUnknown_08595A54[] =
-{
+static const union AnimCmd *const gUnknown_08595A54[] = {
     gUnknown_08595A48,
 };
 
 // Unused
-const struct SpriteTemplate gUnknown_08595A58 =
-{
+const struct SpriteTemplate gUnknown_08595A58 = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -73,87 +71,72 @@ const struct SpriteTemplate gUnknown_08595A58 =
     .callback = sub_810B6C4,
 };
 
-static const union AnimCmd gUnknown_08595A70[] =
-{
+static const union AnimCmd gUnknown_08595A70[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_IceCrystalLarge[] =
-{
+static const union AnimCmd sAnim_IceCrystalLarge[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_IceCrystalSmall[] =
-{
+static const union AnimCmd sAnim_IceCrystalSmall[] = {
     ANIMCMD_FRAME(6, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_Snowball[] =
-{
+static const union AnimCmd sAnim_Snowball[] = {
     ANIMCMD_FRAME(7, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_BlizzardIceCrystal[] =
-{
+static const union AnimCmd sAnim_BlizzardIceCrystal[] = {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_SmallBubblePair[] =
-{
+static const union AnimCmd sAnim_SmallBubblePair[] = {
     ANIMCMD_FRAME(12, 6),
     ANIMCMD_FRAME(13, 6),
     ANIMCMD_JUMP(0),
 };
 
 // Unused
-static const union AnimCmd *const gUnknown_08595AA4[] =
-{
+static const union AnimCmd *const gUnknown_08595AA4[] = {
     gUnknown_08595A70,
 };
 
-static const union AnimCmd *const sAnims_IceCrystalLarge[] =
-{
+static const union AnimCmd *const sAnims_IceCrystalLarge[] = {
     sAnim_IceCrystalLarge,
 };
 
-static const union AnimCmd *const sAnims_IceCrystalSmall[] =
-{
+static const union AnimCmd *const sAnims_IceCrystalSmall[] = {
     sAnim_IceCrystalSmall,
 };
 
-static const union AnimCmd *const sAnims_Snowball[] =
-{
+static const union AnimCmd *const sAnims_Snowball[] = {
     sAnim_Snowball,
 };
 
-static const union AnimCmd *const sAnims_BlizzardIceCrystal[] =
-{
+static const union AnimCmd *const sAnims_BlizzardIceCrystal[] = {
     sAnim_BlizzardIceCrystal,
 };
 
-const union AnimCmd *const gAnims_SmallBubblePair[] =
-{
+const union AnimCmd *const gAnims_SmallBubblePair[] = {
     sAnim_SmallBubblePair,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceCrystalSpiralInwardLarge[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceCrystalSpiralInwardLarge[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 40, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_IceCrystalSpiralInwardLarge[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_IceCrystalSpiralInwardLarge[] = {
     sAffineAnim_IceCrystalSpiralInwardLarge,
 };
 
-const struct SpriteTemplate gIceCrystalSpiralInwardLarge =
-{
+const struct SpriteTemplate gIceCrystalSpiralInwardLarge = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineDouble_ObjBlend_8x16,
@@ -163,8 +146,7 @@ const struct SpriteTemplate gIceCrystalSpiralInwardLarge =
     .callback = AnimIcePunchSwirlingParticle,
 };
 
-const struct SpriteTemplate gIceCrystalSpiralInwardSmall =
-{
+const struct SpriteTemplate gIceCrystalSpiralInwardSmall = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjBlend_8x8,
@@ -174,19 +156,16 @@ const struct SpriteTemplate gIceCrystalSpiralInwardSmall =
     .callback = AnimIcePunchSwirlingParticle,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBeamInnerCrystal[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBeamInnerCrystal[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_IceBeamInnerCrystal[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_IceBeamInnerCrystal[] = {
     sAffineAnim_IceBeamInnerCrystal,
 };
 
-const struct SpriteTemplate gIceBeamInnerCrystalSpriteTemplate =
-{
+const struct SpriteTemplate gIceBeamInnerCrystalSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineNormal_ObjBlend_8x16,
@@ -196,8 +175,7 @@ const struct SpriteTemplate gIceBeamInnerCrystalSpriteTemplate =
     .callback = AnimIceBeamParticle,
 };
 
-const struct SpriteTemplate gIceBeamOuterCrystalSpriteTemplate =
-{
+const struct SpriteTemplate gIceBeamOuterCrystalSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjBlend_8x8,
@@ -207,21 +185,18 @@ const struct SpriteTemplate gIceBeamOuterCrystalSpriteTemplate =
     .callback = AnimIceBeamParticle,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceCrystalHit[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceCrystalHit[] = {
     AFFINEANIMCMD_FRAME(0xCE, 0xCE, 0, 0),
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 6),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_IceCrystalHit[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_IceCrystalHit[] = {
     sAffineAnim_IceCrystalHit,
 };
 
-const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate =
-{
+const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineNormal_ObjBlend_8x16,
@@ -231,8 +206,7 @@ const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate =
     .callback = AnimIceEffectParticle,
 };
 
-const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate =
-{
+const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineNormal_ObjBlend_8x8,
@@ -242,8 +216,7 @@ const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate =
     .callback = AnimIceEffectParticle,
 };
 
-const struct SpriteTemplate gSwirlingSnowballSpriteTemplate =
-{
+const struct SpriteTemplate gSwirlingSnowballSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -253,8 +226,7 @@ const struct SpriteTemplate gSwirlingSnowballSpriteTemplate =
     .callback = AnimSwirlingSnowball,
 };
 
-const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate =
-{
+const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -264,8 +236,7 @@ const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate =
     .callback = AnimMoveParticleBeyondTarget,
 };
 
-const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate =
-{
+const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -275,8 +246,7 @@ const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate =
     .callback = AnimMoveParticleBeyondTarget,
 };
 
-static const union AnimCmd sAnim_IceGroundSpike[] =
-{
+static const union AnimCmd sAnim_IceGroundSpike[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(2, 5),
     ANIMCMD_FRAME(4, 5),
@@ -287,13 +257,11 @@ static const union AnimCmd sAnim_IceGroundSpike[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_IceGroundSpike[] =
-{
+static const union AnimCmd *const sAnims_IceGroundSpike[] = {
     sAnim_IceGroundSpike,
 };
 
-const struct SpriteTemplate gIceGroundSpikeSpriteTemplate =
-{
+const struct SpriteTemplate gIceGroundSpikeSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_SPIKES,
     .paletteTag = ANIM_TAG_ICE_SPIKES,
     .oam = &gOamData_AffineOff_ObjBlend_8x16,
@@ -303,20 +271,17 @@ const struct SpriteTemplate gIceGroundSpikeSpriteTemplate =
     .callback = AnimWaveFromCenterOfTarget,
 };
 
-static const union AnimCmd sAnim_Cloud[] =
-{
+static const union AnimCmd sAnim_Cloud[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(8, 8),
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sAnims_Cloud[] =
-{
+static const union AnimCmd *const sAnims_Cloud[] = {
     sAnim_Cloud,
 };
 
-const struct SpriteTemplate gMistCloudSpriteTemplate =
-{
+const struct SpriteTemplate gMistCloudSpriteTemplate = {
     .tileTag = ANIM_TAG_MIST_CLOUD,
     .paletteTag = ANIM_TAG_MIST_CLOUD,
     .oam = &gOamData_AffineOff_ObjBlend_32x16,
@@ -326,8 +291,7 @@ const struct SpriteTemplate gMistCloudSpriteTemplate =
     .callback = InitSwirlingFogAnim,
 };
 
-const struct SpriteTemplate gSmogCloudSpriteTemplate =
-{
+const struct SpriteTemplate gSmogCloudSpriteTemplate = {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .oam = &gOamData_AffineOff_ObjBlend_32x16,
@@ -337,13 +301,30 @@ const struct SpriteTemplate gSmogCloudSpriteTemplate =
     .callback = InitSwirlingFogAnim,
 };
 
-static const u8 sUnknown_08595C5C[] =
-{
-    0, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 6, 6, 6, 6, 7, 8, 8, 8, 9,
+static const u8 sUnknown_08595C5C[] = {
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    4,
+    4,
+    4,
+    5,
+    6,
+    6,
+    6,
+    6,
+    7,
+    8,
+    8,
+    8,
+    9,
 };
 
-const struct SpriteTemplate gMistBallSpriteTemplate =
-{
+const struct SpriteTemplate gMistBallSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -353,13 +334,30 @@ const struct SpriteTemplate gMistBallSpriteTemplate =
     .callback = AnimThrowMistBall,
 };
 
-static const u8 sUnknown_08595C88[] =
-{
-    0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5,
+static const u8 sUnknown_08595C88[] = {
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4,
+    5,
 };
 
-const struct SpriteTemplate gPoisonGasCloudSpriteTemplate =
-{
+const struct SpriteTemplate gPoisonGasCloudSpriteTemplate = {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .oam = &gOamData_AffineOff_ObjBlend_32x16,
@@ -369,58 +367,50 @@ const struct SpriteTemplate gPoisonGasCloudSpriteTemplate =
     .callback = InitPoisonGasCloudAnim,
 };
 
-static const struct HailStruct sHailCoordData[] =
-{
-    {.x = 100, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 2},
-    {.x = 85,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 0},
-    {.x = 242, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .unk3 = 1},
-    {.x = 66,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .unk3 = 1},
-    {.x = 182, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 0},
-    {.x = 60,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 2},
-    {.x = 214, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .unk3 = 0},
-    {.x = 113, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 1},
-    {.x = 210, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 1},
-    {.x = 38,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .unk3 = 0},
+static const struct HailStruct sHailCoordData[] = {
+    { .x = 100, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT, .unk3 = 2 },
+    { .x = 85, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT, .unk3 = 0 },
+    { .x = 242, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT, .unk3 = 1 },
+    { .x = 66, .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT, .unk3 = 1 },
+    { .x = 182, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 0 },
+    { .x = 60, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT, .unk3 = 2 },
+    { .x = 214, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT, .unk3 = 0 },
+    { .x = 113, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT, .unk3 = 1 },
+    { .x = 210, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 1 },
+    { .x = 38, .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT, .unk3 = 0 },
 };
 
-static const union AffineAnimCmd sAffineAnim_HailParticle_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_HailParticle_0[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_HailParticle_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_HailParticle_1[] = {
     AFFINEANIMCMD_FRAME(0xF0, 0xF0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_HailParticle_2[] =
-{
+static const union AffineAnimCmd sAffineAnim_HailParticle_2[] = {
     AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_WeatherBallIceDown[] =
-{
+static const union AffineAnimCmd sAffineAnim_WeatherBallIceDown[] = {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_HailParticle[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_HailParticle[] = {
     sAffineAnim_HailParticle_0,
     sAffineAnim_HailParticle_1,
     sAffineAnim_HailParticle_2,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_WeatherBallIceDown[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallIceDown[] = {
     sAffineAnim_WeatherBallIceDown,
 };
 
-const struct SpriteTemplate gHailParticleSpriteTemplate =
-{
+const struct SpriteTemplate gHailParticleSpriteTemplate = {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -430,8 +420,7 @@ const struct SpriteTemplate gHailParticleSpriteTemplate =
     .callback = AnimHailBegin,
 };
 
-const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate =
-{
+const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate = {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -441,14 +430,12 @@ const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate =
     .callback = AnimWeatherBallDown,
 };
 
-static const union AnimCmd sAnim_IceBallChunk_0[] =
-{
+static const union AnimCmd sAnim_IceBallChunk_0[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_IceBallChunk_1[] =
-{
+static const union AnimCmd sAnim_IceBallChunk_1[] = {
     ANIMCMD_FRAME(16, 4),
     ANIMCMD_FRAME(32, 4),
     ANIMCMD_FRAME(48, 4),
@@ -456,44 +443,37 @@ static const union AnimCmd sAnim_IceBallChunk_1[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_IceBallChunk[] =
-{
+static const union AnimCmd *const sAnims_IceBallChunk[] = {
     sAnim_IceBallChunk_0,
     sAnim_IceBallChunk_1,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBallChunk_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_0[] = {
     AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBallChunk_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_1[] = {
     AFFINEANIMCMD_FRAME(0x118, 0x118, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBallChunk_2[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_2[] = {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBallChunk_3[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_3[] = {
     AFFINEANIMCMD_FRAME(0x180, 0x180, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_IceBallChunk_4[] =
-{
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_4[] = {
     AFFINEANIMCMD_FRAME(0x1C0, 0x1C0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_IceBallChunk[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_IceBallChunk[] = {
     sAffineAnim_IceBallChunk_0,
     sAffineAnim_IceBallChunk_1,
     sAffineAnim_IceBallChunk_2,
@@ -501,8 +481,7 @@ static const union AffineAnimCmd *const sAffineAnims_IceBallChunk[] =
     sAffineAnim_IceBallChunk_4,
 };
 
-const struct SpriteTemplate gIceBallChunkSpriteTemplate =
-{
+const struct SpriteTemplate gIceBallChunkSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CHUNK,
     .paletteTag = ANIM_TAG_ICE_CHUNK,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
@@ -512,8 +491,7 @@ const struct SpriteTemplate gIceBallChunkSpriteTemplate =
     .callback = InitIceBallAnim,
 };
 
-const struct SpriteTemplate gIceBallImpactShardSpriteTemplate =
-{
+const struct SpriteTemplate gIceBallImpactShardSpriteTemplate = {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -540,14 +518,14 @@ static void sub_810B6C4(struct Sprite *sprite)
     sprite->data[4] = gBattleAnimArgs[3] + targetY;
     sub_80A64EC(sprite);
 
-    for (;(targetX >= -32 && targetX <= 272) && (targetY >= -32 && targetY <= 192);
-           targetX += sprite->data[1], targetY += sprite->data[2])
+    for (; (targetX >= -32 && targetX <= 272) && (targetY >= -32 && targetY <= 192);
+         targetX += sprite->data[1], targetY += sprite->data[2])
         ;
 
     sprite->data[1] = -sprite->data[1];
     sprite->data[2] = -sprite->data[2];
-    for (;(attackerX >= -32 && attackerX <= 272) && (attackerY >= -32 && attackerY <= 192);
-           attackerX += sprite->data[1], attackerY += sprite->data[2])
+    for (; (attackerX >= -32 && attackerX <= 272) && (attackerY >= -32 && attackerY <= 192);
+         attackerX += sprite->data[1], attackerY += sprite->data[2])
         ;
 
     sprite->pos1.x = attackerX;
@@ -612,7 +590,8 @@ static void AnimIceBeamParticle(struct Sprite *sprite)
     else
         sprite->data[2] += gBattleAnimArgs[2];
 
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+    sprite->data[4] =
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = StartAnimLinearTranslation;
@@ -672,7 +651,8 @@ static void AnimSwirlingSnowball(struct Sprite *sprite)
     if (!gBattleAnimArgs[5])
     {
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET)
+                          + gBattleAnimArgs[3];
     }
     else
     {
@@ -697,8 +677,7 @@ static void AnimSwirlingSnowball(struct Sprite *sprite)
         AnimFastTranslateLinear(sprite);
 
         if ((u32)(sprite->pos1.x + sprite->pos2.x + 16) > 272
-         || sprite->pos1.y + sprite->pos2.y > 160
-         || sprite->pos1.y + sprite->pos2.y < -16)
+            || sprite->pos1.y + sprite->pos2.y > 160 || sprite->pos1.y + sprite->pos2.y < -16)
             break;
     }
 
@@ -741,7 +720,7 @@ static void AnimSwirlingSnowball_Step2(struct Sprite *sprite)
     if (sprite->data[5] <= 31)
     {
         sprite->pos2.x = Sin(sprite->data[0], tempVar) - sprite->data[3];
-        sprite->pos2.y = Cos(sprite->data[0], 15)      - sprite->data[4];
+        sprite->pos2.y = Cos(sprite->data[0], 15) - sprite->data[4];
         sprite->data[0] = (sprite->data[0] + 16) & 0xFF;
         sprite->data[5] += 1;
     }
@@ -762,9 +741,8 @@ static void AnimSwirlingSnowball_End(struct Sprite *sprite)
     sprite->data[0] = 1;
     AnimFastTranslateLinear(sprite);
 
-    if ((u32)(sprite->pos1.x + sprite->pos2.x + 16) > 272
-     || sprite->pos1.y + sprite->pos2.y > 256
-     || sprite->pos1.y + sprite->pos2.y < -16)
+    if ((u32)(sprite->pos1.x + sprite->pos2.x + 16) > 272 || sprite->pos1.y + sprite->pos2.y > 256
+        || sprite->pos1.y + sprite->pos2.y < -16)
         DestroyAnimSprite(sprite);
 }
 
@@ -817,8 +795,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
         sprite->data[0] = 1;
         AnimFastTranslateLinear(sprite);
         if ((u32)(sprite->pos1.x + sprite->pos2.x + 16) > 272
-         || sprite->pos1.y + sprite->pos2.y > 160
-         || sprite->pos1.y + sprite->pos2.y < -16)
+            || sprite->pos1.y + sprite->pos2.y > 160 || sprite->pos1.y + sprite->pos2.y < -16)
             break;
     }
 
@@ -847,8 +824,7 @@ static void AnimWiggleParticleTowardsTarget(struct Sprite *sprite)
     if (sprite->data[0] == 1)
     {
         if ((u32)(sprite->pos1.x + sprite->pos2.x + 16) > 272
-         || sprite->pos1.y + sprite->pos2.y > 160
-         || sprite->pos1.y + sprite->pos2.y < -16)
+            || sprite->pos1.y + sprite->pos2.y > 160 || sprite->pos1.y + sprite->pos2.y < -16)
             DestroyAnimSprite(sprite);
     }
 }
@@ -895,7 +871,7 @@ static void AnimWaveFromCenterOfTarget(struct Sprite *sprite)
 static void InitSwirlingFogAnim(struct Sprite *sprite)
 {
     s16 tempVar;
-    u8  battler;
+    u8 battler;
 
     if (gBattleAnimArgs[4] == 0)
     {
@@ -1015,61 +991,63 @@ static void AnimTask_Haze2(u8 taskId)
 
     switch (gTasks[taskId].data[12])
     {
-    case 0:
-        if (++gTasks[taskId].data[10] == 4)
-        {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[9]++;
-            gTasks[taskId].data[11] = sUnknown_08595C5C[gTasks[taskId].data[9]];
-
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
-            if (gTasks[taskId].data[11] == 9)
+        case 0:
+            if (++gTasks[taskId].data[10] == 4)
             {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
+                gTasks[taskId].data[10] = 0;
+                gTasks[taskId].data[9]++;
+                gTasks[taskId].data[11] = sUnknown_08595C5C[gTasks[taskId].data[9]];
+
+                SetGpuReg(REG_OFFSET_BLDALPHA,
+                    BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
+                if (gTasks[taskId].data[11] == 9)
+                {
+                    gTasks[taskId].data[12]++;
+                    gTasks[taskId].data[11] = 0;
+                }
             }
-        }
-        break;
-    case 1:
-        if (++gTasks[taskId].data[11] == 0x51)
-        {
-            gTasks[taskId].data[11] = 9;
+            break;
+        case 1:
+            if (++gTasks[taskId].data[11] == 0x51)
+            {
+                gTasks[taskId].data[11] = 9;
+                gTasks[taskId].data[12]++;
+            }
+            break;
+        case 2:
+            if (++gTasks[taskId].data[10] == 4)
+            {
+                gTasks[taskId].data[10] = 0;
+                gTasks[taskId].data[11]--;
+
+                SetGpuReg(REG_OFFSET_BLDALPHA,
+                    BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
+                if (gTasks[taskId].data[11] == 0)
+                {
+                    gTasks[taskId].data[12]++;
+                    gTasks[taskId].data[11] = 0;
+                }
+            }
+            break;
+        case 3:
+            sub_80A6B30(&animBg);
+            sub_80A6C68(1);
+            sub_80A6C68(2);
+
             gTasks[taskId].data[12]++;
-        }
-        break;
-    case 2:
-        if (++gTasks[taskId].data[10] == 4)
-        {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11]--;
 
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
-            if (gTasks[taskId].data[11] == 0)
-            {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
-            }
-        }
-        break;
-    case 3:
-        sub_80A6B30(&animBg);
-        sub_80A6C68(1);
-        sub_80A6C68(2);
+            // fall through
+        case 4:
+            if (!IsContest())
+                SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
 
-        gTasks[taskId].data[12]++;
-
-        // fall through
-    case 4:
-        if (!IsContest())
-            SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
-
-        gBattle_BG1_X = 0;
-        gBattle_BG1_Y = 0;
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
-        SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
-        DestroyAnimVisualTask(taskId);
-        break;
+            gBattle_BG1_X = 0;
+            gBattle_BG1_Y = 0;
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
+            SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -1123,55 +1101,57 @@ static void AnimTask_OverlayFogTiles(u8 taskId)
 
     switch (gTasks[taskId].data[12])
     {
-    case 0:
-        gTasks[taskId].data[9] += 1;
-        gTasks[taskId].data[11] = sUnknown_08595C88[gTasks[taskId].data[9]];
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 17 - gTasks[taskId].data[11]));
-        if (gTasks[taskId].data[11] == 5)
-        {
-            gTasks[taskId].data[12]++;
-            gTasks[taskId].data[11] = 0;
-        }
-        break;
-    case 1:
-        if (++gTasks[taskId].data[11] == 0x51)
-        {
-            gTasks[taskId].data[11] = 5;
-            gTasks[taskId].data[12]++;
-        }
-        break;
-    case 2:
-        if (++gTasks[taskId].data[10] == 4)
-        {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11] -= 1;
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
-            if (gTasks[taskId].data[11] == 0)
+        case 0:
+            gTasks[taskId].data[9] += 1;
+            gTasks[taskId].data[11] = sUnknown_08595C88[gTasks[taskId].data[9]];
+            SetGpuReg(REG_OFFSET_BLDALPHA,
+                BLDALPHA_BLEND(gTasks[taskId].data[11], 17 - gTasks[taskId].data[11]));
+            if (gTasks[taskId].data[11] == 5)
             {
                 gTasks[taskId].data[12]++;
                 gTasks[taskId].data[11] = 0;
             }
-        }
-        break;
-    case 3:
-        sub_80A6B30(&animBg);
-        sub_80A6C68(1);
-        sub_80A6C68(2);
+            break;
+        case 1:
+            if (++gTasks[taskId].data[11] == 0x51)
+            {
+                gTasks[taskId].data[11] = 5;
+                gTasks[taskId].data[12]++;
+            }
+            break;
+        case 2:
+            if (++gTasks[taskId].data[10] == 4)
+            {
+                gTasks[taskId].data[10] = 0;
+                gTasks[taskId].data[11] -= 1;
+                SetGpuReg(REG_OFFSET_BLDALPHA,
+                    BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
+                if (gTasks[taskId].data[11] == 0)
+                {
+                    gTasks[taskId].data[12]++;
+                    gTasks[taskId].data[11] = 0;
+                }
+            }
+            break;
+        case 3:
+            sub_80A6B30(&animBg);
+            sub_80A6C68(1);
+            sub_80A6C68(2);
 
-        gTasks[taskId].data[12]++;
+            gTasks[taskId].data[12]++;
 
-        // fall through
-    case 4:
-        if (!IsContest())
-            SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
+            // fall through
+        case 4:
+            if (!IsContest())
+                SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
 
-        gBattle_BG1_X = 0;
-        gBattle_BG1_Y = 0;
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
-        SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
-        DestroyAnimVisualTask(taskId);
-        break;
+            gBattle_BG1_X = 0;
+            gBattle_BG1_Y = 0;
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
+            SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -1188,7 +1168,8 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
 {
     sprite->data[0] = gBattleAnimArgs[0];
 
-    if (GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) < GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2))
+    if (GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2)
+        < GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2))
         sprite->data[7] = 0x8000;
 
     if ((gBattlerPositions[gBattleAnimTarget] & BIT_SIDE) == B_SIDE_PLAYER)
@@ -1196,7 +1177,8 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
         gBattleAnimArgs[1] = -gBattleAnimArgs[1];
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
 
-        if ((sprite->data[7] & 0x8000) && (gBattlerPositions[gBattleAnimAttacker] & BIT_SIDE) == B_SIDE_PLAYER)
+        if ((sprite->data[7] & 0x8000)
+            && (gBattlerPositions[gBattleAnimAttacker] & BIT_SIDE) == B_SIDE_PLAYER)
             sprite->subpriority = gSprites[GetAnimBattlerSpriteId(ANIM_TARGET)].subpriority + 1;
 
         sprite->data[6] = 1;
@@ -1207,17 +1189,21 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
     if (gBattleAnimArgs[7])
     {
         sprite->data[1] = sprite->pos1.x + gBattleAnimArgs[1];
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[3];
+        sprite->data[2] =
+            GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[3];
         sprite->data[3] = sprite->pos1.y + gBattleAnimArgs[2];
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[4];
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET)
+                          + gBattleAnimArgs[4];
         sprite->data[7] |= GetBattlerSpriteBGPriority(gBattleAnimTarget) << 8;
     }
     else
     {
         sprite->data[1] = sprite->pos1.x + gBattleAnimArgs[1];
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[3];
+        sprite->data[2] =
+            GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[3];
         sprite->data[3] = sprite->pos1.y + gBattleAnimArgs[2];
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[4];
+        sprite->data[4] =
+            GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[4];
         sprite->data[7] |= GetBattlerSpriteBGPriority(gBattleAnimTarget) << 8;
     }
 
@@ -1237,96 +1223,96 @@ static void MovePoisonGasCloud(struct Sprite *sprite)
 
     switch (sprite->data[7] & 0xFF)
     {
-    case 0:
-        AnimTranslateLinear(sprite);
-        value = gSineTable[sprite->data[5]];
-        sprite->pos2.x += value >> 4;
-        if (sprite->data[6])
-            sprite->data[5] = (sprite->data[5] - 8) & 0xFF;
-        else
-            sprite->data[5] = (sprite->data[5] + 8) & 0xFF;
-
-        if (sprite->data[0] <= 0)
-        {
-            sprite->data[0] = 80;
-            sprite->pos1.x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
-            sprite->data[1] = sprite->pos1.x;
-            sprite->data[2] = sprite->pos1.x;
-            sprite->pos1.y += sprite->pos2.y;
-            sprite->data[3] = sprite->pos1.y;
-            sprite->data[4] = sprite->pos1.y + 29;
-            sprite->data[7]++;
-            if (IsContest())
-                sprite->data[5] = 80;
-            else if (GET_BATTLER_SIDE2(gBattleAnimTarget) != B_SIDE_PLAYER)
-                sprite->data[5] = 204;
-            else
-                sprite->data[5] = 80;
-
-            sprite->pos2.y = 0;
+        case 0:
+            AnimTranslateLinear(sprite);
             value = gSineTable[sprite->data[5]];
-            sprite->pos2.x = value >> 3;
-            sprite->data[5] = (sprite->data[5] + 2) & 0xFF;
-            InitAnimLinearTranslation(sprite);
-        }
-        break;
-    case 1:
-        AnimTranslateLinear(sprite);
-        value = gSineTable[sprite->data[5]];
-        sprite->pos2.x += value >> 3;
-        sprite->pos2.y += (gSineTable[sprite->data[5] + 0x40] * -3) >> 8;
-        if (!IsContest())
-        {
-            u16 var0 = sprite->data[5] - 0x40;
-            if (var0 <= 0x7F)
-                sprite->oam.priority = sprite->data[7] >> 8;
+            sprite->pos2.x += value >> 4;
+            if (sprite->data[6])
+                sprite->data[5] = (sprite->data[5] - 8) & 0xFF;
             else
-                sprite->oam.priority = (sprite->data[7] >> 8) + 1;
+                sprite->data[5] = (sprite->data[5] + 8) & 0xFF;
 
-            sprite->data[5] = (sprite->data[5] + 4) & 0xFF;
-        }
-        else
-        {
-            u16 var0 = sprite->data[5] - 0x40;
-            if (var0 <= 0x7F)
-                sprite->subpriority = 128;
-            else
-                sprite->subpriority = 140;
-
-            sprite->data[5] = (sprite->data[5] - 4) & 0xFF;
-        }
-
-        if (sprite->data[0] <= 0)
-        {
-            sprite->data[0] = 0x300;
-            sprite->data[1] = sprite->pos1.x += sprite->pos2.x;
-            sprite->data[3] = sprite->pos1.y += sprite->pos2.y;
-            sprite->data[4] = sprite->pos1.y + 4;
-            if (IsContest())
-                sprite->data[2] = -0x10;
-            else if (GET_BATTLER_SIDE2(gBattleAnimTarget) != B_SIDE_PLAYER)
-                sprite->data[2] = 0x100;
-            else
-                sprite->data[2] = -0x10;
-
-            sprite->data[7]++;
-            sprite->pos2.x = sprite->pos2.y = 0;
-            sub_80A6FD4(sprite);
-        }
-        break;
-    case 2:
-        if (AnimTranslateLinear(sprite))
-        {
-            if (sprite->oam.affineMode & 1)
+            if (sprite->data[0] <= 0)
             {
-                FreeOamMatrix(sprite->oam.matrixNum);
-                sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+                sprite->data[0] = 80;
+                sprite->pos1.x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+                sprite->data[1] = sprite->pos1.x;
+                sprite->data[2] = sprite->pos1.x;
+                sprite->pos1.y += sprite->pos2.y;
+                sprite->data[3] = sprite->pos1.y;
+                sprite->data[4] = sprite->pos1.y + 29;
+                sprite->data[7]++;
+                if (IsContest())
+                    sprite->data[5] = 80;
+                else if (GET_BATTLER_SIDE2(gBattleAnimTarget) != B_SIDE_PLAYER)
+                    sprite->data[5] = 204;
+                else
+                    sprite->data[5] = 80;
+
+                sprite->pos2.y = 0;
+                value = gSineTable[sprite->data[5]];
+                sprite->pos2.x = value >> 3;
+                sprite->data[5] = (sprite->data[5] + 2) & 0xFF;
+                InitAnimLinearTranslation(sprite);
+            }
+            break;
+        case 1:
+            AnimTranslateLinear(sprite);
+            value = gSineTable[sprite->data[5]];
+            sprite->pos2.x += value >> 3;
+            sprite->pos2.y += (gSineTable[sprite->data[5] + 0x40] * -3) >> 8;
+            if (!IsContest())
+            {
+                u16 var0 = sprite->data[5] - 0x40;
+                if (var0 <= 0x7F)
+                    sprite->oam.priority = sprite->data[7] >> 8;
+                else
+                    sprite->oam.priority = (sprite->data[7] >> 8) + 1;
+
+                sprite->data[5] = (sprite->data[5] + 4) & 0xFF;
+            }
+            else
+            {
+                u16 var0 = sprite->data[5] - 0x40;
+                if (var0 <= 0x7F)
+                    sprite->subpriority = 128;
+                else
+                    sprite->subpriority = 140;
+
+                sprite->data[5] = (sprite->data[5] - 4) & 0xFF;
             }
 
-            DestroySprite(sprite);
-            gAnimVisualTaskCount--;
-        }
-        break;
+            if (sprite->data[0] <= 0)
+            {
+                sprite->data[0] = 0x300;
+                sprite->data[1] = sprite->pos1.x += sprite->pos2.x;
+                sprite->data[3] = sprite->pos1.y += sprite->pos2.y;
+                sprite->data[4] = sprite->pos1.y + 4;
+                if (IsContest())
+                    sprite->data[2] = -0x10;
+                else if (GET_BATTLER_SIDE2(gBattleAnimTarget) != B_SIDE_PLAYER)
+                    sprite->data[2] = 0x100;
+                else
+                    sprite->data[2] = -0x10;
+
+                sprite->data[7]++;
+                sprite->pos2.x = sprite->pos2.y = 0;
+                sub_80A6FD4(sprite);
+            }
+            break;
+        case 2:
+            if (AnimTranslateLinear(sprite))
+            {
+                if (sprite->oam.affineMode & 1)
+                {
+                    FreeOamMatrix(sprite->oam.matrixNum);
+                    sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+                }
+
+                DestroySprite(sprite);
+                gAnimVisualTaskCount--;
+            }
+            break;
     }
 }
 
@@ -1342,43 +1328,42 @@ static void AnimTask_Hail2(u8 taskId)
     struct Task *task = &gTasks[taskId];
     switch (task->data[0])
     {
-    case 0:
-        if (++task->data[4] > 2)
-        {
-            task->data[4] = 0;
-            task->data[5] = 0;
-            task->data[2] = 0;
-            task->data[0]++;
-        }
-        break;
-    case 1:
-        if (task->data[5] == 0)
-        {
-            if (GenerateHailParticle(task->data[3], task->data[2], taskId, 1))
-                task->data[1]++;
-
-            if (++task->data[2] == 3)
+        case 0:
+            if (++task->data[4] > 2)
             {
-                if (++task->data[3] == 10)
-                    task->data[0]++;
+                task->data[4] = 0;
+                task->data[5] = 0;
+                task->data[2] = 0;
+                task->data[0]++;
+            }
+            break;
+        case 1:
+            if (task->data[5] == 0)
+            {
+                if (GenerateHailParticle(task->data[3], task->data[2], taskId, 1))
+                    task->data[1]++;
+
+                if (++task->data[2] == 3)
+                {
+                    if (++task->data[3] == 10)
+                        task->data[0]++;
+                    else
+                        task->data[0]--;
+                }
                 else
-                    task->data[0]--;
+                {
+                    task->data[5] = 1;
+                }
             }
             else
             {
-                task->data[5] = 1;
+                task->data[5]--;
             }
-
-        }
-        else
-        {
-            task->data[5]--;
-        }
-        break;
-    case 2:
-        if (task->data[1] == 0)
-            DestroyAnimVisualTask(taskId);
-        break;
+            break;
+        case 2:
+            if (task->data[1] == 0)
+                DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -1400,14 +1385,14 @@ static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, 
             battlerY = GetBattlerSpriteCoord(id, BATTLER_COORD_Y_PIC_OFFSET);
             switch (unk)
             {
-            case 0:
-                battlerX -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
-                battlerY -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
-                break;
-            case 1:
-                battlerX += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
-                battlerY += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
-                break;
+                case 0:
+                    battlerX -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
+                    battlerY -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
+                    break;
+                case 1:
+                    battlerX += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
+                    battlerY += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
+                    break;
             }
         }
         else
@@ -1453,7 +1438,9 @@ static void AnimHailBegin(struct Sprite *sprite)
     if (sprite->data[0] == 1 && sprite->data[5] == 0)
     {
         spriteId = CreateSprite(&gIceCrystalHitLargeSpriteTemplate,
-                                sprite->data[3], sprite->data[4], sprite->subpriority);
+            sprite->data[3],
+            sprite->data[4],
+            sprite->subpriority);
 
         sprite->data[0] = spriteId;
         if (spriteId != 64)
@@ -1493,7 +1480,8 @@ static void AnimHailContinue(struct Sprite *sprite)
 // arg 5: arc height (negative)
 static void InitIceBallAnim(struct Sprite *sprite)
 {
-    u8 animNum = gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
+    u8 animNum =
+        gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
 
     if (animNum > 4)
         animNum = 4;
@@ -1506,8 +1494,10 @@ static void InitIceBallAnim(struct Sprite *sprite)
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+    sprite->data[2] =
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
+    sprite->data[4] =
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[5];
 
     InitAnimArcTranslation(sprite);
@@ -1566,6 +1556,7 @@ void AnimTask_GetIceBallCounter(u8 taskId)
 {
     u8 arg = gBattleAnimArgs[0];
 
-    gBattleAnimArgs[arg] = gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
+    gBattleAnimArgs[arg] =
+        gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
     DestroyAnimVisualTask(taskId);
 }

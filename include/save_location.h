@@ -10,7 +10,7 @@
 //
 //
 //
-#define CHAMPION_SAVEWARP            (1 << 7)
+#define CHAMPION_SAVEWARP (1 << 7)
 
 void TrySetMapSaveWarpStatus(void);
 void SetChampionSaveWarp(void);

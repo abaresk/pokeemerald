@@ -43,29 +43,30 @@ static void Task_EnterCaveTransition3(u8 taskId);
 static void Task_EnterCaveTransition4(u8 taskId);
 
 // rodata
-static const struct FlashStruct sTransitionTypes[] =
-{
-    {MAP_TYPE_TOWN,        MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_CITY,        MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_ROUTE,       MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_UNDERWATER,  MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_OCEAN_ROUTE, MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_UNKNOWN,     MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_INDOOR,      MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_SECRET_BASE, MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_TOWN,        FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_CITY,        FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_ROUTE,       FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNDERWATER,  FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_OCEAN_ROUTE, FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNKNOWN,     FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_INDOOR,      FALSE,  TRUE, DoExitCaveTransition},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_SECRET_BASE, FALSE,  TRUE, DoExitCaveTransition},
+static const struct FlashStruct sTransitionTypes[] = {
+    { MAP_TYPE_TOWN, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_CITY, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_ROUTE, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_UNDERWATER, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_OCEAN_ROUTE, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_UNKNOWN, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_INDOOR, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_SECRET_BASE, MAP_TYPE_UNDERGROUND, TRUE, FALSE, DoEnterCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_TOWN, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_CITY, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_ROUTE, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_UNDERWATER, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_OCEAN_ROUTE, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_UNKNOWN, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_INDOOR, FALSE, TRUE, DoExitCaveTransition },
+    { MAP_TYPE_UNDERGROUND, MAP_TYPE_SECRET_BASE, FALSE, TRUE, DoExitCaveTransition },
     {},
 };
 
-static const u16 gCaveTransitionPalette_White[] = INCBIN_U16("graphics/misc/cave_transition_white.gbapal");
-static const u16 gCaveTransitionPalette_Black[] = INCBIN_U16("graphics/misc/cave_transition_black.gbapal");
+static const u16 gCaveTransitionPalette_White[] =
+    INCBIN_U16("graphics/misc/cave_transition_white.gbapal");
+static const u16 gCaveTransitionPalette_Black[] =
+    INCBIN_U16("graphics/misc/cave_transition_black.gbapal");
 
 static const u16 gUnknown_085B2890[] = INCBIN_U16("graphics/misc/85B2890.gbapal");
 static const u16 gUnknown_085B28A0[] = INCBIN_U16("graphics/misc/85B28A0.gbapal");
@@ -224,24 +225,16 @@ static void Task_ExitCaveTransition2(u8 taskId)
     LZ77UnCompVram(gCaveTransitionTilemap, (void *)(VRAM + 0xF800));
     LoadPalette(gCaveTransitionPalette_White, 0xE0, 0x20);
     LoadPalette(gUnknown_085B28A0, 0xE0, 0x10);
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0
-                                | BLDCNT_EFFECT_BLEND
-                                | BLDCNT_TGT2_BG1
-                                | BLDCNT_TGT2_BG2
-                                | BLDCNT_TGT2_BG3
-                                | BLDCNT_TGT2_OBJ
-                                | BLDCNT_TGT2_BD);
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3
+            | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
-    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
-                               | BGCNT_CHARBASE(3)
-                               | BGCNT_SCREENBASE(31)
-                               | BGCNT_16COLOR
-                               | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                | DISPCNT_OBJ_1D_MAP
-                                | DISPCNT_BG0_ON
-                                | DISPCNT_OBJ_ON);
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(0) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(31) | BGCNT_16COLOR
+            | BGCNT_TXT256x256);
+    SetGpuReg(
+        REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
     gTasks[taskId].func = Task_ExitCaveTransition3;
     gTasks[taskId].data[0] = 16;
     gTasks[taskId].data[1] = 0;
@@ -310,15 +303,11 @@ static void Task_EnterCaveTransition2(u8 taskId)
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 0);
-    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0)
-                               | BGCNT_CHARBASE(3)
-                               | BGCNT_SCREENBASE(31)
-                               | BGCNT_16COLOR
-                               | BGCNT_TXT256x256);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
-                                | DISPCNT_OBJ_1D_MAP
-                                | DISPCNT_BG0_ON
-                                | DISPCNT_OBJ_ON);
+    SetGpuReg(REG_OFFSET_BG0CNT,
+        BGCNT_PRIORITY(0) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(31) | BGCNT_16COLOR
+            | BGCNT_TXT256x256);
+    SetGpuReg(
+        REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
     LoadPalette(gCaveTransitionPalette_White, 0xE0, 0x20);
     LoadPalette(gCaveTransitionPalette_Black, 0, 0x20);
     gTasks[taskId].func = Task_EnterCaveTransition3;
@@ -340,13 +329,9 @@ static void Task_EnterCaveTransition3(u8 taskId)
     else
     {
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 16));
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0
-                                    | BLDCNT_EFFECT_BLEND
-                                    | BLDCNT_TGT2_BG1
-                                    | BLDCNT_TGT2_BG2
-                                    | BLDCNT_TGT2_BG3
-                                    | BLDCNT_TGT2_OBJ
-                                    | BLDCNT_TGT2_BD);
+        SetGpuReg(REG_OFFSET_BLDCNT,
+            BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2
+                | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD);
         gTasks[taskId].func = Task_EnterCaveTransition4;
     }
 }

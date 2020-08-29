@@ -1,16 +1,16 @@
 #ifndef GUARD_CONSTANTS_GAME_STAT_H
 #define GUARD_CONSTANTS_GAME_STAT_H
 
-#define GAME_STAT_SAVED_GAME                 0
-#define GAME_STAT_FIRST_HOF_PLAY_TIME        1
-#define GAME_STAT_STARTED_TRENDS             2
-#define GAME_STAT_PLANTED_BERRIES            3
-#define GAME_STAT_TRADED_BIKES               4
-#define GAME_STAT_STEPS                      5
-#define GAME_STAT_GOT_INTERVIEWED            6
-#define GAME_STAT_TOTAL_BATTLES              7
-#define GAME_STAT_WILD_BATTLES               8
-#define GAME_STAT_TRAINER_BATTLES            9
+#define GAME_STAT_SAVED_GAME                0
+#define GAME_STAT_FIRST_HOF_PLAY_TIME       1
+#define GAME_STAT_STARTED_TRENDS            2
+#define GAME_STAT_PLANTED_BERRIES           3
+#define GAME_STAT_TRADED_BIKES              4
+#define GAME_STAT_STEPS                     5
+#define GAME_STAT_GOT_INTERVIEWED           6
+#define GAME_STAT_TOTAL_BATTLES             7
+#define GAME_STAT_WILD_BATTLES              8
+#define GAME_STAT_TRAINER_BATTLES           9
 #define GAME_STAT_ENTERED_HOF               10
 #define GAME_STAT_POKEMON_CAPTURES          11
 #define GAME_STAT_FISHING_CAPTURES          12
@@ -54,7 +54,7 @@
 #define GAME_STAT_NUM_UNION_ROOM_BATTLES    50
 #define GAME_STAT_51                        51
 
-#define NUM_USED_GAME_STATS                 52
-#define NUM_GAME_STATS                      64
+#define NUM_USED_GAME_STATS 52
+#define NUM_GAME_STATS      64
 
 #endif // GUARD_CONSTANTS_GAME_STAT_H

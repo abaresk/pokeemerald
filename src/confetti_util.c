@@ -138,7 +138,8 @@ static bool32 SetAnimAndTileNum(struct ConfettiUtil *structPtr, u8 animNum)
         return FALSE;
 
     structPtr->animNum = animNum;
-    structPtr->tileNum = (GetTilesPerImage(structPtr->oam.shape, structPtr->oam.size) * animNum) + tileStart;
+    structPtr->tileNum =
+        (GetTilesPerImage(structPtr->oam.shape, structPtr->oam.size) * animNum) + tileStart;
     return TRUE;
 }
 
@@ -157,14 +158,17 @@ u8 ConfettiUtil_SetData(u8 id, u8 dataArrayId, s16 dataValue)
 {
     if (sWork == NULL || id >= sWork->count)
         return 0xFF;
-    else if (!sWork->array[id].active || dataArrayId > ARRAY_COUNT(sWork->array[id].data) - 1) // - 1 b/c last slot is reserved for taskId
+    else if (!sWork->array[id].active
+             || dataArrayId > ARRAY_COUNT(sWork->array[id].data)
+                                  - 1) // - 1 b/c last slot is reserved for taskId
         return 0xFF;
 
     sWork->array[id].data[dataArrayId] = dataValue;
     return id;
 }
 
-u8 ConfettiUtil_AddNew(const struct OamData *oam, u16 tileTag, u16 palTag, s16 x, s16 y, u8 animNum, u8 priority)
+u8 ConfettiUtil_AddNew(
+    const struct OamData *oam, u16 tileTag, u16 palTag, s16 x, s16 y, u8 animNum, u8 priority)
 {
     struct ConfettiUtil *structPtr = NULL;
     u8 i;

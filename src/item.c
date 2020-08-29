@@ -26,7 +26,7 @@ static bool8 CheckPyramidBagHasItem(u16 itemId, u16 count);
 static bool8 CheckPyramidBagHasSpace(u16 itemId, u16 count);
 
 // EWRAM variables
-EWRAM_DATA struct BagPocket gBagPockets[POCKETS_COUNT] = {0};
+EWRAM_DATA struct BagPocket gBagPockets[POCKETS_COUNT] = { 0 };
 
 // rodata
 #include "data/text/item_descriptions.h"
@@ -40,7 +40,7 @@ static u16 GetBagItemQuantity(u16 *quantity)
 
 static void SetBagItemQuantity(u16 *quantity, u16 newValue)
 {
-    *quantity =  newValue ^ gSaveBlock2Ptr->encryptionKey;
+    *quantity = newValue ^ gSaveBlock2Ptr->encryptionKey;
 }
 
 static u16 GetPCItemQuantity(u16 *quantity)
@@ -440,7 +440,9 @@ bool8 AddBagItem(u16 itemId, u16 count)
                     // goto SUCCESS_ADD_ITEM;
                     // is equivalent but won't match
 
-                    memcpy(itemPocket->itemSlots, newItems, itemPocket->capacity * sizeof(struct ItemSlot));
+                    memcpy(itemPocket->itemSlots,
+                        newItems,
+                        itemPocket->capacity * sizeof(struct ItemSlot));
                     Free(newItems);
                     return TRUE;
                 }
@@ -456,7 +458,8 @@ bool8 AddBagItem(u16 itemId, u16 count)
                     {
                         count -= slotCapacity - ownedCount;
                         SetBagItemQuantity(&newItems[i].quantity, slotCapacity);
-                        // don't create another instance of the item if it's at max slot capacity and count is equal to 0
+                        // don't create another instance of the item if it's at max slot capacity
+                        // and count is equal to 0
                         if (count == 0)
                         {
                             goto SUCCESS_ADD_ITEM;
@@ -469,7 +472,8 @@ bool8 AddBagItem(u16 itemId, u16 count)
         // we're done if quantity is equal to 0
         if (count > 0)
         {
-            // either no existing item was found or we have to create another instance, because the capacity was exceeded
+            // either no existing item was found or we have to create another instance, because the
+            // capacity was exceeded
             for (i = 0; i < itemPocket->capacity; i++)
             {
                 if (newItems[i].itemId == ITEM_NONE)
@@ -502,10 +506,10 @@ bool8 AddBagItem(u16 itemId, u16 count)
             }
         }
 
-        SUCCESS_ADD_ITEM:
-            memcpy(itemPocket->itemSlots, newItems, itemPocket->capacity * sizeof(struct ItemSlot));
-            Free(newItems);
-            return TRUE;
+    SUCCESS_ADD_ITEM:
+        memcpy(itemPocket->itemSlots, newItems, itemPocket->capacity * sizeof(struct ItemSlot));
+        Free(newItems);
+        return TRUE;
     }
 }
 
@@ -539,17 +543,17 @@ bool8 RemoveBagItem(u16 itemId, u16 count)
         }
 
         if (totalQuantity < count)
-            return FALSE;   // We don't have enough of the item
+            return FALSE; // We don't have enough of the item
 
         if (CurMapIsSecretBase() == TRUE)
         {
-            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_BAG);
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS,
+                VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | SECRET_BASE_USED_BAG);
             VarSet(VAR_SECRET_BASE_LAST_ITEM_USED, itemId);
         }
 
         var = GetItemListPosition(pocket);
-        if (itemPocket->capacity > var
-         && itemPocket->itemSlots[var].itemId == itemId)
+        if (itemPocket->capacity > var && itemPocket->itemSlots[var].itemId == itemId)
         {
             ownedCount = GetBagItemQuantity(&itemPocket->itemSlots[var].quantity);
             if (ownedCount >= count)
@@ -644,7 +648,8 @@ bool8 CheckPCHasItem(u16 itemId, u16 count)
 
     for (i = 0; i < PC_ITEMS_COUNT; i++)
     {
-        if (gSaveBlock1Ptr->pcItems[i].itemId == itemId && GetPCItemQuantity(&gSaveBlock1Ptr->pcItems[i].quantity) >= count)
+        if (gSaveBlock1Ptr->pcItems[i].itemId == itemId
+            && GetPCItemQuantity(&gSaveBlock1Ptr->pcItems[i].quantity) >= count)
             return TRUE;
     }
     return FALSE;
@@ -741,12 +746,12 @@ void SwapRegisteredBike(void)
 {
     switch (gSaveBlock1Ptr->registeredItem)
     {
-    case ITEM_MACH_BIKE:
-        gSaveBlock1Ptr->registeredItem = ITEM_ACRO_BIKE;
-        break;
-    case ITEM_ACRO_BIKE:
-        gSaveBlock1Ptr->registeredItem = ITEM_MACH_BIKE;
-        break;
+        case ITEM_MACH_BIKE:
+            gSaveBlock1Ptr->registeredItem = ITEM_ACRO_BIKE;
+            break;
+        case ITEM_ACRO_BIKE:
+            gSaveBlock1Ptr->registeredItem = ITEM_MACH_BIKE;
+            break;
     }
 }
 
@@ -800,7 +805,7 @@ void SortBerriesOrTMHMs(struct BagPocket *bagPocket)
     }
 }
 
-void MoveItemSlotInList(struct ItemSlot* itemSlots_, u32 from, u32 to_)
+void MoveItemSlotInList(struct ItemSlot *itemSlots_, u32 from, u32 to_)
 {
     // dumb assignments needed to match
     struct ItemSlot *itemSlots = itemSlots_;

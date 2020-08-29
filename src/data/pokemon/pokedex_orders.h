@@ -1,5 +1,4 @@
-const u16 gPokedexOrder_Alphabetical[] =
-{
+const u16 gPokedexOrder_Alphabetical[] = {
     NATIONAL_DEX_OLD_UNOWN_B,
     NATIONAL_DEX_OLD_UNOWN_C,
     NATIONAL_DEX_OLD_UNOWN_D,
@@ -414,8 +413,7 @@ const u16 gPokedexOrder_Alphabetical[] =
     NATIONAL_DEX_ZUBAT,
 };
 
-const u16 gPokedexOrder_Weight[] =
-{
+const u16 gPokedexOrder_Weight[] = {
     NATIONAL_DEX_GASTLY,
     NATIONAL_DEX_HAUNTER,
     NATIONAL_DEX_HOPPIP,
@@ -804,8 +802,7 @@ const u16 gPokedexOrder_Weight[] =
     NATIONAL_DEX_GROUDON,
 };
 
-const u16 gPokedexOrder_Height[] =
-{
+const u16 gPokedexOrder_Height[] = {
     NATIONAL_DEX_DIGLETT,
     NATIONAL_DEX_AZURILL,
     NATIONAL_DEX_NATU,

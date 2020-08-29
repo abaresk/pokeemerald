@@ -20,4 +20,4 @@ bool8 LinkContest_GetBlockReceivedFromAllPlayers(void);
 bool8 LinkContest_GetBlockReceived(u8);
 u8 LinkContest_GetLeaderIndex(u8 *);
 
-#endif //GUARD_CONTEST_LINK_H
+#endif // GUARD_CONTEST_LINK_H

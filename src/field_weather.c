@@ -17,7 +17,8 @@
 #include "trig.h"
 #include "gpu_regs.h"
 
-#define DROUGHT_COLOR_INDEX(color) ((((color) >> 1) & 0xF) | (((color) >> 2) & 0xF0) | (((color) >> 3) & 0xF00))
+#define DROUGHT_COLOR_INDEX(color) \
+    ((((color) >> 1) & 0xF) | (((color) >> 2) & 0xF0) | (((color) >> 3) & 0xF00))
 
 enum
 {
@@ -28,9 +29,9 @@ enum
 
 struct RGBColor
 {
-    u16 r:5;
-    u16 g:5;
-    u16 b:5;
+    u16 r : 5;
+    u16 g : 5;
+    u16 b : 5;
 };
 
 struct WeatherPaletteData
@@ -51,7 +52,8 @@ static bool8 LightenSpritePaletteInFog(u8);
 static void BuildGammaShiftTables(void);
 static void UpdateWeatherGammaShift(void);
 static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex);
-static void ApplyGammaShiftWithBlend(u8 startPalIndex, u8 numPalettes, s8 gammaIndex, u8 blendCoeff, u16 blendColor);
+static void ApplyGammaShiftWithBlend(
+    u8 startPalIndex, u8 numPalettes, s8 gammaIndex, u8 blendCoeff, u16 blendColor);
 static void ApplyDroughtGammaShiftWithBlend(s8 gammaIndex, u8 blendCoeff, u16 blendColor);
 static void ApplyFogBlend(u8 blendCoeff, u16 blendColor);
 static bool8 FadeInScreen_RainShowShade(void);
@@ -65,8 +67,8 @@ static void None_Init(void);
 static void None_Main(void);
 static u8 None_Finish(void);
 
-EWRAM_DATA struct Weather gWeather = {0};
-EWRAM_DATA static u8 sFieldEffectPaletteGammaTypes[32] = {0};
+EWRAM_DATA struct Weather gWeather = { 0 };
+EWRAM_DATA static u8 sFieldEffectPaletteGammaTypes[32] = { 0 };
 
 static const u8 *sPaletteGammaTypes;
 
@@ -87,37 +89,55 @@ const u16 sDroughtWeatherColors[][0x1000] = {
 // this file produces the same result as accessing gWeather directly.
 struct Weather *const gWeatherPtr = &gWeather;
 
-static const struct WeatherCallbacks sWeatherFuncs[] =
-{
-    [WEATHER_NONE]               = {None_Init,              None_Main,          None_Init,             None_Finish},
-    [WEATHER_SUNNY_CLOUDS]       = {Clouds_InitVars,        Clouds_Main,        Clouds_InitAll,        Clouds_Finish},
-    [WEATHER_SUNNY]              = {Sunny_InitVars,         Sunny_Main,         Sunny_InitAll,         Sunny_Finish},
-    [WEATHER_RAIN]               = {Rain_InitVars,          Rain_Main,          Rain_InitAll,          Rain_Finish},
-    [WEATHER_SNOW]               = {Snow_InitVars,          Snow_Main,          Snow_InitAll,          Snow_Finish},
-    [WEATHER_RAIN_THUNDERSTORM]  = {Thunderstorm_InitVars,  Thunderstorm_Main,  Thunderstorm_InitAll,  Thunderstorm_Finish},
-    [WEATHER_FOG_HORIZONTAL]     = {FogHorizontal_InitVars, FogHorizontal_Main, FogHorizontal_InitAll, FogHorizontal_Finish},
-    [WEATHER_VOLCANIC_ASH]       = {Ash_InitVars,           Ash_Main,           Ash_InitAll,           Ash_Finish},
-    [WEATHER_SANDSTORM]          = {Sandstorm_InitVars,     Sandstorm_Main,     Sandstorm_InitAll,     Sandstorm_Finish},
-    [WEATHER_FOG_DIAGONAL]       = {FogDiagonal_InitVars,   FogDiagonal_Main,   FogDiagonal_InitAll,   FogDiagonal_Finish},
-    [WEATHER_UNDERWATER]         = {FogHorizontal_InitVars, FogHorizontal_Main, FogHorizontal_InitAll, FogHorizontal_Finish},
-    [WEATHER_SHADE]              = {Shade_InitVars,         Shade_Main,         Shade_InitAll,         Shade_Finish},
-    [WEATHER_DROUGHT]            = {Drought_InitVars,       Drought_Main,       Drought_InitAll,       Drought_Finish},
-    [WEATHER_DOWNPOUR]           = {Downpour_InitVars,      Thunderstorm_Main,  Downpour_InitAll,      Thunderstorm_Finish},
-    [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,       Bubbles_Finish},
+static const struct WeatherCallbacks sWeatherFuncs[] = {
+    [WEATHER_NONE] = { None_Init, None_Main, None_Init, None_Finish },
+    [WEATHER_SUNNY_CLOUDS] = { Clouds_InitVars, Clouds_Main, Clouds_InitAll, Clouds_Finish },
+    [WEATHER_SUNNY] = { Sunny_InitVars, Sunny_Main, Sunny_InitAll, Sunny_Finish },
+    [WEATHER_RAIN] = { Rain_InitVars, Rain_Main, Rain_InitAll, Rain_Finish },
+    [WEATHER_SNOW] = { Snow_InitVars, Snow_Main, Snow_InitAll, Snow_Finish },
+    [WEATHER_RAIN_THUNDERSTORM] = { Thunderstorm_InitVars,
+        Thunderstorm_Main,
+        Thunderstorm_InitAll,
+        Thunderstorm_Finish },
+    [WEATHER_FOG_HORIZONTAL] = { FogHorizontal_InitVars,
+        FogHorizontal_Main,
+        FogHorizontal_InitAll,
+        FogHorizontal_Finish },
+    [WEATHER_VOLCANIC_ASH] = { Ash_InitVars, Ash_Main, Ash_InitAll, Ash_Finish },
+    [WEATHER_SANDSTORM] = { Sandstorm_InitVars,
+        Sandstorm_Main,
+        Sandstorm_InitAll,
+        Sandstorm_Finish },
+    [WEATHER_FOG_DIAGONAL] = { FogDiagonal_InitVars,
+        FogDiagonal_Main,
+        FogDiagonal_InitAll,
+        FogDiagonal_Finish },
+    [WEATHER_UNDERWATER] = { FogHorizontal_InitVars,
+        FogHorizontal_Main,
+        FogHorizontal_InitAll,
+        FogHorizontal_Finish },
+    [WEATHER_SHADE] = { Shade_InitVars, Shade_Main, Shade_InitAll, Shade_Finish },
+    [WEATHER_DROUGHT] = { Drought_InitVars, Drought_Main, Drought_InitAll, Drought_Finish },
+    [WEATHER_DOWNPOUR] = { Downpour_InitVars,
+        Thunderstorm_Main,
+        Downpour_InitAll,
+        Thunderstorm_Finish },
+    [WEATHER_UNDERWATER_BUBBLES] = { Bubbles_InitVars,
+        Bubbles_Main,
+        Bubbles_InitAll,
+        Bubbles_Finish },
 };
 
-void (*const gWeatherPalStateFuncs[])(void) =
-{
-    [WEATHER_PAL_STATE_CHANGING_WEATHER]  = UpdateWeatherGammaShift,
-    [WEATHER_PAL_STATE_SCREEN_FADING_IN]  = FadeInScreenWithWeather,
-    [WEATHER_PAL_STATE_SCREEN_FADING_OUT] = DoNothing,               
-    [WEATHER_PAL_STATE_IDLE]              = DoNothing,             
+void (*const gWeatherPalStateFuncs[])(void) = {
+    [WEATHER_PAL_STATE_CHANGING_WEATHER] = UpdateWeatherGammaShift,
+    [WEATHER_PAL_STATE_SCREEN_FADING_IN] = FadeInScreenWithWeather,
+    [WEATHER_PAL_STATE_SCREEN_FADING_OUT] = DoNothing,
+    [WEATHER_PAL_STATE_IDLE] = DoNothing,
 };
 
 // This table specifies which of the gamma shift tables should be
 // applied to each of the background and sprite palettes.
-static const u8 sBasePaletteGammaTypes[32] =
-{
+static const u8 sBasePaletteGammaTypes[32] = {
     // background palettes
     GAMMA_NORMAL,
     GAMMA_NORMAL,
@@ -188,7 +208,8 @@ void StartWeather(void)
 
 void SetNextWeather(u8 weather)
 {
-    if (weather != WEATHER_RAIN && weather != WEATHER_RAIN_THUNDERSTORM && weather != WEATHER_DOWNPOUR)
+    if (weather != WEATHER_RAIN && weather != WEATHER_RAIN_THUNDERSTORM
+        && weather != WEATHER_DOWNPOUR)
     {
         PlayRainStoppingSoundEffect();
     }
@@ -274,7 +295,7 @@ static u8 None_Finish(void)
 static void BuildGammaShiftTables(void)
 {
     u16 v0;
-    u8 (*gammaTable)[32];
+    u8(*gammaTable)[32];
     u16 v2;
     u16 v4;
     u16 v5;
@@ -371,42 +392,42 @@ static void FadeInScreenWithWeather(void)
 
     switch (gWeatherPtr->currWeather)
     {
-    case WEATHER_RAIN:
-    case WEATHER_RAIN_THUNDERSTORM:
-    case WEATHER_DOWNPOUR:
-    case WEATHER_SNOW:
-    case WEATHER_SHADE:
-        if (FadeInScreen_RainShowShade() == FALSE)
-        {
-            gWeatherPtr->gammaIndex = 3;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
-    case WEATHER_DROUGHT:
-        if (FadeInScreen_Drought() == FALSE)
-        {
-            gWeatherPtr->gammaIndex = -6;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
-    case WEATHER_FOG_HORIZONTAL:
-        if (FadeInScreen_FogHorizontal() == FALSE)
-        {
-            gWeatherPtr->gammaIndex = 0;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
-    case WEATHER_VOLCANIC_ASH:
-    case WEATHER_SANDSTORM:
-    case WEATHER_FOG_DIAGONAL:
-    case WEATHER_UNDERWATER:
-    default:
-        if (!gPaletteFade.active)
-        {
-            gWeatherPtr->gammaIndex = gWeatherPtr->gammaTargetIndex;
-            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
-        }
-        break;
+        case WEATHER_RAIN:
+        case WEATHER_RAIN_THUNDERSTORM:
+        case WEATHER_DOWNPOUR:
+        case WEATHER_SNOW:
+        case WEATHER_SHADE:
+            if (FadeInScreen_RainShowShade() == FALSE)
+            {
+                gWeatherPtr->gammaIndex = 3;
+                gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+            }
+            break;
+        case WEATHER_DROUGHT:
+            if (FadeInScreen_Drought() == FALSE)
+            {
+                gWeatherPtr->gammaIndex = -6;
+                gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+            }
+            break;
+        case WEATHER_FOG_HORIZONTAL:
+            if (FadeInScreen_FogHorizontal() == FALSE)
+            {
+                gWeatherPtr->gammaIndex = 0;
+                gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+            }
+            break;
+        case WEATHER_VOLCANIC_ASH:
+        case WEATHER_SANDSTORM:
+        case WEATHER_FOG_DIAGONAL:
+        case WEATHER_UNDERWATER:
+        default:
+            if (!gPaletteFade.active)
+            {
+                gWeatherPtr->gammaIndex = gWeatherPtr->gammaTargetIndex;
+                gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+            }
+            break;
     }
 }
 
@@ -422,7 +443,8 @@ static bool8 FadeInScreen_RainShowShade(void)
         return FALSE;
     }
 
-    ApplyGammaShiftWithBlend(0, 32, 3, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
+    ApplyGammaShiftWithBlend(
+        0, 32, 3, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
     return TRUE;
 }
 
@@ -438,7 +460,8 @@ static bool8 FadeInScreen_Drought(void)
         return FALSE;
     }
 
-    ApplyDroughtGammaShiftWithBlend(-6, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
+    ApplyDroughtGammaShiftWithBlend(
+        -6, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
     return TRUE;
 }
 
@@ -453,7 +476,8 @@ static bool8 FadeInScreen_FogHorizontal(void)
 }
 
 static void DoNothing(void)
-{ }
+{
+}
 
 static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex)
 {
@@ -475,14 +499,16 @@ static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex)
             if (sPaletteGammaTypes[curPalIndex] == GAMMA_NONE)
             {
                 // No palette change.
-                CpuFastCopy(gPlttBufferUnfaded + palOffset, gPlttBufferFaded + palOffset, 16 * sizeof(u16));
+                CpuFastCopy(
+                    gPlttBufferUnfaded + palOffset, gPlttBufferFaded + palOffset, 16 * sizeof(u16));
                 palOffset += 16;
             }
             else
             {
                 u8 r, g, b;
 
-                if (sPaletteGammaTypes[curPalIndex] == GAMMA_ALT || curPalIndex - 16 == gWeatherPtr->altGammaSpritePalIndex)
+                if (sPaletteGammaTypes[curPalIndex] == GAMMA_ALT
+                    || curPalIndex - 16 == gWeatherPtr->altGammaSpritePalIndex)
                     gammaTable = gWeatherPtr->altGammaShifts[gammaIndex];
                 else
                     gammaTable = gWeatherPtr->gammaShifts[gammaIndex];
@@ -503,7 +529,8 @@ static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex)
     }
     else if (gammaIndex < 0)
     {
-        // A negative gammIndex value means that the blending will come from the special Drought weather's palette tables.
+        // A negative gammIndex value means that the blending will come from the special Drought
+        // weather's palette tables.
         gammaIndex = -gammaIndex - 1;
         palOffset = startPalIndex * 16;
         numPalettes += startPalIndex;
@@ -514,14 +541,17 @@ static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex)
             if (sPaletteGammaTypes[curPalIndex] == GAMMA_NONE)
             {
                 // No palette change.
-                CpuFastCopy(gPlttBufferUnfaded + palOffset, gPlttBufferFaded + palOffset, 16 * sizeof(u16));
+                CpuFastCopy(
+                    gPlttBufferUnfaded + palOffset, gPlttBufferFaded + palOffset, 16 * sizeof(u16));
                 palOffset += 16;
             }
             else
             {
                 for (i = 0; i < 16; i++)
                 {
-                    gPlttBufferFaded[palOffset] = sDroughtWeatherColors[gammaIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
+                    gPlttBufferFaded[palOffset] =
+                        sDroughtWeatherColors[gammaIndex]
+                                             [DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
                     palOffset++;
                 }
             }
@@ -532,11 +562,14 @@ static void ApplyGammaShift(u8 startPalIndex, u8 numPalettes, s8 gammaIndex)
     else
     {
         // No palette blending.
-        CpuFastCopy(gPlttBufferUnfaded + startPalIndex * 16, gPlttBufferFaded + startPalIndex * 16, numPalettes * 16 * sizeof(u16));
+        CpuFastCopy(gPlttBufferUnfaded + startPalIndex * 16,
+            gPlttBufferFaded + startPalIndex * 16,
+            numPalettes * 16 * sizeof(u16));
     }
 }
 
-static void ApplyGammaShiftWithBlend(u8 startPalIndex, u8 numPalettes, s8 gammaIndex, u8 blendCoeff, u16 blendColor)
+static void ApplyGammaShiftWithBlend(
+    u8 startPalIndex, u8 numPalettes, s8 gammaIndex, u8 blendCoeff, u16 blendColor)
 {
     u16 palOffset;
     u16 curPalIndex;
@@ -693,7 +726,8 @@ static void MarkFogSpritePalToLighten(u8 paletteIndex)
 {
     if (gWeatherPtr->lightenedFogSpritePalsCount < 6)
     {
-        gWeatherPtr->lightenedFogSpritePals[gWeatherPtr->lightenedFogSpritePalsCount] = paletteIndex;
+        gWeatherPtr->lightenedFogSpritePals[gWeatherPtr->lightenedFogSpritePalsCount] =
+            paletteIndex;
         gWeatherPtr->lightenedFogSpritePalsCount++;
     }
 }
@@ -741,40 +775,40 @@ void FadeScreen(u8 mode, s8 delay)
 
     switch (mode)
     {
-    case FADE_FROM_BLACK:
-        fadeColor = RGB_BLACK;
-        fadeOut = FALSE;
-        break;
-    case FADE_FROM_WHITE:
-        fadeColor = RGB_WHITEALPHA;
-        fadeOut = FALSE;
-        break;
-    case FADE_TO_BLACK:
-        fadeColor = RGB_BLACK;
-        fadeOut = TRUE;
-        break;
-    case FADE_TO_WHITE:
-        fadeColor = RGB_WHITEALPHA;
-        fadeOut = TRUE;
-        break;
-    default:
-        return;
+        case FADE_FROM_BLACK:
+            fadeColor = RGB_BLACK;
+            fadeOut = FALSE;
+            break;
+        case FADE_FROM_WHITE:
+            fadeColor = RGB_WHITEALPHA;
+            fadeOut = FALSE;
+            break;
+        case FADE_TO_BLACK:
+            fadeColor = RGB_BLACK;
+            fadeOut = TRUE;
+            break;
+        case FADE_TO_WHITE:
+            fadeColor = RGB_WHITEALPHA;
+            fadeOut = TRUE;
+            break;
+        default:
+            return;
     }
 
     switch (gWeatherPtr->currWeather)
     {
-    case WEATHER_RAIN:
-    case WEATHER_RAIN_THUNDERSTORM:
-    case WEATHER_DOWNPOUR:
-    case WEATHER_SNOW:
-    case WEATHER_FOG_HORIZONTAL:
-    case WEATHER_SHADE:
-    case WEATHER_DROUGHT:
-        useWeatherPal = TRUE;
-        break;
-    default:
-        useWeatherPal = FALSE;
-        break;
+        case WEATHER_RAIN:
+        case WEATHER_RAIN_THUNDERSTORM:
+        case WEATHER_DOWNPOUR:
+        case WEATHER_SNOW:
+        case WEATHER_FOG_HORIZONTAL:
+        case WEATHER_SHADE:
+        case WEATHER_DROUGHT:
+            useWeatherPal = TRUE;
+            break;
+        default:
+            useWeatherPal = FALSE;
+            break;
     }
 
     if (fadeOut)
@@ -813,34 +847,34 @@ void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex)
 
     switch (gWeatherPtr->palProcessingState)
     {
-    case WEATHER_PAL_STATE_SCREEN_FADING_IN:
-        if (gWeatherPtr->unknown_6CA != 0)
-        {
-            if (gWeatherPtr->currWeather == WEATHER_FOG_HORIZONTAL)
-                MarkFogSpritePalToLighten(paletteIndex);
+        case WEATHER_PAL_STATE_SCREEN_FADING_IN:
+            if (gWeatherPtr->unknown_6CA != 0)
+            {
+                if (gWeatherPtr->currWeather == WEATHER_FOG_HORIZONTAL)
+                    MarkFogSpritePalToLighten(paletteIndex);
+                paletteIndex *= 16;
+                for (i = 0; i < 16; i++)
+                    gPlttBufferFaded[paletteIndex + i] = gWeatherPtr->fadeDestColor;
+            }
+            break;
+        case WEATHER_PAL_STATE_SCREEN_FADING_OUT:
             paletteIndex *= 16;
-            for (i = 0; i < 16; i++)
-                gPlttBufferFaded[paletteIndex + i] = gWeatherPtr->fadeDestColor;
-        }
-        break;
-    case WEATHER_PAL_STATE_SCREEN_FADING_OUT:
-        paletteIndex *= 16;
-        CpuFastCopy(gPlttBufferFaded + paletteIndex, gPlttBufferUnfaded + paletteIndex, 32);
-        BlendPalette(paletteIndex, 16, gPaletteFade.y, gPaletteFade.blendColor);
-        break;
-    // WEATHER_PAL_STATE_CHANGING_WEATHER
-    // WEATHER_PAL_STATE_CHANGING_IDLE
-    default:
-        if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL)
-        {
-            ApplyGammaShift(paletteIndex, 1, gWeatherPtr->gammaIndex);
-        }
-        else
-        {
-            paletteIndex *= 16;
-            BlendPalette(paletteIndex, 16, 12, RGB(28, 31, 28));
-        }
-        break;
+            CpuFastCopy(gPlttBufferFaded + paletteIndex, gPlttBufferUnfaded + paletteIndex, 32);
+            BlendPalette(paletteIndex, 16, gPaletteFade.y, gPaletteFade.blendColor);
+            break;
+        // WEATHER_PAL_STATE_CHANGING_WEATHER
+        // WEATHER_PAL_STATE_CHANGING_IDLE
+        default:
+            if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL)
+            {
+                ApplyGammaShift(paletteIndex, 1, gWeatherPtr->gammaIndex);
+            }
+            else
+            {
+                paletteIndex *= 16;
+                BlendPalette(paletteIndex, 16, 12, RGB(28, 31, 28));
+            }
+            break;
     }
 }
 
@@ -879,7 +913,8 @@ bool8 LoadDroughtWeatherPalettes(void)
 {
     if (gWeatherPtr->loadDroughtPalsIndex < 32)
     {
-        LoadDroughtWeatherPalette(&gWeatherPtr->loadDroughtPalsIndex, &gWeatherPtr->loadDroughtPalsOffset);
+        LoadDroughtWeatherPalette(
+            &gWeatherPtr->loadDroughtPalsIndex, &gWeatherPtr->loadDroughtPalsOffset);
         if (gWeatherPtr->loadDroughtPalsIndex < 32)
             return TRUE;
     }
@@ -903,35 +938,35 @@ void sub_80AC01C(void)
 {
     switch (gWeatherPtr->unknown_742)
     {
-    case 0:
-        if (++gWeatherPtr->unknown_740 > 5)
-        {
-            gWeatherPtr->unknown_740 = 0;
-            sub_80ABFE0(gWeatherPtr->unknown_73C++);
-            if (gWeatherPtr->unknown_73C > 5)
+        case 0:
+            if (++gWeatherPtr->unknown_740 > 5)
             {
-                gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
-                gWeatherPtr->unknown_742 = 1;
-                gWeatherPtr->unknown_740 = 0x3C;
+                gWeatherPtr->unknown_740 = 0;
+                sub_80ABFE0(gWeatherPtr->unknown_73C++);
+                if (gWeatherPtr->unknown_73C > 5)
+                {
+                    gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
+                    gWeatherPtr->unknown_742 = 1;
+                    gWeatherPtr->unknown_740 = 0x3C;
+                }
             }
-        }
-        break;
-    case 1:
-        gWeatherPtr->unknown_740 = (gWeatherPtr->unknown_740 + 3) & 0x7F;
-        gWeatherPtr->unknown_73C = ((gSineTable[gWeatherPtr->unknown_740] - 1) >> 6) + 2;
-        if (gWeatherPtr->unknown_73C != gWeatherPtr->unknown_73E)
-            sub_80ABFE0(gWeatherPtr->unknown_73C);
-        gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
-        break;
-    case 2:
-        if (++gWeatherPtr->unknown_740 > 5)
-        {
-            gWeatherPtr->unknown_740 = 0;
-            sub_80ABFE0(--gWeatherPtr->unknown_73C);
-            if (gWeatherPtr->unknown_73C == 3)
-                gWeatherPtr->unknown_742 = 0;
-        }
-        break;
+            break;
+        case 1:
+            gWeatherPtr->unknown_740 = (gWeatherPtr->unknown_740 + 3) & 0x7F;
+            gWeatherPtr->unknown_73C = ((gSineTable[gWeatherPtr->unknown_740] - 1) >> 6) + 2;
+            if (gWeatherPtr->unknown_73C != gWeatherPtr->unknown_73E)
+                sub_80ABFE0(gWeatherPtr->unknown_73C);
+            gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
+            break;
+        case 2:
+            if (++gWeatherPtr->unknown_740 > 5)
+            {
+                gWeatherPtr->unknown_740 = 0;
+                sub_80ABFE0(--gWeatherPtr->unknown_73C);
+                if (gWeatherPtr->unknown_73C == 3)
+                    gWeatherPtr->unknown_742 = 0;
+            }
+            break;
     }
 }
 
@@ -956,7 +991,7 @@ void Weather_SetTargetBlendCoeffs(u8 eva, u8 evb, int delay)
 bool8 Weather_UpdateBlend(void)
 {
     if (gWeatherPtr->currBlendEVA == gWeatherPtr->targetBlendEVA
-     && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
+        && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
         return TRUE;
 
     if (++gWeatherPtr->blendFrameCounter > gWeatherPtr->blendDelay)
@@ -981,10 +1016,11 @@ bool8 Weather_UpdateBlend(void)
         }
     }
 
-    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gWeatherPtr->currBlendEVA, gWeatherPtr->currBlendEVB));
+    SetGpuReg(
+        REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gWeatherPtr->currBlendEVA, gWeatherPtr->currBlendEVB));
 
     if (gWeatherPtr->currBlendEVA == gWeatherPtr->targetBlendEVA
-     && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
+        && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
         return TRUE;
 
     return FALSE;
@@ -994,36 +1030,36 @@ void sub_80AC274(u8 a)
 {
     switch (a)
     {
-    case 1:
-        SetWeather(WEATHER_SUNNY_CLOUDS);
-        break;
-    case 2:
-        SetWeather(WEATHER_SUNNY);
-        break;
-    case 3:
-        SetWeather(WEATHER_RAIN);
-        break;
-    case 4:
-        SetWeather(WEATHER_SNOW);
-        break;
-    case 5:
-        SetWeather(WEATHER_RAIN_THUNDERSTORM);
-        break;
-    case 6:
-        SetWeather(WEATHER_FOG_HORIZONTAL);
-        break;
-    case 7:
-        SetWeather(WEATHER_FOG_DIAGONAL);
-        break;
-    case 8:
-        SetWeather(WEATHER_VOLCANIC_ASH);
-        break;
-    case 9:
-        SetWeather(WEATHER_SANDSTORM);
-        break;
-    case 10:
-        SetWeather(WEATHER_SHADE);
-        break;
+        case 1:
+            SetWeather(WEATHER_SUNNY_CLOUDS);
+            break;
+        case 2:
+            SetWeather(WEATHER_SUNNY);
+            break;
+        case 3:
+            SetWeather(WEATHER_RAIN);
+            break;
+        case 4:
+            SetWeather(WEATHER_SNOW);
+            break;
+        case 5:
+            SetWeather(WEATHER_RAIN_THUNDERSTORM);
+            break;
+        case 6:
+            SetWeather(WEATHER_FOG_HORIZONTAL);
+            break;
+        case 7:
+            SetWeather(WEATHER_FOG_DIAGONAL);
+            break;
+        case 8:
+            SetWeather(WEATHER_VOLCANIC_ASH);
+            break;
+        case 9:
+            SetWeather(WEATHER_SANDSTORM);
+            break;
+        case 10:
+            SetWeather(WEATHER_SHADE);
+            break;
     }
 }
 
@@ -1038,17 +1074,17 @@ void SetRainStrengthFromSoundEffect(u16 soundEffect)
     {
         switch (soundEffect)
         {
-        case SE_T_KOAME:
-            gWeatherPtr->rainStrength = 0;
-            break;
-        case SE_T_OOAME:
-            gWeatherPtr->rainStrength = 1;
-            break;
-        case SE_T_AME:
-            gWeatherPtr->rainStrength = 2;
-            break;
-        default:
-            return;
+            case SE_T_KOAME:
+                gWeatherPtr->rainStrength = 0;
+                break;
+            case SE_T_OOAME:
+                gWeatherPtr->rainStrength = 1;
+                break;
+            case SE_T_AME:
+                gWeatherPtr->rainStrength = 2;
+                break;
+            default:
+                return;
         }
 
         PlaySE(soundEffect);
@@ -1061,16 +1097,16 @@ void PlayRainStoppingSoundEffect(void)
     {
         switch (gWeatherPtr->rainStrength)
         {
-        case 0:
-            PlaySE(SE_T_KOAME_E);
-            break;
-        case 1:
-            PlaySE(SE_T_OOAME_E);
-            break;
-        case 2:
-        default:
-            PlaySE(SE_T_AME_E);
-            break;
+            case 0:
+                PlaySE(SE_T_KOAME_E);
+                break;
+            case 1:
+                PlaySE(SE_T_OOAME_E);
+                break;
+            case 2:
+            default:
+                PlaySE(SE_T_AME_E);
+                break;
         }
     }
 }

@@ -16,15 +16,15 @@ struct WirelessGnameUnamePair
 struct UnkStruct_x1C
 {
     struct WirelessGnameUnamePair gname_uname;
-    u8 active:1;
+    u8 active : 1;
 };
 
 struct UnkStruct_x20
 {
     struct WirelessGnameUnamePair gname_uname;
     u16 timeoutCounter;
-    u8 groupScheduledAnim:2;
-    bool8 useRedText:1; // Never set
+    u8 groupScheduledAnim : 2;
+    bool8 useRedText : 1; // Never set
     u8 field_1B;
     u8 filler[3];
 };
@@ -165,4 +165,4 @@ void MEvent_CreateTask_Leader(u32 arg0);
 u8 CreateTask_ListenToWireless(void);
 void StartUnionRoomBattle(u16 battleFlags);
 
-#endif //GUARD_UNION_ROOM_H
+#endif // GUARD_UNION_ROOM_H

@@ -14,7 +14,8 @@ void RouletteFlash_Reset(struct RouletteFlashUtil *flash)
     memset(&flash->palettes, 0, sizeof(flash->palettes));
 }
 
-u8 RouletteFlash_Add(struct RouletteFlashUtil *flash, u8 id, const struct RouletteFlashSettings *settings)
+u8 RouletteFlash_Add(
+    struct RouletteFlashUtil *flash, u8 id, const struct RouletteFlashSettings *settings)
 {
     if (id >= ARRAY_COUNT(flash->palettes) || flash->palettes[id].available)
         return 0xFF;
@@ -58,41 +59,43 @@ static u8 RouletteFlash_FadePalette(struct RouletteFlashPalette *pal)
 
     for (i = 0; i < pal->settings.numColors; i++)
     {
-        struct PlttData *faded =   (struct PlttData *)&gPlttBufferFaded[pal->settings.paletteOffset + i];
-        struct PlttData *unfaded = (struct PlttData *)&gPlttBufferUnfaded[pal->settings.paletteOffset + i];
+        struct PlttData *faded =
+            (struct PlttData *)&gPlttBufferFaded[pal->settings.paletteOffset + i];
+        struct PlttData *unfaded =
+            (struct PlttData *)&gPlttBufferUnfaded[pal->settings.paletteOffset + i];
 
         switch (pal->state)
         {
-        case 1:
-            // Fade color
-            if (faded->r + pal->colorDelta >= 0 && faded->r + pal->colorDelta < 32)
-                faded->r += pal->colorDelta;
-            if (faded->g + pal->colorDelta >= 0 && faded->g + pal->colorDelta < 32)
-                faded->g += pal->colorDelta;
-            if (faded->b + pal->colorDelta >= 0 && faded->b + pal->colorDelta < 32)
-                faded->b += pal->colorDelta;
-            break;
-        case 2:
-            // Fade back to original color
-            if (pal->colorDelta < 0)
-            {
-                if (faded->r + pal->colorDelta >= unfaded->r)
+            case 1:
+                // Fade color
+                if (faded->r + pal->colorDelta >= 0 && faded->r + pal->colorDelta < 32)
                     faded->r += pal->colorDelta;
-                if (faded->g + pal->colorDelta >= unfaded->g)
+                if (faded->g + pal->colorDelta >= 0 && faded->g + pal->colorDelta < 32)
                     faded->g += pal->colorDelta;
-                if (faded->b + pal->colorDelta >= unfaded->b)
+                if (faded->b + pal->colorDelta >= 0 && faded->b + pal->colorDelta < 32)
                     faded->b += pal->colorDelta;
-            }
-            else
-            {
-                if (faded->r + pal->colorDelta <= unfaded->r)
-                    faded->r += pal->colorDelta;
-                if (faded->g + pal->colorDelta <= unfaded->g)
-                    faded->g += pal->colorDelta;
-                if (faded->b + pal->colorDelta <= unfaded->b)
-                    faded->b += pal->colorDelta;
-            }
-            break;
+                break;
+            case 2:
+                // Fade back to original color
+                if (pal->colorDelta < 0)
+                {
+                    if (faded->r + pal->colorDelta >= unfaded->r)
+                        faded->r += pal->colorDelta;
+                    if (faded->g + pal->colorDelta >= unfaded->g)
+                        faded->g += pal->colorDelta;
+                    if (faded->b + pal->colorDelta >= unfaded->b)
+                        faded->b += pal->colorDelta;
+                }
+                else
+                {
+                    if (faded->r + pal->colorDelta <= unfaded->r)
+                        faded->r += pal->colorDelta;
+                    if (faded->g + pal->colorDelta <= unfaded->g)
+                        faded->g += pal->colorDelta;
+                    if (faded->b + pal->colorDelta <= unfaded->b)
+                        faded->b += pal->colorDelta;
+                }
+                break;
         }
     }
     if ((u32)pal->fadeCycleCounter++ != pal->settings.numFadeCycles)
@@ -117,18 +120,19 @@ static u8 RouletteFlash_FlashPalette(struct RouletteFlashPalette *pal)
     u8 i = 0;
     switch (pal->state)
     {
-    case 1:
-        // Flash to color
-        for (; i < pal->settings.numColors; i++)
-            gPlttBufferFaded[pal->settings.paletteOffset + i] = pal->settings.color;
-        pal->state++;
-        break;
-    case 2:
-        // Restore to original color
-        for (; i < pal->settings.numColors; i++)
-            gPlttBufferFaded[pal->settings.paletteOffset + i] = gPlttBufferUnfaded[pal->settings.paletteOffset + i];
-        pal->state--;
-        break;
+        case 1:
+            // Flash to color
+            for (; i < pal->settings.numColors; i++)
+                gPlttBufferFaded[pal->settings.paletteOffset + i] = pal->settings.color;
+            pal->state++;
+            break;
+        case 2:
+            // Restore to original color
+            for (; i < pal->settings.numColors; i++)
+                gPlttBufferFaded[pal->settings.paletteOffset + i] =
+                    gPlttBufferUnfaded[pal->settings.paletteOffset + i];
+            pal->state--;
+            break;
     }
     return 1;
 }
@@ -224,7 +228,8 @@ void InitPulseBlend(struct PulseBlend *pulseBlend)
         pulseBlend->pulseBlendPalettes[i].paletteSelector = i;
 }
 
-int InitPulseBlendPaletteSettings(struct PulseBlend *pulseBlend, const struct PulseBlendSettings *settings)
+int InitPulseBlendPaletteSettings(
+    struct PulseBlend *pulseBlend, const struct PulseBlendSettings *settings)
 {
     u8 i = 0;
     struct PulseBlendPalette *pulseBlendPalette = NULL;
@@ -247,7 +252,7 @@ int InitPulseBlendPaletteSettings(struct PulseBlend *pulseBlend, const struct Pu
 
     if (pulseBlendPalette == NULL)
         return 0xFF;
-    
+
     pulseBlendPalette->blendCoeff = 0;
     pulseBlendPalette->fadeDirection = 0;
     pulseBlendPalette->available = 1;
@@ -262,13 +267,18 @@ static void ClearPulseBlendPalettesSettings(struct PulseBlendPalette *pulseBlend
 {
     u16 i;
 
-    if (!pulseBlendPalette->available && pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
+    if (!pulseBlendPalette->available
+        && pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
     {
-        for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+        for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset;
+             i < pulseBlendPalette->pulseBlendSettings.paletteOffset
+                     + pulseBlendPalette->pulseBlendSettings.numColors;
+             i++)
             gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
     }
 
-    memset(&pulseBlendPalette->pulseBlendSettings, 0, sizeof(pulseBlendPalette->pulseBlendSettings));
+    memset(
+        &pulseBlendPalette->pulseBlendSettings, 0, sizeof(pulseBlendPalette->pulseBlendSettings));
     pulseBlendPalette->blendCoeff = 0;
     pulseBlendPalette->fadeDirection = 0;
     pulseBlendPalette->unk1_5 = 0;
@@ -278,13 +288,15 @@ static void ClearPulseBlendPalettesSettings(struct PulseBlendPalette *pulseBlend
     pulseBlendPalette->delayCounter = 0;
 }
 
-void UnloadUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+void UnloadUsedPulseBlendPalettes(
+    struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
 {
     u16 i = 0;
 
     if (!multiSelection)
     {
-        ClearPulseBlendPalettesSettings(&pulseBlend->pulseBlendPalettes[pulseBlendPaletteSelector & 0xF]);
+        ClearPulseBlendPalettesSettings(
+            &pulseBlend->pulseBlendPalettes[pulseBlendPaletteSelector & 0xF]);
     }
     else
     {
@@ -298,7 +310,8 @@ void UnloadUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
     }
 }
 
-void MarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+void MarkUsedPulseBlendPalettes(
+    struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
 {
     u8 i = 0;
 
@@ -312,7 +325,8 @@ void MarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPal
     {
         for (i = 0; i < 16; i++)
         {
-            if (!(pulseBlendPaletteSelector & 1) || !pulseBlend->pulseBlendPalettes[i].inUse || !pulseBlend->pulseBlendPalettes[i].available)
+            if (!(pulseBlendPaletteSelector & 1) || !pulseBlend->pulseBlendPalettes[i].inUse
+                || !pulseBlend->pulseBlendPalettes[i].available)
             {
                 pulseBlendPaletteSelector <<= 1;
             }
@@ -322,10 +336,11 @@ void MarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPal
                 pulseBlend->usedPulseBlendPalettes |= 1 << i;
             }
         }
-    }    
+    }
 }
 
-void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+void UnmarkUsedPulseBlendPalettes(
+    struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
 {
     u16 i;
     struct PulseBlendPalette *pulseBlendPalette;
@@ -338,7 +353,10 @@ void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
         {
             if (pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
             {
-                for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+                for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset;
+                     i < pulseBlendPalette->pulseBlendSettings.paletteOffset
+                             + pulseBlendPalette->pulseBlendSettings.numColors;
+                     i++)
                     gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
             }
 
@@ -351,7 +369,8 @@ void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
         for (j = 0; j < 16; j++)
         {
             pulseBlendPalette = &pulseBlend->pulseBlendPalettes[j];
-            if (!(pulseBlendPaletteSelector & 1) || pulseBlendPalette->available || !pulseBlendPalette->inUse)
+            if (!(pulseBlendPaletteSelector & 1) || pulseBlendPalette->available
+                || !pulseBlendPalette->inUse)
             {
                 pulseBlendPaletteSelector <<= 1;
             }
@@ -359,7 +378,10 @@ void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
             {
                 if (pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
                 {
-                    for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+                    for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset;
+                         i < pulseBlendPalette->pulseBlendSettings.paletteOffset
+                                 + pulseBlendPalette->pulseBlendSettings.numColors;
+                         i++)
                         gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
                 }
 
@@ -380,58 +402,67 @@ void UpdatePulseBlend(struct PulseBlend *pulseBlend)
         for (i = 0; i < 16; i++)
         {
             pulseBlendPalette = &pulseBlend->pulseBlendPalettes[i];
-            if ((!pulseBlendPalette->available && pulseBlendPalette->inUse) && (!gPaletteFade.active || !pulseBlendPalette->pulseBlendSettings.unk7_7))
+            if ((!pulseBlendPalette->available && pulseBlendPalette->inUse)
+                && (!gPaletteFade.active || !pulseBlendPalette->pulseBlendSettings.unk7_7))
             {
                 if (--pulseBlendPalette->delayCounter == 0xFF)
                 {
                     pulseBlendPalette->delayCounter = pulseBlendPalette->pulseBlendSettings.delay;
-                    BlendPalette(pulseBlendPalette->pulseBlendSettings.paletteOffset, pulseBlendPalette->pulseBlendSettings.numColors, pulseBlendPalette->blendCoeff, pulseBlendPalette->pulseBlendSettings.blendColor);
+                    BlendPalette(pulseBlendPalette->pulseBlendSettings.paletteOffset,
+                        pulseBlendPalette->pulseBlendSettings.numColors,
+                        pulseBlendPalette->blendCoeff,
+                        pulseBlendPalette->pulseBlendSettings.blendColor);
                     switch (pulseBlendPalette->pulseBlendSettings.fadeType)
                     {
-                    case 0: // Fade all the way to the max blend amount, then wrap around
-                        // BUG: This comparison will never be true for maxBlendCoeff values that are >= 8. This is because
-                        // maxBlendCoeff is a signed 4-bit field, but blendCoeff is an unsigned 4-bit field. This code is never
-                        // reached, anyway, so the bug is not observable in vanilla gameplay.
-                        if (pulseBlendPalette->blendCoeff++ == pulseBlendPalette->pulseBlendSettings.maxBlendCoeff)
-                        {
-                            pulseBlendPalette->fadeCycleCounter++;
-                            pulseBlendPalette->blendCoeff = 0;
-                        }
-                        break;
-                    case 1: // Fade in and out
-                        if (pulseBlendPalette->fadeDirection)
-                        {
-                            if (--pulseBlendPalette->blendCoeff == 0)
+                        case 0: // Fade all the way to the max blend amount, then wrap around
+                            // BUG: This comparison will never be true for maxBlendCoeff values that
+                            // are >= 8. This is because maxBlendCoeff is a signed 4-bit field, but
+                            // blendCoeff is an unsigned 4-bit field. This code is never reached,
+                            // anyway, so the bug is not observable in vanilla gameplay.
+                            if (pulseBlendPalette->blendCoeff++
+                                == pulseBlendPalette->pulseBlendSettings.maxBlendCoeff)
                             {
                                 pulseBlendPalette->fadeCycleCounter++;
-                                pulseBlendPalette->fadeDirection ^= 1;
+                                pulseBlendPalette->blendCoeff = 0;
                             }
-                        }
-                        else
-                        {
-                            u8 max = (pulseBlendPalette->pulseBlendSettings.maxBlendCoeff - 1) & 0xF;
-                            if (pulseBlendPalette->blendCoeff++ == max)
+                            break;
+                        case 1: // Fade in and out
+                            if (pulseBlendPalette->fadeDirection)
                             {
-                                pulseBlendPalette->fadeCycleCounter++;
-                                pulseBlendPalette->fadeDirection ^= 1;
+                                if (--pulseBlendPalette->blendCoeff == 0)
+                                {
+                                    pulseBlendPalette->fadeCycleCounter++;
+                                    pulseBlendPalette->fadeDirection ^= 1;
+                                }
                             }
-                        }
-                        break;
+                            else
+                            {
+                                u8 max =
+                                    (pulseBlendPalette->pulseBlendSettings.maxBlendCoeff - 1) & 0xF;
+                                if (pulseBlendPalette->blendCoeff++ == max)
+                                {
+                                    pulseBlendPalette->fadeCycleCounter++;
+                                    pulseBlendPalette->fadeDirection ^= 1;
+                                }
+                            }
+                            break;
                     case (MODERN ? -2 : 2): // Flip back and forth
                         // This code is never reached in vanilla
                         if (pulseBlendPalette->fadeDirection)
                             pulseBlendPalette->blendCoeff = 0;
-                        else
-                            pulseBlendPalette->blendCoeff = pulseBlendPalette->pulseBlendSettings.maxBlendCoeff & 0xF;
-                        
+                        else pulseBlendPalette->blendCoeff =
+                            pulseBlendPalette->pulseBlendSettings.maxBlendCoeff & 0xF;
+
                         pulseBlendPalette->fadeDirection ^= 1;
                         pulseBlendPalette->fadeCycleCounter++;
                         break;
                     }
 
                     if (pulseBlendPalette->pulseBlendSettings.numFadeCycles != 0xFF
-                     && pulseBlendPalette->fadeCycleCounter == pulseBlendPalette->pulseBlendSettings.numFadeCycles)
-                        UnmarkUsedPulseBlendPalettes(pulseBlend, pulseBlendPalette->paletteSelector, FALSE);
+                        && pulseBlendPalette->fadeCycleCounter
+                               == pulseBlendPalette->pulseBlendSettings.numFadeCycles)
+                        UnmarkUsedPulseBlendPalettes(
+                            pulseBlend, pulseBlendPalette->paletteSelector, FALSE);
                 }
             }
         }

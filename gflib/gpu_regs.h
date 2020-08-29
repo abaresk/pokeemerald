@@ -16,4 +16,4 @@ void ClearGpuRegBits(u8 regOffset, u16 mask);
 void EnableInterrupts(u16 mask);
 void DisableInterrupts(u16 mask);
 
-#endif //GUARD_GPU_REGS_H
+#endif // GUARD_GPU_REGS_H

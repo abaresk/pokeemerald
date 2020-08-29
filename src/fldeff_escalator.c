@@ -73,7 +73,7 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
     s16 i;
     s16 j;
 
-    // Check all the escalator sections and only progress the selected one to the next stage    
+    // Check all the escalator sections and only progress the selected one to the next stage
     if (!gTasks[taskId].tGoingUp)
     {
         for (i = 0; i < 3; i++)
@@ -85,7 +85,8 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
                 if (metatileIds[transitionStage] == metatileId)
                 {
                     if (transitionStage != LAST_ESCALATOR_STAGE)
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[transitionStage + 1]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[transitionStage + 1]);
                     else
                         MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[0]);
                 }
@@ -103,9 +104,11 @@ static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatile
                 if (metatileIds[LAST_ESCALATOR_STAGE - transitionStage] == metatileId)
                 {
                     if (transitionStage != LAST_ESCALATOR_STAGE)
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[1 - transitionStage]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[1 - transitionStage]);
                     else
-                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[LAST_ESCALATOR_STAGE]);
+                        MapGridSetMetatileIdAt(
+                            x + j, y + i, metatileMasks | metatileIds[LAST_ESCALATOR_STAGE]);
                 }
             }
         }
@@ -180,8 +183,8 @@ void StopEscalator(void)
 
 bool8 IsEscalatorMoving(void)
 {
-    if (gTasks[sEscalatorAnim_TaskId].tDrawingEscalator == FALSE 
-     && gTasks[sEscalatorAnim_TaskId].tTransitionStage == LAST_ESCALATOR_STAGE)
+    if (gTasks[sEscalatorAnim_TaskId].tDrawingEscalator == FALSE
+        && gTasks[sEscalatorAnim_TaskId].tTransitionStage == LAST_ESCALATOR_STAGE)
         return FALSE;
     else
         return TRUE;

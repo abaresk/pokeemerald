@@ -23,8 +23,10 @@ void AllocateBattleResources(void)
     gBattleResources = AllocZeroed(sizeof(*gBattleResources));
     gBattleResources->secretBase = AllocZeroed(sizeof(*gBattleResources->secretBase));
     gBattleResources->flags = AllocZeroed(sizeof(*gBattleResources->flags));
-    gBattleResources->battleScriptsStack = AllocZeroed(sizeof(*gBattleResources->battleScriptsStack));
-    gBattleResources->battleCallbackStack = AllocZeroed(sizeof(*gBattleResources->battleCallbackStack));
+    gBattleResources->battleScriptsStack =
+        AllocZeroed(sizeof(*gBattleResources->battleScriptsStack));
+    gBattleResources->battleCallbackStack =
+        AllocZeroed(sizeof(*gBattleResources->battleCallbackStack));
     gBattleResources->beforeLvlUp = AllocZeroed(sizeof(*gBattleResources->beforeLvlUp));
     gBattleResources->ai = AllocZeroed(sizeof(*gBattleResources->ai));
     gBattleResources->battleHistory = AllocZeroed(sizeof(*gBattleResources->battleHistory));
@@ -92,13 +94,16 @@ void AdjustFriendshipOnBattleFaint(u8 battlerId)
     if (gBattleMons[opposingBattlerId].level > gBattleMons[battlerId].level)
     {
         if (gBattleMons[opposingBattlerId].level - gBattleMons[battlerId].level > 29)
-            AdjustFriendship(&gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_LARGE);
+            AdjustFriendship(
+                &gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_LARGE);
         else
-            AdjustFriendship(&gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_SMALL);
+            AdjustFriendship(
+                &gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_SMALL);
     }
     else
     {
-        AdjustFriendship(&gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_SMALL);
+        AdjustFriendship(
+            &gPlayerParty[gBattlerPartyIndexes[battlerId]], FRIENDSHIP_EVENT_FAINT_SMALL);
     }
 }
 
@@ -111,12 +116,13 @@ void SwitchPartyOrderInGameMulti(u8 battlerId, u8 arg1)
         // gBattleStruct->field_60[0][i]
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            gBattlePartyCurrentOrder[i] = *(0 * 3 + i + (u8*)(gBattleStruct->field_60));
+            gBattlePartyCurrentOrder[i] = *(0 * 3 + i + (u8 *)(gBattleStruct->field_60));
 
-        SwitchPartyMonSlots(GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battlerId]), GetPartyIdFromBattlePartyId(arg1));
+        SwitchPartyMonSlots(GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battlerId]),
+            GetPartyIdFromBattlePartyId(arg1));
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
-            *(0 * 3 + i + (u8*)(gBattleStruct->field_60)) = gBattlePartyCurrentOrder[i];
+            *(0 * 3 + i + (u8 *)(gBattleStruct->field_60)) = gBattlePartyCurrentOrder[i];
     }
 }
 
@@ -128,69 +134,69 @@ u32 sub_805725C(u8 battlerId)
     {
         switch (gBattleCommunication[MULTIUSE_STATE])
         {
-        case 0:
-            if (gBattleMons[battlerId].status1 & STATUS1_SLEEP)
-            {
-                if (UproarWakeUpCheck(battlerId))
+            case 0:
+                if (gBattleMons[battlerId].status1 & STATUS1_SLEEP)
                 {
-                    gBattleMons[battlerId].status1 &= ~(STATUS1_SLEEP);
-                    gBattleMons[battlerId].status2 &= ~(STATUS2_NIGHTMARE);
-                    BattleScriptPushCursor();
-                    gBattleCommunication[MULTISTRING_CHOOSER] = 1;
-                    gBattlescriptCurrInstr = BattleScript_MoveUsedWokeUp;
-                    effect = 2;
-                }
-                else
-                {
-                    u32 toSub;
-
-                    if (gBattleMons[battlerId].ability == ABILITY_EARLY_BIRD)
-                        toSub = 2;
-                    else
-                        toSub = 1;
-
-                    if ((gBattleMons[battlerId].status1 & STATUS1_SLEEP) < toSub)
+                    if (UproarWakeUpCheck(battlerId))
+                    {
                         gBattleMons[battlerId].status1 &= ~(STATUS1_SLEEP);
-                    else
-                        gBattleMons[battlerId].status1 -= toSub;
-
-                    if (gBattleMons[battlerId].status1 & STATUS1_SLEEP)
-                    {
-                        gBattlescriptCurrInstr = BattleScript_MoveUsedIsAsleep;
-                        effect = 2;
-                    }
-                    else
-                    {
                         gBattleMons[battlerId].status2 &= ~(STATUS2_NIGHTMARE);
                         BattleScriptPushCursor();
-                        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
                         gBattlescriptCurrInstr = BattleScript_MoveUsedWokeUp;
                         effect = 2;
                     }
+                    else
+                    {
+                        u32 toSub;
+
+                        if (gBattleMons[battlerId].ability == ABILITY_EARLY_BIRD)
+                            toSub = 2;
+                        else
+                            toSub = 1;
+
+                        if ((gBattleMons[battlerId].status1 & STATUS1_SLEEP) < toSub)
+                            gBattleMons[battlerId].status1 &= ~(STATUS1_SLEEP);
+                        else
+                            gBattleMons[battlerId].status1 -= toSub;
+
+                        if (gBattleMons[battlerId].status1 & STATUS1_SLEEP)
+                        {
+                            gBattlescriptCurrInstr = BattleScript_MoveUsedIsAsleep;
+                            effect = 2;
+                        }
+                        else
+                        {
+                            gBattleMons[battlerId].status2 &= ~(STATUS2_NIGHTMARE);
+                            BattleScriptPushCursor();
+                            gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                            gBattlescriptCurrInstr = BattleScript_MoveUsedWokeUp;
+                            effect = 2;
+                        }
+                    }
                 }
-            }
-            gBattleCommunication[MULTIUSE_STATE]++;
-            break;
-        case 1:
-            if (gBattleMons[battlerId].status1 & STATUS1_FREEZE)
-            {
-                if (Random() % 5 != 0)
+                gBattleCommunication[MULTIUSE_STATE]++;
+                break;
+            case 1:
+                if (gBattleMons[battlerId].status1 & STATUS1_FREEZE)
                 {
-                    gBattlescriptCurrInstr = BattleScript_MoveUsedIsFrozen;
+                    if (Random() % 5 != 0)
+                    {
+                        gBattlescriptCurrInstr = BattleScript_MoveUsedIsFrozen;
+                    }
+                    else
+                    {
+                        gBattleMons[battlerId].status1 &= ~(STATUS1_FREEZE);
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_MoveUsedUnfroze;
+                        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                    }
+                    effect = 2;
                 }
-                else
-                {
-                    gBattleMons[battlerId].status1 &= ~(STATUS1_FREEZE);
-                    BattleScriptPushCursor();
-                    gBattlescriptCurrInstr = BattleScript_MoveUsedUnfroze;
-                    gBattleCommunication[MULTISTRING_CHOOSER] = 0;
-                }
-                effect = 2;
-            }
-            gBattleCommunication[MULTIUSE_STATE]++;
-            break;
-        case 2:
-            break;
+                gBattleCommunication[MULTIUSE_STATE]++;
+                break;
+            case 2:
+                break;
         }
 
     } while (gBattleCommunication[MULTIUSE_STATE] != 2 && effect == 0);
@@ -198,7 +204,8 @@ u32 sub_805725C(u8 battlerId)
     if (effect == 2)
     {
         gActiveBattler = battlerId;
-        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+        BtlController_EmitSetMonData(
+            0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
         MarkBattlerForControllerExec(gActiveBattler);
     }
 

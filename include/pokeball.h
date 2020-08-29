@@ -20,11 +20,19 @@ enum
 
 extern const struct SpriteTemplate gBallSpriteTemplates[];
 
-#define POKEBALL_PLAYER_SENDOUT     0xFF
-#define POKEBALL_OPPONENT_SENDOUT   0xFE
+#define POKEBALL_PLAYER_SENDOUT   0xFF
+#define POKEBALL_OPPONENT_SENDOUT 0xFE
 
 u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow);
-void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 battler, u8 x, u8 y, u8 oamPriority, u8 subpriortiy, u8 g, u32 h, u16 species);
+void CreatePokeballSpriteToReleaseMon(u8 monSpriteId,
+    u8 battler,
+    u8 x,
+    u8 y,
+    u8 oamPriority,
+    u8 subpriortiy,
+    u8 g,
+    u32 h,
+    u16 species);
 u8 CreateTradePokeballSprite(u8 a, u8 b, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 g, u32 h);
 void sub_8076918(u8 battler);
 void DoHitAnimHealthboxEffect(u8 battler);

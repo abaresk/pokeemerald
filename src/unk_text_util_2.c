@@ -5,7 +5,7 @@
 #include "sound.h"
 
 ALIGNED(4)
-static const u8 sUnknown_08616124[] = {1, 2, 4};
+static const u8 sUnknown_08616124[] = { 1, 2, 4 };
 static const u16 sFont6BrailleGlyphs[] = INCBIN_U16("graphics/fonts/font6.fwjpnfont");
 
 static void DecompressGlyphFont6(u16);
@@ -25,7 +25,7 @@ u16 Font6Func(struct TextPrinter *textPrinter)
             }
             if (textPrinter->delayCounter && textPrinter->textSpeed)
             {
-                textPrinter->delayCounter --;
+                textPrinter->delayCounter--;
                 if (gTextFlags.canABSpeedUpPrint && gMain.newKeys & (A_BUTTON | B_BUTTON))
                 {
                     subStruct->hasPrintBeenSpedUp = TRUE;
@@ -48,7 +48,9 @@ u16 Font6Func(struct TextPrinter *textPrinter)
                     return 1;
                 case CHAR_NEWLINE:
                     textPrinter->printerTemplate.currentX = textPrinter->printerTemplate.x;
-                    textPrinter->printerTemplate.currentY += gFonts[textPrinter->printerTemplate.fontId].maxLetterHeight + textPrinter->printerTemplate.lineSpacing;
+                    textPrinter->printerTemplate.currentY +=
+                        gFonts[textPrinter->printerTemplate.fontId].maxLetterHeight
+                        + textPrinter->printerTemplate.lineSpacing;
                     return 2;
                 case PLACEHOLDER_BEGIN:
                     textPrinter->printerTemplate.currentChar++;
@@ -58,24 +60,38 @@ u16 Font6Func(struct TextPrinter *textPrinter)
                     switch (char_)
                     {
                         case EXT_CTRL_CODE_COLOR:
-                            textPrinter->printerTemplate.fgColor = *textPrinter->printerTemplate.currentChar++;
-                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor, textPrinter->printerTemplate.bgColor, textPrinter->printerTemplate.shadowColor);
+                            textPrinter->printerTemplate.fgColor =
+                                *textPrinter->printerTemplate.currentChar++;
+                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor,
+                                textPrinter->printerTemplate.bgColor,
+                                textPrinter->printerTemplate.shadowColor);
                             return 2;
                         case EXT_CTRL_CODE_HIGHLIGHT:
-                            textPrinter->printerTemplate.bgColor = *textPrinter->printerTemplate.currentChar++;
-                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor, textPrinter->printerTemplate.bgColor, textPrinter->printerTemplate.shadowColor);
+                            textPrinter->printerTemplate.bgColor =
+                                *textPrinter->printerTemplate.currentChar++;
+                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor,
+                                textPrinter->printerTemplate.bgColor,
+                                textPrinter->printerTemplate.shadowColor);
                             return 2;
                         case EXT_CTRL_CODE_SHADOW:
-                            textPrinter->printerTemplate.shadowColor = *textPrinter->printerTemplate.currentChar++;
-                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor, textPrinter->printerTemplate.bgColor, textPrinter->printerTemplate.shadowColor);
+                            textPrinter->printerTemplate.shadowColor =
+                                *textPrinter->printerTemplate.currentChar++;
+                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor,
+                                textPrinter->printerTemplate.bgColor,
+                                textPrinter->printerTemplate.shadowColor);
                             return 2;
                         case EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW:
-                            textPrinter->printerTemplate.fgColor = *textPrinter->printerTemplate.currentChar;
-                            textPrinter->printerTemplate.bgColor = *++textPrinter->printerTemplate.currentChar;
-                            textPrinter->printerTemplate.shadowColor = *++textPrinter->printerTemplate.currentChar;
+                            textPrinter->printerTemplate.fgColor =
+                                *textPrinter->printerTemplate.currentChar;
+                            textPrinter->printerTemplate.bgColor =
+                                *++textPrinter->printerTemplate.currentChar;
+                            textPrinter->printerTemplate.shadowColor =
+                                *++textPrinter->printerTemplate.currentChar;
                             textPrinter->printerTemplate.currentChar++;
 
-                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor, textPrinter->printerTemplate.bgColor, textPrinter->printerTemplate.shadowColor);
+                            GenerateFontHalfRowLookupTable(textPrinter->printerTemplate.fgColor,
+                                textPrinter->printerTemplate.bgColor,
+                                textPrinter->printerTemplate.shadowColor);
                             return 2;
                         case EXT_CTRL_CODE_PALETTE:
                             textPrinter->printerTemplate.currentChar++;
@@ -108,13 +124,18 @@ u16 Font6Func(struct TextPrinter *textPrinter)
                             char_ = *++textPrinter->printerTemplate.currentChar;
                             break;
                         case EXT_CTRL_CODE_SHIFT_TEXT:
-                            textPrinter->printerTemplate.currentX = textPrinter->printerTemplate.x + *textPrinter->printerTemplate.currentChar++;
+                            textPrinter->printerTemplate.currentX =
+                                textPrinter->printerTemplate.x
+                                + *textPrinter->printerTemplate.currentChar++;
                             return 2;
                         case EXT_CTRL_CODE_SHIFT_DOWN:
-                            textPrinter->printerTemplate.currentY = textPrinter->printerTemplate.y + *textPrinter->printerTemplate.currentChar++;
+                            textPrinter->printerTemplate.currentY =
+                                textPrinter->printerTemplate.y
+                                + *textPrinter->printerTemplate.currentChar++;
                             return 2;
                         case EXT_CTRL_CODE_FILL_WINDOW:
-                            FillWindowPixelBuffer(textPrinter->printerTemplate.windowId, PIXEL_FILL(textPrinter->printerTemplate.bgColor));
+                            FillWindowPixelBuffer(textPrinter->printerTemplate.windowId,
+                                PIXEL_FILL(textPrinter->printerTemplate.bgColor));
                             return 2;
                     }
                     break;
@@ -127,7 +148,7 @@ u16 Font6Func(struct TextPrinter *textPrinter)
                     TextPrinterInitDownArrowCounters(textPrinter);
                     return 3;
                 case CHAR_EXTRA_SYMBOL:
-                    char_ = *textPrinter->printerTemplate.currentChar++| 0x100;
+                    char_ = *textPrinter->printerTemplate.currentChar++ | 0x100;
                     break;
                 case CHAR_KEYPAD_ICON:
                     textPrinter->printerTemplate.currentChar++;
@@ -135,7 +156,8 @@ u16 Font6Func(struct TextPrinter *textPrinter)
             }
             DecompressGlyphFont6(char_);
             CopyGlyphToWindow(textPrinter);
-            textPrinter->printerTemplate.currentX += gUnknown_03002F90.unk80 + textPrinter->printerTemplate.letterSpacing;
+            textPrinter->printerTemplate.currentX +=
+                gUnknown_03002F90.unk80 + textPrinter->printerTemplate.letterSpacing;
             return 0;
         case 1:
             if (TextPrinterWait(textPrinter))
@@ -146,7 +168,8 @@ u16 Font6Func(struct TextPrinter *textPrinter)
         case 2:
             if (TextPrinterWaitWithDownArrow(textPrinter))
             {
-                FillWindowPixelBuffer(textPrinter->printerTemplate.windowId, PIXEL_FILL(textPrinter->printerTemplate.bgColor));
+                FillWindowPixelBuffer(textPrinter->printerTemplate.windowId,
+                    PIXEL_FILL(textPrinter->printerTemplate.bgColor));
                 textPrinter->printerTemplate.currentX = textPrinter->printerTemplate.x;
                 textPrinter->printerTemplate.currentY = textPrinter->printerTemplate.y;
                 textPrinter->state = 0;
@@ -156,7 +179,9 @@ u16 Font6Func(struct TextPrinter *textPrinter)
             if (TextPrinterWaitWithDownArrow(textPrinter))
             {
                 TextPrinterClearDownArrow(textPrinter);
-                textPrinter->scrollDistance = gFonts[textPrinter->printerTemplate.fontId].maxLetterHeight + textPrinter->printerTemplate.lineSpacing;
+                textPrinter->scrollDistance =
+                    gFonts[textPrinter->printerTemplate.fontId].maxLetterHeight
+                    + textPrinter->printerTemplate.lineSpacing;
                 textPrinter->printerTemplate.currentX = textPrinter->printerTemplate.x;
                 textPrinter->state = 4;
             }
@@ -164,15 +189,23 @@ u16 Font6Func(struct TextPrinter *textPrinter)
         case 4:
             if (textPrinter->scrollDistance)
             {
-                if (textPrinter->scrollDistance < sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed])
+                if (textPrinter->scrollDistance
+                    < sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed])
                 {
-                    ScrollWindow(textPrinter->printerTemplate.windowId, 0, textPrinter->scrollDistance, PIXEL_FILL(textPrinter->printerTemplate.bgColor));
+                    ScrollWindow(textPrinter->printerTemplate.windowId,
+                        0,
+                        textPrinter->scrollDistance,
+                        PIXEL_FILL(textPrinter->printerTemplate.bgColor));
                     textPrinter->scrollDistance = 0;
                 }
                 else
                 {
-                    ScrollWindow(textPrinter->printerTemplate.windowId, 0, sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed], PIXEL_FILL(textPrinter->printerTemplate.bgColor));
-                    textPrinter->scrollDistance -= sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed];
+                    ScrollWindow(textPrinter->printerTemplate.windowId,
+                        0,
+                        sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed],
+                        PIXEL_FILL(textPrinter->printerTemplate.bgColor));
+                    textPrinter->scrollDistance -=
+                        sUnknown_08616124[gSaveBlock2Ptr->optionsTextSpeed];
                 }
                 CopyWindowToVram(textPrinter->printerTemplate.windowId, 2);
             }
@@ -190,7 +223,7 @@ u16 Font6Func(struct TextPrinter *textPrinter)
         case 6:
             if (textPrinter->delayCounter)
             {
-                textPrinter->delayCounter --;
+                textPrinter->delayCounter--;
             }
             else
             {

@@ -28,41 +28,29 @@ static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 sp
 static EWRAM_DATA u8 sUnknown_0203BCF8 = 0; // set but unused
 
 // const rom data
-static const struct BgTemplate sBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    }
-};
+static const struct BgTemplate sBgTemplates[] = { { .bg = 0,
+    .charBaseIndex = 2,
+    .mapBaseIndex = 31,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0 } };
 
-static const struct WindowTemplate sWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 4,
-        .tilemapTop = 15,
-        .width = 22,
-        .height = 4,
-        .paletteNum = 14,
-        .baseBlock = 20
-    },
-    {
-        .bg = 0,
+static const struct WindowTemplate sWindowTemplates[] = { { .bg = 0,
+                                                              .tilemapLeft = 4,
+                                                              .tilemapTop = 15,
+                                                              .width = 22,
+                                                              .height = 4,
+                                                              .paletteNum = 14,
+                                                              .baseBlock = 20 },
+    { .bg = 0,
         .tilemapLeft = 7,
         .tilemapTop = 6,
         .width = 16,
         .height = 4,
         .paletteNum = 14,
-        .baseBlock = 0x6C
-    },
-    DUMMY_WIN_TEMPLATE
-};
+        .baseBlock = 0x6C },
+    DUMMY_WIN_TEMPLATE };
 
 // code
 static void VBlankCB(void)
@@ -133,59 +121,99 @@ static void CB2_MysteryEventMenu(void)
 {
     switch (gMain.state)
     {
-    case 0:
-        DrawStdFrameWithCustomTileAndPalette(0, 1, 1, 0xD);
-        PutWindowTilemap(0);
-        CopyWindowToVram(0, 3);
-        ShowBg(0);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
-        gMain.state++;
-        break;
-    case 1:
-        if (!gPaletteFade.active)
-        {
-            PrintMysteryMenuText(0, gText_LinkStandby2, 1, 2, 1);
+        case 0:
+            DrawStdFrameWithCustomTileAndPalette(0, 1, 1, 0xD);
+            PutWindowTilemap(0);
+            CopyWindowToVram(0, 3);
+            ShowBg(0);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
             gMain.state++;
-        }
-        break;
-    case 2:
-        if (!IsTextPrinterActive(0))
-        {
-            gMain.state++;
-            gLinkType = LINKTYPE_MYSTERY_EVENT;
-            OpenLink();
-        }
-        break;
-    case 3:
-        if ((gLinkStatus & 0x20) && (gLinkStatus & 0x1C) > 4)
-        {
-            PlaySE(SE_PIN);
-            PrintMysteryMenuText(0, gText_PressAToLoadEvent, 1, 2, 1);
-            gMain.state++;
-        }
-        if (gMain.newKeys & B_BUTTON)
-        {
-            PlaySE(SE_SELECT);
-            CloseLink();
-            gMain.state = 15;
-        }
-        break;
-    case 4:
-        if (!IsTextPrinterActive(0))
-            gMain.state++;
-        break;
-    case 5:
-        if (GetLinkPlayerCount_2() == 2)
-        {
-            if (gMain.newKeys & A_BUTTON)
+            break;
+        case 1:
+            if (!gPaletteFade.active)
+            {
+                PrintMysteryMenuText(0, gText_LinkStandby2, 1, 2, 1);
+                gMain.state++;
+            }
+            break;
+        case 2:
+            if (!IsTextPrinterActive(0))
+            {
+                gMain.state++;
+                gLinkType = LINKTYPE_MYSTERY_EVENT;
+                OpenLink();
+            }
+            break;
+        case 3:
+            if ((gLinkStatus & 0x20) && (gLinkStatus & 0x1C) > 4)
+            {
+                PlaySE(SE_PIN);
+                PrintMysteryMenuText(0, gText_PressAToLoadEvent, 1, 2, 1);
+                gMain.state++;
+            }
+            if (gMain.newKeys & B_BUTTON)
             {
                 PlaySE(SE_SELECT);
-                CheckShouldAdvanceLinkState();
-                DrawStdFrameWithCustomTileAndPalette(1, 1, 1, 0xD);
-                PrintMysteryMenuText(1, gText_LoadingEvent, 1, 2, 0);
-                PutWindowTilemap(1);
-                CopyWindowToVram(1, 3);
+                CloseLink();
+                gMain.state = 15;
+            }
+            break;
+        case 4:
+            if (!IsTextPrinterActive(0))
                 gMain.state++;
+            break;
+        case 5:
+            if (GetLinkPlayerCount_2() == 2)
+            {
+                if (gMain.newKeys & A_BUTTON)
+                {
+                    PlaySE(SE_SELECT);
+                    CheckShouldAdvanceLinkState();
+                    DrawStdFrameWithCustomTileAndPalette(1, 1, 1, 0xD);
+                    PrintMysteryMenuText(1, gText_LoadingEvent, 1, 2, 0);
+                    PutWindowTilemap(1);
+                    CopyWindowToVram(1, 3);
+                    gMain.state++;
+                }
+                else if (gMain.newKeys & B_BUTTON)
+                {
+                    PlaySE(SE_SELECT);
+                    CloseLink();
+                    gMain.state = 15;
+                }
+            }
+            else
+            {
+                GetEventLoadMessage(gStringVar4, 1);
+                PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
+                gMain.state = 13;
+            }
+            break;
+        case 6:
+            if (IsLinkConnectionEstablished())
+            {
+                if (gReceivedRemoteLinkPlayers != 0)
+                {
+                    if (GetLinkPlayerDataExchangeStatusTimed(2, 2) == EXCHANGE_DIFF_SELECTIONS)
+                    {
+                        SetCloseLinkCallback();
+                        GetEventLoadMessage(gStringVar4, 1);
+                        PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
+                        gMain.state = 13;
+                    }
+                    else if (CheckLanguageMatch())
+                    {
+                        PrintMysteryMenuText(0, gText_DontRemoveCableTurnOff, 1, 2, 1);
+                        gMain.state++;
+                    }
+                    else
+                    {
+                        CloseLink();
+                        GetEventLoadMessage(gStringVar4, 1);
+                        PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
+                        gMain.state = 13;
+                    }
+                }
             }
             else if (gMain.newKeys & B_BUTTON)
             {
@@ -193,101 +221,61 @@ static void CB2_MysteryEventMenu(void)
                 CloseLink();
                 gMain.state = 15;
             }
-        }
-        else
-        {
-            GetEventLoadMessage(gStringVar4, 1);
-            PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
-            gMain.state = 13;
-        }
-        break;
-    case 6:
-        if (IsLinkConnectionEstablished())
-        {
-            if (gReceivedRemoteLinkPlayers != 0)
+            break;
+        case 7:
+            if (!IsTextPrinterActive(0))
+                gMain.state++;
+            break;
+        case 8:
+            if (GetBlockReceivedStatus())
             {
-                if (GetLinkPlayerDataExchangeStatusTimed(2, 2) == EXCHANGE_DIFF_SELECTIONS)
-                {
-                    SetCloseLinkCallback();
-                    GetEventLoadMessage(gStringVar4, 1);
-                    PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
-                    gMain.state = 13;
-                }
-                else if (CheckLanguageMatch())
-                {
-                    PrintMysteryMenuText(0, gText_DontRemoveCableTurnOff, 1, 2, 1);
-                    gMain.state++;
-                }
-                else
-                {
-                    CloseLink();
-                    GetEventLoadMessage(gStringVar4, 1);
-                    PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
-                    gMain.state = 13;
-                }
+                ResetBlockReceivedFlags();
+                gMain.state++;
             }
-        }
-        else if (gMain.newKeys & B_BUTTON)
-        {
-            PlaySE(SE_SELECT);
-            CloseLink();
-            gMain.state = 15;
-        }
-        break;
-    case 7:
-        if (!IsTextPrinterActive(0))
+            break;
+        case 9:
             gMain.state++;
-        break;
-    case 8:
-        if (GetBlockReceivedStatus())
-        {
-            ResetBlockReceivedFlags();
+            break;
+        case 10:
+            SetCloseLinkCallback();
             gMain.state++;
-        }
-        break;
-    case 9:
-        gMain.state++;
-        break;
-    case 10:
-        SetCloseLinkCallback();
-        gMain.state++;
-        break;
-    case 11:
-        if (gReceivedRemoteLinkPlayers == 0)
-        {
-            u16 unkVal = RunMysteryEventScript(gDecompressionBuffer);
-            CpuFill32(0, gDecompressionBuffer, 0x7D4);
-            if (!GetEventLoadMessage(gStringVar4, unkVal))
-                TrySavingData(SAVE_NORMAL);
+            break;
+        case 11:
+            if (gReceivedRemoteLinkPlayers == 0)
+            {
+                u16 unkVal = RunMysteryEventScript(gDecompressionBuffer);
+                CpuFill32(0, gDecompressionBuffer, 0x7D4);
+                if (!GetEventLoadMessage(gStringVar4, unkVal))
+                    TrySavingData(SAVE_NORMAL);
+                gMain.state++;
+            }
+            break;
+        case 12:
+            PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
             gMain.state++;
-        }
-        break;
-    case 12:
-        PrintMysteryMenuText(0, gStringVar4, 1, 2, 1);
-        gMain.state++;
-        break;
-    case 13:
-        if (!IsTextPrinterActive(0))
-        {
+            break;
+        case 13:
+            if (!IsTextPrinterActive(0))
+            {
+                gMain.state++;
+                sUnknown_0203BCF8 = 0;
+            }
+            break;
+        case 14:
+            if (gMain.newKeys & A_BUTTON)
+            {
+                PlaySE(SE_SELECT);
+                gMain.state++;
+            }
+            break;
+        case 15:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
             gMain.state++;
-            sUnknown_0203BCF8 = 0;
-        }
-        break;
-    case 14:
-        if (gMain.newKeys & A_BUTTON)
-        {
-            PlaySE(SE_SELECT);
-            gMain.state++;
-        }
-        break;
-    case 15:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-        gMain.state++;
-        break;
-    case 16:
-        if (!gPaletteFade.active)
-            DoSoftReset();
-        break;
+            break;
+        case 16:
+            if (!gPaletteFade.active)
+                DoSoftReset();
+            break;
     }
 
     if (gLinkStatus & 0x40 && !IsLinkMaster())
@@ -315,5 +303,6 @@ static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 sp
     textColor[2] = 3;
 
     FillWindowPixelBuffer(windowId, PIXEL_FILL(textColor[0]));
-    AddTextPrinterParameterized4(windowId, 1, x, y, letterSpacing, lineSpacing, textColor, speed, text);
+    AddTextPrinterParameterized4(
+        windowId, 1, x, y, letterSpacing, lineSpacing, textColor, speed, text);
 }

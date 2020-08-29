@@ -27,7 +27,8 @@
 
 // Static RAM declarations
 
-static EWRAM_DATA struct {
+static EWRAM_DATA struct
+{
     MainCallback callback;
     u32 unused;
     struct RegionMap regionMap;
@@ -44,48 +45,36 @@ static void PrintRegionMapSecName(void);
 
 // .rodata
 
-static const struct BgTemplate sFieldRegionMapBgTemplates[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    }, {
-        .bg = 2,
+static const struct BgTemplate sFieldRegionMapBgTemplates[] = { { .bg = 0,
+                                                                    .charBaseIndex = 0,
+                                                                    .mapBaseIndex = 31,
+                                                                    .screenSize = 0,
+                                                                    .paletteMode = 0,
+                                                                    .priority = 0,
+                                                                    .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 28,
         .screenSize = 2,
         .paletteMode = 1,
         .priority = 2,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const struct WindowTemplate sFieldRegionMapWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 17,
-        .tilemapTop = 17,
-        .width = 12,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 1
-    },
-    {
-        .bg = 0,
+static const struct WindowTemplate sFieldRegionMapWindowTemplates[] = { { .bg = 0,
+                                                                            .tilemapLeft = 17,
+                                                                            .tilemapTop = 17,
+                                                                            .width = 12,
+                                                                            .height = 2,
+                                                                            .paletteNum = 15,
+                                                                            .baseBlock = 1 },
+    { .bg = 0,
         .tilemapLeft = 22,
         .tilemapTop = 1,
         .width = 7,
         .height = 2,
         .paletteNum = 15,
-        .baseBlock = 25
-    },
-    DUMMY_WIN_TEMPLATE
-};
+        .baseBlock = 25 },
+    DUMMY_WIN_TEMPLATE };
 
 // .text
 
@@ -207,7 +196,8 @@ static void PrintRegionMapSecName(void)
     if (sFieldRegionMapHandler->regionMap.mapSecType != MAPSECTYPE_NONE)
     {
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized(0, 1, sFieldRegionMapHandler->regionMap.mapSecName, 0, 1, 0, NULL);
+        AddTextPrinterParameterized(
+            0, 1, sFieldRegionMapHandler->regionMap.mapSecName, 0, 1, 0, NULL);
         ScheduleBgCopyTilemapToVram(0);
     }
     else

@@ -10,4 +10,4 @@ struct PlayerHallRecords
 void RecordMixingPlayerSpotTriggered(void);
 void GetPlayerHallRecords(struct PlayerHallRecords *dst);
 
-#endif //GUARD_RECORD_MIXING_H
+#endif // GUARD_RECORD_MIXING_H

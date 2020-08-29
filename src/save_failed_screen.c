@@ -15,7 +15,7 @@
 #include "text_window.h"
 #include "constants/rgb.h"
 
-#define MSG_WIN_TOP 12
+#define MSG_WIN_TOP   12
 #define CLOCK_WIN_TOP (MSG_WIN_TOP - 4)
 
 extern const u8 gText_SaveFailedCheckingBackup[];
@@ -39,15 +39,13 @@ enum
     CLOCK_WIN_ID
 };
 
-EWRAM_DATA u16 gSaveFailedType = {0};
-EWRAM_DATA u16 gSaveFailedClockInfo[2] = {0};
-EWRAM_DATA u8 gSaveFailedUnused1[12] = {0};
-EWRAM_DATA u8 gSaveFailedWindowIds[2] = {0};
-EWRAM_DATA u8 gSaveFailedUnused2[4] = {0};
+EWRAM_DATA u16 gSaveFailedType = { 0 };
+EWRAM_DATA u16 gSaveFailedClockInfo[2] = { 0 };
+EWRAM_DATA u8 gSaveFailedUnused1[12] = { 0 };
+EWRAM_DATA u8 gSaveFailedWindowIds[2] = { 0 };
+EWRAM_DATA u8 gSaveFailedUnused2[4] = { 0 };
 
-static const struct OamData sClockOamData =
-{
-    .y = 160,
+static const struct OamData sClockOamData = { .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -59,11 +57,9 @@ static const struct OamData sClockOamData =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct BgTemplate gUnknown_085EFD88[3] =
-{
+static const struct BgTemplate gUnknown_085EFD88[3] = {
     {
         .bg = 0,
         .charBaseIndex = 2,
@@ -93,47 +89,37 @@ static const struct BgTemplate gUnknown_085EFD88[3] =
     },
 };
 
-static const struct WindowTemplate gUnknown_085EFD94[] =
-{
-    {
-        .bg = 255,
-        .tilemapLeft = 0,
-        .tilemapTop = 0,
-        .width = 0,
-        .height = 0,
-        .paletteNum = 0,
-        .baseBlock = 0,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFD94[] = { {
+    .bg = 255,
+    .tilemapLeft = 0,
+    .tilemapTop = 0,
+    .width = 0,
+    .height = 0,
+    .paletteNum = 0,
+    .baseBlock = 0,
+} };
 
-static const struct WindowTemplate gUnknown_085EFD9C[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 1,
-        .tilemapTop = 13,
-        .width = 28,
-        .height = 6,
-        .paletteNum = 15,
-        .baseBlock = 1,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFD9C[] = { {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 13,
+    .width = 28,
+    .height = 6,
+    .paletteNum = 15,
+    .baseBlock = 1,
+} };
 
-static const struct WindowTemplate gUnknown_085EFDA4[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 14,
-        .tilemapTop = 9,
-        .width = 2,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 169,
-    }
-};
+static const struct WindowTemplate gUnknown_085EFDA4[] = { {
+    .bg = 0,
+    .tilemapLeft = 14,
+    .tilemapTop = 9,
+    .width = 2,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 169,
+} };
 
-static const u8 sClockFrames[8][3] =
-{
+static const u8 sClockFrames[8][3] = {
     { 1, 0, 0 },
     { 5, 0, 0 },
     { 9, 0, 0 },
@@ -164,7 +150,8 @@ static void SaveFailedScreenTextPrint(const u8 *text, u8 var1, u8 var2)
     color[0] = 0;
     color[1] = 15;
     color[2] = 3;
-    AddTextPrinterParameterized4(gSaveFailedWindowIds[TEXT_WIN_ID], 1, var1 * 8, var2 * 8 + 1, 0, 0, color, 0, text);
+    AddTextPrinterParameterized4(
+        gSaveFailedWindowIds[TEXT_WIN_ID], 1, var1 * 8, var2 * 8 + 1, 0, 0, color, 0, text);
 }
 
 void DoSaveFailedScreen(u8 saveType)
@@ -188,70 +175,74 @@ static void CB2_SaveFailedScreen(void)
 {
     switch (gMain.state)
     {
-    case 0:
-    default:
-        SetVBlankCallback(NULL);
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
-        SetGpuReg(REG_OFFSET_BG3CNT, 0);
-        SetGpuReg(REG_OFFSET_BG2CNT, 0);
-        SetGpuReg(REG_OFFSET_BG1CNT, 0);
-        SetGpuReg(REG_OFFSET_BG0CNT, 0);
-        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG2HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG1HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG1VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
-        DmaFill16(3, 0, VRAM, VRAM_SIZE);
-        DmaFill32(3, 0, OAM, OAM_SIZE);
-        DmaFill16(3, 0, PLTT, PLTT_SIZE);
-        LZ77UnCompVram(gBirchHelpGfx, (void *)VRAM);
-        LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(14)));
-        LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(15)));
-        LZ77UnCompVram(sSaveFailedClockGfx, (void *)(VRAM + 0x10020));
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, gUnknown_085EFD88, 3);
-        SetBgTilemapBuffer(0, (void *)&gDecompressionBuffer[0x2000]);
-        CpuFill32(0, &gDecompressionBuffer[0x2000], 0x800);
-        LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
-        InitWindows(gUnknown_085EFD94);
-        gSaveFailedWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFD9C);
-        SetWindowAttribute(gSaveFailedWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
-        gSaveFailedWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFDA4);
-        SetWindowAttribute(gSaveFailedWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
-        DeactivateAllTextPrinters();
-        ResetSpriteData();
-        ResetTasks();
-        ResetPaletteFade();
-        LoadPalette(gBirchBagGrassPal, 0, 0x40);
-        LoadPalette(sSaveFailedClockPal, 0x100, 0x20);
-        LoadPalette(gTextWindowFrame1_Pal, 0xE0, 0x20);
-        LoadPalette(gUnknown_0860F074, 0xF0, 0x20);
-        DrawStdFrameWithCustomTileAndPalette(gSaveFailedWindowIds[TEXT_WIN_ID], FALSE, 0x214, 0xE);
-        DrawStdFrameWithCustomTileAndPalette(gSaveFailedWindowIds[CLOCK_WIN_ID], FALSE, 0x214, 0xE);
-        FillWindowPixelBuffer(gSaveFailedWindowIds[CLOCK_WIN_ID], PIXEL_FILL(1)); // backwards?
-        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-        CopyWindowToVram(gSaveFailedWindowIds[CLOCK_WIN_ID], 2); // again?
-        CopyWindowToVram(gSaveFailedWindowIds[TEXT_WIN_ID], 1);
-        SaveFailedScreenTextPrint(gText_SaveFailedCheckingBackup, 1, 0);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
-        EnableInterrupts(1);
-        SetVBlankCallback(VBlankCB);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        ShowBg(0);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            SetMainCallback2(CB2_WipeSave);
-            SetVBlankCallback(VBlankCB_UpdateClockGraphics);
-        }
-        break;
+        case 0:
+        default:
+            SetVBlankCallback(NULL);
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            SetGpuReg(REG_OFFSET_BG3CNT, 0);
+            SetGpuReg(REG_OFFSET_BG2CNT, 0);
+            SetGpuReg(REG_OFFSET_BG1CNT, 0);
+            SetGpuReg(REG_OFFSET_BG0CNT, 0);
+            SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+            SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+            SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+            DmaFill16(3, 0, VRAM, VRAM_SIZE);
+            DmaFill32(3, 0, OAM, OAM_SIZE);
+            DmaFill16(3, 0, PLTT, PLTT_SIZE);
+            LZ77UnCompVram(gBirchHelpGfx, (void *)VRAM);
+            LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(14)));
+            LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(15)));
+            LZ77UnCompVram(sSaveFailedClockGfx, (void *)(VRAM + 0x10020));
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, gUnknown_085EFD88, 3);
+            SetBgTilemapBuffer(0, (void *)&gDecompressionBuffer[0x2000]);
+            CpuFill32(0, &gDecompressionBuffer[0x2000], 0x800);
+            LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
+            InitWindows(gUnknown_085EFD94);
+            gSaveFailedWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFD9C);
+            SetWindowAttribute(
+                gSaveFailedWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
+            gSaveFailedWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFDA4);
+            SetWindowAttribute(
+                gSaveFailedWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
+            DeactivateAllTextPrinters();
+            ResetSpriteData();
+            ResetTasks();
+            ResetPaletteFade();
+            LoadPalette(gBirchBagGrassPal, 0, 0x40);
+            LoadPalette(sSaveFailedClockPal, 0x100, 0x20);
+            LoadPalette(gTextWindowFrame1_Pal, 0xE0, 0x20);
+            LoadPalette(gUnknown_0860F074, 0xF0, 0x20);
+            DrawStdFrameWithCustomTileAndPalette(
+                gSaveFailedWindowIds[TEXT_WIN_ID], FALSE, 0x214, 0xE);
+            DrawStdFrameWithCustomTileAndPalette(
+                gSaveFailedWindowIds[CLOCK_WIN_ID], FALSE, 0x214, 0xE);
+            FillWindowPixelBuffer(gSaveFailedWindowIds[CLOCK_WIN_ID], PIXEL_FILL(1)); // backwards?
+            FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+            CopyWindowToVram(gSaveFailedWindowIds[CLOCK_WIN_ID], 2); // again?
+            CopyWindowToVram(gSaveFailedWindowIds[TEXT_WIN_ID], 1);
+            SaveFailedScreenTextPrint(gText_SaveFailedCheckingBackup, 1, 0);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+            EnableInterrupts(1);
+            SetVBlankCallback(VBlankCB);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+            ShowBg(0);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
+            {
+                SetMainCallback2(CB2_WipeSave);
+                SetVBlankCallback(VBlankCB_UpdateClockGraphics);
+            }
+            break;
     }
 }
 

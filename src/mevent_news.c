@@ -17,15 +17,15 @@ void GenerateRandomNews(u32 a0)
     r5->unk_0_0 = a0;
     switch (a0)
     {
-    case 0:
-        break;
-    case 1:
-    case 2:
-        r5->unk_1 = (Random() % 15) + 16;
-        break;
-    case 3:
-        r5->unk_1 = (Random() % 15) + 1;
-        break;
+        case 0:
+            break;
+        case 1:
+        case 2:
+            r5->unk_1 = (Random() % 15) + 16;
+            break;
+        case 3:
+            r5->unk_1 = (Random() % 15) + 1;
+            break;
     }
 }
 
@@ -67,26 +67,26 @@ u16 sub_801DC20(void)
 
     switch (r5)
     {
-    case 0:
-        break;
-    case 1:
-        *r6 = sub_801DCAC(r4);
-        break;
-    case 2:
-        *r6 = sub_801DCAC(r4);
-        break;
-    case 3:
-        break;
-    case 4:
-        *r6 = sub_801DCAC(r4);
-        sub_801DCD8(r4);
-        break;
-    case 5:
-        *r6 = sub_801DCAC(r4);
-        sub_801DCCC(r4);
-        break;
-    case 6:
-        break;
+        case 0:
+            break;
+        case 1:
+            *r6 = sub_801DCAC(r4);
+            break;
+        case 2:
+            *r6 = sub_801DCAC(r4);
+            break;
+        case 3:
+            break;
+        case 4:
+            *r6 = sub_801DCAC(r4);
+            sub_801DCD8(r4);
+            break;
+        case 5:
+            *r6 = sub_801DCAC(r4);
+            sub_801DCCC(r4);
+            break;
+        case 6:
+            break;
     }
 
     return r5;
@@ -131,18 +131,18 @@ static u32 sub_801DD44(struct MysteryEventStruct *a0)
     r0 = *a0;
     switch (r0.unk_0_0)
     {
-    case 0:
-        return 3;
-    case 1:
-        return 1;
-    case 2:
-        return 2;
-    case 3:
-        if ((u8)r0.unk_0_2 < 3)
-            return 4;
-        return 5;
-    default:
-        AGB_ASSERT(0);
-        return 0;
+        case 0:
+            return 3;
+        case 1:
+            return 1;
+        case 2:
+            return 2;
+        case 3:
+            if ((u8)r0.unk_0_2 < 3)
+                return 4;
+            return 5;
+        default:
+            AGB_ASSERT(0);
+            return 0;
     }
 }

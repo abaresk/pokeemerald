@@ -23,7 +23,8 @@ struct PokenavMatchCallEntries
 
 struct PokenavListTemplate
 {
-    union {
+    union
+    {
         struct PokenavMonList *monList;
         struct PokenavMatchCallEntries *matchCallEntries;
     } list;
@@ -36,7 +37,8 @@ struct PokenavListTemplate
     u8 unkC;
     u8 unkD;
     u8 unkE;
-    union {
+    union
+    {
         void (*unk10_1)(struct PokenavMonList *, u8 *a1);
         void (*unk10_2)(struct PokenavMatchCallEntries *, u8 *a1);
     } listFunc;
@@ -51,11 +53,11 @@ struct PokenavSub18
 };
 
 // Return values of LoopedTask functions.
-#define LT_INC_AND_PAUSE 0
-#define LT_INC_AND_CONTINUE 1
-#define LT_PAUSE 2
-#define LT_CONTINUE 3
-#define LT_FINISH 4
+#define LT_INC_AND_PAUSE       0
+#define LT_INC_AND_CONTINUE    1
+#define LT_PAUSE               2
+#define LT_CONTINUE            3
+#define LT_FINISH              4
 #define LT_SET_STATE(newState) (newState + 5)
 
 enum
@@ -88,21 +90,21 @@ enum
 #define POKENAV_MENU_IDS_START 100000
 enum
 {
-	POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START,
-	POKENAV_MAIN_MENU_CURSOR_ON_MAP,
-	POKENAV_CONDITION_MENU,
-	POKENAV_CONDITION_SEARCH_MENU,
-	POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL,
-	POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS,
-	POKENAV_REGION_MAP,
-	POKENAV_CONDITION_PARTY,
-	POKENAV_CONDITION_SEARCH_RESULTS,
-	POKENAV_MENU_9, // Condition
-	POKENAV_MENU_A, // Condition
-	POKENAV_MATCH_CALL,
-	POKENAV_RIBBONS_MON_LIST,
-	POKENAV_MENU_D, // Ribbons
-	POKENAV_MENU_E, // Ribbons
+    POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START,
+    POKENAV_MAIN_MENU_CURSOR_ON_MAP,
+    POKENAV_CONDITION_MENU,
+    POKENAV_CONDITION_SEARCH_MENU,
+    POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL,
+    POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS,
+    POKENAV_REGION_MAP,
+    POKENAV_CONDITION_PARTY,
+    POKENAV_CONDITION_SEARCH_RESULTS,
+    POKENAV_MENU_9, // Condition
+    POKENAV_MENU_A, // Condition
+    POKENAV_MATCH_CALL,
+    POKENAV_RIBBONS_MON_LIST,
+    POKENAV_MENU_D, // Ribbons
+    POKENAV_MENU_E, // Ribbons
 };
 
 enum
@@ -116,7 +118,8 @@ enum
 };
 
 // Global IDs for menu selections
-// As opposed to the cursor position, which is only relative to the number of options for the current menu
+// As opposed to the cursor position, which is only relative to the number of options for the
+// current menu
 enum
 {
     POKENAV_MENUITEM_MAP,
@@ -157,28 +160,28 @@ enum
 
 enum
 {
-	MC_HEADER_MR_STONE,
-	MC_HEADER_PROF_BIRCH,
-	MC_HEADER_BRENDAN,
-	MC_HEADER_MAY,
-	MC_HEADER_WALLY,
-	MC_HEADER_NORMAN,
-	MC_HEADER_MOM,
-	MC_HEADER_STEVEN,
-	MC_HEADER_SCOTT,
-	MC_HEADER_ROXANNE,
-	MC_HEADER_BRAWLY,
-	MC_HEADER_WATTSON,
-	MC_HEADER_FLANNERY,
-	MC_HEADER_WINONA,
-	MC_HEADER_TATE_LIZA,
-	MC_HEADER_JUAN,
-	MC_HEADER_SIDNEY,
-	MC_HEADER_PHOEBE,
-	MC_HEADER_GLACIA,
-	MC_HEADER_DRAKE,
-	MC_HEADER_WALLACE,
-	MC_HEADER_COUNT
+    MC_HEADER_MR_STONE,
+    MC_HEADER_PROF_BIRCH,
+    MC_HEADER_BRENDAN,
+    MC_HEADER_MAY,
+    MC_HEADER_WALLY,
+    MC_HEADER_NORMAN,
+    MC_HEADER_MOM,
+    MC_HEADER_STEVEN,
+    MC_HEADER_SCOTT,
+    MC_HEADER_ROXANNE,
+    MC_HEADER_BRAWLY,
+    MC_HEADER_WATTSON,
+    MC_HEADER_FLANNERY,
+    MC_HEADER_WINONA,
+    MC_HEADER_TATE_LIZA,
+    MC_HEADER_JUAN,
+    MC_HEADER_SIDNEY,
+    MC_HEADER_PHOEBE,
+    MC_HEADER_GLACIA,
+    MC_HEADER_DRAKE,
+    MC_HEADER_WALLACE,
+    MC_HEADER_COUNT
 };
 
 enum
@@ -198,11 +201,13 @@ enum
     CHECK_PAGE_ENTRY_COUNT
 };
 
-#define MCFLAVOR(name) {[CHECK_PAGE_STRATEGY] = gText_MatchCall##name##_Strategy, \
-                        [CHECK_PAGE_POKEMON]  = gText_MatchCall##name##_Pokemon,  \
-                        [CHECK_PAGE_INTRO_1]  = gText_MatchCall##name##_Intro1,   \
-                        [CHECK_PAGE_INTRO_2]  = gText_MatchCall##name##_Intro2}
-
+#define MCFLAVOR(name)                                            \
+    {                                                             \
+        [CHECK_PAGE_STRATEGY] = gText_MatchCall##name##_Strategy, \
+        [CHECK_PAGE_POKEMON] = gText_MatchCall##name##_Pokemon,   \
+        [CHECK_PAGE_INTRO_1] = gText_MatchCall##name##_Intro1,    \
+        [CHECK_PAGE_INTRO_2] = gText_MatchCall##name##_Intro2     \
+    }
 
 // Pokenav Function IDs
 // Indices into the LoopedTask tables for each of the main Pokenav features
@@ -363,7 +368,7 @@ const u8 *GetMatchCallFlavorText(int index, int textType);
 const u8 *GetMatchCallMessageText(int index, u8 *arg1);
 u16 GetMatchCallOptionCursorPos(void);
 u16 GetMatchCallOptionId(int arg0);
-void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntries * arg0, u8 *str);
+void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntries *arg0, u8 *str);
 u8 sub_81CB0C8(int rematchIndex);
 int GetIndexDeltaOfNextCheckPageDown(int index);
 int GetIndexDeltaOfNextCheckPageUp(int index);

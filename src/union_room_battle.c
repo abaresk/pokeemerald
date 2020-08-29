@@ -26,28 +26,20 @@ struct UnionRoomBattle
     s16 textState;
 };
 
-static EWRAM_DATA struct UnionRoomBattle * sBattle = NULL;
+static EWRAM_DATA struct UnionRoomBattle *sBattle = NULL;
 
 static const struct BgTemplate sBgTemplates[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 31
-    }
+    { .bg = 0, .charBaseIndex = 3, .mapBaseIndex = 31 }
 };
 
-static const struct WindowTemplate sWindowTemplates[] = {
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 15,
-        .width = 24,
-        .height = 4,
-        .paletteNum = 0xE,
-        .baseBlock = 0x014
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sWindowTemplates[] = { { .bg = 0,
+                                                              .tilemapLeft = 3,
+                                                              .tilemapTop = 15,
+                                                              .width = 24,
+                                                              .height = 4,
+                                                              .paletteNum = 0xE,
+                                                              .baseBlock = 0x014 },
+    DUMMY_WIN_TEMPLATE };
 
 static const u8 sTextColors[] = { TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY };
 
@@ -73,32 +65,33 @@ static void CB2_SetUpPartiesAndStartBattle(void)
     SetMainCallback2(CB2_InitBattle);
 }
 
-static void AddTextPrinterForUnionRoomBattle(u8 windowId, const u8 * str, u8 x, u8 y, s32 speed)
+static void AddTextPrinterForUnionRoomBattle(u8 windowId, const u8 *str, u8 x, u8 y, s32 speed)
 {
     s32 letterSpacing = 0;
     s32 lineSpacing = 1;
     FillWindowPixelBuffer(windowId, (sTextColors[0] << 4) | sTextColors[0]);
-    AddTextPrinterParameterized4(windowId, 1, x, y, letterSpacing, lineSpacing, sTextColors, speed, str);
+    AddTextPrinterParameterized4(
+        windowId, 1, x, y, letterSpacing, lineSpacing, sTextColors, speed, str);
 }
 
-static bool32 PrintUnionRoomBattleMessage(s16 * state, const u8 * str, s32 speed)
+static bool32 PrintUnionRoomBattleMessage(s16 *state, const u8 *str, s32 speed)
 {
     switch (*state)
     {
-    case 0:
-        DrawTextBorderOuter(0, 0x001, 0xD);
-        AddTextPrinterForUnionRoomBattle(0, str, 0, 1, speed);
-        PutWindowTilemap(0);
-        CopyWindowToVram(0, 3);
-        (*state)++;
-        break;
-    case 1:
-        if (!IsTextPrinterActive(0))
-        {
-            *state = 0;
-            return TRUE;
-        }
-        break;
+        case 0:
+            DrawTextBorderOuter(0, 0x001, 0xD);
+            AddTextPrinterForUnionRoomBattle(0, str, 0, 1, speed);
+            PutWindowTilemap(0);
+            CopyWindowToVram(0, 3);
+            (*state)++;
+            break;
+        case 1:
+            if (!IsTextPrinterActive(0))
+            {
+                *state = 0;
+                return TRUE;
+            }
+            break;
     }
     return FALSE;
 }
@@ -114,116 +107,118 @@ void CB2_UnionRoomBattle(void)
 {
     switch (gMain.state)
     {
-    case 0:
-        SetGpuReg(REG_OFFSET_DISPCNT, 0x0000);
-        sBattle = AllocZeroed(sizeof(struct UnionRoomBattle));
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        ResetTasks();
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
-        ResetTempTileDataBuffers();
-        if (!InitWindows(sWindowTemplates))
-            return;
-        DeactivateAllTextPrinters();
-        ClearWindowTilemap(0);
-        FillWindowPixelBuffer(0, PIXEL_FILL(0));
-        FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        FillBgTilemapBufferRect(0, 0, 0, 0, 30, 20, 0xF);
-        LoadUserWindowBorderGfx(0, 1, 0xD0);
-        LoadUserWindowBorderGfx_(0, 1, 0xD0);
-        sub_819789C();
-        SetVBlankCallback(VBlankCB_UnionRoomBattle);
-        gMain.state++;
-        break;
-    case 1:
-        if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_CommStandbyAwaitingOtherPlayer, 0))
-        {
+        case 0:
+            SetGpuReg(REG_OFFSET_DISPCNT, 0x0000);
+            sBattle = AllocZeroed(sizeof(struct UnionRoomBattle));
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            ResetTasks();
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+            ResetTempTileDataBuffers();
+            if (!InitWindows(sWindowTemplates))
+                return;
+            DeactivateAllTextPrinters();
+            ClearWindowTilemap(0);
+            FillWindowPixelBuffer(0, PIXEL_FILL(0));
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            FillBgTilemapBufferRect(0, 0, 0, 0, 30, 20, 0xF);
+            LoadUserWindowBorderGfx(0, 1, 0xD0);
+            LoadUserWindowBorderGfx_(0, 1, 0xD0);
+            sub_819789C();
+            SetVBlankCallback(VBlankCB_UnionRoomBattle);
             gMain.state++;
-        }
-        break;
-    case 2:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
-        ShowBg(0);
-        gMain.state++;
-        break;
-    case 3:
-        if (!UpdatePaletteFade())
-        {
-            memset(gBlockSendBuffer, 0, 0x20);
-            if (gSelectedOrderFromParty[0] == -gSelectedOrderFromParty[1])
+            break;
+        case 1:
+            if (PrintUnionRoomBattleMessage(
+                    &sBattle->textState, gText_CommStandbyAwaitingOtherPlayer, 0))
             {
-                gBlockSendBuffer[0] = ACTIVITY_DECLINE | IN_UNION_ROOM;
+                gMain.state++;
             }
-            else
-            {
-                gBlockSendBuffer[0] = ACTIVITY_ACCEPT | IN_UNION_ROOM;
-            }
-            SendBlock(0, gBlockSendBuffer, 0x20);
+            break;
+        case 2:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+            ShowBg(0);
             gMain.state++;
-        }
-        break;
-    case 4:
-        if (GetBlockReceivedStatus() == 3)
-        {
-            if (gBlockRecvBuffer[0][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM) 
-             && gBlockRecvBuffer[1][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
+            break;
+        case 3:
+            if (!UpdatePaletteFade())
             {
-                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
-                gMain.state = 50;
-            }
-            else
-            {
-                SetCloseLinkCallback();
-                if (gBlockRecvBuffer[GetMultiplayerId()][0] == (ACTIVITY_DECLINE | IN_UNION_ROOM))
+                memset(gBlockSendBuffer, 0, 0x20);
+                if (gSelectedOrderFromParty[0] == -gSelectedOrderFromParty[1])
                 {
-                    gMain.state = 6;
+                    gBlockSendBuffer[0] = ACTIVITY_DECLINE | IN_UNION_ROOM;
                 }
                 else
                 {
-                    gMain.state = 8;
+                    gBlockSendBuffer[0] = ACTIVITY_ACCEPT | IN_UNION_ROOM;
                 }
+                SendBlock(0, gBlockSendBuffer, 0x20);
+                gMain.state++;
             }
-            ResetBlockReceivedFlags();
-        }
-        break;
-    case 50:
-        if (!UpdatePaletteFade())
-        {
-            SetLinkStandbyCallback();
-            gMain.state++;
-        }
-        break;
-    case 51:
-        if (IsLinkTaskFinished())
-        {
-            SetMainCallback2(CB2_SetUpPartiesAndStartBattle);
-        }
-        break;
-    case 6:
-        if (!gReceivedRemoteLinkPlayers)
-        {
-            gMain.state++;
-        }
-        break;
-    case 7:
-        if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_RefusedBattle, 1))
-        {
-            SetMainCallback2(CB2_ReturnToField);
-        }
-        break;
-    case 8:
-        if (!gReceivedRemoteLinkPlayers)
-        {
-            gMain.state++;
-        }
-        break;
-    case 9:
-        if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_BattleWasRefused, 1))
-        {
-            SetMainCallback2(CB2_ReturnToField);
-        }
-        break;
+            break;
+        case 4:
+            if (GetBlockReceivedStatus() == 3)
+            {
+                if (gBlockRecvBuffer[0][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM)
+                    && gBlockRecvBuffer[1][0] == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
+                {
+                    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+                    gMain.state = 50;
+                }
+                else
+                {
+                    SetCloseLinkCallback();
+                    if (gBlockRecvBuffer[GetMultiplayerId()][0]
+                        == (ACTIVITY_DECLINE | IN_UNION_ROOM))
+                    {
+                        gMain.state = 6;
+                    }
+                    else
+                    {
+                        gMain.state = 8;
+                    }
+                }
+                ResetBlockReceivedFlags();
+            }
+            break;
+        case 50:
+            if (!UpdatePaletteFade())
+            {
+                SetLinkStandbyCallback();
+                gMain.state++;
+            }
+            break;
+        case 51:
+            if (IsLinkTaskFinished())
+            {
+                SetMainCallback2(CB2_SetUpPartiesAndStartBattle);
+            }
+            break;
+        case 6:
+            if (!gReceivedRemoteLinkPlayers)
+            {
+                gMain.state++;
+            }
+            break;
+        case 7:
+            if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_RefusedBattle, 1))
+            {
+                SetMainCallback2(CB2_ReturnToField);
+            }
+            break;
+        case 8:
+            if (!gReceivedRemoteLinkPlayers)
+            {
+                gMain.state++;
+            }
+            break;
+        case 9:
+            if (PrintUnionRoomBattleMessage(&sBattle->textState, gText_BattleWasRefused, 1))
+            {
+                SetMainCallback2(CB2_ReturnToField);
+            }
+            break;
     }
     RunTasks();
     RunTextPrinters();

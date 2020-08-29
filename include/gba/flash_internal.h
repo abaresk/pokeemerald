@@ -17,16 +17,19 @@ struct FlashSector
     u16 top;
 };
 
-struct FlashType {
+struct FlashType
+{
     u32 romSize;
     struct FlashSector sector;
     u16 wait[2]; // game pak bus read/write wait
 
     // TODO: add support for anonymous unions/structs if possible
-    union {
-        struct {
-        u8 makerId;
-        u8 deviceId;
+    union
+    {
+        struct
+        {
+            u8 makerId;
+            u8 deviceId;
         } separate;
         u16 joined;
     } ids;

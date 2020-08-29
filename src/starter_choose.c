@@ -25,7 +25,7 @@
 #include "constants/species.h"
 #include "constants/rgb.h"
 
-#define STARTER_MON_COUNT   3
+#define STARTER_MON_COUNT 3
 
 // Position of the sprite of the selected starter Pokemon
 #define STARTER_PKMN_POS_X (DISPLAY_WIDTH / 2)
@@ -52,8 +52,7 @@ static void SpriteCB_StarterPokemon(struct Sprite *sprite);
 
 static u16 sStarterLabelWindowId;
 
-const u16 gBirchBagGrassPal[][16] =
-{
+const u16 gBirchBagGrassPal[][16] = {
     INCBIN_U16("graphics/misc/birch_bag.gbapal"),
     INCBIN_U16("graphics/misc/birch_grass.gbapal"),
 };
@@ -62,102 +61,83 @@ static const u16 sPokeballSelection_Pal[] = INCBIN_U16("graphics/misc/pokeball_s
 static const u16 sStarterCircle_Pal[] = INCBIN_U16("graphics/misc/starter_circle.gbapal");
 const u32 gBirchBagTilemap[] = INCBIN_U32("graphics/misc/birch_bag_map.bin.lz");
 const u32 gBirchGrassTilemap[] = INCBIN_U32("graphics/misc/birch_grass_map.bin.lz");
-const u32 gBirchHelpGfx[] = INCBIN_U32("graphics/misc/birch_help.4bpp.lz"); // Birch bag and grass combined
+const u32 gBirchHelpGfx[] =
+    INCBIN_U32("graphics/misc/birch_help.4bpp.lz"); // Birch bag and grass combined
 const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/misc/pokeball_selection.4bpp.lz");
 static const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/misc/starter_circle.4bpp.lz");
 
-static const struct WindowTemplate sWindowTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct WindowTemplate sWindowTemplates[] = {
+    { .bg = 0,
         .tilemapLeft = 3,
         .tilemapTop = 15,
         .width = 24,
         .height = 4,
         .paletteNum = 14,
-        .baseBlock = 0x0200
-    },
+        .baseBlock = 0x0200 },
     DUMMY_WIN_TEMPLATE,
 };
 
-static const struct WindowTemplate sWindowTemplate_ConfirmStarter =
-{
-    .bg = 0,
+static const struct WindowTemplate sWindowTemplate_ConfirmStarter = { .bg = 0,
     .tilemapLeft = 24,
     .tilemapTop = 9,
     .width = 5,
     .height = 4,
     .paletteNum = 14,
-    .baseBlock = 0x0260
-};
+    .baseBlock = 0x0260 };
 
-static const struct WindowTemplate sWindowTemplate_StarterLabel =
-{
-    .bg = 0,
+static const struct WindowTemplate sWindowTemplate_StarterLabel = { .bg = 0,
     .tilemapLeft = 0,
     .tilemapTop = 0,
     .width = 13,
     .height = 4,
     .paletteNum = 14,
-    .baseBlock = 0x0274
+    .baseBlock = 0x0274 };
+
+static const u8 sPokeballCoords[STARTER_MON_COUNT][2] = {
+    { 60, 64 },
+    { 120, 88 },
+    { 180, 64 },
 };
 
-static const u8 sPokeballCoords[STARTER_MON_COUNT][2] =
-{
-    {60, 64},
-    {120, 88},
-    {180, 64},
+static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] = {
+    { 0, 9 },
+    { 16, 10 },
+    { 8, 4 },
 };
 
-static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
-{
-    {0, 9},
-    {16, 10},
-    {8, 4},
-};
-
-static const u16 sStarterMon[STARTER_MON_COUNT] =
-{
+static const u16 sStarterMon[STARTER_MON_COUNT] = {
     SPECIES_TREECKO,
     SPECIES_TORCHIC,
     SPECIES_MUDKIP,
 };
 
-static const struct BgTemplate sBgTemplates[3] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sBgTemplates[3] = {
+    { .bg = 0,
         .charBaseIndex = 2,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 7,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 0,
         .mapBaseIndex = 6,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const u8 sTextColors[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GREY};
+static const u8 sTextColors[] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GREY };
 
-static const struct OamData sOam_Hand =
-{
+static const struct OamData sOam_Hand = {
     .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -173,8 +153,7 @@ static const struct OamData sOam_Hand =
     .affineParam = 0,
 };
 
-static const struct OamData sOam_Pokeball =
-{
+static const struct OamData sOam_Pokeball = {
     .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -190,8 +169,7 @@ static const struct OamData sOam_Pokeball =
     .affineParam = 0,
 };
 
-static const struct OamData sOam_StarterCircle =
-{
+static const struct OamData sOam_StarterCircle = {
     .y = 160,
     .affineMode = ST_OAM_AFFINE_DOUBLE,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -207,27 +185,23 @@ static const struct OamData sOam_StarterCircle =
     .affineParam = 0,
 };
 
-static const u8 sCursorCoords[][2] =
-{
-    {60, 32},
-    {120, 56},
-    {180, 32},
+static const u8 sCursorCoords[][2] = {
+    { 60, 32 },
+    { 120, 56 },
+    { 180, 32 },
 };
 
-static const union AnimCmd sAnim_Hand[] =
-{
+static const union AnimCmd sAnim_Hand[] = {
     ANIMCMD_FRAME(48, 30),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_Pokeball_Still[] =
-{
+static const union AnimCmd sAnim_Pokeball_Still[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_Pokeball_Moving[] =
-{
+static const union AnimCmd sAnim_Pokeball_Moving[] = {
     ANIMCMD_FRAME(16, 4),
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(32, 4),
@@ -248,110 +222,80 @@ static const union AnimCmd sAnim_Pokeball_Moving[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd sAnim_StarterCircle[] =
-{
+static const union AnimCmd sAnim_StarterCircle[] = {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd * const sAnims_Hand[] =
-{
+static const union AnimCmd *const sAnims_Hand[] = {
     sAnim_Hand,
 };
 
-static const union AnimCmd * const sAnims_Pokeball[] =
-{
+static const union AnimCmd *const sAnims_Pokeball[] = {
     sAnim_Pokeball_Still,
     sAnim_Pokeball_Moving,
 };
 
-static const union AnimCmd * const sAnims_StarterCircle[] =
-{
+static const union AnimCmd *const sAnims_StarterCircle[] = {
     sAnim_StarterCircle,
 };
 
-static const union AffineAnimCmd sAffineAnim_StarterPokemon[] =
-{
+static const union AffineAnimCmd sAffineAnim_StarterPokemon[] = {
     AFFINEANIMCMD_FRAME(16, 16, 0, 0),
     AFFINEANIMCMD_FRAME(16, 16, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_StarterCircle[] =
-{
+static const union AffineAnimCmd sAffineAnim_StarterCircle[] = {
     AFFINEANIMCMD_FRAME(20, 20, 0, 0),
     AFFINEANIMCMD_FRAME(20, 20, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd * const sAffineAnims_StarterPokemon = {sAffineAnim_StarterPokemon};
-static const union AffineAnimCmd * const sAffineAnims_StarterCircle[] = {sAffineAnim_StarterCircle};
-
-static const struct CompressedSpriteSheet sSpriteSheet_PokeballSelect[] =
-{
-    {
-        .data = gPokeballSelection_Gfx,
-        .size = 0x0800,
-        .tag = TAG_POKEBALL_SELECT
-    },
-    {}
+static const union AffineAnimCmd *const sAffineAnims_StarterPokemon = {
+    sAffineAnim_StarterPokemon
+};
+static const union AffineAnimCmd *const sAffineAnims_StarterCircle[] = {
+    sAffineAnim_StarterCircle
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_StarterCircle[] =
-{
-    {
-        .data = sStarterCircle_Gfx,
-        .size = 0x0800,
-        .tag = TAG_STARTER_CIRCLE
-    },
-    {}
+static const struct CompressedSpriteSheet sSpriteSheet_PokeballSelect[] = {
+    { .data = gPokeballSelection_Gfx, .size = 0x0800, .tag = TAG_POKEBALL_SELECT }, {}
 };
 
-static const struct SpritePalette sSpritePalettes_StarterChoose[] =
-{
-    {
-        .data = sPokeballSelection_Pal,
-        .tag = TAG_POKEBALL_SELECT
-    },
-    {
-        .data = sStarterCircle_Pal,
-        .tag = TAG_STARTER_CIRCLE
-    },
+static const struct CompressedSpriteSheet sSpriteSheet_StarterCircle[] = {
+    { .data = sStarterCircle_Gfx, .size = 0x0800, .tag = TAG_STARTER_CIRCLE }, {}
+};
+
+static const struct SpritePalette sSpritePalettes_StarterChoose[] = {
+    { .data = sPokeballSelection_Pal, .tag = TAG_POKEBALL_SELECT },
+    { .data = sStarterCircle_Pal, .tag = TAG_STARTER_CIRCLE },
     {},
 };
 
-static const struct SpriteTemplate sSpriteTemplate_Hand =
-{
-    .tileTag = TAG_POKEBALL_SELECT,
+static const struct SpriteTemplate sSpriteTemplate_Hand = { .tileTag = TAG_POKEBALL_SELECT,
     .paletteTag = TAG_POKEBALL_SELECT,
     .oam = &sOam_Hand,
     .anims = sAnims_Hand,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_SelectionHand
-};
+    .callback = SpriteCB_SelectionHand };
 
-static const struct SpriteTemplate sSpriteTemplate_Pokeball =
-{
-    .tileTag = TAG_POKEBALL_SELECT,
+static const struct SpriteTemplate sSpriteTemplate_Pokeball = { .tileTag = TAG_POKEBALL_SELECT,
     .paletteTag = TAG_POKEBALL_SELECT,
     .oam = &sOam_Pokeball,
     .anims = sAnims_Pokeball,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_Pokeball
-};
+    .callback = SpriteCB_Pokeball };
 
-static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
-{
-    .tileTag = TAG_STARTER_CIRCLE,
+static const struct SpriteTemplate sSpriteTemplate_StarterCircle = { .tileTag = TAG_STARTER_CIRCLE,
     .paletteTag = TAG_STARTER_CIRCLE,
     .oam = &sOam_StarterCircle,
     .anims = sAnims_StarterCircle,
     .images = NULL,
     .affineAnims = sAffineAnims_StarterCircle,
-    .callback = SpriteCB_StarterPokemon
-};
+    .callback = SpriteCB_StarterPokemon };
 
 // .text
 u16 GetStarterPokemon(u16 chosenStarterId)
@@ -369,9 +313,9 @@ static void VblankCB_StarterChoose(void)
 }
 
 // Data for Task_StarterChoose
-#define tStarterSelection   data[0]
-#define tPkmnSpriteId       data[1]
-#define tCircleSpriteId     data[2]
+#define tStarterSelection data[0]
+#define tPkmnSpriteId     data[1]
+#define tCircleSpriteId   data[2]
 
 // Data for sSpriteTemplate_Pokeball
 #define sTaskId data[0]
@@ -437,7 +381,9 @@ void CB2_ChooseStarter(void)
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ);
     SetGpuReg(REG_OFFSET_WIN0H, 0);
     SetGpuReg(REG_OFFSET_WIN0V, 0);
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN);
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD
+            | BLDCNT_EFFECT_DARKEN);
     SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     SetGpuReg(REG_OFFSET_BLDY, 7);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
@@ -454,15 +400,18 @@ void CB2_ChooseStarter(void)
     gSprites[spriteId].data[0] = taskId;
 
     // Create three Pokeball sprites
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[0][0], sPokeballCoords[0][1], 2);
+    spriteId =
+        CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[0][0], sPokeballCoords[0][1], 2);
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sBallId = 0;
 
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[1][0], sPokeballCoords[1][1], 2);
+    spriteId =
+        CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[1][0], sPokeballCoords[1][1], 2);
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sBallId = 1;
 
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[2][0], sPokeballCoords[2][1], 2);
+    spriteId =
+        CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[2][0], sPokeballCoords[2][1], 2);
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sBallId = 2;
 
@@ -499,11 +448,16 @@ static void Task_HandleStarterChooseInput(u8 taskId)
         ClearStarterLabel();
 
         // Create white circle background
-        spriteId = CreateSprite(&sSpriteTemplate_StarterCircle, sPokeballCoords[selection][0], sPokeballCoords[selection][1], 1);
+        spriteId = CreateSprite(&sSpriteTemplate_StarterCircle,
+            sPokeballCoords[selection][0],
+            sPokeballCoords[selection][1],
+            1);
         gTasks[taskId].tCircleSpriteId = spriteId;
 
         // Create Pokemon sprite
-        spriteId = CreatePokemonFrontSprite(GetStarterPokemon(gTasks[taskId].tStarterSelection), sPokeballCoords[selection][0], sPokeballCoords[selection][1]);
+        spriteId = CreatePokemonFrontSprite(GetStarterPokemon(gTasks[taskId].tStarterSelection),
+            sPokeballCoords[selection][0],
+            sPokeballCoords[selection][1]);
         gSprites[spriteId].affineAnims = &sAffineAnims_StarterPokemon;
         gSprites[spriteId].callback = SpriteCB_StarterPokemon;
 
@@ -524,9 +478,9 @@ static void Task_HandleStarterChooseInput(u8 taskId)
 
 static void Task_WaitForStarterSprite(u8 taskId)
 {
-    if (gSprites[gTasks[taskId].tCircleSpriteId].affineAnimEnded &&
-        gSprites[gTasks[taskId].tCircleSpriteId].pos1.x == STARTER_PKMN_POS_X &&
-        gSprites[gTasks[taskId].tCircleSpriteId].pos1.y == STARTER_PKMN_POS_Y)
+    if (gSprites[gTasks[taskId].tCircleSpriteId].affineAnimEnded
+        && gSprites[gTasks[taskId].tCircleSpriteId].pos1.x == STARTER_PKMN_POS_X
+        && gSprites[gTasks[taskId].tCircleSpriteId].pos1.y == STARTER_PKMN_POS_Y)
     {
         gTasks[taskId].func = Task_AskConfirmStarter;
     }
@@ -548,24 +502,24 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
 
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
-    case 0:  // YES
-        // Return the starter choice and exit.
-        gSpecialVar_Result = gTasks[taskId].tStarterSelection;
-        ResetAllPicSprites();
-        SetMainCallback2(gMain.savedCallback);
-        break;
-    case 1:  // NO
-    case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
-        spriteId = gTasks[taskId].tPkmnSpriteId;
-        FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
-        FreeAndDestroyMonPicSprite(spriteId);
+        case 0: // YES
+            // Return the starter choice and exit.
+            gSpecialVar_Result = gTasks[taskId].tStarterSelection;
+            ResetAllPicSprites();
+            SetMainCallback2(gMain.savedCallback);
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            PlaySE(SE_SELECT);
+            spriteId = gTasks[taskId].tPkmnSpriteId;
+            FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
+            FreeAndDestroyMonPicSprite(spriteId);
 
-        spriteId = gTasks[taskId].tCircleSpriteId;
-        FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
-        DestroySprite(&gSprites[spriteId]);
-        gTasks[taskId].func = Task_DeclineStarter;
-        break;
+            spriteId = gTasks[taskId].tCircleSpriteId;
+            FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
+            DestroySprite(&gSprites[spriteId]);
+            gTasks[taskId].func = Task_DeclineStarter;
+            break;
     }
 }
 

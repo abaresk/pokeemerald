@@ -69,19 +69,19 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 
-#define PLAYER_TRADING_STATE_IDLE 0x80
-#define PLAYER_TRADING_STATE_BUSY 0x81
-#define PLAYER_TRADING_STATE_UNK_2 0x82
+#define PLAYER_TRADING_STATE_IDLE         0x80
+#define PLAYER_TRADING_STATE_BUSY         0x81
+#define PLAYER_TRADING_STATE_UNK_2        0x82
 #define PLAYER_TRADING_STATE_EXITING_ROOM 0x83
 
-#define FACING_NONE 0
-#define FACING_UP 1
-#define FACING_DOWN 2
-#define FACING_LEFT 3
-#define FACING_RIGHT 4
-#define FACING_FORCED_UP 7
-#define FACING_FORCED_DOWN 8
-#define FACING_FORCED_LEFT 9
+#define FACING_NONE         0
+#define FACING_UP           1
+#define FACING_DOWN         2
+#define FACING_LEFT         3
+#define FACING_RIGHT        4
+#define FACING_FORCED_UP    7
+#define FACING_FORCED_DOWN  8
+#define FACING_FORCED_LEFT  9
 #define FACING_FORCED_RIGHT 10
 
 extern const struct MapLayout *const gMapLayouts[];
@@ -119,7 +119,7 @@ static void CreateLinkPlayerSprites(void);
 static void ClearAllPlayerKeys(void);
 static void ResetAllTradingStates(void);
 static void UpdateHeldKeyCode(u16);
-static void UpdateAllLinkPlayers(u16*, s32);
+static void UpdateAllLinkPlayers(u16 *, s32);
 static u8 FlipVerticalAndClearForced(u8 a1, u8 a2);
 static u8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y);
 static void CreateLinkPlayerSprite(u8 linkPlayerId, u8 gameVersion);
@@ -162,8 +162,10 @@ static void SetKeyInterceptCallback(u16 (*func)(u32));
 static void SetFieldVBlankCallback(void);
 static void FieldClearVBlankHBlankCallbacks(void);
 static void TransitionMapMusic(void);
-static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *playerStruct, u16 a2, u8 a3);
-static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStruct, u8 a2, u16 a3, u8 a4);
+static u8 GetAdjustedInitialTransitionFlags(
+    struct InitialPlayerAvatarState *playerStruct, u16 a2, u8 a3);
+static u8 GetAdjustedInitialDirection(
+    struct InitialPlayerAvatarState *playerStruct, u8 a2, u16 a3, u8 a4);
 static u16 GetCenterScreenMetatileBehavior(void);
 
 // IWRAM bss vars
@@ -189,19 +191,18 @@ u8 gFieldLinkPlayerCount;
 
 // EWRAM vars
 EWRAM_DATA static u8 sObjectEventLoadFlag = 0;
-EWRAM_DATA struct WarpData gLastUsedWarp = {0};
-EWRAM_DATA static struct WarpData sWarpDestination = {0};  // new warp position
-EWRAM_DATA static struct WarpData sFixedDiveWarp = {0};
-EWRAM_DATA static struct WarpData sFixedHoleWarp = {0};
+EWRAM_DATA struct WarpData gLastUsedWarp = { 0 };
+EWRAM_DATA static struct WarpData sWarpDestination = { 0 }; // new warp position
+EWRAM_DATA static struct WarpData sFixedDiveWarp = { 0 };
+EWRAM_DATA static struct WarpData sFixedHoleWarp = { 0 };
 EWRAM_DATA static u16 sLastMapSectionId = 0;
-EWRAM_DATA static struct InitialPlayerAvatarState sInitialPlayerAvatarState = {0};
+EWRAM_DATA static struct InitialPlayerAvatarState sInitialPlayerAvatarState = { 0 };
 EWRAM_DATA static u16 sAmbientCrySpecies = 0;
 EWRAM_DATA static bool8 sIsAmbientCryWaterMon = FALSE;
-EWRAM_DATA struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4] = {0};
+EWRAM_DATA struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4] = { 0 };
 
 // const rom data
-static const struct WarpData sDummyWarpData =
-{
+static const struct WarpData sDummyWarpData = {
     .mapGroup = -1,
     .mapNum = -1,
     .warpId = -1,
@@ -209,10 +210,7 @@ static const struct WarpData sDummyWarpData =
     .y = -1,
 };
 
-static const u32 sUnusedData[] =
-{
-    1200, 3600, 1200, 2400, 50, 80, -44, 44
-};
+static const u32 sUnusedData[] = { 1200, 3600, 1200, 2400, 50, 80, -44, 44 };
 
 const struct UCoords32 gDirectionToVectors[] =
 {
@@ -263,48 +261,36 @@ const struct UCoords32 gDirectionToVectors[] =
     },
 };
 
-static const struct BgTemplate sOverworldBgTemplates[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+static const struct BgTemplate sOverworldBgTemplates[] = { { .bg = 0,
+                                                               .charBaseIndex = 2,
+                                                               .mapBaseIndex = 31,
+                                                               .screenSize = 0,
+                                                               .paletteMode = 0,
+                                                               .priority = 0,
+                                                               .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 28,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const struct ScanlineEffectParams sFlashEffectParams =
-{
+static const struct ScanlineEffectParams sFlashEffectParams = {
     (void *)REG_ADDR_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
     1,
@@ -315,20 +301,21 @@ static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *, struct Obje
 static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 MovementEventModeCB_Normal_2(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
-static u8 (*const gLinkPlayerMovementModes[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
-{
-    MovementEventModeCB_Normal, // MOVEMENT_MODE_FREE
-    MovementEventModeCB_Ignored, // MOVEMENT_MODE_FROZEN
+static u8 (*const gLinkPlayerMovementModes[])(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) = {
+    MovementEventModeCB_Normal,   // MOVEMENT_MODE_FREE
+    MovementEventModeCB_Ignored,  // MOVEMENT_MODE_FROZEN
     MovementEventModeCB_Normal_2, // MOVEMENT_MODE_SCRIPTED
 };
 
 static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_ForcedFacingChange(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
 // These handlers return TRUE if the movement was scripted and successful, and FALSE otherwise.
-static bool8 (*const gLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
-{
+static bool8 (*const gLinkPlayerFacingHandlers[])(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) = {
     FacingHandler_DoNothing,
     FacingHandler_DpadMovement,
     FacingHandler_DpadMovement,
@@ -342,12 +329,14 @@ static bool8 (*const gLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *
     FacingHandler_ForcedFacingChange,
 };
 
-static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
-static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_EnterFreeMode(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_TryAdvanceScript(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *);
 
 // These handlers are run after an attempted movement.
-static void (*const gMovementStatusHandler[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
-{
+static void (*const gMovementStatusHandler[])(
+    struct LinkPlayerObjectEvent *, struct ObjectEvent *) = {
     // FALSE:
     MovementStatusHandler_EnterFreeMode,
     // TRUE:
@@ -469,12 +458,13 @@ void ApplyNewEncryptionKeyToGameStats(u32 newKey)
 void LoadObjEventTemplatesFromHeader(void)
 {
     // Clear map object templates
-    CpuFill32(0, gSaveBlock1Ptr->objectEventTemplates, sizeof(gSaveBlock1Ptr->objectEventTemplates));
+    CpuFill32(
+        0, gSaveBlock1Ptr->objectEventTemplates, sizeof(gSaveBlock1Ptr->objectEventTemplates));
 
     // Copy map header events to save block
     CpuCopy32(gMapHeader.events->objectEvents,
-              gSaveBlock1Ptr->objectEventTemplates,
-              gMapHeader.events->objectEventCount * sizeof(struct ObjectEventTemplate));
+        gSaveBlock1Ptr->objectEventTemplates,
+        gMapHeader.events->objectEventCount * sizeof(struct ObjectEventTemplate));
 }
 
 void LoadSaveblockObjEventScripts(void)
@@ -589,20 +579,23 @@ struct MapHeader const *const GetDestinationWarpMapHeader(void)
 static void LoadCurrentMapData(void)
 {
     sLastMapSectionId = gMapHeader.regionMapSectionId;
-    gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+    gMapHeader = *Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     gSaveBlock1Ptr->mapLayoutId = gMapHeader.mapLayoutId;
     gMapHeader.mapLayout = GetMapLayout();
 }
 
 static void LoadSaveblockMapHeader(void)
 {
-    gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+    gMapHeader = *Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     gMapHeader.mapLayout = GetMapLayout();
 }
 
 static void SetPlayerCoordsFromWarp(void)
 {
-    if (gSaveBlock1Ptr->location.warpId >= 0 && gSaveBlock1Ptr->location.warpId < gMapHeader.events->warpCount)
+    if (gSaveBlock1Ptr->location.warpId >= 0
+        && gSaveBlock1Ptr->location.warpId < gMapHeader.events->warpCount)
     {
         gSaveBlock1Ptr->pos.x = gMapHeader.events->warps[gSaveBlock1Ptr->location.warpId].x;
         gSaveBlock1Ptr->pos.y = gMapHeader.events->warps[gSaveBlock1Ptr->location.warpId].y;
@@ -638,7 +631,12 @@ void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
 
 void SetDynamicWarp(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId)
 {
-    SetWarpData(&gSaveBlock1Ptr->dynamicWarp, mapGroup, mapNum, warpId, gSaveBlock1Ptr->pos.x, gSaveBlock1Ptr->pos.y);
+    SetWarpData(&gSaveBlock1Ptr->dynamicWarp,
+        mapGroup,
+        mapNum,
+        warpId,
+        gSaveBlock1Ptr->pos.x,
+        gSaveBlock1Ptr->pos.y);
 }
 
 void SetDynamicWarpWithCoords(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -667,7 +665,12 @@ void SetLastHealLocationWarp(u8 healLocationId)
 {
     const struct HealLocation *healLocation = GetHealLocation(healLocationId);
     if (healLocation)
-        SetWarpData(&gSaveBlock1Ptr->lastHealLocation, healLocation->group, healLocation->map, -1, healLocation->x, healLocation->y);
+        SetWarpData(&gSaveBlock1Ptr->lastHealLocation,
+            healLocation->group,
+            healLocation->map,
+            -1,
+            healLocation->x,
+            healLocation->y);
 }
 
 void UpdateEscapeWarp(s16 x, s16 y)
@@ -675,7 +678,8 @@ void UpdateEscapeWarp(s16 x, s16 y)
     u8 currMapType = GetCurrentMapType();
     u8 destMapType = GetMapTypeByGroupAndId(sWarpDestination.mapGroup, sWarpDestination.mapNum);
     if (IsMapTypeOutdoors(currMapType) && IsMapTypeOutdoors(destMapType) != TRUE)
-        SetEscapeWarp(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, -1, x - 7, y - 6);
+        SetEscapeWarp(
+            gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, -1, x - 7, y - 6);
 }
 
 void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -725,7 +729,8 @@ void SetContinueGameWarpToHealLocation(u8 healLocationId)
 {
     const struct HealLocation *warp = GetHealLocation(healLocationId);
     if (warp)
-        SetWarpData(&gSaveBlock1Ptr->continueGameWarp, warp->group, warp->map, -1, warp->x, warp->y);
+        SetWarpData(
+            &gSaveBlock1Ptr->continueGameWarp, warp->group, warp->map, -1, warp->x, warp->y);
 }
 
 void SetContinueGameWarpToDynamicWarp(int unused)
@@ -742,7 +747,7 @@ const struct MapConnection *GetMapConnection(u8 dir)
     if (connection == NULL)
         return NULL;
 
-    for(i = 0; i < count; i++, connection++)
+    for (i = 0; i < count; i++, connection++)
         if (connection->direction == dir)
             return connection;
 
@@ -815,8 +820,8 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ResetFieldTasksArgs();
     RunOnResumeMapScript();
 
-    if (gMapHeader.regionMapSectionId != MAPSEC_BATTLE_FRONTIER 
-     || gMapHeader.regionMapSectionId != sLastMapSectionId)
+    if (gMapHeader.regionMapSectionId != MAPSEC_BATTLE_FRONTIER
+        || gMapHeader.regionMapSectionId != sLastMapSectionId)
         ShowMapNamePopup();
 }
 
@@ -844,7 +849,8 @@ static void LoadMapFromWarp(bool32 a1)
     ClearTempFieldEventData();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
-    TryUpdateRandomTrainerRematches(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+    TryUpdateRandomTrainerRematches(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     if (a1 != TRUE)
         DoTimeBasedEvents();
     SetSav1WeatherFromCurrMapHeader();
@@ -897,14 +903,17 @@ static struct InitialPlayerAvatarState *GetInitialPlayerAvatarState(void)
     struct InitialPlayerAvatarState playerStruct;
     u8 mapType = GetCurrentMapType();
     u16 metatileBehavior = GetCenterScreenMetatileBehavior();
-    u8 transitionFlags = GetAdjustedInitialTransitionFlags(&sInitialPlayerAvatarState, metatileBehavior, mapType);
+    u8 transitionFlags =
+        GetAdjustedInitialTransitionFlags(&sInitialPlayerAvatarState, metatileBehavior, mapType);
     playerStruct.transitionFlags = transitionFlags;
-    playerStruct.direction = GetAdjustedInitialDirection(&sInitialPlayerAvatarState, transitionFlags, metatileBehavior, mapType);
+    playerStruct.direction = GetAdjustedInitialDirection(
+        &sInitialPlayerAvatarState, transitionFlags, metatileBehavior, mapType);
     sInitialPlayerAvatarState = playerStruct;
     return &sInitialPlayerAvatarState;
 }
 
-static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *playerStruct, u16 metatileBehavior, u8 mapType)
+static u8 GetAdjustedInitialTransitionFlags(
+    struct InitialPlayerAvatarState *playerStruct, u16 metatileBehavior, u8 mapType)
 {
     if (mapType != MAP_TYPE_INDOOR && FlagGet(FLAG_SYS_CRUISE_MODE))
         return PLAYER_AVATAR_FLAG_ON_FOOT;
@@ -922,13 +931,17 @@ static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *pla
         return PLAYER_AVATAR_FLAG_ACRO_BIKE;
 }
 
-static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStruct, u8 transitionFlags, u16 metatileBehavior, u8 mapType)
+static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStruct,
+    u8 transitionFlags,
+    u16 metatileBehavior,
+    u8 mapType)
 {
     if (FlagGet(FLAG_SYS_CRUISE_MODE) && mapType == MAP_TYPE_OCEAN_ROUTE)
         return DIR_EAST;
     else if (MetatileBehavior_IsDeepSouthWarp(metatileBehavior) == TRUE)
         return DIR_NORTH;
-    else if (MetatileBehavior_IsNonAnimDoor(metatileBehavior) == TRUE || MetatileBehavior_IsDoor(metatileBehavior) == TRUE)
+    else if (MetatileBehavior_IsNonAnimDoor(metatileBehavior) == TRUE
+             || MetatileBehavior_IsDoor(metatileBehavior) == TRUE)
         return DIR_SOUTH;
     else if (MetatileBehavior_IsSouthArrowWarp(metatileBehavior) == TRUE)
         return DIR_NORTH;
@@ -938,8 +951,10 @@ static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStr
         return DIR_EAST;
     else if (MetatileBehavior_IsEastArrowWarp(metatileBehavior) == TRUE)
         return DIR_WEST;
-    else if ((playerStruct->transitionFlags == PLAYER_AVATAR_FLAG_UNDERWATER  && transitionFlags == PLAYER_AVATAR_FLAG_SURFING)
-          || (playerStruct->transitionFlags == PLAYER_AVATAR_FLAG_SURFING && transitionFlags == PLAYER_AVATAR_FLAG_UNDERWATER))
+    else if ((playerStruct->transitionFlags == PLAYER_AVATAR_FLAG_UNDERWATER
+                 && transitionFlags == PLAYER_AVATAR_FLAG_SURFING)
+             || (playerStruct->transitionFlags == PLAYER_AVATAR_FLAG_SURFING
+                 && transitionFlags == PLAYER_AVATAR_FLAG_UNDERWATER))
         return playerStruct->direction;
     else if (MetatileBehavior_IsLadder(metatileBehavior) == TRUE)
         return playerStruct->direction;
@@ -1007,26 +1022,26 @@ static bool16 ShouldLegendaryMusicPlayAtLocation(struct WarpData *warp)
     {
         switch (warp->mapNum)
         {
-        case MAP_NUM(LILYCOVE_CITY):
-        case MAP_NUM(MOSSDEEP_CITY):
-        case MAP_NUM(SOOTOPOLIS_CITY):
-        case MAP_NUM(EVER_GRANDE_CITY):
-        case MAP_NUM(ROUTE124):
-        case MAP_NUM(ROUTE125):
-        case MAP_NUM(ROUTE126):
-        case MAP_NUM(ROUTE127):
-        case MAP_NUM(ROUTE128):
-            return TRUE;
-        default:
-            if (VarGet(VAR_SOOTOPOLIS_CITY_STATE) < 4)
-                return FALSE;
-            switch (warp->mapNum)
-            {
-            case MAP_NUM(ROUTE129):
-            case MAP_NUM(ROUTE130):
-            case MAP_NUM(ROUTE131):
+            case MAP_NUM(LILYCOVE_CITY):
+            case MAP_NUM(MOSSDEEP_CITY):
+            case MAP_NUM(SOOTOPOLIS_CITY):
+            case MAP_NUM(EVER_GRANDE_CITY):
+            case MAP_NUM(ROUTE124):
+            case MAP_NUM(ROUTE125):
+            case MAP_NUM(ROUTE126):
+            case MAP_NUM(ROUTE127):
+            case MAP_NUM(ROUTE128):
                 return TRUE;
-            }
+            default:
+                if (VarGet(VAR_SOOTOPOLIS_CITY_STATE) < 4)
+                    return FALSE;
+                switch (warp->mapNum)
+                {
+                    case MAP_NUM(ROUTE129):
+                    case MAP_NUM(ROUTE130):
+                    case MAP_NUM(ROUTE131):
+                        return TRUE;
+                }
         }
     }
     return FALSE;
@@ -1051,7 +1066,7 @@ static bool16 IsInfiltratedWeatherInstitute(struct WarpData *warp)
     else if (warp->mapGroup != MAP_GROUP(ROUTE119_WEATHER_INSTITUTE_1F))
         return FALSE;
     else if (warp->mapNum == MAP_NUM(ROUTE119_WEATHER_INSTITUTE_1F)
-     || warp->mapNum == MAP_NUM(ROUTE119_WEATHER_INSTITUTE_2F))
+             || warp->mapNum == MAP_NUM(ROUTE119_WEATHER_INSTITUTE_2F))
         return TRUE;
     else
         return FALSE;
@@ -1066,7 +1081,7 @@ static bool16 IsInflitratedSpaceCenter(struct WarpData *warp)
     else if (warp->mapGroup != MAP_GROUP(MOSSDEEP_CITY_SPACE_CENTER_1F))
         return FALSE;
     else if (warp->mapNum == MAP_NUM(MOSSDEEP_CITY_SPACE_CENTER_1F)
-     || warp->mapNum == MAP_NUM(MOSSDEEP_CITY_SPACE_CENTER_2F))
+             || warp->mapNum == MAP_NUM(MOSSDEEP_CITY_SPACE_CENTER_2F))
         return TRUE;
     return FALSE;
 }
@@ -1091,8 +1106,8 @@ u16 GetCurrLocationDefaultMusic(void)
 
     // Play the desert music only when the sandstorm is active on Route 111.
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE111)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE111)
-     && GetSav1Weather() == WEATHER_SANDSTORM)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE111)
+        && GetSav1Weather() == WEATHER_SANDSTORM)
         return MUS_ASHROAD;
 
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
@@ -1119,7 +1134,7 @@ u16 GetWarpDestinationMusic(void)
     else
     {
         if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAUVILLE_CITY)
-         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAUVILLE_CITY))
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAUVILLE_CITY))
             return MUS_DOORO_X1;
         else
             return MUS_GRANROAD;
@@ -1211,13 +1226,11 @@ void TryFadeOutOldMapMusic(void)
     u16 warpMusic = GetWarpDestinationMusic();
     if (FlagGet(FLAG_DONT_TRANSITION_MUSIC) != TRUE && warpMusic != GetCurrentMapMusic())
     {
-        if (currentMusic == MUS_NAMINORI
-            && VarGet(VAR_SKY_PILLAR_STATE) == 2
+        if (currentMusic == MUS_NAMINORI && VarGet(VAR_SKY_PILLAR_STATE) == 2
             && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
             && gSaveBlock1Ptr->location.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
             && sWarpDestination.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
-            && sWarpDestination.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
-            && sWarpDestination.x == 29
+            && sWarpDestination.mapNum == MAP_NUM(SOOTOPOLIS_CITY) && sWarpDestination.x == 29
             && sWarpDestination.y == 53)
             return;
         FadeOutMapMusic(GetMapMusicFadeoutSpeed());
@@ -1242,7 +1255,7 @@ static void PlayAmbientCry(void)
 
     PlayerGetDestCoords(&x, &y);
     if (sIsAmbientCryWaterMon == TRUE
-     && !MetatileBehavior_IsSurfableWaterOrUnderwater(MapGridGetMetatileBehaviorAt(x, y)))
+        && !MetatileBehavior_IsSurfableWaterOrUnderwater(MapGridGetMetatileBehaviorAt(x, y)))
         return;
     pan = (Random() % 88) + 212;
     volume = (Random() % 30) + 50;
@@ -1255,49 +1268,49 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter)
 
     switch (*state)
     {
-    case 0:
-        if (sAmbientCrySpecies == SPECIES_NONE)
-            *state = 4;
-        else
-            *state = 1;
-        break;
-    case 1:
-        *delayCounter = (Random() % 2400) + 1200;
-        *state = 3;
-        break;
-    case 2:
-        divBy = 1;
-        monsCount = CalculatePlayerPartyCount();
-        for (i = 0; i < monsCount; i++)
-        {
-            if (!GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG)
-                && GetMonAbility(&gPlayerParty[0]) == ABILITY_SWARM)
+        case 0:
+            if (sAmbientCrySpecies == SPECIES_NONE)
+                *state = 4;
+            else
+                *state = 1;
+            break;
+        case 1:
+            *delayCounter = (Random() % 2400) + 1200;
+            *state = 3;
+            break;
+        case 2:
+            divBy = 1;
+            monsCount = CalculatePlayerPartyCount();
+            for (i = 0; i < monsCount; i++)
             {
-                divBy = 2;
-                break;
+                if (!GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG)
+                    && GetMonAbility(&gPlayerParty[0]) == ABILITY_SWARM)
+                {
+                    divBy = 2;
+                    break;
+                }
             }
-        }
-        *delayCounter = ((Random() % 1200) + 1200) / divBy;
-        *state = 3;
-        break;
-    case 3:
-        (*delayCounter)--;
-        if (*delayCounter == 0)
-        {
-            PlayAmbientCry();
-            *state = 2;
-        }
-        break;
-    case 4:
-        break;
+            *delayCounter = ((Random() % 1200) + 1200) / divBy;
+            *state = 3;
+            break;
+        case 3:
+            (*delayCounter)--;
+            if (*delayCounter == 0)
+            {
+                PlayAmbientCry();
+                *state = 2;
+            }
+            break;
+        case 4:
+            break;
     }
 }
 
 static void ChooseAmbientCrySpecies(void)
 {
     if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE130)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE130))
-     && !IsMirageIslandPresent())
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE130))
+        && !IsMirageIslandPresent())
     {
         // Only play water pokemon cries on this route
         // when Mirage Island is not present
@@ -1332,11 +1345,8 @@ u8 GetLastUsedWarpMapType(void)
 
 bool8 IsMapTypeOutdoors(u8 mapType)
 {
-    if (mapType == MAP_TYPE_ROUTE
-     || mapType == MAP_TYPE_TOWN
-     || mapType == MAP_TYPE_UNDERWATER
-     || mapType == MAP_TYPE_CITY
-     || mapType == MAP_TYPE_OCEAN_ROUTE)
+    if (mapType == MAP_TYPE_ROUTE || mapType == MAP_TYPE_TOWN || mapType == MAP_TYPE_UNDERWATER
+        || mapType == MAP_TYPE_CITY || mapType == MAP_TYPE_OCEAN_ROUTE)
         return TRUE;
     else
         return FALSE;
@@ -1344,10 +1354,8 @@ bool8 IsMapTypeOutdoors(u8 mapType)
 
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
 {
-    if (mapType == MAP_TYPE_ROUTE
-     || mapType == MAP_TYPE_TOWN
-     || mapType == MAP_TYPE_OCEAN_ROUTE
-     || mapType == MAP_TYPE_CITY)
+    if (mapType == MAP_TYPE_ROUTE || mapType == MAP_TYPE_TOWN || mapType == MAP_TYPE_OCEAN_ROUTE
+        || mapType == MAP_TYPE_CITY)
         return TRUE;
     else
         return FALSE;
@@ -1355,8 +1363,7 @@ bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
 
 bool8 IsMapTypeIndoors(u8 mapType)
 {
-    if (mapType == MAP_TYPE_INDOOR
-     || mapType == MAP_TYPE_SECRET_BASE)
+    if (mapType == MAP_TYPE_INDOOR || mapType == MAP_TYPE_SECRET_BASE)
         return TRUE;
     else
         return FALSE;
@@ -1364,17 +1371,23 @@ bool8 IsMapTypeIndoors(u8 mapType)
 
 u8 GetSavedWarpRegionMapSectionId(void)
 {
-    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->dynamicWarp.mapGroup, gSaveBlock1Ptr->dynamicWarp.mapNum)->regionMapSectionId;
+    return Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->dynamicWarp.mapGroup, gSaveBlock1Ptr->dynamicWarp.mapNum)
+        ->regionMapSectionId;
 }
 
 u8 GetCurrentRegionMapSectionId(void)
 {
-    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)->regionMapSectionId;
+    return Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)
+        ->regionMapSectionId;
 }
 
 u8 GetCurrentMapBattleScene(void)
 {
-    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)->battleType;
+    return Overworld_GetMapHeaderByGroupAndId(
+        gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)
+        ->battleType;
 }
 
 static void InitOverworldBgs(void)
@@ -1793,76 +1806,76 @@ static bool32 LoadMapInStepsLink(u8 *state)
 {
     switch (*state)
     {
-    case 0:
-        InitOverworldBgs();
-        ScriptContext1_Init();
-        ScriptContext2_Disable();
-        ResetMirageTowerAndSaveBlockPtrs();
-        sub_80867D8();
-        (*state)++;
-        break;
-    case 1:
-        LoadMapFromWarp(TRUE);
-        (*state)++;
-        break;
-    case 2:
-        ResumeMap(TRUE);
-        (*state)++;
-        break;
-    case 3:
-        OffsetCameraFocusByLinkPlayerId();
-        InitObjectEventsLink();
-        SpawnLinkPlayers();
-        SetCameraToTrackGuestPlayer();
-        (*state)++;
-        break;
-    case 4:
-        InitCurrentFlashLevelScanlineEffect();
-        InitOverworldGraphicsRegisters();
-        InitTextBoxGfxAndPrinters();
-        (*state)++;
-        break;
-    case 5:
-        ResetFieldCamera();
-        (*state)++;
-        break;
-    case 6:
-        CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 7:
-        CopySecondaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 8:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            LoadMapTilesetPalettes(gMapHeader.mapLayout);
+        case 0:
+            InitOverworldBgs();
+            ScriptContext1_Init();
+            ScriptContext2_Disable();
+            ResetMirageTowerAndSaveBlockPtrs();
+            sub_80867D8();
             (*state)++;
-        }
-        break;
-    case 9:
-        DrawWholeMapView();
-        (*state)++;
-        break;
-    case 10:
-        InitTilesetAnimations();
-        (*state)++;
-        break;
-    case 11:
-        if (gWirelessCommType != 0)
-        {
-            LoadWirelessStatusIndicatorSpriteGfx();
-            CreateWirelessStatusIndicatorSprite(0, 0);
-        }
-        (*state)++;
-        break;
-    case 12:
-        if (RunFieldCallback())
+            break;
+        case 1:
+            LoadMapFromWarp(TRUE);
             (*state)++;
-        break;
-    case 13:
-        return TRUE;
+            break;
+        case 2:
+            ResumeMap(TRUE);
+            (*state)++;
+            break;
+        case 3:
+            OffsetCameraFocusByLinkPlayerId();
+            InitObjectEventsLink();
+            SpawnLinkPlayers();
+            SetCameraToTrackGuestPlayer();
+            (*state)++;
+            break;
+        case 4:
+            InitCurrentFlashLevelScanlineEffect();
+            InitOverworldGraphicsRegisters();
+            InitTextBoxGfxAndPrinters();
+            (*state)++;
+            break;
+        case 5:
+            ResetFieldCamera();
+            (*state)++;
+            break;
+        case 6:
+            CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 7:
+            CopySecondaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 8:
+            if (FreeTempTileDataBuffersIfPossible() != TRUE)
+            {
+                LoadMapTilesetPalettes(gMapHeader.mapLayout);
+                (*state)++;
+            }
+            break;
+        case 9:
+            DrawWholeMapView();
+            (*state)++;
+            break;
+        case 10:
+            InitTilesetAnimations();
+            (*state)++;
+            break;
+        case 11:
+            if (gWirelessCommType != 0)
+            {
+                LoadWirelessStatusIndicatorSpriteGfx();
+                CreateWirelessStatusIndicatorSprite(0, 0);
+            }
+            (*state)++;
+            break;
+        case 12:
+            if (RunFieldCallback())
+                (*state)++;
+            break;
+        case 13:
+            return TRUE;
     }
 
     return FALSE;
@@ -1872,69 +1885,69 @@ static bool32 LoadMapInStepsLocal(u8 *state, bool32 a2)
 {
     switch (*state)
     {
-    case 0:
-        FieldClearVBlankHBlankCallbacks();
-        LoadMapFromWarp(a2);
-        (*state)++;
-        break;
-    case 1:
-        ResetMirageTowerAndSaveBlockPtrs();
-        sub_80867D8();
-        (*state)++;
-        break;
-    case 2:
-        ResumeMap(a2);
-        (*state)++;
-        break;
-    case 3:
-        InitObjectEventsLocal();
-        SetCameraToTrackPlayer();
-        (*state)++;
-        break;
-    case 4:
-        InitCurrentFlashLevelScanlineEffect();
-        InitOverworldGraphicsRegisters();
-        InitTextBoxGfxAndPrinters();
-        (*state)++;
-        break;
-    case 5:
-        ResetFieldCamera();
-        (*state)++;
-        break;
-    case 6:
-        CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 7:
-        CopySecondaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 8:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            LoadMapTilesetPalettes(gMapHeader.mapLayout);
+        case 0:
+            FieldClearVBlankHBlankCallbacks();
+            LoadMapFromWarp(a2);
             (*state)++;
-        }
-        break;
-    case 9:
-        DrawWholeMapView();
-        (*state)++;
-        break;
-    case 10:
-        InitTilesetAnimations();
-        (*state)++;
-        break;
-    case 11:
-        if (SHOW_MAP_NAME_ENABLED && SecretBaseMapPopupEnabled() == TRUE)
-            ShowMapNamePopup();
-        (*state)++;
-        break;
-    case 12:
-        if (RunFieldCallback())
+            break;
+        case 1:
+            ResetMirageTowerAndSaveBlockPtrs();
+            sub_80867D8();
             (*state)++;
-        break;
-    case 13:
-        return TRUE;
+            break;
+        case 2:
+            ResumeMap(a2);
+            (*state)++;
+            break;
+        case 3:
+            InitObjectEventsLocal();
+            SetCameraToTrackPlayer();
+            (*state)++;
+            break;
+        case 4:
+            InitCurrentFlashLevelScanlineEffect();
+            InitOverworldGraphicsRegisters();
+            InitTextBoxGfxAndPrinters();
+            (*state)++;
+            break;
+        case 5:
+            ResetFieldCamera();
+            (*state)++;
+            break;
+        case 6:
+            CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 7:
+            CopySecondaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 8:
+            if (FreeTempTileDataBuffersIfPossible() != TRUE)
+            {
+                LoadMapTilesetPalettes(gMapHeader.mapLayout);
+                (*state)++;
+            }
+            break;
+        case 9:
+            DrawWholeMapView();
+            (*state)++;
+            break;
+        case 10:
+            InitTilesetAnimations();
+            (*state)++;
+            break;
+        case 11:
+            if (SHOW_MAP_NAME_ENABLED && SecretBaseMapPopupEnabled() == TRUE)
+                ShowMapNamePopup();
+            (*state)++;
+            break;
+        case 12:
+            if (RunFieldCallback())
+                (*state)++;
+            break;
+        case 13:
+            return TRUE;
     }
 
     return FALSE;
@@ -1944,25 +1957,25 @@ static bool32 ReturnToFieldLocal(u8 *state)
 {
     switch (*state)
     {
-    case 0:
-        ResetMirageTowerAndSaveBlockPtrs();
-        sub_80867D8();
-        ResumeMap(FALSE);
-        sub_8086A68();
-        SetCameraToTrackPlayer();
-        (*state)++;
-        break;
-    case 1:
-        InitViewGraphics();
-        TryLoadTrainerHillEReaderPalette();
-        (*state)++;
-        break;
-    case 2:
-        if (RunFieldCallback())
+        case 0:
+            ResetMirageTowerAndSaveBlockPtrs();
+            sub_80867D8();
+            ResumeMap(FALSE);
+            sub_8086A68();
+            SetCameraToTrackPlayer();
             (*state)++;
-        break;
-    case 3:
-        return TRUE;
+            break;
+        case 1:
+            InitViewGraphics();
+            TryLoadTrainerHillEReaderPalette();
+            (*state)++;
+            break;
+        case 2:
+            if (RunFieldCallback())
+                (*state)++;
+            break;
+        case 3:
+            return TRUE;
     }
 
     return FALSE;
@@ -1972,74 +1985,74 @@ static bool32 ReturnToFieldLink(u8 *state)
 {
     switch (*state)
     {
-    case 0:
-        FieldClearVBlankHBlankCallbacks();
-        ResetMirageTowerAndSaveBlockPtrs();
-        sub_80867D8();
-        (*state)++;
-        break;
-    case 1:
-        ResumeMap(TRUE);
-        (*state)++;
-        break;
-    case 2:
-        CreateLinkPlayerSprites();
-        sub_8086A68();
-        SetCameraToTrackGuestPlayer_2();
-        (*state)++;
-        break;
-    case 3:
-        InitCurrentFlashLevelScanlineEffect();
-        InitOverworldGraphicsRegisters();
-        InitTextBoxGfxAndPrinters();
-        (*state)++;
-        break;
-    case 4:
-        ResetFieldCamera();
-        (*state)++;
-        break;
-    case 5:
-        CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 6:
-        CopySecondaryTilesetToVram(gMapHeader.mapLayout);
-        (*state)++;
-        break;
-    case 7:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            LoadMapTilesetPalettes(gMapHeader.mapLayout);
+        case 0:
+            FieldClearVBlankHBlankCallbacks();
+            ResetMirageTowerAndSaveBlockPtrs();
+            sub_80867D8();
             (*state)++;
-        }
-        break;
-    case 8:
-        DrawWholeMapView();
-        (*state)++;
-        break;
-    case 9:
-        InitTilesetAnimations();
-        (*state)++;
-        break;
-    case 11:
-        if (gWirelessCommType != 0)
-        {
-            LoadWirelessStatusIndicatorSpriteGfx();
-            CreateWirelessStatusIndicatorSprite(0, 0);
-        }
-        (*state)++;
-        break;
-    case 12:
-        if (RunFieldCallback())
+            break;
+        case 1:
+            ResumeMap(TRUE);
             (*state)++;
-        break;
-    case 10:
-        (*state)++;
-        break;
-    case 13:
-        SetFieldVBlankCallback();
-        (*state)++;
-        return TRUE;
+            break;
+        case 2:
+            CreateLinkPlayerSprites();
+            sub_8086A68();
+            SetCameraToTrackGuestPlayer_2();
+            (*state)++;
+            break;
+        case 3:
+            InitCurrentFlashLevelScanlineEffect();
+            InitOverworldGraphicsRegisters();
+            InitTextBoxGfxAndPrinters();
+            (*state)++;
+            break;
+        case 4:
+            ResetFieldCamera();
+            (*state)++;
+            break;
+        case 5:
+            CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 6:
+            CopySecondaryTilesetToVram(gMapHeader.mapLayout);
+            (*state)++;
+            break;
+        case 7:
+            if (FreeTempTileDataBuffersIfPossible() != TRUE)
+            {
+                LoadMapTilesetPalettes(gMapHeader.mapLayout);
+                (*state)++;
+            }
+            break;
+        case 8:
+            DrawWholeMapView();
+            (*state)++;
+            break;
+        case 9:
+            InitTilesetAnimations();
+            (*state)++;
+            break;
+        case 11:
+            if (gWirelessCommType != 0)
+            {
+                LoadWirelessStatusIndicatorSpriteGfx();
+                CreateWirelessStatusIndicatorSprite(0, 0);
+            }
+            (*state)++;
+            break;
+        case 12:
+            if (RunFieldCallback())
+                (*state)++;
+            break;
+        case 10:
+            (*state)++;
+            break;
+        case 13:
+            SetFieldVBlankCallback();
+            (*state)++;
+            return TRUE;
     }
 
     return FALSE;
@@ -2047,7 +2060,8 @@ static bool32 ReturnToFieldLink(u8 *state)
 
 static void DoMapLoadLoop(u8 *state)
 {
-    while (!LoadMapInStepsLocal(state, FALSE));
+    while (!LoadMapInStepsLocal(state, FALSE))
+        ;
 }
 
 static void ResetMirageTowerAndSaveBlockPtrs(void)
@@ -2080,14 +2094,16 @@ static void InitOverworldGraphicsRegisters(void)
     ClearScheduledBgCopiesToVram();
     ResetTempTileDataBuffers();
     SetGpuReg(REG_OFFSET_MOSAIC, 0);
-    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ);
+    SetGpuReg(
+        REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ);
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WINOBJ_BG0);
     SetGpuReg(REG_OFFSET_WIN0H, 0xFF);
     SetGpuReg(REG_OFFSET_WIN0V, 0xFF);
     SetGpuReg(REG_OFFSET_WIN1H, 0xFFFF);
     SetGpuReg(REG_OFFSET_WIN1V, 0xFFFF);
-    SetGpuReg(REG_OFFSET_BLDCNT, gOverworldBackgroundLayerFlags[1] | gOverworldBackgroundLayerFlags[2] | gOverworldBackgroundLayerFlags[3]
-                               | BLDCNT_TGT2_OBJ | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDCNT,
+        gOverworldBackgroundLayerFlags[1] | gOverworldBackgroundLayerFlags[2]
+            | gOverworldBackgroundLayerFlags[3] | BLDCNT_TGT2_OBJ | BLDCNT_EFFECT_BLEND);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(13, 7));
     InitOverworldBgs();
     ScheduleBgCopyTilemapToVram(1);
@@ -2101,8 +2117,9 @@ static void InitOverworldGraphicsRegisters(void)
     ChangeBgY(2, 0, 0);
     ChangeBgX(3, 0, 0);
     ChangeBgY(3, 0, 0);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_WIN0_ON | DISPCNT_WIN1_ON
-                                | DISPCNT_OBJ_1D_MAP | DISPCNT_HBLANK_INTERVAL);
+    SetGpuReg(REG_OFFSET_DISPCNT,
+        DISPCNT_OBJ_ON | DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_1D_MAP
+            | DISPCNT_HBLANK_INTERVAL);
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
@@ -2217,7 +2234,6 @@ static void CreateLinkPlayerSprites(void)
         CreateLinkPlayerSprite(i, gLinkPlayers[i].version);
 }
 
-
 static void CB1_UpdateLinkState(void)
 {
     if (gWirelessCommType == 0 || !IsRfuRecvQueueEmpty() || !IsSendingKeysToLink())
@@ -2227,10 +2243,10 @@ static void CB1_UpdateLinkState(void)
 
         // Note: Because guestId is between 0 and 4, while the smallest key code is
         // LINK_KEY_CODE_EMPTY, this is functionally equivalent to `sPlayerKeyInterceptCallback(0)`.
-        // It is expecting the callback to be KeyInterCB_SelfIdle, and that will 
+        // It is expecting the callback to be KeyInterCB_SelfIdle, and that will
         // completely ignore any input parameters.
         //
-        // UpdateHeldKeyCode performs a sanity check on its input; if 
+        // UpdateHeldKeyCode performs a sanity check on its input; if
         // sPlayerKeyInterceptCallback echoes back the argument, which is selfId, then
         // it'll use LINK_KEY_CODE_EMPTY instead.
         //
@@ -2298,7 +2314,8 @@ static bool32 IsAnyPlayerInTradingState(u16 tradingState)
     return FALSE;
 }
 
-static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct TradeRoomPlayer *trainer, u16 *forceFacing)
+static void HandleLinkPlayerKeyInput(
+    u32 playerId, u16 key, struct TradeRoomPlayer *trainer, u16 *forceFacing)
 {
     const u8 *script;
 
@@ -2329,82 +2346,82 @@ static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct TradeRoomPlay
 
         switch (key)
         {
-        case LINK_KEY_CODE_START_BUTTON:
-            if (sub_8087340_2(trainer))
-            {
-                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-                if (trainer->isLocalPlayer)
+            case LINK_KEY_CODE_START_BUTTON:
+                if (sub_8087340_2(trainer))
                 {
-                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
-                    InitLinkRoomStartMenuScript();
+                    sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+                    if (trainer->isLocalPlayer)
+                    {
+                        SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                        InitLinkRoomStartMenuScript();
+                    }
                 }
-            }
-            break;
-        case LINK_KEY_CODE_DPAD_DOWN:
-            if (PlayerIsAtSouthExit(trainer) == TRUE)
-            {
-                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-                if (trainer->isLocalPlayer)
+                break;
+            case LINK_KEY_CODE_DPAD_DOWN:
+                if (PlayerIsAtSouthExit(trainer) == TRUE)
                 {
-                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
-                    CreateConfirmLeaveTradeRoomPrompt();
+                    sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+                    if (trainer->isLocalPlayer)
+                    {
+                        SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                        CreateConfirmLeaveTradeRoomPrompt();
+                    }
                 }
-            }
-            break;
-        case LINK_KEY_CODE_A_BUTTON:
-            script = TryInteractWithPlayer(trainer);
-            if (script)
-            {
-                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-                if (trainer->isLocalPlayer)
+                break;
+            case LINK_KEY_CODE_A_BUTTON:
+                script = TryInteractWithPlayer(trainer);
+                if (script)
                 {
-                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
-                    InitMenuBasedScript(script);
+                    sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+                    if (trainer->isLocalPlayer)
+                    {
+                        SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                        InitMenuBasedScript(script);
+                    }
                 }
-            }
-            break;
-        case LINK_KEY_CODE_HANDLE_RECV_QUEUE:
-            if (sub_8087340(trainer))
-            {
-                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-                if (trainer->isLocalPlayer)
+                break;
+            case LINK_KEY_CODE_HANDLE_RECV_QUEUE:
+                if (sub_8087340(trainer))
                 {
-                    SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
-                    sub_8087510();
+                    sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+                    if (trainer->isLocalPlayer)
+                    {
+                        SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
+                        sub_8087510();
+                    }
                 }
-            }
-            break;
-        case LINK_KEY_CODE_HANDLE_SEND_QUEUE:
-            if (sub_8087340(trainer))
-            {
-                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-                if (trainer->isLocalPlayer)
+                break;
+            case LINK_KEY_CODE_HANDLE_SEND_QUEUE:
+                if (sub_8087340(trainer))
                 {
-                    SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
-                    sub_8087510();
+                    sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+                    if (trainer->isLocalPlayer)
+                    {
+                        SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
+                        sub_8087510();
+                    }
                 }
-            }
-            break;
+                break;
         }
     }
 
     switch (key)
     {
-    case LINK_KEY_CODE_EXIT_ROOM:
-        sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_EXITING_ROOM;
-        break;
-    case LINK_KEY_CODE_UNK_2:
-        sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_UNK_2;
-        break;
-    case LINK_KEY_CODE_UNK_4:
-        sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_IDLE;
-        if (trainer->isLocalPlayer)
-            SetKeyInterceptCallback(KeyInterCB_SelfIdle);
-        break;
-    case LINK_KEY_CODE_UNK_7:
-        if (sPlayerTradingStates[playerId] == PLAYER_TRADING_STATE_UNK_2)
-            sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
-        break;
+        case LINK_KEY_CODE_EXIT_ROOM:
+            sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_EXITING_ROOM;
+            break;
+        case LINK_KEY_CODE_UNK_2:
+            sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_UNK_2;
+            break;
+        case LINK_KEY_CODE_UNK_4:
+            sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_IDLE;
+            if (trainer->isLocalPlayer)
+                SetKeyInterceptCallback(KeyInterCB_SelfIdle);
+            break;
+        case LINK_KEY_CODE_UNK_7:
+            if (sPlayerTradingStates[playerId] == PLAYER_TRADING_STATE_UNK_2)
+                sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
+            break;
     }
 }
 
@@ -2432,22 +2449,20 @@ static void UpdateHeldKeyCode(u16 key)
     else
         gHeldKeyCodeToSend = LINK_KEY_CODE_EMPTY;
 
-    if (gWirelessCommType != 0
-        && GetLinkSendQueueLength() > 1
-        && IsUpdateLinkStateCBActive() == TRUE
-        && IsSendingKeysToLink() == TRUE)
+    if (gWirelessCommType != 0 && GetLinkSendQueueLength() > 1
+        && IsUpdateLinkStateCBActive() == TRUE && IsSendingKeysToLink() == TRUE)
     {
         switch (key)
         {
-        case LINK_KEY_CODE_EMPTY:
-        case LINK_KEY_CODE_DPAD_DOWN:
-        case LINK_KEY_CODE_DPAD_UP:
-        case LINK_KEY_CODE_DPAD_LEFT:
-        case LINK_KEY_CODE_DPAD_RIGHT:
-        case LINK_KEY_CODE_START_BUTTON:
-        case LINK_KEY_CODE_A_BUTTON:
-            gHeldKeyCodeToSend = LINK_KEY_CODE_NULL;
-            break;
+            case LINK_KEY_CODE_EMPTY:
+            case LINK_KEY_CODE_DPAD_DOWN:
+            case LINK_KEY_CODE_DPAD_UP:
+            case LINK_KEY_CODE_DPAD_LEFT:
+            case LINK_KEY_CODE_DPAD_RIGHT:
+            case LINK_KEY_CODE_START_BUTTON:
+            case LINK_KEY_CODE_A_BUTTON:
+                gHeldKeyCodeToSend = LINK_KEY_CODE_NULL;
+                break;
         }
     }
 }
@@ -2474,16 +2489,16 @@ static u16 GetDirectionForDpadKey(u16 a1)
 {
     switch (a1)
     {
-    case LINK_KEY_CODE_DPAD_RIGHT:
-        return FACING_RIGHT;
-    case LINK_KEY_CODE_DPAD_LEFT:
-        return FACING_LEFT;
-    case LINK_KEY_CODE_DPAD_UP:
-        return FACING_UP;
-    case LINK_KEY_CODE_DPAD_DOWN:
-        return FACING_DOWN;
-    default:
-        return FACING_NONE;
+        case LINK_KEY_CODE_DPAD_RIGHT:
+            return FACING_RIGHT;
+        case LINK_KEY_CODE_DPAD_LEFT:
+            return FACING_LEFT;
+        case LINK_KEY_CODE_DPAD_UP:
+            return FACING_UP;
+        case LINK_KEY_CODE_DPAD_DOWN:
+            return FACING_DOWN;
+        default:
+            return FACING_NONE;
     }
 }
 
@@ -2494,7 +2509,6 @@ static void ResetPlayerHeldKeys(u16 *keys)
     for (i = 0; i < 4; i++)
         keys[i] = LINK_KEY_CODE_EMPTY;
 }
-
 
 static u16 KeyInterCB_SelfIdle(u32 key)
 {
@@ -2633,9 +2647,11 @@ u32 sub_8087214(void)
 {
     if (IsAnyPlayerInTradingState(PLAYER_TRADING_STATE_EXITING_ROOM) == TRUE)
         return 2;
-    if (sPlayerKeyInterceptCallback == sub_8087170 && sPlayerTradingStates[gLocalLinkPlayerId] != PLAYER_TRADING_STATE_UNK_2)
+    if (sPlayerKeyInterceptCallback == sub_8087170
+        && sPlayerTradingStates[gLocalLinkPlayerId] != PLAYER_TRADING_STATE_UNK_2)
         return 0;
-    if (sPlayerKeyInterceptCallback == KeyInterCB_DoNothingAndKeepAlive && sPlayerTradingStates[gLocalLinkPlayerId] == PLAYER_TRADING_STATE_BUSY)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_DoNothingAndKeepAlive
+        && sPlayerTradingStates[gLocalLinkPlayerId] == PLAYER_TRADING_STATE_BUSY)
         return 2;
     if (AreAllPlayersInTradingState(PLAYER_TRADING_STATE_UNK_2) != FALSE)
         return 1;
@@ -3007,7 +3023,8 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     for (i = 0; i < MAX_LINK_PLAYERS; i++)
     {
         if (gLinkPlayerObjectEvents[i].active
-         && (gLinkPlayerObjectEvents[i].movementMode == 0 || gLinkPlayerObjectEvents[i].movementMode == 2))
+            && (gLinkPlayerObjectEvents[i].movementMode == 0
+                || gLinkPlayerObjectEvents[i].movementMode == 2))
         {
             struct ObjectEvent *objEvent = &gObjectEvents[gLinkPlayerObjectEvents[i].objEventId];
             if (objEvent->currentCoords.x == x && objEvent->currentCoords.y == y)
@@ -3031,41 +3048,46 @@ static void SetPlayerFacingDirection(u8 linkPlayerId, u8 facing)
         }
         else
         {
-            // This is a hack to split this code onto two separate lines, without declaring a local variable.
-            // C++ style inline variables would be nice here.
-            #define TEMP gLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, facing)
+// This is a hack to split this code onto two separate lines, without declaring a local variable.
+// C++ style inline variables would be nice here.
+#define TEMP \
+    gLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, facing)
 
             gMovementStatusHandler[TEMP](linkPlayerObjEvent, objEvent);
-            
-            // Clean up the hack.
-            #undef TEMP
+
+// Clean up the hack.
+#undef TEMP
         }
     }
 }
 
-
-static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Normal(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return gLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
 }
 
-static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Ignored(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return FACING_UP;
 }
 
 // Duplicate Function
-static u8 MovementEventModeCB_Normal_2(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Normal_2(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return gLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
 }
 
-static bool8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static bool8 FacingHandler_DoNothing(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return FALSE;
 }
 
-static bool8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static bool8 FacingHandler_DpadMovement(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     s16 x, y;
 
@@ -3085,19 +3107,22 @@ static bool8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayer
     }
 }
 
-static bool8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static bool8 FacingHandler_ForcedFacingChange(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     objEvent->range.as_byte = FlipVerticalAndClearForced(a3, objEvent->range.as_byte);
     return FALSE;
 }
 
 // This is called every time a free movement happens. Most of the time it's a No-Op.
-static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_EnterFreeMode(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 }
 
-static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_TryAdvanceScript(
+    struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     objEvent->directionSequenceIndex--;
     linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FROZEN;
@@ -3116,18 +3141,18 @@ static u8 FlipVerticalAndClearForced(u8 newFacing, u8 oldFacing)
 {
     switch (newFacing)
     {
-    case FACING_UP:
-    case FACING_FORCED_UP:
-        return DIR_NORTH;
-    case FACING_DOWN:
-    case FACING_FORCED_DOWN:
-        return DIR_SOUTH;
-    case FACING_LEFT:
-    case FACING_FORCED_LEFT:
-        return DIR_WEST;
-    case FACING_RIGHT:
-    case FACING_FORCED_RIGHT:
-        return DIR_EAST;
+        case FACING_UP:
+        case FACING_FORCED_UP:
+            return DIR_NORTH;
+        case FACING_DOWN:
+        case FACING_FORCED_DOWN:
+            return DIR_SOUTH;
+        case FACING_LEFT:
+        case FACING_FORCED_LEFT:
+            return DIR_WEST;
+        case FACING_RIGHT:
+        case FACING_FORCED_RIGHT:
+            return DIR_EAST;
     }
     return oldFacing;
 }
@@ -3140,7 +3165,8 @@ static u8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y)
         if (i != selfObjEventId)
         {
             if ((gObjectEvents[i].currentCoords.x == x && gObjectEvents[i].currentCoords.y == y)
-             || (gObjectEvents[i].previousCoords.x == x && gObjectEvents[i].previousCoords.y == y))
+                || (gObjectEvents[i].previousCoords.x == x
+                    && gObjectEvents[i].previousCoords.y == y))
             {
                 return 1;
             }
@@ -3160,17 +3186,33 @@ static void CreateLinkPlayerSprite(u8 linkPlayerId, u8 gameVersion)
     {
         switch (gameVersion)
         {
-        case VERSION_FIRE_RED:
-        case VERSION_LEAF_GREEN:
-            objEvent->spriteId = AddPseudoObjectEvent(GetFRLGAvatarGraphicsIdByGender(objEvent->singleMovementActive), SpriteCB_LinkPlayer, 0, 0, 0);
-            break;
-        case VERSION_RUBY:
-        case VERSION_SAPPHIRE:
-            objEvent->spriteId = AddPseudoObjectEvent(GetRSAvatarGraphicsIdByGender(objEvent->singleMovementActive), SpriteCB_LinkPlayer, 0, 0, 0);
-            break;
-        case VERSION_EMERALD:
-            objEvent->spriteId = AddPseudoObjectEvent(GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, objEvent->singleMovementActive), SpriteCB_LinkPlayer, 0, 0, 0);
-            break;
+            case VERSION_FIRE_RED:
+            case VERSION_LEAF_GREEN:
+                objEvent->spriteId = AddPseudoObjectEvent(
+                    GetFRLGAvatarGraphicsIdByGender(objEvent->singleMovementActive),
+                    SpriteCB_LinkPlayer,
+                    0,
+                    0,
+                    0);
+                break;
+            case VERSION_RUBY:
+            case VERSION_SAPPHIRE:
+                objEvent->spriteId = AddPseudoObjectEvent(
+                    GetRSAvatarGraphicsIdByGender(objEvent->singleMovementActive),
+                    SpriteCB_LinkPlayer,
+                    0,
+                    0,
+                    0);
+                break;
+            case VERSION_EMERALD:
+                objEvent->spriteId = AddPseudoObjectEvent(
+                    GetRivalAvatarGraphicsIdByStateIdAndGender(
+                        PLAYER_AVATAR_STATE_NORMAL, objEvent->singleMovementActive),
+                    SpriteCB_LinkPlayer,
+                    0,
+                    0,
+                    0);
+                break;
         }
 
         sprite = &gSprites[objEvent->spriteId];

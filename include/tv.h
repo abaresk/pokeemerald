@@ -2,7 +2,7 @@
 #define GUARD_TV_H
 
 #define SLOT_MACHINE 0
-#define ROULETTE 1
+#define ROULETTE     1
 
 extern u8 *const gTVStringVarPtrs[3];
 
@@ -44,12 +44,14 @@ void sub_80F1208(TVShow *shows);
 void sub_80EE44C(u8 nMonsCaught, u8 nPkblkUsed);
 void sub_80F14F8(TVShow *shows);
 size_t sub_80EF370(int value);
-bool8 Put3CheersForPokeblocksOnTheAir(const u8 *partnersName, u8 flavor, u8 unused, u8 sheen, u8 language);
+bool8 Put3CheersForPokeblocksOnTheAir(
+    const u8 *partnersName, u8 flavor, u8 unused, u8 sheen, u8 language);
 void SetPokemonAnglerSpecies(u16 species);
 void UpdateTVShowsPerDay(u16 days);
 void PutPokemonTodayCaughtOnAir(void);
 void TV_PutSecretBaseVisitOnTheAir(void);
-void PutBattleUpdateOnTheAir(u8 opponentLinkPlayerId, u16 move, u16 speciesPlayer, u16 speciesOpponent);
+void PutBattleUpdateOnTheAir(
+    u8 opponentLinkPlayerId, u16 move, u16 speciesPlayer, u16 speciesOpponent);
 void BravoTrainerPokemonProfile_BeforeInterview1(u16 move);
 void InterviewBefore(void);
 void InterviewAfter(void);
@@ -66,4 +68,4 @@ void ContestLiveUpdates_SetWinnerMoveUsed(u16 move);
 void ContestLiveUpdates_SetLoserData(u8 flag, u8 loser);
 void ResetGabbyAndTy(void);
 
-#endif //GUARD_TV_H
+#endif // GUARD_TV_H

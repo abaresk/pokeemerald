@@ -32,7 +32,7 @@ struct SaveSectionOffsets
 // Emerald changes this definition to be the sectors per slot.
 #define NUM_SECTORS_PER_SLOT 16
 
-#define UNKNOWN_CHECK_VALUE 0x8012025
+#define UNKNOWN_CHECK_VALUE      0x8012025
 #define SPECIAL_SECTION_SENTINEL 0xB39D
 
 // SetDamagedSectorBits states
@@ -48,25 +48,25 @@ enum
 {
     SAVE_NORMAL,
     SAVE_LINK,
-    //EREADER_SAVE, // deprecated in Emerald
+    // EREADER_SAVE, // deprecated in Emerald
     SAVE_LINK2, // unknown 2nd link save
     SAVE_HALL_OF_FAME,
     SAVE_OVERWRITE_DIFFERENT_FILE,
     SAVE_HALL_OF_FAME_ERASE_BEFORE // unused
 };
 
-#define SECTOR_ID_SAVEBLOCK2  0
-#define SECTOR_ID_SAVEBLOCK1_START 1
-#define SECTOR_ID_SAVEBLOCK1_END   4
+#define SECTOR_ID_SAVEBLOCK2         0
+#define SECTOR_ID_SAVEBLOCK1_START   1
+#define SECTOR_ID_SAVEBLOCK1_END     4
 #define SECTOR_ID_PKMN_STORAGE_START 5
 #define SECTOR_ID_PKMN_STORAGE_END   13
-#define SECTOR_SAVE_SLOT_LENGTH 14
+#define SECTOR_SAVE_SLOT_LENGTH      14
 // Save Slot 1: 0-13;  Save Slot 2: 14-27
-#define SECTOR_ID_HOF_1 28
-#define SECTOR_ID_HOF_2 29
-#define SECTOR_ID_TRAINER_HILL 30
-#define SECTOR_ID_RECORDED_BATTLE  31
-#define SECTORS_COUNT 32
+#define SECTOR_ID_HOF_1           28
+#define SECTOR_ID_HOF_2           29
+#define SECTOR_ID_TRAINER_HILL    30
+#define SECTOR_ID_RECORDED_BATTLE 31
+#define SECTORS_COUNT             32
 
 #define SAVE_STATUS_EMPTY    0
 #define SAVE_STATUS_OK       1
@@ -100,8 +100,8 @@ bool8 FullSaveGame(void);
 bool8 CheckSaveFile(void);
 u8 Save_LoadGameData(u8 saveType);
 u16 sub_815355C(void);
-u32 TryReadSpecialSaveSection(u8 sector, u8* dst);
-u32 TryWriteSpecialSaveSection(u8 sector, u8* src);
+u32 TryReadSpecialSaveSection(u8 sector, u8 *dst);
+u32 TryWriteSpecialSaveSection(u8 sector, u8 *src);
 void Task_LinkSave(u8 taskId);
 
 // save_failed_screen.c

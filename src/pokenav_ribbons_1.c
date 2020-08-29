@@ -10,7 +10,7 @@
 
 struct PokenavSub9
 {
-    u32 (*unk0)(struct PokenavSub9*);
+    u32 (*unk0)(struct PokenavSub9 *);
     u32 loopedTaskId;
     u16 winid;
     s32 unkC;
@@ -52,63 +52,44 @@ static void sub_81D0288(struct PokenavSub10 *ptr);
 static void sub_81D0304(void);
 static void BufferRibbonMonInfoText(struct PokenavMonList *, u8 *);
 
-static const LoopedTask gUnknown_086235D8[] =
-{
-    sub_81CFB8C,
-    sub_81CFC2C,
-    sub_81CFC40
-};
+static const LoopedTask gUnknown_086235D8[] = { sub_81CFB8C, sub_81CFC2C, sub_81CFC40 };
 
 static const u16 gUnknown_086235E4[] = INCBIN_U16("graphics/pokenav/ui_ribbons.gbapal");
 static const u32 gUnknown_08623604[] = INCBIN_U32("graphics/pokenav/ui_ribbons.4bpp.lz");
 static const u32 gUnknown_086236CC[] = INCBIN_U32("graphics/pokenav/ui_ribbons.bin.lz");
 static const u16 gUnknown_08623790[] = INCBIN_U16("graphics/pokenav/8623790.gbapal");
 
-static const struct BgTemplate gUnknown_086237B0[] =
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 1,
-        .mapBaseIndex = 0x06,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    }, {
-        .bg = 2,
+static const struct BgTemplate gUnknown_086237B0[] = { { .bg = 1,
+                                                           .charBaseIndex = 1,
+                                                           .mapBaseIndex = 0x06,
+                                                           .screenSize = 0,
+                                                           .paletteMode = 0,
+                                                           .priority = 2,
+                                                           .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 0x07,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
+        .baseTile = 0 } };
+
+static const LoopedTask gUnknown_086237B8[] = {
+    NULL, sub_81CFFFC, sub_81D0074, sub_81D00EC, sub_81D0164, sub_81D01DC, sub_81D021C
 };
 
-static const LoopedTask gUnknown_086237B8[] =
-{
-    NULL,
-    sub_81CFFFC,
-    sub_81D0074,
-    sub_81D00EC,
-    sub_81D0164,
-    sub_81D01DC,
-    sub_81D021C
-};
-
-static const struct WindowTemplate gUnknown_086237D4 =
-{
-    .bg = 1,
+static const struct WindowTemplate gUnknown_086237D4 = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 6,
     .width = 7,
     .height = 2,
     .paletteNum = 1,
-    .baseBlock = 20
-};
+    .baseBlock = 20 };
 
-static const u8 sText_MaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
-static const u8 sText_FemaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sText_MaleSymbol[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sText_FemaleSymbol[] = _(
+    "{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
 static const u8 sText_NoGenderSymbol[] = _("{UNK_SPACER}");
 
 bool32 PokenavCallback_Init_12(void)
@@ -202,28 +183,28 @@ static u32 sub_81CFB18(void)
     return structPtr->unk14;
 }
 
-static struct PokenavMonList * sub_81CFB28(void)
+static struct PokenavMonList *sub_81CFB28(void)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     return ptr->unk1C->unk4;
 }
 
 static s32 sub_81CFB38(void)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     return ptr->unk1C->unk0;
 }
 
 static s32 sub_81CFB48(void)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     s32 idx = GetSelectedMatchCall();
     return ptr->unk1C->unk4[idx].data;
 }
 
 static s32 sub_81CFB64(void)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     return ptr->unk1C->unk2;
 }
 
@@ -236,17 +217,18 @@ static u32 sub_81CFB8C(s32 state)
 {
     s32 i;
     struct PokenavMonList item;
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
 
     ptr->unk1C->unk0 = 0;
     ptr->unk1C->unk2 = 0;
     item.boxId = TOTAL_BOXES_COUNT;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        struct Pokemon * pokemon = &gPlayerParty[i];
+        struct Pokemon *pokemon = &gPlayerParty[i];
         if (!GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES))
             return LT_INC_AND_CONTINUE;
-        if (!GetMonData(pokemon, MON_DATA_SANITY_IS_EGG) && !GetMonData(pokemon, MON_DATA_SANITY_IS_BAD_EGG))
+        if (!GetMonData(pokemon, MON_DATA_SANITY_IS_EGG)
+            && !GetMonData(pokemon, MON_DATA_SANITY_IS_BAD_EGG))
         {
             u32 ribbonCount = GetMonData(pokemon, MON_DATA_RIBBON_COUNT);
             if (ribbonCount != 0)
@@ -263,7 +245,7 @@ static u32 sub_81CFB8C(s32 state)
 
 static u32 sub_81CFC2C(s32 state)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     ptr->unk10 = 0;
     ptr->unkC = 0;
     return LT_INC_AND_CONTINUE;
@@ -271,7 +253,7 @@ static u32 sub_81CFC2C(s32 state)
 
 static u32 sub_81CFC40(s32 state)
 {
-    struct PokenavSub9 * ptr = GetSubstructPtr(9);
+    struct PokenavSub9 *ptr = GetSubstructPtr(9);
     s32 boxId = ptr->unkC;
     s32 monId = ptr->unk10;
     s32 boxCount = 0;
@@ -335,7 +317,7 @@ static bool32 sub_81CFD58(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        struct Pokemon * mon = &gPlayerParty[i];
+        struct Pokemon *mon = &gPlayerParty[i];
         if (!GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES))
             continue;
         if (GetMonData(mon, MON_DATA_SANITY_IS_EGG))
@@ -360,7 +342,7 @@ static bool32 sub_81CFD58(void)
 
 bool32 sub_81CFDD0(void)
 {
-    struct PokenavSub10 * ptr = AllocSubstruct(10, sizeof(struct PokenavSub10));
+    struct PokenavSub10 *ptr = AllocSubstruct(10, sizeof(struct PokenavSub10));
     if (ptr == NULL)
         return FALSE;
     ptr->ltid = CreateLoopedTask(sub_81CFEB8, 1);
@@ -371,7 +353,7 @@ bool32 sub_81CFDD0(void)
 
 bool32 sub_81CFE08(void)
 {
-    struct PokenavSub10 * ptr = AllocSubstruct(10, sizeof(struct PokenavSub10));
+    struct PokenavSub10 *ptr = AllocSubstruct(10, sizeof(struct PokenavSub10));
     if (ptr == NULL)
         return FALSE;
     ptr->ltid = CreateLoopedTask(sub_81CFEB8, 1);
@@ -382,26 +364,26 @@ bool32 sub_81CFE08(void)
 
 void sub_81CFE40(s32 idx)
 {
-    struct PokenavSub10 * ptr = GetSubstructPtr(10);
+    struct PokenavSub10 *ptr = GetSubstructPtr(10);
     ptr->ltid = CreateLoopedTask(gUnknown_086237B8[idx], 1);
     ptr->callback = sub_81CFE84;
 }
 
 bool32 sub_81CFE70(void)
 {
-    struct PokenavSub10 * ptr = GetSubstructPtr(10);
+    struct PokenavSub10 *ptr = GetSubstructPtr(10);
     return ptr->callback();
 }
 
 bool32 sub_81CFE84(void)
 {
-    struct PokenavSub10 * ptr = GetSubstructPtr(10);
+    struct PokenavSub10 *ptr = GetSubstructPtr(10);
     return IsLoopedTaskActive(ptr->ltid);
 }
 
 void sub_81CFE98(void)
 {
-    struct PokenavSub10 * ptr = GetSubstructPtr(10);
+    struct PokenavSub10 *ptr = GetSubstructPtr(10);
     sub_81C8234();
     RemoveWindow(ptr->winid);
     FreePokenavSubstruct(10);
@@ -409,188 +391,188 @@ void sub_81CFE98(void)
 
 static u32 sub_81CFEB8(s32 state)
 {
-    struct PokenavSub10 * unk = GetSubstructPtr(10);
+    struct PokenavSub10 *unk = GetSubstructPtr(10);
     switch (state)
     {
-    case 0:
-        InitBgTemplates(gUnknown_086237B0, NELEMS(gUnknown_086237B0));
-        DecompressAndCopyTileDataToVram(1, gUnknown_08623604, 0, 0, 0);
-        SetBgTilemapBuffer(1, unk->buff);
-        CopyToBgTilemapBuffer(1, gUnknown_086236CC, 0, 0);
-        CopyPaletteIntoBufferUnfaded(gUnknown_086235E4, 0x10, 0x20);
-        CopyBgTilemapBufferToVram(1);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (FreeTempTileDataBuffersIfPossible())
-            return LT_PAUSE;
-        if (!sub_81CFB18())
-            return LT_PAUSE;
-        ChangeBgX(1, 0, 0);
-        ChangeBgY(1, 0, 0);
-        ShowBg(1);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        if (FreeTempTileDataBuffersIfPossible())
-            return LT_PAUSE;
-        CopyPaletteIntoBufferUnfaded(gUnknown_08623790, 0x20, 0x20);
-        sub_81D0304();
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (sub_81C8224())
-            return LT_PAUSE;
-        sub_81D024C(unk);
-        return LT_INC_AND_PAUSE;
-    case 4:
-        if (FreeTempTileDataBuffersIfPossible())
-            return LT_PAUSE;
-        ShowBg(2);
-        HideBg(3);
-        PrintHelpBarText(HELPBAR_RIBBONS_MON_LIST);
-        PokenavFadeScreen(1);
-        if (!unk->unkC)
-        {
-            LoadLeftHeaderGfxForIndex(2);
-            sub_81C7FA0(2, 1, 0);
-        }
-        return LT_INC_AND_PAUSE;
-    case 5:
-        if (IsPaletteFadeActive())
-            return LT_PAUSE;
-        if (sub_81C8010())
-            return LT_PAUSE;
-        break;
+        case 0:
+            InitBgTemplates(gUnknown_086237B0, NELEMS(gUnknown_086237B0));
+            DecompressAndCopyTileDataToVram(1, gUnknown_08623604, 0, 0, 0);
+            SetBgTilemapBuffer(1, unk->buff);
+            CopyToBgTilemapBuffer(1, gUnknown_086236CC, 0, 0);
+            CopyPaletteIntoBufferUnfaded(gUnknown_086235E4, 0x10, 0x20);
+            CopyBgTilemapBufferToVram(1);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (FreeTempTileDataBuffersIfPossible())
+                return LT_PAUSE;
+            if (!sub_81CFB18())
+                return LT_PAUSE;
+            ChangeBgX(1, 0, 0);
+            ChangeBgY(1, 0, 0);
+            ShowBg(1);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            if (FreeTempTileDataBuffersIfPossible())
+                return LT_PAUSE;
+            CopyPaletteIntoBufferUnfaded(gUnknown_08623790, 0x20, 0x20);
+            sub_81D0304();
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (sub_81C8224())
+                return LT_PAUSE;
+            sub_81D024C(unk);
+            return LT_INC_AND_PAUSE;
+        case 4:
+            if (FreeTempTileDataBuffersIfPossible())
+                return LT_PAUSE;
+            ShowBg(2);
+            HideBg(3);
+            PrintHelpBarText(HELPBAR_RIBBONS_MON_LIST);
+            PokenavFadeScreen(1);
+            if (!unk->unkC)
+            {
+                LoadLeftHeaderGfxForIndex(2);
+                sub_81C7FA0(2, 1, 0);
+            }
+            return LT_INC_AND_PAUSE;
+        case 5:
+            if (IsPaletteFadeActive())
+                return LT_PAUSE;
+            if (sub_81C8010())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
 
 static u32 sub_81CFFFC(s32 state)
 {
-    struct PokenavSub10 * unk = GetSubstructPtr(10);
+    struct PokenavSub10 *unk = GetSubstructPtr(10);
     switch (state)
     {
-    case 0:
-        switch (MatchCall_MoveCursorUp())
-        {
         case 0:
-            return LT_FINISH;
+            switch (MatchCall_MoveCursorUp())
+            {
+                case 0:
+                    return LT_FINISH;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return LT_SET_STATE(2);
+                case 2:
+                    PlaySE(SE_SELECT);
+                    break;
+            }
+            return LT_INC_AND_PAUSE;
         case 1:
-            PlaySE(SE_SELECT);
-            return LT_SET_STATE(2);
+            if (sub_81C8630())
+                return LT_PAUSE;
+            // fallthrough
         case 2:
-            PlaySE(SE_SELECT);
+            sub_81D0288(unk);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
             break;
-        }
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
-        // fallthrough
-    case 2:
-        sub_81D0288(unk);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
     }
     return LT_FINISH;
 }
 
 static u32 sub_81D0074(s32 state)
 {
-    struct PokenavSub10 * unk = GetSubstructPtr(10);
+    struct PokenavSub10 *unk = GetSubstructPtr(10);
     switch (state)
     {
-    case 0:
-        switch (MatchCall_MoveCursorDown())
-        {
         case 0:
-            return LT_FINISH;
+            switch (MatchCall_MoveCursorDown())
+            {
+                case 0:
+                    return LT_FINISH;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return LT_SET_STATE(2);
+                case 2:
+                    PlaySE(SE_SELECT);
+                    break;
+            }
+            return LT_INC_AND_PAUSE;
         case 1:
-            PlaySE(SE_SELECT);
-            return LT_SET_STATE(2);
+            if (sub_81C8630())
+                return LT_PAUSE;
+            // fallthrough
         case 2:
-            PlaySE(SE_SELECT);
+            sub_81D0288(unk);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
             break;
-        }
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
-        // fallthrough
-    case 2:
-        sub_81D0288(unk);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
     }
     return LT_FINISH;
 }
 
 static u32 sub_81D00EC(s32 state)
 {
-    struct PokenavSub10 * unk = GetSubstructPtr(10);
+    struct PokenavSub10 *unk = GetSubstructPtr(10);
     switch (state)
     {
-    case 0:
-        switch (MatchCall_PageUp())
-        {
         case 0:
-            return LT_FINISH;
+            switch (MatchCall_PageUp())
+            {
+                case 0:
+                    return LT_FINISH;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return LT_SET_STATE(2);
+                case 2:
+                    PlaySE(SE_SELECT);
+                    break;
+            }
+            return LT_INC_AND_PAUSE;
         case 1:
-            PlaySE(SE_SELECT);
-            return LT_SET_STATE(2);
+            if (sub_81C8630())
+                return LT_PAUSE;
+            // fallthrough
         case 2:
-            PlaySE(SE_SELECT);
+            sub_81D0288(unk);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
             break;
-        }
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
-        // fallthrough
-    case 2:
-        sub_81D0288(unk);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
     }
     return LT_FINISH;
 }
 
 static u32 sub_81D0164(s32 state)
 {
-    struct PokenavSub10 * unk = GetSubstructPtr(10);
+    struct PokenavSub10 *unk = GetSubstructPtr(10);
     switch (state)
     {
-    case 0:
-        switch (MatchCall_PageDown())
-        {
         case 0:
-            return LT_FINISH;
+            switch (MatchCall_PageDown())
+            {
+                case 0:
+                    return LT_FINISH;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return LT_SET_STATE(2);
+                case 2:
+                    PlaySE(SE_SELECT);
+                    break;
+            }
+            return LT_INC_AND_PAUSE;
         case 1:
-            PlaySE(SE_SELECT);
-            return LT_SET_STATE(2);
+            if (sub_81C8630())
+                return LT_PAUSE;
+            // fallthrough
         case 2:
-            PlaySE(SE_SELECT);
+            sub_81D0288(unk);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
             break;
-        }
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
-        // fallthrough
-    case 2:
-        sub_81D0288(unk);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
     }
     return LT_FINISH;
 }
@@ -599,18 +581,18 @@ static u32 sub_81D01DC(s32 state)
 {
     switch (state)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        PokenavFadeScreen(0);
-        sub_81C78A0();
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsPaletteFadeActive())
-            return LT_PAUSE;
-        if (MainMenuLoopedTaskIsBusy())
-            return LT_PAUSE;
-        sub_81C7FDC();
-        break;
+        case 0:
+            PlaySE(SE_SELECT);
+            PokenavFadeScreen(0);
+            sub_81C78A0();
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsPaletteFadeActive())
+                return LT_PAUSE;
+            if (MainMenuLoopedTaskIsBusy())
+                return LT_PAUSE;
+            sub_81C7FDC();
+            break;
     }
     return LT_FINISH;
 }
@@ -619,19 +601,19 @@ static u32 sub_81D021C(s32 state)
 {
     switch (state)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        PokenavFadeScreen(0);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsPaletteFadeActive())
-            return LT_PAUSE;
-        break;
+        case 0:
+            PlaySE(SE_SELECT);
+            PokenavFadeScreen(0);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsPaletteFadeActive())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
 
-static void sub_81D024C(struct PokenavSub10 * ptr)
+static void sub_81D024C(struct PokenavSub10 *ptr)
 {
     s32 r2;
     ptr->winid = AddWindow(&gUnknown_086237D4);
@@ -642,7 +624,7 @@ static void sub_81D024C(struct PokenavSub10 * ptr)
     sub_81D0288(ptr);
 }
 
-static void sub_81D0288(struct PokenavSub10 * ptr)
+static void sub_81D0288(struct PokenavSub10 *ptr)
 {
     s32 r4 = GetSelectedMatchCall();
     s32 r2 = sub_81CFB38();
@@ -655,7 +637,7 @@ static void sub_81D02B0(s32 windowId, s32 val1, s32 val2)
     u8 strbuf[16];
     u32 x;
 
-    u8 * ptr = strbuf;
+    u8 *ptr = strbuf;
     ptr = ConvertIntToDecimalStringN(ptr, val1, STR_CONV_MODE_RIGHT_ALIGN, 3);
     *ptr++ = CHAR_SLASH;
     ConvertIntToDecimalStringN(ptr, val2, STR_CONV_MODE_RIGHT_ALIGN, 3);
@@ -682,18 +664,18 @@ static void sub_81D0304(void)
 }
 
 // Buffers the "Nickname gender/level" text for the ribbon mon list
-static void BufferRibbonMonInfoText(struct PokenavMonList * item0, u8 * dest)
+static void BufferRibbonMonInfoText(struct PokenavMonList *item0, u8 *dest)
 {
     u8 gender;
     u8 level;
-    u8 * s;
-    const u8 * genderStr;
-    struct PokenavMonList * item = item0;
+    u8 *s;
+    const u8 *genderStr;
+    struct PokenavMonList *item = item0;
 
     // Mon is in party
     if (item->boxId == TOTAL_BOXES_COUNT)
     {
-        struct Pokemon * mon = &gPlayerParty[item->monId];
+        struct Pokemon *mon = &gPlayerParty[item->monId];
         gender = GetMonGender(mon);
         level = GetLevelFromMonExp(mon);
         GetMonData(mon, MON_DATA_NICKNAME, gStringVar3);
@@ -701,7 +683,7 @@ static void BufferRibbonMonInfoText(struct PokenavMonList * item0, u8 * dest)
     // Mon is in PC
     else
     {
-        struct BoxPokemon * mon = GetBoxedMonPtr(item->boxId, item->monId);
+        struct BoxPokemon *mon = GetBoxedMonPtr(item->boxId, item->monId);
         gender = GetBoxMonGender(mon);
         level = GetLevelFromBoxMonExp(mon);
         GetBoxMonData(mon, MON_DATA_NICKNAME, gStringVar3);
@@ -711,15 +693,15 @@ static void BufferRibbonMonInfoText(struct PokenavMonList * item0, u8 * dest)
     dest = sub_81DB494(dest, 1, gStringVar3, 60);
     switch (gender)
     {
-    default:
-        genderStr = sText_NoGenderSymbol;
-        break;
-    case MON_MALE:
-        genderStr = sText_MaleSymbol;
-        break;
-    case MON_FEMALE:
-        genderStr = sText_FemaleSymbol;
-        break;
+        default:
+            genderStr = sText_NoGenderSymbol;
+            break;
+        case MON_MALE:
+            genderStr = sText_MaleSymbol;
+            break;
+        case MON_FEMALE:
+            genderStr = sText_FemaleSymbol;
+            break;
     }
 
     s = StringCopy(gStringVar1, genderStr);

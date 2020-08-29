@@ -120,40 +120,29 @@ static const u16 gUnknown_08622700[] = INCBIN_U16("graphics/pokenav/8622700.gbap
 static const u16 gUnknown_08622720[] = INCBIN_U16("graphics/pokenav/pokeball_matchcall.gbapal");
 static const u32 gUnknown_08622760[] = INCBIN_U32("graphics/pokenav/pokeball_matchcall.4bpp.lz");
 
-const struct BgTemplate gUnknown_0862278C[3] = 
-{
-    {
-        .bg = 1,
-        .charBaseIndex = 3,
-        .mapBaseIndex = 0x1F,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+const struct BgTemplate gUnknown_0862278C[3] = { { .bg = 1,
+                                                     .charBaseIndex = 3,
+                                                     .mapBaseIndex = 0x1F,
+                                                     .screenSize = 0,
+                                                     .paletteMode = 0,
+                                                     .priority = 1,
+                                                     .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 0x06,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0x80
-    },
-    {
-        .bg = 3,
+        .baseTile = 0x80 },
+    { .bg = 3,
         .charBaseIndex = 1,
         .mapBaseIndex = 0x07,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    }
-};
+        .baseTile = 0 } };
 
-static const LoopedTask sMatchCallLoopTaskFuncs[] = 
-{
-    [POKENAV_MC_FUNC_NONE] = NULL,
+static const LoopedTask sMatchCallLoopTaskFuncs[] = { [POKENAV_MC_FUNC_NONE] = NULL,
     [POKENAV_MC_FUNC_DOWN] = MatchCallListCursorDown,
     [POKENAV_MC_FUNC_UP] = MatchCallListCursorUp,
     [POKENAV_MC_FUNC_PG_DOWN] = MatchCallListPageDown,
@@ -168,64 +157,45 @@ static const LoopedTask sMatchCallLoopTaskFuncs[] =
     [POKENAV_MC_FUNC_CHECK_PAGE_UP] = ShowCheckPageUp,
     [POKENAV_MC_FUNC_CHECK_PAGE_DOWN] = ShowCheckPageDown,
     [POKENAV_MC_FUNC_EXIT_CHECK_PAGE] = ExitCheckPage,
-    [POKENAV_MC_FUNC_EXIT] = ExitMatchCall
-};
+    [POKENAV_MC_FUNC_EXIT] = ExitMatchCall };
 
-static const struct WindowTemplate sMatchCallLocationWindowTemplate = 
-{
-    .bg = 2,
+static const struct WindowTemplate sMatchCallLocationWindowTemplate = { .bg = 2,
     .tilemapLeft = 0,
     .tilemapTop = 5,
     .width = 11,
     .height = 2,
     .paletteNum = 2,
-    .baseBlock = 16
-};
+    .baseBlock = 16 };
 
-static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate = 
-{
-    .bg = 2,
+static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate = { .bg = 2,
     .tilemapLeft = 0,
     .tilemapTop = 9,
     .width = 11,
     .height = 8,
     .paletteNum = 2,
-    .baseBlock = 38
-};
+    .baseBlock = 38 };
 
-static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] = 
-{
-    [MATCH_CALL_OPTION_CALL]   = gText_Call,
-    [MATCH_CALL_OPTION_CHECK]  = gText_Check,
-    [MATCH_CALL_OPTION_CANCEL] = gText_Cancel6
-};
+static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] = { [MATCH_CALL_OPTION_CALL] =
+                                                                              gText_Call,
+    [MATCH_CALL_OPTION_CHECK] = gText_Check,
+    [MATCH_CALL_OPTION_CANCEL] = gText_Cancel6 };
 
 // The series of 5 dots that appear when someone is called with Match Call
 static const u8 sText_CallingDots[] = _("·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·\p");
 
-static const struct WindowTemplate sCallMsgBoxWindowTemplate = 
-{
-    .bg = 1,
+static const struct WindowTemplate sCallMsgBoxWindowTemplate = { .bg = 1,
     .tilemapLeft = 1,
     .tilemapTop = 12,
     .width = 0x1C,
     .height = 0x04,
     .paletteNum = 1,
-    .baseBlock = 10
-};
+    .baseBlock = 10 };
 
-const struct CompressedSpriteSheet gUnknown_08622810[1] = 
-{
-    {gUnknown_086226B8, 0x40, 7}
-};
+const struct CompressedSpriteSheet gUnknown_08622810[1] = { { gUnknown_086226B8, 0x40, 7 } };
 
-const struct SpritePalette gUnknown_08622818[2] = 
-{
-    {gUnknown_08622698, 12}
-};
+const struct SpritePalette gUnknown_08622818[2] = { { gUnknown_08622698, 12 } };
 
-static const struct OamData sOptionsCursorOamData = 
-{
+static const struct OamData sOptionsCursorOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -236,10 +206,9 @@ static const struct OamData sOptionsCursorOamData =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-}; 
+};
 
-static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
-{
+static const struct SpriteTemplate sOptionsCursorSpriteTemplate = {
     .tileTag = 7,
     .paletteTag = 12,
     .oam = &sOptionsCursorOamData,
@@ -249,8 +218,7 @@ static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
     .callback = SpriteCB_OptionsCursor,
 };
 
-static const struct OamData sTrainerPicOamData = 
-{
+static const struct OamData sTrainerPicOamData = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -263,8 +231,7 @@ static const struct OamData sTrainerPicOamData =
     .paletteNum = 0,
 };
 
-static const struct SpriteTemplate sTrainerPicSpriteTemplate =
-{
+static const struct SpriteTemplate sTrainerPicSpriteTemplate = {
     .tileTag = 8,
     .paletteTag = 13,
     .oam = &sTrainerPicOamData,
@@ -321,71 +288,71 @@ static u32 LoopedTask_OpenMatchCall(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        InitBgTemplates(gUnknown_0862278C, ARRAY_COUNT(gUnknown_0862278C));
-        ChangeBgX(2, 0, 0);
-        ChangeBgY(2, 0, 0);
-        DecompressAndCopyTileDataToVram(2, sMatchCallUI_Gfx, 0, 0, 0);
-        SetBgTilemapBuffer(2, state->unk1024);
-        CopyToBgTilemapBuffer(2, sMatchCallUI_Tilemap, 0, 0);
-        CopyBgTilemapBufferToVram(2);
-        CopyPaletteIntoBufferUnfaded(sMatchCallUI_Pal, 0x20, 0x20);
-        CopyBgTilemapBufferToVram(2);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (FreeTempTileDataBuffersIfPossible())
-            return LT_PAUSE;
+        case 0:
+            InitBgTemplates(gUnknown_0862278C, ARRAY_COUNT(gUnknown_0862278C));
+            ChangeBgX(2, 0, 0);
+            ChangeBgY(2, 0, 0);
+            DecompressAndCopyTileDataToVram(2, sMatchCallUI_Gfx, 0, 0, 0);
+            SetBgTilemapBuffer(2, state->unk1024);
+            CopyToBgTilemapBuffer(2, sMatchCallUI_Tilemap, 0, 0);
+            CopyBgTilemapBufferToVram(2);
+            CopyPaletteIntoBufferUnfaded(sMatchCallUI_Pal, 0x20, 0x20);
+            CopyBgTilemapBufferToVram(2);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (FreeTempTileDataBuffersIfPossible())
+                return LT_PAUSE;
 
-        sub_8199DF0(1, 0, 0, 1);
-        SetBgTilemapBuffer(1, state->unk24);
-        FillBgTilemapBufferRect_Palette0(1, 0x1000, 0, 0, 32, 20);
-        CopyPaletteIntoBufferUnfaded(gUnknown_086226E0, 0x10, 0x20);
-        CopyBgTilemapBufferToVram(1);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        if (FreeTempTileDataBuffersIfPossible())
-            return LT_PAUSE;
+            sub_8199DF0(1, 0, 0, 1);
+            SetBgTilemapBuffer(1, state->unk24);
+            FillBgTilemapBufferRect_Palette0(1, 0x1000, 0, 0, 32, 20);
+            CopyPaletteIntoBufferUnfaded(gUnknown_086226E0, 0x10, 0x20);
+            CopyBgTilemapBufferToVram(1);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            if (FreeTempTileDataBuffersIfPossible())
+                return LT_PAUSE;
 
-        sub_81CC034(state);
-        DecompressAndCopyTileDataToVram(3, gUnknown_08622760, 0, 0, 0);
-        CopyPaletteIntoBufferUnfaded(gUnknown_08622700, 0x30, 0x20);
-        CopyPaletteIntoBufferUnfaded(gUnknown_08622720, 0x50, 0x20);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (FreeTempTileDataBuffersIfPossible() || !sub_81CAE28())
-            return LT_PAUSE;
+            sub_81CC034(state);
+            DecompressAndCopyTileDataToVram(3, gUnknown_08622760, 0, 0, 0);
+            CopyPaletteIntoBufferUnfaded(gUnknown_08622700, 0x30, 0x20);
+            CopyPaletteIntoBufferUnfaded(gUnknown_08622720, 0x50, 0x20);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (FreeTempTileDataBuffersIfPossible() || !sub_81CAE28())
+                return LT_PAUSE;
 
-        sub_81CBBB8();
-        return LT_INC_AND_PAUSE;
-    case 4:
-        if (sub_81C8224())
-            return LT_PAUSE;
+            sub_81CBBB8();
+            return LT_INC_AND_PAUSE;
+        case 4:
+            if (sub_81C8224())
+                return LT_PAUSE;
 
-        DrawMatchCallLeftColumnWindows(state);
-        return LT_INC_AND_PAUSE;
-    case 5:
-        UpdateMatchCallInfoBox(state);
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 6:
-        ChangeBgX(1, 0, 0);
-        ChangeBgY(1, 0, 0);
-        ShowBg(2);
-        ShowBg(3);
-        ShowBg(1);
-        sub_81CC214();
-        LoadLeftHeaderGfxForIndex(3);
-        sub_81C7FA0(3, 1, 0);
-        PokenavFadeScreen(1);
-        return LT_INC_AND_PAUSE;
-    case 7:
-        if (IsPaletteFadeActive() || sub_81C8010())
-            return LT_PAUSE;
+            DrawMatchCallLeftColumnWindows(state);
+            return LT_INC_AND_PAUSE;
+        case 5:
+            UpdateMatchCallInfoBox(state);
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 6:
+            ChangeBgX(1, 0, 0);
+            ChangeBgY(1, 0, 0);
+            ShowBg(2);
+            ShowBg(3);
+            ShowBg(1);
+            sub_81CC214();
+            LoadLeftHeaderGfxForIndex(3);
+            sub_81C7FA0(3, 1, 0);
+            PokenavFadeScreen(1);
+            return LT_INC_AND_PAUSE;
+        case 7:
+            if (IsPaletteFadeActive() || sub_81C8010())
+                return LT_PAUSE;
 
-        sub_81CBC38(1);
-        return LT_FINISH;
-    default:
-        return LT_FINISH;
+            sub_81CBC38(1);
+            return LT_FINISH;
+        default:
+            return LT_FINISH;
     }
 }
 
@@ -394,34 +361,34 @@ u32 MatchCallListCursorDown(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        switch (MatchCall_MoveCursorDown())
-        {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
+        case 0:
+            switch (MatchCall_MoveCursorDown())
+            {
+                case 0:
+                    break;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return 7;
+                case 2:
+                    PlaySE(SE_SELECT);
+                    // fall through
+                default:
+                    return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (sub_81C8630())
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
@@ -431,34 +398,34 @@ u32 MatchCallListCursorUp(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        switch (MatchCall_MoveCursorUp())
-        {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
+        case 0:
+            switch (MatchCall_MoveCursorUp())
+            {
+                case 0:
+                    break;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return 7;
+                case 2:
+                    PlaySE(SE_SELECT);
+                    // fall through
+                default:
+                    return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (sub_81C8630())
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
@@ -468,34 +435,34 @@ u32 MatchCallListPageDown(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        switch (MatchCall_PageDown())
-        {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
+        case 0:
+            switch (MatchCall_PageDown())
+            {
+                case 0:
+                    break;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return 7;
+                case 2:
+                    PlaySE(SE_SELECT);
+                    // fall through
+                default:
+                    return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (sub_81C8630())
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
@@ -505,34 +472,34 @@ u32 MatchCallListPageUp(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        switch (MatchCall_PageUp())
-        {
-            case 0:
-                break;
-            case 1:
-                PlaySE(SE_SELECT);
-                return 7;
-            case 2:
-                PlaySE(SE_SELECT);
-                // fall through
-            default:
-                return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (sub_81C8630())
-            return LT_PAUSE;
+        case 0:
+            switch (MatchCall_PageUp())
+            {
+                case 0:
+                    break;
+                case 1:
+                    PlaySE(SE_SELECT);
+                    return 7;
+                case 2:
+                    PlaySE(SE_SELECT);
+                    // fall through
+                default:
+                    return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (sub_81C8630())
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintMatchCallLocation(state, 0);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintMatchCallLocation(state, 0);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
+            break;
     }
     return LT_FINISH;
 }
@@ -542,15 +509,15 @@ u32 SelectMatchCallEntry(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        PrintMatchCallSelectionOptions(state);
-        PrintHelpBarText(HELPBAR_MC_CALL_MENU);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81CBFC4(state))
-            return LT_PAUSE;
-        break;
+        case 0:
+            PlaySE(SE_SELECT);
+            PrintMatchCallSelectionOptions(state);
+            PrintHelpBarText(HELPBAR_MC_CALL_MENU);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (sub_81CBFC4(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -573,15 +540,15 @@ u32 CancelMatchCallSelection(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        UpdateWindowsReturnToTrainerList(state);
-        PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsDma3ManagerBusyWithBgCopy1(state))
-            return LT_PAUSE;
-        break;
+        case 0:
+            PlaySE(SE_SELECT);
+            UpdateWindowsReturnToTrainerList(state);
+            PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsDma3ManagerBusyWithBgCopy1(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -592,28 +559,28 @@ u32 DoMatchCallMessage(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        ToggleMatchCallVerticalArrows(TRUE);
-        DrawMsgBoxForMatchCallMsg(state);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsDma3ManagerBusyWithBgCopy2(state))
-            return LT_PAUSE;
+        case 0:
+            ToggleMatchCallVerticalArrows(TRUE);
+            DrawMsgBoxForMatchCallMsg(state);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsDma3ManagerBusyWithBgCopy2(state))
+                return LT_PAUSE;
 
-        PrintCallingDots(state);
-        PlaySE(SE_TOREEYE);
-        state->unkE = 0;
-        return LT_INC_AND_PAUSE;
-    case 2:
-        if (WaitForCallingDotsText(state))
-            return LT_PAUSE;
+            PrintCallingDots(state);
+            PlaySE(SE_TOREEYE);
+            state->unkE = 0;
+            return LT_INC_AND_PAUSE;
+        case 2:
+            if (WaitForCallingDotsText(state))
+                return LT_PAUSE;
 
-        PrintMatchCallMessage(state);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (WaitForMatchCallMessageText(state))
-            return LT_PAUSE;
-        break;
+            PrintMatchCallMessage(state);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (WaitForMatchCallMessageText(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -624,22 +591,22 @@ u32 DoTrainerCloseByMessage(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        DrawMsgBoxForCloseByMsg(state);
-        ToggleMatchCallVerticalArrows(TRUE);
-        state->unkE = 1;
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsDma3ManagerBusyWithBgCopy2(state))
-            return LT_PAUSE;
+        case 0:
+            PlaySE(SE_SELECT);
+            DrawMsgBoxForCloseByMsg(state);
+            ToggleMatchCallVerticalArrows(TRUE);
+            state->unkE = 1;
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsDma3ManagerBusyWithBgCopy2(state))
+                return LT_PAUSE;
 
-        PrintTrainerIsCloseBy(state);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        if (WaitForTrainerIsCloseByText(state))
-            return LT_PAUSE;
-        break;
+            PrintTrainerIsCloseBy(state);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            if (WaitForTrainerIsCloseByText(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -652,58 +619,58 @@ u32 sub_81CB888(s32 taskState)
 
     switch (taskState)
     {
-    case 0:
-        if (!state->unkE)
-            PlaySE(SE_TOREOFF);
+        case 0:
+            if (!state->unkE)
+                PlaySE(SE_TOREOFF);
 
-        PlaySE(SE_SELECT);
-        break;
-    case 1:
-        DrawSpinningPokenavForCall(state);
-        break;
-    case 2:
-        if (WaitForSpinningPokenav(state))
-            result = LT_PAUSE;
-        break;
-    case 3:
-        UpdateWindowsReturnToTrainerList(state);
-        break;
-    case 4:
-        if (IsDma3ManagerBusyWithBgCopy1(state))
-            result = LT_PAUSE;
+            PlaySE(SE_SELECT);
+            break;
+        case 1:
+            DrawSpinningPokenavForCall(state);
+            break;
+        case 2:
+            if (WaitForSpinningPokenav(state))
+                result = LT_PAUSE;
+            break;
+        case 3:
+            UpdateWindowsReturnToTrainerList(state);
+            break;
+        case 4:
+            if (IsDma3ManagerBusyWithBgCopy1(state))
+                result = LT_PAUSE;
 
-        PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
-        break;
-    case 5:
-        if (WaitForHelpBar())
-        {
-            result = LT_PAUSE;
-        }
-        else
-        {
-            if (state->unkF)
+            PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
+            break;
+        case 5:
+            if (WaitForHelpBar())
             {
-                sub_81C8838();
-                result = LT_INC_AND_CONTINUE;
+                result = LT_PAUSE;
+            }
+            else
+            {
+                if (state->unkF)
+                {
+                    sub_81C8838();
+                    result = LT_INC_AND_CONTINUE;
+                }
+                else
+                {
+                    ToggleMatchCallVerticalArrows(FALSE);
+                    result = LT_FINISH;
+                }
+            }
+            break;
+        case 6:
+            if (IsDma3ManagerBusyWithBgCopy())
+            {
+                result = LT_PAUSE;
             }
             else
             {
                 ToggleMatchCallVerticalArrows(FALSE);
                 result = LT_FINISH;
             }
-        }
-        break;
-    case 6:
-        if (IsDma3ManagerBusyWithBgCopy())
-        {
-            result = LT_PAUSE;
-        }
-        else
-        {
-            ToggleMatchCallVerticalArrows(FALSE);
-            result = LT_FINISH;
-        }
-        break;
+            break;
     }
 
     return result;
@@ -714,25 +681,25 @@ u32 ShowCheckPage(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        sub_81C877C();
-        UpdateWindowsToShowCheckPage(state);
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8820() || IsDma3ManagerBusyWithBgCopy1(state))
-            return LT_PAUSE;
+        case 0:
+            PlaySE(SE_SELECT);
+            sub_81C877C();
+            UpdateWindowsToShowCheckPage(state);
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (sub_81C8820() || IsDma3ManagerBusyWithBgCopy1(state))
+                return LT_PAUSE;
 
-        PrintHelpBarText(HELPBAR_MC_CHECK_PAGE);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintCheckPageInfo(0);
-        LoadCheckPageTrainerPic(state);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        if (sub_81C8820() || WaitForTrainerPic(state) || WaitForHelpBar())
-            return LT_PAUSE;
-        break;
+            PrintHelpBarText(HELPBAR_MC_CHECK_PAGE);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintCheckPageInfo(0);
+            LoadCheckPageTrainerPic(state);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            if (sub_81C8820() || WaitForTrainerPic(state) || WaitForHelpBar())
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -745,33 +712,33 @@ u32 ShowCheckPageDown(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        topId = GetMatchCallListTopIndex();
-        delta = GetIndexDeltaOfNextCheckPageDown(topId);
-        if (delta)
-        {
-            PlaySE(SE_SELECT);
-            state->unk16 = delta;
-            TrainerPicSlideOffscreen(state);
-            return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (WaitForTrainerPic(state))
-            return LT_PAUSE;
+        case 0:
+            topId = GetMatchCallListTopIndex();
+            delta = GetIndexDeltaOfNextCheckPageDown(topId);
+            if (delta)
+            {
+                PlaySE(SE_SELECT);
+                state->unk16 = delta;
+                TrainerPicSlideOffscreen(state);
+                return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (WaitForTrainerPic(state))
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, state->unk16);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintCheckPageInfo(state->unk16);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        LoadCheckPageTrainerPic(state);
-        return LT_INC_AND_PAUSE;
-    case 4:
-        if (sub_81C8820() || WaitForTrainerPic(state))
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, state->unk16);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintCheckPageInfo(state->unk16);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            LoadCheckPageTrainerPic(state);
+            return LT_INC_AND_PAUSE;
+        case 4:
+            if (sub_81C8820() || WaitForTrainerPic(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -782,22 +749,22 @@ u32 ExitCheckPage(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        TrainerPicSlideOffscreen(state);
-        sub_81C87F0();
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (sub_81C8820() || WaitForTrainerPic(state))
-            return LT_PAUSE;
+        case 0:
+            PlaySE(SE_SELECT);
+            TrainerPicSlideOffscreen(state);
+            sub_81C87F0();
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (sub_81C8820() || WaitForTrainerPic(state))
+                return LT_PAUSE;
 
-        PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
-        UpdateMatchCallInfoBox(state);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        if (IsDma3ManagerBusyWithBgCopy())
-            return LT_PAUSE;
-        break;
+            PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
+            UpdateMatchCallInfoBox(state);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            if (IsDma3ManagerBusyWithBgCopy())
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -810,33 +777,33 @@ u32 ShowCheckPageUp(s32 taskState)
     struct Pokenav4Struct *state = GetSubstructPtr(6);
     switch (taskState)
     {
-    case 0:
-        topId = GetMatchCallListTopIndex();
-        delta = GetIndexDeltaOfNextCheckPageUp(topId);
-        if (delta)
-        {
-            PlaySE(SE_SELECT);
-            state->unk16 = delta;
-            TrainerPicSlideOffscreen(state);
-            return LT_INC_AND_PAUSE;
-        }
-        break;
-    case 1:
-        if (WaitForTrainerPic(state))
-            return LT_PAUSE;
+        case 0:
+            topId = GetMatchCallListTopIndex();
+            delta = GetIndexDeltaOfNextCheckPageUp(topId);
+            if (delta)
+            {
+                PlaySE(SE_SELECT);
+                state->unk16 = delta;
+                TrainerPicSlideOffscreen(state);
+                return LT_INC_AND_PAUSE;
+            }
+            break;
+        case 1:
+            if (WaitForTrainerPic(state))
+                return LT_PAUSE;
 
-        PrintMatchCallLocation(state, state->unk16);
-        return LT_INC_AND_PAUSE;
-    case 2:
-        PrintCheckPageInfo(state->unk16);
-        return LT_INC_AND_PAUSE;
-    case 3:
-        LoadCheckPageTrainerPic(state);
-        return LT_INC_AND_PAUSE;
-    case 4:
-        if (sub_81C8820() || WaitForTrainerPic(state))
-            return LT_PAUSE;
-        break;
+            PrintMatchCallLocation(state, state->unk16);
+            return LT_INC_AND_PAUSE;
+        case 2:
+            PrintCheckPageInfo(state->unk16);
+            return LT_INC_AND_PAUSE;
+        case 3:
+            LoadCheckPageTrainerPic(state);
+            return LT_INC_AND_PAUSE;
+        case 4:
+            if (sub_81C8820() || WaitForTrainerPic(state))
+                return LT_PAUSE;
+            break;
     }
 
     return LT_FINISH;
@@ -846,18 +813,18 @@ u32 ExitMatchCall(s32 taskState)
 {
     switch (taskState)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        sub_81CBC38(0);
-        PokenavFadeScreen(0);
-        sub_81C78A0();
-        return LT_INC_AND_PAUSE;
-    case 1:
-        if (IsPaletteFadeActive() || MainMenuLoopedTaskIsBusy())
-            return LT_PAUSE;
+        case 0:
+            PlaySE(SE_SELECT);
+            sub_81CBC38(0);
+            PokenavFadeScreen(0);
+            sub_81C78A0();
+            return LT_INC_AND_PAUSE;
+        case 1:
+            if (IsPaletteFadeActive() || MainMenuLoopedTaskIsBusy())
+                return LT_PAUSE;
 
-        sub_81C7FDC();
-        break;
+            sub_81C7FDC();
+            break;
     }
 
     return LT_FINISH;
@@ -903,7 +870,12 @@ static void sub_81CBC64(u8 taskId)
         taskData[0] += 4;
         taskData[0] &= 0x7F;
         taskData[1] = gSineTable[taskData[0]] >> 4;
-        sub_81C79BC(gUnknown_08622720, gUnknown_08622720 + 0x10, 0x10, 0x10, taskData[1], gPlttBufferUnfaded + 0x50);
+        sub_81C79BC(gUnknown_08622720,
+            gUnknown_08622720 + 0x10,
+            0x10,
+            0x10,
+            taskData[1],
+            gPlttBufferUnfaded + 0x50);
         if (!gPaletteFade.active)
             CpuCopy32(gPlttBufferUnfaded + 0x50, gPlttBufferFaded + 0x50, 0x20);
     }
@@ -1007,7 +979,7 @@ static void PrintMatchCallLocation(struct Pokenav4Struct *state, int arg1)
         GetMapName(mapName, mapSec, 0);
     else
         StringCopy(mapName, gText_Unknown);
-    
+
     x = GetStringCenterAlignXOffset(7, mapName, 88);
     FillWindowPixelBuffer(state->locWindowId, PIXEL_FILL(1));
     AddTextPrinterParameterized(state->locWindowId, 7, mapName, x, 1, 0, NULL);
@@ -1024,7 +996,13 @@ static void PrintMatchCallSelectionOptions(struct Pokenav4Struct *state)
         if (optionText == MATCH_CALL_OPTION_COUNT)
             break;
 
-        AddTextPrinterParameterized(state->infoBoxWindowId, 7, sMatchCallOptionTexts[optionText], 16, i * 16 + 1, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(state->infoBoxWindowId,
+            7,
+            sMatchCallOptionTexts[optionText],
+            16,
+            i * 16 + 1,
+            TEXT_SPEED_FF,
+            NULL);
     }
 
     CopyWindowToVram(state->infoBoxWindowId, 2);
@@ -1249,22 +1227,22 @@ static void SpriteCB_TrainerPicSlideOnscreen(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        if (CheckForSpaceForDma3Request(sprite->data[7]) != -1)
-        {
-            sprite->pos2.x = -80;
-            sprite->invisible = FALSE;
-            sprite->data[0]++;
-        }
-        break;
-    case 1:
-        sprite->pos2.x += 8;
-        if (sprite->pos2.x >= 0)
-        {
-            sprite->pos2.x = 0;
-            sprite->callback = SpriteCallbackDummy;
-        }
-        break;
+        case 0:
+            if (CheckForSpaceForDma3Request(sprite->data[7]) != -1)
+            {
+                sprite->pos2.x = -80;
+                sprite->invisible = FALSE;
+                sprite->data[0]++;
+            }
+            break;
+        case 1:
+            sprite->pos2.x += 8;
+            if (sprite->pos2.x >= 0)
+            {
+                sprite->pos2.x = 0;
+                sprite->callback = SpriteCallbackDummy;
+            }
+            break;
     }
 }
 

@@ -14,17 +14,17 @@
 static u32 mevent_receive_func(struct mevent_srv_sub *);
 static u32 mevent_send_func(struct mevent_srv_sub *);
 
-u32 mevent_srv_sub_recv(struct mevent_srv_sub * svr)
+u32 mevent_srv_sub_recv(struct mevent_srv_sub *svr)
 {
     return svr->recvFunc(svr);
 }
 
-u32 mevent_srv_sub_send(struct mevent_srv_sub * svr)
+u32 mevent_srv_sub_send(struct mevent_srv_sub *svr)
 {
     return svr->sendFunc(svr);
 }
 
-void mevent_srv_sub_init(struct mevent_srv_sub * svr, u32 sendPlayerNo, u32 recvPlayerNo)
+void mevent_srv_sub_init(struct mevent_srv_sub *svr, u32 sendPlayerNo, u32 recvPlayerNo)
 {
     svr->sendPlayerNo = sendPlayerNo;
     svr->recvPlayerNo = recvPlayerNo;
@@ -41,7 +41,7 @@ void mevent_srv_sub_init(struct mevent_srv_sub * svr, u32 sendPlayerNo, u32 recv
     svr->recvFunc = mevent_receive_func;
 }
 
-void mevent_srv_sub_init_send(struct mevent_srv_sub * svr, u32 ident, const void * src, u32 size)
+void mevent_srv_sub_init_send(struct mevent_srv_sub *svr, u32 ident, const void *src, u32 size)
 {
     svr->seqno = 0;
     svr->sendIdent = ident;
@@ -54,7 +54,7 @@ void mevent_srv_sub_init_send(struct mevent_srv_sub * svr, u32 ident, const void
     svr->sendBfr = src;
 }
 
-void mevent_srv_sub_init_recv(struct mevent_srv_sub * svr, u32 ident, void * dest)
+void mevent_srv_sub_init_recv(struct mevent_srv_sub *svr, u32 ident, void *dest)
 {
     svr->seqno = 0;
     svr->recvIdent = ident;
@@ -64,7 +64,7 @@ void mevent_srv_sub_init_recv(struct mevent_srv_sub * svr, u32 ident, void * des
     svr->recvBfr = dest;
 }
 
-static void mevent_recv_block(u32 recv_idx, void * dest, size_t size)
+static void mevent_recv_block(u32 recv_idx, void *dest, size_t size)
 {
     memcpy(dest, gBlockRecvBuffer[recv_idx], size);
 }
@@ -82,7 +82,7 @@ static void mevent_reset_recv(u32 recv_idx)
     ResetBlockReceivedFlag(recv_idx);
 }
 
-static bool32 mevent_receive_func(struct mevent_srv_sub * svr)
+static bool32 mevent_receive_func(struct mevent_srv_sub *svr)
 {
     struct send_recv_header header;
 
@@ -118,7 +118,8 @@ static bool32 mevent_receive_func(struct mevent_srv_sub * svr)
                 size_t blocksiz = svr->recvCounter * 252;
                 if (svr->recvSize - blocksiz <= 252)
                 {
-                    mevent_recv_block(svr->recvPlayerNo, svr->recvBfr + blocksiz, svr->recvSize - blocksiz);
+                    mevent_recv_block(
+                        svr->recvPlayerNo, svr->recvBfr + blocksiz, svr->recvSize - blocksiz);
                     ++svr->recvCounter;
                     ++svr->seqno;
                 }
@@ -142,13 +143,12 @@ static bool32 mevent_receive_func(struct mevent_srv_sub * svr)
                 return TRUE;
             }
             break;
-
     }
 
     return FALSE;
 }
 
-static bool32 mevent_send_func(struct mevent_srv_sub * svr)
+static bool32 mevent_send_func(struct mevent_srv_sub *svr)
 {
     struct send_recv_header header;
 

@@ -34,4 +34,4 @@ extern const struct SpritePalette gSpritePalette_SecretPower_Plant;
 extern const struct SpritePalette gFieldEffectObjectPaletteInfo9;
 extern const u16 gTilesetPalettes_SecretBase[][16];
 
-#endif //GUARD_FLDEFF_MISC_H
+#endif // GUARD_FLDEFF_MISC_H

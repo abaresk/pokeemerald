@@ -67,13 +67,16 @@ bool32 sub_801B078(const struct WonderNews *src)
 
     s_DestroyWonderNews();
     gSaveBlock1Ptr->unk_322C.wonderNews.data = *src;
-    gSaveBlock1Ptr->unk_322C.wonderNews.crc = CalcCRC16WithTable((void *)&gSaveBlock1Ptr->unk_322C.wonderNews.data, sizeof(struct WonderNews));
+    gSaveBlock1Ptr->unk_322C.wonderNews.crc = CalcCRC16WithTable(
+        (void *)&gSaveBlock1Ptr->unk_322C.wonderNews.data, sizeof(struct WonderNews));
     return TRUE;
 }
 
 bool32 ValidateReceivedWonderNews(void)
 {
-    if (CalcCRC16WithTable((void *)&gSaveBlock1Ptr->unk_322C.wonderNews.data, sizeof(struct WonderNews)) != gSaveBlock1Ptr->unk_322C.wonderNews.crc)
+    if (CalcCRC16WithTable(
+            (void *)&gSaveBlock1Ptr->unk_322C.wonderNews.data, sizeof(struct WonderNews))
+        != gSaveBlock1Ptr->unk_322C.wonderNews.crc)
         return FALSE;
     if (!sub_801B114(&gSaveBlock1Ptr->unk_322C.wonderNews.data))
         return FALSE;
@@ -146,7 +149,8 @@ bool32 sub_801B21C(const struct WonderCard *data)
 
     DestroyWonderCard();
     memcpy(&gSaveBlock1Ptr->unk_322C.wonderCard.data, data, sizeof(struct WonderCard));
-    gSaveBlock1Ptr->unk_322C.wonderCard.crc = CalcCRC16WithTable((void *)&gSaveBlock1Ptr->unk_322C.wonderCard.data, sizeof(struct WonderCard));
+    gSaveBlock1Ptr->unk_322C.wonderCard.crc = CalcCRC16WithTable(
+        (void *)&gSaveBlock1Ptr->unk_322C.wonderCard.data, sizeof(struct WonderCard));
     r2 = &gSaveBlock1Ptr->unk_322C.buffer_310.data;
     r1 = &gSaveBlock1Ptr->unk_322C.wonderCard.data;
     r2->unk_06 = r1->unk_02;
@@ -155,7 +159,9 @@ bool32 sub_801B21C(const struct WonderCard *data)
 
 bool32 ValidateReceivedWonderCard(void)
 {
-    if (gSaveBlock1Ptr->unk_322C.wonderCard.crc != CalcCRC16WithTable((void *)&gSaveBlock1Ptr->unk_322C.wonderCard.data, sizeof(struct WonderCard)))
+    if (gSaveBlock1Ptr->unk_322C.wonderCard.crc
+        != CalcCRC16WithTable(
+            (void *)&gSaveBlock1Ptr->unk_322C.wonderCard.data, sizeof(struct WonderCard)))
         return FALSE;
     if (!sub_801B2CC(&gSaveBlock1Ptr->unk_322C.wonderCard.data))
         return FALSE;
@@ -198,7 +204,7 @@ static void sub_801B330(void)
 
 static void sub_801B368(void)
 {
-    CpuFill32(0, sav1_get_mevent_buffer_2(), 18 *sizeof(u16));
+    CpuFill32(0, sav1_get_mevent_buffer_2(), 18 * sizeof(u16));
     gSaveBlock1Ptr->unk_322C.buffer_310.crc = 0;
 }
 
@@ -224,8 +230,7 @@ static bool32 IsWonderCardFlagIDInValidRange(u16 a0)
     return FALSE;
 }
 
-static const u16 sMysteryGiftFlags[] =
-{
+static const u16 sMysteryGiftFlags[] = {
     FLAG_RECEIVED_AURORA_TICKET,
     FLAG_RECEIVED_MYSTIC_TICKET,
     FLAG_RECEIVED_OLD_SEA_MAP,
@@ -324,7 +329,8 @@ bool32 sub_801B508(const u16 *data)
 
     for (i = 0; i < size; i++)
     {
-        if (gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[1][i] == 0 && gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[0][i] == 0)
+        if (gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[1][i] == 0
+            && gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[0][i] == 0)
         {
             gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[1][i] = data[1];
             gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_08[0][i] = data[0];
@@ -423,7 +429,8 @@ u32 sub_801B708(const u16 *a0, const struct MEventStruct_Unk1442CC *a1, const vo
     return 2;
 }
 
-bool32 MEventStruct_Unk1442CC_CompareField_unk_16(const struct MEventStruct_Unk1442CC *a0, const u16 *a1)
+bool32 MEventStruct_Unk1442CC_CompareField_unk_16(
+    const struct MEventStruct_Unk1442CC *a0, const u16 *a1)
 {
     int i;
     for (i = 0; i < 4; i++)
@@ -440,23 +447,24 @@ static int sub_801B770(const struct MEventStruct_Unk1442CC *a0)
     return sub_801B438(&a0->unk_20, a0->unk_44);
 }
 
-u16 MEventStruct_Unk1442CC_GetValueNFrom_unk_20(const struct MEventStruct_Unk1442CC *a0, u32 command)
+u16 MEventStruct_Unk1442CC_GetValueNFrom_unk_20(
+    const struct MEventStruct_Unk1442CC *a0, u32 command)
 {
     switch (command)
     {
-    case 0:
-        return a0->unk_20.unk_00;
-    case 1:
-        return a0->unk_20.unk_02;
-    case 2:
-        return a0->unk_20.unk_04;
-    case 3:
-        return sub_801B770(a0);
-    case 4:
-        return a0->unk_44;
-    default:
-        AGB_ASSERT(0);
-        return 0;
+        case 0:
+            return a0->unk_20.unk_00;
+        case 1:
+            return a0->unk_20.unk_02;
+        case 2:
+            return a0->unk_20.unk_04;
+        case 3:
+            return sub_801B770(a0);
+        case 4:
+            return a0->unk_44;
+        default:
+            AGB_ASSERT(0);
+            return 0;
     }
 }
 
@@ -468,19 +476,19 @@ static void sub_801B7D8(u32 command)
         u16 *dest = NULL;
         switch (command)
         {
-        case 0:
-            dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_00;
-            break;
-        case 1:
-            dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_02;
-            break;
-        case 2:
-            dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_04;
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
+            case 0:
+                dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_00;
+                break;
+            case 1:
+                dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_02;
+                break;
+            case 2:
+                dest = &gSaveBlock1Ptr->unk_322C.buffer_310.data.unk_04;
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
 
         if (dest == NULL)
@@ -575,17 +583,17 @@ void RecordIdOfWonderCardSenderByEventType(u32 a0, u32 a1)
     {
         switch (a0)
         {
-        case 2:
-            sub_801BA8C(2, a1, gSaveBlock1Ptr->unk_322C.unk_344[1], 5);
-            break;
-        case 0:
-            sub_801BA8C(0, a1, gSaveBlock1Ptr->unk_322C.unk_344[0], 5);
-            break;
-        case 1:
-            sub_801BA8C(1, a1, gSaveBlock1Ptr->unk_322C.unk_344[0], 5);
-            break;
-        default:
-            AGB_ASSERT(0);
+            case 2:
+                sub_801BA8C(2, a1, gSaveBlock1Ptr->unk_322C.unk_344[1], 5);
+                break;
+            case 0:
+                sub_801BA8C(0, a1, gSaveBlock1Ptr->unk_322C.unk_344[0], 5);
+                break;
+            case 1:
+                sub_801BA8C(1, a1, gSaveBlock1Ptr->unk_322C.unk_344[0], 5);
+                break;
+            default:
+                AGB_ASSERT(0);
         }
     }
 }

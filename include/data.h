@@ -68,7 +68,7 @@ struct Trainer
     /*0x24*/ union TrainerMonPtr party;
 };
 
-#define TRAINER_ENCOUNTER_MUSIC(trainer)((gTrainers[trainer].encounterMusic_gender & 0x7F))
+#define TRAINER_ENCOUNTER_MUSIC(trainer) ((gTrainers[trainer].encounterMusic_gender & 0x7F))
 
 extern const u16 gUnknown_082FF1D8[];
 extern const u32 gUnknown_082FF1F8[];

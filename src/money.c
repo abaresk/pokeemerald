@@ -17,8 +17,7 @@ EWRAM_DATA static u8 sMoneyLabelSpriteId = 0;
 
 #define MONEY_LABEL_TAG 0x2722
 
-static const struct OamData sOamData_MoneyLabel =
-{
+static const struct OamData sOamData_MoneyLabel = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -34,52 +33,40 @@ static const struct OamData sOamData_MoneyLabel =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_MoneyLabel[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_MoneyLabel[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_MoneyLabel[] =
-{
+static const union AnimCmd *const sSpriteAnimTable_MoneyLabel[] = {
     sSpriteAnim_MoneyLabel,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_MoneyLabel =
-{
-    .tileTag = MONEY_LABEL_TAG,
+static const struct SpriteTemplate sSpriteTemplate_MoneyLabel = { .tileTag = MONEY_LABEL_TAG,
     .paletteTag = MONEY_LABEL_TAG,
     .oam = &sOamData_MoneyLabel,
     .anims = sSpriteAnimTable_MoneyLabel,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
-};
+    .callback = SpriteCallbackDummy };
 
-static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel =
-{
+static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel = {
     .data = gMenuMoneyGfx,
     .size = 256,
     .tag = MONEY_LABEL_TAG,
 };
 
-static const struct CompressedSpritePalette sSpritePalette_MoneyLabel =
-{
-    .data = gMenuMoneyPal,
-    .tag = MONEY_LABEL_TAG
-};
+static const struct CompressedSpritePalette sSpritePalette_MoneyLabel = { .data = gMenuMoneyPal,
+    .tag = MONEY_LABEL_TAG };
 
-u32 GetMoney(u32* moneyPtr)
+u32 GetMoney(u32 *moneyPtr)
 {
     return *moneyPtr ^ gSaveBlock2Ptr->encryptionKey;
 }
 
-void SetMoney(u32* moneyPtr, u32 newValue)
+void SetMoney(u32 *moneyPtr, u32 newValue)
 {
     *moneyPtr = gSaveBlock2Ptr->encryptionKey ^ newValue;
 }
 
-bool8 IsEnoughMoney(u32* moneyPtr, u32 cost)
+bool8 IsEnoughMoney(u32 *moneyPtr, u32 cost)
 {
     if (GetMoney(moneyPtr) >= cost)
         return TRUE;
@@ -87,7 +74,7 @@ bool8 IsEnoughMoney(u32* moneyPtr, u32 cost)
         return FALSE;
 }
 
-void AddMoney(u32* moneyPtr, u32 toAdd)
+void AddMoney(u32 *moneyPtr, u32 toAdd)
 {
     u32 toSet = GetMoney(moneyPtr);
 
@@ -107,7 +94,7 @@ void AddMoney(u32* moneyPtr, u32 toAdd)
     SetMoney(moneyPtr, toSet);
 }
 
-void RemoveMoney(u32* moneyPtr, u32 toSub)
+void RemoveMoney(u32 *moneyPtr, u32 toSub)
 {
     u32 toSet = GetMoney(moneyPtr);
 

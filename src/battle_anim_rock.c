@@ -27,33 +27,28 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId);
 static void sub_8111214(struct Task *task);
 static u8 GetRolloutCounter(void);
 
-static const union AnimCmd sAnim_FlyingRock_0[] =
-{
+static const union AnimCmd sAnim_FlyingRock_0[] = {
     ANIMCMD_FRAME(32, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_FlyingRock_1[] =
-{
+static const union AnimCmd sAnim_FlyingRock_1[] = {
     ANIMCMD_FRAME(48, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_FlyingRock_2[] =
-{
+static const union AnimCmd sAnim_FlyingRock_2[] = {
     ANIMCMD_FRAME(64, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_FlyingRock[] =
-{
+static const union AnimCmd *const sAnims_FlyingRock[] = {
     sAnim_FlyingRock_0,
     sAnim_FlyingRock_1,
     sAnim_FlyingRock_2,
 };
 
-const struct SpriteTemplate gFallingRockSpriteTemplate =
-{
+const struct SpriteTemplate gFallingRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -63,8 +58,7 @@ const struct SpriteTemplate gFallingRockSpriteTemplate =
     .callback = AnimFallingRock,
 };
 
-const struct SpriteTemplate gRockFragmentSpriteTemplate =
-{
+const struct SpriteTemplate gRockFragmentSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -74,8 +68,7 @@ const struct SpriteTemplate gRockFragmentSpriteTemplate =
     .callback = AnimRockFragment,
 };
 
-const struct SpriteTemplate gSwirlingDirtSpriteTemplate =
-{
+const struct SpriteTemplate gSwirlingDirtSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -85,21 +78,18 @@ const struct SpriteTemplate gSwirlingDirtSpriteTemplate =
     .callback = AnimParticleInVortex,
 };
 
-static const union AffineAnimCmd sAffineAnim_Whirlpool[] =
-{
+static const union AffineAnimCmd sAffineAnim_Whirlpool[] = {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
     AFFINEANIMCMD_FRAME(0x2, 0xFFFD, 0, 5),
     AFFINEANIMCMD_FRAME(0xFFFE, 0x3, 0, 5),
     AFFINEANIMCMD_JUMP(1),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_Whirlpool[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_Whirlpool[] = {
     sAffineAnim_Whirlpool,
 };
 
-const struct SpriteTemplate gWhirlpoolSpriteTemplate =
-{
+const struct SpriteTemplate gWhirlpoolSpriteTemplate = {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
@@ -109,8 +99,7 @@ const struct SpriteTemplate gWhirlpoolSpriteTemplate =
     .callback = AnimParticleInVortex,
 };
 
-const struct SpriteTemplate gFireSpinSpriteTemplate =
-{
+const struct SpriteTemplate gFireSpinSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -120,8 +109,7 @@ const struct SpriteTemplate gFireSpinSpriteTemplate =
     .callback = AnimParticleInVortex,
 };
 
-const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate =
-{
+const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate = {
     .tileTag = ANIM_TAG_FLYING_DIRT,
     .paletteTag = ANIM_TAG_FLYING_DIRT,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
@@ -131,69 +119,68 @@ const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate =
     .callback = AnimFlyingSandCrescent,
 };
 
-static const struct Subsprite sFlyingSandSubsprites[] =
-{
-    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .tileOffset = 0, .priority = 1},
-    {.x =  16, .y = 0, .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .tileOffset = 8, .priority = 1},
+static const struct Subsprite sFlyingSandSubsprites[] = {
+    { .x = -16,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x16),
+        .size = SPRITE_SIZE(32x16),
+        .tileOffset = 0,
+        .priority = 1 },
+    { .x = 16,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x16),
+        .size = SPRITE_SIZE(32x16),
+        .tileOffset = 8,
+        .priority = 1 },
 };
 
-static const struct SubspriteTable sFlyingSandSubspriteTable[] =
-{
-    {ARRAY_COUNT(sFlyingSandSubsprites), sFlyingSandSubsprites},
+static const struct SubspriteTable sFlyingSandSubspriteTable[] = {
+    { ARRAY_COUNT(sFlyingSandSubsprites), sFlyingSandSubsprites },
 };
 
-static const union AnimCmd sAnim_BasicRock_0[] =
-{
+static const union AnimCmd sAnim_BasicRock_0[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_BasicRock_1[] =
-{
+static const union AnimCmd sAnim_BasicRock_1[] = {
     ANIMCMD_FRAME(16, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_WeatherBallRockDown_0[] =
-{
+static const union AnimCmd sAnim_WeatherBallRockDown_0[] = {
     ANIMCMD_FRAME(32, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_WeatherBallRockDown_1[] =
-{
+static const union AnimCmd sAnim_WeatherBallRockDown_1[] = {
     ANIMCMD_FRAME(48, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_TwisterRock_0[] =
-{
+static const union AnimCmd sAnim_TwisterRock_0[] = {
     ANIMCMD_FRAME(64, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_TwisterRock_1[] =
-{
+static const union AnimCmd sAnim_TwisterRock_1[] = {
     ANIMCMD_FRAME(80, 1),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_BasicRock[] =
-{
+static const union AnimCmd *const sAnims_BasicRock[] = {
     sAnim_BasicRock_0,
     sAnim_BasicRock_1,
     sAnim_WeatherBallRockDown_0,
     sAnim_WeatherBallRockDown_1,
 };
 
-static const union AnimCmd *const sAnims_TwisterRock[] =
-{
+static const union AnimCmd *const sAnims_TwisterRock[] = {
     sAnim_TwisterRock_0,
     sAnim_TwisterRock_1,
 };
 
-const struct SpriteTemplate gAncientPowerRockSpriteTemplate =
-{
+const struct SpriteTemplate gAncientPowerRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -203,8 +190,7 @@ const struct SpriteTemplate gAncientPowerRockSpriteTemplate =
     .callback = AnimRaiseSprite,
 };
 
-const struct SpriteTemplate gRolloutMudSpriteTemplate =
-{
+const struct SpriteTemplate gRolloutMudSpriteTemplate = {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
@@ -214,8 +200,7 @@ const struct SpriteTemplate gRolloutMudSpriteTemplate =
     .callback = AnimRolloutParticle,
 };
 
-const struct SpriteTemplate gRolloutRockSpriteTemplate =
-{
+const struct SpriteTemplate gRolloutRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -225,8 +210,7 @@ const struct SpriteTemplate gRolloutRockSpriteTemplate =
     .callback = AnimRolloutParticle,
 };
 
-const struct SpriteTemplate gRockTombRockSpriteTemplate =
-{
+const struct SpriteTemplate gRockTombRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -236,26 +220,22 @@ const struct SpriteTemplate gRockTombRockSpriteTemplate =
     .callback = AnimRockTomb,
 };
 
-static const union AffineAnimCmd sAffineAnim_BasicRock_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_BasicRock_0[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -5, 5),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd sAffineAnim_BasicRock_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_BasicRock_1[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 5, 5),
     AFFINEANIMCMD_JUMP(0),
 };
 
-static const union AffineAnimCmd *const sAffineAnims_BasicRock[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_BasicRock[] = {
     sAffineAnim_BasicRock_0,
     sAffineAnim_BasicRock_1,
 };
 
-const struct SpriteTemplate gRockBlastRockSpriteTemplate =
-{
+const struct SpriteTemplate gRockBlastRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -265,8 +245,7 @@ const struct SpriteTemplate gRockBlastRockSpriteTemplate =
     .callback = AnimRockBlastRock,
 };
 
-const struct SpriteTemplate gRockScatterSpriteTemplate =
-{
+const struct SpriteTemplate gRockScatterSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -276,8 +255,7 @@ const struct SpriteTemplate gRockScatterSpriteTemplate =
     .callback = AnimRockScatter,
 };
 
-const struct SpriteTemplate gTwisterRockSpriteTemplate =
-{
+const struct SpriteTemplate gTwisterRockSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -287,8 +265,7 @@ const struct SpriteTemplate gTwisterRockSpriteTemplate =
     .callback = AnimMoveTwisterParticle,
 };
 
-const struct SpriteTemplate gWeatherBallRockDownSpriteTemplate =
-{
+const struct SpriteTemplate gWeatherBallRockDownSpriteTemplate = {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
@@ -436,55 +413,57 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
 
     switch (gTasks[taskId].data[12])
     {
-    case 0:
-        if (++gTasks[taskId].data[10] == 4)
-        {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11]++;
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
-            if (gTasks[taskId].data[11] == 7)
+        case 0:
+            if (++gTasks[taskId].data[10] == 4)
             {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
+                gTasks[taskId].data[10] = 0;
+                gTasks[taskId].data[11]++;
+                SetGpuReg(REG_OFFSET_BLDALPHA,
+                    BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
+                if (gTasks[taskId].data[11] == 7)
+                {
+                    gTasks[taskId].data[12]++;
+                    gTasks[taskId].data[11] = 0;
+                }
             }
-        }
-        break;
-    case 1:
-        if (++gTasks[taskId].data[11] == 101)
-        {
-            gTasks[taskId].data[11] = 7;
+            break;
+        case 1:
+            if (++gTasks[taskId].data[11] == 101)
+            {
+                gTasks[taskId].data[11] = 7;
+                gTasks[taskId].data[12]++;
+            }
+            break;
+        case 2:
+            if (++gTasks[taskId].data[10] == 4)
+            {
+                gTasks[taskId].data[10] = 0;
+                gTasks[taskId].data[11]--;
+                SetGpuReg(REG_OFFSET_BLDALPHA,
+                    BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
+                if (gTasks[taskId].data[11] == 0)
+                {
+                    gTasks[taskId].data[12]++;
+                    gTasks[taskId].data[11] = 0;
+                }
+            }
+            break;
+        case 3:
+            sub_80A6B30(&animBg);
+            sub_80A6C68(animBg.bgId);
             gTasks[taskId].data[12]++;
-        }
-        break;
-    case 2:
-        if (++gTasks[taskId].data[10] == 4)
-        {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11]--;
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]));
-            if (gTasks[taskId].data[11] == 0)
-            {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
-            }
-        }
-        break;
-    case 3:
-        sub_80A6B30(&animBg);
-        sub_80A6C68(animBg.bgId);
-        gTasks[taskId].data[12]++;
-        break;
-    case 4:
-        if (!IsContest())
-            SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
+            break;
+        case 4:
+            if (!IsContest())
+                SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
 
-        gBattle_BG1_X = 0;
-        gBattle_BG1_Y = 0;
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
-        DestroyAnimVisualTask(taskId);
-        break;
+            gBattle_BG1_X = 0;
+            gBattle_BG1_Y = 0;
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -619,60 +598,60 @@ static void AnimTask_Rollout_Step(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        task->data[6] -= task->data[4];
-        task->data[7] -= task->data[5];
-        gSprites[task->data[15]].pos2.x = task->data[6] >> 3;
-        gSprites[task->data[15]].pos2.y = task->data[7] >> 3;
+        case 0:
+            task->data[6] -= task->data[4];
+            task->data[7] -= task->data[5];
+            gSprites[task->data[15]].pos2.x = task->data[6] >> 3;
+            gSprites[task->data[15]].pos2.y = task->data[7] >> 3;
 
-        if (++task->data[9] == 10)
-        {
-            task->data[11] = 20;
-            task->data[0]++;
-        }
+            if (++task->data[9] == 10)
+            {
+                task->data[11] = 20;
+                task->data[0]++;
+            }
 
-        PlaySE12WithPanning(SE_W029, task->data[13]);
-        break;
-    case 1:
-        if (--task->data[11] == 0)
-            task->data[0]++;
-        break;
-    case 2:
-        if (--task->data[9] != 0)
-        {
-            task->data[6] += task->data[4];
-            task->data[7] += task->data[5];
-        }
-        else
-        {
-            task->data[6] = 0;
-            task->data[7] = 0;
-            task->data[0]++;
-        }
+            PlaySE12WithPanning(SE_W029, task->data[13]);
+            break;
+        case 1:
+            if (--task->data[11] == 0)
+                task->data[0]++;
+            break;
+        case 2:
+            if (--task->data[9] != 0)
+            {
+                task->data[6] += task->data[4];
+                task->data[7] += task->data[5];
+            }
+            else
+            {
+                task->data[6] = 0;
+                task->data[7] = 0;
+                task->data[0]++;
+            }
 
-        gSprites[task->data[15]].pos2.x = task->data[6] >> 3;
-        gSprites[task->data[15]].pos2.y = task->data[7] >> 3;
-        break;
-    case 3:
-        task->data[2] += task->data[4];
-        task->data[3] += task->data[5];
-        if (++task->data[9] >= task->data[10])
-        {
-            task->data[9] = 0;
-            sub_8111214(task);
-            task->data[13] += task->data[14];
-            PlaySE12WithPanning(SE_W091, task->data[13]);
-        }
+            gSprites[task->data[15]].pos2.x = task->data[6] >> 3;
+            gSprites[task->data[15]].pos2.y = task->data[7] >> 3;
+            break;
+        case 3:
+            task->data[2] += task->data[4];
+            task->data[3] += task->data[5];
+            if (++task->data[9] >= task->data[10])
+            {
+                task->data[9] = 0;
+                sub_8111214(task);
+                task->data[13] += task->data[14];
+                PlaySE12WithPanning(SE_W091, task->data[13]);
+            }
 
-        if (--task->data[8] == 0)
-        {
-            task->data[0]++;
-        }
-        break;
-    case 4:
-        if (task->data[11] == 0)
-            DestroyAnimVisualTask(taskId);
-        break;
+            if (--task->data[8] == 0)
+            {
+                task->data[0]++;
+            }
+            break;
+        case 4:
+            if (task->data[11] == 0)
+                DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -685,25 +664,25 @@ static void sub_8111214(struct Task *task)
 
     switch (task->data[1])
     {
-    case 1:
-        spriteTemplate = &gRolloutMudSpriteTemplate;
-        tileOffset = 0;
-        break;
-    case 2:
-    case 3:
-        spriteTemplate = &gRolloutRockSpriteTemplate;
-        tileOffset = 80;
-        break;
-    case 4:
-        spriteTemplate = &gRolloutRockSpriteTemplate;
-        tileOffset = 64;
-        break;
-    case 5:
-        spriteTemplate = &gRolloutRockSpriteTemplate;
-        tileOffset = 48;
-        break;
-    default:
-        return;
+        case 1:
+            spriteTemplate = &gRolloutMudSpriteTemplate;
+            tileOffset = 0;
+            break;
+        case 2:
+        case 3:
+            spriteTemplate = &gRolloutRockSpriteTemplate;
+            tileOffset = 80;
+            break;
+        case 4:
+            spriteTemplate = &gRolloutRockSpriteTemplate;
+            tileOffset = 64;
+            break;
+        case 5:
+            spriteTemplate = &gRolloutRockSpriteTemplate;
+            tileOffset = 48;
+            break;
+        default:
+            return;
     }
 
     x = task->data[2] >> 3;

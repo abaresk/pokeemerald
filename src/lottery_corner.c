@@ -12,8 +12,7 @@
 static EWRAM_DATA u16 sWinNumberDigit = 0;
 static EWRAM_DATA u16 sOtIdDigit = 0;
 
-static const u16 sLotteryPrizes[] =
-{
+static const u16 sLotteryPrizes[] = {
     ITEM_PP_UP,
     ITEM_EXP_SHARE,
     ITEM_MAX_REVIVE,
@@ -76,7 +75,8 @@ void PickLotteryCornerTicket(void)
                 }
             }
         }
-        else // pokemon are always arranged from populated spots first to unpopulated, so the moment a NONE species is found, that's the end of the list.
+        else // pokemon are always arranged from populated spots first to unpopulated, so the moment
+             // a NONE species is found, that's the end of the list.
             break;
     }
 
@@ -84,8 +84,8 @@ void PickLotteryCornerTicket(void)
     {
         for (j = 0; j < IN_BOX_COUNT; j++)
         {
-            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SPECIES) != SPECIES_NONE &&
-            !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_IS_EGG))
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SPECIES) != SPECIES_NONE
+                && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_IS_EGG))
             {
                 u32 otId = GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_OT_ID);
                 u8 numMatchingDigits = GetMatchingDigits(gSpecialVar_Result, otId);
@@ -140,7 +140,8 @@ static u8 GetMatchingDigits(u16 winNumber, u16 otId)
     return matchingDigits;
 }
 
-// lottery numbers go from 0 to 99999, not 65535 (0xFFFF). interestingly enough, the function that calls GetLotteryNumber shifts to u16, so it cant be anything above 65535 anyway.
+// lottery numbers go from 0 to 99999, not 65535 (0xFFFF). interestingly enough, the function that
+// calls GetLotteryNumber shifts to u16, so it cant be anything above 65535 anyway.
 void SetLotteryNumber(u32 lotteryNum)
 {
     u16 lowNum = lotteryNum >> 16;
@@ -158,7 +159,9 @@ u32 GetLotteryNumber(void)
     return (lowNum << 16) | highNum;
 }
 
-// interestingly, this may have been the original lottery number set function, but GF tried to change it to 32-bit later but didnt finish changing all calls as one GetLotteryNumber still shifts to u16.
+// interestingly, this may have been the original lottery number set function, but GF tried to
+// change it to 32-bit later but didnt finish changing all calls as one GetLotteryNumber still
+// shifts to u16.
 void SetLotteryNumber16_Unused(u16 lotteryNum)
 {
     SetLotteryNumber(lotteryNum);

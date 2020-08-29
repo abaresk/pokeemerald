@@ -10,6 +10,6 @@ u8 LaunchTask_PostEvoSparklesSet2AndFlash(u16 species);
 u8 LaunchTask_PostEvoSparklesSet2AndFlash_Trade(u16 species);
 u8 sub_817C3A0(u8 preEvoSpriteID, u8 postEvoSpriteID);
 
-#define EvoGraphicsTaskEvoStop  data[8]
+#define EvoGraphicsTaskEvoStop data[8]
 
 #endif // GUARD_EVOLUTION_GRAPHICS_H

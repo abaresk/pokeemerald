@@ -34,4 +34,4 @@ void InstallCameraPanAheadCallback(void);
 void UpdateCameraPanning(void);
 void FieldUpdateBgTilemapScroll(void);
 
-#endif //GUARD_FIELD_CAMERA_H
+#endif // GUARD_FIELD_CAMERA_H

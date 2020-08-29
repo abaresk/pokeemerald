@@ -26,8 +26,7 @@ static void sub_8114374(u8);
 static void AnimTask_MetallicShine_Step(u8);
 
 // Unused
-const struct SpriteTemplate gUnknown_08596FC8 =
-{
+const struct SpriteTemplate gUnknown_08596FC8 = {
     .tileTag = ANIM_TAG_TIED_BAG,
     .paletteTag = ANIM_TAG_TIED_BAG,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -37,56 +36,47 @@ const struct SpriteTemplate gUnknown_08596FC8 =
     .callback = sub_81138D4,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_0[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_1[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 32, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_2[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_2[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 64, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_3[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_3[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_4[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_4[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -128, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_5[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_5[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_6[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_6[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -64, 1),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_Bite_7[] =
-{
+static const union AffineAnimCmd sAffineAnim_Bite_7[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -32, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gAffineAnims_Bite[] =
-{
+const union AffineAnimCmd *const gAffineAnims_Bite[] = {
     sAffineAnim_Bite_0,
     sAffineAnim_Bite_1,
     sAffineAnim_Bite_2,
@@ -97,8 +87,7 @@ const union AffineAnimCmd *const gAffineAnims_Bite[] =
     sAffineAnim_Bite_7,
 };
 
-const struct SpriteTemplate gSharpTeethSpriteTemplate =
-{
+const struct SpriteTemplate gSharpTeethSpriteTemplate = {
     .tileTag = ANIM_TAG_SHARP_TEETH,
     .paletteTag = ANIM_TAG_SHARP_TEETH,
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
@@ -108,8 +97,7 @@ const struct SpriteTemplate gSharpTeethSpriteTemplate =
     .callback = AnimBite,
 };
 
-const struct SpriteTemplate gClampJawSpriteTemplate =
-{
+const struct SpriteTemplate gClampJawSpriteTemplate = {
     .tileTag = ANIM_TAG_CLAMP,
     .paletteTag = ANIM_TAG_CLAMP,
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
@@ -119,28 +107,24 @@ const struct SpriteTemplate gClampJawSpriteTemplate =
     .callback = AnimBite,
 };
 
-static const union AffineAnimCmd sAffineAnim_TearDrop_0[] =
-{
+static const union AffineAnimCmd sAffineAnim_TearDrop_0[] = {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 80, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, -2, 8),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd sAffineAnim_TearDrop_1[] =
-{
+static const union AffineAnimCmd sAffineAnim_TearDrop_1[] = {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, -80, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 2, 8),
     AFFINEANIMCMD_END,
 };
 
-static const union AffineAnimCmd *const sAffineAnims_TearDrop[] =
-{
+static const union AffineAnimCmd *const sAffineAnims_TearDrop[] = {
     sAffineAnim_TearDrop_0,
     sAffineAnim_TearDrop_1,
 };
 
-const struct SpriteTemplate gTearDropSpriteTemplate =
-{
+const struct SpriteTemplate gTearDropSpriteTemplate = {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
@@ -150,8 +134,7 @@ const struct SpriteTemplate gTearDropSpriteTemplate =
     .callback = AnimTearDrop,
 };
 
-static const union AnimCmd sAnim_ClawSlash_0[] =
-{
+static const union AnimCmd sAnim_ClawSlash_0[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
     ANIMCMD_FRAME(32, 4),
@@ -160,8 +143,7 @@ static const union AnimCmd sAnim_ClawSlash_0[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd sAnim_ClawSlash_1[] =
-{
+static const union AnimCmd sAnim_ClawSlash_1[] = {
     ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 4, .hFlip = TRUE),
@@ -170,14 +152,12 @@ static const union AnimCmd sAnim_ClawSlash_1[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const sAnims_ClawSlash[] =
-{
+static const union AnimCmd *const sAnims_ClawSlash[] = {
     sAnim_ClawSlash_0,
     sAnim_ClawSlash_1,
 };
 
-const struct SpriteTemplate gClawSlashSpriteTemplate =
-{
+const struct SpriteTemplate gClawSlashSpriteTemplate = {
     .tileTag = ANIM_TAG_CLAW_SLASH,
     .paletteTag = ANIM_TAG_CLAW_SLASH,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
@@ -359,26 +339,26 @@ static void AnimTearDrop(struct Sprite *sprite)
 
     switch (gBattleAnimArgs[1])
     {
-    case 0:
-        sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 8;
-        sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
-        break;
-    case 1:
-        sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 14;
-        sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
-        break;
-    case 2:
-        sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 8;
-        sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
-        StartSpriteAffineAnim(sprite, 1);
-        xOffset = -20;
-        break;
-    case 3:
-        sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 14;
-        sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
-        StartSpriteAffineAnim(sprite, 1);
-        xOffset = -20;
-        break;
+        case 0:
+            sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 8;
+            sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
+            break;
+        case 1:
+            sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 14;
+            sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
+            break;
+        case 2:
+            sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 8;
+            sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
+            StartSpriteAffineAnim(sprite, 1);
+            xOffset = -20;
+            break;
+        case 3:
+            sprite->pos1.x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 14;
+            sprite->pos1.y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
+            StartSpriteAffineAnim(sprite, 1);
+            xOffset = -20;
+            break;
     }
 
     sprite->data[0] = 32;
@@ -459,8 +439,12 @@ void AnimTask_MoveAttackerMementoShadow(u8 taskId)
     }
 
     ScanlineEffect_SetParams(scanlineParams);
-    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | (var0 ^ (WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR)));
-    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT,
+        WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR
+            | (var0 ^ (WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR)));
+    SetGpuReg(REG_OFFSET_WININ,
+        WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ
+            | WININ_WIN1_CLR);
     gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
     gBattle_WIN0V = 160;
 
@@ -473,55 +457,55 @@ static void AnimTask_MoveAttackerMementoShadow_Step(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        if (++task->data[1] > 1)
-        {
-            task->data[1] = 0;
-            if (++task->data[2] & 1)
+        case 0:
+            if (++task->data[1] > 1)
             {
-                if (task->data[11] != 12)
-                    task->data[11]++;
-            }
-            else
-            {
-                if (task->data[12] != 8)
-                    task->data[12]--;
-            }
+                task->data[1] = 0;
+                if (++task->data[2] & 1)
+                {
+                    if (task->data[11] != 12)
+                        task->data[11]++;
+                }
+                else
+                {
+                    if (task->data[12] != 8)
+                        task->data[12]--;
+                }
 
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(task->data[11], task->data[12]));
+                SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(task->data[11], task->data[12]));
 
-            if (task->data[11] == 12 && task->data[12] == 8)
+                if (task->data[11] == 12 && task->data[12] == 8)
+                    task->data[0]++;
+            }
+            break;
+        case 1:
+            task->data[4] -= 8;
+            sub_8114244(task);
+
+            if (task->data[4] < task->data[8])
                 task->data[0]++;
-        }
-        break;
-    case 1:
-        task->data[4] -= 8;
-        sub_8114244(task);
+            break;
+        case 2:
+            task->data[4] -= 8;
+            sub_8114244(task);
+            task->data[14] += 4;
+            task->data[15] -= 4;
 
-        if (task->data[4] < task->data[8])
+            if (task->data[14] >= task->data[15])
+                task->data[14] = task->data[15];
+
+            gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
+
+            if (task->data[14] == task->data[15])
+                task->data[0]++;
+            break;
+        case 3:
+            gScanlineEffect.state = 3;
             task->data[0]++;
-        break;
-    case 2:
-        task->data[4] -= 8;
-        sub_8114244(task);
-        task->data[14] += 4;
-        task->data[15] -= 4;
-
-        if (task->data[14] >= task->data[15])
-            task->data[14] = task->data[15];
-
-        gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
-
-        if (task->data[14] == task->data[15])
-            task->data[0]++;
-        break;
-    case 3:
-        gScanlineEffect.state = 3;
-        task->data[0]++;
-        break;
-    case 4:
-        DestroyAnimVisualTask(taskId);
-        break;
+            break;
+        case 4:
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -535,101 +519,116 @@ void AnimTask_MoveTargetMementoShadow(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        if (IsContest() == TRUE)
-        {
-            gBattle_WIN0H = 0;
-            gBattle_WIN0V = 0;
-            SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-            DestroyAnimVisualTask(taskId);
-        }
-        else
-        {
-            task->data[3] = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
-            if (task->data[3] == 1)
+        case 0:
+            if (IsContest() == TRUE)
             {
-                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1);
-                gBattle_BG2_X += 240;
+                gBattle_WIN0H = 0;
+                gBattle_WIN0V = 0;
+                SetGpuReg(REG_OFFSET_WININ,
+                    WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL
+                        | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+                SetGpuReg(REG_OFFSET_WINOUT,
+                    WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR
+                        | WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+                DestroyAnimVisualTask(taskId);
             }
             else
             {
-                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2);
-                gBattle_BG1_X += 240;
+                task->data[3] = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
+                if (task->data[3] == 1)
+                {
+                    SetGpuReg(
+                        REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1);
+                    gBattle_BG2_X += 240;
+                }
+                else
+                {
+                    SetGpuReg(
+                        REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2);
+                    gBattle_BG1_X += 240;
+                }
+
+                task->data[0]++;
+            }
+            break;
+        case 1:
+            if (task->data[3] == 1)
+            {
+                sub_80A6B30(&animBg);
+                task->data[10] = gBattle_BG1_Y;
+                FillPalette(0, animBg.paletteId * 16, 32);
+            }
+            else
+            {
+                task->data[10] = gBattle_BG2_Y;
+                FillPalette(0, 9 * 16, 32);
             }
 
+            sub_8114374(3);
             task->data[0]++;
-        }
-        break;
-    case 1:
-        if (task->data[3] == 1)
-        {
-            sub_80A6B30(&animBg);
-            task->data[10] = gBattle_BG1_Y;
-            FillPalette(0, animBg.paletteId * 16, 32);
-        }
-        else
-        {
-            task->data[10] = gBattle_BG2_Y;
-            FillPalette(0, 9 * 16, 32);
-        }
+            break;
+        case 2:
+            task->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 31;
+            task->data[6] =
+                GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP) - 7;
+            task->data[13] = (task->data[7] - task->data[6]) << 8;
+            x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+            task->data[14] = x - 4;
+            task->data[15] = x + 4;
 
-        sub_8114374(3);
-        task->data[0]++;
-        break;
-    case 2:
-        task->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 31;
-        task->data[6] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP) - 7;
-        task->data[13] = (task->data[7] - task->data[6]) << 8;
-        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
-        task->data[14] = x - 4;
-        task->data[15] = x + 4;
+            if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+                task->data[8] = -12;
+            else
+                task->data[8] = -64;
 
-        if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
-            task->data[8] = -12;
-        else
-            task->data[8] = -64;
+            task->data[4] = task->data[8];
+            task->data[5] = task->data[8];
+            task->data[11] = 12;
+            task->data[12] = 8;
+            task->data[0]++;
+            break;
+        case 3:
+            if (task->data[3] == 1)
+                scanlineParams.dmaDest = &REG_BG1VOFS;
+            else
+                scanlineParams.dmaDest = &REG_BG2VOFS;
 
-        task->data[4] = task->data[8];
-        task->data[5] = task->data[8];
-        task->data[11] = 12;
-        task->data[12] = 8;
-        task->data[0]++;
-        break;
-    case 3:
-        if (task->data[3] == 1)
-            scanlineParams.dmaDest = &REG_BG1VOFS;
-        else
-            scanlineParams.dmaDest = &REG_BG2VOFS;
+            for (i = 0; i < 112; i++)
+            {
+                gScanlineEffectRegBuffers[0][i] = task->data[10] + (159 - i);
+                gScanlineEffectRegBuffers[1][i] = task->data[10] + (159 - i);
+            }
 
-        for (i = 0; i < 112; i++)
-        {
-            gScanlineEffectRegBuffers[0][i] = task->data[10] + (159 - i);
-            gScanlineEffectRegBuffers[1][i] = task->data[10] + (159 - i);
-        }
+            scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
+            scanlineParams.initState = 1;
+            scanlineParams.unused9 = 0;
+            ScanlineEffect_SetParams(scanlineParams);
+            task->data[0]++;
+            break;
+        case 4:
+            if (task->data[3] == 1)
+                SetGpuReg(REG_OFFSET_WINOUT,
+                    WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0
+                        | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ
+                        | WINOUT_WIN01_CLR);
+            else
+                SetGpuReg(REG_OFFSET_WINOUT,
+                    WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0
+                        | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ
+                        | WINOUT_WIN01_CLR);
 
-        scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
-        scanlineParams.initState = 1;
-        scanlineParams.unused9 = 0;
-        ScanlineEffect_SetParams(scanlineParams);
-        task->data[0]++;
-        break;
-    case 4:
-        if (task->data[3] == 1)
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-        else
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL
+                    | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
+            gBattle_WIN0V = 160;
 
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-        gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
-        gBattle_WIN0V = 160;
-
-        task->data[0] = 0;
-        task->data[1] = 0;
-        task->data[2] = 0;
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 8));
-        task->func = AnimTask_MoveTargetMementoShadow_Step;
-        break;
+            task->data[0] = 0;
+            task->data[1] = 0;
+            task->data[2] = 0;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 8));
+            task->func = AnimTask_MoveTargetMementoShadow_Step;
+            break;
     }
 }
 
@@ -641,70 +640,74 @@ static void AnimTask_MoveTargetMementoShadow_Step(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        task->data[5] += 8;
-        if (task->data[5] >=  task->data[7])
-            task->data[5] = task->data[7];
+        case 0:
+            task->data[5] += 8;
+            if (task->data[5] >= task->data[7])
+                task->data[5] = task->data[7];
 
-        sub_8114244(task);
-        if (task->data[5] == task->data[7])
-            task->data[0]++;
-        break;
-    case 1:
-        if (task->data[15] - task->data[14] < 0x40)
-        {
-            task->data[14] -= 4;
-            task->data[15] += 4;
-        }
-        else
-        {
-            task->data[1] = 1;
-        }
-
-        gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
-        task->data[4] += 8;
-        if (task->data[4] >= task->data[6])
-            task->data[4] = task->data[6];
-
-        sub_8114244(task);
-        if (task->data[4] == task->data[6] && task->data[1])
-        {
-            task->data[1] = 0;
-            task->data[0]++;
-        }
-        break;
-    case 2:
-        if (++task->data[1] > 1)
-        {
-            task->data[1] = 0;
-            task->data[2]++;
-            if (task->data[2] & 1)
+            sub_8114244(task);
+            if (task->data[5] == task->data[7])
+                task->data[0]++;
+            break;
+        case 1:
+            if (task->data[15] - task->data[14] < 0x40)
             {
-                if (task->data[11])
-                    task->data[11]--;
+                task->data[14] -= 4;
+                task->data[15] += 4;
             }
             else
             {
-                if (task->data[12] < 16)
-                    task->data[12]++;
+                task->data[1] = 1;
             }
 
-            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(task->data[11], task->data[12]));
-            if (task->data[11] == 0 && task->data[12] == 16)
+            gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
+            task->data[4] += 8;
+            if (task->data[4] >= task->data[6])
+                task->data[4] = task->data[6];
+
+            sub_8114244(task);
+            if (task->data[4] == task->data[6] && task->data[1])
+            {
+                task->data[1] = 0;
                 task->data[0]++;
-        }
-        break;
-    case 3:
-        gScanlineEffect.state = 3;
-        task->data[0]++;
-        break;
-    case 4:
-        gBattle_WIN0H = 0;
-        gBattle_WIN0V = 0;
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-        DestroyAnimVisualTask(taskId);
-        break;
+            }
+            break;
+        case 2:
+            if (++task->data[1] > 1)
+            {
+                task->data[1] = 0;
+                task->data[2]++;
+                if (task->data[2] & 1)
+                {
+                    if (task->data[11])
+                        task->data[11]--;
+                }
+                else
+                {
+                    if (task->data[12] < 16)
+                        task->data[12]++;
+                }
+
+                SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(task->data[11], task->data[12]));
+                if (task->data[11] == 0 && task->data[12] == 16)
+                    task->data[0]++;
+            }
+            break;
+        case 3:
+            gScanlineEffect.state = 3;
+            task->data[0]++;
+            break;
+        case 4:
+            gBattle_WIN0H = 0;
+            gBattle_WIN0V = 0;
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL
+                    | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            SetGpuReg(REG_OFFSET_WINOUT,
+                WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG_ALL
+                    | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+            DestroyAnimVisualTask(taskId);
+            break;
     }
 }
 
@@ -812,7 +815,8 @@ static void AnimClawSlash(struct Sprite *sprite)
 // arg0: if true won't change battler's palette back
 // arg1: if true, use custom color
 // arg2: custom color
-// Custom color argument is used in MOVE_POISON_TAIL to make the mon turn purplish/pinkish as if became cloaked in poison.
+// Custom color argument is used in MOVE_POISON_TAIL to make the mon turn purplish/pinkish as if
+// became cloaked in poison.
 void AnimTask_MetallicShine(u8 taskId)
 {
     u16 species;
@@ -824,8 +828,12 @@ void AnimTask_MetallicShine(u8 taskId)
 
     gBattle_WIN0H = 0;
     gBattle_WIN0V = 0;
-    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+    SetGpuReg(REG_OFFSET_WININ,
+        WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ
+            | WININ_WIN1_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT,
+        WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG0
+            | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
     SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJWIN_ON);
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 12));
@@ -836,7 +844,8 @@ void AnimTask_MetallicShine(u8 taskId)
 
     if (IsDoubleBattle() && !IsContest())
     {
-        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
+        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT
+            || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
         {
             if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)) == TRUE)
             {
@@ -854,9 +863,11 @@ void AnimTask_MetallicShine(u8 taskId)
     else
     {
         if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
-            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
+            species = GetMonData(
+                &gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
         else
-            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
+            species = GetMonData(
+                &gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
     }
 
     spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
@@ -914,8 +925,12 @@ static void AnimTask_MetallicShine_Step(u8 taskId)
         {
             gBattle_WIN0H = 0;
             gBattle_WIN0V = 0;
-            SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-            SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+            SetGpuReg(REG_OFFSET_WININ,
+                WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL
+                    | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+            SetGpuReg(REG_OFFSET_WINOUT,
+                WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR | WINOUT_WIN01_BG_ALL
+                    | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
             if (!IsContest())
                 SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
 
@@ -939,31 +954,31 @@ void AnimTask_SetGreyscaleOrOriginalPal(u8 taskId)
 
     switch (gBattleAnimArgs[0])
     {
-    case ANIM_ATTACKER:
-    case ANIM_TARGET:
-    case ANIM_ATK_PARTNER:
-    case ANIM_DEF_PARTNER:
-        spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        break;
-    case 4:
-        position = B_POSITION_PLAYER_LEFT;
-        calcSpriteId = TRUE;
-        break;
-    case 5:
-        position = B_POSITION_PLAYER_RIGHT;
-        calcSpriteId = TRUE;
-        break;
-    case 6:
-        position = B_POSITION_OPPONENT_LEFT;
-        calcSpriteId = TRUE;
-        break;
-    case 7:
-        position = B_POSITION_OPPONENT_RIGHT;
-        calcSpriteId = TRUE;
-        break;
-    default:
-        spriteId = 0xFF;
-        break;
+        case ANIM_ATTACKER:
+        case ANIM_TARGET:
+        case ANIM_ATK_PARTNER:
+        case ANIM_DEF_PARTNER:
+            spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+            break;
+        case 4:
+            position = B_POSITION_PLAYER_LEFT;
+            calcSpriteId = TRUE;
+            break;
+        case 5:
+            position = B_POSITION_PLAYER_RIGHT;
+            calcSpriteId = TRUE;
+            break;
+        case 6:
+            position = B_POSITION_OPPONENT_LEFT;
+            calcSpriteId = TRUE;
+            break;
+        case 7:
+            position = B_POSITION_OPPONENT_RIGHT;
+            calcSpriteId = TRUE;
+            break;
+        default:
+            spriteId = 0xFF;
+            break;
     }
 
     if (calcSpriteId)

@@ -42,7 +42,7 @@ static bool32 SharesTileWithAnyActive(u32 id);
 static bool32 SharesPalWithAnyActive(u32 id);
 
 // ewram
-static EWRAM_DATA struct DigitPrinterAlloc *sOamWork = {0};
+static EWRAM_DATA struct DigitPrinterAlloc *sOamWork = { 0 };
 
 // const rom data
 static const u8 sTilesPerImage[4][4] =
@@ -138,7 +138,7 @@ bool32 DigitObjUtil_CreatePrinter(u32 id, s32 num, const struct DigitObjUtilTemp
         {
             struct CompressedSpriteSheet compSpriteSheet;
 
-            compSpriteSheet = *(struct CompressedSpriteSheet*)(template->spriteSheet);
+            compSpriteSheet = *(struct CompressedSpriteSheet *)(template->spriteSheet);
             compSpriteSheet.size = GetDecompressedDataSize(template->spriteSheet->data);
             sOamWork->array[id].tileStart = LoadCompressedSpriteSheet(&compSpriteSheet);
         }
@@ -224,16 +224,16 @@ void DigitObjUtil_PrintNumOn(u32 id, s32 num)
 
     switch (sOamWork->array[id].strConvMode)
     {
-    case 0:
-    default:
-        DrawNumObjsLeadingZeros(&sOamWork->array[id], num, sign);
-        break;
-    case 1:
-        DrawNumObjsMinusInFront(&sOamWork->array[id], num, sign);
-        break;
-    case 2:
-        DrawNumObjsMinusInBack(&sOamWork->array[id], num, sign);
-        break;
+        case 0:
+        default:
+            DrawNumObjsLeadingZeros(&sOamWork->array[id], num, sign);
+            break;
+        case 1:
+            DrawNumObjsMinusInFront(&sOamWork->array[id], num, sign);
+            break;
+        case 2:
+            DrawNumObjsMinusInBack(&sOamWork->array[id], num, sign);
+            break;
     }
 }
 

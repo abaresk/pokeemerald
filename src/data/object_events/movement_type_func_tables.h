@@ -8,7 +8,7 @@ u8 (*const gMovementTypeFuncs_WanderAround[])(struct ObjectEvent *, struct Sprit
     MovementType_WanderAround_Step6,
 };
 
-const u8 gStandardDirections[] = {DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST};
+const u8 gStandardDirections[] = { DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST };
 
 u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16) = {
     GetVectorDirection,
@@ -42,7 +42,7 @@ u8 (*const gMovementTypeFuncs_WanderUpAndDown[])(struct ObjectEvent *, struct Sp
     MovementType_WanderUpAndDown_Step6,
 };
 
-const u8 gUpAndDownDirections[] = {DIR_SOUTH, DIR_NORTH};
+const u8 gUpAndDownDirections[] = { DIR_SOUTH, DIR_NORTH };
 
 u8 (*const gMovementTypeFuncs_WanderLeftAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_WanderLeftAndRight_Step0,
@@ -54,7 +54,7 @@ u8 (*const gMovementTypeFuncs_WanderLeftAndRight[])(struct ObjectEvent *, struct
     MovementType_WanderLeftAndRight_Step6,
 };
 
-const u8 gLeftAndRightDirections[] = {DIR_WEST, DIR_EAST};
+const u8 gLeftAndRightDirections[] = { DIR_WEST, DIR_EAST };
 
 u8 (*const gMovementTypeFuncs_FaceDirection[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDirection_Step0,
@@ -94,7 +94,7 @@ u8 (*const gMovementTypeFuncs_FaceUpAndLeft[])(struct ObjectEvent *, struct Spri
     MovementType_FaceUpAndLeft_Step4,
 };
 
-const u8 gUpAndLeftDirections[] = {DIR_NORTH, DIR_WEST};
+const u8 gUpAndLeftDirections[] = { DIR_NORTH, DIR_WEST };
 
 u8 (*const gMovementTypeFuncs_FaceUpAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceUpAndRight_Step0,
@@ -104,7 +104,7 @@ u8 (*const gMovementTypeFuncs_FaceUpAndRight[])(struct ObjectEvent *, struct Spr
     MovementType_FaceUpAndRight_Step4,
 };
 
-const u8 gUpAndRightDirections[] = {DIR_NORTH, DIR_EAST};
+const u8 gUpAndRightDirections[] = { DIR_NORTH, DIR_EAST };
 
 u8 (*const gMovementTypeFuncs_FaceDownAndLeft[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDownAndLeft_Step0,
@@ -114,7 +114,7 @@ u8 (*const gMovementTypeFuncs_FaceDownAndLeft[])(struct ObjectEvent *, struct Sp
     MovementType_FaceDownAndLeft_Step4,
 };
 
-const u8 gDownAndLeftDirections[] = {DIR_SOUTH, DIR_WEST};
+const u8 gDownAndLeftDirections[] = { DIR_SOUTH, DIR_WEST };
 
 u8 (*const gMovementTypeFuncs_FaceDownAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDownAndRight_Step0,
@@ -124,7 +124,7 @@ u8 (*const gMovementTypeFuncs_FaceDownAndRight[])(struct ObjectEvent *, struct S
     MovementType_FaceDownAndRight_Step4,
 };
 
-const u8 gDownAndRightDirections[] = {DIR_SOUTH, DIR_EAST};
+const u8 gDownAndRightDirections[] = { DIR_SOUTH, DIR_EAST };
 
 u8 (*const gMovementTypeFuncs_FaceDownUpAndLeft[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDownUpAndLeft_Step0,
@@ -134,7 +134,7 @@ u8 (*const gMovementTypeFuncs_FaceDownUpAndLeft[])(struct ObjectEvent *, struct 
     MovementType_FaceDownUpAndLeft_Step4,
 };
 
-const u8 gDownUpAndLeftDirections[] = {DIR_NORTH, DIR_SOUTH, DIR_WEST, DIR_SOUTH};
+const u8 gDownUpAndLeftDirections[] = { DIR_NORTH, DIR_SOUTH, DIR_WEST, DIR_SOUTH };
 
 u8 (*const gMovementTypeFuncs_FaceDownUpAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDownUpAndRight_Step0,
@@ -144,7 +144,7 @@ u8 (*const gMovementTypeFuncs_FaceDownUpAndRight[])(struct ObjectEvent *, struct
     MovementType_FaceDownUpAndRight_Step4,
 };
 
-const u8 gDownUpAndRightDirections[] = {DIR_SOUTH, DIR_NORTH, DIR_EAST, DIR_SOUTH};
+const u8 gDownUpAndRightDirections[] = { DIR_SOUTH, DIR_NORTH, DIR_EAST, DIR_SOUTH };
 
 u8 (*const gMovementTypeFuncs_FaceUpLeftAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceUpLeftAndRight_Step0,
@@ -154,7 +154,7 @@ u8 (*const gMovementTypeFuncs_FaceUpLeftAndRight[])(struct ObjectEvent *, struct
     MovementType_FaceUpLeftAndRight_Step4,
 };
 
-const u8 gUpLeftAndRightDirections[] = {DIR_NORTH, DIR_WEST, DIR_EAST, DIR_NORTH};
+const u8 gUpLeftAndRightDirections[] = { DIR_NORTH, DIR_WEST, DIR_EAST, DIR_NORTH };
 
 u8 (*const gMovementTypeFuncs_FaceDownLeftAndRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_FaceDownLeftAndRight_Step0,
@@ -164,7 +164,7 @@ u8 (*const gMovementTypeFuncs_FaceDownLeftAndRight[])(struct ObjectEvent *, stru
     MovementType_FaceDownLeftAndRight_Step4,
 };
 
-const u8 gDownLeftAndRightDirections[] = {DIR_WEST, DIR_EAST, DIR_SOUTH, DIR_SOUTH};
+const u8 gDownLeftAndRightDirections[] = { DIR_WEST, DIR_EAST, DIR_SOUTH, DIR_SOUTH };
 
 u8 (*const gMovementTypeFuncs_RotateCounterclockwise[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_RotateCounterclockwise_Step0,
@@ -173,7 +173,7 @@ u8 (*const gMovementTypeFuncs_RotateCounterclockwise[])(struct ObjectEvent *, st
     MovementType_RotateCounterclockwise_Step3,
 };
 
-const u8 gCounterclockwiseDirections[] = {DIR_SOUTH, DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH};
+const u8 gCounterclockwiseDirections[] = { DIR_SOUTH, DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH };
 
 u8 (*const gMovementTypeFuncs_RotateClockwise[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_RotateClockwise_Step0,
@@ -182,7 +182,7 @@ u8 (*const gMovementTypeFuncs_RotateClockwise[])(struct ObjectEvent *, struct Sp
     MovementType_RotateClockwise_Step3,
 };
 
-const u8 gClockwiseDirections[] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
+const u8 gClockwiseDirections[] = { DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH };
 
 u8 (*const gMovementTypeFuncs_WalkBackAndForth[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkBackAndForth_Step0,
@@ -191,195 +191,219 @@ u8 (*const gMovementTypeFuncs_WalkBackAndForth[])(struct ObjectEvent *, struct S
     MovementType_WalkBackAndForth_Step3,
 };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpRightLeftDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpRightLeftDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpRightLeftDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpRightLeftDownDirections[] = {DIR_NORTH, DIR_EAST, DIR_WEST, DIR_SOUTH};
+const u8 gUpRightLeftDownDirections[] = { DIR_NORTH, DIR_EAST, DIR_WEST, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftDownUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftDownUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightLeftDownUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightLeftDownUpDirections[] = {DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH};
+const u8 gRightLeftDownUpDirections[] = { DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownUpRightLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownUpRightLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownUpRightLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gDownUpRightLeftDirections[] = {DIR_SOUTH, DIR_NORTH, DIR_EAST, DIR_WEST};
+const u8 gDownUpRightLeftDirections[] = { DIR_SOUTH, DIR_NORTH, DIR_EAST, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownUpRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownUpRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftDownUpRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftDownUpRightDirections[] = {DIR_WEST, DIR_SOUTH, DIR_NORTH, DIR_EAST};
+const u8 gLeftDownUpRightDirections[] = { DIR_WEST, DIR_SOUTH, DIR_NORTH, DIR_EAST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftRightDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftRightDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpLeftRightDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpLeftRightDownDirections[] = {DIR_NORTH, DIR_WEST, DIR_EAST, DIR_SOUTH};
+const u8 gUpLeftRightDownDirections[] = { DIR_NORTH, DIR_WEST, DIR_EAST, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightDownUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightDownUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftRightDownUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftRightDownUpDirections[] = {DIR_WEST, DIR_EAST, DIR_SOUTH, DIR_NORTH};
+const u8 gLeftRightDownUpDirections[] = { DIR_WEST, DIR_EAST, DIR_SOUTH, DIR_NORTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownUpLeftRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownUpLeftRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownUpLeftRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightDownUpLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightDownUpLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightDownUpLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightDownUpLeftDirections[] = {DIR_EAST, DIR_SOUTH, DIR_NORTH, DIR_WEST};
+const u8 gRightDownUpLeftDirections[] = { DIR_EAST, DIR_SOUTH, DIR_NORTH, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpDownRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpDownRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftUpDownRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftUpDownRightDirections[] = {DIR_WEST, DIR_NORTH, DIR_SOUTH, DIR_EAST};
+const u8 gLeftUpDownRightDirections[] = { DIR_WEST, DIR_NORTH, DIR_SOUTH, DIR_EAST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpDownRightLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpDownRightLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpDownRightLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpDownRightLeftDirections[] = {DIR_NORTH, DIR_SOUTH, DIR_EAST, DIR_WEST};
+const u8 gUpDownRightLeftDirections[] = { DIR_NORTH, DIR_SOUTH, DIR_EAST, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftUpDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftUpDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightLeftUpDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightLeftUpDownDirections[] = {DIR_EAST, DIR_WEST, DIR_NORTH, DIR_SOUTH};
+const u8 gRightLeftUpDownDirections[] = { DIR_EAST, DIR_WEST, DIR_NORTH, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownRightLeftUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownRightLeftUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownRightLeftUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gDownRightLeftUpDirections[] = {DIR_SOUTH, DIR_EAST, DIR_WEST, DIR_NORTH};
+const u8 gDownRightLeftUpDirections[] = { DIR_SOUTH, DIR_EAST, DIR_WEST, DIR_NORTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightUpDownLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightUpDownLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightUpDownLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightUpDownLeftDirections[] = {DIR_EAST, DIR_NORTH, DIR_SOUTH, DIR_WEST};
+const u8 gRightUpDownLeftDirections[] = { DIR_EAST, DIR_NORTH, DIR_SOUTH, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpDownLeftRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpDownLeftRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpDownLeftRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpDownLeftRightDirections[] = {DIR_NORTH, DIR_SOUTH, DIR_WEST, DIR_EAST};
+const u8 gUpDownLeftRightDirections[] = { DIR_NORTH, DIR_SOUTH, DIR_WEST, DIR_EAST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightUpDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightUpDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftRightUpDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftRightUpDownDirections[] = {DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
+const u8 gLeftRightUpDownDirections[] = { DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftRightUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftRightUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownLeftRightUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gDownLeftRightUpDirections[] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH};
+const u8 gDownLeftRightUpDirections[] = { DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftDownRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftDownRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpLeftDownRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpLeftDownRightDirections[] = {DIR_NORTH, DIR_WEST, DIR_SOUTH, DIR_EAST};
+const u8 gUpLeftDownRightDirections[] = { DIR_NORTH, DIR_WEST, DIR_SOUTH, DIR_EAST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownRightUpLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownRightUpLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownRightUpLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gDownRightUpLeftDirections[] = {DIR_SOUTH, DIR_EAST, DIR_NORTH, DIR_WEST};
+const u8 gDownRightUpLeftDirections[] = { DIR_SOUTH, DIR_EAST, DIR_NORTH, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownRightUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownRightUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftDownRightUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftDownRightUpDirections[] = {DIR_WEST, DIR_SOUTH, DIR_EAST, DIR_NORTH};
+const u8 gLeftDownRightUpDirections[] = { DIR_WEST, DIR_SOUTH, DIR_EAST, DIR_NORTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightUpLeftDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightUpLeftDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightUpLeftDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightUpLeftDownDirections[] = {DIR_EAST, DIR_NORTH, DIR_WEST, DIR_SOUTH};
+const u8 gRightUpLeftDownDirections[] = { DIR_EAST, DIR_NORTH, DIR_WEST, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceUpRightDownLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceUpRightDownLeft[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceUpRightDownLeft_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gUpRightDownLeftDirections[] = {DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST};
+const u8 gUpRightDownLeftDirections[] = { DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftUpRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftUpRight[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceDownLeftUpRight_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gDownLeftUpRightDirections[] = {DIR_SOUTH, DIR_WEST, DIR_NORTH, DIR_EAST};
+const u8 gDownLeftUpRightDirections[] = { DIR_SOUTH, DIR_WEST, DIR_NORTH, DIR_EAST };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpRightDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpRightDown[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceLeftUpRightDown_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gLeftUpRightDownDirections[] = {DIR_WEST, DIR_NORTH, DIR_EAST, DIR_SOUTH};
+const u8 gLeftUpRightDownDirections[] = { DIR_WEST, DIR_NORTH, DIR_EAST, DIR_SOUTH };
 
-u8 (*const gMovementTypeFuncs_WalkSequenceRightDownLeftUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementTypeFuncs_WalkSequenceRightDownLeftUp[])(
+    struct ObjectEvent *, struct Sprite *) = {
     MovementType_WalkSequence_Step0,
     MovementType_WalkSequenceRightDownLeftUp_Step1,
     MovementType_WalkSequence_Step2,
 };
 
-const u8 gRightDownLeftUpDirections[] = {DIR_EAST, DIR_SOUTH, DIR_WEST, DIR_NORTH};
+const u8 gRightDownLeftUpDirections[] = { DIR_EAST, DIR_SOUTH, DIR_WEST, DIR_NORTH };
 
 u8 (*const gMovementTypeFuncs_CopyPlayer[])(struct ObjectEvent *, struct Sprite *) = {
     MovementType_CopyPlayer_Step0,

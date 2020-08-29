@@ -28,7 +28,8 @@ void ResetBerryTreeSparkleFlags(void);
 
 extern const struct Berry gBerries[];
 
-struct UnkStruct_0858AB24 {
+struct UnkStruct_0858AB24
+{
     u8 unk0;
     u16 unk1;
 };

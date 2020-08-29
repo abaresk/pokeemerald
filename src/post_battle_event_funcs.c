@@ -14,7 +14,8 @@ int GameClear(void)
 {
     int i;
     bool32 ribbonGet;
-    struct RibbonCounter {
+    struct RibbonCounter
+    {
         u8 partyIndex;
         u8 count;
     } ribbonCounts[6];
@@ -32,7 +33,9 @@ int GameClear(void)
     }
 
     if (GetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME) == 0)
-        SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME, (gSaveBlock2Ptr->playTimeHours << 16) | (gSaveBlock2Ptr->playTimeMinutes << 8) | gSaveBlock2Ptr->playTimeSeconds);
+        SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME,
+            (gSaveBlock2Ptr->playTimeHours << 16) | (gSaveBlock2Ptr->playTimeMinutes << 8)
+                | gSaveBlock2Ptr->playTimeSeconds);
 
     SetContinueGameWarpStatus();
 
@@ -50,11 +53,10 @@ int GameClear(void)
         ribbonCounts[i].partyIndex = i;
         ribbonCounts[i].count = 0;
 
-        if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES)
-         && !GetMonData(mon, MON_DATA_SANITY_IS_EGG)
-         && !GetMonData(mon, MON_DATA_CHAMPION_RIBBON))
+        if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES) && !GetMonData(mon, MON_DATA_SANITY_IS_EGG)
+            && !GetMonData(mon, MON_DATA_CHAMPION_RIBBON))
         {
-            u8 val[1] = {TRUE};
+            u8 val[1] = { TRUE };
             SetMonData(mon, MON_DATA_CHAMPION_RIBBON, val);
             ribbonCounts[i].count = GetRibbonCount(mon);
             ribbonGet = TRUE;
@@ -65,7 +67,7 @@ int GameClear(void)
     {
         IncrementGameStat(GAME_STAT_RECEIVED_RIBBONS);
         FlagSet(FLAG_SYS_RIBBON_GET);
-        
+
         for (i = 1; i < 6; i++)
         {
             if (ribbonCounts[i].count > ribbonCounts[0].count)
@@ -78,7 +80,8 @@ int GameClear(void)
 
         if (ribbonCounts[0].count > NUM_CUTIES_RIBBONS)
         {
-            TryPutSpotTheCutiesOnAir(&gPlayerParty[ribbonCounts[0].partyIndex], MON_DATA_CHAMPION_RIBBON);
+            TryPutSpotTheCutiesOnAir(
+                &gPlayerParty[ribbonCounts[0].partyIndex], MON_DATA_CHAMPION_RIBBON);
         }
     }
 

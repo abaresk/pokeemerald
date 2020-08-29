@@ -1,126 +1,127 @@
-#define SQUARE(n)(n * n)
-#define CUBE(n)(n * n * n)
+#define SQUARE(n) (n * n)
+#define CUBE(n)   (n * n * n)
 
-#define EXP_SLOW(n)((5 * CUBE(n)) / 4) // (5 * (n)^3) / 4
-#define EXP_FAST(n)((4 * CUBE(n)) / 5) // (4 * (n)^3) / 5
-#define EXP_MEDIUM_FAST(n)(CUBE(n)) // (n)^3
-#define EXP_MEDIUM_SLOW(n)((6 * CUBE(n)) / 5 - (15 * SQUARE(n)) + (100 * n) - 140)    // (6 * (n)^3) / 5 - (15 * (n)^2) + (100 * n) - 140
-#define EXP_ERRATIC(n)                                      \
-     (n <= 50) ? ((100 - n) * CUBE(n) /  50)                \
-    :(n <= 68) ? ((150 - n) * CUBE(n) / 100)                \
-    :(n <= 98) ? (((1911 - 10 * n) / 3) * CUBE(n) / 500)    \
-    :            ((160 - n) * CUBE(n) / 100)
-#define EXP_FLUCTUATING(n)                                  \
-     (n <= 15) ? (((n + 1) / 3 + 24) * CUBE(n) / 50)        \
-    :(n <= 36) ? ((n + 14)           * CUBE(n) / 50)        \
-    :            (((n / 2) + 32)     * CUBE(n) / 50)
+#define EXP_SLOW(n)        ((5 * CUBE(n)) / 4) // (5 * (n)^3) / 4
+#define EXP_FAST(n)        ((4 * CUBE(n)) / 5) // (4 * (n)^3) / 5
+#define EXP_MEDIUM_FAST(n) (CUBE(n))           // (n)^3
+#define EXP_MEDIUM_SLOW(n)                            \
+    ((6 * CUBE(n)) / 5 - (15 * SQUARE(n)) + (100 * n) \
+        - 140) // (6 * (n)^3) / 5 - (15 * (n)^2) + (100 * n) - 140
+#define EXP_ERRATIC(n)                                                          \
+    (n <= 50) ? ((100 - n) * CUBE(n) / 50)                                      \
+              : (n <= 68) ? ((150 - n) * CUBE(n) / 100)                         \
+                          : (n <= 98) ? (((1911 - 10 * n) / 3) * CUBE(n) / 500) \
+                                      : ((160 - n) * CUBE(n) / 100)
+#define EXP_FLUCTUATING(n)                          \
+    (n <= 15) ? (((n + 1) / 3 + 24) * CUBE(n) / 50) \
+              : (n <= 36) ? ((n + 14) * CUBE(n) / 50) : (((n / 2) + 32) * CUBE(n) / 50)
 
-const u32 gExperienceTables[][MAX_LEVEL + 1] =
-{
-    { // Medium Fast
-        0, // 0
-        1, // 1
-        EXP_MEDIUM_FAST(2),
-        EXP_MEDIUM_FAST(3),
-        EXP_MEDIUM_FAST(4),
-        EXP_MEDIUM_FAST(5),
-        EXP_MEDIUM_FAST(6),
-        EXP_MEDIUM_FAST(7),
-        EXP_MEDIUM_FAST(8),
-        EXP_MEDIUM_FAST(9),
-        EXP_MEDIUM_FAST(10),
-        EXP_MEDIUM_FAST(11),
-        EXP_MEDIUM_FAST(12),
-        EXP_MEDIUM_FAST(13),
-        EXP_MEDIUM_FAST(14),
-        EXP_MEDIUM_FAST(15),
-        EXP_MEDIUM_FAST(16),
-        EXP_MEDIUM_FAST(17),
-        EXP_MEDIUM_FAST(18),
-        EXP_MEDIUM_FAST(19),
-        EXP_MEDIUM_FAST(20),
-        EXP_MEDIUM_FAST(21),
-        EXP_MEDIUM_FAST(22),
-        EXP_MEDIUM_FAST(23),
-        EXP_MEDIUM_FAST(24),
-        EXP_MEDIUM_FAST(25),
-        EXP_MEDIUM_FAST(26),
-        EXP_MEDIUM_FAST(27),
-        EXP_MEDIUM_FAST(28),
-        EXP_MEDIUM_FAST(29),
-        EXP_MEDIUM_FAST(30),
-        EXP_MEDIUM_FAST(31),
-        EXP_MEDIUM_FAST(32),
-        EXP_MEDIUM_FAST(33),
-        EXP_MEDIUM_FAST(34),
-        EXP_MEDIUM_FAST(35),
-        EXP_MEDIUM_FAST(36),
-        EXP_MEDIUM_FAST(37),
-        EXP_MEDIUM_FAST(38),
-        EXP_MEDIUM_FAST(39),
-        EXP_MEDIUM_FAST(40),
-        EXP_MEDIUM_FAST(41),
-        EXP_MEDIUM_FAST(42),
-        EXP_MEDIUM_FAST(43),
-        EXP_MEDIUM_FAST(44),
-        EXP_MEDIUM_FAST(45),
-        EXP_MEDIUM_FAST(46),
-        EXP_MEDIUM_FAST(47),
-        EXP_MEDIUM_FAST(48),
-        EXP_MEDIUM_FAST(49),
-        EXP_MEDIUM_FAST(50),
-        EXP_MEDIUM_FAST(51),
-        EXP_MEDIUM_FAST(52),
-        EXP_MEDIUM_FAST(53),
-        EXP_MEDIUM_FAST(54),
-        EXP_MEDIUM_FAST(55),
-        EXP_MEDIUM_FAST(56),
-        EXP_MEDIUM_FAST(57),
-        EXP_MEDIUM_FAST(58),
-        EXP_MEDIUM_FAST(59),
-        EXP_MEDIUM_FAST(60),
-        EXP_MEDIUM_FAST(61),
-        EXP_MEDIUM_FAST(62),
-        EXP_MEDIUM_FAST(63),
-        EXP_MEDIUM_FAST(64),
-        EXP_MEDIUM_FAST(65),
-        EXP_MEDIUM_FAST(66),
-        EXP_MEDIUM_FAST(67),
-        EXP_MEDIUM_FAST(68),
-        EXP_MEDIUM_FAST(69),
-        EXP_MEDIUM_FAST(70),
-        EXP_MEDIUM_FAST(71),
-        EXP_MEDIUM_FAST(72),
-        EXP_MEDIUM_FAST(73),
-        EXP_MEDIUM_FAST(74),
-        EXP_MEDIUM_FAST(75),
-        EXP_MEDIUM_FAST(76),
-        EXP_MEDIUM_FAST(77),
-        EXP_MEDIUM_FAST(78),
-        EXP_MEDIUM_FAST(79),
-        EXP_MEDIUM_FAST(80),
-        EXP_MEDIUM_FAST(81),
-        EXP_MEDIUM_FAST(82),
-        EXP_MEDIUM_FAST(83),
-        EXP_MEDIUM_FAST(84),
-        EXP_MEDIUM_FAST(85),
-        EXP_MEDIUM_FAST(86),
-        EXP_MEDIUM_FAST(87),
-        EXP_MEDIUM_FAST(88),
-        EXP_MEDIUM_FAST(89),
-        EXP_MEDIUM_FAST(90),
-        EXP_MEDIUM_FAST(91),
-        EXP_MEDIUM_FAST(92),
-        EXP_MEDIUM_FAST(93),
-        EXP_MEDIUM_FAST(94),
-        EXP_MEDIUM_FAST(95),
-        EXP_MEDIUM_FAST(96),
-        EXP_MEDIUM_FAST(97),
-        EXP_MEDIUM_FAST(98),
-        EXP_MEDIUM_FAST(99),
-        EXP_MEDIUM_FAST(100),
-    },
-    { // Erratic
+const u32 gExperienceTables[][MAX_LEVEL + 1] = { {
+                                                     // Medium Fast
+                                                     0, // 0
+                                                     1, // 1
+                                                     EXP_MEDIUM_FAST(2),
+                                                     EXP_MEDIUM_FAST(3),
+                                                     EXP_MEDIUM_FAST(4),
+                                                     EXP_MEDIUM_FAST(5),
+                                                     EXP_MEDIUM_FAST(6),
+                                                     EXP_MEDIUM_FAST(7),
+                                                     EXP_MEDIUM_FAST(8),
+                                                     EXP_MEDIUM_FAST(9),
+                                                     EXP_MEDIUM_FAST(10),
+                                                     EXP_MEDIUM_FAST(11),
+                                                     EXP_MEDIUM_FAST(12),
+                                                     EXP_MEDIUM_FAST(13),
+                                                     EXP_MEDIUM_FAST(14),
+                                                     EXP_MEDIUM_FAST(15),
+                                                     EXP_MEDIUM_FAST(16),
+                                                     EXP_MEDIUM_FAST(17),
+                                                     EXP_MEDIUM_FAST(18),
+                                                     EXP_MEDIUM_FAST(19),
+                                                     EXP_MEDIUM_FAST(20),
+                                                     EXP_MEDIUM_FAST(21),
+                                                     EXP_MEDIUM_FAST(22),
+                                                     EXP_MEDIUM_FAST(23),
+                                                     EXP_MEDIUM_FAST(24),
+                                                     EXP_MEDIUM_FAST(25),
+                                                     EXP_MEDIUM_FAST(26),
+                                                     EXP_MEDIUM_FAST(27),
+                                                     EXP_MEDIUM_FAST(28),
+                                                     EXP_MEDIUM_FAST(29),
+                                                     EXP_MEDIUM_FAST(30),
+                                                     EXP_MEDIUM_FAST(31),
+                                                     EXP_MEDIUM_FAST(32),
+                                                     EXP_MEDIUM_FAST(33),
+                                                     EXP_MEDIUM_FAST(34),
+                                                     EXP_MEDIUM_FAST(35),
+                                                     EXP_MEDIUM_FAST(36),
+                                                     EXP_MEDIUM_FAST(37),
+                                                     EXP_MEDIUM_FAST(38),
+                                                     EXP_MEDIUM_FAST(39),
+                                                     EXP_MEDIUM_FAST(40),
+                                                     EXP_MEDIUM_FAST(41),
+                                                     EXP_MEDIUM_FAST(42),
+                                                     EXP_MEDIUM_FAST(43),
+                                                     EXP_MEDIUM_FAST(44),
+                                                     EXP_MEDIUM_FAST(45),
+                                                     EXP_MEDIUM_FAST(46),
+                                                     EXP_MEDIUM_FAST(47),
+                                                     EXP_MEDIUM_FAST(48),
+                                                     EXP_MEDIUM_FAST(49),
+                                                     EXP_MEDIUM_FAST(50),
+                                                     EXP_MEDIUM_FAST(51),
+                                                     EXP_MEDIUM_FAST(52),
+                                                     EXP_MEDIUM_FAST(53),
+                                                     EXP_MEDIUM_FAST(54),
+                                                     EXP_MEDIUM_FAST(55),
+                                                     EXP_MEDIUM_FAST(56),
+                                                     EXP_MEDIUM_FAST(57),
+                                                     EXP_MEDIUM_FAST(58),
+                                                     EXP_MEDIUM_FAST(59),
+                                                     EXP_MEDIUM_FAST(60),
+                                                     EXP_MEDIUM_FAST(61),
+                                                     EXP_MEDIUM_FAST(62),
+                                                     EXP_MEDIUM_FAST(63),
+                                                     EXP_MEDIUM_FAST(64),
+                                                     EXP_MEDIUM_FAST(65),
+                                                     EXP_MEDIUM_FAST(66),
+                                                     EXP_MEDIUM_FAST(67),
+                                                     EXP_MEDIUM_FAST(68),
+                                                     EXP_MEDIUM_FAST(69),
+                                                     EXP_MEDIUM_FAST(70),
+                                                     EXP_MEDIUM_FAST(71),
+                                                     EXP_MEDIUM_FAST(72),
+                                                     EXP_MEDIUM_FAST(73),
+                                                     EXP_MEDIUM_FAST(74),
+                                                     EXP_MEDIUM_FAST(75),
+                                                     EXP_MEDIUM_FAST(76),
+                                                     EXP_MEDIUM_FAST(77),
+                                                     EXP_MEDIUM_FAST(78),
+                                                     EXP_MEDIUM_FAST(79),
+                                                     EXP_MEDIUM_FAST(80),
+                                                     EXP_MEDIUM_FAST(81),
+                                                     EXP_MEDIUM_FAST(82),
+                                                     EXP_MEDIUM_FAST(83),
+                                                     EXP_MEDIUM_FAST(84),
+                                                     EXP_MEDIUM_FAST(85),
+                                                     EXP_MEDIUM_FAST(86),
+                                                     EXP_MEDIUM_FAST(87),
+                                                     EXP_MEDIUM_FAST(88),
+                                                     EXP_MEDIUM_FAST(89),
+                                                     EXP_MEDIUM_FAST(90),
+                                                     EXP_MEDIUM_FAST(91),
+                                                     EXP_MEDIUM_FAST(92),
+                                                     EXP_MEDIUM_FAST(93),
+                                                     EXP_MEDIUM_FAST(94),
+                                                     EXP_MEDIUM_FAST(95),
+                                                     EXP_MEDIUM_FAST(96),
+                                                     EXP_MEDIUM_FAST(97),
+                                                     EXP_MEDIUM_FAST(98),
+                                                     EXP_MEDIUM_FAST(99),
+                                                     EXP_MEDIUM_FAST(100),
+                                                 },
+    {
+        // Erratic
         0, // 0
         1, // 1
         EXP_ERRATIC(2),
@@ -223,7 +224,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_ERRATIC(99),
         EXP_ERRATIC(100),
     },
-    { // Fluctuating
+    {
+        // Fluctuating
         0, // 0
         1, // 1
         EXP_FLUCTUATING(2),
@@ -326,7 +328,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_FLUCTUATING(99),
         EXP_FLUCTUATING(100),
     },
-    { // Medium Slow
+    {
+        // Medium Slow
         0, // 0
         1, // 1
         EXP_MEDIUM_SLOW(2),
@@ -429,7 +432,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_MEDIUM_SLOW(99),
         EXP_MEDIUM_SLOW(100),
     },
-    { // Fast
+    {
+        // Fast
         0, // 0
         1, // 1
         EXP_FAST(2),
@@ -532,7 +536,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_FAST(99),
         EXP_FAST(100),
     },
-    { // Slow
+    {
+        // Slow
         0, // 0
         1, // 1
         EXP_SLOW(2),
@@ -635,7 +640,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_SLOW(99),
         EXP_SLOW(100),
     },
-    { // Medium Fast copy 2 (unused? to-do: investigate)
+    {
+        // Medium Fast copy 2 (unused? to-do: investigate)
         0, // 0
         1, // 1
         EXP_MEDIUM_FAST(2),
@@ -738,7 +744,8 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_MEDIUM_FAST(99),
         EXP_MEDIUM_FAST(100),
     },
-    { // Medium Fast copy 3 (unused? to-do: investigate)
+    {
+        // Medium Fast copy 3 (unused? to-do: investigate)
         0, // 0
         1, // 1
         EXP_MEDIUM_FAST(2),
@@ -840,5 +847,4 @@ const u32 gExperienceTables[][MAX_LEVEL + 1] =
         EXP_MEDIUM_FAST(98),
         EXP_MEDIUM_FAST(99),
         EXP_MEDIUM_FAST(100),
-    }
-};
+    } };

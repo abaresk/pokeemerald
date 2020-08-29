@@ -1,8 +1,8 @@
 #ifndef GUARD_TRAINER_CARD_H
 #define GUARD_TRAINER_CARD_H
 
-#define TRAINER_CARD_PROFILE_LENGTH  4
-#define TRAINER_CARD_STICKER_TYPES   3
+#define TRAINER_CARD_PROFILE_LENGTH 4
+#define TRAINER_CARD_STICKER_TYPES  3
 
 enum
 {
@@ -53,7 +53,7 @@ struct TrainerCard
     /*0x4E*/ u8 monIconTint; // FRLG only
     /*0x4F*/ u8 facilityClass;
     /*0x50*/ u8 stickers[TRAINER_CARD_STICKER_TYPES]; // FRLG only
-    /*0x54*/ u16 monSpecies[PARTY_SIZE]; // FRLG only
+    /*0x54*/ u16 monSpecies[PARTY_SIZE];              // FRLG only
     /*0x60*/ bool16 hasAllSymbols;
     /*0x62*/ u16 frontierBP;
 };

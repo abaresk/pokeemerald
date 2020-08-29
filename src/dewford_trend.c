@@ -25,12 +25,15 @@ void InitDewfordTrend(void)
 
     for (i = 0; i < 5; i++)
     {
-        gSaveBlock1Ptr->easyChatPairs[i].words[0] = GetRandomEasyChatWordFromGroup(EC_GROUP_CONDITIONS);
+        gSaveBlock1Ptr->easyChatPairs[i].words[0] =
+            GetRandomEasyChatWordFromGroup(EC_GROUP_CONDITIONS);
 
         if (Random() & 1)
-            gSaveBlock1Ptr->easyChatPairs[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_LIFESTYLE);
+            gSaveBlock1Ptr->easyChatPairs[i].words[1] =
+                GetRandomEasyChatWordFromGroup(EC_GROUP_LIFESTYLE);
         else
-            gSaveBlock1Ptr->easyChatPairs[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_HOBBIES);
+            gSaveBlock1Ptr->easyChatPairs[i].words[1] =
+                GetRandomEasyChatWordFromGroup(EC_GROUP_HOBBIES);
 
         gSaveBlock1Ptr->easyChatPairs[i].unk1_6 = Random() & 1;
         sub_8122B28(&(gSaveBlock1Ptr->easyChatPairs[i]));
@@ -89,10 +92,9 @@ void UpdateDewfordTrendPerDay(u16 a)
     }
 }
 
-
 bool8 sub_81226D8(u16 *a)
 {
-    struct EasyChatPair s = {0};
+    struct EasyChatPair s = { 0 };
     u16 i;
 
     if (!SB1ContainsWords(a))
@@ -125,7 +127,7 @@ bool8 sub_81226D8(u16 *a)
                     r3--;
                 }
                 gSaveBlock1Ptr->easyChatPairs[i] = s;
-                if(i == 4)
+                if (i == 4)
                     sub_80EDC60(a);
                 return (i == 0);
             }
@@ -135,7 +137,6 @@ bool8 sub_81226D8(u16 *a)
     }
     return FALSE;
 }
-
 
 static void sub_8122804(struct EasyChatPair *s, u16 b, u8 c)
 {
@@ -165,10 +166,10 @@ void ReceiveEasyChatPairsData(struct EasyChatPair *a, size_t size, u8 unused)
     struct EasyChatPair *buffer1, *buffer2, *src, *dst, *foo_of_buffer2;
 
     buffer1 = Alloc(0x100);
-    if(buffer1 != NULL)
+    if (buffer1 != NULL)
     {
         buffer2 = Alloc(0x100);
-        if(buffer2 == NULL)
+        if (buffer2 == NULL)
         {
             Free(buffer1);
         }
@@ -192,7 +193,10 @@ void ReceiveEasyChatPairsData(struct EasyChatPair *a, size_t size, u8 unused)
                     }
                     else
                     {
-                        foo_of_buffer2 = (struct EasyChatPair *)((u32)buffer2 + (foo * 8)); //required to do this to reverse the order of register operands in add ASM statement
+                        foo_of_buffer2 = (struct EasyChatPair
+                                *)((u32)buffer2
+                                   + (foo * 8)); // required to do this to reverse the order of
+                                                 // register operands in add ASM statement
                         if (foo_of_buffer2->unk0_0 < src->unk0_0)
                         {
                             *foo_of_buffer2 = *src;
@@ -225,9 +229,9 @@ void TrendyPhraseIsOld(void)
 
     if (gSaveBlock1Ptr->easyChatPairs[0].unk0_0 - gSaveBlock1Ptr->easyChatPairs[1].unk0_0 < 2)
     {
-        #ifndef NONMATCHING
-            asm("":::"r2"); //Force the compiler to store address of gSaveBlock1 in r3 instead of r2
-        #endif
+#ifndef NONMATCHING
+        asm("" ::: "r2"); // Force the compiler to store address of gSaveBlock1 in r3 instead of r2
+#endif
         if (!gSaveBlock1Ptr->easyChatPairs[0].unk1_6 && gSaveBlock1Ptr->easyChatPairs[1].unk1_6)
             result = 1;
     }
@@ -236,55 +240,56 @@ void TrendyPhraseIsOld(void)
 
 void GetDewfordHallPaintingNameIndex(void)
 {
-    gSpecialVar_Result = (gSaveBlock1Ptr->easyChatPairs[0].words[0] + gSaveBlock1Ptr->easyChatPairs[0].words[1]) & 7;
+    gSpecialVar_Result =
+        (gSaveBlock1Ptr->easyChatPairs[0].words[0] + gSaveBlock1Ptr->easyChatPairs[0].words[1]) & 7;
 }
 
 static bool8 sub_8122A58(struct EasyChatPair *a, struct EasyChatPair *b, u8 c)
 {
     switch (c)
     {
-    case 0:
-        if (a->unk0_0 > b->unk0_0)
+        case 0:
+            if (a->unk0_0 > b->unk0_0)
+                return 1;
+            if (a->unk0_0 < b->unk0_0)
+                return 0;
+            if (a->unk0_7 > b->unk0_7)
+                return 1;
+            if (a->unk0_7 < b->unk0_7)
+                return 0;
+            break;
+        case 1:
+            if (a->unk0_7 > b->unk0_7)
+                return 1;
+            if (a->unk0_7 < b->unk0_7)
+                return 0;
+            if (a->unk0_0 > b->unk0_0)
+                return 1;
+            if (a->unk0_0 < b->unk0_0)
+                return 0;
+            break;
+        case 2:
+            if (a->unk0_0 > b->unk0_0)
+                return 1;
+            if (a->unk0_0 < b->unk0_0)
+                return 0;
+            if (a->unk0_7 > b->unk0_7)
+                return 1;
+            if (a->unk0_7 < b->unk0_7)
+                return 0;
+            if (a->unk2 > b->unk2)
+                return 1;
+            if (a->unk2 < b->unk2)
+                return 0;
+            if (a->words[0] > b->words[0])
+                return 1;
+            if (a->words[0] < b->words[0])
+                return 0;
+            if (a->words[1] > b->words[1])
+                return 1;
+            if (a->words[1] < b->words[1])
+                return 0;
             return 1;
-        if (a->unk0_0 < b->unk0_0)
-            return 0;
-        if (a->unk0_7 > b->unk0_7)
-            return 1;
-        if (a->unk0_7 < b->unk0_7)
-            return 0;
-        break;
-    case 1:
-        if (a->unk0_7 > b->unk0_7)
-            return 1;
-        if (a->unk0_7 < b->unk0_7)
-            return 0;
-        if (a->unk0_0 > b->unk0_0)
-            return 1;
-        if (a->unk0_0 < b->unk0_0)
-            return 0;
-        break;
-    case 2:
-        if (a->unk0_0 > b->unk0_0)
-            return 1;
-        if (a->unk0_0 < b->unk0_0)
-            return 0;
-        if (a->unk0_7 > b->unk0_7)
-            return 1;
-        if (a->unk0_7 < b->unk0_7)
-            return 0;
-        if (a->unk2 > b->unk2)
-            return 1;
-        if (a->unk2 < b->unk2)
-            return 0;
-        if (a->words[0] > b->words[0])
-            return 1;
-        if (a->words[0] < b->words[0])
-            return 0;
-        if (a->words[1] > b->words[1])
-            return 1;
-        if (a->words[1] < b->words[1])
-            return 0;
-        return 1;
     }
     return Random() & 1;
 }
@@ -329,7 +334,7 @@ static bool8 IsEasyChatPairEqual(u16 *words1, u16 *words2)
     return TRUE;
 }
 
-static s16 GetEqualEasyChatPairIndex(struct EasyChatPair*s, struct EasyChatPair *a, u16 b)
+static s16 GetEqualEasyChatPairIndex(struct EasyChatPair *s, struct EasyChatPair *a, u16 b)
 {
     s16 i;
 

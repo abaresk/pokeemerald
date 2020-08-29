@@ -14,4 +14,4 @@ void BufferContestLadyLanguage(u8 *dest);
 void BufferContestName(u8 *dest, u8 category);
 u8 sub_818E880(void);
 
-#endif //GUARD_LILYCOVE_LADY_H
+#endif // GUARD_LILYCOVE_LADY_H

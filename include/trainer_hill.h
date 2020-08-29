@@ -27,7 +27,7 @@ struct TrHillDisplay
     u16 unk3A0[16];
     u8 coords[2]; // x first 4 bits, y last 4 bits
     u8 direction; // array of 4 bits for each trainer
-    u8 range; // array of 4 bits for each trainer
+    u8 range;     // array of 4 bits for each trainer
 };
 
 struct TrHillFloor
@@ -65,8 +65,8 @@ bool32 LoadTrainerHillFloorObjectEventScripts(void);
 void GenerateTrainerHillFloorLayout(u16 *mapArg);
 bool32 InTrainerHill(void);
 u8 GetCurrentTrainerHillMapId(void);
-const struct WarpEvent* SetWarpDestinationTrainerHill4F(void);
-const struct WarpEvent* SetWarpDestinationTrainerHillFinalFloor(u8 warpEventId);
+const struct WarpEvent *SetWarpDestinationTrainerHill4F(void);
+const struct WarpEvent *SetWarpDestinationTrainerHillFinalFloor(u8 warpEventId);
 u16 LocalIdToHillTrainerId(u8 localId);
 bool8 GetHillTrainerFlag(u8 objectEventId);
 void SetHillTrainerFlag(void);

@@ -53,66 +53,51 @@ struct BerryTagScreenStruct
 static EWRAM_DATA struct BerryTagScreenStruct *sBerryTag = NULL;
 
 // const rom data
-static const struct BgTemplate sBackgroundTemplates[] =
-{
-  {
-      .bg = 0,
-      .charBaseIndex = 0,
-      .mapBaseIndex = 31,
-      .screenSize = 0,
-      .paletteMode = 0,
-      .priority = 0,
-      .baseTile = 0
-  },
-  {
-      .bg = 1,
-      .charBaseIndex = 0,
-      .mapBaseIndex = 30,
-      .screenSize = 0,
-      .paletteMode = 0,
-      .priority = 1,
-      .baseTile = 0
-  },
-  {
-      .bg = 2,
-      .charBaseIndex = 0,
-      .mapBaseIndex = 29,
-      .screenSize = 0,
-      .paletteMode = 0,
-      .priority = 2,
-      .baseTile = 0
-  },
-  {
-      .bg = 3,
-      .charBaseIndex = 0,
-      .mapBaseIndex = 28,
-      .screenSize = 0,
-      .paletteMode = 0,
-      .priority = 3,
-      .baseTile = 0
-  }
-};
+static const struct BgTemplate sBackgroundTemplates[] = { { .bg = 0,
+                                                              .charBaseIndex = 0,
+                                                              .mapBaseIndex = 31,
+                                                              .screenSize = 0,
+                                                              .paletteMode = 0,
+                                                              .priority = 0,
+                                                              .baseTile = 0 },
+    { .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0 },
+    { .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0 },
+    { .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0 } };
 
 static const u16 sFontPalette[] = INCBIN_U16("graphics/interface/berry_tag_screen.gbapal");
 
-static const u8 sTextColors[2][3] =
-{
-    {0, 2, 3},
-    {15, 14, 13}
-};
+static const u8 sTextColors[2][3] = { { 0, 2, 3 }, { 15, 14, 13 } };
 
-static const struct WindowTemplate sWindowTemplates[] =
-{
-    { // WIN_BERRY_NAME
-        .bg = 1,
-        .tilemapLeft = 11,
-        .tilemapTop = 4,
-        .width = 8,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 69,
-    },
-    { // WIN_SIZE_FIRM
+static const struct WindowTemplate sWindowTemplates[] = { {
+                                                              // WIN_BERRY_NAME
+                                                              .bg = 1,
+                                                              .tilemapLeft = 11,
+                                                              .tilemapTop = 4,
+                                                              .width = 8,
+                                                              .height = 2,
+                                                              .paletteNum = 15,
+                                                              .baseBlock = 69,
+                                                          },
+    {
+        // WIN_SIZE_FIRM
         .bg = 1,
         .tilemapLeft = 11,
         .tilemapTop = 7,
@@ -121,7 +106,8 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 85,
     },
-    { // WIN_DESC
+    {
+        // WIN_DESC
         .bg = 1,
         .tilemapLeft = 4,
         .tilemapTop = 14,
@@ -130,7 +116,8 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 157,
     },
-    { // WIN_BERRY_TAG
+    {
+        // WIN_BERRY_TAG
         .bg = 0,
         .tilemapLeft = 2,
         .tilemapTop = 0,
@@ -139,17 +126,13 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 257,
     },
-    DUMMY_WIN_TEMPLATE
-};
+    DUMMY_WIN_TEMPLATE };
 
-static const u8 *const sBerryFirmnessStrings[] =
-{
-    gBerryFirmnessString_VerySoft,
+static const u8 *const sBerryFirmnessStrings[] = { gBerryFirmnessString_VerySoft,
     gBerryFirmnessString_Soft,
     gBerryFirmnessString_Hard,
     gBerryFirmnessString_VeryHard,
-    gBerryFirmnessString_SuperHard
-};
+    gBerryFirmnessString_SuperHard };
 
 // this file's functions
 static void CB2_InitBerryTagScreen(void);
@@ -214,81 +197,81 @@ static bool8 InitBerryTagScreen(void)
 {
     switch (gMain.state)
     {
-    case 0:
-        SetVBlankHBlankCallbacksToNull();
-        ResetVramOamAndBgCntRegs();
-        ClearScheduledBgCopiesToVram();
-        gMain.state++;
-        break;
-    case 1:
-        ScanlineEffect_Stop();
-        gMain.state++;
-        break;
-    case 2:
-        ResetPaletteFade();
-        gPaletteFade.bufferTransferDisabled = 1;
-        gMain.state++;
-        break;
-    case 3:
-        ResetSpriteData();
-        gMain.state++;
-        break;
-    case 4:
-        FreeAllSpritePalettes();
-        gMain.state++;
-        break;
-    case 5:
-        if (!MenuHelpers_LinkSomething())
-            ResetTasks();
-        gMain.state++;
-        break;
-    case 6:
-        HandleInitBackgrounds();
-        sBerryTag->gfxState = 0;
-        gMain.state++;
-        break;
-    case 7:
-        if (LoadBerryTagGfx())
+        case 0:
+            SetVBlankHBlankCallbacksToNull();
+            ResetVramOamAndBgCntRegs();
+            ClearScheduledBgCopiesToVram();
             gMain.state++;
-        break;
-    case 8:
-        HandleInitWindows();
-        gMain.state++;
-        break;
-    case 9:
-        AddBerryTagTextToBg0();
-        gMain.state++;
-        break;
-    case 10:
-        PrintAllBerryData();
-        gMain.state++;
-        break;
-    case 11:
-        CreateBerrySprite();
-        gMain.state++;
-        break;
-    case 12:
-        CreateFlavorCircleSprites();
-        SetFlavorCirclesVisiblity();
-        gMain.state++;
-        break;
-    case 13:
-        CreateTask(Task_HandleInput, 0);
-        gMain.state++;
-        break;
-    case 14:
-        BlendPalettes(-1, 0x10, 0);
-        gMain.state++;
-        break;
-    case 15:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
-        gPaletteFade.bufferTransferDisabled = 0;
-        gMain.state++;
-        break;
-    default: // done
-        SetVBlankCallback(VblankCB);
-        SetMainCallback2(CB2_BerryTagScreen);
-        return TRUE;
+            break;
+        case 1:
+            ScanlineEffect_Stop();
+            gMain.state++;
+            break;
+        case 2:
+            ResetPaletteFade();
+            gPaletteFade.bufferTransferDisabled = 1;
+            gMain.state++;
+            break;
+        case 3:
+            ResetSpriteData();
+            gMain.state++;
+            break;
+        case 4:
+            FreeAllSpritePalettes();
+            gMain.state++;
+            break;
+        case 5:
+            if (!MenuHelpers_LinkSomething())
+                ResetTasks();
+            gMain.state++;
+            break;
+        case 6:
+            HandleInitBackgrounds();
+            sBerryTag->gfxState = 0;
+            gMain.state++;
+            break;
+        case 7:
+            if (LoadBerryTagGfx())
+                gMain.state++;
+            break;
+        case 8:
+            HandleInitWindows();
+            gMain.state++;
+            break;
+        case 9:
+            AddBerryTagTextToBg0();
+            gMain.state++;
+            break;
+        case 10:
+            PrintAllBerryData();
+            gMain.state++;
+            break;
+        case 11:
+            CreateBerrySprite();
+            gMain.state++;
+            break;
+        case 12:
+            CreateFlavorCircleSprites();
+            SetFlavorCirclesVisiblity();
+            gMain.state++;
+            break;
+        case 13:
+            CreateTask(Task_HandleInput, 0);
+            gMain.state++;
+            break;
+        case 14:
+            BlendPalettes(-1, 0x10, 0);
+            gMain.state++;
+            break;
+        case 15:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
+            gPaletteFade.bufferTransferDisabled = 0;
+            gMain.state++;
+            break;
+        default: // done
+            SetVBlankCallback(VblankCB);
+            SetMainCallback2(CB2_BerryTagScreen);
+            return TRUE;
     }
 
     return FALSE;
@@ -317,46 +300,46 @@ static bool8 LoadBerryTagGfx(void)
 
     switch (sBerryTag->gfxState)
     {
-    case 0:
-        ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(2, gBerryCheck_Gfx, 0, 0, 0);
-        sBerryTag->gfxState++;
-        break;
-    case 1:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            LZDecompressWram(gBerryTag_Gfx, sBerryTag->tilemapBuffers[0]);
+        case 0:
+            ResetTempTileDataBuffers();
+            DecompressAndCopyTileDataToVram(2, gBerryCheck_Gfx, 0, 0, 0);
             sBerryTag->gfxState++;
-        }
-        break;
-    case 2:
-        LZDecompressWram(gBerryTag_Pal, sBerryTag->tilemapBuffers[2]);
-        sBerryTag->gfxState++;
-        break;
-    case 3:
-        if (gSaveBlock2Ptr->playerGender == MALE)
-        {
-            for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
-                sBerryTag->tilemapBuffers[1][i] = 0x4042;
-        }
-        else
-        {
-            for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
-                sBerryTag->tilemapBuffers[1][i] = 0x5042;
-        }
-        sBerryTag->gfxState++;
-        break;
-    case 4:
-        LoadCompressedPalette(gBerryCheck_Pal, 0, 0xC0);
-        sBerryTag->gfxState++;
-        break;
-    case 5:
-        LoadCompressedSpriteSheet(&gBerryCheckCircleSpriteSheet);
-        sBerryTag->gfxState++;
-        break;
-    default:
-        LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
-        return TRUE; // done
+            break;
+        case 1:
+            if (FreeTempTileDataBuffersIfPossible() != TRUE)
+            {
+                LZDecompressWram(gBerryTag_Gfx, sBerryTag->tilemapBuffers[0]);
+                sBerryTag->gfxState++;
+            }
+            break;
+        case 2:
+            LZDecompressWram(gBerryTag_Pal, sBerryTag->tilemapBuffers[2]);
+            sBerryTag->gfxState++;
+            break;
+        case 3:
+            if (gSaveBlock2Ptr->playerGender == MALE)
+            {
+                for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
+                    sBerryTag->tilemapBuffers[1][i] = 0x4042;
+            }
+            else
+            {
+                for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
+                    sBerryTag->tilemapBuffers[1][i] = 0x5042;
+            }
+            sBerryTag->gfxState++;
+            break;
+        case 4:
+            LoadCompressedPalette(gBerryCheck_Pal, 0, 0xC0);
+            sBerryTag->gfxState++;
+            break;
+        case 5:
+            LoadCompressedSpriteSheet(&gBerryCheckCircleSpriteSheet);
+            sBerryTag->gfxState++;
+            break;
+        default:
+            LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
+            return TRUE; // done
     }
 
     return FALSE;
@@ -375,16 +358,23 @@ static void HandleInitWindows(void)
     ScheduleBgCopyTilemapToVram(1);
 }
 
-static void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId)
+static void PrintTextInBerryTagScreen(
+    u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId)
 {
     AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, sTextColors[colorStructId], speed, text);
 }
 
 static void AddBerryTagTextToBg0(void)
 {
-    memcpy(GetBgTilemapBuffer(0), sBerryTag->tilemapBuffers[2], sizeof(sBerryTag->tilemapBuffers[2]));
+    memcpy(
+        GetBgTilemapBuffer(0), sBerryTag->tilemapBuffers[2], sizeof(sBerryTag->tilemapBuffers[2]));
     FillWindowPixelBuffer(WIN_BERRY_TAG, PIXEL_FILL(15));
-    PrintTextInBerryTagScreen(WIN_BERRY_TAG, gText_BerryTag, GetStringCenterAlignXOffset(1, gText_BerryTag, 0x40), 1, 0, 1);
+    PrintTextInBerryTagScreen(WIN_BERRY_TAG,
+        gText_BerryTag,
+        GetStringCenterAlignXOffset(1, gText_BerryTag, 0x40),
+        1,
+        0,
+        1);
     PutWindowTilemap(WIN_BERRY_TAG);
     ScheduleBgCopyTilemapToVram(0);
 }
@@ -437,7 +427,8 @@ static void PrintBerryFirmness(void)
     const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
     AddTextPrinterParameterized(WIN_SIZE_FIRM, 1, gText_FirmSlash, 0, 0x11, TEXT_SPEED_FF, NULL);
     if (berry->firmness != 0)
-        AddTextPrinterParameterized(WIN_SIZE_FIRM, 1, sBerryFirmnessStrings[berry->firmness - 1], 0x28, 0x11, 0, NULL);
+        AddTextPrinterParameterized(
+            WIN_SIZE_FIRM, 1, sBerryFirmnessStrings[berry->firmness - 1], 0x28, 0x11, 0, NULL);
     else
         AddTextPrinterParameterized(WIN_SIZE_FIRM, 1, gText_ThreeMarks, 0x28, 0x11, 0, NULL);
 }
@@ -549,9 +540,11 @@ static void Task_HandleInput(u8 taskId)
 static void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
 {
     s16 *data = gTasks[taskId].data;
-    s16 currPocketPosition = gBagPositionStruct.scrollPosition[3] + gBagPositionStruct.cursorPosition[3];
+    s16 currPocketPosition =
+        gBagPositionStruct.scrollPosition[3] + gBagPositionStruct.cursorPosition[3];
     u32 newPocketPosition = currPocketPosition + toMove;
-    if (newPocketPosition < 46 && BagGetItemIdByPocketPosition(POCKET_BERRIES, newPocketPosition) != 0)
+    if (newPocketPosition < 46
+        && BagGetItemIdByPocketPosition(POCKET_BERRIES, newPocketPosition) != 0)
     {
         if (toMove < 0)
             data[1] = 2;
@@ -584,7 +577,8 @@ static void HandleBagCursorPositionChange(s8 toMove)
             *scrollPos += toMove;
     }
 
-    sBerryTag->berryId = ItemIdToBerryType(BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + *cursorPos));
+    sBerryTag->berryId =
+        ItemIdToBerryType(BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + *cursorPos));
 }
 
 static void Task_DisplayAnotherBerry(u8 taskId)
@@ -599,74 +593,74 @@ static void Task_DisplayAnotherBerry(u8 taskId)
     {
         switch (data[0])
         {
-        case 0x30:
-            FillWindowPixelBuffer(0, PIXEL_FILL(0));
-            break;
-        case 0x40:
-            PrintBerryNumberAndName();
-            break;
-        case 0x50:
-            DestroyBerrySprite();
-            CreateBerrySprite();
-            break;
-        case 0x60:
-            FillWindowPixelBuffer(1, PIXEL_FILL(0));
-            break;
-        case 0x70:
-            PrintBerrySize();
-            break;
-        case 0x80:
-            PrintBerryFirmness();
-            break;
-        case 0x90:
-            SetFlavorCirclesVisiblity();
-            break;
-        case 0xA0:
-            FillWindowPixelBuffer(2, PIXEL_FILL(0));
-            break;
-        case 0xB0:
-            PrintBerryDescription1();
-            break;
-        case 0xC0:
-            PrintBerryDescription2();
-            break;
+            case 0x30:
+                FillWindowPixelBuffer(0, PIXEL_FILL(0));
+                break;
+            case 0x40:
+                PrintBerryNumberAndName();
+                break;
+            case 0x50:
+                DestroyBerrySprite();
+                CreateBerrySprite();
+                break;
+            case 0x60:
+                FillWindowPixelBuffer(1, PIXEL_FILL(0));
+                break;
+            case 0x70:
+                PrintBerrySize();
+                break;
+            case 0x80:
+                PrintBerryFirmness();
+                break;
+            case 0x90:
+                SetFlavorCirclesVisiblity();
+                break;
+            case 0xA0:
+                FillWindowPixelBuffer(2, PIXEL_FILL(0));
+                break;
+            case 0xB0:
+                PrintBerryDescription1();
+                break;
+            case 0xC0:
+                PrintBerryDescription2();
+                break;
         }
     }
     else
     {
         switch (data[0])
         {
-        case 0x30:
-            FillWindowPixelBuffer(2, PIXEL_FILL(0));
-            break;
-        case 0x40:
-            PrintBerryDescription2();
-            break;
-        case 0x50:
-            PrintBerryDescription1();
-            break;
-        case 0x60:
-            SetFlavorCirclesVisiblity();
-            break;
-        case 0x70:
-            FillWindowPixelBuffer(1, PIXEL_FILL(0));
-            break;
-        case 0x80:
-            PrintBerryFirmness();
-            break;
-        case 0x90:
-            PrintBerrySize();
-            break;
-        case 0xA0:
-            DestroyBerrySprite();
-            CreateBerrySprite();
-            break;
-        case 0xB0:
-            FillWindowPixelBuffer(0, PIXEL_FILL(0));
-            break;
-        case 0xC0:
-            PrintBerryNumberAndName();
-            break;
+            case 0x30:
+                FillWindowPixelBuffer(2, PIXEL_FILL(0));
+                break;
+            case 0x40:
+                PrintBerryDescription2();
+                break;
+            case 0x50:
+                PrintBerryDescription1();
+                break;
+            case 0x60:
+                SetFlavorCirclesVisiblity();
+                break;
+            case 0x70:
+                FillWindowPixelBuffer(1, PIXEL_FILL(0));
+                break;
+            case 0x80:
+                PrintBerryFirmness();
+                break;
+            case 0x90:
+                PrintBerrySize();
+                break;
+            case 0xA0:
+                DestroyBerrySprite();
+                CreateBerrySprite();
+                break;
+            case 0xB0:
+                FillWindowPixelBuffer(0, PIXEL_FILL(0));
+                break;
+            case 0xC0:
+                PrintBerryNumberAndName();
+                break;
         }
     }
 

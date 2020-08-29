@@ -194,7 +194,9 @@ u8 sub_81CD258(u8 arg0)
     struct PokenavSub18 *unkPtr = GetSubstructPtr(18);
 
     r7 = (arg0) ? structPtr->unk6788 : structPtr->unk6787;
-    sub_81D1F84(&structPtr->unk6428, structPtr->unk6428.unk14[structPtr->unk6786], structPtr->unk6428.unk14[r7]);
+    sub_81D1F84(&structPtr->unk6428,
+        structPtr->unk6428.unk14[structPtr->unk6786],
+        structPtr->unk6428.unk14[r7]);
     r6 = (unkPtr->unk2 != ((sub_81CDD5C() != 0) ? unkPtr->unk0 : unkPtr->unk0 - 1));
     if (arg0)
     {
@@ -235,60 +237,60 @@ bool32 sub_81CD3C4(void)
 
     switch (structPtr->unk678A)
     {
-    case 0:
-        sub_81CD824(unkPtr->unk2, 0);
-        break;
-    case 1:
-        sub_81CDA1C(unkPtr->unk2, 0);
-        break;
-    case 2:
-        sub_81CDB98(unkPtr->unk2, 0);
-        break;
-    case 3:
-        if (unkPtr->unk0 == 1)
-        {
-            structPtr->unk6786 = 0;
-            structPtr->unk6787 = 0;
-            structPtr->unk6788 = 0;
+        case 0:
+            sub_81CD824(unkPtr->unk2, 0);
+            break;
+        case 1:
+            sub_81CDA1C(unkPtr->unk2, 0);
+            break;
+        case 2:
+            sub_81CDB98(unkPtr->unk2, 0);
+            break;
+        case 3:
+            if (unkPtr->unk0 == 1)
+            {
+                structPtr->unk6786 = 0;
+                structPtr->unk6787 = 0;
+                structPtr->unk6788 = 0;
+                structPtr->unk678A = 0;
+                return TRUE;
+            }
+            else
+            {
+                structPtr->unk6786 = 0;
+                structPtr->unk6787 = 1;
+                structPtr->unk6788 = 2;
+            }
+            break;
+        // These were probably ternaries just like cases 7-9, but couldn't match it any other way.
+        case 4:
+            var = unkPtr->unk2 + 1;
+            if (var >= unkPtr->unk0)
+                var = 0;
+            sub_81CD824(var, 1);
+            break;
+        case 5:
+            var = unkPtr->unk2 + 1;
+            if (var >= unkPtr->unk0)
+                var = 0;
+            sub_81CDA1C(var, 1);
+            break;
+        case 6:
+            var = unkPtr->unk2 + 1;
+            if (var >= unkPtr->unk0)
+                var = 0;
+            sub_81CDB98(var, 1);
+            break;
+        case 7:
+            sub_81CD824((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
+            break;
+        case 8:
+            sub_81CDA1C((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
+            break;
+        case 9:
+            sub_81CDB98((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
             structPtr->unk678A = 0;
             return TRUE;
-        }
-        else
-        {
-            structPtr->unk6786 = 0;
-            structPtr->unk6787 = 1;
-            structPtr->unk6788 = 2;
-        }
-        break;
-    // These were probably ternaries just like cases 7-9, but couldn't match it any other way.
-    case 4:
-        var = unkPtr->unk2 + 1;
-        if (var >= unkPtr->unk0)
-            var = 0;
-        sub_81CD824(var, 1);
-        break;
-    case 5:
-        var = unkPtr->unk2 + 1;
-        if (var >= unkPtr->unk0)
-            var = 0;
-        sub_81CDA1C(var, 1);
-        break;
-    case 6:
-        var = unkPtr->unk2 + 1;
-        if (var >= unkPtr->unk0)
-            var = 0;
-        sub_81CDB98(var, 1);
-        break;
-    case 7:
-        sub_81CD824((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
-        break;
-    case 8:
-        sub_81CDA1C((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
-        break;
-    case 9:
-        sub_81CDB98((unkPtr->unk2 - 1 >= 0) ? unkPtr->unk2 - 1 : unkPtr->unk0 - 1, 2);
-        structPtr->unk678A = 0;
-        return TRUE;
     }
 
     structPtr->unk678A++;
@@ -301,15 +303,15 @@ bool32 sub_81CD548(u8 arg0)
 
     switch (arg0)
     {
-    case 0:
-        sub_81CD824(structPtr->unk6302, structPtr->unk6789);
-        break;
-    case 1:
-        sub_81CDA1C(structPtr->unk6302, structPtr->unk6789);
-        break;
-    case 2:
-        sub_81CDB98(structPtr->unk6302, structPtr->unk6789);
-        return TRUE;
+        case 0:
+            sub_81CD824(structPtr->unk6302, structPtr->unk6789);
+            break;
+        case 1:
+            sub_81CDA1C(structPtr->unk6302, structPtr->unk6789);
+            break;
+        case 2:
+            sub_81CDB98(structPtr->unk6302, structPtr->unk6789);
+            return TRUE;
     }
 
     return FALSE;
@@ -360,7 +362,8 @@ u8 *sub_81CD624(u8 *str, u16 id, bool8 arg3)
         level = GetLevelFromBoxMonExp(boxMon);
     }
 
-    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && !StringCompare(str, gSpeciesNames[species]))
+    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M)
+        && !StringCompare(str, gSpeciesNames[species]))
         gender = MON_GENDERLESS;
 
     str_ = str; // For some reason, a variable is needed to match.
@@ -372,27 +375,27 @@ u8 *sub_81CD624(u8 *str, u16 id, bool8 arg3)
     *(str_++) = 60;
     switch (gender)
     {
-    default:
-        *(str_++) = CHAR_UNK_SPACER;
-        break;
-    case MON_MALE:
-        *(str_++) = EXT_CTRL_CODE_BEGIN;
-        *(str_++) = EXT_CTRL_CODE_COLOR;
-        *(str_++) = TEXT_COLOR_RED;
-        *(str_++) = EXT_CTRL_CODE_BEGIN;
-        *(str_++) = EXT_CTRL_CODE_SHADOW;
-        *(str_++) = TEXT_COLOR_LIGHT_RED;
-        *(str_++) = CHAR_MALE;
-        break;
-    case MON_FEMALE:
-        *(str_++) = EXT_CTRL_CODE_BEGIN;
-        *(str_++) = EXT_CTRL_CODE_COLOR;
-        *(str_++) = TEXT_COLOR_GREEN;
-        *(str_++) = EXT_CTRL_CODE_BEGIN;
-        *(str_++) = EXT_CTRL_CODE_SHADOW;
-        *(str_++) = TEXT_COLOR_LIGHT_GREEN;
-        *(str_++) = CHAR_FEMALE;
-        break;
+        default:
+            *(str_++) = CHAR_UNK_SPACER;
+            break;
+        case MON_MALE:
+            *(str_++) = EXT_CTRL_CODE_BEGIN;
+            *(str_++) = EXT_CTRL_CODE_COLOR;
+            *(str_++) = TEXT_COLOR_RED;
+            *(str_++) = EXT_CTRL_CODE_BEGIN;
+            *(str_++) = EXT_CTRL_CODE_SHADOW;
+            *(str_++) = TEXT_COLOR_LIGHT_RED;
+            *(str_++) = CHAR_MALE;
+            break;
+        case MON_FEMALE:
+            *(str_++) = EXT_CTRL_CODE_BEGIN;
+            *(str_++) = EXT_CTRL_CODE_COLOR;
+            *(str_++) = TEXT_COLOR_GREEN;
+            *(str_++) = EXT_CTRL_CODE_BEGIN;
+            *(str_++) = EXT_CTRL_CODE_SHADOW;
+            *(str_++) = TEXT_COLOR_LIGHT_GREEN;
+            *(str_++) = CHAR_FEMALE;
+            break;
     }
 
     *(str_++) = EXT_CTRL_CODE_BEGIN;
@@ -497,10 +500,12 @@ void sub_81CDA1C(s16 arg0, u8 arg1)
         structPtr->unk6428.unk0[arg1][1] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_TOUGH, NULL);
         structPtr->unk6428.unk0[arg1][2] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SMART, NULL);
         structPtr->unk6428.unk0[arg1][3] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_CUTE, NULL);
-        structPtr->unk6428.unk0[arg1][4] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_BEAUTY, NULL);
-        structPtr->unk6780[arg1] = (GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) != 255)
-                                 ? GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) / 29u
-                                 : 9;
+        structPtr->unk6428.unk0[arg1][4] =
+            GetBoxOrPartyMonData(boxId, monId, MON_DATA_BEAUTY, NULL);
+        structPtr->unk6780[arg1] =
+            (GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) != 255)
+                ? GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) / 29u
+                : 9;
         structPtr->unk6783[arg1] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_MARKINGS, NULL);
         sub_81D2754(structPtr->unk6428.unk0[arg1], structPtr->unk6428.unk14[arg1]);
     }
@@ -530,8 +535,10 @@ void sub_81CDB98(s16 arg0, u8 arg1)
     species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES2, NULL);
     tid = GetBoxOrPartyMonData(boxId, monId, MON_DATA_OT_ID, NULL);
     personality = GetBoxOrPartyMonData(boxId, monId, MON_DATA_PERSONALITY, NULL);
-    LoadSpecialPokePic(&gMonFrontPicTable[species], structPtr->monPicGfx[arg1], species, personality, TRUE);
-    LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, tid, personality), structPtr->monPal[arg1]);
+    LoadSpecialPokePic(
+        &gMonFrontPicTable[species], structPtr->monPicGfx[arg1], species, personality, TRUE);
+    LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, tid, personality),
+        structPtr->monPal[arg1]);
 }
 
 u16 sub_81CDC50(void)

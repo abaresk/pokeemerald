@@ -38,8 +38,7 @@ static void VBlankCB(void)
     TransferPlttBuffer();
 }
 
-static const u16 sDiplomaPalettes[][16] =
-{
+static const u16 sDiplomaPalettes[][16] = {
     INCBIN_U16("graphics/misc/diploma_national.gbapal"),
     INCBIN_U16("graphics/misc/diploma_hoenn.gbapal"),
 };
@@ -143,8 +142,7 @@ static void DisplayDiplomaText(void)
     CopyWindowToVram(0, 3);
 }
 
-static const struct BgTemplate sDiplomaBgTemplates[2] =
-{
+static const struct BgTemplate sDiplomaBgTemplates[2] = {
     {
         .bg = 0,
         .charBaseIndex = 1,
@@ -178,8 +176,7 @@ static void InitDiplomaBg(void)
     SetGpuReg(REG_OFFSET_BLDY, DISPCNT_MODE_0);
 }
 
-static const struct WindowTemplate sDiplomaWinTemplates[2] =
-{
+static const struct WindowTemplate sDiplomaWinTemplates[2] = {
     {
         .bg = 0,
         .tilemapLeft = 5,
@@ -203,7 +200,7 @@ static void InitDiplomaWindow(void)
 
 static void PrintDiplomaText(u8 *text, u8 var1, u8 var2)
 {
-    u8 color[3] = {0, 2, 3};
+    u8 color[3] = { 0, 2, 3 };
 
     AddTextPrinterParameterized4(0, 1, var1, var2, 0, 0, color, -1, text);
 }

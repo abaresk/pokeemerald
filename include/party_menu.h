@@ -10,14 +10,14 @@ struct PartyMenu
 {
     MainCallback exitCallback;
     TaskFunc task;
-    u8 menuType:4;
-    u8 layout:2;
+    u8 menuType : 4;
+    u8 layout : 2;
     s8 slotId;
     s8 slotId2;
     u8 action;
     u16 bagItem;
-    s16 data1;           // used variously as a moveId, counter, moveSlotId, or cursorPos
-    s16 learnMoveState;  // data2, used only as a learn move state
+    s16 data1;          // used variously as a moveId, counter, moveSlotId, or cursorPos
+    s16 learnMoveState; // data2, used only as a learn move state
 };
 
 extern struct PartyMenu gPartyMenu;
@@ -36,8 +36,8 @@ bool8 IsMultiBattle(void);
 u8 GetCursorSelectionMonId(void);
 u8 GetPartyMenuType(void);
 void Task_HandleChooseMonInput(u8 taskId);
-u8* GetMonNickname(struct Pokemon *mon, u8 *dest);
-u8 DisplayPartyMenuMessage(const u8* str, bool8 keepOpen);
+u8 *GetMonNickname(struct Pokemon *mon, u8 *dest);
+u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen);
 bool8 IsPartyMenuTextPrinterActive(void);
 void PartyMenuModifyHP(u8 taskId, u8 slot, s8 hpIncrement, s16 HPDifference, TaskFunc task);
 u8 GetAilmentFromStatus(u32 status);

@@ -14,7 +14,7 @@ static void AnimTask_TranslateMonElliptical_Step(u8 taskId);
 static void DoHorizontalLunge(struct Sprite *sprite);
 static void ReverseHorizontalLungeDirection(struct Sprite *sprite);
 static void DoVerticalDip(struct Sprite *sprite);
-static void ReverseVerticalDipDirection(struct Sprite* sprite);
+static void ReverseVerticalDipDirection(struct Sprite *sprite);
 static void SlideMonToOriginalPos(struct Sprite *sprite);
 static void SlideMonToOriginalPos_Step(struct Sprite *sprite);
 static void SlideMonToOffset(struct Sprite *sprite);
@@ -28,8 +28,7 @@ static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId);
 static void AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step(u8 taskId);
 static void AnimTask_SlideOffScreen_Step(u8 taskId);
 
-const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
-{
+const struct SpriteTemplate gHorizontalLungeSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -39,8 +38,7 @@ const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
     .callback = DoHorizontalLunge,
 };
 
-const struct SpriteTemplate gVerticalDipSpriteTemplate =
-{
+const struct SpriteTemplate gVerticalDipSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -50,8 +48,7 @@ const struct SpriteTemplate gVerticalDipSpriteTemplate =
     .callback = DoVerticalDip,
 };
 
-const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -61,8 +58,7 @@ const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate =
     .callback = SlideMonToOriginalPos,
 };
 
-const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -72,8 +68,7 @@ const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate =
     .callback = SlideMonToOffset,
 };
 
-const struct SpriteTemplate gSlideMonToOffsetAndBackSpriteTemplate =
-{
+const struct SpriteTemplate gSlideMonToOffsetAndBackSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &gDummyOamData,
@@ -172,19 +167,19 @@ void AnimTask_ShakeMon2(u8 taskId)
     {
         switch (gBattleAnimArgs[0])
         {
-        case 4:
-            battlerId = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
-            break;
-        case 5:
-            battlerId = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
-            break;
-        case 6:
-            battlerId = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-            break;
-        case 7:
-        default:
-            battlerId = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
-            break;
+            case 4:
+                battlerId = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+                break;
+            case 5:
+                battlerId = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+                break;
+            case 6:
+                battlerId = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+                break;
+            case 7:
+            default:
+                battlerId = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+                break;
         }
 
         if (IsBattlerSpriteVisible(battlerId) == FALSE)
@@ -625,7 +620,6 @@ static void SlideMonToOffsetAndBack(struct Sprite *sprite)
     sprite->callback = TranslateMonSpriteLinearFixedPoint;
 }
 
-
 static void SlideMonToOffsetAndBack_End(struct Sprite *sprite)
 {
     gSprites[sprite->data[5]].pos2.x = 0;
@@ -702,29 +696,29 @@ void AnimTask_SlideOffScreen(u8 taskId)
     u8 spriteId;
     switch (gBattleAnimArgs[0])
     {
-    case ANIM_ATTACKER:
-    case ANIM_TARGET:
-        spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        break;
-    case ANIM_ATK_PARTNER:
-        if (!IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
-        {
+        case ANIM_ATTACKER:
+        case ANIM_TARGET:
+            spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+            break;
+        case ANIM_ATK_PARTNER:
+            if (!IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
+            {
+                DestroyAnimVisualTask(taskId);
+                return;
+            }
+            spriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)];
+            break;
+        case ANIM_DEF_PARTNER:
+            if (!IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
+            {
+                DestroyAnimVisualTask(taskId);
+                return;
+            }
+            spriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimTarget)];
+            break;
+        default:
             DestroyAnimVisualTask(taskId);
             return;
-        }
-        spriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)];
-        break;
-    case ANIM_DEF_PARTNER:
-        if (!IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
-        {
-            DestroyAnimVisualTask(taskId);
-            return;
-        }
-        spriteId = gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimTarget)];
-        break;
-    default:
-        DestroyAnimVisualTask(taskId);
-        return;
     }
     gTasks[taskId].data[0] = spriteId;
     if (GetBattlerSide(gBattleAnimTarget) != B_SIDE_PLAYER)
@@ -809,7 +803,8 @@ static void AnimTask_SwayMonStep(u8 taskId)
     }
 
     if (((waveIndex >= 0x80u) && (gTasks[taskId].data[11] == 0) && (gTasks[taskId].data[12] == 1))
-        || ((waveIndex < 0x7fu) && (gTasks[taskId].data[11] == 1) && (gTasks[taskId].data[12] == 0)))
+        || ((waveIndex < 0x7fu) && (gTasks[taskId].data[11] == 1)
+            && (gTasks[taskId].data[12] == 0)))
     {
         gTasks[taskId].data[11] ^= 1;
         gTasks[taskId].data[12] ^= 1;
@@ -964,17 +959,17 @@ static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId)
     {
         switch (gTasks[taskId].data[6])
         {
-        case 1:
-            ResetSpriteRotScale(gTasks[taskId].data[5]);
-        case 0:
-        default:
-            DestroyAnimVisualTask(taskId);
-            return;
-        case 2:
-            gTasks[taskId].data[1] = 0;
-            gTasks[taskId].data[4] *= -1;
-            gTasks[taskId].data[6] = 1;
-            break;
+            case 1:
+                ResetSpriteRotScale(gTasks[taskId].data[5]);
+            case 0:
+            default:
+                DestroyAnimVisualTask(taskId);
+                return;
+            case 2:
+                gTasks[taskId].data[1] = 0;
+                gTasks[taskId].data[4] *= -1;
+                gTasks[taskId].data[6] = 1;
+                break;
         }
     }
 }

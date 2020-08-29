@@ -15,18 +15,46 @@ extern const u8 gText_Peekaboo[];
 // this file's functions
 static void CB2_HandleGivenWaldaPhrase(void);
 static u32 GetWaldaPhraseInputCase(u8 *inputPtr);
-static bool32 TryCalculateWallpaper(u16* backgroundClr, u16 *foregroundClr, u8 *iconId, u8 *patternId, u16 trainerId, u8 *phrase);
+static bool32 TryCalculateWallpaper(
+    u16 *backgroundClr, u16 *foregroundClr, u8 *iconId, u8 *patternId, u16 trainerId, u8 *phrase);
 static void sub_81D9D5C(u8 *array, u8 *letterTableIds, u32 arg2, u32 arg3, u32 loopCount);
 static u32 sub_81D9DAC(u8 *array, u32 arg1, u32 loopCount);
 static void sub_81D9C90(u8 *array, s32 arg1, s32 arg2);
 static void sub_81D9CDC(u8 *array, u32 loopCount, u8 arg2);
 
 // only consonants are allowed, no vowels, some lowercase letters are missing
-static const u8 sWaldaLettersTable[] =
-{
-    CHAR_B, CHAR_C, CHAR_D, CHAR_F, CHAR_G, CHAR_H, CHAR_J, CHAR_K, CHAR_L, CHAR_M, CHAR_N, CHAR_P, CHAR_Q, CHAR_R, CHAR_S, CHAR_T, CHAR_V, CHAR_W, CHAR_Z,
-    CHAR_b, CHAR_c, CHAR_d, CHAR_f, CHAR_g, CHAR_h, CHAR_j, CHAR_k,         CHAR_m, CHAR_n, CHAR_p, CHAR_q,         CHAR_s
-};
+static const u8 sWaldaLettersTable[] = { CHAR_B,
+    CHAR_C,
+    CHAR_D,
+    CHAR_F,
+    CHAR_G,
+    CHAR_H,
+    CHAR_J,
+    CHAR_K,
+    CHAR_L,
+    CHAR_M,
+    CHAR_N,
+    CHAR_P,
+    CHAR_Q,
+    CHAR_R,
+    CHAR_S,
+    CHAR_T,
+    CHAR_V,
+    CHAR_W,
+    CHAR_Z,
+    CHAR_b,
+    CHAR_c,
+    CHAR_d,
+    CHAR_f,
+    CHAR_g,
+    CHAR_h,
+    CHAR_j,
+    CHAR_k,
+    CHAR_m,
+    CHAR_n,
+    CHAR_p,
+    CHAR_q,
+    CHAR_s };
 
 enum
 {
@@ -56,17 +84,17 @@ static void CB2_HandleGivenWaldaPhrase(void)
 
     switch (gSpecialVar_0x8004)
     {
-    case PHRASE_FIRST_ATTEMPT:
-        if (IsWaldaPhraseEmpty())
-            SetWaldaPhrase(gText_Peekaboo);
-        else
-            gSpecialVar_0x8004 = PHRASE_NO_CHANGE;
-        break;
-    case PHRASE_GIVEN_NEW:
-        SetWaldaPhrase(gStringVar2);
-        break;
-    case PHRASE_NO_CHANGE:
-        break;
+        case PHRASE_FIRST_ATTEMPT:
+            if (IsWaldaPhraseEmpty())
+                SetWaldaPhrase(gText_Peekaboo);
+            else
+                gSpecialVar_0x8004 = PHRASE_NO_CHANGE;
+            break;
+        case PHRASE_GIVEN_NEW:
+            SetWaldaPhrase(gStringVar2);
+            break;
+        case PHRASE_NO_CHANGE:
+            break;
     }
 
     StringCopy(gStringVar1, GetWaldaPhrasePtr());
@@ -89,7 +117,8 @@ u16 TryGetWallpaperWithWaldaPhrase(void)
     u16 backgroundClr, foregroundClr;
     u8 patternId, iconId;
     u16 trainerId = GetTrainerId(gSaveBlock2Ptr->playerTrainerId);
-    gSpecialVar_Result = TryCalculateWallpaper(&backgroundClr, &foregroundClr, &iconId, &patternId, trainerId, GetWaldaPhrasePtr());
+    gSpecialVar_Result = TryCalculateWallpaper(
+        &backgroundClr, &foregroundClr, &iconId, &patternId, trainerId, GetWaldaPhrasePtr());
 
     if (gSpecialVar_Result)
     {
@@ -115,7 +144,8 @@ static u8 GetLetterTableId(u8 letter)
     return ARRAY_COUNT(sWaldaLettersTable);
 }
 
-static bool32 TryCalculateWallpaper(u16* backgroundClr, u16 *foregroundClr, u8 *iconId, u8 *patternId, u16 trainerId, u8 *phrase)
+static bool32 TryCalculateWallpaper(
+    u16 *backgroundClr, u16 *foregroundClr, u8 *iconId, u8 *patternId, u16 trainerId, u8 *phrase)
 {
     s32 i;
     ALIGNED(2) u8 array[12];
@@ -152,10 +182,10 @@ static bool32 TryCalculateWallpaper(u16* backgroundClr, u16 *foregroundClr, u8 *
     if (array[7] != (array[1] ^ array[3] ^ array[5] ^ (trainerId & 0xFF)))
         return FALSE;
 
-    ptr = (u16*)(&array[0]);
+    ptr = (u16 *)(&array[0]);
     *backgroundClr = *ptr;
 
-    ptr = (u16*)(&array[2]);
+    ptr = (u16 *)(&array[2]);
     *foregroundClr = *ptr;
 
     *iconId = array[4];
@@ -173,7 +203,8 @@ static void sub_81D9C90(u8 *array, s32 arg1, s32 arg2)
     {
         var1 = (array[0] & 0x80) >> 7;
 
-        var1++; var1--; // needed to match
+        var1++;
+        var1--; // needed to match
 
         for (j = arg1 - 1; j >= 0; j--)
         {

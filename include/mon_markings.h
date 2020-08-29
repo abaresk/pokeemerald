@@ -34,4 +34,4 @@ struct Sprite *sub_811FF94(u16 tileTag, u16 paletteTag, const u16 *palette);
 struct Sprite *sub_811FFB4(u16 tileTag, u16 paletteTag, const u16 *palette);
 void sub_8120084(u8 markings, void *dest);
 
-#endif //POKEEMERALD_MON_MARKINGS_H
+#endif // POKEEMERALD_MON_MARKINGS_H

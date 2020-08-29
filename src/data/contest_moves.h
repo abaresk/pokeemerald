@@ -3128,9 +3128,7 @@ const struct ContestEffect gContestEffects[] =
 
 // A lookup table with TRUE for each combo starter ID and FALSE for ID 0,
 // which means "not a combo starter move".
-const bool8 gComboStarterLookupTable[] =
-{
-    FALSE,
+const bool8 gComboStarterLookupTable[] = { FALSE,
     TRUE,
     TRUE,
     TRUE,
@@ -3192,11 +3190,9 @@ const bool8 gComboStarterLookupTable[] =
     TRUE,
     TRUE,
     TRUE,
-    TRUE
-};
+    TRUE };
 
-void (*const gContestEffectFuncs[])(void) =
-{
+void (*const gContestEffectFuncs[])(void) = {
     ContestEffect_HighlyAppealing,
     ContestEffect_UserMoreEasilyStartled,
     ContestEffect_GreatAppealButNoMoreMoves,

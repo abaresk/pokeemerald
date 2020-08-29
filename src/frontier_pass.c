@@ -60,7 +60,7 @@ enum
     CURSOR_AREA_CANCEL,
     CURSOR_AREA_POINTS,
     CURSOR_AREA_EARNED_SYMBOLS, // The window.
-    CURSOR_AREA_SYMBOL, // All 7 symbols.
+    CURSOR_AREA_SYMBOL,         // All 7 symbols.
     CURSOR_AREA_COUNT = CURSOR_AREA_SYMBOL + NUM_FRONTIER_FACILITIES,
 };
 
@@ -73,9 +73,9 @@ struct FrontierPassData
     s16 cursorY;
     u8 cursorArea;
     u8 previousCursorArea;
-    u8 hasBattleRecord:1;
-    u8 unkE:3;
-    u8 trainerStars:4;
+    u8 hasBattleRecord : 1;
+    u8 unkE : 3;
+    u8 trainerStars : 4;
     u8 facilitySymbols[NUM_FRONTIER_FACILITIES];
 };
 
@@ -117,7 +117,7 @@ struct FrontierMapData
 static EWRAM_DATA struct FrontierPassData *sPassData = NULL;
 static EWRAM_DATA struct FrontierPassGfx *sPassGfx = NULL;
 static EWRAM_DATA struct FrontierMapData *sMapData = NULL;
-static EWRAM_DATA struct FrontierPassSaved sSavedPassData = {0};
+static EWRAM_DATA struct FrontierPassSaved sSavedPassData = { 0 };
 
 // This file's functions.
 static u32 AllocateFrontierPassData(void (*callback)(void));
@@ -138,92 +138,79 @@ static void SpriteCb_Dummy(struct Sprite *sprite);
 
 // Const rom data.
 static const u16 sMaleHeadPalette[] = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
-static const u16 sFemaleHeadPalette[] = INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
+static const u16 sFemaleHeadPalette[] =
+    INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
 static const u32 gUnknown_0856FBBC[] = INCBIN_U32("graphics/frontier_pass/map_screen.4bpp.lz");
 static const u32 sCursorGfx[] = INCBIN_U32("graphics/frontier_pass/cursor.4bpp.lz");
 static const u32 sHeadsGfx[] = INCBIN_U32("graphics/frontier_pass/map_heads.4bpp.lz");
 static const u32 sMapCursorGfx[] = INCBIN_U32("graphics/frontier_pass/map_cursor.4bpp.lz");
 static const u32 gUnknown_08570E00[] = INCBIN_U32("graphics/frontier_pass/map_screen.bin.lz");
-static const u32 gUnknown_08571060[] = INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.lz");
+static const u32 gUnknown_08571060[] =
+    INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.lz");
 static const u32 gUnknown_08571298[] = INCBIN_U32("graphics/frontier_pass/unknown_571298.bin");
 static const u32 gUnknown_085712C0[] = INCBIN_U32("graphics/frontier_pass/record_frame.bin.lz");
-static const u32 gUnknown_085712F8[] = INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.lz");
+static const u32 gUnknown_085712F8[] =
+    INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.lz");
 
-static const s16 gUnknown_085713E0[][2] = {{216, 32}, {216, 128}};
+static const s16 gUnknown_085713E0[][2] = { { 216, 32 }, { 216, 128 } };
 
-static const struct BgTemplate sPassBgTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sPassBgTemplates[] = {
+    { .bg = 0,
         .charBaseIndex = 2,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 1,
         .mapBaseIndex = 29,
         .screenSize = 1,
         .paletteMode = 1,
         .priority = 0,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct BgTemplate sMapBgTemplates[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate sMapBgTemplates[] = {
+    { .bg = 0,
         .charBaseIndex = 2,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
+        .baseTile = 0 },
+    { .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct WindowTemplate sPassWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 3,
-        .width = 12,
-        .height = 3,
-        .paletteNum = 15,
-        .baseBlock = 0x1,
-    },
+static const struct WindowTemplate sPassWindowTemplates[] = { {
+                                                                  .bg = 0,
+                                                                  .tilemapLeft = 2,
+                                                                  .tilemapTop = 3,
+                                                                  .width = 12,
+                                                                  .height = 3,
+                                                                  .paletteNum = 15,
+                                                                  .baseBlock = 0x1,
+                                                              },
     {
         .bg = 0,
         .tilemapLeft = 2,
@@ -251,20 +238,17 @@ static const struct WindowTemplate sPassWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 0x7C,
     },
-    DUMMY_WIN_TEMPLATE
-};
+    DUMMY_WIN_TEMPLATE };
 
-static const struct WindowTemplate sMapWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 0,
-        .tilemapTop = 1,
-        .width = 15,
-        .height = 5,
-        .paletteNum = 15,
-        .baseBlock = 0x1,
-    },
+static const struct WindowTemplate sMapWindowTemplates[] = { {
+                                                                 .bg = 0,
+                                                                 .tilemapLeft = 0,
+                                                                 .tilemapTop = 1,
+                                                                 .width = 15,
+                                                                 .height = 5,
+                                                                 .paletteNum = 15,
+                                                                 .baseBlock = 0x1,
+                                                             },
     {
         .bg = 0,
         .tilemapLeft = 20,
@@ -283,14 +267,12 @@ static const struct WindowTemplate sMapWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 0xDA,
     },
-    DUMMY_WIN_TEMPLATE
-};
+    DUMMY_WIN_TEMPLATE };
 
-static const u8 sTextColors[][3] =
-{
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY},
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_BLUE},
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED},
+static const u8 sTextColors[][3] = {
+    { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY },
+    { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_BLUE },
+    { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED },
 };
 
 struct
@@ -299,146 +281,85 @@ struct
     s16 yEnd;
     s16 xStart;
     s16 xEnd;
-}
-static const sPassAreasLayout[] =
-{
-    {28, 76, 132, 220},
-    {84, 132, 132, 220},
-    {80, 102, 20, 108},
-    {0, 16, 152, 240},
-    {108, 134, 20, 108},
-    {24, 48, 20, 108},
-    {50, 66, 20, 36},
-    {66, 82, 32, 48},
-    {50, 66, 44, 60},
-    {66, 82, 56, 72},
-    {50, 66, 68, 84},
-    {66, 82, 80, 96},
-    {50, 66, 92, 108},
+} static const sPassAreasLayout[] = {
+    { 28, 76, 132, 220 },
+    { 84, 132, 132, 220 },
+    { 80, 102, 20, 108 },
+    { 0, 16, 152, 240 },
+    { 108, 134, 20, 108 },
+    { 24, 48, 20, 108 },
+    { 50, 66, 20, 36 },
+    { 66, 82, 32, 48 },
+    { 50, 66, 44, 60 },
+    { 66, 82, 56, 72 },
+    { 50, 66, 68, 84 },
+    { 66, 82, 80, 96 },
+    { 50, 66, 92, 108 },
 };
 
-static const struct CompressedSpriteSheet sCursorSpriteSheets[] =
-{
-    {sCursorGfx, 0x100, 0},
-    {sMapCursorGfx, 0x400, 1},
-    {gFrontierPassMedals_Gfx, 0x380, 2},
+static const struct CompressedSpriteSheet sCursorSpriteSheets[] = {
+    { sCursorGfx, 0x100, 0 },
+    { sMapCursorGfx, 0x400, 1 },
+    { gFrontierPassMedals_Gfx, 0x380, 2 },
 };
 
-static const struct CompressedSpriteSheet sHeadsSpriteSheet[] =
-{
-    {sHeadsGfx, 0x100, 4},
-    {}
+static const struct CompressedSpriteSheet sHeadsSpriteSheet[] = { { sHeadsGfx, 0x100, 4 }, {} };
+
+static const struct SpritePalette sSpritePalettes[] = { { gFrontierPassCursor_Pal, 0 },
+    { gFrontierPassMapCursor_Pal, 1 },
+    { gFrontierPassMedalsSilver_Pal, 2 },
+    { gFrontierPassMedalsGold_Pal, 3 },
+    { sMaleHeadPalette, 4 },
+    { sFemaleHeadPalette, 5 },
+    {} };
+
+static const union AnimCmd sSpriteAnim_857151C[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571524[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857152C[] = { ANIMCMD_FRAME(4, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571534[] = { ANIMCMD_FRAME(8, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857153C[] = { ANIMCMD_FRAME(12, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571544[] = { ANIMCMD_FRAME(16, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857154C[] = { ANIMCMD_FRAME(20, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571554[] = { ANIMCMD_FRAME(24, 0), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857155C[] = {
+    ANIMCMD_FRAME(0, 45), ANIMCMD_FRAME(8, 45), ANIMCMD_JUMP(0)
 };
 
-static const struct SpritePalette sSpritePalettes[] =
-{
-    {gFrontierPassCursor_Pal, 0},
-    {gFrontierPassMapCursor_Pal, 1},
-    {gFrontierPassMedalsSilver_Pal, 2},
-    {gFrontierPassMedalsGold_Pal, 3},
-    {sMaleHeadPalette, 4},
-    {sFemaleHeadPalette, 5},
-    {}
+static const union AnimCmd sSpriteAnim_8571568[] = {
+    ANIMCMD_FRAME(16, 45), ANIMCMD_FRAME(24, 45), ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sSpriteAnim_857151C[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd *const sSpriteAnimTable_8571574[] = { sSpriteAnim_8571524,
+    sSpriteAnim_857152C };
 
-static const union AnimCmd sSpriteAnim_8571524[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857152C[] =
-{
-    ANIMCMD_FRAME(4, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_8571534[] =
-{
-    ANIMCMD_FRAME(8, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857153C[] =
-{
-    ANIMCMD_FRAME(12, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_8571544[] =
-{
-    ANIMCMD_FRAME(16, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857154C[] =
-{
-    ANIMCMD_FRAME(20, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_8571554[] =
-{
-    ANIMCMD_FRAME(24, 0),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857155C[] =
-{
-    ANIMCMD_FRAME(0, 45),
-    ANIMCMD_FRAME(8, 45),
-    ANIMCMD_JUMP(0)
-};
-
-static const union AnimCmd sSpriteAnim_8571568[] =
-{
-    ANIMCMD_FRAME(16, 45),
-    ANIMCMD_FRAME(24, 45),
-    ANIMCMD_JUMP(0)
-};
-
-static const union AnimCmd *const sSpriteAnimTable_8571574[] =
-{
-    sSpriteAnim_8571524,
-    sSpriteAnim_857152C
-};
-
-static const union AnimCmd *const sSpriteAnimTable_857157C[] =
-{
-    sSpriteAnim_8571524,
+static const union AnimCmd *const sSpriteAnimTable_857157C[] = { sSpriteAnim_8571524,
     sSpriteAnim_857152C,
     sSpriteAnim_8571534,
     sSpriteAnim_857153C,
     sSpriteAnim_8571544,
     sSpriteAnim_857154C,
-    sSpriteAnim_8571554
+    sSpriteAnim_8571554 };
+
+static const union AnimCmd *const sSpriteAnimTable_8571598[] = { sSpriteAnim_857155C,
+    sSpriteAnim_8571568 };
+
+static const union AffineAnimCmd sSpriteAffineAnim_85715A0[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AnimCmd *const sSpriteAnimTable_8571598[] =
-{
-    sSpriteAnim_857155C,
-    sSpriteAnim_8571568
-};
-
-static const union AffineAnimCmd sSpriteAffineAnim_85715A0[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_85715B0[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_85715B0[] = {
     sSpriteAffineAnim_85715A0
 };
 
-static const struct SpriteTemplate sSpriteTemplates_Cursors[] =
-{
+static const struct SpriteTemplate sSpriteTemplates_Cursors[] = {
     {
         .tileTag = 0,
         .paletteTag = 0,
@@ -459,8 +380,7 @@ static const struct SpriteTemplate sSpriteTemplates_Cursors[] =
     },
 };
 
-static const struct SpriteTemplate sSpriteTemplate_Medal =
-{
+static const struct SpriteTemplate sSpriteTemplate_Medal = {
     .tileTag = 2,
     .paletteTag = 2,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -470,8 +390,7 @@ static const struct SpriteTemplate sSpriteTemplate_Medal =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_Head =
-{
+static const struct SpriteTemplate sSpriteTemplate_Head = {
     .tileTag = 4,
     .paletteTag = 4,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
@@ -481,8 +400,7 @@ static const struct SpriteTemplate sSpriteTemplate_Head =
     .callback = SpriteCb_Dummy,
 };
 
-static const u8 *const sPassAreaDescriptions[] =
-{
+static const u8 *const sPassAreaDescriptions[] = {
     gText_ThereIsNoBattleRecord,
     gText_CheckFrontierMap,
     gText_CheckTrainerCard,
@@ -507,15 +425,14 @@ struct
     s16 x;
     s16 y;
     u8 animNum;
-} static const sMapLandmarks[] =
-{
-    {gText_BattleTower3,   gText_BattleTowerDesc,   0x59, 0x28, 1},
-    {gText_BattleDome2,    gText_BattleDomeDesc,    0x21, 0x2A, 1},
-    {gText_BattlePalace2,  gText_BattlePalaceDesc,  0x78, 0x56, 0},
-    {gText_BattleArena2,   gText_BattleArenaDesc,   0x72, 0x3B, 0},
-    {gText_BattleFactory2, gText_BattleFactoryDesc, 0x19, 0x43, 0},
-    {gText_BattlePike2,    gText_BattlePikeDesc,    0x39, 0x39, 1},
-    {gText_BattlePyramid2, gText_BattlePyramidDesc, 0x86, 0x29, 1},
+} static const sMapLandmarks[] = {
+    { gText_BattleTower3, gText_BattleTowerDesc, 0x59, 0x28, 1 },
+    { gText_BattleDome2, gText_BattleDomeDesc, 0x21, 0x2A, 1 },
+    { gText_BattlePalace2, gText_BattlePalaceDesc, 0x78, 0x56, 0 },
+    { gText_BattleArena2, gText_BattleArenaDesc, 0x72, 0x3B, 0 },
+    { gText_BattleFactory2, gText_BattleFactoryDesc, 0x19, 0x43, 0 },
+    { gText_BattlePike2, gText_BattlePikeDesc, 0x39, 0x39, 1 },
+    { gText_BattlePyramid2, gText_BattlePyramidDesc, 0x86, 0x29, 1 },
 };
 
 // code
@@ -643,13 +560,13 @@ static void VblankCb_FrontierPass(void)
     if (sPassGfx->setAffine)
     {
         SetBgAffine(2,
-                    gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][0],
-                    gUnknown_085713E0[sPassData->unkE - 1][1],
-                    sPassGfx->unk2E,
-                    sPassGfx->unk30,
-                    0);
+            gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][0],
+            gUnknown_085713E0[sPassData->unkE - 1][1],
+            sPassGfx->unk2E,
+            sPassGfx->unk30,
+            0);
     }
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -684,84 +601,84 @@ static bool32 InitFrontierPass(void)
 
     switch (sPassData->state)
     {
-    case 0:
-        SetVBlankCallback(NULL);
-        ScanlineEffect_Stop();
-        SetVBlankHBlankCallbacksToNull();
-        DisableInterrupts(INTR_FLAG_HBLANK);
-        break;
-    case 1:
-        ResetGpuRegsAndBgs();
-        break;
-    case 2:
-        ResetTasks();
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        ResetPaletteFade();
-        ResetTempTileDataBuffers();
-        break;
-    case 3:
-        AllocateFrontierPassGfx();
-        break;
-    case 4:
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(1, sPassBgTemplates, ARRAY_COUNT(sPassBgTemplates));
-        SetBgTilemapBuffer(1, sPassGfx->tilemapBuff1);
-        SetBgTilemapBuffer(2, sPassGfx->tilemapBuff2);
-        SetBgTilemapBuffer(3, sPassGfx->tilemapBuff3);
-        SetBgAttribute(2, BG_ATTR_WRAPAROUND, 1);
-        break;
-    case 5:
-        InitWindows(sPassWindowTemplates);
-        DeactivateAllTextPrinters();
-        break;
-    case 6:
-        sPassGfx->unk20 = malloc_and_decompress(gUnknown_085712F8, &sizeOut);
-        sPassGfx->unk24 = malloc_and_decompress(gUnknown_08571060, &sizeOut);
-        sPassGfx->unk28 = malloc_and_decompress(gUnknown_085712C0, &sizeOut);
-        DecompressAndCopyTileDataToVram(1, gUnknown_08DE08C8, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(2, gUnknown_08DE2084, 0, 0, 0);
-        break;
-    case 7:
-        if (FreeTempTileDataBuffersIfPossible())
-            return FALSE;
-        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
-        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 30, 20);
-        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 30, 20);
-        CopyBgTilemapBufferToVram(0);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        break;
-    case 8:
-        LoadPalette(gUnknown_08DE07C8[0], 0, 0x1A0);
-        LoadPalette(gUnknown_08DE07C8[1 + sPassData->trainerStars], 0x10, 0x20);
-        LoadPalette(GetTextWindowPalette(0), 0xF0, 0x20);
-        sub_80C629C();
-        sub_80C6104(sPassData->cursorArea, sPassData->previousCursorArea);
-        if (sPassData->unkE == 1 || sPassData->unkE == 2)
-        {
+        case 0:
+            SetVBlankCallback(NULL);
+            ScanlineEffect_Stop();
+            SetVBlankHBlankCallbacksToNull();
+            DisableInterrupts(INTR_FLAG_HBLANK);
+            break;
+        case 1:
+            ResetGpuRegsAndBgs();
+            break;
+        case 2:
+            ResetTasks();
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            ResetPaletteFade();
+            ResetTempTileDataBuffers();
+            break;
+        case 3:
+            AllocateFrontierPassGfx();
+            break;
+        case 4:
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(1, sPassBgTemplates, ARRAY_COUNT(sPassBgTemplates));
+            SetBgTilemapBuffer(1, sPassGfx->tilemapBuff1);
+            SetBgTilemapBuffer(2, sPassGfx->tilemapBuff2);
+            SetBgTilemapBuffer(3, sPassGfx->tilemapBuff3);
+            SetBgAttribute(2, BG_ATTR_WRAPAROUND, 1);
+            break;
+        case 5:
+            InitWindows(sPassWindowTemplates);
+            DeactivateAllTextPrinters();
+            break;
+        case 6:
+            sPassGfx->unk20 = malloc_and_decompress(gUnknown_085712F8, &sizeOut);
+            sPassGfx->unk24 = malloc_and_decompress(gUnknown_08571060, &sizeOut);
+            sPassGfx->unk28 = malloc_and_decompress(gUnknown_085712C0, &sizeOut);
+            DecompressAndCopyTileDataToVram(1, gUnknown_08DE08C8, 0, 0, 0);
+            DecompressAndCopyTileDataToVram(2, gUnknown_08DE2084, 0, 0, 0);
+            break;
+        case 7:
+            if (FreeTempTileDataBuffersIfPossible())
+                return FALSE;
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+            FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 30, 20);
+            FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 30, 20);
+            CopyBgTilemapBufferToVram(0);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            break;
+        case 8:
+            LoadPalette(gUnknown_08DE07C8[0], 0, 0x1A0);
+            LoadPalette(gUnknown_08DE07C8[1 + sPassData->trainerStars], 0x10, 0x20);
+            LoadPalette(GetTextWindowPalette(0), 0xF0, 0x20);
+            sub_80C629C();
+            sub_80C6104(sPassData->cursorArea, sPassData->previousCursorArea);
+            if (sPassData->unkE == 1 || sPassData->unkE == 2)
+            {
+                sPassData->state = 0;
+                return TRUE;
+            }
+            break;
+        case 9:
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+            ShowBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            LoadCursorAndSymbolSprites();
+            SetVBlankCallback(VblankCb_FrontierPass);
+            BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
+            break;
+        case 10:
+            AnimateSprites();
+            BuildOamBuffer();
+            if (UpdatePaletteFade())
+                return FALSE;
+
             sPassData->state = 0;
             return TRUE;
-        }
-        break;
-    case 9:
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        LoadCursorAndSymbolSprites();
-        SetVBlankCallback(VblankCb_FrontierPass);
-        BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
-        break;
-    case 10:
-        AnimateSprites();
-        BuildOamBuffer();
-        if (UpdatePaletteFade())
-            return FALSE;
-
-        sPassData->state = 0;
-        return TRUE;
     }
 
     sPassData->state++;
@@ -772,46 +689,46 @@ static bool32 HideFrontierPass(void)
 {
     switch (sPassData->state)
     {
-    case 0:
-        if (sPassData->unkE != 1 && sPassData->unkE != 2)
-        {
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-        }
-        else
-        {
-            sPassData->state = 2;
-            return FALSE;
-        }
-        break;
-    case 1:
-        if (UpdatePaletteFade())
-            return FALSE;
-        break;
-    case 2:
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
-        HideBg(0);
-        HideBg(1);
-        HideBg(2);
-        SetVBlankCallback(NULL);
-        ScanlineEffect_Stop();
-        SetVBlankHBlankCallbacksToNull();
-        break;
-    case 3:
-        FreeCursorAndSymbolSprites();
-        break;
-    case 4:
-        ResetGpuRegsAndBgs();
-        ResetTasks();
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        break;
-    case 5:
-        UnsetBgTilemapBuffer(0);
-        UnsetBgTilemapBuffer(1);
-        UnsetBgTilemapBuffer(2);
-        FreeFrontierPassGfx();
-        sPassData->state = 0;
-        return TRUE;
+        case 0:
+            if (sPassData->unkE != 1 && sPassData->unkE != 2)
+            {
+                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+            }
+            else
+            {
+                sPassData->state = 2;
+                return FALSE;
+            }
+            break;
+        case 1:
+            if (UpdatePaletteFade())
+                return FALSE;
+            break;
+        case 2:
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            HideBg(0);
+            HideBg(1);
+            HideBg(2);
+            SetVBlankCallback(NULL);
+            ScanlineEffect_Stop();
+            SetVBlankHBlankCallbacksToNull();
+            break;
+        case 3:
+            FreeCursorAndSymbolSprites();
+            break;
+        case 4:
+            ResetGpuRegsAndBgs();
+            ResetTasks();
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            break;
+        case 5:
+            UnsetBgTilemapBuffer(0);
+            UnsetBgTilemapBuffer(1);
+            UnsetBgTilemapBuffer(2);
+            FreeFrontierPassGfx();
+            sPassData->state = 0;
+            return TRUE;
     }
 
     sPassData->state++;
@@ -828,7 +745,8 @@ static u8 GetCursorAreaFromCoords(s16 x, s16 y)
         if (sPassAreasLayout[i].yStart <= y && sPassAreasLayout[i].yEnd >= y
             && sPassAreasLayout[i].xStart <= x && sPassAreasLayout[i].xEnd >= x)
         {
-            if (i >= CURSOR_AREA_SYMBOL - 1 && sPassData->facilitySymbols[i - CURSOR_AREA_SYMBOL + 1] == 0)
+            if (i >= CURSOR_AREA_SYMBOL - 1
+                && sPassData->facilitySymbols[i - CURSOR_AREA_SYMBOL + 1] == 0)
                 break;
 
             return i + 1;
@@ -847,16 +765,16 @@ void CB2_ReshowFrontierPass(void)
 
     switch (sPassData->unkE)
     {
-    case 1:
-    case 2:
-        taskId = CreateTask(Task_DoFadeEffect, 0);
-        gTasks[taskId].data[0] = TRUE;
-        break;
-    case 3:
-    default:
-        sPassData->unkE = 0;
-        taskId = CreateTask(Task_HandleFrontierPassInput, 0);
-        break;
+        case 1:
+        case 2:
+            taskId = CreateTask(Task_DoFadeEffect, 0);
+            gTasks[taskId].data[0] = TRUE;
+            break;
+        case 3:
+        default:
+            sPassData->unkE = 0;
+            taskId = CreateTask(Task_HandleFrontierPassInput, 0);
+            break;
     }
 
     SetMainCallback2(CB2_FrontierPass);
@@ -870,15 +788,15 @@ static void CB2_ReturnFromRecord(void)
     memset(&sSavedPassData, 0, sizeof(sSavedPassData));
     switch (InBattlePyramid())
     {
-    case 1:
-        PlayBGM(MUS_PYRAMID);
-        break;
-    case 2:
-        PlayBGM(MUS_PYRAMID_TOP);
-        break;
-    default:
-        Overworld_PlaySpecialMapMusic();
-        break;
+        case 1:
+            PlayBGM(MUS_PYRAMID);
+            break;
+        case 2:
+            PlayBGM(MUS_PYRAMID_TOP);
+            break;
+        default:
+            Overworld_PlaySpecialMapMusic();
+            break;
     }
 
     SetMainCallback2(CB2_ReshowFrontierPass);
@@ -891,19 +809,19 @@ static void CB2_ShowFrontierPassFeature(void)
 
     switch (sPassData->unkE)
     {
-    case 1:
-        ShowFrontierMap(CB2_ReshowFrontierPass);
-        break;
-    case 3:
-        sSavedPassData.callback = sPassData->callback;
-        sSavedPassData.cursorX = sPassData->cursorX;
-        sSavedPassData.cursorY = sPassData->cursorY;
-        FreeFrontierPassData();
-        PlayRecordedBattle(CB2_ReturnFromRecord);
-        break;
-    case 2:
-        ShowPlayerTrainerCard(CB2_ReshowFrontierPass);
-        break;
+        case 1:
+            ShowFrontierMap(CB2_ReshowFrontierPass);
+            break;
+        case 3:
+            sSavedPassData.callback = sPassData->callback;
+            sSavedPassData.cursorX = sPassData->cursorX;
+            sSavedPassData.cursorY = sPassData->cursorY;
+            FreeFrontierPassData();
+            PlayRecordedBattle(CB2_ReturnFromRecord);
+            break;
+        case 2:
+            ShowPlayerTrainerCard(CB2_ReshowFrontierPass);
+            break;
     }
 }
 
@@ -911,21 +829,21 @@ static bool32 TryCallPassAreaFunction(u8 taskId, u8 cursorArea)
 {
     switch (cursorArea)
     {
-    case CURSOR_AREA_RECORD:
-        if (!sPassData->hasBattleRecord)
+        case CURSOR_AREA_RECORD:
+            if (!sPassData->hasBattleRecord)
+                return FALSE;
+            sPassData->unkE = 3;
+            DestroyTask(taskId);
+            SetMainCallback2(CB2_ShowFrontierPassFeature);
+            break;
+        case CURSOR_AREA_MAP:
+        case CURSOR_AREA_CARD:
+            sPassData->unkE = cursorArea;
+            gTasks[taskId].func = Task_DoFadeEffect;
+            gTasks[taskId].data[0] = FALSE;
+            break;
+        default:
             return FALSE;
-        sPassData->unkE = 3;
-        DestroyTask(taskId);
-        SetMainCallback2(CB2_ShowFrontierPassFeature);
-        break;
-    case CURSOR_AREA_MAP:
-    case CURSOR_AREA_CARD:
-        sPassData->unkE = cursorArea;
-        gTasks[taskId].func = Task_DoFadeEffect;
-        gTasks[taskId].data[0] = FALSE;
-        break;
-    default:
-        return FALSE;
     }
 
     sPassData->cursorX = sPassGfx->cursorSprite->pos1.x;
@@ -935,7 +853,8 @@ static bool32 TryCallPassAreaFunction(u8 taskId, u8 cursorArea)
 
 static void Task_HandleFrontierPassInput(u8 taskId)
 {
-    u8 var = FALSE; // Reused, first informs whether the cursor moves, then used as the new cursor area.
+    u8 var =
+        FALSE; // Reused, first informs whether the cursor moves, then used as the new cursor area.
 
     if (gMain.heldKeys & DPAD_UP && sPassGfx->cursorSprite->pos1.y >= 9)
     {
@@ -982,7 +901,8 @@ static void Task_HandleFrontierPassInput(u8 taskId)
                 PlaySE(SE_PC_OFF);
                 SetMainCallback2(CB2_HideFrontierPass);
                 DestroyTask(taskId);
-                // BUG. The function should return here. Otherwise, it can play the same sound twice and destroy the same task twice.
+                // BUG. The function should return here. Otherwise, it can play the same sound twice
+                // and destroy the same task twice.
             }
         }
 
@@ -995,7 +915,8 @@ static void Task_HandleFrontierPassInput(u8 taskId)
     }
     else
     {
-        var = GetCursorAreaFromCoords(sPassGfx->cursorSprite->pos1.x - 5, sPassGfx->cursorSprite->pos1.y + 5);
+        var = GetCursorAreaFromCoords(
+            sPassGfx->cursorSprite->pos1.x - 5, sPassGfx->cursorSprite->pos1.y + 5);
         if (sPassData->cursorArea != var)
         {
             PrintAreaDescription(var);
@@ -1012,71 +933,71 @@ static void Task_DoFadeEffect(u8 taskId)
 
     switch (sPassData->state)
     {
-    case 0:
-        if (!data[0])
-        {
-            sub_80C5F58(TRUE, FALSE);
-            data[1] = Q_8_8(1);
-            data[2] = Q_8_8(1);
-            data[3] = 0x15;
-            data[4] = 0x15;
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_WHITE);
-        }
-        else
-        {
-            data[1] = Q_8_8(1.984375); // 1 and 63/64
-            data[2] = Q_8_8(1.984375);
-            data[3] = -0x15;
-            data[4] = -0x15;
-            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-            ShowBg(0);
-            ShowBg(1);
-            ShowBg(2);
-            LoadCursorAndSymbolSprites();
-            SetVBlankCallback(VblankCb_FrontierPass);
-            BlendPalettes(0xFFFFFFFF, 0x10, RGB_WHITE);
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_WHITE);
-        }
-        sPassGfx->setAffine = TRUE;
-        sPassGfx->unk2E = MathUtil_Inv16(data[1]);
-        sPassGfx->unk30 = MathUtil_Inv16(data[2]);
-        break;
-    case 1:
-        UpdatePaletteFade();
-        data[1] += data[3];
-        data[2] += data[4];
-        sPassGfx->unk2E = MathUtil_Inv16(data[1]);
-        sPassGfx->unk30 = MathUtil_Inv16(data[2]);
-        if (!data[0])
-        {
-            if (data[1] <= Q_8_8(1.984375))
+        case 0:
+            if (!data[0])
+            {
+                sub_80C5F58(TRUE, FALSE);
+                data[1] = Q_8_8(1);
+                data[2] = Q_8_8(1);
+                data[3] = 0x15;
+                data[4] = 0x15;
+                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_WHITE);
+            }
+            else
+            {
+                data[1] = Q_8_8(1.984375); // 1 and 63/64
+                data[2] = Q_8_8(1.984375);
+                data[3] = -0x15;
+                data[4] = -0x15;
+                SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+                ShowBg(0);
+                ShowBg(1);
+                ShowBg(2);
+                LoadCursorAndSymbolSprites();
+                SetVBlankCallback(VblankCb_FrontierPass);
+                BlendPalettes(0xFFFFFFFF, 0x10, RGB_WHITE);
+                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_WHITE);
+            }
+            sPassGfx->setAffine = TRUE;
+            sPassGfx->unk2E = MathUtil_Inv16(data[1]);
+            sPassGfx->unk30 = MathUtil_Inv16(data[2]);
+            break;
+        case 1:
+            UpdatePaletteFade();
+            data[1] += data[3];
+            data[2] += data[4];
+            sPassGfx->unk2E = MathUtil_Inv16(data[1]);
+            sPassGfx->unk30 = MathUtil_Inv16(data[2]);
+            if (!data[0])
+            {
+                if (data[1] <= Q_8_8(1.984375))
+                    return;
+            }
+            else
+            {
+                if (data[1] != Q_8_8(1))
+                    return;
+            }
+            break;
+        case 2:
+            if (sPassGfx->setAffine) // Nonsensical check.
+                sPassGfx->setAffine = FALSE;
+            if (UpdatePaletteFade())
                 return;
-        }
-        else
-        {
-            if (data[1] != Q_8_8(1))
-                return;
-        }
-        break;
-    case 2:
-        if (sPassGfx->setAffine) // Nonsensical check.
-            sPassGfx->setAffine = FALSE;
-        if (UpdatePaletteFade())
+            if (!data[0])
+            {
+                DestroyTask(taskId);
+                SetMainCallback2(CB2_ShowFrontierPassFeature);
+            }
+            else
+            {
+                sub_80C5F58(FALSE, FALSE);
+                sPassData->unkE = 0;
+                gTasks[taskId].func = Task_HandleFrontierPassInput;
+            }
+            SetBgAttribute(2, BG_ATTR_WRAPAROUND, 0);
+            sPassData->state = 0;
             return;
-        if (!data[0])
-        {
-            DestroyTask(taskId);
-            SetMainCallback2(CB2_ShowFrontierPassFeature);
-        }
-        else
-        {
-            sub_80C5F58(FALSE, FALSE);
-            sPassData->unkE = 0;
-            gTasks[taskId].func = Task_HandleFrontierPassInput;
-        }
-        SetBgAttribute(2, BG_ATTR_WRAPAROUND, 0);
-        sPassData->state = 0;
-        return;
     }
 
     sPassData->state++;
@@ -1094,12 +1015,15 @@ static void ShowAndPrintWindows(void)
     }
 
     x = GetStringCenterAlignXOffset(1, gText_SymbolsEarned, 96);
-    AddTextPrinterParameterized3(WINDOW_EARNED_SYMBOLS, 1, x, 5, sTextColors[0], 0, gText_SymbolsEarned);
+    AddTextPrinterParameterized3(
+        WINDOW_EARNED_SYMBOLS, 1, x, 5, sTextColors[0], 0, gText_SymbolsEarned);
 
     x = GetStringCenterAlignXOffset(1, gText_BattleRecord, 96);
-    AddTextPrinterParameterized3(WINDOW_BATTLE_RECORD, 1, x, 5, sTextColors[0], 0, gText_BattleRecord);
+    AddTextPrinterParameterized3(
+        WINDOW_BATTLE_RECORD, 1, x, 5, sTextColors[0], 0, gText_BattleRecord);
 
-    AddTextPrinterParameterized3(WINDOW_BATTLE_POINTS, 8, 5, 4, sTextColors[0], 0, gText_BattlePoints);
+    AddTextPrinterParameterized3(
+        WINDOW_BATTLE_POINTS, 8, 5, 4, sTextColors[0], 0, gText_BattlePoints);
     ConvertIntToDecimalStringN(gStringVar4, sPassData->battlePoints, STR_CONV_MODE_LEFT_ALIGN, 5);
     x = GetStringRightAlignXOffset(8, gStringVar4, 91);
     AddTextPrinterParameterized3(WINDOW_BATTLE_POINTS, 8, x, 16, sTextColors[0], 0, gStringVar4);
@@ -1118,9 +1042,11 @@ static void PrintAreaDescription(u8 cursorArea)
 {
     FillWindowPixelBuffer(WINDOW_DESCRIPTION, PIXEL_FILL(0));
     if (cursorArea == CURSOR_AREA_RECORD && !sPassData->hasBattleRecord)
-        AddTextPrinterParameterized3(WINDOW_DESCRIPTION, 1, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[0]);
+        AddTextPrinterParameterized3(
+            WINDOW_DESCRIPTION, 1, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[0]);
     else if (cursorArea != CURSOR_AREA_NOTHING)
-        AddTextPrinterParameterized3(WINDOW_DESCRIPTION, 1, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[cursorArea]);
+        AddTextPrinterParameterized3(
+            WINDOW_DESCRIPTION, 1, 2, 0, sTextColors[1], 0, sPassAreaDescriptions[cursorArea]);
 
     CopyWindowToVram(WINDOW_DESCRIPTION, 3);
     CopyBgTilemapBufferToVram(0);
@@ -1130,44 +1056,44 @@ static void sub_80C5F58(bool8 arg0, bool8 arg1)
 {
     switch (sPassData->unkE)
     {
-    case 1:
-        if (arg0)
-            CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->unk20, 16, 3, 12, 7, 16);
-        else
-            FillBgTilemapBufferRect(2, 0, 16, 3, 12, 7, 16);
-        break;
-    case 2:
-        if (arg0)
-            CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->unk20 + 84, 16, 10, 12, 7, 16);
-        else
-            FillBgTilemapBufferRect(2, 0, 16, 10, 12, 7, 16);
-        break;
-    default:
-        return;
+        case 1:
+            if (arg0)
+                CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->unk20, 16, 3, 12, 7, 16);
+            else
+                FillBgTilemapBufferRect(2, 0, 16, 3, 12, 7, 16);
+            break;
+        case 2:
+            if (arg0)
+                CopyToBgTilemapBufferRect_ChangePalette(2, sPassGfx->unk20 + 84, 16, 10, 12, 7, 16);
+            else
+                FillBgTilemapBufferRect(2, 0, 16, 10, 12, 7, 16);
+            break;
+        default:
+            return;
     }
 
     CopyBgTilemapBufferToVram(2);
     if (arg1)
     {
         SetBgAffine(2,
-                    gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][0],
-                    gUnknown_085713E0[sPassData->unkE - 1][1],
-                    MathUtil_Inv16(Q_8_8(1.984375)), // 1 and 63/64
-                    MathUtil_Inv16(Q_8_8(1.984375)),
-                    0);
+            gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][0],
+            gUnknown_085713E0[sPassData->unkE - 1][1],
+            MathUtil_Inv16(Q_8_8(1.984375)), // 1 and 63/64
+            MathUtil_Inv16(Q_8_8(1.984375)),
+            0);
     }
     else
     {
         SetBgAffine(2,
-                    gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
-                    gUnknown_085713E0[sPassData->unkE - 1][0],
-                    gUnknown_085713E0[sPassData->unkE - 1][1],
-                    MathUtil_Inv16(Q_8_8(1)),
-                    MathUtil_Inv16(Q_8_8(1)),
-                    0);
+            gUnknown_085713E0[sPassData->unkE - 1][0] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][1] << 8,
+            gUnknown_085713E0[sPassData->unkE - 1][0],
+            gUnknown_085713E0[sPassData->unkE - 1][1],
+            MathUtil_Inv16(Q_8_8(1)),
+            MathUtil_Inv16(Q_8_8(1)),
+            0);
     }
 }
 
@@ -1177,32 +1103,32 @@ static void sub_80C6104(u8 cursorArea, u8 previousCursorArea)
 
     switch (previousCursorArea)
     {
-    case CURSOR_AREA_MAP:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24, 16, 3, 12, 7, 17);
-        var = TRUE;
-        break;
-    case CURSOR_AREA_CARD:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 336, 16, 10, 12, 7, 17);
-        var = TRUE;
-        break;
-    case CURSOR_AREA_RECORD:
-        if (!sPassData->hasBattleRecord)
-        {
-            var = FALSE;
-        }
-        else
-        {
-            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk28, 2, 10, 12, 3, 17);
+        case CURSOR_AREA_MAP:
+            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24, 16, 3, 12, 7, 17);
             var = TRUE;
-        }
-        break;
-    case CURSOR_AREA_CANCEL:
-        CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_08DE3350, 21, 0, 9, 2, 17);
-        var = TRUE;
-        break;
-    default:
-        var = FALSE;
-        break;
+            break;
+        case CURSOR_AREA_CARD:
+            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 336, 16, 10, 12, 7, 17);
+            var = TRUE;
+            break;
+        case CURSOR_AREA_RECORD:
+            if (!sPassData->hasBattleRecord)
+            {
+                var = FALSE;
+            }
+            else
+            {
+                CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk28, 2, 10, 12, 3, 17);
+                var = TRUE;
+            }
+            break;
+        case CURSOR_AREA_CANCEL:
+            CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_08DE3350, 21, 0, 9, 2, 17);
+            var = TRUE;
+            break;
+        default:
+            var = FALSE;
+            break;
     }
 
     if (!var)
@@ -1213,35 +1139,35 @@ static void sub_80C6104(u8 cursorArea, u8 previousCursorArea)
 
     switch (cursorArea)
     {
-    case CURSOR_AREA_MAP:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 168, 16, 3, 12, 7, 17);
-        var = TRUE;
-        break;
-    case CURSOR_AREA_CARD:
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 504, 16, 10, 12, 7, 17);
-        var = TRUE;
-        break;
-    case CURSOR_AREA_RECORD:
-        if (!sPassData->hasBattleRecord)
-            return;
+        case CURSOR_AREA_MAP:
+            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 168, 16, 3, 12, 7, 17);
+            var = TRUE;
+            break;
+        case CURSOR_AREA_CARD:
+            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk24 + 504, 16, 10, 12, 7, 17);
+            var = TRUE;
+            break;
+        case CURSOR_AREA_RECORD:
+            if (!sPassData->hasBattleRecord)
+                return;
 
-        CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk28 + 72, 2, 10, 12, 3, 17);
-        var = TRUE;
-        break;
-    case CURSOR_AREA_CANCEL:
-        CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_08DE3374, 21, 0, 9, 2, 17);
-        var = TRUE;
-        break;
-    default:
-        var = FALSE;
-        break;
+            CopyToBgTilemapBufferRect_ChangePalette(1, sPassGfx->unk28 + 72, 2, 10, 12, 3, 17);
+            var = TRUE;
+            break;
+        case CURSOR_AREA_CANCEL:
+            CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_08DE3374, 21, 0, 9, 2, 17);
+            var = TRUE;
+            break;
+        default:
+            var = FALSE;
+            break;
     }
 
     if (!var)
     {
-        #ifndef NONMATCHING
-            asm("":::"r4");
-        #endif
+#ifndef NONMATCHING
+        asm("" ::: "r4");
+#endif
         if (previousCursorArea == CURSOR_AREA_NOTHING || previousCursorArea > CURSOR_AREA_CANCEL)
             return;
     }
@@ -1268,7 +1194,8 @@ static void LoadCursorAndSymbolSprites(void)
     LoadSpritePalettes(sSpritePalettes);
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[0]);
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[2]);
-    spriteId = CreateSprite(&sSpriteTemplates_Cursors[0], sPassData->cursorX, sPassData->cursorY, 0);
+    spriteId =
+        CreateSprite(&sSpriteTemplates_Cursors[0], sPassData->cursorX, sPassData->cursorY, 0);
     sPassGfx->cursorSprite = &gSprites[spriteId];
     sPassGfx->cursorSprite->oam.priority = 0;
 
@@ -1279,7 +1206,10 @@ static void LoadCursorAndSymbolSprites(void)
             struct SpriteTemplate sprite = sSpriteTemplate_Medal;
 
             sprite.paletteTag += sPassData->facilitySymbols[i] - 1;
-            spriteId = CreateSprite(&sprite, sPassAreasLayout[i + CURSOR_AREA_SYMBOL - 1].xStart + 8, sPassAreasLayout[i + CURSOR_AREA_SYMBOL - 1].yStart + 6, i + 1);
+            spriteId = CreateSprite(&sprite,
+                sPassAreasLayout[i + CURSOR_AREA_SYMBOL - 1].xStart + 8,
+                sPassAreasLayout[i + CURSOR_AREA_SYMBOL - 1].yStart + 6,
+                i + 1);
             sPassGfx->symbolSprites[i] = &gSprites[spriteId];
             sPassGfx->symbolSprites[i]->oam.priority = 2;
             StartSpriteAnim(sPassGfx->symbolSprites[i], i);
@@ -1308,7 +1238,6 @@ static void FreeCursorAndSymbolSprites(void)
 
 static void SpriteCb_Dummy(struct Sprite *sprite)
 {
-
 }
 
 // Frontier Map code.
@@ -1322,7 +1251,8 @@ static void HandleFrontierMapCursorMove(u8 direction);
 static void ShowFrontierMap(void (*callback)(void))
 {
     if (sMapData != NULL)
-        SetMainCallback2(callback); // This line doesn't make sense at all, since it gets overwritten later anyway.
+        SetMainCallback2(callback); // This line doesn't make sense at all, since it gets
+                                    // overwritten later anyway.
 
     sMapData = AllocZeroed(sizeof(*sMapData));
     sMapData->callback = callback;
@@ -1343,62 +1273,62 @@ static bool32 InitFrontierMap(void)
 {
     switch (sPassData->state)
     {
-    case 0:
-        SetVBlankCallback(NULL);
-        ScanlineEffect_Stop();
-        SetVBlankHBlankCallbacksToNull();
-        break;
-    case 1:
-        ResetGpuRegsAndBgs();
-        break;
-    case 2:
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        ResetPaletteFade();
-        ResetTempTileDataBuffers();
-        break;
-    case 3:
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sMapBgTemplates, ARRAY_COUNT(sMapBgTemplates));
-        SetBgTilemapBuffer(0, sMapData->tilemapBuff0);
-        SetBgTilemapBuffer(1, sMapData->tilemapBuff1);
-        SetBgTilemapBuffer(2, sMapData->tilemapBuff2);
-        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
-        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 30, 20);
-        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 30, 20);
-        CopyBgTilemapBufferToVram(0);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        break;
-    case 4:
-        InitWindows(sMapWindowTemplates);
-        DeactivateAllTextPrinters();
-        PrintOnFrontierMap();
-        DecompressAndCopyTileDataToVram(1, gUnknown_0856FBBC, 0, 0, 0);
-        break;
-    case 5:
-        if (FreeTempTileDataBuffersIfPossible())
-            return FALSE;
-        LoadPalette(gUnknown_08DE07C8[0], 0, 0x1A0);
-        LoadPalette(GetTextWindowPalette(0), 0xF0, 0x20);
-        CopyToBgTilemapBuffer(2, gUnknown_08570E00, 0, 0);
-        CopyBgTilemapBufferToVram(2);
-        break;
-    case 6:
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        InitFrontierMapSprites();
-        SetVBlankCallback(VblankCb_FrontierPass);
-        BlendPalettes(0xFFFFFFFF, 0x10, RGB_WHITE);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_WHITE);
-        break;
-    case 7:
-        if (UpdatePaletteFade())
-            return FALSE;
-        sPassData->state = 0;
-        return TRUE;
+        case 0:
+            SetVBlankCallback(NULL);
+            ScanlineEffect_Stop();
+            SetVBlankHBlankCallbacksToNull();
+            break;
+        case 1:
+            ResetGpuRegsAndBgs();
+            break;
+        case 2:
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            ResetPaletteFade();
+            ResetTempTileDataBuffers();
+            break;
+        case 3:
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sMapBgTemplates, ARRAY_COUNT(sMapBgTemplates));
+            SetBgTilemapBuffer(0, sMapData->tilemapBuff0);
+            SetBgTilemapBuffer(1, sMapData->tilemapBuff1);
+            SetBgTilemapBuffer(2, sMapData->tilemapBuff2);
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+            FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 30, 20);
+            FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 30, 20);
+            CopyBgTilemapBufferToVram(0);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            break;
+        case 4:
+            InitWindows(sMapWindowTemplates);
+            DeactivateAllTextPrinters();
+            PrintOnFrontierMap();
+            DecompressAndCopyTileDataToVram(1, gUnknown_0856FBBC, 0, 0, 0);
+            break;
+        case 5:
+            if (FreeTempTileDataBuffersIfPossible())
+                return FALSE;
+            LoadPalette(gUnknown_08DE07C8[0], 0, 0x1A0);
+            LoadPalette(GetTextWindowPalette(0), 0xF0, 0x20);
+            CopyToBgTilemapBuffer(2, gUnknown_08570E00, 0, 0);
+            CopyBgTilemapBufferToVram(2);
+            break;
+        case 6:
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+            ShowBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            InitFrontierMapSprites();
+            SetVBlankCallback(VblankCb_FrontierPass);
+            BlendPalettes(0xFFFFFFFF, 0x10, RGB_WHITE);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_WHITE);
+            break;
+        case 7:
+            if (UpdatePaletteFade())
+                return FALSE;
+            sPassData->state = 0;
+            return TRUE;
     }
 
     sPassData->state++;
@@ -1409,51 +1339,51 @@ static bool32 ExitFrontierMap(void)
 {
     switch (sPassData->state)
     {
-    case 0:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_WHITE);
-        break;
-    case 1:
-        if (UpdatePaletteFade())
-            return FALSE;
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
-        HideBg(0);
-        HideBg(1);
-        HideBg(2);
-        break;
-    case 2:
-        SetVBlankCallback(NULL);
-        ScanlineEffect_Stop();
-        SetVBlankHBlankCallbacksToNull();
-        break;
-    case 3:
-        if (sMapData->cursorSprite != NULL)
-        {
-            DestroySprite(sMapData->cursorSprite);
-            FreeSpriteTilesByTag(0);
-        }
-        if (sMapData->mapIndicatorSprite != NULL)
-        {
-            DestroySprite(sMapData->mapIndicatorSprite);
-            FreeSpriteTilesByTag(1);
-        }
-        if (sMapData->playerHeadSprite != NULL)
-        {
-            DestroySprite(sMapData->playerHeadSprite);
-            FreeSpriteTilesByTag(4);
-        }
-        FreeAllWindowBuffers();
-        break;
-    case 4:
-        ResetGpuRegsAndBgs();
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        break;
-    case 5:
-        UnsetBgTilemapBuffer(0);
-        UnsetBgTilemapBuffer(1);
-        UnsetBgTilemapBuffer(2);
-        sPassData->state = 0;
-        return TRUE;
+        case 0:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_WHITE);
+            break;
+        case 1:
+            if (UpdatePaletteFade())
+                return FALSE;
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            HideBg(0);
+            HideBg(1);
+            HideBg(2);
+            break;
+        case 2:
+            SetVBlankCallback(NULL);
+            ScanlineEffect_Stop();
+            SetVBlankHBlankCallbacksToNull();
+            break;
+        case 3:
+            if (sMapData->cursorSprite != NULL)
+            {
+                DestroySprite(sMapData->cursorSprite);
+                FreeSpriteTilesByTag(0);
+            }
+            if (sMapData->mapIndicatorSprite != NULL)
+            {
+                DestroySprite(sMapData->mapIndicatorSprite);
+                FreeSpriteTilesByTag(1);
+            }
+            if (sMapData->playerHeadSprite != NULL)
+            {
+                DestroySprite(sMapData->playerHeadSprite);
+                FreeSpriteTilesByTag(4);
+            }
+            FreeAllWindowBuffers();
+            break;
+        case 4:
+            ResetGpuRegsAndBgs();
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            break;
+        case 5:
+            UnsetBgTilemapBuffer(0);
+            UnsetBgTilemapBuffer(1);
+            UnsetBgTilemapBuffer(2);
+            sPassData->state = 0;
+            return TRUE;
     }
 
     sPassData->state++;
@@ -1466,65 +1396,65 @@ static void Task_HandleFrontierMap(u8 taskId)
 
     switch (data[0])
     {
-    case 0:
-        if (InitFrontierMap())
-            break;
-        return;
-    case 1:
-        if (gMain.newKeys & B_BUTTON)
-        {
-            PlaySE(SE_PC_OFF);
-            data[0] = 4;
-        }
-        else if (gMain.newKeys & DPAD_DOWN)
-        {
-            if (sMapData->cursorPos >= NUM_FRONTIER_FACILITIES - 1)
+        case 0:
+            if (InitFrontierMap())
+                break;
+            return;
+        case 1:
+            if (gMain.newKeys & B_BUTTON)
+            {
+                PlaySE(SE_PC_OFF);
+                data[0] = 4;
+            }
+            else if (gMain.newKeys & DPAD_DOWN)
+            {
+                if (sMapData->cursorPos >= NUM_FRONTIER_FACILITIES - 1)
+                    HandleFrontierMapCursorMove(0);
+                else
+                    data[0] = 2;
+            }
+            else if (gMain.newKeys & DPAD_UP)
+            {
+                if (sMapData->cursorPos == 0)
+                    HandleFrontierMapCursorMove(1);
+                else
+                    data[0] = 3;
+            }
+            return;
+        case 2:
+            if (data[1] > 3)
+            {
                 HandleFrontierMapCursorMove(0);
+                data[1] = 0;
+                data[0] = 1;
+            }
             else
-                data[0] = 2;
-        }
-        else if (gMain.newKeys & DPAD_UP)
-        {
-            if (sMapData->cursorPos == 0)
+            {
+                sMapData->cursorSprite->pos1.y += 4;
+                data[1]++;
+            }
+            return;
+        case 3:
+            if (data[1] > 3)
+            {
                 HandleFrontierMapCursorMove(1);
+                data[1] = 0;
+                data[0] = 1;
+            }
             else
-                data[0] = 3;
-        }
-        return;
-    case 2:
-        if (data[1] > 3)
-        {
-            HandleFrontierMapCursorMove(0);
-            data[1] = 0;
-            data[0] = 1;
-        }
-        else
-        {
-            sMapData->cursorSprite->pos1.y += 4;
-            data[1]++;
-        }
-        return;
-    case 3:
-        if (data[1] > 3)
-        {
-            HandleFrontierMapCursorMove(1);
-            data[1] = 0;
-            data[0] = 1;
-        }
-        else
-        {
-            sMapData->cursorSprite->pos1.y -= 4;
-            data[1]++;
-        }
-        return;
-    case 4:
-        if (ExitFrontierMap())
-            break;
-        return;
-    case 5:
-        DestroyTask(taskId);
-        FreeFrontierMap();
-        return;
+            {
+                sMapData->cursorSprite->pos1.y -= 4;
+                data[1]++;
+            }
+            return;
+        case 4:
+            if (ExitFrontierMap())
+                break;
+            return;
+        case 5:
+            DestroyTask(taskId);
+            FreeFrontierMap();
+            return;
     }
 
     data[0]++;
@@ -1532,8 +1462,10 @@ static void Task_HandleFrontierMap(u8 taskId)
 
 static u8 MapNumToFrontierFacilityId(u16 mapNum) // id + 1, zero means not a frontier map number
 {
-    if ((mapNum >= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_LOBBY) && mapNum <= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM))
-        || (mapNum >= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM) && mapNum <= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_MULTI_BATTLE_ROOM)))
+    if ((mapNum >= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_LOBBY)
+            && mapNum <= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM))
+        || (mapNum >= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM)
+            && mapNum <= MAP_NUM(BATTLE_FRONTIER_BATTLE_TOWER_MULTI_BATTLE_ROOM)))
         return FRONTIER_FACILITY_TOWER + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_DOME_LOBBY)
              || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR)
@@ -1541,16 +1473,16 @@ static u8 MapNumToFrontierFacilityId(u16 mapNum) // id + 1, zero means not a fro
              || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM))
         return FRONTIER_FACILITY_DOME + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PALACE_LOBBY)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM))
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR)
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM))
         return FRONTIER_FACILITY_PALACE + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_ARENA_LOBBY)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM))
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR)
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM))
         return FRONTIER_FACILITY_ARENA + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM))
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM)
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM))
         return FRONTIER_FACILITY_FACTORY + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PIKE_LOBBY)
              || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR)
@@ -1560,8 +1492,8 @@ static u8 MapNumToFrontierFacilityId(u16 mapNum) // id + 1, zero means not a fro
              || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS))
         return FRONTIER_FACILITY_PIKE + 1;
     else if (mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR)
-        || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PYRAMID_TOP))
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR)
+             || mapNum == MAP_NUM(BATTLE_FRONTIER_BATTLE_PYRAMID_TOP))
         return FRONTIER_FACILITY_PYRAMID + 1;
     else
         return 0;
@@ -1585,7 +1517,10 @@ static void InitFrontierMapSprites(void)
     StartSpriteAnim(sMapData->cursorSprite, 1);
 
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[1]);
-    spriteId = CreateSprite(&sSpriteTemplates_Cursors[1], sMapLandmarks[sMapData->cursorPos].x, sMapLandmarks[sMapData->cursorPos].y, 1);
+    spriteId = CreateSprite(&sSpriteTemplates_Cursors[1],
+        sMapLandmarks[sMapData->cursorPos].x,
+        sMapLandmarks[sMapData->cursorPos].y,
+        1);
     sMapData->mapIndicatorSprite = &gSprites[spriteId];
     sMapData->mapIndicatorSprite->oam.priority = 0;
     StartSpriteAnim(sMapData->mapIndicatorSprite, sMapLandmarks[sMapData->cursorPos].animNum);
@@ -1664,12 +1599,20 @@ static void PrintOnFrontierMap(void)
     for (i = 0; i < NUM_FRONTIER_FACILITIES; i++)
     {
         if (i == sMapData->cursorPos)
-            AddTextPrinterParameterized3(MAP_WINDOW_NAME, 7, 4, (i * 16) + 1, sTextColors[2], 0, sMapLandmarks[i].name);
+            AddTextPrinterParameterized3(
+                MAP_WINDOW_NAME, 7, 4, (i * 16) + 1, sTextColors[2], 0, sMapLandmarks[i].name);
         else
-            AddTextPrinterParameterized3(MAP_WINDOW_NAME, 7, 4, (i * 16) + 1, sTextColors[1], 0, sMapLandmarks[i].name);
+            AddTextPrinterParameterized3(
+                MAP_WINDOW_NAME, 7, 4, (i * 16) + 1, sTextColors[1], 0, sMapLandmarks[i].name);
     }
 
-    AddTextPrinterParameterized3(MAP_WINDOW_DESCRIPTION, 1, 4, 0, sTextColors[0], 0, sMapLandmarks[sMapData->cursorPos].description);
+    AddTextPrinterParameterized3(MAP_WINDOW_DESCRIPTION,
+        1,
+        4,
+        0,
+        sTextColors[0],
+        0,
+        sMapLandmarks[sMapData->cursorPos].description);
 
     for (i = 0; i < MAP_WINDOW_COUNT; i++)
         CopyWindowToVram(i, 3);
@@ -1692,8 +1635,20 @@ static void HandleFrontierMapCursorMove(u8 direction)
         sMapData->cursorPos = (oldCursorPos + 1) % NUM_FRONTIER_FACILITIES;
     }
 
-    AddTextPrinterParameterized3(MAP_WINDOW_NAME, 7, 4, (oldCursorPos * 16) + 1, sTextColors[1], 0, sMapLandmarks[oldCursorPos].name);
-    AddTextPrinterParameterized3(MAP_WINDOW_NAME, 7, 4, (sMapData->cursorPos * 16) + 1, sTextColors[2], 0, sMapLandmarks[sMapData->cursorPos].name);
+    AddTextPrinterParameterized3(MAP_WINDOW_NAME,
+        7,
+        4,
+        (oldCursorPos * 16) + 1,
+        sTextColors[1],
+        0,
+        sMapLandmarks[oldCursorPos].name);
+    AddTextPrinterParameterized3(MAP_WINDOW_NAME,
+        7,
+        4,
+        (sMapData->cursorPos * 16) + 1,
+        sTextColors[2],
+        0,
+        sMapLandmarks[sMapData->cursorPos].name);
 
     sMapData->cursorSprite->pos1.y = (sMapData->cursorPos * 16) + 8;
 
@@ -1701,7 +1656,13 @@ static void HandleFrontierMapCursorMove(u8 direction)
     sMapData->mapIndicatorSprite->pos1.x = sMapLandmarks[sMapData->cursorPos].x;
     sMapData->mapIndicatorSprite->pos1.y = sMapLandmarks[sMapData->cursorPos].y;
     FillWindowPixelBuffer(MAP_WINDOW_DESCRIPTION, PIXEL_FILL(0));
-    AddTextPrinterParameterized3(MAP_WINDOW_DESCRIPTION, 1, 4, 0, sTextColors[0], 0, sMapLandmarks[sMapData->cursorPos].description);
+    AddTextPrinterParameterized3(MAP_WINDOW_DESCRIPTION,
+        1,
+        4,
+        0,
+        sTextColors[0],
+        0,
+        sMapLandmarks[sMapData->cursorPos].description);
 
     for (i = 0; i < 3; i++)
         CopyWindowToVram(i, 3);

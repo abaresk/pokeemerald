@@ -21,32 +21,32 @@ struct UnknownPokemonStruct4
     /*0x1D*/ u8 language;
 };
 
-#define TYPE_NAME_LENGTH 6
+#define TYPE_NAME_LENGTH    6
 #define ABILITY_NAME_LENGTH 12
 
 // defines for the u8 array gTypeEffectiveness
-#define TYPE_EFFECT_ATK_TYPE(i)((gTypeEffectiveness[i + 0]))
-#define TYPE_EFFECT_DEF_TYPE(i)((gTypeEffectiveness[i + 1]))
-#define TYPE_EFFECT_MULTIPLIER(i)((gTypeEffectiveness[i + 2]))
+#define TYPE_EFFECT_ATK_TYPE(i)   ((gTypeEffectiveness[i + 0]))
+#define TYPE_EFFECT_DEF_TYPE(i)   ((gTypeEffectiveness[i + 1]))
+#define TYPE_EFFECT_MULTIPLIER(i) ((gTypeEffectiveness[i + 2]))
 
 // defines for the gTypeEffectiveness multipliers
-#define TYPE_MUL_NO_EFFECT          0
-#define TYPE_MUL_NOT_EFFECTIVE      5
-#define TYPE_MUL_NORMAL             10
-#define TYPE_MUL_SUPER_EFFECTIVE    20
+#define TYPE_MUL_NO_EFFECT       0
+#define TYPE_MUL_NOT_EFFECTIVE   5
+#define TYPE_MUL_NORMAL          10
+#define TYPE_MUL_SUPER_EFFECTIVE 20
 
 // special type table Ids
-#define TYPE_FORESIGHT  0xFE
-#define TYPE_ENDTABLE   0xFF
+#define TYPE_FORESIGHT 0xFE
+#define TYPE_ENDTABLE  0xFF
 
 // defines for the 'DoBounceEffect' function
-#define BOUNCE_MON          0x0
-#define BOUNCE_HEALTHBOX    0x1
+#define BOUNCE_MON       0x0
+#define BOUNCE_HEALTHBOX 0x1
 
 void CB2_InitBattle(void);
 void BattleMainCB2(void);
 void CB2_QuitRecordedBattle(void);
-void sub_8038528(struct Sprite* sprite);
+void sub_8038528(struct Sprite *sprite);
 void sub_8038A04(void); // unused
 void VBlankCB_Battle(void);
 void nullsub_17(struct Sprite *sprite);

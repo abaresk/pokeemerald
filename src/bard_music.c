@@ -19,7 +19,7 @@ const struct BardSound *GetWordSounds(u16 word)
 {
     u32 category;
     u32 subword;
-    const struct BardSound (*ptr)[6];
+    const struct BardSound(*ptr)[6];
 
     if (ECWord_CheckIfOutsideOfValidRange(word))
     {
@@ -51,7 +51,7 @@ void GetWordPhonemes(struct BardSong *song, u16 word)
     const struct BardSound *sound;
 
     song->length = 0;
-    for (i = 0; i < 6; i ++)
+    for (i = 0; i < 6; i++)
     {
         sound = &song->sound[i];
         if (sound->var00 != 0xFF)

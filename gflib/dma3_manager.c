@@ -58,26 +58,26 @@ void ProcessDma3Requests(void)
 
         switch (gDma3Requests[gDma3RequestCursor].mode)
         {
-        case DMA_REQUEST_COPY32: // regular 32-bit copy
-            Dma3CopyLarge32_(gDma3Requests[gDma3RequestCursor].src,
-                             gDma3Requests[gDma3RequestCursor].dest,
-                             gDma3Requests[gDma3RequestCursor].size);
-            break;
-        case DMA_REQUEST_FILL32: // repeat a single 32-bit value across RAM
-            Dma3FillLarge32_(gDma3Requests[gDma3RequestCursor].value,
-                             gDma3Requests[gDma3RequestCursor].dest,
-                             gDma3Requests[gDma3RequestCursor].size);
-            break;
-        case DMA_REQUEST_COPY16:    // regular 16-bit copy
-            Dma3CopyLarge16_(gDma3Requests[gDma3RequestCursor].src,
-                             gDma3Requests[gDma3RequestCursor].dest,
-                             gDma3Requests[gDma3RequestCursor].size);
-            break;
-        case DMA_REQUEST_FILL16: // repeat a single 16-bit value across RAM
-            Dma3FillLarge16_(gDma3Requests[gDma3RequestCursor].value,
-                             gDma3Requests[gDma3RequestCursor].dest,
-                             gDma3Requests[gDma3RequestCursor].size);
-            break;
+            case DMA_REQUEST_COPY32: // regular 32-bit copy
+                Dma3CopyLarge32_(gDma3Requests[gDma3RequestCursor].src,
+                    gDma3Requests[gDma3RequestCursor].dest,
+                    gDma3Requests[gDma3RequestCursor].size);
+                break;
+            case DMA_REQUEST_FILL32: // repeat a single 32-bit value across RAM
+                Dma3FillLarge32_(gDma3Requests[gDma3RequestCursor].value,
+                    gDma3Requests[gDma3RequestCursor].dest,
+                    gDma3Requests[gDma3RequestCursor].size);
+                break;
+            case DMA_REQUEST_COPY16: // regular 16-bit copy
+                Dma3CopyLarge16_(gDma3Requests[gDma3RequestCursor].src,
+                    gDma3Requests[gDma3RequestCursor].dest,
+                    gDma3Requests[gDma3RequestCursor].size);
+                break;
+            case DMA_REQUEST_FILL16: // repeat a single 16-bit value across RAM
+                Dma3FillLarge16_(gDma3Requests[gDma3RequestCursor].value,
+                    gDma3Requests[gDma3RequestCursor].dest,
+                    gDma3Requests[gDma3RequestCursor].size);
+                break;
         }
 
         // Free the request
@@ -122,7 +122,7 @@ s16 RequestDma3Copy(const void *src, void *dest, u16 size, u8 mode)
         i++;
     }
     gDma3ManagerLocked = FALSE;
-    return -1;  // no free DMA request was found
+    return -1; // no free DMA request was found
 }
 
 s16 RequestDma3Fill(s32 value, void *dest, u16 size, u8 mode)
@@ -142,7 +142,7 @@ s16 RequestDma3Fill(s32 value, void *dest, u16 size, u8 mode)
             gDma3Requests[cursor].mode = mode;
             gDma3Requests[cursor].value = value;
 
-            if(mode == 1)
+            if (mode == 1)
                 gDma3Requests[cursor].mode = DMA_REQUEST_FILL32;
             else
                 gDma3Requests[cursor].mode = DMA_REQUEST_FILL16;
@@ -155,14 +155,14 @@ s16 RequestDma3Fill(s32 value, void *dest, u16 size, u8 mode)
         i++;
     }
     gDma3ManagerLocked = FALSE;
-    return -1;  // no free DMA request was found
+    return -1; // no free DMA request was found
 }
 
 s16 CheckForSpaceForDma3Request(s16 index)
 {
     int i = 0;
 
-    if (index == -1)  // check if all requests are free
+    if (index == -1) // check if all requests are free
     {
         while (i < MAX_DMA_REQUESTS)
         {
@@ -172,7 +172,7 @@ s16 CheckForSpaceForDma3Request(s16 index)
         }
         return 0;
     }
-    else  // check the specified request
+    else // check the specified request
     {
         if (gDma3Requests[index].size != 0)
             return -1;

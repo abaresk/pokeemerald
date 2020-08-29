@@ -10,9 +10,9 @@
 
 #define LOOPED_TASK_DECODE_STATE(action) (action - 5)
 
-#define LOOPED_TASK_ID(primary, secondary) (((secondary) << 16) |(primary))
-#define LOOPED_TASK_PRIMARY_ID(taskId) (taskId & 0xFFFF)
-#define LOOPED_TASK_SECONDARY_ID(taskId) (taskId >> 16)
+#define LOOPED_TASK_ID(primary, secondary) (((secondary) << 16) | (primary))
+#define LOOPED_TASK_PRIMARY_ID(taskId)     (taskId & 0xFFFF)
+#define LOOPED_TASK_SECONDARY_ID(taskId)   (taskId >> 16)
 
 #define SUBSTRUCT_COUNT 19
 
@@ -231,7 +231,8 @@ bool32 IsLoopedTaskActive(u32 taskId)
     u32 secondaryId = LOOPED_TASK_SECONDARY_ID(taskId);
 
     if (gTasks[primaryId].isActive
-        && (gTasks[primaryId].func == Task_RunLoopedTask || gTasks[primaryId].func == Task_RunLoopedTask_LinkMode)
+        && (gTasks[primaryId].func == Task_RunLoopedTask
+            || gTasks[primaryId].func == Task_RunLoopedTask_LinkMode)
         && gTasks[primaryId].data[3] == secondaryId)
         return TRUE;
     else
@@ -244,7 +245,8 @@ bool32 FuncIsActiveLoopedTask(LoopedTask func)
     for (i = 0; i < NUM_TASKS; i++)
     {
         if (gTasks[i].isActive
-            && (gTasks[i].func == Task_RunLoopedTask || gTasks[i].func == Task_RunLoopedTask_LinkMode)
+            && (gTasks[i].func == Task_RunLoopedTask
+                || gTasks[i].func == Task_RunLoopedTask_LinkMode)
             && (LoopedTask)GetWordTaskArg(i, 1) == func)
             return TRUE;
     }
@@ -262,23 +264,23 @@ static void Task_RunLoopedTask(u8 taskId)
         u32 action = loopedTask(*state);
         switch (action)
         {
-        case LT_INC_AND_CONTINUE:
-            (*state)++;
-            break;
-        case LT_INC_AND_PAUSE:
-            (*state)++;
-            return;
-        case LT_FINISH:
-            DestroyTask(taskId);
-            return;
-        // case LT_SET_STATE:
-        default:
-            *state = LOOPED_TASK_DECODE_STATE(action);
-            break;
-        case LT_CONTINUE:
-            break;
-        case LT_PAUSE:
-            return;
+            case LT_INC_AND_CONTINUE:
+                (*state)++;
+                break;
+            case LT_INC_AND_PAUSE:
+                (*state)++;
+                return;
+            case LT_FINISH:
+                DestroyTask(taskId);
+                return;
+            // case LT_SET_STATE:
+            default:
+                *state = LOOPED_TASK_DECODE_STATE(action);
+                break;
+            case LT_CONTINUE:
+                break;
+            case LT_PAUSE:
+                return;
         }
     }
 }
@@ -298,20 +300,20 @@ static void Task_RunLoopedTask_LinkMode(u8 taskId)
     action = task(*state);
     switch (action)
     {
-    case LT_INC_AND_PAUSE:
-    case LT_INC_AND_CONTINUE:
-        (*state)++;
-        break;
-    case LT_FINISH:
-        DestroyTask(taskId);
-        break;
-    // case: LT_SET_STATE:
-    default:
-        *state = LOOPED_TASK_DECODE_STATE(action);
-        break;
-    case LT_PAUSE:
-    case LT_CONTINUE:
-        break;
+        case LT_INC_AND_PAUSE:
+        case LT_INC_AND_CONTINUE:
+            (*state)++;
+            break;
+        case LT_FINISH:
+            DestroyTask(taskId);
+            break;
+        // case: LT_SET_STATE:
+        default:
+            *state = LOOPED_TASK_DECODE_STATE(action);
+            break;
+        case LT_PAUSE:
+        case LT_CONTINUE:
+            break;
     }
 }
 
@@ -394,7 +396,7 @@ static bool32 AnyMonHasRibbon(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&gPlayerParty[i],  MON_DATA_SANITY_HAS_SPECIES)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES)
             && !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG)
             && GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT) != 0)
         {
@@ -406,8 +408,7 @@ static bool32 AnyMonHasRibbon(void)
     {
         for (i = 0; i < IN_BOX_COUNT; i++)
         {
-            if (CheckBoxMonSanityAt(j, i)
-                && GetBoxMonDataAt(j, i, MON_DATA_RIBBON_COUNT) != 0)
+            if (CheckBoxMonSanityAt(j, i) && GetBoxMonDataAt(j, i, MON_DATA_RIBBON_COUNT) != 0)
             {
                 return TRUE;
             }
@@ -441,66 +442,66 @@ static void Task_Pokenav(u8 taskId)
 
     switch (tState)
     {
-    case 0:
-        InitPokenavMainMenu();
-        tState = 1;
-        break;
-    case 1:
-        // Wait for LoopedTask_InitPokenavMenu to finish
-        if (PokenavMainMenuLoopedTaskIsActive())
+        case 0:
+            InitPokenavMainMenu();
+            tState = 1;
             break;
-        SetActivePokenavMenu(POKENAV_MAIN_MENU);
-        tState = 4;
-        break;
-    case 2:
-        if (sub_81C786C())
+        case 1:
+            // Wait for LoopedTask_InitPokenavMenu to finish
+            if (PokenavMainMenuLoopedTaskIsActive())
+                break;
+            SetActivePokenavMenu(POKENAV_MAIN_MENU);
+            tState = 4;
             break;
-        tState = 3;
-    case 3:
-        menuId = GetCurrentMenuCB();
-        if (menuId == -1)
-        {
-            ShutdownPokenav();
-            tState = 5;
-        }
-        else if (menuId >= POKENAV_MENU_IDS_START)
-        {
-            PokenavMenuCallbacks[gPokenavResources->currentMenuIndex].free2();
-            PokenavMenuCallbacks[gPokenavResources->currentMenuIndex].free1();
-            if (SetActivePokenavMenu(menuId))
-            {
-                tState = 4;
-            }
-            else
+        case 2:
+            if (sub_81C786C())
+                break;
+            tState = 3;
+        case 3:
+            menuId = GetCurrentMenuCB();
+            if (menuId == -1)
             {
                 ShutdownPokenav();
                 tState = 5;
             }
-        }
-        else if (menuId != 0)
-        {
-            sub_81C7850(menuId);
-            if (sub_81C786C())
-                tState = 2;
-        }
-        break;
-    case 4:
-        if (!sub_81C75D4())
-            tState = 3;
-        break;
-    case 5:
-        if (!WaitForPokenavShutdownFade())
-        {
-            bool32 calledFromScript = (gPokenavResources->mode != POKENAV_MODE_NORMAL);
+            else if (menuId >= POKENAV_MENU_IDS_START)
+            {
+                PokenavMenuCallbacks[gPokenavResources->currentMenuIndex].free2();
+                PokenavMenuCallbacks[gPokenavResources->currentMenuIndex].free1();
+                if (SetActivePokenavMenu(menuId))
+                {
+                    tState = 4;
+                }
+                else
+                {
+                    ShutdownPokenav();
+                    tState = 5;
+                }
+            }
+            else if (menuId != 0)
+            {
+                sub_81C7850(menuId);
+                if (sub_81C786C())
+                    tState = 2;
+            }
+            break;
+        case 4:
+            if (!sub_81C75D4())
+                tState = 3;
+            break;
+        case 5:
+            if (!WaitForPokenavShutdownFade())
+            {
+                bool32 calledFromScript = (gPokenavResources->mode != POKENAV_MODE_NORMAL);
 
-            FreeMenuHandlerSubstruct1();
-            FreePokenavResources();
-            if (calledFromScript)
-                SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-            else
-                SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-        }
-        break;
+                FreeMenuHandlerSubstruct1();
+                FreePokenavResources();
+                if (calledFromScript)
+                    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+                else
+                    SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
+            }
+            break;
     }
 }
 
@@ -516,7 +517,8 @@ static bool32 SetActivePokenavMenu(u32 menuId)
     if (!PokenavMenuCallbacks[index].open())
         return FALSE;
 
-    sub_81C7834(PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
+    sub_81C7834(
+        PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
     gPokenavResources->currentMenuCb1 = PokenavMenuCallbacks[index].callback;
     gPokenavResources->currentMenuIndex = index;
     return TRUE;

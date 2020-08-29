@@ -36,47 +36,51 @@ static void SootopolisGymIcePerStepCallback(u8 taskId);
 static void CrackedFloorPerStepCallback(u8 taskId);
 static void Task_MuddySlope(u8 taskId);
 
-static const TaskFunc sPerStepCallbacks[] =
-{
-    [STEP_CB_DUMMY]             = DummyPerStepCallback,
-    [STEP_CB_ASH]               = AshGrassPerStepCallback,
-    [STEP_CB_FORTREE_BRIDGE]    = FortreeBridgePerStepCallback,
+static const TaskFunc sPerStepCallbacks[] = { [STEP_CB_DUMMY] = DummyPerStepCallback,
+    [STEP_CB_ASH] = AshGrassPerStepCallback,
+    [STEP_CB_FORTREE_BRIDGE] = FortreeBridgePerStepCallback,
     [STEP_CB_PACIFIDLOG_BRIDGE] = PacifidlogBridgePerStepCallback,
-    [STEP_CB_SOOTOPOLIS_ICE]    = SootopolisGymIcePerStepCallback,
-    [STEP_CB_TRUCK]             = EndTruckSequence,
-    [STEP_CB_SECRET_BASE]       = SecretBasePerStepCallback,
-    [STEP_CB_CRACKED_FLOOR]     = CrackedFloorPerStepCallback
-};
+    [STEP_CB_SOOTOPOLIS_ICE] = SootopolisGymIcePerStepCallback,
+    [STEP_CB_TRUCK] = EndTruckSequence,
+    [STEP_CB_SECRET_BASE] = SecretBasePerStepCallback,
+    [STEP_CB_CRACKED_FLOOR] = CrackedFloorPerStepCallback };
 
 // they are in pairs but declared as 1D array
-static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] =
-{
-    { 0,  0, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical0}, {0, 1, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical1},
-    { 0, -1, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical0}, {0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical1},
-    { 0,  0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal0}, {1, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal1},
-    {-1,  0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal0}, {0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal1}
+static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] = {
+    { 0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical0 },
+    { 0, 1, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical1 },
+    { 0, -1, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical0 },
+    { 0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Vertical1 },
+    { 0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal0 },
+    { 1, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal1 },
+    { -1, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal0 },
+    { 0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_Horizontal1 }
 };
 
-static const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[] =
-{
-    { 0,  0, METATILE_Pacifidlog_SubmergedLogs_Vertical0}, {0, 1, METATILE_Pacifidlog_SubmergedLogs_Vertical1},
-    { 0, -1, METATILE_Pacifidlog_SubmergedLogs_Vertical0}, {0, 0, METATILE_Pacifidlog_SubmergedLogs_Vertical1},
-    { 0,  0, METATILE_Pacifidlog_SubmergedLogs_Horizontal0}, {1, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal1},
-    {-1,  0, METATILE_Pacifidlog_SubmergedLogs_Horizontal0}, {0, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal1}
+static const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[] = {
+    { 0, 0, METATILE_Pacifidlog_SubmergedLogs_Vertical0 },
+    { 0, 1, METATILE_Pacifidlog_SubmergedLogs_Vertical1 },
+    { 0, -1, METATILE_Pacifidlog_SubmergedLogs_Vertical0 },
+    { 0, 0, METATILE_Pacifidlog_SubmergedLogs_Vertical1 },
+    { 0, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal0 },
+    { 1, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal1 },
+    { -1, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal0 },
+    { 0, 0, METATILE_Pacifidlog_SubmergedLogs_Horizontal1 }
 };
 
-static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] =
-{
-    { 0,  0, METATILE_Pacifidlog_FloatingLogs_Vertical0}, {0, 1, METATILE_Pacifidlog_FloatingLogs_Vertical1},
-    { 0, -1, METATILE_Pacifidlog_FloatingLogs_Vertical0}, {0, 0, METATILE_Pacifidlog_FloatingLogs_Vertical1},
-    { 0,  0, METATILE_Pacifidlog_FloatingLogs_Horizontal0}, {1, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal1},
-    {-1,  0, METATILE_Pacifidlog_FloatingLogs_Horizontal0}, {0, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal1}
+static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] = {
+    { 0, 0, METATILE_Pacifidlog_FloatingLogs_Vertical0 },
+    { 0, 1, METATILE_Pacifidlog_FloatingLogs_Vertical1 },
+    { 0, -1, METATILE_Pacifidlog_FloatingLogs_Vertical0 },
+    { 0, 0, METATILE_Pacifidlog_FloatingLogs_Vertical1 },
+    { 0, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal0 },
+    { 1, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal1 },
+    { -1, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal0 },
+    { 0, 0, METATILE_Pacifidlog_FloatingLogs_Horizontal1 }
 };
 
 // Each element corresponds to a y coordinate row in the sootopolis gym 1F map.
-static const u16 sSootopolisGymIceRowVars[] =
-{
-    0,
+static const u16 sSootopolisGymIceRowVars[] = { 0,
     0,
     0,
     0,
@@ -101,15 +105,12 @@ static const u16 sSootopolisGymIceRowVars[] =
     0,
     0,
     0,
-    0
-};
+    0 };
 
-static const u16 sMuddySlopeMetatiles[] = {
-    METATILE_General_MuddySlope_Frame0,
+static const u16 sMuddySlopeMetatiles[] = { METATILE_General_MuddySlope_Frame0,
     METATILE_General_MuddySlope_Frame3,
     METATILE_General_MuddySlope_Frame2,
-    METATILE_General_MuddySlope_Frame1
-};
+    METATILE_General_MuddySlope_Frame1 };
 
 static void Task_RunPerStepCallback(u8 taskId)
 {
@@ -214,10 +215,10 @@ void ResetFieldTasksArgs(void)
 
 static void DummyPerStepCallback(u8 taskId)
 {
-
 }
 
-static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *offsets, u16 metatileBehavior)
+static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(
+    const struct PacifidlogMetatileOffsets *offsets, u16 metatileBehavior)
 {
     if (MetatileBehavior_IsPacifilogVerticalLog1(metatileBehavior))
         return &offsets[0 * 2];
@@ -231,7 +232,8 @@ static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffset
         return NULL;
 }
 
-static void SetPacifidlogBridgeMetatiles(const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 redrawMap)
+static void SetPacifidlogBridgeMetatiles(
+    const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 redrawMap)
 {
     offsets = GetPacifidlogBridgeMetatileOffsets(offsets, MapGridGetMetatileBehaviorAt(x, y));
     if (offsets)
@@ -435,8 +437,10 @@ static void FortreeBridgePerStepCallback(u8 taskId)
             if (x == x2 && y == y2)
                 break;
 
-            isFortreeBridgeCur = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y));
-            isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x2, y2));
+            isFortreeBridgeCur =
+                MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y));
+            isFortreeBridgePrev =
+                MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x2, y2));
             z = PlayerGetZCoord();
             flag = 0;
             if ((u8)(z & 1) == 0)
@@ -637,7 +641,10 @@ static void AshGrassPerStepCallback(u8 taskId)
 
 static void SetCrackedFloorHoleMetatile(s16 x, s16 y)
 {
-    MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206 : 0x237);// unsure what these are referring to
+    MapGridSetMetatileIdAt(x,
+        y,
+        MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206
+                                              : 0x237); // unsure what these are referring to
     CurrentMapDrawMetatileAt(x, y);
 }
 

@@ -22,8 +22,7 @@ static bool8 SetupClearSaveDataScreen(void);
 static void CB2_FadeAndDoReset(void);
 static void InitClearSaveDataScreenWindows(void);
 
-static const struct BgTemplate sClearSaveBgTemplates[2] =
-{
+static const struct BgTemplate sClearSaveBgTemplates[2] = {
     {
         .bg = 0,
         .charBaseIndex = 0,
@@ -44,32 +43,26 @@ static const struct BgTemplate sClearSaveBgTemplates[2] =
     },
 };
 
-static const struct WindowTemplate sClearSaveTextWindow[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 15,
-        .width = 26,
-        .height = 4,
-        .paletteNum = 15,
-        .baseBlock = 11,
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sClearSaveTextWindow[] = { {
+                                                                  .bg = 0,
+                                                                  .tilemapLeft = 3,
+                                                                  .tilemapTop = 15,
+                                                                  .width = 26,
+                                                                  .height = 4,
+                                                                  .paletteNum = 15,
+                                                                  .baseBlock = 11,
+                                                              },
+    DUMMY_WIN_TEMPLATE };
 
-static const struct WindowTemplate sClearSaveYesNo[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 3,
-        .tilemapTop = 2,
-        .width = 5,
-        .height = 4,
-        .paletteNum = 15,
-        .baseBlock = 115,
-    }
-};
+static const struct WindowTemplate sClearSaveYesNo[] = { {
+    .bg = 0,
+    .tilemapLeft = 3,
+    .tilemapTop = 2,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 115,
+} };
 
 void CB2_InitClearSaveDataScreen(void)
 {
@@ -89,16 +82,16 @@ static void Task_ClearSaveDataScreenYesNoChoice(u8 taskId)
 {
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
-    case 0:
-        FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized(0, 1, gText_ClearingData, 0, 1, 0, 0);
-        gTasks[taskId].func = Task_ClearSaveData;
-        break;
-    case 1:
-    case -1:
-        PlaySE(SE_SELECT);
-        DestroyTask(taskId);
-        SetMainCallback2(CB2_FadeAndDoReset);
+        case 0:
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            AddTextPrinterParameterized(0, 1, gText_ClearingData, 0, 1, 0, 0);
+            gTasks[taskId].func = Task_ClearSaveData;
+            break;
+        case 1:
+        case -1:
+            PlaySE(SE_SELECT);
+            DestroyTask(taskId);
+            SetMainCallback2(CB2_FadeAndDoReset);
     }
 }
 
@@ -124,78 +117,78 @@ static bool8 SetupClearSaveDataScreen(void)
 {
     u16 i;
 
-    switch(gMain.state)
+    switch (gMain.state)
     {
-    case 0:
-    default:
-        SetVBlankCallback(NULL);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
-        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
-        SetGpuReg(REG_OFFSET_WIN0H, 0);
-        SetGpuReg(REG_OFFSET_WIN0V, 0);
-        SetGpuReg(REG_OFFSET_WININ, 0);
-        SetGpuReg(REG_OFFSET_WINOUT, 0);
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
-        DmaFill32(3, 0, (void *)OAM, OAM_SIZE);
-        DmaFill16(3, 0, (void *)(PLTT + 2), PLTT_SIZE - 2);
-        ResetPaletteFade();
-        gPlttBufferUnfaded[0] = RGB_WHITE;
-        gPlttBufferFaded[0] = RGB_WHITE;
-        gPlttBufferUnfaded[1] = RGB(5, 10, 14);
-        gPlttBufferFaded[1] = RGB(5, 10, 14);
-        for (i = 0; i < 0x10; i++)
-            ((u16 *)(VRAM + 0x20))[i] = 0x1111;
+        case 0:
+        default:
+            SetVBlankCallback(NULL);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
+            SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+            SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+            SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+            SetGpuReg(REG_OFFSET_WIN0H, 0);
+            SetGpuReg(REG_OFFSET_WIN0V, 0);
+            SetGpuReg(REG_OFFSET_WININ, 0);
+            SetGpuReg(REG_OFFSET_WINOUT, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
+            DmaFill32(3, 0, (void *)OAM, OAM_SIZE);
+            DmaFill16(3, 0, (void *)(PLTT + 2), PLTT_SIZE - 2);
+            ResetPaletteFade();
+            gPlttBufferUnfaded[0] = RGB_WHITE;
+            gPlttBufferFaded[0] = RGB_WHITE;
+            gPlttBufferUnfaded[1] = RGB(5, 10, 14);
+            gPlttBufferFaded[1] = RGB(5, 10, 14);
+            for (i = 0; i < 0x10; i++)
+                ((u16 *)(VRAM + 0x20))[i] = 0x1111;
 
-        for (i = 0; i < 0x400; i++)
-            ((u16 *)(BG_SCREEN_ADDR(30)))[i] = 0x0001;
-        ResetTasks();
-        ResetSpriteData();
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sClearSaveBgTemplates, ARRAY_COUNT(sClearSaveBgTemplates));
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        ShowBg(0);
-        ShowBg(3);
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        InitClearSaveDataScreenWindows();
-        BeginNormalPaletteFade(0x0000FFFF, 0, 0x10, 0, RGB_WHITEALPHA);
-        EnableInterrupts(INTR_FLAG_VBLANK);
-        SetVBlankCallback(VBlankCB);
-        gMain.state = 1;
-        break;
-    case 1:
-        UpdatePaletteFade();
-        if(!gPaletteFade.active)
-        {
-            SetMainCallback2(MainCB);
-            return TRUE;
-        }
+            for (i = 0; i < 0x400; i++)
+                ((u16 *)(BG_SCREEN_ADDR(30)))[i] = 0x0001;
+            ResetTasks();
+            ResetSpriteData();
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sClearSaveBgTemplates, ARRAY_COUNT(sClearSaveBgTemplates));
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+            ShowBg(0);
+            ShowBg(3);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            InitClearSaveDataScreenWindows();
+            BeginNormalPaletteFade(0x0000FFFF, 0, 0x10, 0, RGB_WHITEALPHA);
+            EnableInterrupts(INTR_FLAG_VBLANK);
+            SetVBlankCallback(VBlankCB);
+            gMain.state = 1;
+            break;
+        case 1:
+            UpdatePaletteFade();
+            if (!gPaletteFade.active)
+            {
+                SetMainCallback2(MainCB);
+                return TRUE;
+            }
     }
     return FALSE;
 }
 
 static void CB2_FadeAndDoReset(void)
 {
-    switch(gMain.state)
+    switch (gMain.state)
     {
-    case 0:
-    default:
-        BeginNormalPaletteFade(0x0000FFFF, 0, 0, 0x10, RGB_WHITEALPHA);
-        gMain.state = 1;
-        break;
-    case 1:
-        UpdatePaletteFade();
-        if(!gPaletteFade.active)
-        {
-            FreeAllWindowBuffers();
-            DoSoftReset();
-        }
-        break;
+        case 0:
+        default:
+            BeginNormalPaletteFade(0x0000FFFF, 0, 0, 0x10, RGB_WHITEALPHA);
+            gMain.state = 1;
+            break;
+        case 1:
+            UpdatePaletteFade();
+            if (!gPaletteFade.active)
+            {
+                FreeAllWindowBuffers();
+                DoSoftReset();
+            }
+            break;
     }
 }
 

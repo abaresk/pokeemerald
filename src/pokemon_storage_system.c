@@ -139,8 +139,8 @@ struct PokemonStorageSystemData
     s16 wallpaperScrollSpeed;
     u16 field_2D0;
     u8 field_2D2;
-    u8 field_2D3; // Written to, but never read.
-    u8 field_2D4; // Written to, but never read.
+    u8 field_2D3;  // Written to, but never read.
+    u8 field_2D4;  // Written to, but never read.
     u16 field_2D6; // Written to, but never read.
     s16 field_2D8; // Written to, but never read.
     u16 field_2DA; // Written to, but never read.
@@ -161,7 +161,7 @@ struct PokemonStorageSystemData
     struct Sprite *field_730[2];
     u32 field_738;
     u8 field_73C[80]; // Unused
-    u16 field_78C; // Written to, but never read.
+    u16 field_78C;    // Written to, but never read.
     s16 wallpaperSetId;
     s16 wallpaperId;
     u16 field_792[360];
@@ -422,26 +422,26 @@ enum
     CURSOR_AREA_BUTTONS, // Party Pokemon and Close Box
 };
 
-#define TAG_PAL_WAVEFORM    0xDACA
-#define TAG_PAL_DAC8        0xDAC8
-#define TAG_PAL_DAC6        0xDAC6
-#define TAG_PAL_DACE        0xDACE
-#define TAG_PAL_DAC7        0xDAC7
-#define TAG_PAL_DAC9        0xDAC9
-#define TAG_PAL_DAC0        0xDAC0
-#define TAG_PAL_DACB        0xDACB
+#define TAG_PAL_WAVEFORM 0xDACA
+#define TAG_PAL_DAC8     0xDAC8
+#define TAG_PAL_DAC6     0xDAC6
+#define TAG_PAL_DACE     0xDACE
+#define TAG_PAL_DAC7     0xDAC7
+#define TAG_PAL_DAC9     0xDAC9
+#define TAG_PAL_DAC0     0xDAC0
+#define TAG_PAL_DACB     0xDACB
 
-#define TAG_TILE_WAVEFORM   0x5
-#define TAG_TILE_10         0x10
-#define TAG_TILE_2          0x2
-#define TAG_TILE_D          0xD
-#define TAG_TILE_A          0xA
-#define TAG_TILE_3          0x3
-#define TAG_TILE_4          0x4
-#define TAG_TILE_12         0x12
-#define TAG_TILE_7          0x7
-#define TAG_TILE_0          0x0
-#define TAG_TILE_1          0x1
+#define TAG_TILE_WAVEFORM 0x5
+#define TAG_TILE_10       0x10
+#define TAG_TILE_2        0x2
+#define TAG_TILE_D        0xD
+#define TAG_TILE_A        0xA
+#define TAG_TILE_3        0x3
+#define TAG_TILE_4        0x4
+#define TAG_TILE_12       0x12
+#define TAG_TILE_7        0x7
+#define TAG_TILE_0        0x0
+#define TAG_TILE_1        0x1
 
 // IWRAM bss
 static u32 gUnknown_03000F78[98];
@@ -456,7 +456,7 @@ EWRAM_DATA static u8 gUnknown_02039D0E = 0;
 EWRAM_DATA static u8 sWhichToReshow = 0;
 EWRAM_DATA static u8 sLastUsedBox = 0;
 EWRAM_DATA static u16 sMovingItemId = 0;
-EWRAM_DATA static struct Pokemon gUnknown_02039D14 = {0};
+EWRAM_DATA static struct Pokemon gUnknown_02039D14 = { 0 };
 EWRAM_DATA static s8 sBoxCursorArea = 0;
 EWRAM_DATA static s8 sBoxCursorPosition = 0;
 EWRAM_DATA static bool8 sIsMonBeingMoved = 0;
@@ -652,7 +652,8 @@ static void SetMenuText(u8 textId);
 static void sub_80D0D8C(u8 cursorArea, u8 cursorPos);
 static void sub_80D0E50(u8 cursorArea, u8 cursorPos);
 static void sub_80D0F38(u16 item);
-static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
+static struct Sprite *CreateMonIconSprite(
+    u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
 static void DestroyBoxMonIcon(struct Sprite *sprite);
 static void SetBoxSpeciesAndPersonalities(u8 boxId);
 static void sub_80CB9D0(struct Sprite *sprite, u16 partyId);
@@ -716,17 +717,14 @@ static void sub_80D2B88(struct UnkStruct_2000028 *unkStruct);
 static void sub_80D2C1C(struct UnkStruct_2000028 *unkStruct);
 
 // static const rom data
-static const struct PSS_MenuStringPtrs gUnknown_085716C0[] =
-{
-    {gText_WithdrawPokemon, gText_WithdrawMonDescription},
-    {gText_DepositPokemon, gText_DepositMonDescription},
-    {gText_MovePokemon, gText_MoveMonDescription},
-    {gText_MoveItems, gText_MoveItemsDescription},
-    {gText_SeeYa, gText_SeeYaDescription}
-};
+static const struct PSS_MenuStringPtrs gUnknown_085716C0[] = { { gText_WithdrawPokemon,
+                                                                   gText_WithdrawMonDescription },
+    { gText_DepositPokemon, gText_DepositMonDescription },
+    { gText_MovePokemon, gText_MoveMonDescription },
+    { gText_MoveItems, gText_MoveItemsDescription },
+    { gText_SeeYa, gText_SeeYaDescription } };
 
-static const struct WindowTemplate gUnknown_085716E8 =
-{
+static const struct WindowTemplate gUnknown_085716E8 = {
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 1,
@@ -736,84 +734,147 @@ static const struct WindowTemplate gUnknown_085716E8 =
     .baseBlock = 0x1,
 };
 
-static const union AnimCmd sSpriteAnim_85716F0[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_85716F0[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_85716F8[] = { ANIMCMD_FRAME(4, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571700[] = { ANIMCMD_FRAME(6, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8571708[] = { ANIMCMD_FRAME(10, 5), ANIMCMD_END };
+
+static const union AnimCmd *const sSpriteAnimTable_8571710[] = {
+    sSpriteAnim_85716F0, sSpriteAnim_85716F8, sSpriteAnim_8571700, sSpriteAnim_8571708
 };
 
-static const union AnimCmd sSpriteAnim_85716F8[] =
-{
-    ANIMCMD_FRAME(4, 5),
-    ANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_8571720[] = {
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_8571700[] =
-{
-    ANIMCMD_FRAME(6, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_8571708[] =
-{
-    ANIMCMD_FRAME(10, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd *const sSpriteAnimTable_8571710[] =
-{
-    sSpriteAnim_85716F0,
-    sSpriteAnim_85716F8,
-    sSpriteAnim_8571700,
-    sSpriteAnim_8571708
-};
-
-static const union AffineAnimCmd sSpriteAffineAnim_8571720[] =
-{
-    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_8571730[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_8571730[] = {
     sSpriteAffineAnim_8571720
 };
 
-static const u8 sBoxInfoTextColors[] = {TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
+static const u8 sBoxInfoTextColors[] = {
+    TEXT_COLOR_RED, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5
+};
 static const u8 sText_OutOf30[] = _("/30");
 
 static const u16 gBoxSelectionPopupPalette[] = INCBIN_U16("graphics/unknown/unknown_57173C.gbapal");
-static const u8 gBoxSelectionPopupCenterTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
-static const u8 gBoxSelectionPopupSidesTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
-static const u32 gPokemonStorageScrollingBGTileset[] = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.4bpp.lz");
-static const u32 gPokemonStorageScrollingBGTilemap[] = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
+static const u8 gBoxSelectionPopupCenterTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
+static const u8 gBoxSelectionPopupSidesTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
+static const u32 gPokemonStorageScrollingBGTileset[] =
+    INCBIN_U32("graphics/pokemon_storage/scrolling_bg.4bpp.lz");
+static const u32 gPokemonStorageScrollingBGTilemap[] =
+    INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
 static const u32 gUnknown_08572280[] = INCBIN_U32("graphics/unknown/unknown_572280.gbapal");
 static const u32 gUnknown_085722A0[] = INCBIN_U32("graphics/unknown/unknown_5722A0.bin.lz");
 
-static const u16 gUnknown_0857239C[] =
-{
-    0x0101, 0x0102, 0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108, 0x0111, 0x0112, 0x0113, 0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
-    0x2101, 0x2102, 0x2103, 0x2104, 0x2105, 0x2106, 0x2107, 0x2108, 0x2111, 0x2112, 0x2113, 0x2114, 0x2115, 0x2116, 0x2117, 0x2118,
+static const u16 gUnknown_0857239C[] = {
+    0x0101,
+    0x0102,
+    0x0103,
+    0x0104,
+    0x0105,
+    0x0106,
+    0x0107,
+    0x0108,
+    0x0111,
+    0x0112,
+    0x0113,
+    0x0114,
+    0x0115,
+    0x0116,
+    0x0117,
+    0x0118,
+    0x2101,
+    0x2102,
+    0x2103,
+    0x2104,
+    0x2105,
+    0x2106,
+    0x2107,
+    0x2108,
+    0x2111,
+    0x2112,
+    0x2113,
+    0x2114,
+    0x2115,
+    0x2116,
+    0x2117,
+    0x2118,
 };
 
-static const u16 gUnknown_085723DC[] = INCBIN_U16("graphics/unknown/unknown_5723DC.gbapal"); // Left-most part and Close Box.
+static const u16 gUnknown_085723DC[] =
+    INCBIN_U16("graphics/unknown/unknown_5723DC.gbapal"); // Left-most part and Close Box.
 static const u16 gUnknown_085723FC[] = INCBIN_U16("graphics/unknown/unknown_5723FC.gbapal");
 static const u16 gUnknown_0857241C[] = INCBIN_U16("graphics/unknown/unknown_57241C.gbapal");
 static const u16 gUnknown_0857243C[] = INCBIN_U16("graphics/unknown/unknown_57243C.gbapal");
 
-static const u16 gUnknown_0857245C[] =
-{
-    0x014c, 0x014d, 0x014e, 0x014f, 0x0170, 0x0171, 0x0172, 0x0173, 0x0174, 0x015c, 0x015d, 0x015e, 0x015f, 0x0180, 0x0181, 0x0182,
-    0x0183, 0x0184, 0x0175, 0x0176, 0x0177, 0x0178, 0x0179, 0x017a, 0x017b, 0x017c, 0x017d, 0x0185, 0x0186, 0x0187, 0x0188, 0x0189,
-    0x018a, 0x018b, 0x018c, 0x018d
+static const u16 gUnknown_0857245C[] = { 0x014c,
+    0x014d,
+    0x014e,
+    0x014f,
+    0x0170,
+    0x0171,
+    0x0172,
+    0x0173,
+    0x0174,
+    0x015c,
+    0x015d,
+    0x015e,
+    0x015f,
+    0x0180,
+    0x0181,
+    0x0182,
+    0x0183,
+    0x0184,
+    0x0175,
+    0x0176,
+    0x0177,
+    0x0178,
+    0x0179,
+    0x017a,
+    0x017b,
+    0x017c,
+    0x017d,
+    0x0185,
+    0x0186,
+    0x0187,
+    0x0188,
+    0x0189,
+    0x018a,
+    0x018b,
+    0x018c,
+    0x018d };
+static const u16 gUnknown_085724A4[] = {
+    0x1140,
+    0x1141,
+    0x1141,
+    0x1142,
+    0x1150,
+    0x1151,
+    0x1151,
+    0x1152,
+    0x1160,
+    0x1161,
+    0x1161,
+    0x1162,
 };
-static const u16 gUnknown_085724A4[] =
-{
-    0x1140, 0x1141, 0x1141, 0x1142, 0x1150, 0x1151, 0x1151, 0x1152, 0x1160, 0x1161, 0x1161, 0x1162,
-};
-static const u16 gUnknown_085724BC[] =
-{
-    0x1143, 0x1144, 0x1144, 0x1145, 0x1153, 0x1154, 0x1154, 0x1155, 0x1163, 0x1164, 0x1164, 0x1165,
+static const u16 gUnknown_085724BC[] = {
+    0x1143,
+    0x1144,
+    0x1144,
+    0x1145,
+    0x1153,
+    0x1154,
+    0x1154,
+    0x1155,
+    0x1163,
+    0x1164,
+    0x1164,
+    0x1165,
 };
 
 static const u16 gWaveformPalette[] = INCBIN_U16("graphics/pokemon_storage/waveform.gbapal");
@@ -821,18 +882,18 @@ static const u32 gWaveformTiles[] = INCBIN_U32("graphics/pokemon_storage/wavefor
 static const u32 gUnknown_085726B4[] = INCBIN_U32("graphics/unused/unknown_5726B4.gbapal");
 static const u32 gUnknown_085726F4[] = INCBIN_U32("graphics/unknown/unknown_5726F4.gbapal");
 
-static const struct WindowTemplate gUnknown_08572714[] =
-{
-    { // 0
-        .bg = 1,
-        .tilemapLeft = 0,
-        .tilemapTop = 11,
-        .width = 9,
-        .height = 7,
-        .paletteNum = 3,
-        .baseBlock = 0xC0,
-    },
-    { // 1
+static const struct WindowTemplate gUnknown_08572714[] = { {
+                                                               // 0
+                                                               .bg = 1,
+                                                               .tilemapLeft = 0,
+                                                               .tilemapTop = 11,
+                                                               .width = 9,
+                                                               .height = 7,
+                                                               .paletteNum = 3,
+                                                               .baseBlock = 0xC0,
+                                                           },
+    {
+        // 1
         .bg = 0,
         .tilemapLeft = 11,
         .tilemapTop = 17,
@@ -841,7 +902,8 @@ static const struct WindowTemplate gUnknown_08572714[] =
         .paletteNum = 15,
         .baseBlock = 0x14,
     },
-    { // 2
+    {
+        // 2
         .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 13,
@@ -850,62 +912,47 @@ static const struct WindowTemplate gUnknown_08572714[] =
         .paletteNum = 15,
         .baseBlock = 0x14,
     },
-    DUMMY_WIN_TEMPLATE
-};
+    DUMMY_WIN_TEMPLATE };
 
-static const struct BgTemplate gUnknown_08572734[] =
-{
-    {
-        .bg = 0,
+static const struct BgTemplate gUnknown_08572734[] = {
+    { .bg = 0,
         .charBaseIndex = 0,
         .mapBaseIndex = 29,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
+        .baseTile = 0 },
+    { .bg = 1,
         .charBaseIndex = 1,
         .mapBaseIndex = 30,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-        .baseTile = 0x100
-    },
-    {
-        .bg = 2,
+        .baseTile = 0x100 },
+    { .bg = 2,
         .charBaseIndex = 2,
         .mapBaseIndex = 27,
         .screenSize = 1,
         .paletteMode = 0,
         .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
+        .baseTile = 0 },
+    { .bg = 3,
         .charBaseIndex = 3,
         .mapBaseIndex = 31,
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 3,
-        .baseTile = 0
-    },
+        .baseTile = 0 },
 };
 
-static const struct SpritePalette gWaveformSpritePalette =
-{
-    gWaveformPalette, TAG_PAL_WAVEFORM
-};
+static const struct SpritePalette gWaveformSpritePalette = { gWaveformPalette, TAG_PAL_WAVEFORM };
 
-static const struct SpriteSheet gWaveformSpriteSheet =
-{
+static const struct SpriteSheet gWaveformSpriteSheet = {
     gWaveformTiles, sizeof(gWaveformTiles), TAG_TILE_WAVEFORM
 };
 
 static const struct OamData sOamData_857286C;
-static const struct SpriteTemplate sSpriteTemplate_CursorMon =
-{
+static const struct SpriteTemplate sSpriteTemplate_CursorMon = {
     .tileTag = TAG_TILE_2,
     .paletteTag = TAG_PAL_DAC6,
     .oam = &sOamData_857286C,
@@ -915,43 +962,41 @@ static const struct SpriteTemplate sSpriteTemplate_CursorMon =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct StorageAction gPCStorageActionTexts[] =
-{
-    [PC_TEXT_EXIT_BOX] = {gText_ExitFromBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WHAT_YOU_DO] = {gText_WhatDoYouWantToDo, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PICK_A_THEME] = {gText_PleasePickATheme, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PICK_A_WALLPAPER] = {gText_PickTheWallpaper, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_IS_SELECTED] = {gText_PkmnIsSelected, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_JUMP_TO_WHICH_BOX] = {gText_JumpToWhichBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_DEPOSIT_IN_WHICH_BOX] = {gText_DepositInWhichBox, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WAS_DEPOSITED] = {gText_PkmnWasDeposited, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_BOX_IS_FULL] = {gText_BoxIsFull2, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_RELEASE_POKE] = {gText_ReleaseThisPokemon, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WAS_RELEASED] = {gText_PkmnWasReleased, PC_TEXT_FMT_MON_NAME_4},
-    [PC_TEXT_BYE_BYE] = {gText_ByeByePkmn, PC_TEXT_FMT_MON_NAME_6},
-    [PC_TEXT_MARK_POKE] = {gText_MarkYourPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_LAST_POKE] = {gText_ThatsYourLastPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PARTY_FULL] = {gText_YourPartysFull, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_HOLDING_POKE] = {gText_YoureHoldingAPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_WHICH_ONE_WILL_TAKE] = {gText_WhichOneWillYouTake, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CANT_RELEASE_EGG] = {gText_YouCantReleaseAnEgg, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CONTINUE_BOX] = {gText_ContinueBoxOperations, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_CAME_BACK] = {gText_PkmnCameBack, PC_TEXT_FMT_MON_NAME_1},
-    [PC_TEXT_WORRIED] = {gText_WasItWorriedAboutYou, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_SURPRISE] = {gText_FourEllipsesExclamation, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PLEASE_REMOVE_MAIL] = {gText_PleaseRemoveTheMail, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_IS_SELECTED2] = {gText_PkmnIsSelected, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_GIVE_TO_MON] = {gText_GiveToAPkmn, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PLACED_IN_BAG] = {gText_PlacedItemInBag, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_BAG_FULL] = {gText_BagIsFull2, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_PUT_IN_BAG] = {gText_PutItemInBag, PC_TEXT_FMT_NORMAL},
-    [PC_TEXT_ITEM_IS_HELD] = {gText_ItemIsNowHeld, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_CHANGED_TO_ITEM] = {gText_ChangedToNewItem, PC_TEXT_FMT_ITEM_NAME},
-    [PC_TEXT_CANT_STORE_MAIL] = {gText_MailCantBeStored, PC_TEXT_FMT_NORMAL},
+static const struct StorageAction gPCStorageActionTexts[] = {
+    [PC_TEXT_EXIT_BOX] = { gText_ExitFromBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WHAT_YOU_DO] = { gText_WhatDoYouWantToDo, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PICK_A_THEME] = { gText_PleasePickATheme, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PICK_A_WALLPAPER] = { gText_PickTheWallpaper, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_IS_SELECTED] = { gText_PkmnIsSelected, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_JUMP_TO_WHICH_BOX] = { gText_JumpToWhichBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_DEPOSIT_IN_WHICH_BOX] = { gText_DepositInWhichBox, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WAS_DEPOSITED] = { gText_PkmnWasDeposited, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_BOX_IS_FULL] = { gText_BoxIsFull2, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_RELEASE_POKE] = { gText_ReleaseThisPokemon, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WAS_RELEASED] = { gText_PkmnWasReleased, PC_TEXT_FMT_MON_NAME_4 },
+    [PC_TEXT_BYE_BYE] = { gText_ByeByePkmn, PC_TEXT_FMT_MON_NAME_6 },
+    [PC_TEXT_MARK_POKE] = { gText_MarkYourPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_LAST_POKE] = { gText_ThatsYourLastPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PARTY_FULL] = { gText_YourPartysFull, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_HOLDING_POKE] = { gText_YoureHoldingAPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_WHICH_ONE_WILL_TAKE] = { gText_WhichOneWillYouTake, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CANT_RELEASE_EGG] = { gText_YouCantReleaseAnEgg, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CONTINUE_BOX] = { gText_ContinueBoxOperations, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_CAME_BACK] = { gText_PkmnCameBack, PC_TEXT_FMT_MON_NAME_1 },
+    [PC_TEXT_WORRIED] = { gText_WasItWorriedAboutYou, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_SURPRISE] = { gText_FourEllipsesExclamation, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PLEASE_REMOVE_MAIL] = { gText_PleaseRemoveTheMail, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_IS_SELECTED2] = { gText_PkmnIsSelected, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_GIVE_TO_MON] = { gText_GiveToAPkmn, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PLACED_IN_BAG] = { gText_PlacedItemInBag, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_BAG_FULL] = { gText_BagIsFull2, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_PUT_IN_BAG] = { gText_PutItemInBag, PC_TEXT_FMT_NORMAL },
+    [PC_TEXT_ITEM_IS_HELD] = { gText_ItemIsNowHeld, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_CHANGED_TO_ITEM] = { gText_ChangedToNewItem, PC_TEXT_FMT_ITEM_NAME },
+    [PC_TEXT_CANT_STORE_MAIL] = { gText_MailCantBeStored, PC_TEXT_FMT_NORMAL },
 };
 
-static const struct WindowTemplate sYesNoWindowTemplate =
-{
+static const struct WindowTemplate sYesNoWindowTemplate = {
     .bg = 0,
     .tilemapLeft = 24,
     .tilemapTop = 11,
@@ -961,9 +1006,7 @@ static const struct WindowTemplate sYesNoWindowTemplate =
     .baseBlock = 0x5C,
 };
 
-static const struct OamData sOamData_857286C =
-{
-    .y = 0,
+static const struct OamData sOamData_857286C = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -975,12 +1018,9 @@ static const struct OamData sOamData_857286C =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
-};
+    .affineParam = 0 };
 
-static const struct OamData sOamData_8572874 =
-{
-    .y = 0,
+static const struct OamData sOamData_8572874 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -992,47 +1032,25 @@ static const struct OamData sOamData_8572874 =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AnimCmd sSpriteAnim_857287C[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_8572884[] = {
+    ANIMCMD_FRAME(2, 8), ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(6, 8), ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sSpriteAnim_857287C[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
+static const union AnimCmd sSpriteAnim_8572894[] = { ANIMCMD_FRAME(8, 5), ANIMCMD_END };
+
+static const union AnimCmd sSpriteAnim_857289C[] = {
+    ANIMCMD_FRAME(10, 8), ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(12, 8), ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sSpriteAnim_8572884[] =
-{
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(6, 8),
-    ANIMCMD_JUMP(0)
+static const union AnimCmd *const sSpriteAnimTable_85728AC[] = {
+    sSpriteAnim_857287C, sSpriteAnim_8572884, sSpriteAnim_8572894, sSpriteAnim_857289C
 };
 
-static const union AnimCmd sSpriteAnim_8572894[] =
-{
-    ANIMCMD_FRAME(8, 5),
-    ANIMCMD_END
-};
-
-static const union AnimCmd sSpriteAnim_857289C[] =
-{
-    ANIMCMD_FRAME(10, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(12, 8),
-    ANIMCMD_JUMP(0)
-};
-
-static const union AnimCmd *const sSpriteAnimTable_85728AC[] =
-{
-    sSpriteAnim_857287C,
-    sSpriteAnim_8572884,
-    sSpriteAnim_8572894,
-    sSpriteAnim_857289C
-};
-
-static const struct SpriteTemplate sSpriteTemplate_Waveform =
-{
+static const struct SpriteTemplate sSpriteTemplate_Waveform = {
     .tileTag = TAG_TILE_WAVEFORM,
     .paletteTag = TAG_PAL_WAVEFORM,
     .oam = &sOamData_8572874,
@@ -1043,8 +1061,7 @@ static const struct SpriteTemplate sSpriteTemplate_Waveform =
 };
 
 static const struct OamData sOamData_85728EC;
-static const struct SpriteTemplate gUnknown_085728D4 =
-{
+static const struct SpriteTemplate gUnknown_085728D4 = {
     .tileTag = TAG_TILE_12,
     .paletteTag = TAG_PAL_DAC0,
     .oam = &sOamData_85728EC,
@@ -1054,9 +1071,7 @@ static const struct SpriteTemplate gUnknown_085728D4 =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct OamData sOamData_85728EC =
-{
-    .y = 0,
+static const struct OamData sOamData_85728EC = { .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -1068,149 +1083,134 @@ static const struct OamData sOamData_85728EC =
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AffineAnimCmd gSpriteAffineAnim_85728F4[] = {
+    AFFINEANIMCMD_FRAME(-2, -2, 0, 120), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_85728F4[] =
-{
-    AFFINEANIMCMD_FRAME(-2, -2, 0, 120),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd gSpriteAffineAnim_8572904[] = {
+    AFFINEANIMCMD_FRAME(16, 16, 0, 0), AFFINEANIMCMD_FRAME(16, 16, 0, 15), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_8572904[] =
-{
-    AFFINEANIMCMD_FRAME(16, 16, 0, 0),
-    AFFINEANIMCMD_FRAME(16, 16, 0, 15),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd *const gSpriteAffineAnimTable_857291C[] = {
+    gSpriteAffineAnim_85728F4, gSpriteAffineAnim_8572904
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_857291C[] =
-{
-    gSpriteAffineAnim_85728F4,
-    gSpriteAffineAnim_8572904
-};
-
-static const u16 gWallpaperPalettes_Forest[][16] =
-{
+static const u16 gWallpaperPalettes_Forest[][16] = {
     INCBIN_U16("graphics/pokemon_storage/forest_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/forest_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Forest[] = INCBIN_U32("graphics/pokemon_storage/forest.4bpp.lz");
 static const u32 gWallpaperTilemap_Forest[] = INCBIN_U32("graphics/pokemon_storage/forest.bin.lz");
 
-static const u16 gWallpaperPalettes_City[][16] =
-{
+static const u16 gWallpaperPalettes_City[][16] = {
     INCBIN_U16("graphics/pokemon_storage/city_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/city_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_City[] = INCBIN_U32("graphics/pokemon_storage/city.4bpp.lz");
 static const u32 gWallpaperTilemap_City[] = INCBIN_U32("graphics/pokemon_storage/city.bin.lz");
 
-static const u16 gWallpaperPalettes_Desert[][16] =
-{
+static const u16 gWallpaperPalettes_Desert[][16] = {
     INCBIN_U16("graphics/pokemon_storage/desert_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/desert_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Desert[] = INCBIN_U32("graphics/pokemon_storage/desert.4bpp.lz");
 static const u32 gWallpaperTilemap_Desert[] = INCBIN_U32("graphics/pokemon_storage/desert.bin.lz");
 
-static const u16 gWallpaperPalettes_Savanna[][16] =
-{
+static const u16 gWallpaperPalettes_Savanna[][16] = {
     INCBIN_U16("graphics/pokemon_storage/savanna_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/savanna_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Savanna[] = INCBIN_U32("graphics/pokemon_storage/savanna.4bpp.lz");
-static const u32 gWallpaperTilemap_Savanna[] = INCBIN_U32("graphics/pokemon_storage/savanna.bin.lz");
+static const u32 gWallpaperTilemap_Savanna[] =
+    INCBIN_U32("graphics/pokemon_storage/savanna.bin.lz");
 
-static const u16 gWallpaperPalettes_Crag[][16] =
-{
+static const u16 gWallpaperPalettes_Crag[][16] = {
     INCBIN_U16("graphics/pokemon_storage/crag_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/crag_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Crag[] = INCBIN_U32("graphics/pokemon_storage/crag.4bpp.lz");
 static const u32 gWallpaperTilemap_Crag[] = INCBIN_U32("graphics/pokemon_storage/crag.bin.lz");
 
-static const u16 gWallpaperPalettes_Volcano[][16] =
-{
+static const u16 gWallpaperPalettes_Volcano[][16] = {
     INCBIN_U16("graphics/pokemon_storage/volcano_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/volcano_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Volcano[] = INCBIN_U32("graphics/pokemon_storage/volcano.4bpp.lz");
-static const u32 gWallpaperTilemap_Volcano[] = INCBIN_U32("graphics/pokemon_storage/volcano.bin.lz");
+static const u32 gWallpaperTilemap_Volcano[] =
+    INCBIN_U32("graphics/pokemon_storage/volcano.bin.lz");
 
-static const u16 gWallpaperPalettes_Snow[][16] =
-{
+static const u16 gWallpaperPalettes_Snow[][16] = {
     INCBIN_U16("graphics/pokemon_storage/snow_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/snow_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Snow[] = INCBIN_U32("graphics/pokemon_storage/snow.4bpp.lz");
 static const u32 gWallpaperTilemap_Snow[] = INCBIN_U32("graphics/pokemon_storage/snow.bin.lz");
 
-static const u16 gWallpaperPalettes_Cave[][16] =
-{
+static const u16 gWallpaperPalettes_Cave[][16] = {
     INCBIN_U16("graphics/pokemon_storage/cave_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/cave_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Cave[] = INCBIN_U32("graphics/pokemon_storage/cave.4bpp.lz");
 static const u32 gWallpaperTilemap_Cave[] = INCBIN_U32("graphics/pokemon_storage/cave.bin.lz");
 
-static const u16 gWallpaperPalettes_Beach[][16] =
-{
+static const u16 gWallpaperPalettes_Beach[][16] = {
     INCBIN_U16("graphics/pokemon_storage/beach_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/beach_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Beach[] = INCBIN_U32("graphics/pokemon_storage/beach.4bpp.lz");
 static const u32 gWallpaperTilemap_Beach[] = INCBIN_U32("graphics/pokemon_storage/beach.bin.lz");
 
-static const u16 gWallpaperPalettes_Seafloor[][16] =
-{
+static const u16 gWallpaperPalettes_Seafloor[][16] = {
     INCBIN_U16("graphics/pokemon_storage/seafloor_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/seafloor_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Seafloor[] = INCBIN_U32("graphics/pokemon_storage/seafloor.4bpp.lz");
-static const u32 gWallpaperTilemap_Seafloor[] = INCBIN_U32("graphics/pokemon_storage/seafloor.bin.lz");
+static const u32 gWallpaperTiles_Seafloor[] =
+    INCBIN_U32("graphics/pokemon_storage/seafloor.4bpp.lz");
+static const u32 gWallpaperTilemap_Seafloor[] =
+    INCBIN_U32("graphics/pokemon_storage/seafloor.bin.lz");
 
-static const u16 gWallpaperPalettes_River[][16] =
-{
+static const u16 gWallpaperPalettes_River[][16] = {
     INCBIN_U16("graphics/pokemon_storage/river_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/river_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_River[] = INCBIN_U32("graphics/pokemon_storage/river.4bpp.lz");
 static const u32 gWallpaperTilemap_River[] = INCBIN_U32("graphics/pokemon_storage/river.bin.lz");
-static const u16 gWallpaperPalettes_Sky[][16] =
-{
+static const u16 gWallpaperPalettes_Sky[][16] = {
     INCBIN_U16("graphics/pokemon_storage/sky_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/sky_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Sky[] = INCBIN_U32("graphics/pokemon_storage/sky.4bpp.lz");
 static const u32 gWallpaperTilemap_Sky[] = INCBIN_U32("graphics/pokemon_storage/sky.bin.lz");
 
-static const u16 gWallpaperPalettes_PolkaDot[][16] =
-{
+static const u16 gWallpaperPalettes_PolkaDot[][16] = {
     INCBIN_U16("graphics/pokemon_storage/polkadot_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/polkadot_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_PolkaDot[] = INCBIN_U32("graphics/pokemon_storage/polkadot.4bpp.lz");
-static const u32 gWallpaperTilemap_PolkaDot[] = INCBIN_U32("graphics/pokemon_storage/polkadot.bin.lz");
+static const u32 gWallpaperTiles_PolkaDot[] =
+    INCBIN_U32("graphics/pokemon_storage/polkadot.4bpp.lz");
+static const u32 gWallpaperTilemap_PolkaDot[] =
+    INCBIN_U32("graphics/pokemon_storage/polkadot.bin.lz");
 
-static const u16 gWallpaperPalettes_Pokecenter[][16] =
-{
+static const u16 gWallpaperPalettes_Pokecenter[][16] = {
     INCBIN_U16("graphics/pokemon_storage/pokecenter_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pokecenter_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Pokecenter[] = INCBIN_U32("graphics/pokemon_storage/pokecenter.4bpp.lz");
-static const u32 gWallpaperTilemap_Pokecenter[] = INCBIN_U32("graphics/pokemon_storage/pokecenter.bin.lz");
+static const u32 gWallpaperTiles_Pokecenter[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter.4bpp.lz");
+static const u32 gWallpaperTilemap_Pokecenter[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter.bin.lz");
 
-static const u16 gWallpaperPalettes_Machine[][16] =
-{
+static const u16 gWallpaperPalettes_Machine[][16] = {
     INCBIN_U16("graphics/pokemon_storage/machine_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/machine_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Machine[] = INCBIN_U32("graphics/pokemon_storage/machine.4bpp.lz");
-static const u32 gWallpaperTilemap_Machine[] = INCBIN_U32("graphics/pokemon_storage/machine.bin.lz");
+static const u32 gWallpaperTilemap_Machine[] =
+    INCBIN_U32("graphics/pokemon_storage/machine.bin.lz");
 
-static const u16 gWallpaperPalettes_Plain[][16] =
-{
+static const u16 gWallpaperPalettes_Plain[][16] = {
     INCBIN_U16("graphics/pokemon_storage/plain_frame.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/plain_bg.gbapal"),
 };
@@ -1220,31 +1220,30 @@ static const u32 gWallpaperTilemap_Plain[] = INCBIN_U32("graphics/pokemon_storag
 // 12x18 tilemap
 static const u32 gUnknown_085773C4[] = INCBIN_U32("graphics/unused/tilemap_5773C4.bin");
 
-static const u16 gUnknown_08577574[][2] =
-{
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF},
-    {0x1CE7, 0x7FFF}
-};
+static const u16 gUnknown_08577574[][2] = { { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF },
+    { 0x1CE7, 0x7FFF } };
 
-#define WALLPAPER_ENTRY(name) {gWallpaperTiles_##name, gWallpaperTilemap_##name, gWallpaperPalettes_##name[0]}
+#define WALLPAPER_ENTRY(name)                                                          \
+    {                                                                                  \
+        gWallpaperTiles_##name, gWallpaperTilemap_##name, gWallpaperPalettes_##name[0] \
+    }
 
-static const struct WallpaperTable gWallpaperTable[] =
-{
+static const struct WallpaperTable gWallpaperTable[] = {
     [WALLPAPER_FOREST] = WALLPAPER_ENTRY(Forest),
     [WALLPAPER_CITY] = WALLPAPER_ENTRY(City),
     [WALLPAPER_DESERT] = WALLPAPER_ENTRY(Desert),
@@ -1265,148 +1264,168 @@ static const struct WallpaperTable gWallpaperTable[] =
 
 static const u8 gPCGfx_Arrow[] = INCBIN_U8("graphics/pokemon_storage/arrow.4bpp");
 
-static const u16 gWallpaperPalettes_Zigzagoon[][16] =
-{
+static const u16 gWallpaperPalettes_Zigzagoon[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/zigzagoon_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Zigzagoon[] = INCBIN_U32("graphics/pokemon_storage/zigzagoon.4bpp.lz");
-static const u32 gWallpaperTilemap_Zigzagoon[] = INCBIN_U32("graphics/pokemon_storage/zigzagoon.bin.lz");
+static const u32 gWallpaperTiles_Zigzagoon[] =
+    INCBIN_U32("graphics/pokemon_storage/zigzagoon.4bpp.lz");
+static const u32 gWallpaperTilemap_Zigzagoon[] =
+    INCBIN_U32("graphics/pokemon_storage/zigzagoon.bin.lz");
 
-static const u16 gWallpaperPalettes_Screen[][16] =
-{
+static const u16 gWallpaperPalettes_Screen[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/screen_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Screen[] = INCBIN_U32("graphics/pokemon_storage/screen.4bpp.lz");
 static const u32 gWallpaperTilemap_Screen[] = INCBIN_U32("graphics/pokemon_storage/screen.bin.lz");
 
-static const u16 gWallpaperPalettes_Diagonal[][16] =
-{
+static const u16 gWallpaperPalettes_Diagonal[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/diagonal_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Diagonal[] = INCBIN_U32("graphics/pokemon_storage/diagonal.4bpp.lz");
-static const u32 gWallpaperTilemap_Diagonal[] = INCBIN_U32("graphics/pokemon_storage/diagonal.bin.lz");
+static const u32 gWallpaperTiles_Diagonal[] =
+    INCBIN_U32("graphics/pokemon_storage/diagonal.4bpp.lz");
+static const u32 gWallpaperTilemap_Diagonal[] =
+    INCBIN_U32("graphics/pokemon_storage/diagonal.bin.lz");
 
-static const u16 gWallpaperPalettes_Block[][16] =
-{
+static const u16 gWallpaperPalettes_Block[][16] = {
     INCBIN_U16("graphics/pokemon_storage/block_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/block_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Block[] = INCBIN_U32("graphics/pokemon_storage/block.4bpp.lz");
 static const u32 gWallpaperTilemap_Block[] = INCBIN_U32("graphics/pokemon_storage/block.bin.lz");
 
-static const u16 gWallpaperPalettes_Pokecenter2[][16] =
-{
+static const u16 gWallpaperPalettes_Pokecenter2[][16] = {
     INCBIN_U16("graphics/pokemon_storage/pokecenter2_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pokecenter2_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Pokecenter2[] = INCBIN_U32("graphics/pokemon_storage/pokecenter2.4bpp.lz");
-static const u32 gWallpaperTilemap_Pokecenter2[] = INCBIN_U32("graphics/pokemon_storage/pokecenter2.bin.lz");
+static const u32 gWallpaperTiles_Pokecenter2[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter2.4bpp.lz");
+static const u32 gWallpaperTilemap_Pokecenter2[] =
+    INCBIN_U32("graphics/pokemon_storage/pokecenter2.bin.lz");
 
-static const u16 gWallpaperPalettes_Frame[][16] =
-{
+static const u16 gWallpaperPalettes_Frame[][16] = {
     INCBIN_U16("graphics/pokemon_storage/frame_bg.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/frame_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Frame[] = INCBIN_U32("graphics/pokemon_storage/frame.4bpp.lz");
 static const u32 gWallpaperTilemap_Frame[] = INCBIN_U32("graphics/pokemon_storage/frame.bin.lz");
 
-static const u16 gWallpaperPalettes_Blank[][16] =
-{
+static const u16 gWallpaperPalettes_Blank[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame1.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/zigzagoon_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Blank[] = INCBIN_U32("graphics/pokemon_storage/blank.4bpp.lz");
 static const u32 gWallpaperTilemap_Blank[] = INCBIN_U32("graphics/pokemon_storage/blank.bin.lz");
 
-static const u16 gWallpaperPalettes_Circles[][16] =
-{
+static const u16 gWallpaperPalettes_Circles[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/circles_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Circles[] = INCBIN_U32("graphics/pokemon_storage/circles.4bpp.lz");
-static const u32 gWallpaperTilemap_Circles[] = INCBIN_U32("graphics/pokemon_storage/circles.bin.lz");
+static const u32 gWallpaperTilemap_Circles[] =
+    INCBIN_U32("graphics/pokemon_storage/circles.bin.lz");
 
-static const u16 gWallpaperPalettes_Azumarill[][16] =
-{
+static const u16 gWallpaperPalettes_Azumarill[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/azumarill_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Azumarill[] = INCBIN_U32("graphics/pokemon_storage/azumarill.4bpp.lz");
-static const u32 gWallpaperTilemap_Azumarill[] = INCBIN_U32("graphics/pokemon_storage/azumarill.bin.lz");
+static const u32 gWallpaperTiles_Azumarill[] =
+    INCBIN_U32("graphics/pokemon_storage/azumarill.4bpp.lz");
+static const u32 gWallpaperTilemap_Azumarill[] =
+    INCBIN_U32("graphics/pokemon_storage/azumarill.bin.lz");
 
-static const u16 gWallpaperPalettes_Pikachu[][16] =
-{
+static const u16 gWallpaperPalettes_Pikachu[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/pikachu_bg.gbapal"),
 };
 static const u32 gWallpaperTiles_Pikachu[] = INCBIN_U32("graphics/pokemon_storage/pikachu.4bpp.lz");
-static const u32 gWallpaperTilemap_Pikachu[] = INCBIN_U32("graphics/pokemon_storage/pikachu.bin.lz");
+static const u32 gWallpaperTilemap_Pikachu[] =
+    INCBIN_U32("graphics/pokemon_storage/pikachu.bin.lz");
 
-static const u16 gWallpaperPalettes_Legendary[][16] =
-{
+static const u16 gWallpaperPalettes_Legendary[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/legendary_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Legendary[] = INCBIN_U32("graphics/pokemon_storage/legendary.4bpp.lz");
-static const u32 gWallpaperTilemap_Legendary[] = INCBIN_U32("graphics/pokemon_storage/legendary.bin.lz");
+static const u32 gWallpaperTiles_Legendary[] =
+    INCBIN_U32("graphics/pokemon_storage/legendary.4bpp.lz");
+static const u32 gWallpaperTilemap_Legendary[] =
+    INCBIN_U32("graphics/pokemon_storage/legendary.bin.lz");
 
-static const u16 gWallpaperPalettes_Dusclops[][16] =
-{
+static const u16 gWallpaperPalettes_Dusclops[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/dusclops_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Dusclops[] = INCBIN_U32("graphics/pokemon_storage/dusclops.4bpp.lz");
-static const u32 gWallpaperTilemap_Dusclops[] = INCBIN_U32("graphics/pokemon_storage/dusclops.bin.lz");
+static const u32 gWallpaperTiles_Dusclops[] =
+    INCBIN_U32("graphics/pokemon_storage/dusclops.4bpp.lz");
+static const u32 gWallpaperTilemap_Dusclops[] =
+    INCBIN_U32("graphics/pokemon_storage/dusclops.bin.lz");
 
-static const u16 gWallpaperPalettes_Ludicolo[][16] =
-{
+static const u16 gWallpaperPalettes_Ludicolo[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/ludicolo_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Ludicolo[] = INCBIN_U32("graphics/pokemon_storage/ludicolo.4bpp.lz");
-static const u32 gWallpaperTilemap_Ludicolo[] = INCBIN_U32("graphics/pokemon_storage/ludicolo.bin.lz");
+static const u32 gWallpaperTiles_Ludicolo[] =
+    INCBIN_U32("graphics/pokemon_storage/ludicolo.4bpp.lz");
+static const u32 gWallpaperTilemap_Ludicolo[] =
+    INCBIN_U32("graphics/pokemon_storage/ludicolo.bin.lz");
 
-static const u16 gWallpaperPalettes_Whiscash[][16] =
-{
+static const u16 gWallpaperPalettes_Whiscash[][16] = {
     INCBIN_U16("graphics/pokemon_storage/friends_frame2.gbapal"),
     INCBIN_U16("graphics/pokemon_storage/whiscash_bg.gbapal"),
 };
-static const u32 gWallpaperTiles_Whiscash[] = INCBIN_U32("graphics/pokemon_storage/whiscash.4bpp.lz");
-static const u32 gWallpaperTilemap_Whiscash[] = INCBIN_U32("graphics/pokemon_storage/whiscash.bin.lz");
+static const u32 gWallpaperTiles_Whiscash[] =
+    INCBIN_U32("graphics/pokemon_storage/whiscash.4bpp.lz");
+static const u32 gWallpaperTilemap_Whiscash[] =
+    INCBIN_U32("graphics/pokemon_storage/whiscash.bin.lz");
 
 static const u32 gWallpaperIcon_Aqua[] = INCBIN_U32("graphics/pokemon_storage/aqua_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Heart[] = INCBIN_U32("graphics/pokemon_storage/heart_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FiveStar[] = INCBIN_U32("graphics/pokemon_storage/five_star_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FiveStar[] =
+    INCBIN_U32("graphics/pokemon_storage/five_star_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Brick[] = INCBIN_U32("graphics/pokemon_storage/brick_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FourStar[] = INCBIN_U32("graphics/pokemon_storage/four_star_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Asterisk[] = INCBIN_U32("graphics/pokemon_storage/asterisk_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FourStar[] =
+    INCBIN_U32("graphics/pokemon_storage/four_star_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Asterisk[] =
+    INCBIN_U32("graphics/pokemon_storage/asterisk_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Dot[] = INCBIN_U32("graphics/pokemon_storage/dot_icon.4bpp.lz");
-static const u32 gWallpaperIcon_LineCircle[] = INCBIN_U32("graphics/pokemon_storage/line_circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_PokeBall[] = INCBIN_U32("graphics/pokemon_storage/pokeball_icon.4bpp.lz");
+static const u32 gWallpaperIcon_LineCircle[] =
+    INCBIN_U32("graphics/pokemon_storage/line_circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_PokeBall[] =
+    INCBIN_U32("graphics/pokemon_storage/pokeball_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Maze[] = INCBIN_U32("graphics/pokemon_storage/maze_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Footprint[] = INCBIN_U32("graphics/pokemon_storage/footprint_icon.4bpp.lz");
-static const u32 gWallpaperIcon_BigAsterisk[] = INCBIN_U32("graphics/pokemon_storage/big_asterisk_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Circle[] = INCBIN_U32("graphics/pokemon_storage/circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Koffing[] = INCBIN_U32("graphics/pokemon_storage/koffing_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Ribbon[] = INCBIN_U32("graphics/pokemon_storage/ribbon_icon.4bpp.lz");
-static const u32 gWallpaperIcon_FourCircles[] = INCBIN_U32("graphics/pokemon_storage/four_circles_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Footprint[] =
+    INCBIN_U32("graphics/pokemon_storage/footprint_icon.4bpp.lz");
+static const u32 gWallpaperIcon_BigAsterisk[] =
+    INCBIN_U32("graphics/pokemon_storage/big_asterisk_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Circle[] =
+    INCBIN_U32("graphics/pokemon_storage/circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Koffing[] =
+    INCBIN_U32("graphics/pokemon_storage/koffing_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Ribbon[] =
+    INCBIN_U32("graphics/pokemon_storage/ribbon_icon.4bpp.lz");
+static const u32 gWallpaperIcon_FourCircles[] =
+    INCBIN_U32("graphics/pokemon_storage/four_circles_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Lotad[] = INCBIN_U32("graphics/pokemon_storage/lotad_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Crystal[] = INCBIN_U32("graphics/pokemon_storage/crystal_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Crystal[] =
+    INCBIN_U32("graphics/pokemon_storage/crystal_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Pichu[] = INCBIN_U32("graphics/pokemon_storage/pichu_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Diglett[] = INCBIN_U32("graphics/pokemon_storage/diglett_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Luvdisc[] = INCBIN_U32("graphics/pokemon_storage/luvdisc_icon.4bpp.lz");
-static const u32 gWallpaperIcon_StarInCircle[] = INCBIN_U32("graphics/pokemon_storage/star_in_circle_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Spinda[] = INCBIN_U32("graphics/pokemon_storage/spinda_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Diglett[] =
+    INCBIN_U32("graphics/pokemon_storage/diglett_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Luvdisc[] =
+    INCBIN_U32("graphics/pokemon_storage/luvdisc_icon.4bpp.lz");
+static const u32 gWallpaperIcon_StarInCircle[] =
+    INCBIN_U32("graphics/pokemon_storage/star_in_circle_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Spinda[] =
+    INCBIN_U32("graphics/pokemon_storage/spinda_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Latis[] = INCBIN_U32("graphics/pokemon_storage/latis_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Minun[] = INCBIN_U32("graphics/pokemon_storage/minun_icon.4bpp.lz");
-static const u32 gWallpaperIcon_Togepi[] = INCBIN_U32("graphics/pokemon_storage/togepi_icon.4bpp.lz");
+static const u32 gWallpaperIcon_Togepi[] =
+    INCBIN_U32("graphics/pokemon_storage/togepi_icon.4bpp.lz");
 static const u32 gWallpaperIcon_Magma[] = INCBIN_U32("graphics/pokemon_storage/magma_icon.4bpp.lz");
 
-static const struct WallpaperTable gFriendsWallpaperTable[] =
-{
+static const struct WallpaperTable gFriendsWallpaperTable[] = {
     WALLPAPER_ENTRY(Zigzagoon),
     WALLPAPER_ENTRY(Screen),
     WALLPAPER_ENTRY(Horizontal),
@@ -1425,8 +1444,7 @@ static const struct WallpaperTable gFriendsWallpaperTable[] =
     WALLPAPER_ENTRY(Whiscash),
 };
 
-static const u32 *const gFriendsIcons[] =
-{
+static const u32 *const gFriendsIcons[] = {
     gWallpaperIcon_Aqua,
     gWallpaperIcon_Heart,
     gWallpaperIcon_FiveStar,
@@ -1462,98 +1480,66 @@ static const u32 *const gFriendsIcons[] =
 // Unknown Unused data.
 static const u16 gUnknown_0857B07C = 0x23BA;
 
-static const struct SpriteSheet gUnknown_0857B080 = {gPCGfx_Arrow, 0x80, 6};
+static const struct SpriteSheet gUnknown_0857B080 = { gPCGfx_Arrow, 0x80, 6 };
 
-static const struct OamData gOamData_83BB298 =
-{
-    .shape = SPRITE_SHAPE(32x16),
-    .size = SPRITE_SIZE(32x16),
-    .priority = 2
+static const struct OamData gOamData_83BB298 = {
+    .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .priority = 2
 };
 
-static const union AnimCmd gSpriteAnim_83BB2A0[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2A0[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2A8[] =
-{
-    ANIMCMD_FRAME(8, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2A8[] = { ANIMCMD_FRAME(8, 5), ANIMCMD_END };
 
-static const union AnimCmd *const gSpriteAnimTable_83BB2B0[] =
-{
-    gSpriteAnim_83BB2A0,
-    gSpriteAnim_83BB2A8
-};
+static const union AnimCmd *const gSpriteAnimTable_83BB2B0[] = { gSpriteAnim_83BB2A0,
+    gSpriteAnim_83BB2A8 };
 
-static const struct SpriteTemplate gSpriteTemplate_857B0A8 =
-{
-    TAG_TILE_3,
+static const struct SpriteTemplate gSpriteTemplate_857B0A8 = { TAG_TILE_3,
     TAG_PAL_DAC9,
     &gOamData_83BB298,
     gSpriteAnimTable_83BB2B0,
     NULL,
     gDummySpriteAffineAnimTable,
-    SpriteCallbackDummy
+    SpriteCallbackDummy };
+
+static const struct OamData gOamData_83BB2D0 = {
+    .shape = SPRITE_SHAPE(8x16), .size = SPRITE_SIZE(8x16), .priority = 2
 };
 
-static const struct OamData gOamData_83BB2D0 =
-{
-    .shape = SPRITE_SHAPE(8x16),
-    .size = SPRITE_SIZE(8x16),
-    .priority = 2
-};
+static const union AnimCmd gSpriteAnim_83BB2D8[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2D8[] =
-{
-    ANIMCMD_FRAME(0, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd gSpriteAnim_83BB2E0[] = { ANIMCMD_FRAME(2, 5), ANIMCMD_END };
 
-static const union AnimCmd gSpriteAnim_83BB2E0[] =
-{
-    ANIMCMD_FRAME(2, 5),
-    ANIMCMD_END
-};
+static const union AnimCmd *const gSpriteAnimTable_83BB2E8[] = { gSpriteAnim_83BB2D8,
+    gSpriteAnim_83BB2E0 };
 
-static const union AnimCmd *const gSpriteAnimTable_83BB2E8[] =
-{
-    gSpriteAnim_83BB2D8,
-    gSpriteAnim_83BB2E0
-};
-
-static const struct SpriteTemplate gUnknown_0857B0E0 =
-{
-    6,
+static const struct SpriteTemplate gUnknown_0857B0E0 = { 6,
     TAG_PAL_WAVEFORM,
     &gOamData_83BB2D0,
     gSpriteAnimTable_83BB2E8,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_80CD210
-};
+    sub_80CD210 };
 
 static const u16 gHandCursorPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor.gbapal");
 static const u8 gHandCursorTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor.4bpp");
-static const u8 gHandCursorShadowTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
+static const u8 gHandCursorShadowTiles[] =
+    INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
 
 // code
-void DrawTextWindowAndBufferTiles(const u8 *string, void *dst, u8 zero1, u8 zero2, s32 bytesToBuffer)
+void DrawTextWindowAndBufferTiles(
+    const u8 *string, void *dst, u8 zero1, u8 zero2, s32 bytesToBuffer)
 {
     s32 i, tileBytesToBuffer, remainingBytes;
     u16 windowId;
     u8 txtColor[3];
     u8 *tileData1, *tileData2;
-    struct WindowTemplate winTemplate = {0};
+    struct WindowTemplate winTemplate = { 0 };
 
     winTemplate.width = 24;
     winTemplate.height = 2;
     windowId = AddWindow(&winTemplate);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(zero2));
-    tileData1 = (u8*) GetWindowAttribute(windowId, WINDOW_TILE_DATA);
+    tileData1 = (u8 *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
     tileData2 = (winTemplate.width * 32) + tileData1;
 
     if (!zero1)
@@ -1582,7 +1568,7 @@ void DrawTextWindowAndBufferTiles(const u8 *string, void *dst, u8 zero1, u8 zero
 
     // Never used. bytesToBuffer is always passed <= 6, so remainingBytes is always <= 0 here
     if (remainingBytes > 0)
-        CpuFill16((zero2 << 4) | zero2, dst, (u32)(remainingBytes) * 0x100);
+        CpuFill16((zero2 << 4) | zero2, dst, (u32)(remainingBytes)*0x100);
 
     RemoveWindow(windowId);
 }
@@ -1594,14 +1580,14 @@ void sub_80C6EAC(const u8 *string, void *dst, u16 arg2, u8 arg3, u8 clr2, u8 clr
     u8 windowId;
     u8 txtColor[3];
     u8 *tileData1, *tileData2;
-    struct WindowTemplate winTemplate = {0};
+    struct WindowTemplate winTemplate = { 0 };
 
     winTemplate.width = StringLength_Multibyte(string);
     winTemplate.height = 2;
     var = winTemplate.width * 32;
     windowId = AddWindow(&winTemplate);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(arg3));
-    tileData1 = (u8*) GetWindowAttribute(windowId, WINDOW_TILE_DATA);
+    tileData1 = (u8 *)GetWindowAttribute(windowId, WINDOW_TILE_DATA);
     tileData2 = (winTemplate.width * 32) + tileData1;
     txtColor[0] = arg3;
     txtColor[1] = clr2;
@@ -1660,8 +1646,7 @@ u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore)
 
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (i != slotToIgnore
-            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
+        if (i != slotToIgnore && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE
             && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
             && GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0)
         {
@@ -1703,7 +1688,15 @@ u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n)
     return str;
 }
 
-static void sub_80C7128(u16 *dest, u16 dest_left, u16 dest_top, const u16 *src, u16 src_left, u16 src_top, u16 dest_width, u16 dest_height, u16 src_width)
+static void sub_80C7128(u16 *dest,
+    u16 dest_left,
+    u16 dest_top,
+    const u16 *src,
+    u16 src_left,
+    u16 src_top,
+    u16 dest_width,
+    u16 dest_height,
+    u16 src_width)
 {
     u16 i;
 
@@ -1734,106 +1727,111 @@ static void Task_PokemonStorageSystemPC(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        CreatePCMenu(task->data[1], &task->data[15]);
-        LoadMessageBoxAndBorderGfx();
-        DrawDialogueFrame(0, 0);
-        FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, TEXT_SPEED_FF, NULL, 2, 1, 3);
-        CopyWindowToVram(0, 3);
-        CopyWindowToVram(task->data[15], 3);
-        task->data[0]++;
-        break;
-    case 1:
-        if (IsWeatherNotFadingIn())
-        {
+        case 0:
+            CreatePCMenu(task->data[1], &task->data[15]);
+            LoadMessageBoxAndBorderGfx();
+            DrawDialogueFrame(0, 0);
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            AddTextPrinterParameterized2(
+                0, 1, gUnknown_085716C0[task->data[1]].desc, TEXT_SPEED_FF, NULL, 2, 1, 3);
+            CopyWindowToVram(0, 3);
+            CopyWindowToVram(task->data[15], 3);
             task->data[0]++;
-        }
-        break;
-    case 2:
-        task->data[2] = Menu_ProcessInput();
-        switch(task->data[2])
-        {
-        case MENU_NOTHING_CHOSEN:
-            task->data[3] = task->data[1];
-            if (gMain.newKeys & DPAD_UP && --task->data[3] < 0)
-                task->data[3] = 4;
+            break;
+        case 1:
+            if (IsWeatherNotFadingIn())
+            {
+                task->data[0]++;
+            }
+            break;
+        case 2:
+            task->data[2] = Menu_ProcessInput();
+            switch (task->data[2])
+            {
+                case MENU_NOTHING_CHOSEN:
+                    task->data[3] = task->data[1];
+                    if (gMain.newKeys & DPAD_UP && --task->data[3] < 0)
+                        task->data[3] = 4;
 
-            if (gMain.newKeys & DPAD_DOWN && ++task->data[3] > 4)
-                task->data[3] = 0;
-            if (task->data[1] != task->data[3])
-            {
-                task->data[1] = task->data[3];
-                FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                    if (gMain.newKeys & DPAD_DOWN && ++task->data[3] > 4)
+                        task->data[3] = 0;
+                    if (task->data[1] != task->data[3])
+                    {
+                        task->data[1] = task->data[3];
+                        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                        AddTextPrinterParameterized2(
+                            0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                    }
+                    break;
+                case MENU_B_PRESSED:
+                case 4:
+                    ClearStdWindowAndFrame(task->data[15], TRUE);
+                    ScriptContext2_Disable();
+                    EnableBothScriptContexts();
+                    RemoveWindow(task->data[15]);
+                    DestroyTask(taskId);
+                    break;
+                default:
+                    if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
+                    {
+                        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                        AddTextPrinterParameterized2(0, 1, gText_PartyFull, 0, NULL, 2, 1, 3);
+                        task->data[0] = 3;
+                    }
+                    else if (task->data[2] == 1 && CountPartyMons() == 1)
+                    {
+                        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                        AddTextPrinterParameterized2(0, 1, gText_JustOnePkmn, 0, NULL, 2, 1, 3);
+                        task->data[0] = 3;
+                    }
+                    else
+                    {
+                        FadeScreen(FADE_TO_BLACK, 0);
+                        task->data[0] = 4;
+                    }
+                    break;
             }
             break;
-        case MENU_B_PRESSED:
-        case  4:
-            ClearStdWindowAndFrame(task->data[15], TRUE);
-            ScriptContext2_Disable();
-            EnableBothScriptContexts();
-            RemoveWindow(task->data[15]);
-            DestroyTask(taskId);
-            break;
-        default:
-            if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
+        case 3:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON))
             {
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gText_PartyFull, 0, NULL, 2, 1, 3);
-                task->data[0] = 3;
+                AddTextPrinterParameterized2(
+                    0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                task->data[0] = 2;
             }
-            else if (task->data[2] == 1 && CountPartyMons() == 1)
+            else if (gMain.newKeys & DPAD_UP)
             {
+                if (--task->data[1] < 0)
+                    task->data[1] = 4;
+                Menu_MoveCursor(-1);
+                task->data[1] = Menu_GetCursorPos();
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gText_JustOnePkmn, 0, NULL, 2, 1, 3);
-                task->data[0] = 3;
+                AddTextPrinterParameterized2(
+                    0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                task->data[0] = 2;
             }
-            else
+            else if (gMain.newKeys & DPAD_DOWN)
             {
-                FadeScreen(FADE_TO_BLACK, 0);
-                task->data[0] = 4;
+                if (++task->data[1] > 3)
+                    task->data[1] = 0;
+                Menu_MoveCursor(1);
+                task->data[1] = Menu_GetCursorPos();
+                FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                AddTextPrinterParameterized2(
+                    0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                task->data[0] = 2;
             }
             break;
-        }
-        break;
-    case 3:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON))
-        {
-            FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
-            task->data[0] = 2;
-        }
-        else if (gMain.newKeys & DPAD_UP)
-        {
-            if (--task->data[1] < 0)
-                task->data[1] = 4;
-            Menu_MoveCursor(-1);
-            task->data[1] = Menu_GetCursorPos();
-            FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
-            task->data[0] = 2;
-        }
-        else if (gMain.newKeys & DPAD_DOWN)
-        {
-            if (++task->data[1] > 3)
-                task->data[1] = 0;
-            Menu_MoveCursor(1);
-            task->data[1] = Menu_GetCursorPos();
-            FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_085716C0[task->data[1]].desc, 0, NULL, 2, 1, 3);
-            task->data[0] = 2;
-        }
-        break;
-    case 4:
-        if (!gPaletteFade.active)
-        {
-            CleanupOverworldWindowsAndTilemaps();
-            Cb2_EnterPSS(task->data[2]);
-            RemoveWindow(task->data[15]);
-            DestroyTask(taskId);
-        }
-        break;
+        case 4:
+            if (!gPaletteFade.active)
+            {
+                CleanupOverworldWindowsAndTilemaps();
+                Cb2_EnterPSS(task->data[2]);
+                RemoveWindow(task->data[15]);
+                DestroyTask(taskId);
+            }
+            break;
     }
 }
 
@@ -1863,12 +1861,14 @@ static void CreatePCMenu(u8 whichMenu, s16 *windowIdPtr)
 {
     s16 windowId;
     struct WindowTemplate winTemplate = gUnknown_085716E8;
-    winTemplate.width = GetMaxWidthInMenuTable((void *)gUnknown_085716C0, ARRAY_COUNT(gUnknown_085716C0));
+    winTemplate.width =
+        GetMaxWidthInMenuTable((void *)gUnknown_085716C0, ARRAY_COUNT(gUnknown_085716C0));
     windowId = AddWindow(&winTemplate);
 
     DrawStdWindowFrame(windowId, FALSE);
     PrintMenuTable(windowId, ARRAY_COUNT(gUnknown_085716C0), (void *)gUnknown_085716C0);
-    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(windowId, ARRAY_COUNT(gUnknown_085716C0), whichMenu);
+    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(
+        windowId, ARRAY_COUNT(gUnknown_085716C0), whichMenu);
     *windowIdPtr = windowId;
 }
 
@@ -1903,7 +1903,8 @@ static s16 StorageSystemGetNextMonIndex(struct BoxPokemon *box, s8 startIdx, u8 
     {
         for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
         {
-            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0 && !GetBoxMonData(box + i, MON_DATA_IS_EGG))
+            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0
+                && !GetBoxMonData(box + i, MON_DATA_IS_EGG))
                 return i;
         }
     }
@@ -1932,18 +1933,13 @@ void ResetPokemonStorageSystem(void)
     ResetWaldaWallpaper();
 }
 
-static void sub_80C77E8(struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3, bool32 loadPal)
+static void sub_80C77E8(
+    struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3, bool32 loadPal)
 {
-    struct SpritePalette palette =
-    {
-        gBoxSelectionPopupPalette, palTag
-    };
-    struct SpriteSheet sheets[] =
-    {
-        {gBoxSelectionPopupCenterTiles, 0x800, tileTag},
-        {gBoxSelectionPopupSidesTiles,  0x180, tileTag + 1},
-        {}
-    };
+    struct SpritePalette palette = { gBoxSelectionPopupPalette, palTag };
+    struct SpriteSheet sheets[] = { { gBoxSelectionPopupCenterTiles, 0x800, tileTag },
+        { gBoxSelectionPopupSidesTiles, 0x180, tileTag + 1 },
+        {} };
 
     if (loadPal)
         LoadSpritePalette(&palette);
@@ -2007,9 +2003,13 @@ static void sub_80C7958(u8 curBox)
     struct OamData oamData = {};
     oamData.size = SPRITE_SIZE(64x64);
     oamData.paletteNum = 1;
-    template = (struct SpriteTemplate){
-        0, 0, &oamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-    };
+    template = (struct SpriteTemplate){ 0,
+        0,
+        &oamData,
+        gDummySpriteAnimTable,
+        NULL,
+        gDummySpriteAffineAnimTable,
+        SpriteCallbackDummy };
 
     gUnknown_02039D04->curBox = curBox;
     template.tileTag = gUnknown_02039D04->unk_0240;
@@ -2043,7 +2043,8 @@ static void sub_80C7958(u8 curBox)
     }
     for (i = 0; i < 2; i++)
     {
-        gUnknown_02039D04->unk_0020[i] = sub_80CD2E8(72 * i + 0x7c, 0x58, i, 0, gUnknown_02039D04->unk_0246);
+        gUnknown_02039D04->unk_0020[i] =
+            sub_80CD2E8(72 * i + 0x7c, 0x58, i, 0, gUnknown_02039D04->unk_0246);
         if (gUnknown_02039D04->unk_0020[i])
         {
             gUnknown_02039D04->unk_0020[i]->data[0] = (i == 0 ? -1 : 1);
@@ -2085,7 +2086,8 @@ static void sub_80C7B80(void)
 
 static void sub_80C7BB4(void)
 {
-    gUnknown_02039D04->curBox = (gUnknown_02039D04->curBox == 0 ? TOTAL_BOXES_COUNT - 1 : gUnknown_02039D04->curBox - 1);
+    gUnknown_02039D04->curBox =
+        (gUnknown_02039D04->curBox == 0 ? TOTAL_BOXES_COUNT - 1 : gUnknown_02039D04->curBox - 1);
     sub_80C7BE4();
 }
 
@@ -2107,15 +2109,19 @@ static void sub_80C7BE4(void)
     FillWindowPixelBuffer(windowId, PIXEL_FILL(4));
 
     center = GetStringCenterAlignXOffset(1, boxName, 64);
-    AddTextPrinterParameterized3(windowId, 1, center, 1, sBoxInfoTextColors, TEXT_SPEED_FF, boxName);
+    AddTextPrinterParameterized3(
+        windowId, 1, center, 1, sBoxInfoTextColors, TEXT_SPEED_FF, boxName);
 
     ConvertIntToDecimalStringN(numBoxMonsText, nPokemonInBox, STR_CONV_MODE_RIGHT_ALIGN, 2);
     StringAppend(numBoxMonsText, sText_OutOf30);
     center = GetStringCenterAlignXOffset(1, numBoxMonsText, 64);
-    AddTextPrinterParameterized3(windowId, 1, center, 17, sBoxInfoTextColors, TEXT_SPEED_FF, numBoxMonsText);
+    AddTextPrinterParameterized3(
+        windowId, 1, center, 17, sBoxInfoTextColors, TEXT_SPEED_FF, numBoxMonsText);
 
     winTileData = GetWindowAttribute(windowId, WINDOW_TILE_DATA);
-    CpuCopy32((void *)winTileData, (void *)OBJ_VRAM0 + 0x100 + (GetSpriteTileStartByTag(gUnknown_02039D04->unk_0240) * 32), 0x400);
+    CpuCopy32((void *)winTileData,
+        (void *)OBJ_VRAM0 + 0x100 + (GetSpriteTileStartByTag(gUnknown_02039D04->unk_0240) * 32),
+        0x400);
 
     RemoveWindow(windowId);
 }
@@ -2248,107 +2254,107 @@ static void Cb_InitPSS(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        SetVBlankCallback(NULL);
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
-        sub_80C7E98();
-        if (sPSSData->isReshowingPSS)
-        {
-            switch (sWhichToReshow)
+        case 0:
+            SetVBlankCallback(NULL);
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            sub_80C7E98();
+            if (sPSSData->isReshowingPSS)
             {
-            case 1:
-                sub_80CE790();
-                break;
-            case 0:
-                sub_80CE8E4();
-                break;
-            case 2:
-                GiveChosenBagItem();
-                break;
+                switch (sWhichToReshow)
+                {
+                    case 1:
+                        sub_80CE790();
+                        break;
+                    case 0:
+                        sub_80CE8E4();
+                        break;
+                    case 2:
+                        GiveChosenBagItem();
+                        break;
+                }
             }
-        }
-        LoadPSSMenuGfx();
-        LoadWaveformSpritePalette();
-        break;
-    case 1:
-        if (!InitPSSWindows())
-        {
-            SetPSSCallback(Cb_ChangeScreen);
-            return;
-        }
-        break;
-    case 2:
-        PutWindowTilemap(0);
-        ClearWindowTilemap(1);
-        CpuFill32(0, (void *)VRAM, 0x200);
-        LoadUserWindowBorderGfx(1, 0xB, 0xE0);
-        break;
-    case 3:
-        ResetAllBgCoords();
-        if (!sPSSData->isReshowingPSS)
-            sub_80C7F1C();
-        break;
-    case 4:
-        sub_80CAF04();
-        if (!sPSSData->isReshowingPSS)
-            sub_80CD36C();
-        else
-            sub_80CD3EC();
-        break;
-    case 5:
-        if (!sub_80D0164())
-        {
-            SetPSSCallback(Cb_ChangeScreen);
-            return;
-        }
-        else
-        {
-            SetScrollingBackground();
-            sub_80CAC1C();
-        }
-        break;
-    case 6:
-        sub_80CA0D8();
-        break;
-    case 7:
-        sub_80CA704();
-        break;
-    case 8:
-        sub_80CC32C(StorageGetCurrentBox());
-        break;
-    case 9:
-        if (sub_80CC35C())
-            return;
+            LoadPSSMenuGfx();
+            LoadWaveformSpritePalette();
+            break;
+        case 1:
+            if (!InitPSSWindows())
+            {
+                SetPSSCallback(Cb_ChangeScreen);
+                return;
+            }
+            break;
+        case 2:
+            PutWindowTilemap(0);
+            ClearWindowTilemap(1);
+            CpuFill32(0, (void *)VRAM, 0x200);
+            LoadUserWindowBorderGfx(1, 0xB, 0xE0);
+            break;
+        case 3:
+            ResetAllBgCoords();
+            if (!sPSSData->isReshowingPSS)
+                sub_80C7F1C();
+            break;
+        case 4:
+            sub_80CAF04();
+            if (!sPSSData->isReshowingPSS)
+                sub_80CD36C();
+            else
+                sub_80CD3EC();
+            break;
+        case 5:
+            if (!sub_80D0164())
+            {
+                SetPSSCallback(Cb_ChangeScreen);
+                return;
+            }
+            else
+            {
+                SetScrollingBackground();
+                sub_80CAC1C();
+            }
+            break;
+        case 6:
+            sub_80CA0D8();
+            break;
+        case 7:
+            sub_80CA704();
+            break;
+        case 8:
+            sub_80CC32C(StorageGetCurrentBox());
+            break;
+        case 9:
+            if (sub_80CC35C())
+                return;
 
-        if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
-        {
-            sPSSData->markMenu.baseTileTag = TAG_TILE_D;
-            sPSSData->markMenu.basePaletteTag = TAG_PAL_DACE;
-            sub_811F90C(&sPSSData->markMenu);
-            sub_811FA90();
-        }
-        else
-        {
-            sub_80D0C60();
-            sub_80CAEAC();
-        }
-        break;
-    case 10:
-        SetMonIconTransparency();
-        if (!sPSSData->isReshowingPSS)
-        {
-            BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
-            SetPSSCallback(Cb_ShowPSS);
-        }
-        else
-        {
-            BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
-            SetPSSCallback(Cb_ReshowPSS);
-        }
-        SetVBlankCallback(VblankCb_PSS);
-        return;
-    default:
-        return;
+            if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+            {
+                sPSSData->markMenu.baseTileTag = TAG_TILE_D;
+                sPSSData->markMenu.basePaletteTag = TAG_PAL_DACE;
+                sub_811F90C(&sPSSData->markMenu);
+                sub_811FA90();
+            }
+            else
+            {
+                sub_80D0C60();
+                sub_80CAEAC();
+            }
+            break;
+        case 10:
+            SetMonIconTransparency();
+            if (!sPSSData->isReshowingPSS)
+            {
+                BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
+                SetPSSCallback(Cb_ShowPSS);
+            }
+            else
+            {
+                BlendPalettes(0xFFFFFFFF, 0x10, RGB_BLACK);
+                SetPSSCallback(Cb_ReshowPSS);
+            }
+            SetVBlankCallback(VblankCb_PSS);
+            return;
+        default:
+            return;
     }
 
     sPSSData->state++;
@@ -2358,15 +2364,15 @@ static void Cb_ShowPSS(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PlaySE(SE_PC_LOGIN);
-        ComputerScreenOpenEffect(20, 0, 1);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!IsComputerScreenOpenEffectActive())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+        case 0:
+            PlaySE(SE_PC_LOGIN);
+            ComputerScreenOpenEffect(20, 0, 1);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!IsComputerScreenOpenEffectActive())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -2374,35 +2380,35 @@ static void Cb_ReshowPSS(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        BeginNormalPaletteFade(0xFFFFFFFF, -1, 0x10, 0, RGB_BLACK);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            if (sWhichToReshow == 2 && gSpecialVar_ItemId != 0)
+        case 0:
+            BeginNormalPaletteFade(0xFFFFFFFF, -1, 0x10, 0, RGB_BLACK);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
             {
-                PrintStorageActionText(PC_TEXT_ITEM_IS_HELD);
+                if (sWhichToReshow == 2 && gSpecialVar_ItemId != 0)
+                {
+                    PrintStorageActionText(PC_TEXT_ITEM_IS_HELD);
+                    sPSSData->state++;
+                }
+                else
+                {
+                    SetPSSCallback(Cb_MainPSS);
+                }
+            }
+            break;
+        case 2:
+            if (!IsDma3ManagerBusyWithBgCopy() && gMain.newKeys & (A_BUTTON | B_BUTTON))
+            {
+                ClearBottomWindow();
                 sPSSData->state++;
             }
-            else
-            {
+            break;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
                 SetPSSCallback(Cb_MainPSS);
-            }
-        }
-        break;
-    case 2:
-        if (!IsDma3ManagerBusyWithBgCopy() && gMain.newKeys & (A_BUTTON | B_BUTTON))
-        {
-            ClearBottomWindow();
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
     }
 }
 
@@ -2410,261 +2416,262 @@ static void Cb_MainPSS(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        switch (HandleInput())
-        {
+        case 0:
+            switch (HandleInput())
+            {
+                case 1:
+                    PlaySE(SE_SELECT);
+                    sPSSData->state = 1;
+                    break;
+                case 5:
+                    if (sPSSData->boxOption != BOX_OPTION_MOVE_MONS
+                        && sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+                    {
+                        PrintStorageActionText(PC_TEXT_WHICH_ONE_WILL_TAKE);
+                        sPSSData->state = 3;
+                    }
+                    else
+                    {
+                        sub_80CDC0C();
+                        SetPSSCallback(Cb_ShowPartyPokemon);
+                    }
+                    break;
+                case 6:
+                    if (sPSSData->boxOption == BOX_OPTION_MOVE_MONS)
+                    {
+                        if (IsMonBeingMoved() && ItemIsMail(sPSSData->cursorMonItem))
+                            sPSSData->state = 5;
+                        else
+                            SetPSSCallback(Cb_HidePartyPokemon);
+                    }
+                    else if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
+                    {
+                        SetPSSCallback(Cb_HidePartyPokemon);
+                    }
+                    break;
+                case 4:
+                    SetPSSCallback(Cb_OnCloseBoxPressed);
+                    break;
+                case 19:
+                    SetPSSCallback(Cb_OnBPressed);
+                    break;
+                case 7:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_HandleBoxOptions);
+                    break;
+                case 8:
+                    SetPSSCallback(Cb_OnSelectedMon);
+                    break;
+                case 9:
+                    PlaySE(SE_SELECT);
+                    sPSSData->newCurrBoxId = StorageGetCurrentBox() + 1;
+                    if (sPSSData->newCurrBoxId >= TOTAL_BOXES_COUNT)
+                        sPSSData->newCurrBoxId = 0;
+                    if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+                    {
+                        SetUpScrollToBox(sPSSData->newCurrBoxId);
+                        sPSSData->state = 2;
+                    }
+                    else
+                    {
+                        sub_80CFEA8();
+                        sPSSData->state = 10;
+                    }
+                    break;
+                case 10:
+                    PlaySE(SE_SELECT);
+                    sPSSData->newCurrBoxId = StorageGetCurrentBox() - 1;
+                    if (sPSSData->newCurrBoxId < 0)
+                        sPSSData->newCurrBoxId = TOTAL_BOXES_COUNT - 1;
+                    if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+                    {
+                        SetUpScrollToBox(sPSSData->newCurrBoxId);
+                        sPSSData->state = 2;
+                    }
+                    else
+                    {
+                        sub_80CFEA8();
+                        sPSSData->state = 10;
+                    }
+                    break;
+                case 11:
+                    if (!CanMovePartyMon())
+                    {
+                        if (ItemIsMail(sPSSData->cursorMonItem))
+                        {
+                            sPSSData->state = 5;
+                        }
+                        else
+                        {
+                            PlaySE(SE_SELECT);
+                            SetPSSCallback(Cb_DepositMenu);
+                        }
+                    }
+                    else
+                    {
+                        sPSSData->state = 4;
+                    }
+                    break;
+                case 13:
+                    if (CanMovePartyMon())
+                    {
+                        sPSSData->state = 4;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        SetPSSCallback(Cb_MoveMon);
+                    }
+                    break;
+                case 14:
+                    if (!CanShiftMon())
+                    {
+                        sPSSData->state = 4;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        SetPSSCallback(Cb_ShiftMon);
+                    }
+                    break;
+                case 12:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_WithdrawMon);
+                    break;
+                case 15:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_PlaceMon);
+                    break;
+                case 16:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_TakeItemForMoving);
+                    break;
+                case 17:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_GiveMovingItemToMon);
+                    break;
+                case 18:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_SwitchSelectedItem);
+                    break;
+                case 20:
+                    PlaySE(SE_SELECT);
+                    sub_80D01D0(0);
+                    sPSSData->state = 7;
+                    break;
+                case 22:
+                    sub_80D01D0(1);
+                    sPSSData->state = 8;
+                    break;
+                case 21:
+                    PlaySE(SE_SELECT);
+                    sub_80D01D0(2);
+                    sPSSData->state = 9;
+                    break;
+                case 23:
+                    sub_80D01D0(3);
+                    sPSSData->state = 7;
+                    break;
+                case 25:
+                    PlaySE(SE_SELECT);
+                    sub_80D01D0(4);
+                    sPSSData->state = 9;
+                    break;
+                case 26:
+                    PlaySE(SE_SELECT);
+                    sub_80D01D0(5);
+                    sPSSData->state = 7;
+                    break;
+                case 24:
+                    PlaySE(SE_HAZURE);
+                    break;
+            }
+            break;
         case 1:
-            PlaySE(SE_SELECT);
-            sPSSData->state = 1;
-            break;
-        case 5:
-            if (sPSSData->boxOption != BOX_OPTION_MOVE_MONS && sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+            if (!sub_80CD554())
             {
-                PrintStorageActionText(PC_TEXT_WHICH_ONE_WILL_TAKE);
-                sPSSData->state = 3;
-            }
-            else
-            {
-                sub_80CDC0C();
-                SetPSSCallback(Cb_ShowPartyPokemon);
-            }
-            break;
-        case 6:
-            if (sPSSData->boxOption == BOX_OPTION_MOVE_MONS)
-            {
-                if (IsMonBeingMoved() && ItemIsMail(sPSSData->cursorMonItem))
-                    sPSSData->state = 5;
+                if (IsCursorOnCloseBox())
+                    sub_80CA9C0();
                 else
-                    SetPSSCallback(Cb_HidePartyPokemon);
+                    sub_80CA9EC();
+
+                if (sPSSData->setMosaic)
+                    BoxSetMosaic();
+                sPSSData->state = 0;
             }
-            else if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
+            break;
+        case 2:
+            if (!ScrollToBox())
             {
-                SetPSSCallback(Cb_HidePartyPokemon);
+                SetCurrentBox(sPSSData->newCurrBoxId);
+                if (!sInPartyMenu && !IsMonBeingMoved())
+                {
+                    sub_80CE00C();
+                    BoxSetMosaic();
+                }
+
+                if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
+                {
+                    sub_80CFECC();
+                    sPSSData->state = 11;
+                }
+                else
+                {
+                    sPSSData->state = 0;
+                }
+            }
+            break;
+        case 3:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sPSSData->state = 0;
             }
             break;
         case 4:
-            SetPSSCallback(Cb_OnCloseBoxPressed);
+            PlaySE(SE_HAZURE);
+            PrintStorageActionText(PC_TEXT_LAST_POKE);
+            sPSSData->state = 6;
             break;
-        case 19:
-            SetPSSCallback(Cb_OnBPressed);
+        case 5:
+            PlaySE(SE_HAZURE);
+            PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
+            sPSSData->state = 6;
+            break;
+        case 6:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
             break;
         case 7:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_HandleBoxOptions);
+            if (!sub_80D01E4())
+                sPSSData->state = 0;
             break;
         case 8:
-            SetPSSCallback(Cb_OnSelectedMon);
+            if (!sub_80D01E4())
+                SetPSSCallback(Cb_MoveMon);
             break;
         case 9:
-            PlaySE(SE_SELECT);
-            sPSSData->newCurrBoxId = StorageGetCurrentBox() + 1;
-            if (sPSSData->newCurrBoxId >= TOTAL_BOXES_COUNT)
-                sPSSData->newCurrBoxId = 0;
-            if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+            if (!sub_80D01E4())
             {
-                SetUpScrollToBox(sPSSData->newCurrBoxId);
-                sPSSData->state = 2;
-            }
-            else
-            {
-                sub_80CFEA8();
-                sPSSData->state = 10;
+                if (sPSSData->setMosaic)
+                    BoxSetMosaic();
+                sPSSData->state = 0;
             }
             break;
         case 10:
-            PlaySE(SE_SELECT);
-            sPSSData->newCurrBoxId = StorageGetCurrentBox() - 1;
-            if (sPSSData->newCurrBoxId < 0)
-                sPSSData->newCurrBoxId = TOTAL_BOXES_COUNT - 1;
-            if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+            if (!sub_80D1218())
             {
                 SetUpScrollToBox(sPSSData->newCurrBoxId);
                 sPSSData->state = 2;
             }
-            else
-            {
-                sub_80CFEA8();
-                sPSSData->state = 10;
-            }
             break;
         case 11:
-            if (!CanMovePartyMon())
-            {
-                if (ItemIsMail(sPSSData->cursorMonItem))
-                {
-                    sPSSData->state = 5;
-                }
-                else
-                {
-                    PlaySE(SE_SELECT);
-                    SetPSSCallback(Cb_DepositMenu);
-                }
-            }
-            else
-            {
-                sPSSData->state = 4;
-            }
-            break;
-        case 13:
-            if (CanMovePartyMon())
-            {
-                sPSSData->state = 4;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                SetPSSCallback(Cb_MoveMon);
-            }
-            break;
-        case 14:
-            if (!CanShiftMon())
-            {
-                sPSSData->state = 4;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                SetPSSCallback(Cb_ShiftMon);
-            }
-            break;
-        case 12:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_WithdrawMon);
-            break;
-        case 15:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_PlaceMon);
-            break;
-        case 16:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_TakeItemForMoving);
-            break;
-        case 17:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_GiveMovingItemToMon);
-            break;
-        case 18:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_SwitchSelectedItem);
-            break;
-        case 20:
-            PlaySE(SE_SELECT);
-            sub_80D01D0(0);
-            sPSSData->state = 7;
-            break;
-        case 22:
-            sub_80D01D0(1);
-            sPSSData->state = 8;
-            break;
-        case 21:
-            PlaySE(SE_SELECT);
-            sub_80D01D0(2);
-            sPSSData->state = 9;
-            break;
-        case 23:
-            sub_80D01D0(3);
-            sPSSData->state = 7;
-            break;
-        case 25:
-            PlaySE(SE_SELECT);
-            sub_80D01D0(4);
-            sPSSData->state = 9;
-            break;
-        case 26:
-            PlaySE(SE_SELECT);
-            sub_80D01D0(5);
-            sPSSData->state = 7;
-            break;
-        case 24:
-            PlaySE(SE_HAZURE);
-            break;
-        }
-        break;
-    case 1:
-        if (!sub_80CD554())
-        {
-            if (IsCursorOnCloseBox())
-                sub_80CA9C0();
-            else
-                sub_80CA9EC();
-
-            if (sPSSData->setMosaic)
-                BoxSetMosaic();
-            sPSSData->state = 0;
-        }
-        break;
-    case 2:
-        if (!ScrollToBox())
-        {
-            SetCurrentBox(sPSSData->newCurrBoxId);
-            if (!sInPartyMenu && !IsMonBeingMoved())
-            {
-                sub_80CE00C();
-                BoxSetMosaic();
-            }
-
-            if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
-            {
-                sub_80CFECC();
-                sPSSData->state = 11;
-            }
-            else
-            {
+            if (!sub_80D1218())
                 sPSSData->state = 0;
-            }
-        }
-        break;
-    case 3:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sPSSData->state = 0;
-        }
-        break;
-    case 4:
-        PlaySE(SE_HAZURE);
-        PrintStorageActionText(PC_TEXT_LAST_POKE);
-        sPSSData->state = 6;
-        break;
-    case 5:
-        PlaySE(SE_HAZURE);
-        PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
-        sPSSData->state = 6;
-        break;
-    case 6:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 7:
-        if (!sub_80D01E4())
-            sPSSData->state = 0;
-        break;
-    case 8:
-        if (!sub_80D01E4())
-            SetPSSCallback(Cb_MoveMon);
-        break;
-    case 9:
-        if (!sub_80D01E4())
-        {
-            if (sPSSData->setMosaic)
-                BoxSetMosaic();
-            sPSSData->state = 0;
-        }
-        break;
-    case 10:
-        if (!sub_80D1218())
-        {
-            SetUpScrollToBox(sPSSData->newCurrBoxId);
-            sPSSData->state = 2;
-        }
-        break;
-    case 11:
-        if (!sub_80D1218())
-            sPSSData->state = 0;
-        break;
+            break;
     }
 }
 
@@ -2672,14 +2679,14 @@ static void Cb_ShowPartyPokemon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        SetUpDoShowPartyMenu();
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!DoShowPartyMenu())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+        case 0:
+            SetUpDoShowPartyMenu();
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!DoShowPartyMenu())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -2687,26 +2694,26 @@ static void Cb_HidePartyPokemon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        SetUpHidePartyMenu();
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!HidePartyMenu())
-        {
-            sub_80CDBF8(sub_80CDC2C());
+        case 0:
+            PlaySE(SE_SELECT);
+            SetUpHidePartyMenu();
             sPSSData->state++;
-        }
-        break;
-    case 2:
-        if (!sub_80CD554())
-        {
-            if (sPSSData->setMosaic)
-                BoxSetMosaic();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+            break;
+        case 1:
+            if (!HidePartyMenu())
+            {
+                sub_80CDBF8(sub_80CDC2C());
+                sPSSData->state++;
+            }
+            break;
+        case 2:
+            if (!sub_80CD554())
+            {
+                if (sPSSData->setMosaic)
+                    BoxSetMosaic();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -2714,156 +2721,156 @@ static void Cb_OnSelectedMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (!sub_80CA2B8())
-        {
-            PlaySE(SE_SELECT);
-            if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
-                PrintStorageActionText(PC_TEXT_IS_SELECTED);
-            else if (IsActiveItemMoving() || sPSSData->cursorMonItem != 0)
-                PrintStorageActionText(PC_TEXT_IS_SELECTED2);
-            else
-                PrintStorageActionText(PC_TEXT_GIVE_TO_MON);
+        case 0:
+            if (!sub_80CA2B8())
+            {
+                PlaySE(SE_SELECT);
+                if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
+                    PrintStorageActionText(PC_TEXT_IS_SELECTED);
+                else if (IsActiveItemMoving() || sPSSData->cursorMonItem != 0)
+                    PrintStorageActionText(PC_TEXT_IS_SELECTED2);
+                else
+                    PrintStorageActionText(PC_TEXT_GIVE_TO_MON);
 
-            AddMenu();
-            sPSSData->state = 1;
-        }
-        break;
-    case 1: // debug?
-        if (!sub_80D00A8())
-            sPSSData->state = 2;
-        break;
-    case 2:
-        switch (sub_80D00AC())
-        {
-        case -1:
-        case  0:
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-            break;
-        case 3:
-            if (CanMovePartyMon())
-            {
-                sPSSData->state = 3;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                ClearBottomWindow();
-                SetPSSCallback(Cb_MoveMon);
+                AddMenu();
+                sPSSData->state = 1;
             }
             break;
-        case 5:
-            PlaySE(SE_SELECT);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_PlaceMon);
-            break;
-        case 4:
-            if (!CanShiftMon())
-            {
-                sPSSData->state = 3;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                ClearBottomWindow();
-                SetPSSCallback(Cb_ShiftMon);
-            }
+        case 1: // debug?
+            if (!sub_80D00A8())
+                sPSSData->state = 2;
             break;
         case 2:
-            PlaySE(SE_SELECT);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_WithdrawMon);
+            switch (sub_80D00AC())
+            {
+                case -1:
+                case 0:
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 3:
+                    if (CanMovePartyMon())
+                    {
+                        sPSSData->state = 3;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        ClearBottomWindow();
+                        SetPSSCallback(Cb_MoveMon);
+                    }
+                    break;
+                case 5:
+                    PlaySE(SE_SELECT);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_PlaceMon);
+                    break;
+                case 4:
+                    if (!CanShiftMon())
+                    {
+                        sPSSData->state = 3;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        ClearBottomWindow();
+                        SetPSSCallback(Cb_ShiftMon);
+                    }
+                    break;
+                case 2:
+                    PlaySE(SE_SELECT);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_WithdrawMon);
+                    break;
+                case 1:
+                    if (CanMovePartyMon())
+                    {
+                        sPSSData->state = 3;
+                    }
+                    else if (ItemIsMail(sPSSData->cursorMonItem))
+                    {
+                        sPSSData->state = 4;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        ClearBottomWindow();
+                        SetPSSCallback(Cb_DepositMenu);
+                    }
+                    break;
+                case 7:
+                    if (CanMovePartyMon())
+                    {
+                        sPSSData->state = 3;
+                    }
+                    else if (sPSSData->cursorMonIsEgg)
+                    {
+                        sPSSData->state = 5; // Cannot release an Egg.
+                    }
+                    else if (ItemIsMail(sPSSData->cursorMonItem))
+                    {
+                        sPSSData->state = 4;
+                    }
+                    else
+                    {
+                        PlaySE(SE_SELECT);
+                        SetPSSCallback(Cb_ReleaseMon);
+                    }
+                    break;
+                case 6:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_ShowMonSummary);
+                    break;
+                case 8:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_ShowMarkMenu);
+                    break;
+                case 12:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_TakeItemForMoving);
+                    break;
+                case 13:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_GiveMovingItemToMon);
+                    break;
+                case 16:
+                    SetPSSCallback(Cb_ItemToBag);
+                    break;
+                case 15:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_SwitchSelectedItem);
+                    break;
+                case 14:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_GiveItemFromBag);
+                    break;
+                case 17:
+                    SetPSSCallback(Cb_ShowItemInfo);
+                    break;
+            }
             break;
-        case 1:
-            if (CanMovePartyMon())
-            {
-                sPSSData->state = 3;
-            }
-            else if (ItemIsMail(sPSSData->cursorMonItem))
-            {
-                sPSSData->state = 4;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                ClearBottomWindow();
-                SetPSSCallback(Cb_DepositMenu);
-            }
+        case 3:
+            PlaySE(SE_HAZURE);
+            PrintStorageActionText(PC_TEXT_LAST_POKE);
+            sPSSData->state = 6;
             break;
-        case 7:
-            if (CanMovePartyMon())
-            {
-                sPSSData->state = 3;
-            }
-            else if (sPSSData->cursorMonIsEgg)
-            {
-                sPSSData->state = 5; // Cannot release an Egg.
-            }
-            else if (ItemIsMail(sPSSData->cursorMonItem))
-            {
-                sPSSData->state = 4;
-            }
-            else
-            {
-                PlaySE(SE_SELECT);
-                SetPSSCallback(Cb_ReleaseMon);
-            }
+        case 5:
+            PlaySE(SE_HAZURE);
+            PrintStorageActionText(PC_TEXT_CANT_RELEASE_EGG);
+            sPSSData->state = 6;
+            break;
+        case 4:
+            PlaySE(SE_HAZURE);
+            PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
+            sPSSData->state = 6;
             break;
         case 6:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_ShowMonSummary);
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
             break;
-        case 8:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_ShowMarkMenu);
-            break;
-        case 12:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_TakeItemForMoving);
-            break;
-        case 13:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_GiveMovingItemToMon);
-            break;
-        case 16:
-            SetPSSCallback(Cb_ItemToBag);
-            break;
-        case 15:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_SwitchSelectedItem);
-            break;
-        case 14:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_GiveItemFromBag);
-            break;
-        case 17:
-            SetPSSCallback(Cb_ShowItemInfo);
-            break;
-        }
-        break;
-    case 3:
-        PlaySE(SE_HAZURE);
-        PrintStorageActionText(PC_TEXT_LAST_POKE);
-        sPSSData->state = 6;
-        break;
-    case 5:
-        PlaySE(SE_HAZURE);
-        PrintStorageActionText(PC_TEXT_CANT_RELEASE_EGG);
-        sPSSData->state = 6;
-        break;
-    case 4:
-        PlaySE(SE_HAZURE);
-        PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
-        sPSSData->state = 6;
-        break;
-    case 6:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
     }
 }
 
@@ -2871,19 +2878,19 @@ static void Cb_MoveMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        InitMonPlaceChange(0);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!DoMonPlaceChange())
-        {
-            if (sInPartyMenu)
-                SetPSSCallback(Cb_HandleMovingMonFromParty);
-            else
-                SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            InitMonPlaceChange(0);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!DoMonPlaceChange())
+            {
+                if (sInPartyMenu)
+                    SetPSSCallback(Cb_HandleMovingMonFromParty);
+                else
+                    SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -2891,19 +2898,19 @@ static void Cb_PlaceMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        InitMonPlaceChange(1);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!DoMonPlaceChange())
-        {
-            if (sInPartyMenu)
-                SetPSSCallback(Cb_HandleMovingMonFromParty);
-            else
-                SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            InitMonPlaceChange(1);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!DoMonPlaceChange())
+            {
+                if (sInPartyMenu)
+                    SetPSSCallback(Cb_HandleMovingMonFromParty);
+                else
+                    SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -2911,17 +2918,17 @@ static void Cb_ShiftMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        InitMonPlaceChange(2);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!DoMonPlaceChange())
-        {
-            BoxSetMosaic();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            InitMonPlaceChange(2);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!DoMonPlaceChange())
+            {
+                BoxSetMosaic();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -2929,51 +2936,51 @@ static void Cb_WithdrawMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (CalculatePlayerPartyCount() == PARTY_SIZE)
-        {
-            PrintStorageActionText(PC_TEXT_PARTY_FULL);
-            sPSSData->state = 1;
-        }
-        else
-        {
-            sub_80CDC18();
-            InitMonPlaceChange(0);
-            sPSSData->state = 2;
-        }
-        break;
-    case 1:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 2:
-        if (!DoMonPlaceChange())
-        {
-            SetMovingMonPriority(1);
-            SetUpDoShowPartyMenu();
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (!DoShowPartyMenu())
-        {
-            InitMonPlaceChange(1);
-            sPSSData->state++;
-        }
-        break;
-    case 4:
-        if (!DoMonPlaceChange())
-        {
-            sub_80CAB20();
-            sPSSData->state++;
-        }
-        break;
-    case 5:
-        SetPSSCallback(Cb_HidePartyPokemon);
-        break;
+        case 0:
+            if (CalculatePlayerPartyCount() == PARTY_SIZE)
+            {
+                PrintStorageActionText(PC_TEXT_PARTY_FULL);
+                sPSSData->state = 1;
+            }
+            else
+            {
+                sub_80CDC18();
+                InitMonPlaceChange(0);
+                sPSSData->state = 2;
+            }
+            break;
+        case 1:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 2:
+            if (!DoMonPlaceChange())
+            {
+                SetMovingMonPriority(1);
+                SetUpDoShowPartyMenu();
+                sPSSData->state++;
+            }
+            break;
+        case 3:
+            if (!DoShowPartyMenu())
+            {
+                InitMonPlaceChange(1);
+                sPSSData->state++;
+            }
+            break;
+        case 4:
+            if (!DoMonPlaceChange())
+            {
+                sub_80CAB20();
+                sPSSData->state++;
+            }
+            break;
+        case 5:
+            SetPSSCallback(Cb_HidePartyPokemon);
+            break;
     }
 }
 
@@ -2983,63 +2990,63 @@ static void Cb_DepositMenu(u8 taskId)
 
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
-        sub_80C77E8(&sPSSData->field_1E5C, TAG_TILE_A, TAG_PAL_DAC7, 3, FALSE);
-        sub_80C78D4(gUnknown_02039D0E);
-        sPSSData->state++;
-        break;
-    case 1:
-        boxId = HandleBoxChooseSelectionInput();
-        if (boxId == 200)
-        {
-            // no box chosen yet
-        }
-        else if (boxId == 201)
-        {
-            ClearBottomWindow();
-            sub_80C78E4();
-            sub_80C7890();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        else
-        {
-            if (TryStorePartyMonInBox(boxId))
+        case 0:
+            PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
+            sub_80C77E8(&sPSSData->field_1E5C, TAG_TILE_A, TAG_PAL_DAC7, 3, FALSE);
+            sub_80C78D4(gUnknown_02039D0E);
+            sPSSData->state++;
+            break;
+        case 1:
+            boxId = HandleBoxChooseSelectionInput();
+            if (boxId == 200)
             {
-                gUnknown_02039D0E = boxId;
+                // no box chosen yet
+            }
+            else if (boxId == 201)
+            {
                 ClearBottomWindow();
                 sub_80C78E4();
                 sub_80C7890();
-                sPSSData->state = 2;
+                SetPSSCallback(Cb_MainPSS);
             }
             else
             {
-                PrintStorageActionText(PC_TEXT_BOX_IS_FULL);
-                sPSSData->state = 4;
+                if (TryStorePartyMonInBox(boxId))
+                {
+                    gUnknown_02039D0E = boxId;
+                    ClearBottomWindow();
+                    sub_80C78E4();
+                    sub_80C7890();
+                    sPSSData->state = 2;
+                }
+                else
+                {
+                    PrintStorageActionText(PC_TEXT_BOX_IS_FULL);
+                    sPSSData->state = 4;
+                }
             }
-        }
-        break;
-    case 2:
-        CompactPartySlots();
-        sub_80CB950();
-        sPSSData->state++;
-        break;
-    case 3:
-        if (!sub_80CB9BC())
-        {
-            sub_80CE22C();
-            BoxSetMosaic();
-            sub_80CAB20();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 4:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
-            sPSSData->state = 1;
-        }
-        break;
+            break;
+        case 2:
+            CompactPartySlots();
+            sub_80CB950();
+            sPSSData->state++;
+            break;
+        case 3:
+            if (!sub_80CB9BC())
+            {
+                sub_80CE22C();
+                BoxSetMosaic();
+                sub_80CAB20();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 4:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
+                sPSSData->state = 1;
+            }
+            break;
     }
 }
 
@@ -3047,129 +3054,129 @@ static void Cb_ReleaseMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_RELEASE_POKE);
-        ShowYesNoWindow(1);
-        sPSSData->state++;
-        // fallthrough
-    case 1:
-        switch (Menu_ProcessInputNoWrapClearOnChoose())
-        {
-        case MENU_B_PRESSED:
-        case  1:
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-            break;
-        case  0:
-            ClearBottomWindow();
-            InitCanRelaseMonVars();
-            sub_80CE250();
+        case 0:
+            PrintStorageActionText(PC_TEXT_RELEASE_POKE);
+            ShowYesNoWindow(1);
             sPSSData->state++;
-            break;
-        }
-        break;
-    case 2:
-        RunCanReleaseMon();
-        if (!sub_80CE2A8())
-        {
-            while (1)
+            // fallthrough
+        case 1:
+            switch (Menu_ProcessInputNoWrapClearOnChoose())
             {
-                s8 r0 = RunCanReleaseMon();
-                if (r0 == 1)
-                {
+                case MENU_B_PRESSED:
+                case 1:
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 0:
+                    ClearBottomWindow();
+                    InitCanRelaseMonVars();
+                    sub_80CE250();
                     sPSSData->state++;
                     break;
-                }
-                else if (r0 == 0)
+            }
+            break;
+        case 2:
+            RunCanReleaseMon();
+            if (!sub_80CE2A8())
+            {
+                while (1)
                 {
-                    sPSSData->state = 8; // Can't release the mon.
-                    break;
+                    s8 r0 = RunCanReleaseMon();
+                    if (r0 == 1)
+                    {
+                        sPSSData->state++;
+                        break;
+                    }
+                    else if (r0 == 0)
+                    {
+                        sPSSData->state = 8; // Can't release the mon.
+                        break;
+                    }
                 }
             }
-        }
-        break;
-    case 3:
-        ReleaseMon();
-        RefreshCursorMonData();
-        PrintStorageActionText(PC_TEXT_WAS_RELEASED);
-        sPSSData->state++;
-        break;
-    case 4:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            PrintStorageActionText(PC_TEXT_BYE_BYE);
+            break;
+        case 3:
+            ReleaseMon();
+            RefreshCursorMonData();
+            PrintStorageActionText(PC_TEXT_WAS_RELEASED);
             sPSSData->state++;
-        }
-        break;
-    case 5:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            if (sInPartyMenu)
+            break;
+        case 4:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
             {
-                CompactPartySlots();
-                sub_80CB950();
+                PrintStorageActionText(PC_TEXT_BYE_BYE);
                 sPSSData->state++;
             }
-            else
+            break;
+        case 5:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
             {
-                sPSSData->state = 7;
+                ClearBottomWindow();
+                if (sInPartyMenu)
+                {
+                    CompactPartySlots();
+                    sub_80CB950();
+                    sPSSData->state++;
+                }
+                else
+                {
+                    sPSSData->state = 7;
+                }
             }
-        }
-        break;
-    case 6:
-        if (!sub_80CB9BC())
-        {
-            sub_80CE00C();
-            BoxSetMosaic();
-            sub_80CAB20();
-            sPSSData->state++;
-        }
-        break;
-    case 7:
-        SetPSSCallback(Cb_MainPSS);
-        break;
-    case 8:
-        PrintStorageActionText(PC_TEXT_WAS_RELEASED);
-        sPSSData->state++;
-        break;
-    case 9:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            PrintStorageActionText(PC_TEXT_SURPRISE);
-            sPSSData->state++;
-        }
-        break;
-    case 10:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sub_80CC064();
-            sPSSData->state++;
-        }
-        break;
-    case 11:
-        if (!sub_80CC0A0())
-        {
-            sub_80CE324();
-            PrintStorageActionText(PC_TEXT_CAME_BACK);
-            sPSSData->state++;
-        }
-        break;
-    case 12:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            PrintStorageActionText(PC_TEXT_WORRIED);
-            sPSSData->state++;
-        }
-        break;
-    case 13:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
+            break;
+        case 6:
+            if (!sub_80CB9BC())
+            {
+                sub_80CE00C();
+                BoxSetMosaic();
+                sub_80CAB20();
+                sPSSData->state++;
+            }
+            break;
+        case 7:
             SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+            break;
+        case 8:
+            PrintStorageActionText(PC_TEXT_WAS_RELEASED);
+            sPSSData->state++;
+            break;
+        case 9:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                PrintStorageActionText(PC_TEXT_SURPRISE);
+                sPSSData->state++;
+            }
+            break;
+        case 10:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sub_80CC064();
+                sPSSData->state++;
+            }
+            break;
+        case 11:
+            if (!sub_80CC0A0())
+            {
+                sub_80CE324();
+                PrintStorageActionText(PC_TEXT_CAME_BACK);
+                sPSSData->state++;
+            }
+            break;
+        case 12:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                PrintStorageActionText(PC_TEXT_WORRIED);
+                sPSSData->state++;
+            }
+            break;
+        case 13:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -3177,22 +3184,22 @@ static void Cb_ShowMarkMenu(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_MARK_POKE);
-        sPSSData->markMenu.markings = sPSSData->cursorMonMarkings;
-        sub_811FAA4(sPSSData->cursorMonMarkings, 0xb0, 0x10);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!sub_811FBA4())
-        {
-            sub_811FAF8();
-            ClearBottomWindow();
-            SetMonMarkings(sPSSData->markMenu.markings);
-            RefreshCursorMonData();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            PrintStorageActionText(PC_TEXT_MARK_POKE);
+            sPSSData->markMenu.markings = sPSSData->cursorMonMarkings;
+            sub_811FAA4(sPSSData->cursorMonMarkings, 0xb0, 0x10);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!sub_811FBA4())
+            {
+                sub_811FAF8();
+                ClearBottomWindow();
+                SetMonMarkings(sPSSData->markMenu.markings);
+                RefreshCursorMonData();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -3200,36 +3207,38 @@ static void Cb_TakeItemForMoving(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (!ItemIsMail(sPSSData->cursorMonItem))
-        {
-            ClearBottomWindow();
+        case 0:
+            if (!ItemIsMail(sPSSData->cursorMonItem))
+            {
+                ClearBottomWindow();
+                sPSSData->state++;
+            }
+            else
+            {
+                SetPSSCallback(Cb_PrintCantStoreMail);
+            }
+            break;
+        case 1:
+            sub_80CFE54(2);
+            Item_FromMonToMoving(
+                (sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+                GetBoxCursorPosition());
             sPSSData->state++;
-        }
-        else
-        {
-            SetPSSCallback(Cb_PrintCantStoreMail);
-        }
-        break;
-    case 1:
-        sub_80CFE54(2);
-        Item_FromMonToMoving((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
-        sPSSData->state++;
-        break;
-    case 2:
-        if (!sub_80D1218())
-        {
-            sub_80CFE54(3);
-            ClearBottomWindow();
-            sub_80CE00C();
-            PrintCursorMonInfo();
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
+        case 2:
+            if (!sub_80D1218())
+            {
+                sub_80CFE54(3);
+                ClearBottomWindow();
+                sub_80CE00C();
+                PrintCursorMonInfo();
+                sPSSData->state++;
+            }
+            break;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3237,36 +3246,38 @@ static void Cb_GiveMovingItemToMon(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        ClearBottomWindow();
-        sPSSData->state++;
-        break;
-    case 1:
-        sub_80CFE54(2);
-        Item_GiveMovingToMon((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
-        sPSSData->state++;
-        break;
-    case 2:
-        if (!sub_80D1218())
-        {
-            sub_80CFE54(0);
-            sub_80CE00C();
-            PrintCursorMonInfo();
-            PrintStorageActionText(PC_TEXT_ITEM_IS_HELD);
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
+        case 0:
             ClearBottomWindow();
             sPSSData->state++;
-        }
-        break;
-    case 4:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
+        case 1:
+            sub_80CFE54(2);
+            Item_GiveMovingToMon(
+                (sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+                GetBoxCursorPosition());
+            sPSSData->state++;
+            break;
+        case 2:
+            if (!sub_80D1218())
+            {
+                sub_80CFE54(0);
+                sub_80CE00C();
+                PrintCursorMonInfo();
+                PrintStorageActionText(PC_TEXT_ITEM_IS_HELD);
+                sPSSData->state++;
+            }
+            break;
+        case 3:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sPSSData->state++;
+            }
+            break;
+        case 4:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3274,47 +3285,48 @@ static void Cb_ItemToBag(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (!AddBagItem(sPSSData->cursorMonItem, 1))
-        {
-            PlaySE(SE_HAZURE);
-            PrintStorageActionText(PC_TEXT_BAG_FULL);
-            sPSSData->state = 3;
-        }
-        else
-        {
-            PlaySE(SE_SELECT);
-            Item_TakeMons((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
-            sPSSData->state = 1;
-        }
-        break;
-    case 1:
-        if (!sub_80D1218())
-        {
-            PrintStorageActionText(PC_TEXT_PLACED_IN_BAG);
-            sPSSData->state = 2;
-        }
-        break;
-    case 2:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sub_80CE00C();
-            PrintCursorMonInfo();
-            sPSSData->state = 4;
-        }
-        break;
-    case 4:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
-    case 3:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            if (!AddBagItem(sPSSData->cursorMonItem, 1))
+            {
+                PlaySE(SE_HAZURE);
+                PrintStorageActionText(PC_TEXT_BAG_FULL);
+                sPSSData->state = 3;
+            }
+            else
+            {
+                PlaySE(SE_SELECT);
+                Item_TakeMons((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+                    GetBoxCursorPosition());
+                sPSSData->state = 1;
+            }
+            break;
+        case 1:
+            if (!sub_80D1218())
+            {
+                PrintStorageActionText(PC_TEXT_PLACED_IN_BAG);
+                sPSSData->state = 2;
+            }
+            break;
+        case 2:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sub_80CE00C();
+                PrintCursorMonInfo();
+                sPSSData->state = 4;
+            }
+            break;
+        case 4:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
+        case 3:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -3322,43 +3334,45 @@ static void Cb_SwitchSelectedItem(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (!ItemIsMail(sPSSData->cursorMonItem))
-        {
-            ClearBottomWindow();
+        case 0:
+            if (!ItemIsMail(sPSSData->cursorMonItem))
+            {
+                ClearBottomWindow();
+                sPSSData->state++;
+            }
+            else
+            {
+                SetPSSCallback(Cb_PrintCantStoreMail);
+            }
+            break;
+        case 1:
+            sub_80CFE54(2);
+            Item_SwitchMonsWithMoving(
+                (sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX,
+                GetBoxCursorPosition());
             sPSSData->state++;
-        }
-        else
-        {
-            SetPSSCallback(Cb_PrintCantStoreMail);
-        }
-        break;
-    case 1:
-        sub_80CFE54(2);
-        Item_SwitchMonsWithMoving((sInPartyMenu != FALSE) ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetBoxCursorPosition());
-        sPSSData->state++;
-        break;
-    case 2:
-        if (!sub_80D1218())
-        {
-            sub_80CFE54(3);
-            sub_80CE00C();
-            PrintCursorMonInfo();
-            PrintStorageActionText(PC_TEXT_CHANGED_TO_ITEM);
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sPSSData->state++;
-        }
-        break;
-    case 4:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
+        case 2:
+            if (!sub_80D1218())
+            {
+                sub_80CFE54(3);
+                sub_80CE00C();
+                PrintCursorMonInfo();
+                PrintStorageActionText(PC_TEXT_CHANGED_TO_ITEM);
+                sPSSData->state++;
+            }
+            break;
+        case 3:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sPSSData->state++;
+            }
+            break;
+        case 4:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3366,42 +3380,42 @@ static void Cb_ShowItemInfo(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        ClearBottomWindow();
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            PlaySE(SE_WIN_OPEN);
-            PrintItemDescription();
-            sub_80D1818();
+        case 0:
+            ClearBottomWindow();
             sPSSData->state++;
-        }
-        break;
-    case 2:
-        if (!sub_80D184C())
-            sPSSData->state++;
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            sPSSData->state++;
-        break;
-    case 4:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            PlaySE(SE_WIN_OPEN);
-            sPSSData->state++;
-        }
-        break;
-    case 5:
-        if (!sub_80D18E4())
-            sPSSData->state++;
-        break;
-    case 6:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
+        case 1:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                PlaySE(SE_WIN_OPEN);
+                PrintItemDescription();
+                sub_80D1818();
+                sPSSData->state++;
+            }
+            break;
+        case 2:
+            if (!sub_80D184C())
+                sPSSData->state++;
+            break;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                sPSSData->state++;
+            break;
+        case 4:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                PlaySE(SE_WIN_OPEN);
+                sPSSData->state++;
+            }
+            break;
+        case 5:
+            if (!sub_80D18E4())
+                sPSSData->state++;
+            break;
+        case 6:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3409,56 +3423,56 @@ static void Cb_CloseBoxWhileHoldingItem(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PlaySE(SE_SELECT);
-        PrintStorageActionText(PC_TEXT_PUT_IN_BAG);
-        ShowYesNoWindow(0);
-        sPSSData->state = 1;
-        break;
-    case 1:
-        switch (Menu_ProcessInputNoWrapClearOnChoose())
-        {
-        case MENU_B_PRESSED:
-        case 1:
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-            break;
         case 0:
-            if (AddBagItem(sPSSData->movingItem, 1) == TRUE)
+            PlaySE(SE_SELECT);
+            PrintStorageActionText(PC_TEXT_PUT_IN_BAG);
+            ShowYesNoWindow(0);
+            sPSSData->state = 1;
+            break;
+        case 1:
+            switch (Menu_ProcessInputNoWrapClearOnChoose())
+            {
+                case MENU_B_PRESSED:
+                case 1:
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 0:
+                    if (AddBagItem(sPSSData->movingItem, 1) == TRUE)
+                    {
+                        ClearBottomWindow();
+                        sPSSData->state = 3;
+                    }
+                    else
+                    {
+                        PrintStorageActionText(PC_TEXT_BAG_FULL);
+                        sPSSData->state = 2;
+                    }
+                    break;
+            }
+            break;
+        case 2:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
             {
                 ClearBottomWindow();
-                sPSSData->state = 3;
-            }
-            else
-            {
-                PrintStorageActionText(PC_TEXT_BAG_FULL);
-                sPSSData->state = 2;
+                sPSSData->state = 5;
             }
             break;
-        }
-        break;
-    case 2:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sPSSData->state = 5;
-        }
-        break;
-    case 3:
-        sub_80D1194();
-        sPSSData->state = 4;
-        break;
-    case 4:
-        if (!sub_80D1218())
-        {
-            sub_80CFE54(0);
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 5:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+        case 3:
+            sub_80D1194();
+            sPSSData->state = 4;
+            break;
+        case 4:
+            if (!sub_80D1218())
+            {
+                sub_80CFE54(0);
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 5:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3466,18 +3480,18 @@ static void Cb_HandleMovingMonFromParty(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        CompactPartySlots();
-        sub_80CB950();
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!sub_80CB9BC())
-        {
-            sub_80CAB20();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
+        case 0:
+            CompactPartySlots();
+            sub_80CB950();
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!sub_80CB9BC())
+            {
+                sub_80CAB20();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
     }
 }
 
@@ -3485,25 +3499,25 @@ static void Cb_PrintCantStoreMail(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_CANT_STORE_MAIL);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!IsDma3ManagerBusyWithBgCopy())
+        case 0:
+            PrintStorageActionText(PC_TEXT_CANT_STORE_MAIL);
             sPSSData->state++;
-        break;
-    case 2:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            sPSSData->state++;
-        }
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-            SetPSSCallback(Cb_MainPSS);
-        break;
+            break;
+        case 1:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                sPSSData->state++;
+            break;
+        case 2:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                sPSSData->state++;
+            }
+            break;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
+                SetPSSCallback(Cb_MainPSS);
+            break;
     }
 }
 
@@ -3511,40 +3525,40 @@ static void Cb_HandleBoxOptions(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_WHAT_YOU_DO);
-        AddMenu();
-        sPSSData->state++;
-        break;
-    case 1:
-        if (sub_80D00A8())
-            return;
-        sPSSData->state++;
-    case 2:
-        switch (sub_80D00AC())
-        {
-        case -1:
-        case  0:
-            sub_80CD1A8(TRUE);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
+        case 0:
+            PrintStorageActionText(PC_TEXT_WHAT_YOU_DO);
+            AddMenu();
+            sPSSData->state++;
             break;
-        case 11:
-            PlaySE(SE_SELECT);
-            SetPSSCallback(Cb_NameBox);
+        case 1:
+            if (sub_80D00A8())
+                return;
+            sPSSData->state++;
+        case 2:
+            switch (sub_80D00AC())
+            {
+                case -1:
+                case 0:
+                    sub_80CD1A8(TRUE);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 11:
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_NameBox);
+                    break;
+                case 10:
+                    PlaySE(SE_SELECT);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_HandleWallpapers);
+                    break;
+                case 9:
+                    PlaySE(SE_SELECT);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_JumpBox);
+                    break;
+            }
             break;
-        case 10:
-            PlaySE(SE_SELECT);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_HandleWallpapers);
-            break;
-        case 9:
-            PlaySE(SE_SELECT);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_JumpBox);
-            break;
-        }
-        break;
     }
 }
 
@@ -3552,81 +3566,81 @@ static void Cb_HandleWallpapers(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        AddWallpaperSetsMenu();
-        PrintStorageActionText(PC_TEXT_PICK_A_THEME);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!sub_80D00A8())
-             sPSSData->state++;
-        break;
-    case 2:
-        sPSSData->wallpaperSetId = sub_80D00AC();
-        switch (sPSSData->wallpaperSetId)
-        {
-        case -1:
-            sub_80CD1A8(TRUE);
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-            break;
-        case 18 ... 21:
-            PlaySE(SE_SELECT);
-            sub_80D013C();
-            sPSSData->wallpaperSetId -= 18;
+        case 0:
+            AddWallpaperSetsMenu();
+            PrintStorageActionText(PC_TEXT_PICK_A_THEME);
             sPSSData->state++;
             break;
-        // New wallpaper from Walda.
-        case 22:
-            PlaySE(SE_SELECT);
-            sPSSData->wallpaperId = 16;
-            sub_80D013C();
-            ClearBottomWindow();
-            sPSSData->state = 6;
+        case 1:
+            if (!sub_80D00A8())
+                sPSSData->state++;
             break;
-        }
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            AddWallpapersMenu(sPSSData->wallpaperSetId);
-            PrintStorageActionText(PC_TEXT_PICK_A_WALLPAPER);
-            sPSSData->state++;
-        }
-        break;
-    case 4:
-        sPSSData->wallpaperId = sub_80D00AC();
-        switch (sPSSData->wallpaperId)
-        {
-        case -2:
+        case 2:
+            sPSSData->wallpaperSetId = sub_80D00AC();
+            switch (sPSSData->wallpaperSetId)
+            {
+                case -1:
+                    sub_80CD1A8(TRUE);
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 18 ... 21:
+                    PlaySE(SE_SELECT);
+                    sub_80D013C();
+                    sPSSData->wallpaperSetId -= 18;
+                    sPSSData->state++;
+                    break;
+                // New wallpaper from Walda.
+                case 22:
+                    PlaySE(SE_SELECT);
+                    sPSSData->wallpaperId = 16;
+                    sub_80D013C();
+                    ClearBottomWindow();
+                    sPSSData->state = 6;
+                    break;
+            }
             break;
-        case -1:
-            ClearBottomWindow();
-            sPSSData->state = 0;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                AddWallpapersMenu(sPSSData->wallpaperSetId);
+                PrintStorageActionText(PC_TEXT_PICK_A_WALLPAPER);
+                sPSSData->state++;
+            }
             break;
-        default:
-            PlaySE(SE_SELECT);
-            ClearBottomWindow();
-            sPSSData->wallpaperId -= 23;
-            SetWallpaperForCurrentBox(sPSSData->wallpaperId);
-            sPSSData->state++;
+        case 4:
+            sPSSData->wallpaperId = sub_80D00AC();
+            switch (sPSSData->wallpaperId)
+            {
+                case -2:
+                    break;
+                case -1:
+                    ClearBottomWindow();
+                    sPSSData->state = 0;
+                    break;
+                default:
+                    PlaySE(SE_SELECT);
+                    ClearBottomWindow();
+                    sPSSData->wallpaperId -= 23;
+                    SetWallpaperForCurrentBox(sPSSData->wallpaperId);
+                    sPSSData->state++;
+                    break;
+            }
             break;
-        }
-        break;
-    case 5:
-        if (!DoWallpaperGfxChange())
-        {
-            sub_80CD1A8(TRUE);
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 6:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            SetWallpaperForCurrentBox(sPSSData->wallpaperId);
-            sPSSData->state = 5;
-        }
-        break;
+        case 5:
+            if (!DoWallpaperGfxChange())
+            {
+                sub_80CD1A8(TRUE);
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 6:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                SetWallpaperForCurrentBox(sPSSData->wallpaperId);
+                sPSSData->state = 5;
+            }
+            break;
     }
 }
 
@@ -3634,45 +3648,46 @@ static void Cb_JumpBox(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        PrintStorageActionText(PC_TEXT_JUMP_TO_WHICH_BOX);
-        sub_80C77E8(&sPSSData->field_1E5C, TAG_TILE_A, TAG_PAL_DAC7, 3, FALSE);
-        sub_80C78D4(StorageGetCurrentBox());
-        sPSSData->state++;
-        break;
-    case 1:
-        sPSSData->newCurrBoxId = HandleBoxChooseSelectionInput();
-        switch (sPSSData->newCurrBoxId)
-        {
-        case 200:
+        case 0:
+            PrintStorageActionText(PC_TEXT_JUMP_TO_WHICH_BOX);
+            sub_80C77E8(&sPSSData->field_1E5C, TAG_TILE_A, TAG_PAL_DAC7, 3, FALSE);
+            sub_80C78D4(StorageGetCurrentBox());
+            sPSSData->state++;
             break;
-        default:
-            ClearBottomWindow();
-            sub_80C78E4();
-            sub_80C7890();
-            if (sPSSData->newCurrBoxId == 201 || sPSSData->newCurrBoxId == StorageGetCurrentBox())
+        case 1:
+            sPSSData->newCurrBoxId = HandleBoxChooseSelectionInput();
+            switch (sPSSData->newCurrBoxId)
             {
-                sub_80CD1A8(TRUE);
+                case 200:
+                    break;
+                default:
+                    ClearBottomWindow();
+                    sub_80C78E4();
+                    sub_80C7890();
+                    if (sPSSData->newCurrBoxId == 201
+                        || sPSSData->newCurrBoxId == StorageGetCurrentBox())
+                    {
+                        sub_80CD1A8(TRUE);
+                        SetPSSCallback(Cb_MainPSS);
+                    }
+                    else
+                    {
+                        sPSSData->state++;
+                    }
+                    break;
+            }
+            break;
+        case 2:
+            SetUpScrollToBox(sPSSData->newCurrBoxId);
+            sPSSData->state++;
+            break;
+        case 3:
+            if (!ScrollToBox())
+            {
+                SetCurrentBox(sPSSData->newCurrBoxId);
                 SetPSSCallback(Cb_MainPSS);
             }
-            else
-            {
-                sPSSData->state++;
-            }
             break;
-        }
-        break;
-    case 2:
-        SetUpScrollToBox(sPSSData->newCurrBoxId);
-        sPSSData->state++;
-        break;
-    case 3:
-        if (!ScrollToBox())
-        {
-            SetCurrentBox(sPSSData->newCurrBoxId);
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
     }
 }
 
@@ -3680,19 +3695,19 @@ static void Cb_NameBox(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        sub_80CE760();
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            sWhichToReshow = 1;
-            sPSSData->screenChangeType = SCREEN_CHANGE_NAME_BOX;
-            SetPSSCallback(Cb_ChangeScreen);
-        }
-        break;
+        case 0:
+            sub_80CE760();
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
+            {
+                sWhichToReshow = 1;
+                sPSSData->screenChangeType = SCREEN_CHANGE_NAME_BOX;
+                SetPSSCallback(Cb_ChangeScreen);
+            }
+            break;
     }
 }
 
@@ -3700,19 +3715,19 @@ static void Cb_ShowMonSummary(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        sub_80CE7E8();
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            sWhichToReshow = 0;
-            sPSSData->screenChangeType = SCREEN_CHANGE_SUMMARY_SCREEN;
-            SetPSSCallback(Cb_ChangeScreen);
-        }
-        break;
+        case 0:
+            sub_80CE7E8();
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
+            {
+                sWhichToReshow = 0;
+                sPSSData->screenChangeType = SCREEN_CHANGE_SUMMARY_SCREEN;
+                SetPSSCallback(Cb_ChangeScreen);
+            }
+            break;
     }
 }
 
@@ -3720,18 +3735,18 @@ static void Cb_GiveItemFromBag(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
-        sPSSData->state++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            sWhichToReshow = 2;
-            sPSSData->screenChangeType = SCREEN_CHANGE_ITEM_FROM_BAG;
-            SetPSSCallback(Cb_ChangeScreen);
-        }
-        break;
+        case 0:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+            sPSSData->state++;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
+            {
+                sWhichToReshow = 2;
+                sPSSData->screenChangeType = SCREEN_CHANGE_ITEM_FROM_BAG;
+                SetPSSCallback(Cb_ChangeScreen);
+            }
+            break;
     }
 }
 
@@ -3739,60 +3754,60 @@ static void Cb_OnCloseBoxPressed(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (IsMonBeingMoved())
-        {
-            PlaySE(SE_HAZURE);
-            PrintStorageActionText(PC_TEXT_HOLDING_POKE);
-            sPSSData->state = 1;
-        }
-        else if (IsActiveItemMoving())
-        {
-            SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
-        }
-        else
-        {
-            PlaySE(SE_SELECT);
-            PrintStorageActionText(PC_TEXT_EXIT_BOX);
-            ShowYesNoWindow(0);
-            sPSSData->state = 2;
-        }
-        break;
-    case 1:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 2:
-        switch (Menu_ProcessInputNoWrapClearOnChoose())
-        {
-        case MENU_B_PRESSED:
-        case 1:
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-            break;
         case 0:
-            PlaySE(SE_PC_OFF);
-            ClearBottomWindow();
+            if (IsMonBeingMoved())
+            {
+                PlaySE(SE_HAZURE);
+                PrintStorageActionText(PC_TEXT_HOLDING_POKE);
+                sPSSData->state = 1;
+            }
+            else if (IsActiveItemMoving())
+            {
+                SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
+            }
+            else
+            {
+                PlaySE(SE_SELECT);
+                PrintStorageActionText(PC_TEXT_EXIT_BOX);
+                ShowYesNoWindow(0);
+                sPSSData->state = 2;
+            }
+            break;
+        case 1:
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 2:
+            switch (Menu_ProcessInputNoWrapClearOnChoose())
+            {
+                case MENU_B_PRESSED:
+                case 1:
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 0:
+                    PlaySE(SE_PC_OFF);
+                    ClearBottomWindow();
+                    sPSSData->state++;
+                    break;
+            }
+            break;
+        case 3:
+            ComputerScreenCloseEffect(20, 0, 1);
             sPSSData->state++;
             break;
-        }
-        break;
-    case 3:
-        ComputerScreenCloseEffect(20, 0, 1);
-        sPSSData->state++;
-        break;
-    case 4:
-        if (!IsComputerScreenCloseEffectActive())
-        {
-            sub_80CABE0();
-            gPlayerPartyCount = CalculatePlayerPartyCount();
-            sPSSData->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
-            SetPSSCallback(Cb_ChangeScreen);
-        }
-        break;
+        case 4:
+            if (!IsComputerScreenCloseEffectActive())
+            {
+                sub_80CABE0();
+                gPlayerPartyCount = CalculatePlayerPartyCount();
+                sPSSData->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
+                SetPSSCallback(Cb_ChangeScreen);
+            }
+            break;
     }
 }
 
@@ -3800,60 +3815,60 @@ static void Cb_OnBPressed(u8 taskId)
 {
     switch (sPSSData->state)
     {
-    case 0:
-        if (IsMonBeingMoved())
-        {
-            PlaySE(SE_HAZURE);
-            PrintStorageActionText(PC_TEXT_HOLDING_POKE);
-            sPSSData->state = 1;
-        }
-        else if (IsActiveItemMoving())
-        {
-            SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
-        }
-        else
-        {
-            PlaySE(SE_SELECT);
-            PrintStorageActionText(PC_TEXT_CONTINUE_BOX);
-            ShowYesNoWindow(0);
-            sPSSData->state = 2;
-        }
-        break;
-    case 1:
-        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
-        {
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
-        }
-        break;
-    case 2:
-        switch (Menu_ProcessInputNoWrapClearOnChoose())
-        {
         case 0:
-            ClearBottomWindow();
-            SetPSSCallback(Cb_MainPSS);
+            if (IsMonBeingMoved())
+            {
+                PlaySE(SE_HAZURE);
+                PrintStorageActionText(PC_TEXT_HOLDING_POKE);
+                sPSSData->state = 1;
+            }
+            else if (IsActiveItemMoving())
+            {
+                SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
+            }
+            else
+            {
+                PlaySE(SE_SELECT);
+                PrintStorageActionText(PC_TEXT_CONTINUE_BOX);
+                ShowYesNoWindow(0);
+                sPSSData->state = 2;
+            }
             break;
         case 1:
-        case MENU_B_PRESSED:
-            PlaySE(SE_PC_OFF);
-            ClearBottomWindow();
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+            {
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MainPSS);
+            }
+            break;
+        case 2:
+            switch (Menu_ProcessInputNoWrapClearOnChoose())
+            {
+                case 0:
+                    ClearBottomWindow();
+                    SetPSSCallback(Cb_MainPSS);
+                    break;
+                case 1:
+                case MENU_B_PRESSED:
+                    PlaySE(SE_PC_OFF);
+                    ClearBottomWindow();
+                    sPSSData->state++;
+                    break;
+            }
+            break;
+        case 3:
+            ComputerScreenCloseEffect(20, 0, 0);
             sPSSData->state++;
             break;
-        }
-        break;
-    case 3:
-        ComputerScreenCloseEffect(20, 0, 0);
-        sPSSData->state++;
-        break;
-    case 4:
-        if (!IsComputerScreenCloseEffectActive())
-        {
-            sub_80CABE0();
-            gPlayerPartyCount = CalculatePlayerPartyCount();
-            sPSSData->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
-            SetPSSCallback(Cb_ChangeScreen);
-        }
-        break;
+        case 4:
+            if (!IsComputerScreenCloseEffectActive())
+            {
+                sub_80CABE0();
+                gPlayerPartyCount = CalculatePlayerPartyCount();
+                sPSSData->screenChangeType = SCREEN_CHANGE_EXIT_BOX;
+                SetPSSCallback(Cb_ChangeScreen);
+            }
+            break;
     }
 }
 
@@ -3870,30 +3885,32 @@ static void Cb_ChangeScreen(u8 taskId)
 
     switch (screenChangeType)
     {
-    case SCREEN_CHANGE_EXIT_BOX:
-    default:
-        FreePSSData();
-        SetMainCallback2(Cb2_ExitPSS);
-        break;
-    case SCREEN_CHANGE_SUMMARY_SCREEN:
-        boxMons = sPSSData->field_218C.box;
-        monIndex = sPSSData->field_2187;
-        maxMonIndex = sPSSData->field_2186;
-        mode = sPSSData->pokemonSummaryScreenMode;
-        FreePSSData();
-        if (mode == PSS_MODE_NORMAL && boxMons == &gUnknown_02039D14.box)
-            ShowPokemonSummaryScreenSet40EF(mode, boxMons, monIndex, maxMonIndex, Cb2_ReturnToPSS);
-        else
-            ShowPokemonSummaryScreen(mode, boxMons, monIndex, maxMonIndex, Cb2_ReturnToPSS);
-        break;
-    case SCREEN_CHANGE_NAME_BOX:
-        FreePSSData();
-        DoNamingScreen(NAMING_SCREEN_BOX, GetBoxNamePtr(StorageGetCurrentBox()), 0, 0, 0, Cb2_ReturnToPSS);
-        break;
-    case SCREEN_CHANGE_ITEM_FROM_BAG:
-        FreePSSData();
-        GoToBagMenu(ITEMMENULOCATION_PCBOX, 0, Cb2_ReturnToPSS);
-        break;
+        case SCREEN_CHANGE_EXIT_BOX:
+        default:
+            FreePSSData();
+            SetMainCallback2(Cb2_ExitPSS);
+            break;
+        case SCREEN_CHANGE_SUMMARY_SCREEN:
+            boxMons = sPSSData->field_218C.box;
+            monIndex = sPSSData->field_2187;
+            maxMonIndex = sPSSData->field_2186;
+            mode = sPSSData->pokemonSummaryScreenMode;
+            FreePSSData();
+            if (mode == PSS_MODE_NORMAL && boxMons == &gUnknown_02039D14.box)
+                ShowPokemonSummaryScreenSet40EF(
+                    mode, boxMons, monIndex, maxMonIndex, Cb2_ReturnToPSS);
+            else
+                ShowPokemonSummaryScreen(mode, boxMons, monIndex, maxMonIndex, Cb2_ReturnToPSS);
+            break;
+        case SCREEN_CHANGE_NAME_BOX:
+            FreePSSData();
+            DoNamingScreen(
+                NAMING_SCREEN_BOX, GetBoxNamePtr(StorageGetCurrentBox()), 0, 0, 0, Cb2_ReturnToPSS);
+            break;
+        case SCREEN_CHANGE_ITEM_FROM_BAG:
+            FreePSSData();
+            GoToBagMenu(ITEMMENULOCATION_PCBOX, 0, Cb2_ReturnToPSS);
+            break;
     }
 
     DestroyTask(taskId);
@@ -3926,7 +3943,8 @@ static void FreePSSData(void)
 
 static void SetScrollingBackground(void)
 {
-    SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
+    SetGpuReg(REG_OFFSET_BG3CNT,
+        BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
     DecompressAndLoadBgGfxUsingHeap(3, gPokemonStorageScrollingBGTileset, 0, 0, 0);
     LZ77UnCompVram(gPokemonStorageScrollingBGTilemap, (void *)BG_SCREEN_ADDR(31));
 }
@@ -3975,7 +3993,8 @@ static void sub_80CA0D8(void)
     else
         LoadPalette(gUnknown_0857243C, 0x30, 0x20);
 
-    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
+    SetGpuReg(REG_OFFSET_BG1CNT,
+        BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
     LoadCursorMonSprite();
     sub_80CA154();
     sub_80CA1C4();
@@ -3989,7 +4008,7 @@ static void sub_80CA154(void)
     sPSSData->field_D94->subpriority = 1;
     sPSSData->field_D94->pos1.x = 40;
     sPSSData->field_D94->pos1.y = 150;
-    sPSSData->field_DA0 = (void*) OBJ_VRAM0 + 32 * GetSpriteTileStartByTag(TAG_TILE_10);
+    sPSSData->field_DA0 = (void *)OBJ_VRAM0 + 32 * GetSpriteTileStartByTag(TAG_TILE_10);
 }
 
 static void sub_80CA1C4(void)
@@ -4022,7 +4041,8 @@ static void BoxSetMosaic(void)
         sPSSData->cursorMonSprite->data[0] = 10;
         sPSSData->cursorMonSprite->data[1] = 1;
         sPSSData->cursorMonSprite->callback = sub_80CA2D0;
-        SetGpuReg(REG_OFFSET_MOSAIC, (sPSSData->cursorMonSprite->data[0] << 12) | (sPSSData->cursorMonSprite->data[0] << 8));
+        SetGpuReg(REG_OFFSET_MOSAIC,
+            (sPSSData->cursorMonSprite->data[0] << 12) | (sPSSData->cursorMonSprite->data[0] << 8));
     }
 }
 
@@ -4050,8 +4070,8 @@ static void LoadCursorMonSprite(void)
     u16 tileStart;
     u8 palSlot;
     u8 spriteId;
-    struct SpriteSheet sheet = {sPSSData->field_22C4, 0x800, TAG_TILE_2};
-    struct SpritePalette palette = {sPSSData->field_2244, TAG_PAL_DAC6};
+    struct SpriteSheet sheet = { sPSSData->field_22C4, 0x800, TAG_TILE_2 };
+    struct SpritePalette palette = { sPSSData->field_2244, TAG_PAL_DAC6 };
     struct SpriteTemplate template = sSpriteTemplate_CursorMon;
 
     for (i = 0; i < 0x800; i++)
@@ -4077,7 +4097,7 @@ static void LoadCursorMonSprite(void)
 
         sPSSData->cursorMonSprite = &gSprites[spriteId];
         sPSSData->field_223A = palSlot * 16 + 0x100;
-        sPSSData->field_223C = (void*) OBJ_VRAM0 + tileStart * 32;
+        sPSSData->field_223C = (void *)OBJ_VRAM0 + tileStart * 32;
     } while (0);
 
     if (sPSSData->cursorMonSprite == NULL)
@@ -4112,16 +4132,20 @@ static void PrintCursorMonInfo(void)
     if (sPSSData->boxOption != BOX_OPTION_MOVE_ITEMS)
     {
         AddTextPrinterParameterized(0, 1, sPSSData->cursorMonNickText, 6, 0, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonSpeciesName, 6, 15, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonGenderLvlText, 10, 29, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonSpeciesName, 6, 15, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonGenderLvlText, 10, 29, TEXT_SPEED_FF, NULL);
         AddTextPrinterParameterized(0, 0, sPSSData->cursorMonItemName, 6, 43, TEXT_SPEED_FF, NULL);
     }
     else
     {
         AddTextPrinterParameterized(0, 0, sPSSData->cursorMonItemName, 6, 0, TEXT_SPEED_FF, NULL);
         AddTextPrinterParameterized(0, 1, sPSSData->cursorMonNickText, 6, 13, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonSpeciesName, 6, 28, TEXT_SPEED_FF, NULL);
-        AddTextPrinterParameterized(0, 2, sPSSData->cursorMonGenderLvlText, 10, 42, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonSpeciesName, 6, 28, TEXT_SPEED_FF, NULL);
+        AddTextPrinterParameterized(
+            0, 2, sPSSData->cursorMonGenderLvlText, 10, 42, TEXT_SPEED_FF, NULL);
     }
 
     CopyWindowToVram(0, 2);
@@ -4345,23 +4369,23 @@ static bool8 DoShowPartyMenu(void)
 {
     switch (sPSSData->showPartyMenuState)
     {
-    case 0:
-        if (!ShowPartyMenu())
-        {
-            sub_80CDBA0();
-            sPSSData->showPartyMenuState++;
-        }
-        break;
-    case 1:
-        if (!sub_80CD554())
-        {
-            if (sPSSData->setMosaic)
-                BoxSetMosaic();
-            sPSSData->showPartyMenuState++;
-        }
-        break;
-    case 2:
-        return FALSE;
+        case 0:
+            if (!ShowPartyMenu())
+            {
+                sub_80CDBA0();
+                sPSSData->showPartyMenuState++;
+            }
+            break;
+        case 1:
+            if (!sub_80CD554())
+            {
+                if (sPSSData->setMosaic)
+                    BoxSetMosaic();
+                sPSSData->showPartyMenuState++;
+            }
+            break;
+        case 2:
+            return FALSE;
     }
     return TRUE;
 }
@@ -4390,33 +4414,34 @@ static void PrintStorageActionText(u8 id)
     DynamicPlaceholderTextUtil_Reset();
     switch (gPCStorageActionTexts[id].format)
     {
-    case PC_TEXT_FMT_NORMAL:
-        break;
-    case PC_TEXT_FMT_MON_NAME_1:
-    case PC_TEXT_FMT_MON_NAME_2:
-    case PC_TEXT_FMT_MON_NAME_3:
-        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->cursorMonNick);
-        break;
-    case PC_TEXT_FMT_MON_NAME_4:
-    case PC_TEXT_FMT_MON_NAME_5:
-    case PC_TEXT_FMT_MON_NAME_6:
-        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->field_21E0);
-        break;
-    case PC_TEXT_FMT_ITEM_NAME:
-        if (IsActiveItemMoving())
-            txtPtr = StringCopy(sPSSData->itemName, GetMovingItemName());
-        else
-            txtPtr = StringCopy(sPSSData->itemName, sPSSData->cursorMonItemName);
+        case PC_TEXT_FMT_NORMAL:
+            break;
+        case PC_TEXT_FMT_MON_NAME_1:
+        case PC_TEXT_FMT_MON_NAME_2:
+        case PC_TEXT_FMT_MON_NAME_3:
+            DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->cursorMonNick);
+            break;
+        case PC_TEXT_FMT_MON_NAME_4:
+        case PC_TEXT_FMT_MON_NAME_5:
+        case PC_TEXT_FMT_MON_NAME_6:
+            DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->field_21E0);
+            break;
+        case PC_TEXT_FMT_ITEM_NAME:
+            if (IsActiveItemMoving())
+                txtPtr = StringCopy(sPSSData->itemName, GetMovingItemName());
+            else
+                txtPtr = StringCopy(sPSSData->itemName, sPSSData->cursorMonItemName);
 
-        while (*(txtPtr - 1) == CHAR_SPACE)
-            txtPtr--;
+            while (*(txtPtr - 1) == CHAR_SPACE)
+                txtPtr--;
 
-        *txtPtr = EOS;
-        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->itemName);
-        break;
+            *txtPtr = EOS;
+            DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPSSData->itemName);
+            break;
     }
 
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(sPSSData->field_2190, gPCStorageActionTexts[id].text);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(
+        sPSSData->field_2190, gPCStorageActionTexts[id].text);
     FillWindowPixelBuffer(1, PIXEL_FILL(1));
     AddTextPrinterParameterized(1, 1, sPSSData->field_2190, 0, 1, TEXT_SPEED_FF, NULL);
     DrawTextBorderOuter(1, 2, 14);
@@ -4454,30 +4479,30 @@ static void AddWallpapersMenu(u8 wallpaperSet)
     InitMenu();
     switch (wallpaperSet)
     {
-    case 0:
-        SetMenuText(23);
-        SetMenuText(24);
-        SetMenuText(25);
-        SetMenuText(26);
-        break;
-    case 1:
-        SetMenuText(27);
-        SetMenuText(28);
-        SetMenuText(29);
-        SetMenuText(30);
-        break;
-    case 2:
-        SetMenuText(31);
-        SetMenuText(32);
-        SetMenuText(33);
-        SetMenuText(34);
-        break;
-    case 3:
-        SetMenuText(35);
-        SetMenuText(36);
-        SetMenuText(37);
-        SetMenuText(38);
-        break;
+        case 0:
+            SetMenuText(23);
+            SetMenuText(24);
+            SetMenuText(25);
+            SetMenuText(26);
+            break;
+        case 1:
+            SetMenuText(27);
+            SetMenuText(28);
+            SetMenuText(29);
+            SetMenuText(30);
+            break;
+        case 2:
+            SetMenuText(31);
+            SetMenuText(32);
+            SetMenuText(33);
+            SetMenuText(34);
+            break;
+        case 3:
+            SetMenuText(35);
+            SetMenuText(36);
+            SetMenuText(37);
+            SetMenuText(38);
+            break;
     }
     AddMenu();
 }
@@ -4554,7 +4579,8 @@ static void sub_80CB028(u8 boxId)
             if (species != SPECIES_NONE)
             {
                 personality = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
-                sPSSData->boxMonsSprites[count] = CreateMonIconSprite(species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
+                sPSSData->boxMonsSprites[count] = CreateMonIconSprite(
+                    species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
             }
             else
             {
@@ -4585,7 +4611,8 @@ static void sub_80CB140(u8 boxPosition)
         s16 y = 8 * (3 * (boxPosition / IN_BOX_ROWS)) + 44;
         u32 personality = GetCurrentBoxMonData(boxPosition, MON_DATA_PERSONALITY);
 
-        sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_ROWS));
+        sPSSData->boxMonsSprites[boxPosition] =
+            CreateMonIconSprite(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_ROWS));
         if (sPSSData->boxOption == BOX_OPTION_MOVE_ITEMS)
             sPSSData->boxMonsSprites[boxPosition]->oam.objMode = ST_OAM_OBJ_BLEND;
     }
@@ -4668,9 +4695,13 @@ static u8 sub_80CB2F8(u8 row, u16 times, s16 xDelta)
         {
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
             {
-                sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
-                                                                                        sPSSData->boxPersonalities[boxPosition],
-                                                                                        x, y, 2, subpriority);
+                sPSSData->boxMonsSprites[boxPosition] =
+                    CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
+                        sPSSData->boxPersonalities[boxPosition],
+                        x,
+                        y,
+                        2,
+                        subpriority);
                 if (sPSSData->boxMonsSprites[boxPosition] != NULL)
                 {
                     sPSSData->boxMonsSprites[boxPosition]->data[1] = times;
@@ -4690,9 +4721,13 @@ static u8 sub_80CB2F8(u8 row, u16 times, s16 xDelta)
         {
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
             {
-                sPSSData->boxMonsSprites[boxPosition] = CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
-                                                                                        sPSSData->boxPersonalities[boxPosition],
-                                                                                        x, y, 2, subpriority);
+                sPSSData->boxMonsSprites[boxPosition] =
+                    CreateMonIconSprite(sPSSData->boxSpecies[boxPosition],
+                        sPSSData->boxPersonalities[boxPosition],
+                        x,
+                        y,
+                        2,
+                        subpriority);
                 if (sPSSData->boxMonsSprites[boxPosition] != NULL)
                 {
                     sPSSData->boxMonsSprites[boxPosition]->data[1] = times;
@@ -4737,38 +4772,39 @@ static bool8 sub_80CB584(void)
 
     switch (sPSSData->field_C6A)
     {
-    case 0:
-        sPSSData->field_C62 += sPSSData->field_C64;
-        if (sPSSData->field_C62 <= 64 || sPSSData->field_C62 >= 252)
-        {
-            DestroyAllIconsInRow(sPSSData->field_C68);
-            sPSSData->field_C62 += sPSSData->field_C69 * 24;
-            sPSSData->field_C6A++;
-        }
-        break;
-    case 1:
-        sPSSData->field_C62 += sPSSData->field_C64;
-        sPSSData->field_C66 += sub_80CB2F8(sPSSData->field_C68, sPSSData->field_C60, sPSSData->field_C64);
-        if ((sPSSData->field_C69 > 0 && sPSSData->field_C68 == IN_BOX_ROWS - 1)
-            || (sPSSData->field_C69 < 0 && sPSSData->field_C68 == 0))
-        {
-            sPSSData->field_C6A++;
-        }
-        else
-        {
-            sPSSData->field_C68 += sPSSData->field_C69;
-            sPSSData->field_C6A = 0;
-        }
-        break;
-    case 2:
-        if (sPSSData->field_C66 == 0)
-        {
-            sPSSData->field_C60++;
+        case 0:
+            sPSSData->field_C62 += sPSSData->field_C64;
+            if (sPSSData->field_C62 <= 64 || sPSSData->field_C62 >= 252)
+            {
+                DestroyAllIconsInRow(sPSSData->field_C68);
+                sPSSData->field_C62 += sPSSData->field_C69 * 24;
+                sPSSData->field_C6A++;
+            }
+            break;
+        case 1:
+            sPSSData->field_C62 += sPSSData->field_C64;
+            sPSSData->field_C66 +=
+                sub_80CB2F8(sPSSData->field_C68, sPSSData->field_C60, sPSSData->field_C64);
+            if ((sPSSData->field_C69 > 0 && sPSSData->field_C68 == IN_BOX_ROWS - 1)
+                || (sPSSData->field_C69 < 0 && sPSSData->field_C68 == 0))
+            {
+                sPSSData->field_C6A++;
+            }
+            else
+            {
+                sPSSData->field_C68 += sPSSData->field_C69;
+                sPSSData->field_C6A = 0;
+            }
+            break;
+        case 2:
+            if (sPSSData->field_C66 == 0)
+            {
+                sPSSData->field_C60++;
+                return FALSE;
+            }
+            break;
+        default:
             return FALSE;
-        }
-        break;
-    default:
-        return FALSE;
     }
 
     return TRUE;
@@ -4783,9 +4819,11 @@ static void SetBoxSpeciesAndPersonalities(u8 boxId)
     {
         for (j = 0; j < IN_BOX_ROWS; j++)
         {
-            sPSSData->boxSpecies[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES2);
+            sPSSData->boxSpecies[boxPosition] =
+                GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES2);
             if (sPSSData->boxSpecies[boxPosition] != SPECIES_NONE)
-                sPSSData->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+                sPSSData->boxPersonalities[boxPosition] =
+                    GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
             boxPosition++;
         }
     }
@@ -4824,7 +4862,8 @@ static void CreatePartyMonsSprites(bool8 arg0)
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
-            sPSSData->partySprites[i] = CreateMonIconSprite(species, personality, 152,  8 * (3 * (i - 1)) + 16, 1, 12);
+            sPSSData->partySprites[i] =
+                CreateMonIconSprite(species, personality, 152, 8 * (3 * (i - 1)) + 16, 1, 12);
             count++;
         }
         else
@@ -4846,7 +4885,8 @@ static void CreatePartyMonsSprites(bool8 arg0)
     {
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (sPSSData->partySprites[i] != NULL && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == 0)
+            if (sPSSData->partySprites[i] != NULL
+                && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == 0)
                 sPSSData->partySprites[i]->oam.objMode = ST_OAM_OBJ_BLEND;
         }
     }
@@ -4941,7 +4981,8 @@ static void sub_80CBAF0(s16 yDelta)
         if (sPSSData->partySprites[i] != NULL)
         {
             sPSSData->partySprites[i]->pos1.y += yDelta;
-            posY = sPSSData->partySprites[i]->pos1.y + sPSSData->partySprites[i]->pos2.y + sPSSData->partySprites[i]->centerToCornerVecY;
+            posY = sPSSData->partySprites[i]->pos1.y + sPSSData->partySprites[i]->pos2.y
+                   + sPSSData->partySprites[i]->centerToCornerVecY;
             posY += 16;
             if (posY > 192)
                 sPSSData->partySprites[i]->invisible = TRUE;
@@ -5072,17 +5113,17 @@ static void sub_80CBF14(u8 mode, u8 position)
 {
     switch (mode)
     {
-    case MODE_PARTY:
-        sPSSData->field_B04 = &sPSSData->partySprites[position];
-        break;
-    case MODE_BOX:
-        sPSSData->field_B04 = &sPSSData->boxMonsSprites[position];
-        break;
-    case MODE_MOVE:
-        sPSSData->field_B04 = &sPSSData->movingMonSprite;
-        break;
-    default:
-        return;
+        case MODE_PARTY:
+            sPSSData->field_B04 = &sPSSData->partySprites[position];
+            break;
+        case MODE_BOX:
+            sPSSData->field_B04 = &sPSSData->boxMonsSprites[position];
+            break;
+        case MODE_MOVE:
+            sPSSData->field_B04 = &sPSSData->movingMonSprite;
+            break;
+        default:
+            return;
     }
 
     if (*sPSSData->field_B04 != NULL)
@@ -5170,7 +5211,7 @@ static u16 sub_80CC124(u16 species)
     sPSSData->field_B58[i] = species;
     sPSSData->field_B08[i]++;
     var = 16 * i;
-    CpuCopy32(GetMonIconTiles(species, TRUE), (void*)(OBJ_VRAM0) + var * 32, 0x200);
+    CpuCopy32(GetMonIconTiles(species, TRUE), (void *)(OBJ_VRAM0) + var * 32, 0x200);
 
     return var;
 }
@@ -5190,7 +5231,8 @@ static void sub_80CC1E0(u16 species)
     }
 }
 
-static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
+static struct Sprite *CreateMonIconSprite(
+    u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
     u16 tileNum;
     u8 spriteId;
@@ -5239,36 +5281,37 @@ static void sub_80CC370(u8 taskId)
 
     switch (task->data[0])
     {
-    case 0:
-        sPSSData->field_2D2 = 0;
-        sPSSData->bg2_X = 0;
-        task->data[1] = RequestDma3Fill(0, sPSSData->field_4AC4, 0x1000, 1);
-        break;
-    case 1:
-        if (CheckForSpaceForDma3Request(task->data[1]) == -1)
-            return;
+        case 0:
+            sPSSData->field_2D2 = 0;
+            sPSSData->bg2_X = 0;
+            task->data[1] = RequestDma3Fill(0, sPSSData->field_4AC4, 0x1000, 1);
+            break;
+        case 1:
+            if (CheckForSpaceForDma3Request(task->data[1]) == -1)
+                return;
 
-        SetBgTilemapBuffer(2, sPSSData->field_4AC4);
-        ShowBg(2);
-        break;
-    case 2:
-        LoadWallpaperGfx(task->data[2], 0);
-        break;
-    case 3:
-        if (!WaitForWallpaperGfxLoad())
-            return;
+            SetBgTilemapBuffer(2, sPSSData->field_4AC4);
+            ShowBg(2);
+            break;
+        case 2:
+            LoadWallpaperGfx(task->data[2], 0);
+            break;
+        case 3:
+            if (!WaitForWallpaperGfxLoad())
+                return;
 
-        sub_80CCB50(task->data[2]);
-        sub_80CD02C();
-        sub_80CB028(task->data[2]);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(27) | BGCNT_TXT512x256);
-        break;
-    case 4:
-        DestroyTask(taskId);
-        break;
-    default:
-        task->data[0] = 0;
-        return;
+            sub_80CCB50(task->data[2]);
+            sub_80CD02C();
+            sub_80CB028(task->data[2]);
+            SetGpuReg(REG_OFFSET_BG2CNT,
+                BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(27) | BGCNT_TXT512x256);
+            break;
+        case 4:
+            DestroyTask(taskId);
+            break;
+        default:
+            task->data[0] = 0;
+            return;
     }
 
     task->data[0]++;
@@ -5299,28 +5342,28 @@ static bool8 ScrollToBox(void)
 
     switch (sPSSData->field_A63)
     {
-    case 0:
-        LoadWallpaperGfx(sPSSData->boxScrollDestination, sPSSData->field_A65);
-        sPSSData->field_A63++;
-    case 1:
-        if (!WaitForWallpaperGfxLoad())
-            return TRUE;
-
-        sub_80CB4CC(sPSSData->boxScrollDestination, sPSSData->field_A65);
-        sub_80CCCFC(sPSSData->boxScrollDestination, sPSSData->field_A65);
-        sub_80CD0B8(sPSSData->field_A65);
-        break;
-    case 2:
-        var = sub_80CB584();
-        if (sPSSData->field_2D0 != 0)
-        {
-            sPSSData->bg2_X += sPSSData->wallpaperScrollSpeed;
-            if (--sPSSData->field_2D0 != 0)
+        case 0:
+            LoadWallpaperGfx(sPSSData->boxScrollDestination, sPSSData->field_A65);
+            sPSSData->field_A63++;
+        case 1:
+            if (!WaitForWallpaperGfxLoad())
                 return TRUE;
-            sub_80CCEE0();
-            sub_80CD158();
-        }
-        return var;
+
+            sub_80CB4CC(sPSSData->boxScrollDestination, sPSSData->field_A65);
+            sub_80CCCFC(sPSSData->boxScrollDestination, sPSSData->field_A65);
+            sub_80CD0B8(sPSSData->field_A65);
+            break;
+        case 2:
+            var = sub_80CB584();
+            if (sPSSData->field_2D0 != 0)
+            {
+                sPSSData->bg2_X += sPSSData->wallpaperScrollSpeed;
+                if (--sPSSData->field_2D0 != 0)
+                    return TRUE;
+                sub_80CCEE0();
+                sub_80CD158();
+            }
+            return var;
     }
 
     sPSSData->field_A63++;
@@ -5353,32 +5396,32 @@ static bool8 DoWallpaperGfxChange(void)
 {
     switch (sPSSData->wallpaperChangeState)
     {
-    case 0:
-        BeginNormalPaletteFade(sPSSData->field_738, 1, 0, 16, RGB_WHITEALPHA);
-        sPSSData->wallpaperChangeState++;
-        break;
-    case 1:
-        if (!UpdatePaletteFade())
-        {
-            u8 curBox = StorageGetCurrentBox();
-            LoadWallpaperGfx(curBox, 0);
+        case 0:
+            BeginNormalPaletteFade(sPSSData->field_738, 1, 0, 16, RGB_WHITEALPHA);
             sPSSData->wallpaperChangeState++;
-        }
-        break;
-    case 2:
-        if (WaitForWallpaperGfxLoad() == TRUE)
-        {
-            sub_80CCF9C();
-            BeginNormalPaletteFade(sPSSData->field_738, 1, 16, 0, RGB_WHITEALPHA);
-            sPSSData->wallpaperChangeState++;
-        }
-        break;
-    case 3:
-        if (!UpdatePaletteFade())
-            sPSSData->wallpaperChangeState++;
-        break;
-    case 4:
-        return FALSE;
+            break;
+        case 1:
+            if (!UpdatePaletteFade())
+            {
+                u8 curBox = StorageGetCurrentBox();
+                LoadWallpaperGfx(curBox, 0);
+                sPSSData->wallpaperChangeState++;
+            }
+            break;
+        case 2:
+            if (WaitForWallpaperGfxLoad() == TRUE)
+            {
+                sub_80CCF9C();
+                BeginNormalPaletteFade(sPSSData->field_738, 1, 16, 0, RGB_WHITEALPHA);
+                sPSSData->wallpaperChangeState++;
+            }
+            break;
+        case 3:
+            if (!UpdatePaletteFade())
+                sPSSData->wallpaperChangeState++;
+            break;
+        case 4:
+            return FALSE;
     }
 
     return TRUE;
@@ -5410,7 +5453,9 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         if (sPSSData->field_6FB != 0)
             LoadPalette(wallpaperGfx->palettes, (sPSSData->field_2D2 * 32) + 0x40, 0x40);
         else
-            CpuCopy16(wallpaperGfx->palettes, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
+            CpuCopy16(wallpaperGfx->palettes,
+                &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40],
+                0x40);
 
         sPSSData->wallpaperTiles = malloc_and_decompress(wallpaperGfx->tiles, &size1);
         LoadBgTiles(2, sPSSData->wallpaperTiles, size1, sPSSData->field_2D2 << 8);
@@ -5428,7 +5473,8 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         if (sPSSData->field_6FB != 0)
             LoadPalette(sPSSData->field_792, (sPSSData->field_2D2 * 32) + 0x40, 0x40);
         else
-            CpuCopy16(sPSSData->field_792, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
+            CpuCopy16(
+                sPSSData->field_792, &gPlttBufferUnfaded[(sPSSData->field_2D2 * 32) + 0x40], 0x40);
 
         sPSSData->wallpaperTiles = malloc_and_decompress(wallpaperGfx->tiles, &size1);
         iconGfx = malloc_and_decompress(gFriendsIcons[GetWaldaWallpaperIconId()], &size2);
@@ -5458,12 +5504,14 @@ static void sub_80CCA3C(const void *tilemap, s8 direction, u8 arg2)
     s16 var = (arg2 * 2) + 3;
     s16 x = ((sPSSData->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
 
-    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 0x14, 0x12, x, 2, 0x14, 0x12, 0x11, arg2 << 8, var);
+    CopyRectToBgTilemapBufferRect(
+        2, tilemap, 0, 0, 0x14, 0x12, x, 2, 0x14, 0x12, 0x11, arg2 << 8, var);
 
     if (direction == 0)
         return;
     else if (direction > 0)
-        x *= 1, x += 0x14; // x * 1 is needed to match, but can be safely removed as it makes no functional difference
+        x *= 1, x += 0x14; // x * 1 is needed to match, but can be safely removed as it makes no
+                           // functional difference
     else
         x -= 4;
 
@@ -5498,11 +5546,8 @@ static void sub_80CCB50(u8 boxId)
     s16 r6;
     u16 i;
 
-    struct SpriteSheet spriteSheet = {sPSSData->field_2F8, 0x200, TAG_TILE_3};
-    struct SpritePalette palettes[] = {
-        {sPSSData->field_6FC, TAG_PAL_DAC9},
-        {}
-    };
+    struct SpriteSheet spriteSheet = { sPSSData->field_2F8, 0x200, TAG_TILE_3 };
+    struct SpritePalette palettes[] = { { sPSSData->field_6FC, TAG_PAL_DAC9 }, {} };
 
     u16 wallpaperId = GetBoxWallpaper(boxId);
 
@@ -5538,7 +5583,7 @@ static void sub_80CCCFC(u8 boxId, s8 direction)
     u16 r8;
     s16 x, x2;
     u16 i;
-    struct SpriteSheet spriteSheet = {sPSSData->field_2F8, 0x200, TAG_TILE_3};
+    struct SpriteSheet spriteSheet = { sPSSData->field_2F8, 0x200, TAG_TILE_3 };
     struct SpriteTemplate template = gSpriteTemplate_857B0A8;
 
     sPSSData->field_6F8 = (sPSSData->field_6F8 == 0);
@@ -5716,38 +5761,38 @@ static void sub_80CD210(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        sprite->pos2.x = 0;
-        break;
-    case 1:
-        if (++sprite->data[1] > 3)
-        {
-            sprite->data[1] = 0;
-            sprite->pos2.x += sprite->data[3];
-            if (++sprite->data[2] > 5)
+        case 0:
+            sprite->pos2.x = 0;
+            break;
+        case 1:
+            if (++sprite->data[1] > 3)
             {
-                sprite->data[2] = 0;
-                sprite->pos2.x = 0;
+                sprite->data[1] = 0;
+                sprite->pos2.x += sprite->data[3];
+                if (++sprite->data[2] > 5)
+                {
+                    sprite->data[2] = 0;
+                    sprite->pos2.x = 0;
+                }
             }
-        }
-        break;
-    case 2:
-        sprite->data[0] = 3;
-        break;
-    case 3:
-        sprite->pos1.x -= sPSSData->wallpaperScrollSpeed;
-        if (sprite->pos1.x < 73 || sprite->pos1.x > 247)
-            sprite->invisible = TRUE;
-        if (--sprite->data[1] == 0)
-        {
-            sprite->pos1.x = sprite->data[2];
-            sprite->invisible = FALSE;
-            sprite->data[0] = 4;
-        }
-        break;
-    case 4:
-        sprite->pos1.x -= sPSSData->wallpaperScrollSpeed;
-        break;
+            break;
+        case 2:
+            sprite->data[0] = 3;
+            break;
+        case 3:
+            sprite->pos1.x -= sPSSData->wallpaperScrollSpeed;
+            if (sprite->pos1.x < 73 || sprite->pos1.x > 247)
+                sprite->invisible = TRUE;
+            if (--sprite->data[1] == 0)
+            {
+                sprite->pos1.x = sprite->data[2];
+                sprite->invisible = FALSE;
+                sprite->data[0] = 4;
+            }
+            break;
+        case 4:
+            sprite->pos1.x -= sPSSData->wallpaperScrollSpeed;
+            break;
     }
 }
 
@@ -5800,39 +5845,39 @@ static void sub_80CD444(u8 cursorArea, u8 cursorPosition, u16 *x, u16 *y)
 {
     switch (cursorArea)
     {
-    case CURSOR_AREA_IN_BOX:
-        *x = (cursorPosition % IN_BOX_ROWS) * 24 + 100;
-        *y = (cursorPosition / IN_BOX_ROWS) * 24 +  32;
-        break;
-    case CURSOR_AREA_IN_PARTY:
-        if (cursorPosition == 0)
-        {
-            *x = 0x68;
-            *y = 0x34;
-        }
-        else if (cursorPosition == PARTY_SIZE)
-        {
-            *x = 0x98;
-            *y = 0x84;
-        }
-        else
-        {
-            *x = 0x98;
-            *y = (cursorPosition - 1) * 24 + 4;
-        }
-        break;
-    case CURSOR_AREA_BOX:
-        *x = 0xa2;
-        *y = 0x0c;
-        break;
-    case CURSOR_AREA_BUTTONS:
-        *y = sIsMonBeingMoved ? 8 : 14;
-        *x = cursorPosition * 0x58 + 0x78;
-        break;
-    case 4:
-        *x = 0xa0;
-        *y = 0x60;
-        break;
+        case CURSOR_AREA_IN_BOX:
+            *x = (cursorPosition % IN_BOX_ROWS) * 24 + 100;
+            *y = (cursorPosition / IN_BOX_ROWS) * 24 + 32;
+            break;
+        case CURSOR_AREA_IN_PARTY:
+            if (cursorPosition == 0)
+            {
+                *x = 0x68;
+                *y = 0x34;
+            }
+            else if (cursorPosition == PARTY_SIZE)
+            {
+                *x = 0x98;
+                *y = 0x84;
+            }
+            else
+            {
+                *x = 0x98;
+                *y = (cursorPosition - 1) * 24 + 4;
+            }
+            break;
+        case CURSOR_AREA_BOX:
+            *x = 0xa2;
+            *y = 0x0c;
+            break;
+        case CURSOR_AREA_BUTTONS:
+            *y = sIsMonBeingMoved ? 8 : 14;
+            *x = cursorPosition * 0x58 + 0x78;
+            break;
+        case 4:
+            *x = 0xa0;
+            *y = 0x60;
+            break;
     }
 }
 
@@ -5840,12 +5885,12 @@ static u16 sub_80CD504(void)
 {
     switch (sBoxCursorArea)
     {
-    case CURSOR_AREA_IN_PARTY:
-        return GetMonData(&gPlayerParty[sBoxCursorPosition], MON_DATA_SPECIES);
-    case CURSOR_AREA_IN_BOX:
-        return GetCurrentBoxMonData(sBoxCursorPosition, MON_DATA_SPECIES);
-    default:
-        return SPECIES_NONE;
+        case CURSOR_AREA_IN_PARTY:
+            return GetMonData(&gPlayerParty[sBoxCursorPosition], MON_DATA_SPECIES);
+        case CURSOR_AREA_IN_BOX:
+            return GetCurrentBoxMonData(sBoxCursorPosition, MON_DATA_SPECIES);
+        default:
+            return SPECIES_NONE;
     }
 }
 
@@ -5992,26 +6037,26 @@ static void sub_80CD894(u8 newCurosrArea, u8 newCursorPosition)
 
     switch (newCurosrArea)
     {
-    case CURSOR_AREA_IN_PARTY:
-    case CURSOR_AREA_BOX:
-    case CURSOR_AREA_BUTTONS:
-        sPSSData->field_CB4->oam.priority = 1;
-        sPSSData->field_CB8->invisible = TRUE;
-        sPSSData->field_CB8->oam.priority = 1;
-        break;
-    case CURSOR_AREA_IN_BOX:
-        if (sPSSData->inBoxMovingMode != 0)
-        {
-            sPSSData->field_CB4->oam.priority = 0;
+        case CURSOR_AREA_IN_PARTY:
+        case CURSOR_AREA_BOX:
+        case CURSOR_AREA_BUTTONS:
+            sPSSData->field_CB4->oam.priority = 1;
             sPSSData->field_CB8->invisible = TRUE;
-        }
-        else
-        {
-            sPSSData->field_CB4->oam.priority = 2;
-            if (sBoxCursorArea == CURSOR_AREA_IN_BOX && sIsMonBeingMoved)
-                SetMovingMonPriority(2);
-        }
-        break;
+            sPSSData->field_CB8->oam.priority = 1;
+            break;
+        case CURSOR_AREA_IN_BOX:
+            if (sPSSData->inBoxMovingMode != 0)
+            {
+                sPSSData->field_CB4->oam.priority = 0;
+                sPSSData->field_CB8->invisible = TRUE;
+            }
+            else
+            {
+                sPSSData->field_CB4->oam.priority = 2;
+                if (sBoxCursorArea == CURSOR_AREA_IN_BOX && sIsMonBeingMoved)
+                    SetMovingMonPriority(2);
+            }
+            break;
     }
 }
 
@@ -6033,26 +6078,26 @@ static void sub_80CDA68(void)
     sub_80CEB40();
     switch (sBoxCursorArea)
     {
-    case CURSOR_AREA_BUTTONS:
-        SetMovingMonPriority(1);
-        break;
-    case CURSOR_AREA_BOX:
-        sub_80CD1A8(TRUE);
-        break;
-    case CURSOR_AREA_IN_PARTY:
-        sPSSData->field_CB8->subpriority = 13;
-        SetMovingMonPriority(1);
-        break;
-    case CURSOR_AREA_IN_BOX:
-        if (sPSSData->inBoxMovingMode == 0)
-        {
-            sPSSData->field_CB4->oam.priority = 1;
-            sPSSData->field_CB8->oam.priority = 2;
-            sPSSData->field_CB8->subpriority = 21;
-            sPSSData->field_CB8->invisible = FALSE;
-            SetMovingMonPriority(2);
-        }
-        break;
+        case CURSOR_AREA_BUTTONS:
+            SetMovingMonPriority(1);
+            break;
+        case CURSOR_AREA_BOX:
+            sub_80CD1A8(TRUE);
+            break;
+        case CURSOR_AREA_IN_PARTY:
+            sPSSData->field_CB8->subpriority = 13;
+            SetMovingMonPriority(1);
+            break;
+        case CURSOR_AREA_IN_BOX:
+            if (sPSSData->inBoxMovingMode == 0)
+            {
+                sPSSData->field_CB4->oam.priority = 1;
+                sPSSData->field_CB8->oam.priority = 2;
+                sPSSData->field_CB8->subpriority = 21;
+                sPSSData->field_CB8->invisible = FALSE;
+                SetMovingMonPriority(2);
+            }
+            break;
     }
 }
 
@@ -6099,8 +6144,7 @@ static u8 sub_80CDC2C(void)
 
 static void InitMonPlaceChange(u8 a0)
 {
-    static bool8 (*const placeChangeFuncs[])(void) =
-    {
+    static bool8 (*const placeChangeFuncs[])(void) = {
         MonPlaceChange_Move,
         MonPlaceChange_Place,
         MonPlaceChange_Shift,
@@ -6129,26 +6173,26 @@ static bool8 MonPlaceChange_Move(void)
 {
     switch (sPSSData->monPlaceChangeState)
     {
-    case 0:
-        if (sIsMonBeingMoved)
+        case 0:
+            if (sIsMonBeingMoved)
+                return FALSE;
+            StartSpriteAnim(sPSSData->field_CB4, 2);
+            sPSSData->monPlaceChangeState++;
+            break;
+        case 1:
+            if (!sub_80CDED4())
+            {
+                StartSpriteAnim(sPSSData->field_CB4, 3);
+                MoveMon();
+                sPSSData->monPlaceChangeState++;
+            }
+            break;
+        case 2:
+            if (!sub_80CDF08())
+                sPSSData->monPlaceChangeState++;
+            break;
+        case 3:
             return FALSE;
-        StartSpriteAnim(sPSSData->field_CB4, 2);
-        sPSSData->monPlaceChangeState++;
-        break;
-    case 1:
-        if (!sub_80CDED4())
-        {
-            StartSpriteAnim(sPSSData->field_CB4, 3);
-            MoveMon();
-            sPSSData->monPlaceChangeState++;
-        }
-        break;
-    case 2:
-        if (!sub_80CDF08())
-            sPSSData->monPlaceChangeState++;
-        break;
-    case 3:
-        return FALSE;
     }
 
     return TRUE;
@@ -6158,23 +6202,23 @@ static bool8 MonPlaceChange_Place(void)
 {
     switch (sPSSData->monPlaceChangeState)
     {
-    case 0:
-        if (!sub_80CDED4())
-        {
-            StartSpriteAnim(sPSSData->field_CB4, 2);
-            PlaceMon();
-            sPSSData->monPlaceChangeState++;
-        }
-        break;
-    case 1:
-        if (!sub_80CDF08())
-        {
-            StartSpriteAnim(sPSSData->field_CB4, 0);
-            sPSSData->monPlaceChangeState++;
-        }
-        break;
-    case 2:
-        return FALSE;
+        case 0:
+            if (!sub_80CDED4())
+            {
+                StartSpriteAnim(sPSSData->field_CB4, 2);
+                PlaceMon();
+                sPSSData->monPlaceChangeState++;
+            }
+            break;
+        case 1:
+            if (!sub_80CDF08())
+            {
+                StartSpriteAnim(sPSSData->field_CB4, 0);
+                sPSSData->monPlaceChangeState++;
+            }
+            break;
+        case 2:
+            return FALSE;
     }
 
     return TRUE;
@@ -6184,32 +6228,32 @@ static bool8 MonPlaceChange_Shift(void)
 {
     switch (sPSSData->monPlaceChangeState)
     {
-    case 0:
-        switch (sBoxCursorArea)
-        {
-        case CURSOR_AREA_IN_PARTY:
-            sPSSData->field_D91 = TOTAL_BOXES_COUNT;
-            break;
-        case CURSOR_AREA_IN_BOX:
-            sPSSData->field_D91 = StorageGetCurrentBox();
-            break;
-        default:
-            return FALSE;
-        }
-        StartSpriteAnim(sPSSData->field_CB4, 2);
-        sub_80CBD5C(sPSSData->field_D91, sBoxCursorPosition);
-        sPSSData->monPlaceChangeState++;
-        break;
-    case 1:
-        if (!sub_80CBDC4())
-        {
-            StartSpriteAnim(sPSSData->field_CB4, 3);
-            SetShiftedMonData(sPSSData->field_D91, sBoxCursorPosition);
+        case 0:
+            switch (sBoxCursorArea)
+            {
+                case CURSOR_AREA_IN_PARTY:
+                    sPSSData->field_D91 = TOTAL_BOXES_COUNT;
+                    break;
+                case CURSOR_AREA_IN_BOX:
+                    sPSSData->field_D91 = StorageGetCurrentBox();
+                    break;
+                default:
+                    return FALSE;
+            }
+            StartSpriteAnim(sPSSData->field_CB4, 2);
+            sub_80CBD5C(sPSSData->field_D91, sBoxCursorPosition);
             sPSSData->monPlaceChangeState++;
-        }
-        break;
-    case 2:
-        return FALSE;
+            break;
+        case 1:
+            if (!sub_80CBDC4())
+            {
+                StartSpriteAnim(sPSSData->field_CB4, 3);
+                SetShiftedMonData(sPSSData->field_D91, sBoxCursorPosition);
+                sPSSData->monPlaceChangeState++;
+            }
+            break;
+        case 2:
+            return FALSE;
     }
 
     return TRUE;
@@ -6229,14 +6273,14 @@ static bool8 sub_80CDED4(void)
 {
     switch (sPSSData->field_CB4->pos2.y)
     {
-    default:
-        sPSSData->field_CB4->pos2.y++;
-        break;
-    case 0:
-        sPSSData->field_CB4->pos2.y++;
-        break;
-    case 8:
-        return FALSE;
+        default:
+            sPSSData->field_CB4->pos2.y++;
+            break;
+        case 0:
+            sPSSData->field_CB4->pos2.y++;
+            break;
+        case 8:
+            return FALSE;
     }
 
     return TRUE;
@@ -6246,11 +6290,11 @@ static bool8 sub_80CDF08(void)
 {
     switch (sPSSData->field_CB4->pos2.y)
     {
-    case 0:
-        return FALSE;
-    default:
-        sPSSData->field_CB4->pos2.y--;
-        break;
+        case 0:
+            return FALSE;
+        default:
+            sPSSData->field_CB4->pos2.y--;
+            break;
     }
 
     return TRUE;
@@ -6260,19 +6304,19 @@ static void MoveMon(void)
 {
     switch (sBoxCursorArea)
     {
-    case CURSOR_AREA_IN_PARTY:
-        SetMovedMonData(TOTAL_BOXES_COUNT, sBoxCursorPosition);
-        sub_80CBC14(MODE_PARTY, sBoxCursorPosition);
-        break;
-    case CURSOR_AREA_IN_BOX:
-        if (sPSSData->inBoxMovingMode == 0)
-        {
-            SetMovedMonData(StorageGetCurrentBox(), sBoxCursorPosition);
-            sub_80CBC14(MODE_BOX, sBoxCursorPosition);
-        }
-        break;
-    default:
-        return;
+        case CURSOR_AREA_IN_PARTY:
+            SetMovedMonData(TOTAL_BOXES_COUNT, sBoxCursorPosition);
+            sub_80CBC14(MODE_PARTY, sBoxCursorPosition);
+            break;
+        case CURSOR_AREA_IN_BOX:
+            if (sPSSData->inBoxMovingMode == 0)
+            {
+                SetMovedMonData(StorageGetCurrentBox(), sBoxCursorPosition);
+                sub_80CBC14(MODE_BOX, sBoxCursorPosition);
+            }
+            break;
+        default:
+            return;
     }
 
     sIsMonBeingMoved = TRUE;
@@ -6284,17 +6328,17 @@ static void PlaceMon(void)
 
     switch (sBoxCursorArea)
     {
-    case CURSOR_AREA_IN_PARTY:
-        SetPlacedMonData(TOTAL_BOXES_COUNT, sBoxCursorPosition);
-        sub_80CBCAC(TOTAL_BOXES_COUNT, sBoxCursorPosition);
-        break;
-    case CURSOR_AREA_IN_BOX:
-        boxId = StorageGetCurrentBox();
-        SetPlacedMonData(boxId, sBoxCursorPosition);
-        sub_80CBCAC(boxId, sBoxCursorPosition);
-        break;
-    default:
-        return;
+        case CURSOR_AREA_IN_PARTY:
+            SetPlacedMonData(TOTAL_BOXES_COUNT, sBoxCursorPosition);
+            sub_80CBCAC(TOTAL_BOXES_COUNT, sBoxCursorPosition);
+            break;
+        case CURSOR_AREA_IN_BOX:
+            boxId = StorageGetCurrentBox();
+            SetPlacedMonData(boxId, sBoxCursorPosition);
+            sub_80CBCAC(boxId, sBoxCursorPosition);
+            break;
+        default:
+            return;
     }
 
     sIsMonBeingMoved = FALSE;
@@ -6444,14 +6488,21 @@ struct
     s8 mapGroup;
     s8 mapNum;
     u16 move;
-} static const gUnknown_0857B9A4[] =
-{
-    {MAP_GROUPS_COUNT, 0, MOVE_SURF},
-    {MAP_GROUPS_COUNT, 0, MOVE_DIVE},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_STRENGTH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_ROCK_SMASH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_STRENGTH},
-    {MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_ROCK_SMASH},
+} static const gUnknown_0857B9A4[] = {
+    { MAP_GROUPS_COUNT, 0, MOVE_SURF },
+    { MAP_GROUPS_COUNT, 0, MOVE_DIVE },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MOVE_STRENGTH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_1F),
+        MOVE_ROCK_SMASH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MOVE_STRENGTH },
+    { MAP_GROUP(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MAP_NUM(EVER_GRANDE_CITY_POKEMON_LEAGUE_2F),
+        MOVE_ROCK_SMASH },
 };
 
 static void sub_80CE350(u16 *moves)
@@ -6461,7 +6512,8 @@ static void sub_80CE350(u16 *moves)
     for (i = 0; i < ARRAY_COUNT(gUnknown_0857B9A4); i++)
     {
         if (gUnknown_0857B9A4[i].mapGroup == MAP_GROUPS_COUNT
-            || (gUnknown_0857B9A4[i].mapGroup == gSaveBlock1Ptr->location.mapGroup && gUnknown_0857B9A4[i].mapNum == gSaveBlock1Ptr->location.mapNum))
+            || (gUnknown_0857B9A4[i].mapGroup == gSaveBlock1Ptr->location.mapGroup
+                && gUnknown_0857B9A4[i].mapNum == gSaveBlock1Ptr->location.mapNum))
         {
             *moves = gUnknown_0857B9A4[i].move;
             moves++;
@@ -6502,7 +6554,8 @@ static void InitCanRelaseMonVars(void)
     }
 
     sub_80CE350(sPSSData->field_2176);
-    sPSSData->field_2174 = GetMonData(&sPSSData->field_2108, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
+    sPSSData->field_2174 =
+        GetMonData(&sPSSData->field_2108, MON_DATA_KNOWN_MOVES, (u8 *)sPSSData->field_2176);
     if (sPSSData->field_2174 != 0)
     {
         sPSSData->field_216D = 0;
@@ -6555,53 +6608,58 @@ static s8 RunCanReleaseMon(void)
 
     switch (sPSSData->field_2172)
     {
-    case 0:
-        for (i = 0; i < PARTY_SIZE; i++)
-        {
-            if (sPSSData->field_2170 != TOTAL_BOXES_COUNT || sPSSData->field_2171 != i)
+        case 0:
+            for (i = 0; i < PARTY_SIZE; i++)
             {
-                knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
-                sPSSData->field_2174 &= ~(knownMoves);
-            }
-        }
-        if (sPSSData->field_2174 == 0)
-        {
-            sPSSData->field_216D = 1;
-            sPSSData->field_216C = 1;
-        }
-        else
-        {
-            sPSSData->field_216E = 0;
-            sPSSData->field_216F = 0;
-            sPSSData->field_2172++;
-        }
-        break;
-    case 1:
-        for (i = 0; i < IN_BOX_COUNT; i++)
-        {
-            knownMoves = GetAndCopyBoxMonDataAt(sPSSData->field_216E, sPSSData->field_216F, MON_DATA_KNOWN_MOVES, (u8*)sPSSData->field_2176);
-            if (knownMoves != 0
-                && !(sPSSData->field_2170 == sPSSData->field_216E && sPSSData->field_2171 == sPSSData->field_216F))
-            {
-                sPSSData->field_2174 &= ~(knownMoves);
-                if (sPSSData->field_2174 == 0)
+                if (sPSSData->field_2170 != TOTAL_BOXES_COUNT || sPSSData->field_2171 != i)
                 {
-                    sPSSData->field_216D = 1;
-                    sPSSData->field_216C = 1;
-                    break;
+                    knownMoves = GetMonData(
+                        gPlayerParty + i, MON_DATA_KNOWN_MOVES, (u8 *)sPSSData->field_2176);
+                    sPSSData->field_2174 &= ~(knownMoves);
                 }
             }
-            if (++sPSSData->field_216F >= IN_BOX_COUNT)
+            if (sPSSData->field_2174 == 0)
             {
+                sPSSData->field_216D = 1;
+                sPSSData->field_216C = 1;
+            }
+            else
+            {
+                sPSSData->field_216E = 0;
                 sPSSData->field_216F = 0;
-                if (++sPSSData->field_216E >= TOTAL_BOXES_COUNT)
+                sPSSData->field_2172++;
+            }
+            break;
+        case 1:
+            for (i = 0; i < IN_BOX_COUNT; i++)
+            {
+                knownMoves = GetAndCopyBoxMonDataAt(sPSSData->field_216E,
+                    sPSSData->field_216F,
+                    MON_DATA_KNOWN_MOVES,
+                    (u8 *)sPSSData->field_2176);
+                if (knownMoves != 0
+                    && !(sPSSData->field_2170 == sPSSData->field_216E
+                         && sPSSData->field_2171 == sPSSData->field_216F))
                 {
-                    sPSSData->field_216D = 1;
-                    sPSSData->field_216C = 0;
+                    sPSSData->field_2174 &= ~(knownMoves);
+                    if (sPSSData->field_2174 == 0)
+                    {
+                        sPSSData->field_216D = 1;
+                        sPSSData->field_216C = 1;
+                        break;
+                    }
+                }
+                if (++sPSSData->field_216F >= IN_BOX_COUNT)
+                {
+                    sPSSData->field_216F = 0;
+                    if (++sPSSData->field_216E >= TOTAL_BOXES_COUNT)
+                    {
+                        sPSSData->field_216D = 1;
+                        sPSSData->field_216C = 0;
+                    }
                 }
             }
-        }
-        break;
+            break;
     }
 
     return -1;
@@ -6701,7 +6759,8 @@ static void SetMonMarkings(u8 markings)
 
 static bool8 CanMovePartyMon(void)
 {
-    if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && !sIsMonBeingMoved && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+    if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && !sIsMonBeingMoved
+        && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         return TRUE;
     else
         return FALSE;
@@ -6711,7 +6770,8 @@ static bool8 CanShiftMon(void)
 {
     if (sIsMonBeingMoved)
     {
-        if (sBoxCursorArea == CURSOR_AREA_IN_PARTY && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+        if (sBoxCursorArea == CURSOR_AREA_IN_PARTY
+            && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         {
             if (sPSSData->cursorMonIsEgg || GetMonData(&sPSSData->movingMon, MON_DATA_HP) == 0)
                 return FALSE;
@@ -6748,20 +6808,21 @@ static void sub_80CEB40(void)
     {
         switch (sBoxCursorArea)
         {
-        case CURSOR_AREA_IN_PARTY:
-            if (sBoxCursorPosition < PARTY_SIZE)
-            {
-                SetCursorMonData(&gPlayerParty[sBoxCursorPosition], MODE_PARTY);
+            case CURSOR_AREA_IN_PARTY:
+                if (sBoxCursorPosition < PARTY_SIZE)
+                {
+                    SetCursorMonData(&gPlayerParty[sBoxCursorPosition], MODE_PARTY);
+                    break;
+                }
+                // fallthrough
+            case CURSOR_AREA_BUTTONS:
+            case CURSOR_AREA_BOX:
+                SetCursorMonData(NULL, MODE_MOVE);
                 break;
-            }
-            // fallthrough
-        case CURSOR_AREA_BUTTONS:
-        case CURSOR_AREA_BOX:
-            SetCursorMonData(NULL, MODE_MOVE);
-            break;
-        case CURSOR_AREA_IN_BOX:
-            SetCursorMonData(GetBoxedMonPtr(StorageGetCurrentBox(), sBoxCursorPosition), MODE_BOX);
-            break;
+            case CURSOR_AREA_IN_BOX:
+                SetCursorMonData(
+                    GetBoxedMonPtr(StorageGetCurrentBox(), sBoxCursorPosition), MODE_BOX);
+                break;
         }
     }
 }
@@ -6820,14 +6881,15 @@ static void SetCursorMonData(void *pokemon, u8 mode)
             else
                 sPSSData->cursorMonIsEgg = GetBoxMonData(boxMon, MON_DATA_IS_EGG);
 
-
             GetBoxMonData(boxMon, MON_DATA_NICKNAME, sPSSData->cursorMonNick);
             StringGetEnd10(sPSSData->cursorMonNick);
             sPSSData->cursorMonLevel = GetLevelFromBoxMonExp(boxMon);
             sPSSData->cursorMonMarkings = GetBoxMonData(boxMon, MON_DATA_MARKINGS);
             sPSSData->cursorMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
-            sPSSData->cursorMonPalette = GetMonSpritePalFromSpeciesAndPersonality(sPSSData->cursorMonSpecies, otId, sPSSData->cursorMonPersonality);
-            gender = GetGenderFromSpeciesAndPersonality(sPSSData->cursorMonSpecies, sPSSData->cursorMonPersonality);
+            sPSSData->cursorMonPalette = GetMonSpritePalFromSpeciesAndPersonality(
+                sPSSData->cursorMonSpecies, otId, sPSSData->cursorMonPersonality);
+            gender = GetGenderFromSpeciesAndPersonality(
+                sPSSData->cursorMonSpecies, sPSSData->cursorMonPersonality);
             sPSSData->cursorMonItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
         }
     }
@@ -6858,7 +6920,8 @@ static void SetCursorMonData(void *pokemon, u8 mode)
     }
     else
     {
-        if (sPSSData->cursorMonSpecies == SPECIES_NIDORAN_F || sPSSData->cursorMonSpecies == SPECIES_NIDORAN_M)
+        if (sPSSData->cursorMonSpecies == SPECIES_NIDORAN_F
+            || sPSSData->cursorMonSpecies == SPECIES_NIDORAN_M)
             gender = MON_GENDERLESS;
 
         StringCopyPadded(sPSSData->cursorMonNickText, sPSSData->cursorMonNick, CHAR_SPACE, 5);
@@ -6872,24 +6935,24 @@ static void SetCursorMonData(void *pokemon, u8 mode)
         *(txtPtr)++ = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
         switch (gender)
         {
-        case MON_MALE:
-            *(txtPtr)++ = TEXT_COLOR_RED;
-            *(txtPtr)++ = TEXT_COLOR_WHITE;
-            *(txtPtr)++ = TEXT_COLOR_LIGHT_RED;
-            *(txtPtr)++ = CHAR_MALE;
-            break;
-        case MON_FEMALE:
-            *(txtPtr)++ = TEXT_COLOR_GREEN;
-            *(txtPtr)++ = TEXT_COLOR_WHITE;
-            *(txtPtr)++ = TEXT_COLOR_LIGHT_GREEN;
-            *(txtPtr)++ = CHAR_FEMALE;
-            break;
-        default:
-            *(txtPtr)++ = TEXT_COLOR_DARK_GREY;
-            *(txtPtr)++ = TEXT_COLOR_WHITE;
-            *(txtPtr)++ = TEXT_COLOR_LIGHT_GREY;
-            *(txtPtr)++ = CHAR_UNK_SPACER;
-            break;
+            case MON_MALE:
+                *(txtPtr)++ = TEXT_COLOR_RED;
+                *(txtPtr)++ = TEXT_COLOR_WHITE;
+                *(txtPtr)++ = TEXT_COLOR_LIGHT_RED;
+                *(txtPtr)++ = CHAR_MALE;
+                break;
+            case MON_FEMALE:
+                *(txtPtr)++ = TEXT_COLOR_GREEN;
+                *(txtPtr)++ = TEXT_COLOR_WHITE;
+                *(txtPtr)++ = TEXT_COLOR_LIGHT_GREEN;
+                *(txtPtr)++ = CHAR_FEMALE;
+                break;
+            default:
+                *(txtPtr)++ = TEXT_COLOR_DARK_GREY;
+                *(txtPtr)++ = TEXT_COLOR_WHITE;
+                *(txtPtr)++ = TEXT_COLOR_LIGHT_GREY;
+                *(txtPtr)++ = CHAR_UNK_SPACER;
+                break;
         }
 
         *(txtPtr++) = EXT_CTRL_CODE_BEGIN;
@@ -6901,12 +6964,16 @@ static void SetCursorMonData(void *pokemon, u8 mode)
         *(txtPtr++) = CHAR_EXTRA_SYMBOL;
         *(txtPtr++) = CHAR_LV_2;
 
-        txtPtr = ConvertIntToDecimalStringN(txtPtr, sPSSData->cursorMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+        txtPtr = ConvertIntToDecimalStringN(
+            txtPtr, sPSSData->cursorMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
         txtPtr[0] = CHAR_SPACE;
         txtPtr[1] = EOS;
 
         if (sPSSData->cursorMonItem != 0)
-            StringCopyPadded(sPSSData->cursorMonItemName, ItemId_GetName(sPSSData->cursorMonItem), CHAR_SPACE, 8);
+            StringCopyPadded(sPSSData->cursorMonItemName,
+                ItemId_GetName(sPSSData->cursorMonItem),
+                CHAR_SPACE,
+                8);
         else
             StringFill(sPSSData->cursorMonItemName, CHAR_SPACE, 8);
     }
@@ -6916,13 +6983,13 @@ static u8 HandleInput_InBox(void)
 {
     switch (sPSSData->inBoxMovingMode)
     {
-    case 0:
-    default:
-        return InBoxInput_Normal();
-    case 1:
-        return InBoxInput_GrabbingMultiple();
-    case 2:
-        return InBoxInput_MovingMultiple();
+        case 0:
+        default:
+            return InBoxInput_Normal();
+        case 1:
+            return InBoxInput_GrabbingMultiple();
+        case 2:
+            return InBoxInput_MovingMultiple();
     }
 }
 
@@ -7013,22 +7080,22 @@ static u8 InBoxInput_Normal(void)
             {
                 switch (sub_80CFF98(0))
                 {
-                case 1:
-                    return 11;
-                case 2:
-                    return 12;
-                case 3:
-                    return 13;
-                case 4:
-                    return 14;
-                case 5:
-                    return 15;
-                case 12:
-                    return 16;
-                case 13:
-                    return 17;
-                case 15:
-                    return 18;
+                    case 1:
+                        return 11;
+                    case 2:
+                        return 12;
+                    case 3:
+                        return 13;
+                    case 4:
+                        return 14;
+                    case 5:
+                        return 15;
+                    case 12:
+                        return 16;
+                    case 13:
+                        return 17;
+                    case 15:
+                        return 18;
                 }
             }
             else
@@ -7293,22 +7360,22 @@ static u8 HandleInput_InParty(void)
 
                 switch (sub_80CFF98(0))
                 {
-                case 1:
-                    return 11;
-                case 2:
-                    return 12;
-                case 3:
-                    return 13;
-                case 4:
-                    return 14;
-                case 5:
-                    return 15;
-                case 12:
-                    return 16;
-                case 13:
-                    return 17;
-                case 15:
-                    return 18;
+                    case 1:
+                        return 11;
+                    case 2:
+                        return 12;
+                    case 3:
+                        return 13;
+                    case 4:
+                        return 14;
+                    case 5:
+                        return 15;
+                    case 12:
+                        return 16;
+                    case 13:
+                        return 17;
+                    case 15:
+                        return 18;
                 }
             }
         }
@@ -7436,7 +7503,7 @@ static u8 HandleInput_OnButtons(void)
             sPSSData->field_CD2 = -1;
             if (sBoxCursorPosition == 0)
                 cursorPosition = IN_BOX_COUNT - 1 - 5;
-            else 
+            else
                 cursorPosition = IN_BOX_COUNT - 1;
             sPSSData->field_CD7 = 1;
             break;
@@ -7491,14 +7558,12 @@ static u8 HandleInput(void)
     {
         u8 (*func)(void);
         s8 area;
-    }
-    static const inputFuncs[] =
-    {
-        {HandleInput_InBox, CURSOR_AREA_IN_BOX},
-        {HandleInput_InParty, CURSOR_AREA_IN_PARTY},
-        {HandleInput_OnBox, CURSOR_AREA_BOX},
-        {HandleInput_OnButtons, CURSOR_AREA_BUTTONS},
-        {NULL, 0},
+    } static const inputFuncs[] = {
+        { HandleInput_InBox, CURSOR_AREA_IN_BOX },
+        { HandleInput_InParty, CURSOR_AREA_IN_PARTY },
+        { HandleInput_OnBox, CURSOR_AREA_BOX },
+        { HandleInput_OnButtons, CURSOR_AREA_BUTTONS },
+        { NULL, 0 },
     };
 
     u16 i = 0;
@@ -7536,37 +7601,37 @@ static bool8 sub_80CFA84(void)
 
     switch (sPSSData->boxOption)
     {
-    case BOX_OPTION_DEPOSIT:
-        if (var0)
-            SetMenuText(1);
-        else
-            return FALSE;
-        break;
-    case BOX_OPTION_WITHDRAW:
-        if (var0)
-            SetMenuText(2);
-        else
-            return FALSE;
-        break;
-    case BOX_OPTION_MOVE_MONS:
-        if (sIsMonBeingMoved)
-        {
+        case BOX_OPTION_DEPOSIT:
             if (var0)
-                SetMenuText(4);
-            else
-                SetMenuText(5);
-        }
-        else
-        {
-            if (var0)
-                SetMenuText(3);
+                SetMenuText(1);
             else
                 return FALSE;
-        }
-        break;
-    case BOX_OPTION_MOVE_ITEMS:
-    default:
-        return FALSE;
+            break;
+        case BOX_OPTION_WITHDRAW:
+            if (var0)
+                SetMenuText(2);
+            else
+                return FALSE;
+            break;
+        case BOX_OPTION_MOVE_MONS:
+            if (sIsMonBeingMoved)
+            {
+                if (var0)
+                    SetMenuText(4);
+                else
+                    SetMenuText(5);
+            }
+            else
+            {
+                if (var0)
+                    SetMenuText(3);
+                else
+                    return FALSE;
+            }
+            break;
+        case BOX_OPTION_MOVE_ITEMS:
+        default:
+            return FALSE;
     }
 
     SetMenuText(6);
@@ -7641,64 +7706,35 @@ static void sub_80CFC14(void)
     u16 x, y;
     u8 spriteId;
     u8 priority, subpriority;
-    struct SpriteSheet spriteSheets[] =
-    {
-        {gHandCursorTiles, 0x800, 0},
-        {gHandCursorShadowTiles, 0x80, 1},
-        {}
+    struct SpriteSheet spriteSheets[] = {
+        { gHandCursorTiles, 0x800, 0 }, { gHandCursorShadowTiles, 0x80, 1 }, {}
     };
 
-    struct SpritePalette spritePalettes[] =
-    {
-        {gHandCursorPalette, TAG_PAL_DAC7},
-        {}
-    };
+    struct SpritePalette spritePalettes[] = { { gHandCursorPalette, TAG_PAL_DAC7 }, {} };
 
-    static const struct OamData sOamData_857BA0C =
-    {
+    static const struct OamData sOamData_857BA0C = {
         .shape = SPRITE_SHAPE(32x32),
         .size = SPRITE_SIZE(32x32),
         .priority = 1,
     };
-    static const struct OamData sOamData_857BA14 =
-    {
+    static const struct OamData sOamData_857BA14 = {
         .shape = SPRITE_SHAPE(16x16),
         .size = SPRITE_SIZE(16x16),
         .priority = 1,
     };
 
-    static const union AnimCmd sSpriteAnim_857BA1C[] =
-    {
-        ANIMCMD_FRAME(0, 30),
-        ANIMCMD_FRAME(16, 30),
-        ANIMCMD_JUMP(0)
+    static const union AnimCmd sSpriteAnim_857BA1C[] = {
+        ANIMCMD_FRAME(0, 30), ANIMCMD_FRAME(16, 30), ANIMCMD_JUMP(0)
     };
-    static const union AnimCmd sSpriteAnim_857BA28[] =
-    {
-        ANIMCMD_FRAME(0, 5),
-        ANIMCMD_END
-    };
-    static const union AnimCmd sSpriteAnim_857BA30[] =
-    {
-        ANIMCMD_FRAME(32, 5),
-        ANIMCMD_END
-    };
-    static const union AnimCmd sSpriteAnim_857BA38[] =
-    {
-        ANIMCMD_FRAME(48, 5),
-        ANIMCMD_END
+    static const union AnimCmd sSpriteAnim_857BA28[] = { ANIMCMD_FRAME(0, 5), ANIMCMD_END };
+    static const union AnimCmd sSpriteAnim_857BA30[] = { ANIMCMD_FRAME(32, 5), ANIMCMD_END };
+    static const union AnimCmd sSpriteAnim_857BA38[] = { ANIMCMD_FRAME(48, 5), ANIMCMD_END };
+
+    static const union AnimCmd *const sSpriteAnimTable_857BA40[] = {
+        sSpriteAnim_857BA1C, sSpriteAnim_857BA28, sSpriteAnim_857BA30, sSpriteAnim_857BA38
     };
 
-    static const union AnimCmd *const sSpriteAnimTable_857BA40[] =
-    {
-        sSpriteAnim_857BA1C,
-        sSpriteAnim_857BA28,
-        sSpriteAnim_857BA30,
-        sSpriteAnim_857BA38
-    };
-
-    static const struct SpriteTemplate gSpriteTemplate_857BA50 =
-    {
+    static const struct SpriteTemplate gSpriteTemplate_857BA50 = {
         .tileTag = TAG_TILE_0,
         .paletteTag = TAG_PAL_WAVEFORM,
         .oam = &sOamData_857BA0C,
@@ -7708,8 +7744,7 @@ static void sub_80CFC14(void)
         .callback = SpriteCallbackDummy,
     };
 
-    static const struct SpriteTemplate gSpriteTemplate_857BA68 =
-    {
+    static const struct SpriteTemplate gSpriteTemplate_857BA68 = {
         .tileTag = TAG_TILE_1,
         .paletteTag = TAG_PAL_WAVEFORM,
         .oam = &sOamData_857BA14,
@@ -7825,8 +7860,7 @@ static void InitMenu(void)
     sPSSData->menuWindow.baseBlock = 92;
 }
 
-static const u8 *const gUnknown_0857BA80[] =
-{
+static const u8 *const gUnknown_0857BA80[] = {
     gPCText_Cancel,
     gPCText_Store,
     gPCText_Withdraw,
@@ -7902,8 +7936,9 @@ static void AddMenu(void)
     sPSSData->field_CB0 = AddWindow(&sPSSData->menuWindow);
     ClearWindowTilemap(sPSSData->field_CB0);
     DrawStdFrameWithCustomTileAndPalette(sPSSData->field_CB0, FALSE, 11, 14);
-    PrintMenuTable(sPSSData->field_CB0, sPSSData->menuItemsCount, (void*)sPSSData->menuItems);
-    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(sPSSData->field_CB0, sPSSData->menuItemsCount, 0);
+    PrintMenuTable(sPSSData->field_CB0, sPSSData->menuItemsCount, (void *)sPSSData->menuItems);
+    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(
+        sPSSData->field_CB0, sPSSData->menuItemsCount, 0);
     ScheduleBgCopyTilemapToVram(0);
     sPSSData->field_CAE = 0;
 }
@@ -7961,8 +7996,7 @@ static void sub_80D013C(void)
 // The icons are converted to background 0 which coordinates are changed while moving mons.
 // There is also a bit of math involved in determining how many column/rows of mons to grab/move.
 
-static const struct WindowTemplate gUnknown_0857BB1C =
-{
+static const struct WindowTemplate gUnknown_0857BB1C = {
     .bg = 0,
     .tilemapLeft = 10,
     .tilemapTop = 3,
@@ -7990,8 +8024,7 @@ EWRAM_DATA static struct
     u16 bgY;
     u16 field_10;
     struct BoxPokemon boxMons[IN_BOX_COUNT];
-}
-*sMoveMonsPtr = NULL;
+} *sMoveMonsPtr = NULL;
 
 static bool8 sub_80D0164(void)
 {
@@ -8025,18 +8058,18 @@ static bool8 sub_80D01E4(void)
 {
     switch (sMoveMonsPtr->field_0)
     {
-    case 0:
-        return sub_80D024C();
-    case 1:
-        return sub_80D0344();
-    case 2:
-        return sub_80D03B0();
-    case 3:
-        return sub_80D0420();
-    case 4:
-        return sub_80D04A0();
-    case 5:
-        return sub_80D04C8();
+        case 0:
+            return sub_80D024C();
+        case 1:
+            return sub_80D0344();
+        case 2:
+            return sub_80D03B0();
+        case 3:
+            return sub_80D0420();
+        case 4:
+            return sub_80D04A0();
+        case 5:
+            return sub_80D04C8();
     }
 
     return FALSE;
@@ -8046,35 +8079,35 @@ static bool8 sub_80D024C(void)
 {
     switch (sMoveMonsPtr->state)
     {
-    case 0:
-        HideBg(0);
-        sub_80D304C(0x80);
-        sMoveMonsPtr->state++;
-        break;
-    case 1:
-        sub_80CFE14(&sMoveMonsPtr->fromRow, &sMoveMonsPtr->fromColumn);
-        sMoveMonsPtr->toRow = sMoveMonsPtr->fromRow;
-        sMoveMonsPtr->toColumn = sMoveMonsPtr->fromColumn;
-        ChangeBgX(0, -1024, 0);
-        ChangeBgY(0, -1024, 0);
-        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
-        FillWindowPixelBuffer8Bit(sPSSData->field_2200, PIXEL_FILL(0));
-        sub_80D07B0(sMoveMonsPtr->fromRow, sMoveMonsPtr->fromColumn);
-        SetBgAttribute(0, BG_ATTR_PALETTEMODE, 1);
-        PutWindowTilemap(sPSSData->field_2200);
-        CopyWindowToVram8Bit(sPSSData->field_2200, 3);
-        BlendPalettes(0x3F00, 8, RGB_WHITE);
-        sub_80CFE54(2);
-        SetGpuRegBits(REG_OFFSET_BG0CNT, BGCNT_256COLOR);
-        sMoveMonsPtr->state++;
-        break;
-    case 2:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            ShowBg(0);
-            return FALSE;
-        }
-        break;
+        case 0:
+            HideBg(0);
+            sub_80D304C(0x80);
+            sMoveMonsPtr->state++;
+            break;
+        case 1:
+            sub_80CFE14(&sMoveMonsPtr->fromRow, &sMoveMonsPtr->fromColumn);
+            sMoveMonsPtr->toRow = sMoveMonsPtr->fromRow;
+            sMoveMonsPtr->toColumn = sMoveMonsPtr->fromColumn;
+            ChangeBgX(0, -1024, 0);
+            ChangeBgY(0, -1024, 0);
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
+            FillWindowPixelBuffer8Bit(sPSSData->field_2200, PIXEL_FILL(0));
+            sub_80D07B0(sMoveMonsPtr->fromRow, sMoveMonsPtr->fromColumn);
+            SetBgAttribute(0, BG_ATTR_PALETTEMODE, 1);
+            PutWindowTilemap(sPSSData->field_2200);
+            CopyWindowToVram8Bit(sPSSData->field_2200, 3);
+            BlendPalettes(0x3F00, 8, RGB_WHITE);
+            sub_80CFE54(2);
+            SetGpuRegBits(REG_OFFSET_BG0CNT, BGCNT_256COLOR);
+            sMoveMonsPtr->state++;
+            break;
+        case 2:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                ShowBg(0);
+                return FALSE;
+            }
+            break;
     }
 
     return TRUE;
@@ -8084,24 +8117,24 @@ static bool8 sub_80D0344(void)
 {
     switch (sMoveMonsPtr->state)
     {
-    case 0:
-        HideBg(0);
-        sMoveMonsPtr->state++;
-        break;
-    case 1:
-        sub_80D0B5C();
-        sub_80CFE54(0);
-        sMoveMonsPtr->state++;
-        break;
-    case 2:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            sub_80CFE84();
-            LoadPalette(GetTextWindowPalette(3), 0xD0, 0x20);
-            ShowBg(0);
-            return FALSE;
-        }
-        break;
+        case 0:
+            HideBg(0);
+            sMoveMonsPtr->state++;
+            break;
+        case 1:
+            sub_80D0B5C();
+            sub_80CFE54(0);
+            sMoveMonsPtr->state++;
+            break;
+        case 2:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                sub_80CFE84();
+                LoadPalette(GetTextWindowPalette(3), 0xD0, 0x20);
+                ShowBg(0);
+                return FALSE;
+            }
+            break;
     }
 
     return TRUE;
@@ -8111,19 +8144,19 @@ static bool8 sub_80D03B0(void)
 {
     switch (sMoveMonsPtr->state)
     {
-    case 0:
-        if (!sub_80CD554())
-        {
-            sub_80CFE14(&sMoveMonsPtr->field_6, &sMoveMonsPtr->field_7);
-            sub_80D062C();
-            sMoveMonsPtr->toRow = sMoveMonsPtr->field_6;
-            sMoveMonsPtr->toColumn = sMoveMonsPtr->field_7;
-            CopyWindowToVram8Bit(sPSSData->field_2200, 2);
-            sMoveMonsPtr->state++;
-        }
-        break;
-    case 1:
-        return IsDma3ManagerBusyWithBgCopy();
+        case 0:
+            if (!sub_80CD554())
+            {
+                sub_80CFE14(&sMoveMonsPtr->field_6, &sMoveMonsPtr->field_7);
+                sub_80D062C();
+                sMoveMonsPtr->toRow = sMoveMonsPtr->field_6;
+                sMoveMonsPtr->toColumn = sMoveMonsPtr->field_7;
+                CopyWindowToVram8Bit(sPSSData->field_2200, 2);
+                sMoveMonsPtr->state++;
+            }
+            break;
+        case 1:
+            return IsDma3ManagerBusyWithBgCopy();
     }
 
     return TRUE;
@@ -8135,27 +8168,27 @@ static bool8 sub_80D0420(void)
 
     switch (sMoveMonsPtr->state)
     {
-    case 0:
-        sub_80D08CC();
-        sub_80D09A4();
-        sub_80CDC64(FALSE);
-        sMoveMonsPtr->state++;
-        break;
-    case 1:
-        if (!DoMonPlaceChange())
-        {
-            sub_80CFE54(3);
-            sub_80D0884(0, 256, 8);
-            sub_80CDC64(TRUE);
+        case 0:
+            sub_80D08CC();
+            sub_80D09A4();
+            sub_80CDC64(FALSE);
             sMoveMonsPtr->state++;
-        }
-        break;
-    case 2:
-        var1 = sub_80D0894();
-        var2 = DoMonPlaceChange();
-        if (!var1 && !var2)
-            return FALSE;
-        break;
+            break;
+        case 1:
+            if (!DoMonPlaceChange())
+            {
+                sub_80CFE54(3);
+                sub_80D0884(0, 256, 8);
+                sub_80CDC64(TRUE);
+                sMoveMonsPtr->state++;
+            }
+            break;
+        case 2:
+            var1 = sub_80D0894();
+            var2 = DoMonPlaceChange();
+            if (!var1 && !var2)
+                return FALSE;
+            break;
     }
 
     return TRUE;
@@ -8176,39 +8209,39 @@ static bool8 sub_80D04C8(void)
 {
     switch (sMoveMonsPtr->state)
     {
-    case 0:
-        sub_80D0AAC();
-        sub_80D0884(0, -256, 8);
-        sub_80CDC64(FALSE);
-        sMoveMonsPtr->state++;
-        break;
-    case 1:
-        if (!DoMonPlaceChange() && !sub_80D0894())
-        {
-            sub_80D0A1C();
-            sub_80CFE54(2);
-            sub_80CDC64(TRUE);
-            HideBg(0);
+        case 0:
+            sub_80D0AAC();
+            sub_80D0884(0, -256, 8);
+            sub_80CDC64(FALSE);
             sMoveMonsPtr->state++;
-        }
-        break;
-    case 2:
-        if (!DoMonPlaceChange())
-        {
-            sub_80CFE54(0);
-            sub_80D0B5C();
-            sMoveMonsPtr->state++;
-        }
-        break;
-    case 3:
-        if (!IsDma3ManagerBusyWithBgCopy())
-        {
-            LoadPalette(GetTextWindowPalette(3), 0xD0, 0x20);
-            sub_80CFE84();
-            ShowBg(0);
-            return FALSE;
-        }
-        break;
+            break;
+        case 1:
+            if (!DoMonPlaceChange() && !sub_80D0894())
+            {
+                sub_80D0A1C();
+                sub_80CFE54(2);
+                sub_80CDC64(TRUE);
+                HideBg(0);
+                sMoveMonsPtr->state++;
+            }
+            break;
+        case 2:
+            if (!DoMonPlaceChange())
+            {
+                sub_80CFE54(0);
+                sub_80D0B5C();
+                sMoveMonsPtr->state++;
+            }
+            break;
+        case 3:
+            if (!IsDma3ManagerBusyWithBgCopy())
+            {
+                LoadPalette(GetTextWindowPalette(3), 0xD0, 0x20);
+                sub_80CFE84();
+                ShowBg(0);
+                return FALSE;
+            }
+            break;
     }
 
     return TRUE;
@@ -8218,30 +8251,30 @@ static bool8 sub_80D0580(u8 arg0)
 {
     switch (arg0)
     {
-    case 0:
-        if (sMoveMonsPtr->minColumn == 0)
-            return FALSE;
-        sMoveMonsPtr->minColumn--;
-        sub_80D0884(0, 1024, 6);
-        break;
-    case 1:
-        if (sMoveMonsPtr->minColumn + sMoveMonsPtr->columsTotal >= 5)
-            return FALSE;
-        sMoveMonsPtr->minColumn++;
-        sub_80D0884(0, -1024, 6);
-        break;
-    case 2:
-        if (sMoveMonsPtr->minRow == 0)
-            return FALSE;
-        sMoveMonsPtr->minRow--;
-        sub_80D0884(1024, 0, 6);
-        break;
-    case 3:
-        if (sMoveMonsPtr->minRow + sMoveMonsPtr->rowsTotal > 5)
-            return FALSE;
-        sMoveMonsPtr->minRow++;
-        sub_80D0884(-1024, 0, 6);
-        break;
+        case 0:
+            if (sMoveMonsPtr->minColumn == 0)
+                return FALSE;
+            sMoveMonsPtr->minColumn--;
+            sub_80D0884(0, 1024, 6);
+            break;
+        case 1:
+            if (sMoveMonsPtr->minColumn + sMoveMonsPtr->columsTotal >= 5)
+                return FALSE;
+            sMoveMonsPtr->minColumn++;
+            sub_80D0884(0, -1024, 6);
+            break;
+        case 2:
+            if (sMoveMonsPtr->minRow == 0)
+                return FALSE;
+            sMoveMonsPtr->minRow--;
+            sub_80D0884(1024, 0, 6);
+            break;
+        case 3:
+            if (sMoveMonsPtr->minRow + sMoveMonsPtr->rowsTotal > 5)
+                return FALSE;
+            sMoveMonsPtr->minRow++;
+            sub_80D0884(-1024, 0, 6);
+            break;
     }
 
     return TRUE;
@@ -8249,8 +8282,10 @@ static bool8 sub_80D0580(u8 arg0)
 
 static void sub_80D062C(void)
 {
-    s16 var = (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->field_6)) - (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->toRow));
-    s16 var2 = (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->field_7)) - (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->toColumn));
+    s16 var = (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->field_6))
+              - (abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->toRow));
+    s16 var2 = (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->field_7))
+               - (abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->toColumn));
 
     if (var > 0)
         sub_80D06D0(sMoveMonsPtr->field_6, sMoveMonsPtr->fromColumn, sMoveMonsPtr->toColumn);
@@ -8338,17 +8373,8 @@ static void sub_80D07B0(u8 arg0, u8 arg1)
         const u8 *iconGfx = GetMonIconPtr(species, personality, 1);
         u8 index = GetValidMonIconPalIndex(species) + 8;
 
-        BlitBitmapRectToWindow4BitTo8Bit(sPSSData->field_2200,
-                                         iconGfx,
-                                         0,
-                                         0,
-                                         32,
-                                         32,
-                                         24 * arg0,
-                                         24 * arg1,
-                                         32,
-                                         32,
-                                         index);
+        BlitBitmapRectToWindow4BitTo8Bit(
+            sPSSData->field_2200, iconGfx, 0, 0, 32, 32, 24 * arg0, 24 * arg1, 32, 32, index);
     }
 }
 
@@ -8359,12 +8385,7 @@ static void sub_80D0834(u8 arg0, u8 arg1)
 
     if (species != SPECIES_NONE)
     {
-        FillWindowPixelRect8Bit(sPSSData->field_2200,
-                                PIXEL_FILL(0),
-                                24 * arg0,
-                                24 * arg1,
-                                32,
-                                32);
+        FillWindowPixelRect8Bit(sPSSData->field_2200, PIXEL_FILL(0), 24 * arg0, 24 * arg1, 32, 32);
     }
 }
 
@@ -8517,9 +8538,7 @@ static bool8 sub_80D0BC0(void)
 
 static const u32 gUnknown_0857BB24[] = INCBIN_U32("graphics/pokemon_storage/unknown_frame.4bpp");
 
-static const struct OamData sOamData_857BBA4 =
-{
-    .y = 0,
+static const struct OamData sOamData_857BBA4 = { .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -8531,60 +8550,41 @@ static const struct OamData sOamData_857BBA4 =
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
-    .affineParam = 0
+    .affineParam = 0 };
+
+static const union AffineAnimCmd sSpriteAffineAnim_857BBAC[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBAC[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BBBC[] = {
+    AFFINEANIMCMD_FRAME(88, 88, 0, 0), AFFINEANIMCMD_FRAME(5, 5, 0, 8), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBBC[] =
-{
-    AFFINEANIMCMD_FRAME(88, 88, 0, 0),
-    AFFINEANIMCMD_FRAME(5, 5, 0, 8),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BBD4[] = {
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0), AFFINEANIMCMD_FRAME(-5, -5, 0, 8), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BBD4[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_FRAME(-5, -5, 0, 8),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd sSpriteAffineAnim_857BBEC[] =
-{
-    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+static const union AffineAnimCmd sSpriteAffineAnim_857BBEC[] = { AFFINEANIMCMD_FRAME(
+                                                                     128, 128, 0, 0),
     AFFINEANIMCMD_FRAME(10, 10, 0, 12),
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
+    AFFINEANIMCMD_END };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC0C[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+static const union AffineAnimCmd sSpriteAffineAnim_857BC0C[] = { AFFINEANIMCMD_FRAME(
+                                                                     256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(-10, -10, 0, 12),
     AFFINEANIMCMD_FRAME(128, 128, 0, 0),
-    AFFINEANIMCMD_END
+    AFFINEANIMCMD_END };
+
+static const union AffineAnimCmd sSpriteAffineAnim_857BC2C[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_FRAME(-5, -5, 0, 16), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC2C[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_FRAME(-5, -5, 0, 16),
-    AFFINEANIMCMD_END
+static const union AffineAnimCmd sSpriteAffineAnim_857BC44[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0), AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_857BC44[] =
-{
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
-    AFFINEANIMCMD_END
-};
-
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] =
-{
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] = {
     sSpriteAffineAnim_857BBAC,
     sSpriteAffineAnim_857BBBC,
     sSpriteAffineAnim_857BBD4,
@@ -8594,8 +8594,7 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_857BC44[] =
     sSpriteAffineAnim_857BC44
 };
 
-static const struct SpriteTemplate gSpriteTemplate_857BC70 =
-{
+static const struct SpriteTemplate gSpriteTemplate_857BC70 = {
     .tileTag = TAG_TILE_7,
     .paletteTag = TAG_PAL_DACB,
     .oam = &sOamData_857BBA4,
@@ -8622,7 +8621,8 @@ static void sub_80D0C60(void)
         {
             spriteSheet.tag = TAG_TILE_7 + i;
             LoadCompressedSpriteSheet(&spriteSheet);
-            sPSSData->field_2204[i].tiles = GetSpriteTileStartByTag(spriteSheet.tag) * 32 + (void*)(OBJ_VRAM0);
+            sPSSData->field_2204[i].tiles =
+                GetSpriteTileStartByTag(spriteSheet.tag) * 32 + (void *)(OBJ_VRAM0);
             sPSSData->field_2204[i].palIndex = AllocSpritePalette(TAG_PAL_DACB + i);
             sPSSData->field_2204[i].palIndex *= 16;
             sPSSData->field_2204[i].palIndex += 0x100;
@@ -8667,18 +8667,19 @@ static void sub_80D0D8C(u8 cursorArea, u8 cursorPos)
 
     switch (cursorArea)
     {
-    case CURSOR_AREA_IN_BOX:
-        if (!GetCurrentBoxMonData(cursorPos, MON_DATA_SANITY_HAS_SPECIES))
+        case CURSOR_AREA_IN_BOX:
+            if (!GetCurrentBoxMonData(cursorPos, MON_DATA_SANITY_HAS_SPECIES))
+                return;
+            heldItem = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
+            break;
+        case CURSOR_AREA_IN_PARTY:
+            if (cursorPos >= PARTY_SIZE
+                || !GetMonData(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
+                return;
+            heldItem = GetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
+            break;
+        default:
             return;
-        heldItem = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
-        break;
-    case CURSOR_AREA_IN_PARTY:
-        if (cursorPos >= PARTY_SIZE || !GetMonData(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
-            return;
-        heldItem = GetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
-        break;
-    default:
-        return;
     }
 
     if (heldItem != 0)
@@ -8719,7 +8720,7 @@ static void Item_FromMonToMoving(u8 cursorArea, u8 cursorPos)
     sub_80D15D4(id, 3);
     sub_80D1604(id, 1, cursorArea, cursorPos);
     sub_80D140C(id, 2, 0);
-    if (cursorArea  == CURSOR_AREA_IN_BOX)
+    if (cursorArea == CURSOR_AREA_IN_BOX)
     {
         SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &item);
         SetBoxMonIconObjMode(cursorPos, 1);
@@ -8810,7 +8811,7 @@ static void Item_TakeMons(u8 cursorArea, u8 cursorPos)
     id = sub_80D1370(cursorArea, cursorPos);
     sub_80D15D4(id, 2);
     sub_80D1604(id, 0, cursorArea, cursorPos);
-    if (cursorArea  == CURSOR_AREA_IN_BOX)
+    if (cursorArea == CURSOR_AREA_IN_BOX)
     {
         SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &item);
         SetBoxMonIconObjMode(cursorPos, 1);
@@ -8854,9 +8855,11 @@ static bool8 sub_80D1218(void)
     {
         if (sPSSData->field_2204[i].unk10)
         {
-            if (!sPSSData->field_2204[i].sprite->affineAnimEnded && sPSSData->field_2204[i].sprite->affineAnimBeginning)
+            if (!sPSSData->field_2204[i].sprite->affineAnimEnded
+                && sPSSData->field_2204[i].sprite->affineAnimBeginning)
                 return TRUE;
-            if (sPSSData->field_2204[i].sprite->callback != SpriteCallbackDummy && sPSSData->field_2204[i].sprite->callback != sub_80D1AD8)
+            if (sPSSData->field_2204[i].sprite->callback != SpriteCallbackDummy
+                && sPSSData->field_2204[i].sprite->callback != sub_80D1AD8)
                 return TRUE;
         }
     }
@@ -8912,8 +8915,7 @@ static bool32 sub_80D1324(u8 cursorArea, u8 cursorPos)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].unk8 == cursorArea
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].unk8 == cursorArea
             && sPSSData->field_2204[i].unk9 == cursorPos)
             return TRUE;
     }
@@ -8927,8 +8929,7 @@ static u8 sub_80D1370(u8 cursorArea, u8 cursorPos)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].unk8 == cursorArea
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].unk8 == cursorArea
             && sPSSData->field_2204[i].unk9 == cursorPos)
             return i;
     }
@@ -8942,8 +8943,7 @@ static u8 sub_80D13C4(struct Sprite *sprite)
 
     for (i = 0; i < 3; i++)
     {
-        if (sPSSData->field_2204[i].unk10
-            && sPSSData->field_2204[i].sprite == sprite)
+        if (sPSSData->field_2204[i].unk10 && sPSSData->field_2204[i].sprite == sprite)
             return i;
     }
 
@@ -8959,26 +8959,26 @@ static void sub_80D140C(u8 id, u8 cursorArea, u8 cursorPos)
 
     switch (cursorArea)
     {
-    case CURSOR_AREA_IN_BOX:
-        row = cursorPos % IN_BOX_ROWS;
-        column = cursorPos / IN_BOX_ROWS;
-        sPSSData->field_2204[id].sprite->pos1.x = (24 * row) + 112;
-        sPSSData->field_2204[id].sprite->pos1.y = (24 * column) + 56;
-        sPSSData->field_2204[id].sprite->oam.priority = 2;
-        break;
-    case CURSOR_AREA_IN_PARTY:
-        if (cursorPos == 0)
-        {
-            sPSSData->field_2204[id].sprite->pos1.x = 116;
-            sPSSData->field_2204[id].sprite->pos1.y = 76;
-        }
-        else
-        {
-            sPSSData->field_2204[id].sprite->pos1.x = 164;
-            sPSSData->field_2204[id].sprite->pos1.y = 24 * (cursorPos - 1) + 28;
-        }
-        sPSSData->field_2204[id].sprite->oam.priority = 1;
-        break;
+        case CURSOR_AREA_IN_BOX:
+            row = cursorPos % IN_BOX_ROWS;
+            column = cursorPos / IN_BOX_ROWS;
+            sPSSData->field_2204[id].sprite->pos1.x = (24 * row) + 112;
+            sPSSData->field_2204[id].sprite->pos1.y = (24 * column) + 56;
+            sPSSData->field_2204[id].sprite->oam.priority = 2;
+            break;
+        case CURSOR_AREA_IN_PARTY:
+            if (cursorPos == 0)
+            {
+                sPSSData->field_2204[id].sprite->pos1.x = 116;
+                sPSSData->field_2204[id].sprite->pos1.y = 76;
+            }
+            else
+            {
+                sPSSData->field_2204[id].sprite->pos1.x = 164;
+                sPSSData->field_2204[id].sprite->pos1.y = 24 * (cursorPos - 1) + 28;
+            }
+            sPSSData->field_2204[id].sprite->oam.priority = 1;
+            break;
     }
 
     sPSSData->field_2204[id].unk8 = cursorArea;
@@ -9017,35 +9017,35 @@ static void sub_80D1604(u8 id, u8 arg1, u8 arg2, u8 arg3)
 
     switch (arg1)
     {
-    case 0:
-        sPSSData->field_2204[id].sprite->data[0] = id;
-        sPSSData->field_2204[id].sprite->callback = sub_80D1A48;
-        break;
-    case 1:
-        sPSSData->field_2204[id].sprite->data[0] = 0;
-        sPSSData->field_2204[id].sprite->callback = sub_80D1A74;
-        break;
-    case 2:
-        sPSSData->field_2204[id].sprite->data[0] = 0;
-        sPSSData->field_2204[id].sprite->data[6] = arg2;
-        sPSSData->field_2204[id].sprite->data[7] = arg3;
-        sPSSData->field_2204[id].sprite->callback = sub_80D1B14;
-        break;
-    case 3:
-        sPSSData->field_2204[id].sprite->data[0] = 0;
-        sPSSData->field_2204[id].sprite->callback = sub_80D1B94;
-        sPSSData->field_2204[id].sprite->data[6] = arg2;
-        sPSSData->field_2204[id].sprite->data[7] = arg3;
-        break;
-    case 4:
-        sPSSData->field_2204[id].sprite->data[0] = 0;
-        sPSSData->field_2204[id].sprite->data[6] = arg2;
-        sPSSData->field_2204[id].sprite->data[7] = arg3;
-        sPSSData->field_2204[id].sprite->callback = sub_80D1C30;
-        break;
-    case 7:
-        sPSSData->field_2204[id].sprite->callback = sub_80D1CCC;
-        break;
+        case 0:
+            sPSSData->field_2204[id].sprite->data[0] = id;
+            sPSSData->field_2204[id].sprite->callback = sub_80D1A48;
+            break;
+        case 1:
+            sPSSData->field_2204[id].sprite->data[0] = 0;
+            sPSSData->field_2204[id].sprite->callback = sub_80D1A74;
+            break;
+        case 2:
+            sPSSData->field_2204[id].sprite->data[0] = 0;
+            sPSSData->field_2204[id].sprite->data[6] = arg2;
+            sPSSData->field_2204[id].sprite->data[7] = arg3;
+            sPSSData->field_2204[id].sprite->callback = sub_80D1B14;
+            break;
+        case 3:
+            sPSSData->field_2204[id].sprite->data[0] = 0;
+            sPSSData->field_2204[id].sprite->callback = sub_80D1B94;
+            sPSSData->field_2204[id].sprite->data[6] = arg2;
+            sPSSData->field_2204[id].sprite->data[7] = arg3;
+            break;
+        case 4:
+            sPSSData->field_2204[id].sprite->data[0] = 0;
+            sPSSData->field_2204[id].sprite->data[6] = arg2;
+            sPSSData->field_2204[id].sprite->data[7] = arg3;
+            sPSSData->field_2204[id].sprite->callback = sub_80D1C30;
+            break;
+        case 7:
+            sPSSData->field_2204[id].sprite->callback = sub_80D1CCC;
+            break;
     }
 }
 
@@ -9099,7 +9099,14 @@ static bool8 sub_80D184C(void)
     var = 0x15 - sPSSData->field_2236;
     for (i = 0; i < var; i++)
     {
-        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i, i, 13, 1, 7, 15, 21);
+        WriteSequenceToBgTilemapBuffer(0,
+            GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i,
+            i,
+            13,
+            1,
+            7,
+            15,
+            21);
     }
 
     sub_80D19B4(var);
@@ -9120,7 +9127,14 @@ static bool8 sub_80D18E4(void)
     var = 0x15 - sPSSData->field_2236;
     for (i = 0; i < var; i++)
     {
-        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i, i, 13, 1, 7, 15, 21);
+        WriteSequenceToBgTilemapBuffer(0,
+            GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sPSSData->field_2236 + i,
+            i,
+            13,
+            1,
+            7,
+            15,
+            21);
     }
 
     if (var >= 0)
@@ -9157,21 +9171,21 @@ static void sub_80D1A74(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        sprite->data[1] = sprite->pos1.x << 4;
-        sprite->data[2] = sprite->pos1.y << 4;
-        sprite->data[3] = 10;
-        sprite->data[4] = 21;
-        sprite->data[5] = 0;
-        sprite->data[0]++;
-    case 1:
-        sprite->data[1] -= sprite->data[3];
-        sprite->data[2] -= sprite->data[4];
-        sprite->pos1.x = sprite->data[1] >> 4;
-        sprite->pos1.y = sprite->data[2] >> 4;
-        if (++sprite->data[5] > 11)
-            sprite->callback = sub_80D1AD8;
-        break;
+        case 0:
+            sprite->data[1] = sprite->pos1.x << 4;
+            sprite->data[2] = sprite->pos1.y << 4;
+            sprite->data[3] = 10;
+            sprite->data[4] = 21;
+            sprite->data[5] = 0;
+            sprite->data[0]++;
+        case 1:
+            sprite->data[1] -= sprite->data[3];
+            sprite->data[2] -= sprite->data[4];
+            sprite->pos1.x = sprite->data[1] >> 4;
+            sprite->pos1.y = sprite->data[2] >> 4;
+            if (++sprite->data[5] > 11)
+                sprite->callback = sub_80D1AD8;
+            break;
     }
 }
 
@@ -9186,24 +9200,24 @@ static void sub_80D1B14(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        sprite->data[1] = sprite->pos1.x << 4;
-        sprite->data[2] = sprite->pos1.y << 4;
-        sprite->data[3] = 10;
-        sprite->data[4] = 21;
-        sprite->data[5] = 0;
-        sprite->data[0]++;
-    case 1:
-        sprite->data[1] += sprite->data[3];
-        sprite->data[2] += sprite->data[4];
-        sprite->pos1.x = sprite->data[1] >> 4;
-        sprite->pos1.y = sprite->data[2] >> 4;
-        if (++sprite->data[5] > 11)
-        {
-            sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
-            sprite->callback = SpriteCallbackDummy;
-        }
-        break;
+        case 0:
+            sprite->data[1] = sprite->pos1.x << 4;
+            sprite->data[2] = sprite->pos1.y << 4;
+            sprite->data[3] = 10;
+            sprite->data[4] = 21;
+            sprite->data[5] = 0;
+            sprite->data[0]++;
+        case 1:
+            sprite->data[1] += sprite->data[3];
+            sprite->data[2] += sprite->data[4];
+            sprite->pos1.x = sprite->data[1] >> 4;
+            sprite->pos1.y = sprite->data[2] >> 4;
+            if (++sprite->data[5] > 11)
+            {
+                sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
+                sprite->callback = SpriteCallbackDummy;
+            }
+            break;
     }
 }
 
@@ -9211,26 +9225,26 @@ static void sub_80D1B94(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        sprite->data[1] = sprite->pos1.x << 4;
-        sprite->data[2] = sprite->pos1.y << 4;
-        sprite->data[3] = 10;
-        sprite->data[4] = 21;
-        sprite->data[5] = 0;
-        sprite->data[0]++;
-    case 1:
-        sprite->data[1] -= sprite->data[3];
-        sprite->data[2] -= sprite->data[4];
-        sprite->pos1.x = sprite->data[1] >> 4;
-        sprite->pos1.y = sprite->data[2] >> 4;
-        sprite->pos2.x = gSineTable[sprite->data[5] * 8] >> 4;
-        if (++sprite->data[5] > 11)
-        {
-            sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
-            sprite->pos2.x = 0;
-            sprite->callback = sub_80D1AD8;
-        }
-        break;
+        case 0:
+            sprite->data[1] = sprite->pos1.x << 4;
+            sprite->data[2] = sprite->pos1.y << 4;
+            sprite->data[3] = 10;
+            sprite->data[4] = 21;
+            sprite->data[5] = 0;
+            sprite->data[0]++;
+        case 1:
+            sprite->data[1] -= sprite->data[3];
+            sprite->data[2] -= sprite->data[4];
+            sprite->pos1.x = sprite->data[1] >> 4;
+            sprite->pos1.y = sprite->data[2] >> 4;
+            sprite->pos2.x = gSineTable[sprite->data[5] * 8] >> 4;
+            if (++sprite->data[5] > 11)
+            {
+                sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
+                sprite->pos2.x = 0;
+                sprite->callback = sub_80D1AD8;
+            }
+            break;
     }
 }
 
@@ -9238,26 +9252,26 @@ static void sub_80D1C30(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
-    case 0:
-        sprite->data[1] = sprite->pos1.x << 4;
-        sprite->data[2] = sprite->pos1.y << 4;
-        sprite->data[3] = 10;
-        sprite->data[4] = 21;
-        sprite->data[5] = 0;
-        sprite->data[0]++;
-    case 1:
-        sprite->data[1] += sprite->data[3];
-        sprite->data[2] += sprite->data[4];
-        sprite->pos1.x = sprite->data[1] >> 4;
-        sprite->pos1.y = sprite->data[2] >> 4;
-        sprite->pos2.x = -(gSineTable[sprite->data[5] * 8] >> 4);
-        if (++sprite->data[5] > 11)
-        {
-            sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
-            sprite->callback = SpriteCallbackDummy;
-            sprite->pos2.x = 0;
-        }
-        break;
+        case 0:
+            sprite->data[1] = sprite->pos1.x << 4;
+            sprite->data[2] = sprite->pos1.y << 4;
+            sprite->data[3] = 10;
+            sprite->data[4] = 21;
+            sprite->data[5] = 0;
+            sprite->data[0]++;
+        case 1:
+            sprite->data[1] += sprite->data[3];
+            sprite->data[2] += sprite->data[4];
+            sprite->pos1.x = sprite->data[1] >> 4;
+            sprite->pos1.y = sprite->data[2] >> 4;
+            sprite->pos2.x = -(gSineTable[sprite->data[5] * 8] >> 4);
+            if (++sprite->data[5] > 11)
+            {
+                sub_80D140C(sub_80D13C4(sprite), sprite->data[6], sprite->data[7]);
+                sprite->callback = SpriteCallbackDummy;
+                sprite->pos2.x = 0;
+            }
+            break;
     }
 }
 
@@ -9273,12 +9287,10 @@ static void sub_80D1CCC(struct Sprite *sprite)
 
 void nullsub_pss(void)
 {
-
 }
 
 void nullsub_98(void)
 {
-
 }
 
 // Functions here are general utility functions.
@@ -9330,10 +9342,12 @@ u32 GetBoxMonLevelAt(u8 boxId, u8 boxPosition)
     u32 lvl;
 
     // BUG: Missed 'else' statement.
-    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT
+        && GetBoxMonData(
+            &gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
         lvl = GetLevelFromBoxMonExp(&gPokemonStoragePtr->boxes[boxId][boxPosition]);
     // else
-        lvl = 0;
+    lvl = 0;
 
     return lvl;
 }
@@ -9364,16 +9378,26 @@ void CopyBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *dst)
         *dst = gPokemonStoragePtr->boxes[boxId][boxPosition];
 }
 
-void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID)
+void CreateBoxMonAt(u8 boxId,
+    u8 boxPosition,
+    u16 species,
+    u8 level,
+    u8 fixedIV,
+    u8 hasFixedPersonality,
+    u32 personality,
+    u8 otIDType,
+    u32 otID)
 {
     if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
     {
         CreateBoxMon(&gPokemonStoragePtr->boxes[boxId][boxPosition],
-                     species,
-                     level,
-                     fixedIV,
-                     hasFixedPersonality, personality,
-                     otIDType, otID);
+            species,
+            level,
+            fixedIV,
+            hasFixedPersonality,
+            personality,
+            otIDType,
+            otID);
     }
 }
 
@@ -9466,11 +9490,12 @@ bool8 CheckFreePokemonStorageSpace(void)
 
 bool32 CheckBoxMonSanityAt(u32 boxId, u32 boxPosition)
 {
-    if (boxId < TOTAL_BOXES_COUNT
-        && boxPosition < IN_BOX_COUNT
-        && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES)
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT
+        && GetBoxMonData(
+            &gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES)
         && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_EGG)
-        && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_BAD_EGG))
+        && !GetBoxMonData(
+            &gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_BAD_EGG))
         return TRUE;
     else
         return FALSE;
@@ -9514,7 +9539,7 @@ u32 CountAllStorageMons(void)
 
 bool32 AnyStorageMonWithMove(u16 moveId)
 {
-    u16 moves[] = {moveId, MOVES_COUNT};
+    u16 moves[] = { moveId, MOVES_COUNT };
     s32 i, j;
 
     for (i = 0; i < TOTAL_BOXES_COUNT; i++)
@@ -9523,7 +9548,8 @@ bool32 AnyStorageMonWithMove(u16 moveId)
         {
             if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
                 && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG)
-                && GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_KNOWN_MOVES, (u8*)moves))
+                && GetBoxMonData(
+                    &gPokemonStoragePtr->boxes[i][j], MON_DATA_KNOWN_MOVES, (u8 *)moves))
                 return TRUE;
         }
     }
@@ -9638,20 +9664,18 @@ struct
 {
     u16 a;
     u16 b;
-}
-static const sUnkVars[][4] =
-{
+} static const sUnkVars[][4] = {
     {
-        {0x0100, 0x0100},
-        {0x0200, 0x0100},
-        {0x0100, 0x0200},
-        {0x0200, 0x0200},
+        { 0x0100, 0x0100 },
+        { 0x0200, 0x0100 },
+        { 0x0100, 0x0200 },
+        { 0x0200, 0x0200 },
     },
     {
-        {0x0080, 0x0080},
-        {0x0100, 0x0100},
-        {0x0200, 0x0200},
-        {0x0400, 0x0400},
+        { 0x0080, 0x0080 },
+        { 0x0100, 0x0100 },
+        { 0x0200, 0x0200 },
+        { 0x0400, 0x0400 },
     },
 };
 
@@ -9726,28 +9750,28 @@ static void sub_80D27F4(u8 id, u8 arg1, s8 arg2)
 
     switch (arg1)
     {
-    case 0:
-        gUnknown_02039D84[id].field_0[1].field_8 += arg2;
-        gUnknown_02039D84[id].field_0[1].field_4 -= arg2;
-        break;
-    case 1:
-        gUnknown_02039D84[id].field_0[1].field_0 += arg2;
-        gUnknown_02039D84[id].field_0[1].field_4 += arg2;
-        break;
-    case 2:
-        gUnknown_02039D84[id].field_0[1].field_A += arg2;
-        gUnknown_02039D84[id].field_0[1].field_6 -= arg2;
-        break;
-    case 3:
-        gUnknown_02039D84[id].field_0[1].field_2 -= arg2;
-        gUnknown_02039D84[id].field_0[1].field_6 += arg2;
-        break;
-    case 4:
-        gUnknown_02039D84[id].field_0[1].field_8 += arg2;
-        break;
-    case 5:
-        gUnknown_02039D84[id].field_0[1].field_A += arg2;
-        break;
+        case 0:
+            gUnknown_02039D84[id].field_0[1].field_8 += arg2;
+            gUnknown_02039D84[id].field_0[1].field_4 -= arg2;
+            break;
+        case 1:
+            gUnknown_02039D84[id].field_0[1].field_0 += arg2;
+            gUnknown_02039D84[id].field_0[1].field_4 += arg2;
+            break;
+        case 2:
+            gUnknown_02039D84[id].field_0[1].field_A += arg2;
+            gUnknown_02039D84[id].field_0[1].field_6 -= arg2;
+            break;
+        case 3:
+            gUnknown_02039D84[id].field_0[1].field_2 -= arg2;
+            gUnknown_02039D84[id].field_0[1].field_6 += arg2;
+            break;
+        case 4:
+            gUnknown_02039D84[id].field_0[1].field_8 += arg2;
+            break;
+        case 5:
+            gUnknown_02039D84[id].field_0[1].field_A += arg2;
+            break;
     }
 
     gUnknown_02039D84[id].field_2C = 1;
@@ -9769,17 +9793,18 @@ static void sub_80D2960(u8 id)
 {
     s32 i;
     u32 adder = gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_20;
-    const void *tiles = (gUnknown_02039D84[id].field_18 + (adder * gUnknown_02039D84[id].field_0[0].field_A))
-                      + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[0].field_8);
+    const void *tiles =
+        (gUnknown_02039D84[id].field_18 + (adder * gUnknown_02039D84[id].field_0[0].field_A))
+        + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[0].field_8);
 
     for (i = 0; i < gUnknown_02039D84[id].field_0[0].field_6; i++)
     {
         CopyToBgTilemapBufferRect(gUnknown_02039D84[id].field_2B,
-                                  tiles,
-                                  gUnknown_02039D84[id].field_0[0].field_8,
-                                  gUnknown_02039D84[id].field_0[0].field_A + i,
-                                  gUnknown_02039D84[id].field_0[0].field_4,
-                                  1);
+            tiles,
+            gUnknown_02039D84[id].field_0[0].field_8,
+            gUnknown_02039D84[id].field_0[0].field_A + i,
+            gUnknown_02039D84[id].field_0[0].field_4,
+            1);
         tiles += adder;
     }
 }
@@ -9788,17 +9813,18 @@ static void sub_80D29F8(u8 id)
 {
     s32 i;
     u32 adder = gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_24;
-    const void *tiles = (gUnknown_02039D84[id].field_1C + (adder * gUnknown_02039D84[id].field_0[1].field_2))
-                      + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[1].field_0);
+    const void *tiles =
+        (gUnknown_02039D84[id].field_1C + (adder * gUnknown_02039D84[id].field_0[1].field_2))
+        + (gUnknown_02039D84[id].field_2A * gUnknown_02039D84[id].field_0[1].field_0);
 
     for (i = 0; i < gUnknown_02039D84[id].field_0[1].field_6; i++)
     {
         CopyToBgTilemapBufferRect(gUnknown_02039D84[id].field_2B,
-                                  tiles,
-                                  gUnknown_02039D84[id].field_0[1].field_8,
-                                  gUnknown_02039D84[id].field_0[1].field_A + i,
-                                  gUnknown_02039D84[id].field_0[1].field_4,
-                                  1);
+            tiles,
+            gUnknown_02039D84[id].field_0[1].field_8,
+            gUnknown_02039D84[id].field_0[1].field_A + i,
+            gUnknown_02039D84[id].field_0[1].field_4,
+            1);
         tiles += adder;
     }
 }
@@ -9829,7 +9855,15 @@ static void sub_80D2AA4(void)
     }
 }
 
-static bool8 sub_80D2AEC(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height, u16 unkArg)
+static bool8 sub_80D2AEC(u8 *dest,
+    u16 dLeft,
+    u16 dTop,
+    const u8 *src,
+    u16 sLeft,
+    u16 sTop,
+    u16 width,
+    u16 height,
+    u16 unkArg)
 {
     struct UnkStruct_2000028 *unkStruct;
 

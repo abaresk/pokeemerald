@@ -3,10 +3,10 @@
 
 struct DigitObjUtilTemplate
 {
-    u8 strConvMode:2;
-    u8 shape:2;
-    u8 size:2;
-    u8 priority:2;
+    u8 strConvMode : 2;
+    u8 shape : 2;
+    u8 size : 2;
+    u8 priority : 2;
     u8 oamCount;
     u8 xDelta;
     s16 x;

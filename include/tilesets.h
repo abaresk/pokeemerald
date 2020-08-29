@@ -10,4 +10,4 @@
 extern struct Tileset *gTilesetPointer_SecretBase;
 extern struct Tileset *gTilesetPointer_SecretBaseRedCave;
 
-#endif //GUARD_tilesets_H
+#endif // GUARD_tilesets_H

@@ -6,26 +6,26 @@
 
 // Special Trainer Ids.
 //      0-299 are frontier trainers
-#define TRAINER_RECORD_MIXING_FRIEND        FRONTIER_TRAINERS_COUNT
-#define TRAINER_RECORD_MIXING_APPRENTICE    400
-#define TRAINER_EREADER                     500
-#define TRAINER_FRONTIER_BRAIN              1022
-#define TRAINER_PLAYER                      1023
-#define TRAINER_SECRET_BASE                 1024
-#define TRAINER_LINK_OPPONENT               2048
-#define TRAINER_UNION_ROOM                  3072
-#define TRAINER_STEVEN_PARTNER              3075
+#define TRAINER_RECORD_MIXING_FRIEND     FRONTIER_TRAINERS_COUNT
+#define TRAINER_RECORD_MIXING_APPRENTICE 400
+#define TRAINER_EREADER                  500
+#define TRAINER_FRONTIER_BRAIN           1022
+#define TRAINER_PLAYER                   1023
+#define TRAINER_SECRET_BASE              1024
+#define TRAINER_LINK_OPPONENT            2048
+#define TRAINER_UNION_ROOM               3072
+#define TRAINER_STEVEN_PARTNER           3075
 
-#define TRAINER_PIC_HIKER                  0
-#define TRAINER_PIC_AQUA_GRUNT_M           1
-#define TRAINER_PIC_POKEMON_BREEDER_F      2
-#define TRAINER_PIC_COOLTRAINER_M          3
-#define TRAINER_PIC_BIRD_KEEPER            4
-#define TRAINER_PIC_COLLECTOR              5
-#define TRAINER_PIC_AQUA_GRUNT_F           6
-#define TRAINER_PIC_SWIMMER_M              7
-#define TRAINER_PIC_MAGMA_GRUNT_M          8
-#define TRAINER_PIC_EXPERT_M               9
+#define TRAINER_PIC_HIKER                 0
+#define TRAINER_PIC_AQUA_GRUNT_M          1
+#define TRAINER_PIC_POKEMON_BREEDER_F     2
+#define TRAINER_PIC_COOLTRAINER_M         3
+#define TRAINER_PIC_BIRD_KEEPER           4
+#define TRAINER_PIC_COLLECTOR             5
+#define TRAINER_PIC_AQUA_GRUNT_F          6
+#define TRAINER_PIC_SWIMMER_M             7
+#define TRAINER_PIC_MAGMA_GRUNT_M         8
+#define TRAINER_PIC_EXPERT_M              9
 #define TRAINER_PIC_AQUA_ADMIN_M          10
 #define TRAINER_PIC_BLACK_BELT            11
 #define TRAINER_PIC_AQUA_ADMIN_F          12
@@ -110,14 +110,14 @@
 #define TRAINER_PIC_RS_BRENDAN            91
 #define TRAINER_PIC_RS_MAY                92
 
-#define TRAINER_BACK_PIC_BRENDAN                0
-#define TRAINER_BACK_PIC_MAY                    1
-#define TRAINER_BACK_PIC_RED                    2
-#define TRAINER_BACK_PIC_LEAF                   3
-#define TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN  4
-#define TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY      5
-#define TRAINER_BACK_PIC_WALLY                  6
-#define TRAINER_BACK_PIC_STEVEN                 7
+#define TRAINER_BACK_PIC_BRENDAN               0
+#define TRAINER_BACK_PIC_MAY                   1
+#define TRAINER_BACK_PIC_RED                   2
+#define TRAINER_BACK_PIC_LEAF                  3
+#define TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN 4
+#define TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY     5
+#define TRAINER_BACK_PIC_WALLY                 6
+#define TRAINER_BACK_PIC_STEVEN                7
 
 #define FACILITY_CLASS_HIKER                 0x0
 #define FACILITY_CLASS_AQUA_GRUNT_M          0x1
@@ -202,7 +202,7 @@
 #define FACILITY_CLASS_RS_BRENDAN            0x50
 #define FACILITY_CLASS_RS_MAY                0x51
 
-#define FACILITY_CLASSES_COUNT               0x52
+#define FACILITY_CLASSES_COUNT 0x52
 
 #define RS_FACILITY_CLASS_AQUA_LEADER_ARCHIE    0x0
 #define RS_FACILITY_CLASS_AQUA_GRUNT_M          0x1
@@ -282,10 +282,10 @@
 #define RS_FACILITY_CLASS_OLD_COUPLE            0x4B
 #define RS_FACILITY_CLASS_SIS_AND_BRO           0x4C
 
-#define RS_FACILITY_CLASSES_COUNT               0x4D
+#define RS_FACILITY_CLASSES_COUNT 0x4D
 
-#define TRAINER_CLASS_PKMN_TRAINER_1 0x0  // Unused
-#define TRAINER_CLASS_PKMN_TRAINER_2 0x1  // Unused
+#define TRAINER_CLASS_PKMN_TRAINER_1 0x0 // Unused
+#define TRAINER_CLASS_PKMN_TRAINER_2 0x1 // Unused
 #define TRAINER_CLASS_HIKER          0x2
 #define TRAINER_CLASS_TEAM_AQUA      0x3
 #define TRAINER_CLASS_PKMN_BREEDER   0x4
@@ -351,16 +351,16 @@
 #define TRAINER_CLASS_PYRAMID_KING   0x40
 #define TRAINER_CLASS_RS_PROTAG      0x41
 
-#define TRAINER_ENCOUNTER_MUSIC_MALE         0 // standard male encounter music
-#define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // standard female encounter music
-#define TRAINER_ENCOUNTER_MUSIC_GIRL         2 // used for male Tubers and Young Couples too
-#define TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS   3
-#define TRAINER_ENCOUNTER_MUSIC_INTENSE      4
-#define TRAINER_ENCOUNTER_MUSIC_COOL         5
-#define TRAINER_ENCOUNTER_MUSIC_AQUA         6
-#define TRAINER_ENCOUNTER_MUSIC_MAGMA        7
-#define TRAINER_ENCOUNTER_MUSIC_SWIMMER      8
-#define TRAINER_ENCOUNTER_MUSIC_TWINS        9 // used for other trainer classes too
+#define TRAINER_ENCOUNTER_MUSIC_MALE        0 // standard male encounter music
+#define TRAINER_ENCOUNTER_MUSIC_FEMALE      1 // standard female encounter music
+#define TRAINER_ENCOUNTER_MUSIC_GIRL        2 // used for male Tubers and Young Couples too
+#define TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS  3
+#define TRAINER_ENCOUNTER_MUSIC_INTENSE     4
+#define TRAINER_ENCOUNTER_MUSIC_COOL        5
+#define TRAINER_ENCOUNTER_MUSIC_AQUA        6
+#define TRAINER_ENCOUNTER_MUSIC_MAGMA       7
+#define TRAINER_ENCOUNTER_MUSIC_SWIMMER     8
+#define TRAINER_ENCOUNTER_MUSIC_TWINS       9 // used for other trainer classes too
 #define TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR  10
 #define TRAINER_ENCOUNTER_MUSIC_HIKER       11 // used for other trainer classes too
 #define TRAINER_ENCOUNTER_MUSIC_INTERVIEWER 12
@@ -374,4 +374,4 @@
 #define F_TRAINER_PARTY_CUSTOM_MOVESET (1 << 0)
 #define F_TRAINER_PARTY_HELD_ITEM      (1 << 1)
 
-#endif  // GUARD_TRAINERS_H
+#endif // GUARD_TRAINERS_H

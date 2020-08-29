@@ -1,13 +1,13 @@
 #ifndef GUARD_LINK_H
 #define GUARD_LINK_H
 
-#define MAX_LINK_PLAYERS 4
-#define MAX_RFU_PLAYERS 5
-#define CMD_LENGTH 8
-#define QUEUE_CAPACITY 50
+#define MAX_LINK_PLAYERS  4
+#define MAX_RFU_PLAYERS   5
+#define CMD_LENGTH        8
+#define QUEUE_CAPACITY    50
 #define BLOCK_BUFFER_SIZE 0x100
 
-#define LINK_SLAVE 0
+#define LINK_SLAVE  0
 #define LINK_MASTER 8
 
 #define LINK_STAT_LOCAL_ID               0x00000003
@@ -38,73 +38,69 @@
 #define LINK_STAT_ERROR_LAG_SLAVE_SHIFT  18
 
 #define EXTRACT_PLAYER_COUNT(status) \
-(((status) & LINK_STAT_PLAYER_COUNT) >> LINK_STAT_PLAYER_COUNT_SHIFT)
-#define EXTRACT_MASTER(status) \
-(((status) >> LINK_STAT_MASTER_SHIFT) & 1)
-#define EXTRACT_CONN_ESTABLISHED(status) \
-(((status) >> LINK_STAT_CONN_ESTABLISHED_SHIFT) & 1)
-#define EXTRACT_RECEIVED_NOTHING(status) \
-(((status) >> LINK_STAT_RECEIVED_NOTHING_SHIFT) & 1)
-#define EXTRACT_LINK_ERRORS(status) \
-(((status) & LINK_STAT_ERRORS) >> LINK_STAT_ERRORS_SHIFT)
+    (((status)&LINK_STAT_PLAYER_COUNT) >> LINK_STAT_PLAYER_COUNT_SHIFT)
+#define EXTRACT_MASTER(status)           (((status) >> LINK_STAT_MASTER_SHIFT) & 1)
+#define EXTRACT_CONN_ESTABLISHED(status) (((status) >> LINK_STAT_CONN_ESTABLISHED_SHIFT) & 1)
+#define EXTRACT_RECEIVED_NOTHING(status) (((status) >> LINK_STAT_RECEIVED_NOTHING_SHIFT) & 1)
+#define EXTRACT_LINK_ERRORS(status)      (((status)&LINK_STAT_ERRORS) >> LINK_STAT_ERRORS_SHIFT)
 
-#define LINKCMD_SEND_LINK_TYPE        0x2222
-#define LINKCMD_READY_EXIT_STANDBY    0x2FFE
-#define LINKCMD_SEND_HELD_KEYS        0x4444
-#define LINKCMD_0x5555                0x5555
-#define LINKCMD_0x5566                0x5566
-#define LINKCMD_READY_CLOSE_LINK      0x5FFF
-#define LINKCMD_0x6666                0x6666
-#define LINKCMD_0x7777                0x7777
-#define LINKCMD_CONT_BLOCK            0x8888
-#define LINKCMD_0xAAAA                0xAAAA
-#define LINKCMD_0xAAAB                0xAAAB
-#define LINKCMD_READY_TO_TRADE        0xAABB
-#define LINKCMD_READY_FINISH_TRADE    0xABCD
-#define LINKCMD_INIT_BLOCK            0xBBBB
-#define LINKCMD_READY_CANCEL_TRADE    0xBBCC
-#define LINKCMD_SEND_HELD_KEYS_2      0xCAFE
-#define LINKCMD_SEND_BLOCK_REQ        0xCCCC
-#define LINKCMD_START_TRADE           0xCCDD
-#define LINKCMD_CONFIRM_FINISH_TRADE  0xDCBA
-#define LINKCMD_SET_MONS_TO_TRADE     0xDDDD 
-#define LINKCMD_0xDDEE                0xDDEE
-#define LINKCMD_REQUEST_CANCEL        0xEEAA
-#define LINKCMD_CANCEL_TRADE          0xEEBB
-#define LINKCMD_0xEECC                0xEECC
+#define LINKCMD_SEND_LINK_TYPE       0x2222
+#define LINKCMD_READY_EXIT_STANDBY   0x2FFE
+#define LINKCMD_SEND_HELD_KEYS       0x4444
+#define LINKCMD_0x5555               0x5555
+#define LINKCMD_0x5566               0x5566
+#define LINKCMD_READY_CLOSE_LINK     0x5FFF
+#define LINKCMD_0x6666               0x6666
+#define LINKCMD_0x7777               0x7777
+#define LINKCMD_CONT_BLOCK           0x8888
+#define LINKCMD_0xAAAA               0xAAAA
+#define LINKCMD_0xAAAB               0xAAAB
+#define LINKCMD_READY_TO_TRADE       0xAABB
+#define LINKCMD_READY_FINISH_TRADE   0xABCD
+#define LINKCMD_INIT_BLOCK           0xBBBB
+#define LINKCMD_READY_CANCEL_TRADE   0xBBCC
+#define LINKCMD_SEND_HELD_KEYS_2     0xCAFE
+#define LINKCMD_SEND_BLOCK_REQ       0xCCCC
+#define LINKCMD_START_TRADE          0xCCDD
+#define LINKCMD_CONFIRM_FINISH_TRADE 0xDCBA
+#define LINKCMD_SET_MONS_TO_TRADE    0xDDDD
+#define LINKCMD_0xDDEE               0xDDEE
+#define LINKCMD_REQUEST_CANCEL       0xEEAA
+#define LINKCMD_CANCEL_TRADE         0xEEBB
+#define LINKCMD_0xEECC               0xEECC
 
 #define LINKTYPE_TRADE               0x1111
 #define LINKTYPE_TRADE_CONNECTING    0x1122
 #define LINKTYPE_TRADE_SETUP         0x1133
 #define LINKTYPE_TRADE_DISCONNECTED  0x1144
 #define LINKTYPE_BATTLE              0x2211
-#define LINKTYPE_0x2222              0x2222  // unused battle?
+#define LINKTYPE_0x2222              0x2222 // unused battle?
 #define LINKTYPE_SINGLE_BATTLE       0x2233
 #define LINKTYPE_DOUBLE_BATTLE       0x2244
 #define LINKTYPE_MULTI_BATTLE        0x2255
 #define LINKTYPE_BATTLE_TOWER_50     0x2266
-#define LINKTYPE_BATTLE_TOWER_OPEN   0x2277 
+#define LINKTYPE_BATTLE_TOWER_OPEN   0x2277
 #define LINKTYPE_BATTLE_TOWER        0x2288
 #define LINKTYPE_RECORD_MIX_BEFORE   0x3311
 #define LINKTYPE_RECORD_MIX_AFTER    0x3322
 #define LINKTYPE_BERRY_BLENDER_SETUP 0x4411
 #define LINKTYPE_BERRY_BLENDER       0x4422
 #define LINKTYPE_MYSTERY_EVENT       0x5501
-#define LINKTYPE_0x5502              0x5502  // unused?
+#define LINKTYPE_0x5502              0x5502 // unused?
 #define LINKTYPE_EREADER             0x5503
 #define LINKTYPE_CONTEST_GMODE       0x6601
 #define LINKTYPE_CONTEST_EMODE       0x6602
 
 struct LinkStatus
 {
-    u32 localId:2;
-    u32 playerCount:3;
-    u32 master:1;
-    u32 connEstablished:1;
-    u32 unused_7:1;
-    u32 receivedNothing:1;
-    u32 unused_9:7;
-    u32 errors:7;
+    u32 localId : 2;
+    u32 playerCount : 3;
+    u32 master : 1;
+    u32 connEstablished : 1;
+    u32 unused_7 : 1;
+    u32 receivedNothing : 1;
+    u32 unused_9 : 7;
+    u32 errors : 7;
 };
 
 #define MASTER_HANDSHAKE 0x8FFF
@@ -199,9 +195,9 @@ struct Link
 
     // error conditions
     /* 0x010 */ bool8 hardwareError; // hardware reported an error
-    /* 0x011 */ bool8 badChecksum; // checksum didn't match between devices
-    /* 0x012 */ u8 queueFull; // send or recv queue out of space
-    /* 0x013 */ u8 lag; // connection is lagging
+    /* 0x011 */ bool8 badChecksum;   // checksum didn't match between devices
+    /* 0x012 */ u8 queueFull;        // send or recv queue out of space
+    /* 0x013 */ u8 lag;              // connection is lagging
 
     /* 0x014 */ u16 checksum;
 
@@ -214,7 +210,7 @@ struct Link
 
 struct BlockRequest
 {
-    void * address;
+    void *address;
     u32 size;
 };
 
@@ -233,7 +229,6 @@ extern bool8 gReceivedRemoteLinkPlayers;
 extern u32 gUnknown_020223C0;
 extern bool8 gLinkVSyncDisabled;
 extern u32 gLinkStatus;
-
 
 bool8 IsWirelessAdapterConnected(void);
 void Task_DestroySelf(u8 taskId);
