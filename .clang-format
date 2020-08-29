@@ -1,0 +1,24 @@
+BasedOnStyle: LLVM
+AllowShortFunctionsOnASingleLine: None
+BreakBeforeBraces: Allman
+ColumnLimit: 100
+UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+# This may solve the struct 1st line problem
+AlignAfterOpenBracket: DontAlign
+Cpp11BracedListStyle: false
+BreakStringLiterals: false
+IndentCaseLabels: true
+BinPackArguments: false
+BinPackParameters: false
+AlignTrailingComments: true
+AlignConsecutiveMacros: true
+# This is bad most of the time. It is good for declaring array elements.
+# AlignConsecutiveAssignments: true
+AlignEscapedNewlines: Left
+MaxEmptyLinesToKeep: 1
+BreakBeforeBinaryOperators: NonAssignment
+# Penalties
+ReflowComments: true
+SortIncludes: false
