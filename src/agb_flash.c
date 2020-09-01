@@ -264,11 +264,11 @@ u32 ProgramFlashSectorAndVerify(u16 sectorNum, u8 *src)
 
     for (i = 0; i < 3; i++)
     {
-        result = ProgramFlashSector(sectorNum, src);
+        result = ProgramFlashSector(sectorNum, src); // takes 16-17 frames usually
         if (result != 0)
             continue;
 
-        result = VerifyFlashSector(sectorNum, src);
+        result = VerifyFlashSector(sectorNum, src); // takes 0-1 frames
         if (result == 0)
             break;
     }

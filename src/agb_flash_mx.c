@@ -153,7 +153,7 @@ static u16 ProgramByte(u8 *src, u8 *dest)
     return WaitForFlashWrite(1, dest, *src);
 }
 
-u16 ProgramFlashSector_MX(u16 sectorNum, u8 *src)
+u16 ProgramFlashSector_MX(u16 sectorNum, u8 *src) // This is ProgramFlashSector. You can go down to the granularity of a byte
 {
     u16 result;
     u8 *dest;

@@ -1,7 +1,42 @@
 #ifndef GUARD_SAVE_H
 #define GUARD_SAVE_H
 
-struct SaveSectionLocation
+// This indices are used relative to the Save Slot
+enum
+{
+    SLOT_SECTOR_0,
+    SLOT_SECTOR_1,
+    SLOT_SECTOR_2,
+    SLOT_SECTOR_3,
+    SLOT_SECTOR_4,
+    SLOT_SECTOR_5,
+    SLOT_SECTOR_6,
+    SLOT_SECTOR_7,
+    SLOT_SECTOR_8,
+    SLOT_SECTOR_9,
+    SLOT_SECTOR_10,
+    SLOT_SECTOR_11,
+    SLOT_SECTOR_12,
+    SLOT_SECTOR_13,
+    SLOT_SECTOR_END,
+};
+
+// Relative to Saveblock sector
+#define SLOT_START        SLOT_SECTOR_0
+#define SLOT_SAVEBLOCK_2  SLOT_SECTOR_0
+#define SLOT_SAVEBLOCK_1  SLOT_SECTOR_1
+#define SLOT_POKESTORE    SLOT_SECTOR_5
+#define SLOT_END          SLOT_SECTOR_END
+#define SAVE_SLOT_SECTORS (SLOT_END - SLOT_START)
+
+// Absolute sector locations
+#define SECTOR_HOF_1         28
+#define SECTOR_HOF_2         29
+#define SECTOR_TRAINER_HILL  30
+#define SECTOR_BATTLE_RECORD 31
+#define NUM_SECTORS          32
+
+struct SaveBuffer
 {
     void *data;
     u16 size;
@@ -23,14 +58,11 @@ struct UnkSaveSection
     u32 security;
 }; // size is 0xFF8
 
-struct SaveSectionOffsets
+struct SaveblockOffset
 {
-    u16 toAdd;
+    u16 offset;
     u16 size;
 };
-
-// Emerald changes this definition to be the sectors per slot.
-#define NUM_SECTORS_PER_SLOT 16
 
 #define UNKNOWN_CHECK_VALUE 0x8012025
 #define SPECIAL_SECTION_SENTINEL 0xB39D
@@ -52,21 +84,8 @@ enum
     SAVE_LINK2, // unknown 2nd link save
     SAVE_HALL_OF_FAME,
     SAVE_OVERWRITE_DIFFERENT_FILE,
-    SAVE_HALL_OF_FAME_ERASE_BEFORE // unused
+    SAVE_CLEAR_RECORDS // unused
 };
-
-#define SECTOR_ID_SAVEBLOCK2  0
-#define SECTOR_ID_SAVEBLOCK1_START 1
-#define SECTOR_ID_SAVEBLOCK1_END   4
-#define SECTOR_ID_PKMN_STORAGE_START 5
-#define SECTOR_ID_PKMN_STORAGE_END   13
-#define SECTOR_SAVE_SLOT_LENGTH 14
-// Save Slot 1: 0-13;  Save Slot 2: 14-27
-#define SECTOR_ID_HOF_1 28
-#define SECTOR_ID_HOF_2 29
-#define SECTOR_ID_TRAINER_HILL 30
-#define SECTOR_ID_RECORDED_BATTLE  31
-#define SECTORS_COUNT 32
 
 #define SAVE_STATUS_EMPTY    0
 #define SAVE_STATUS_OK       1
@@ -83,12 +102,12 @@ extern struct SaveSection *gFastSaveSection;
 extern u16 gUnknown_03006208;
 extern u16 gSaveFileStatus;
 extern void (*gGameContinueCallback)(void);
-extern struct SaveSectionLocation gRamSaveSectionLocations[];
+extern struct SaveBuffer gRamSaveBuffers[];
 extern u16 gUnknown_03006294;
 
 extern struct SaveSection gSaveDataBuffer;
 
-void ClearSaveData(void);
+void ClearSaveFile(void);
 void Save_ResetSaveCounters(void);
 u8 HandleSavingData(u8 saveType);
 u8 TrySavingData(u8 saveType);
