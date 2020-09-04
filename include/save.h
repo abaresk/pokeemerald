@@ -36,7 +36,11 @@ enum
 #define SECTOR_BATTLE_RECORD 31
 #define NUM_SECTORS          32
 
-struct SaveBuffer
+// Bitmask of all saveblock sectors
+#define ALL_SECTORS ((1 << SAVE_SLOT_SECTORS) - 1)
+
+// It's more of a pointer than a buffer
+struct SaveBlockChunk
 {
     void *data;
     u16 size;
@@ -64,15 +68,15 @@ struct SaveblockOffset
     u16 size;
 };
 
-#define UNKNOWN_CHECK_VALUE 0x8012025
+#define FILE_SIGNATURE 0x8012025
 #define SPECIAL_SECTION_SENTINEL 0xB39D
 
 // SetDamagedSectorBits states
 enum
 {
-    ENABLE,
-    DISABLE,
-    CHECK // unused
+    SECTOR_DAMAGED,
+    SECTOR_OK,
+    SECTOR_CHECK // unused
 };
 
 // Do save types
@@ -93,25 +97,25 @@ enum
 #define SAVE_STATUS_NO_FLASH 4
 #define SAVE_STATUS_ERROR    0xFF
 
-extern u16 gLastWrittenSector;
-extern u32 gLastSaveCounter;
+extern u16 gFirstSaveSector;
+extern u32 gPrevSaveCounter;
 extern u16 gLastKnownGoodSector;
 extern u32 gDamagedSaveSectors;
 extern u32 gSaveCounter;
 extern struct SaveSection *gFastSaveSection;
-extern u16 gUnknown_03006208;
+extern u16 gCurSaveChunk;
 extern u16 gSaveFileStatus;
 extern void (*gGameContinueCallback)(void);
-extern struct SaveBuffer gRamSaveBuffers[];
+extern struct SaveBlockChunk gRamSaveBuffers[];
 extern u16 gUnknown_03006294;
 
 extern struct SaveSection gSaveDataBuffer;
 
-void ClearSaveFile(void);
+void Save_EraseAllData(void);
 void Save_ResetSaveCounters(void);
 u8 HandleSavingData(u8 saveType);
 u8 TrySavingData(u8 saveType);
-bool8 sub_8153380(void);
+bool8 FullSaveGame_Link(void);
 bool8 sub_81533AC(void);
 bool8 sub_81533E0(void);
 bool8 sub_8153408(void);

@@ -1,10 +1,10 @@
-gLastWrittenSector
-gLastSaveCounter
+gFirstSaveSector
+gPrevSaveCounter
 gLastKnownGoodSector
 gDamagedSaveSectors
 gSaveCounter
 gFastSaveSection
-gUnknown_03006208
+gCurSaveChunk
 gSaveUnusedVar
 gSaveFileStatus
 gGameContinueCallback

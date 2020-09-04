@@ -197,13 +197,13 @@ void LoadObjectEvents(void)
         gObjectEvents[i] = gSaveBlock1Ptr->objectEvents[i];
 }
 
-void SaveSerializedGame(void)
+void SavePartyAndObjects(void)
 {
     SavePlayerParty();
     SaveObjectEvents();
 }
 
-void LoadSerializedGame(void)
+void LoadPartyAndObjects(void)
 {
     LoadPlayerParty();
     LoadObjectEvents();

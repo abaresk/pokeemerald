@@ -490,12 +490,12 @@ bool32 MoveRecordedBattleToSaveData(void)
     return ret;
 }
 
-static bool32 TryCopyRecordedBattleSaveData(struct RecordedBattleSave *dst, struct SaveSection *saveBuffer)
+static bool32 TryCopyRecordedBattleSaveData(struct RecordedBattleSave *dst, struct SaveSection *SaveBlockChunk)
 {
-    if (TryReadSpecialSaveSection(SECTOR_BATTLE_RECORD, (void*)(saveBuffer)) != SAVE_STATUS_OK)
+    if (TryReadSpecialSaveSection(SECTOR_BATTLE_RECORD, (void*)(SaveBlockChunk)) != SAVE_STATUS_OK)
         return FALSE;
 
-    memcpy(dst, saveBuffer, sizeof(struct RecordedBattleSave));
+    memcpy(dst, SaveBlockChunk, sizeof(struct RecordedBattleSave));
 
     if (!IsRecordedBattleSaveValid(dst))
         return FALSE;

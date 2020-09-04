@@ -4600,7 +4600,7 @@ static void CB2_SaveAndEndTrade(void)
             RecordIdOfWonderCardSenderByEventType(2, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
         }
         SetContinueGameWarpStatusToDynamicWarp();
-        sub_8153380();
+        FullSaveGame_Link();
         gMain.state++;
         sTradeData->timer = 0;
         break;
@@ -4913,7 +4913,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
             StringExpandPlaceholders(gStringVar4, gText_SavingDontTurnOffPower);
             DrawTextOnTradeWindow(0, gStringVar4, 0);
             IncrementGameStat(GAME_STAT_POKEMON_TRADES);
-            sub_8153380();
+            FullSaveGame_Link();
             sTradeData->timer = 0;
         }
         break;
