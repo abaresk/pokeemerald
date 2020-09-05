@@ -91,7 +91,7 @@ typedef void (*AffineAnimCmdFunc)(u8 matrixNum, struct Sprite*);
             .paletteNum = 0, .affineParam = 0                                                                 \
     }
 
-#define ANIM_END 0xFFFF
+#define ANIM_END        0xFFFF
 #define AFFINE_ANIM_END 0x7FFF
 
 // forward declarations

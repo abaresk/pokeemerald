@@ -67,15 +67,15 @@ enum {
 // Special arguments for Battle Controller functions.
 
 #define RESET_ACTION_MOVE_SELECTION 0
-#define RESET_ACTION_SELECTION 1
-#define RESET_MOVE_SELECTION 2
+#define RESET_ACTION_SELECTION      1
+#define RESET_MOVE_SELECTION        2
 
-#define BALL_NO_SHAKES 0
-#define BALL_1_SHAKE 1
-#define BALL_2_SHAKES 2
-#define BALL_3_SHAKES_FAIL 3
+#define BALL_NO_SHAKES        0
+#define BALL_1_SHAKE          1
+#define BALL_2_SHAKES         2
+#define BALL_3_SHAKES_FAIL    3
 #define BALL_3_SHAKES_SUCCESS 4
-#define BALL_TRAINER_BLOCK 5
+#define BALL_TRAINER_BLOCK    5
 
 #define INSTANT_HP_BAR_DROP 32767
 

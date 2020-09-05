@@ -111,17 +111,17 @@ static const struct CaptureStar sCaptureStars[] = {
     },
 };
 
-#define TAG_PARTICLES_POKEBALL 55020
-#define TAG_PARTICLES_GREATBALL 55021
-#define TAG_PARTICLES_SAFARIBALL 55022
-#define TAG_PARTICLES_ULTRABALL 55023
-#define TAG_PARTICLES_MASTERBALL 55024
-#define TAG_PARTICLES_NETBALL 55025
-#define TAG_PARTICLES_DIVEBALL 55026
-#define TAG_PARTICLES_NESTBALL 55027
-#define TAG_PARTICLES_REPEATBALL 55028
-#define TAG_PARTICLES_TIMERBALL 55029
-#define TAG_PARTICLES_LUXURYBALL 55030
+#define TAG_PARTICLES_POKEBALL    55020
+#define TAG_PARTICLES_GREATBALL   55021
+#define TAG_PARTICLES_SAFARIBALL  55022
+#define TAG_PARTICLES_ULTRABALL   55023
+#define TAG_PARTICLES_MASTERBALL  55024
+#define TAG_PARTICLES_NETBALL     55025
+#define TAG_PARTICLES_DIVEBALL    55026
+#define TAG_PARTICLES_NESTBALL    55027
+#define TAG_PARTICLES_REPEATBALL  55028
+#define TAG_PARTICLES_TIMERBALL   55029
+#define TAG_PARTICLES_LUXURYBALL  55030
 #define TAG_PARTICLES_PREMIERBALL 55031
 
 const struct CompressedSpriteSheet gBallParticleSpritesheets[] = {
@@ -678,8 +678,8 @@ u8 ItemIdToBallId(u16 ballItem) {
 #define tSpriteId data[0]
 
 #define sDuration data[0]
-#define sTargetX data[1]
-#define sTargetY data[2]
+#define sTargetX  data[1]
+#define sTargetY  data[2]
 
 void AnimTask_ThrowBall(u8 taskId) {
     u8 ballId;
@@ -754,10 +754,10 @@ static void Task_PlayerThrow_Wait(u8 taskId) {
 #define sTargetXArg data[1]
 #define sTargetYArg data[2]
 
-#define sOffsetX data[1] // re-use
-#define sTargetX data[2] // re-use
-#define sOffsetY data[3]
-#define sTargetY data[4]
+#define sOffsetX   data[1] // re-use
+#define sTargetX   data[2] // re-use
+#define sOffsetY   data[3]
+#define sTargetY   data[4]
 #define sAmplitude data[5]
 
 static void SpriteCB_Ball_Throw(struct Sprite* sprite) {
@@ -781,7 +781,7 @@ static void SpriteCB_Ball_Throw(struct Sprite* sprite) {
 #undef sTargetY
 #undef sAmplitude
 
-#define sTimer data[5]
+#define sTimer  data[5]
 #define sTaskId data[5] // re-use
 
 static void SpriteCB_Ball_Arc(struct Sprite* sprite) {
@@ -826,8 +826,8 @@ static void SpriteCB_Ball_MonShrink(struct Sprite* sprite) {
 #undef sTimer
 #undef sTaskId
 
-#define tState data[0]
-#define sTimer data[1]
+#define tState  data[0]
+#define sTimer  data[1]
 #define sTaskId data[5]
 
 static void SpriteCB_Ball_MonShrink_Step(struct Sprite* sprite) {
@@ -880,9 +880,9 @@ static void SpriteCB_Ball_MonShrink_Step(struct Sprite* sprite) {
 #undef tState
 #undef sTaskId
 
-#define sState data[3]
+#define sState     data[3]
 #define sAmplitude data[4]
-#define sPhase data[5]
+#define sPhase     data[5]
 
 static void SpriteCB_Ball_Bounce(struct Sprite* sprite) {
     s16 phase;
@@ -902,19 +902,19 @@ static void SpriteCB_Ball_Bounce(struct Sprite* sprite) {
 #undef sAmplitude
 #undef sPhase
 
-#define DIRECTION(state) (state & 0xFF)
+#define DIRECTION(state)   (state & 0xFF)
 #define PHASE_DELTA(state) (state >> 8)
-#define BOUNCES(state) (state >> 8)
-#define FALL(state) (state &= -0x100)
+#define BOUNCES(state)     (state >> 8)
+#define FALL(state)        (state &= -0x100)
 #define RISE_FASTER(state) (state += 257)
 
 #define BALL_FALLING 0
-#define BALL_RISING 1
+#define BALL_RISING  1
 
-#define sState data[3]
+#define sState     data[3]
 #define sAmplitude data[4]
-#define sPhase data[5]
-#define sTimer data[5] // re-use
+#define sPhase     data[5]
+#define sTimer     data[5] // re-use
 
 // Animates the Poké Ball dropping to ground and bouncing.
 static void SpriteCB_Ball_Bounce_Step(struct Sprite* sprite) {
@@ -1007,13 +1007,13 @@ static void SpriteCB_Ball_Wobble(struct Sprite* sprite) {
 #undef sTimer
 #undef sState
 
-#define sState data[3]
+#define sState     data[3]
 #define sDirection data[4]
-#define sTimer data[5]
+#define sTimer     data[5]
 
-#define STATE(state) (state & 0xFF)
-#define SHAKES(state) (state >> 8)
-#define SHAKE_INC(state) (state += 0x100)
+#define STATE(state)       (state & 0xFF)
+#define SHAKES(state)      (state >> 8)
+#define SHAKE_INC(state)   (state += 0x100)
 #define RESET_STATE(state) (state &= -0x100)
 
 static void SpriteCB_Ball_Wobble_Step(struct Sprite* sprite) {
@@ -1245,9 +1245,9 @@ static void DestroySpriteAfterOneFrame(struct Sprite* sprite) {
 }
 #undef sFrame
 
-#define sDuration data[0]
-#define sTargetX data[2]
-#define sTargetY data[4]
+#define sDuration  data[0]
+#define sTargetX   data[2]
+#define sTargetY   data[4]
 #define sAmplitude data[5]
 
 static void MakeCaptureStars(struct Sprite* sprite) {
@@ -1287,7 +1287,7 @@ static void SpriteCB_CaptureStar_Flicker(struct Sprite* sprite) {
         DestroySprite(sprite);
 }
 
-#define sFrame data[0]
+#define sFrame   data[0]
 #define sOffsetY data[1]
 
 // Poké Ball didn't catch - starts:
@@ -1789,13 +1789,13 @@ static void DestroyBallOpenAnimationParticle(struct Sprite* sprite) {
     }
 }
 
-#define tCoeff data[0]
-#define tdCoeff data[1]
-#define tTimer data[2]
+#define tCoeff     data[0]
+#define tdCoeff    data[1]
+#define tTimer     data[2]
 #define tPalOffset data[3]
 #define tPaletteLo data[10]
 #define tPaletteHi data[11]
-#define tBallId data[15]
+#define tBallId    data[15]
 
 u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 battler, u32 selectedPalettes, u8 ballId) {
     u8 taskId;
@@ -1955,16 +1955,16 @@ void AnimTask_SetTargetToEffectBattler(u8 taskId) {
     DestroyAnimVisualTask(taskId);
 }
 
-#define tBattler data[0]
-#define tStarMove data[1]
+#define tBattler   data[0]
+#define tStarMove  data[1]
 #define tStarTimer data[10]
-#define tStarIdx data[11]
-#define tNumStars data[12]
-#define tTimer data[13]
+#define tStarIdx   data[11]
+#define tNumStars  data[12]
+#define tTimer     data[13]
 
 #define sTaskId data[0]
-#define sPhase data[1] // For encircling stars
-#define sTimer data[1] // For diagnoal stars
+#define sPhase  data[1] // For encircling stars
+#define sTimer  data[1] // For diagnoal stars
 
 void TryShinyAnimation(u8 battler, struct Pokemon* mon) {
     bool8 isShiny;
@@ -2133,9 +2133,9 @@ void AnimTask_FreePokeblockGfx(u8 taskId) {
     DestroyAnimVisualTask(taskId);
 }
 
-#define sDuration data[0]
-#define sTargetX data[2]
-#define sTargetY data[4]
+#define sDuration  data[0]
+#define sTargetX   data[2]
+#define sTargetY   data[4]
 #define sAmplitude data[5]
 
 static void SpriteCB_PokeBlock_Throw(struct Sprite* sprite) {

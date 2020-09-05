@@ -68,26 +68,26 @@ struct OamData {
     /*0x06*/ u16 affineParam;
 };
 
-#define ST_OAM_HFLIP 0x08
-#define ST_OAM_VFLIP 0x10
+#define ST_OAM_HFLIP          0x08
+#define ST_OAM_VFLIP          0x10
 #define ST_OAM_MNUM_FLIP_MASK 0x18
 
 #define ST_OAM_OBJ_NORMAL 0
-#define ST_OAM_OBJ_BLEND 1
+#define ST_OAM_OBJ_BLEND  1
 #define ST_OAM_OBJ_WINDOW 2
 
-#define ST_OAM_AFFINE_OFF 0
+#define ST_OAM_AFFINE_OFF    0
 #define ST_OAM_AFFINE_NORMAL 1
-#define ST_OAM_AFFINE_ERASE 2
+#define ST_OAM_AFFINE_ERASE  2
 #define ST_OAM_AFFINE_DOUBLE 3
 
-#define ST_OAM_AFFINE_ON_MASK 1
+#define ST_OAM_AFFINE_ON_MASK     1
 #define ST_OAM_AFFINE_DOUBLE_MASK 2
 
 #define ST_OAM_4BPP 0
 #define ST_OAM_8BPP 1
 
-#define ST_OAM_SQUARE 0
+#define ST_OAM_SQUARE      0
 #define ST_OAM_H_RECTANGLE 1
 #define ST_OAM_V_RECTANGLE 2
 
@@ -96,22 +96,22 @@ struct OamData {
 #define ST_OAM_SIZE_2 2
 #define ST_OAM_SIZE_3 3
 
-#define SPRITE_SIZE_8x8 ((ST_OAM_SIZE_0 << 2) | (ST_OAM_SQUARE))
+#define SPRITE_SIZE_8x8   ((ST_OAM_SIZE_0 << 2) | (ST_OAM_SQUARE))
 #define SPRITE_SIZE_16x16 ((ST_OAM_SIZE_1 << 2) | (ST_OAM_SQUARE))
 #define SPRITE_SIZE_32x32 ((ST_OAM_SIZE_2 << 2) | (ST_OAM_SQUARE))
 #define SPRITE_SIZE_64x64 ((ST_OAM_SIZE_3 << 2) | (ST_OAM_SQUARE))
 
-#define SPRITE_SIZE_16x8 ((ST_OAM_SIZE_0 << 2) | (ST_OAM_H_RECTANGLE))
-#define SPRITE_SIZE_32x8 ((ST_OAM_SIZE_1 << 2) | (ST_OAM_H_RECTANGLE))
+#define SPRITE_SIZE_16x8  ((ST_OAM_SIZE_0 << 2) | (ST_OAM_H_RECTANGLE))
+#define SPRITE_SIZE_32x8  ((ST_OAM_SIZE_1 << 2) | (ST_OAM_H_RECTANGLE))
 #define SPRITE_SIZE_32x16 ((ST_OAM_SIZE_2 << 2) | (ST_OAM_H_RECTANGLE))
 #define SPRITE_SIZE_64x32 ((ST_OAM_SIZE_3 << 2) | (ST_OAM_H_RECTANGLE))
 
-#define SPRITE_SIZE_8x16 ((ST_OAM_SIZE_0 << 2) | (ST_OAM_V_RECTANGLE))
-#define SPRITE_SIZE_8x32 ((ST_OAM_SIZE_1 << 2) | (ST_OAM_V_RECTANGLE))
+#define SPRITE_SIZE_8x16  ((ST_OAM_SIZE_0 << 2) | (ST_OAM_V_RECTANGLE))
+#define SPRITE_SIZE_8x32  ((ST_OAM_SIZE_1 << 2) | (ST_OAM_V_RECTANGLE))
 #define SPRITE_SIZE_16x32 ((ST_OAM_SIZE_2 << 2) | (ST_OAM_V_RECTANGLE))
 #define SPRITE_SIZE_32x64 ((ST_OAM_SIZE_3 << 2) | (ST_OAM_V_RECTANGLE))
 
-#define SPRITE_SIZE(dim) ((SPRITE_SIZE_##dim >> 2) & 0x03)
+#define SPRITE_SIZE(dim)  ((SPRITE_SIZE_##dim >> 2) & 0x03)
 #define SPRITE_SHAPE(dim) (SPRITE_SIZE_##dim & 0x03)
 
 struct BgAffineSrcData {
@@ -157,9 +157,9 @@ struct SioMultiCnt {
 #define ST_SIO_MULTI_MODE 2 // Multi-player communication mode
 
 // baud rate
-#define ST_SIO_9600_BPS 0   //   9600 bps
-#define ST_SIO_38400_BPS 1  //  38400 bps
-#define ST_SIO_57600_BPS 2  //  57600 bps
+#define ST_SIO_9600_BPS   0 //   9600 bps
+#define ST_SIO_38400_BPS  1 //  38400 bps
+#define ST_SIO_57600_BPS  2 //  57600 bps
 #define ST_SIO_115200_BPS 3 // 115200 bps
 
 #endif // GUARD_GBA_TYPES_H

@@ -43,7 +43,7 @@
 #include "constants/rgb.h"
 
 // Enough space to hold 2 match info cards worth of trainers and their parties
-#define NUM_INFOCARD_SPRITES ((FRONTIER_PARTY_SIZE + 1) * 4)
+#define NUM_INFOCARD_SPRITES  ((FRONTIER_PARTY_SIZE + 1) * 4)
 #define NUM_INFOCARD_TRAINERS 2
 
 // An 'Info Card' is a trainer or match information page that can be viewed on the Tourney Tree
@@ -60,18 +60,18 @@ struct TourneyTreeLineSection {
 };
 
 #define DOME_TRAINERS gSaveBlock2Ptr->frontier.domeTrainers
-#define DOME_MONS gSaveBlock2Ptr->frontier.domeMonIds
+#define DOME_MONS     gSaveBlock2Ptr->frontier.domeMonIds
 
 #define tState data[0]
 
 // Task data for Task_ShowTourneyTree
-#define tNotInteractive data[1]
+#define tNotInteractive    data[1]
 #define tIsPrevTourneyTree data[4]
 
 // Task data for Task_ShowTourneyInfoCard
 #define tTournamentId data[1]
-#define tMode data[2]
-#define tPrevTaskId data[3]
+#define tMode         data[2]
+#define tPrevTaskId   data[3]
 
 // This file's functions.
 static u8 GetDomeTrainerMonIvs(u16 trainerId);
@@ -2409,12 +2409,12 @@ static int SelectOpponentMonsFromParty(int* partyMovePoints, bool8 allowRandom) 
     return selectedMonBits;
 }
 
-#define TYPE_x0 0
+#define TYPE_x0    0
 #define TYPE_x0_25 5
 #define TYPE_x0_50 10
-#define TYPE_x1 20
-#define TYPE_x2 40
-#define TYPE_x4 80
+#define TYPE_x1    20
+#define TYPE_x2    40
+#define TYPE_x4    80
 
 // Functionally equivalent, while loop is impossible to match.
 // arg2 is either 2, a personality, or an OTID
@@ -3189,15 +3189,15 @@ static void SpriteCb_VerticalScrollArrow(struct Sprite* sprite) {
 }
 
 // Task states for Task_HandleInfoCardInput
-#define STATE_FADE_IN 0
-#define STATE_WAIT_FADE 1
-#define STATE_GET_INPUT 2
+#define STATE_FADE_IN     0
+#define STATE_WAIT_FADE   1
+#define STATE_GET_INPUT   2
 #define STATE_REACT_INPUT 3
-#define STATE_MOVE_UP 4
-#define STATE_MOVE_DOWN 5
-#define STATE_MOVE_LEFT 6
-#define STATE_MOVE_RIGHT 7
-#define STATE_CLOSE_CARD 8
+#define STATE_MOVE_UP     4
+#define STATE_MOVE_DOWN   5
+#define STATE_MOVE_LEFT   6
+#define STATE_MOVE_RIGHT  7
+#define STATE_CLOSE_CARD  8
 
 #define tUsingAlternateSlot data[2] // CARD_ALTERNATE_SLOT
 
@@ -4505,12 +4505,12 @@ static void ShowPreviousDomeTourneyTree(void) {
 }
 
 // Task states for Task_HandleTourneyTreeInput
-#define STATE_FADE_IN 0
-#define STATE_WAIT_FADE 1
-#define STATE_GET_INPUT 2
+#define STATE_FADE_IN               0
+#define STATE_WAIT_FADE             1
+#define STATE_GET_INPUT             2
 #define STATE_SHOW_INFOCARD_TRAINER 3
-#define STATE_SHOW_INFOCARD_MATCH 5
-#define STATE_CLOSE_TOURNEY_TREE 7
+#define STATE_SHOW_INFOCARD_MATCH   5
+#define STATE_CLOSE_TOURNEY_TREE    7
 
 static void Task_HandleTourneyTreeInput(u8 taskId) {
     u8 newTaskId = 0;
@@ -4601,11 +4601,11 @@ static void Task_HandleTourneyTreeInput(u8 taskId) {
 #undef STATE_SHOW_INFOCARD_MATCH
 #undef STATE_CLOSE_TOURNEY_TREE
 
-#define MOVE_DIR_UP 0
-#define MOVE_DIR_DOWN 1
-#define MOVE_DIR_LEFT 2
+#define MOVE_DIR_UP    0
+#define MOVE_DIR_DOWN  1
+#define MOVE_DIR_LEFT  2
 #define MOVE_DIR_RIGHT 3
-#define MOVE_DIR_NONE 4
+#define MOVE_DIR_NONE  4
 
 // Move the tourney tree cursor
 // The 'cursor' is actually just which button sprite is currently doing the 'selected' animation
@@ -5018,10 +5018,10 @@ static void DrawTourneyAdvancementLine(u8 tournamentId, u8 roundId) {
     CopyBgTilemapBufferToVram(1);
 }
 
-#define STATE_FADE_IN 0
-#define STATE_SHOW_RESULTS 1
-#define STATE_DELAY 2
-#define STATE_WAIT_FOR_INPUT 3
+#define STATE_FADE_IN            0
+#define STATE_SHOW_RESULTS       1
+#define STATE_DELAY              2
+#define STATE_WAIT_FOR_INPUT     3
 #define STATE_CLOSE_TOURNEY_TREE 4
 
 // The non-interactive tourney tree that's shown when a round is completed

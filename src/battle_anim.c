@@ -2039,14 +2039,14 @@ static void ScriptCmd_playse(void) {
     sBattleAnimScriptPtr += 2;
 }
 
-#define t1_MONBG_BATTLER 0
-#define t1_MON_IN_BG2 1
+#define t1_MONBG_BATTLER       0
+#define t1_MON_IN_BG2          1
 #define t1_CREATE_ANOTHER_TASK 2
-#define t1_IS_SECONDMON_BG 3
+#define t1_IS_SECONDMON_BG     3
 
 #define t2_BATTLER_SPRITE_ID 0
-#define t2_MON_IN_BG2 5
-#define t2_MONBG_BATTLER 6
+#define t2_MON_IN_BG2        5
+#define t2_MONBG_BATTLER     6
 
 static void sub_80A40F4(u8 taskId) {
     u8 newTaskId;
@@ -2553,7 +2553,7 @@ bool8 IsContest(void) {
 }
 
 #define tBackgroundId data[0]
-#define tState data[10]
+#define tState        data[10]
 
 static void ScriptCmd_fadetobg(void) {
     u8 backgroundId;
@@ -2770,11 +2770,11 @@ static void ScriptCmd_setpan(void) {
     sBattleAnimScriptPtr++;
 }
 
-#define tInitialPan data[0]
-#define tTargetPan data[1]
+#define tInitialPan   data[0]
+#define tTargetPan    data[1]
 #define tIncrementPan data[2]
 #define tFramesToWait data[3]
-#define tCurrentPan data[4]
+#define tCurrentPan   data[4]
 #define tFrameCounter data[8]
 
 static void ScriptCmd_panse_1B(void) {
@@ -2906,11 +2906,11 @@ static void ScriptCmd_panse_27(void) {
 #undef tCurrentPan
 #undef tFrameCounter
 
-#define tSongId data[0]
-#define tPanning data[1]
-#define tFramesToWait data[2]
+#define tSongId        data[0]
+#define tPanning       data[1]
+#define tFramesToWait  data[2]
 #define tNumberOfPlays data[3]
-#define tFrameCounter data[8]
+#define tFrameCounter  data[8]
 
 static void ScriptCmd_loopsewithpan(void) {
     u16 songId;
@@ -2961,8 +2961,8 @@ static void Task_LoopAndPlaySE(u8 taskId) {
 #undef tNumberOfPlays
 #undef tFrameCounter
 
-#define tSongId data[0]
-#define tPanning data[1]
+#define tSongId       data[0]
+#define tPanning      data[1]
 #define tFramesToWait data[2]
 
 static void ScriptCmd_waitplaysewithpan(void) {

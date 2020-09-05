@@ -541,15 +541,15 @@ void sub_80724A8(s16 arg0, s16 arg1, u16* arg2) {
 // data fields for healthboxMain
 // oam.affineParam holds healthboxRight spriteId
 #define hMain_HealthBarSpriteId data[5]
-#define hMain_Battler data[6]
-#define hMain_Data7 data[7]
+#define hMain_Battler           data[6]
+#define hMain_Data7             data[7]
 
 // data fields for healthboxRight
 #define hOther_HealthBoxSpriteId data[5]
 
 // data fields for healthbar
 #define hBar_HealthBoxSpriteId data[5]
-#define hBar_Data6 data[6]
+#define hBar_Data6             data[6]
 
 u8 CreateBattlerHealthboxSprites(u8 battlerId) {
     s16 data6 = 0;
@@ -1073,11 +1073,11 @@ void SwapHpBarsWithHpText(void) {
     }
 }
 
-#define tBattler data[0]
-#define tSummaryBarSpriteId data[1]
+#define tBattler             data[0]
+#define tSummaryBarSpriteId  data[1]
 #define tBallIconSpriteId(n) data[3 + n]
-#define tIsBattleStart data[10]
-#define tData15 data[15]
+#define tIsBattleStart       data[10]
+#define tData15              data[15]
 
 u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus* partyInfo, u8 arg2, bool8 isBattleStart) {
     bool8 isOpponent;
@@ -1757,7 +1757,7 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon* mon, u8 elem
     }
 }
 
-#define B_EXPBAR_PIXELS 64
+#define B_EXPBAR_PIXELS    64
 #define B_HEALTHBAR_PIXELS 48
 
 s32 MoveBattleBar(u8 battlerId, u8 healthboxSpriteId, u8 whichBar, u8 unused) {

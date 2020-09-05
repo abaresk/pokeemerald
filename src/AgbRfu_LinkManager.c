@@ -2,16 +2,16 @@
 #include "librfu.h"
 #include "link_rfu.h"
 
-#define RN_ACCEPT 0x01
+#define RN_ACCEPT           0x01
 #define RN_NAME_TIMER_CLEAR 0x02
-#define RN_DISCONNECT 0x04
+#define RN_DISCONNECT       0x04
 
-#define LINK_RECOVERY_OFF 0x00
-#define LINK_RECOVERY_START 0x01
-#define LINK_RECOVERY_EXE 0x02
+#define LINK_RECOVERY_OFF        0x00
+#define LINK_RECOVERY_START      0x01
+#define LINK_RECOVERY_EXE        0x02
 #define LINK_RECOVERY_IMPOSSIBLE 0x04
 
-#define FSP_ON 0x01
+#define FSP_ON    0x01
 #define FSP_START 0x02
 
 LINK_MANAGER lman;

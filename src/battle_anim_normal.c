@@ -365,14 +365,14 @@ static void sub_81159B4(struct Sprite* sprite) {
 }
 
 // Task data for AnimTask_BlendColorCycle, AnimTask_BlendColorCycleExclude, and AnimTask_BlendColorCycleByTag
-#define tPalSelector data[0] // AnimTask_BlendColorCycle
-#define tPalTag data[0]      // AnimTask_BlendColorCycleByTag
-#define tDelay data[1]
-#define tNumBlends data[2]
+#define tPalSelector   data[0] // AnimTask_BlendColorCycle
+#define tPalTag        data[0] // AnimTask_BlendColorCycleByTag
+#define tDelay         data[1]
+#define tNumBlends     data[2]
 #define tInitialBlendY data[3]
-#define tTargetBlendY data[4]
-#define tBlendColor data[5]
-#define tRestoreBlend data[8]
+#define tTargetBlendY  data[4]
+#define tBlendColor    data[5]
+#define tRestoreBlend  data[8]
 #define tPalSelectorHi data[9]
 #define tPalSelectorLo data[10]
 
@@ -735,10 +735,10 @@ static void AnimShakeMonOrBattleTerrain_UpdateCoordOffsetEnabled(void) {
 }
 
 // Task data for AnimTask_ShakeBattleTerrain
-#define tXOffset data[0]
-#define tYOffset data[1]
-#define tNumShakes data[2]
-#define tTimer data[3]
+#define tXOffset    data[0]
+#define tYOffset    data[1]
+#define tNumShakes  data[2]
+#define tTimer      data[3]
 #define tShakeDelay data[8]
 
 // Can shake battle terrain back and forth on the X or down and back to original pos on Y (cant shake up from orig pos)

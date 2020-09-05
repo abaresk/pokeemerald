@@ -4,7 +4,7 @@
 #include "constants/berry.h"
 #include "constants/pokemon.h"
 
-#define GFX_TAG_POKEBLOCK 14818
+#define GFX_TAG_POKEBLOCK      14818
 #define GFX_TAG_POKEBLOCK_CASE 14800
 
 enum {

@@ -3,11 +3,11 @@
 
 #include "gba/gba.h"
 
-#define SIIRTCINFO_INTFE 0x01  // frequency interrupt enable
-#define SIIRTCINFO_INTME 0x02  // per-minute interrupt enable
-#define SIIRTCINFO_INTAE 0x04  // alarm interrupt enable
+#define SIIRTCINFO_INTFE  0x01 // frequency interrupt enable
+#define SIIRTCINFO_INTME  0x02 // per-minute interrupt enable
+#define SIIRTCINFO_INTAE  0x04 // alarm interrupt enable
 #define SIIRTCINFO_24HOUR 0x40 // 0: 12-hour mode, 1: 24-hour mode
-#define SIIRTCINFO_POWER 0x80  // power on or power failure occurred
+#define SIIRTCINFO_POWER  0x80 // power on or power failure occurred
 
 enum {
     MONTH_JAN = 1,

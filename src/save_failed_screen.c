@@ -15,7 +15,7 @@
 #include "text_window.h"
 #include "constants/rgb.h"
 
-#define MSG_WIN_TOP 12
+#define MSG_WIN_TOP   12
 #define CLOCK_WIN_TOP (MSG_WIN_TOP - 4)
 
 extern const u8 gText_SaveFailedCheckingBackup[];

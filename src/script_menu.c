@@ -98,13 +98,13 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreB
     InitMultichoiceCheckWrap(ignoreBPress, count, windowId, multichoiceId);
 }
 
-#define tLeft data[0]
-#define tTop data[1]
-#define tRight data[2]
-#define tBottom data[3]
-#define tIgnoreBPress data[4]
-#define tDoWrap data[5]
-#define tWindowId data[6]
+#define tLeft          data[0]
+#define tTop           data[1]
+#define tRight         data[2]
+#define tBottom        data[3]
+#define tIgnoreBPress  data[4]
+#define tDoWrap        data[5]
+#define tWindowId      data[6]
 #define tMultichoiceId data[7]
 
 static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId) {
@@ -463,12 +463,12 @@ void GetLilycoveSSTidalSelection(void) {
     }
 }
 
-#define tState data[0]
-#define tMonSpecies data[1]
+#define tState       data[0]
+#define tMonSpecies  data[1]
 #define tMonSpriteId data[2]
-#define tWindowX data[3]
-#define tWindowY data[4]
-#define tWindowId data[5]
+#define tWindowX     data[3]
+#define tWindowY     data[4]
+#define tWindowId    data[5]
 
 static void Task_PokemonPicWindow(u8 taskId) {
     struct Task* task = &gTasks[taskId];

@@ -737,11 +737,11 @@ static void SetOrbFlashScanlineEffectWindowBoundaries(u16* dest, s32 centerX, s3
     }
 }
 
-#define tFlashCenterX data[1]
-#define tFlashCenterY data[2]
-#define tCurFlashRadius data[3]
-#define tDestFlashRadius data[4]
-#define tFlashRadiusDelta data[5]
+#define tFlashCenterX        data[1]
+#define tFlashCenterY        data[2]
+#define tCurFlashRadius      data[3]
+#define tDestFlashRadius     data[4]
+#define tFlashRadiusDelta    data[5]
 #define tClearScanlineEffect data[6]
 
 static void UpdateFlashLevelEffect(u8 taskId) {
@@ -979,17 +979,17 @@ static bool8 sub_80B02C8(u16 shakeDir) {
         return FALSE;
 }
 
-#define tState data[0]
-#define tBlueOrb data[1]
-#define tCenterX data[2]
-#define tCenterY data[3]
+#define tState      data[0]
+#define tBlueOrb    data[1]
+#define tCenterX    data[2]
+#define tCenterY    data[3]
 #define tShakeDelay data[4]
-#define tShakeDir data[5]
-#define tDispCnt data[6]
-#define tBldCnt data[7]
-#define tBldAlpha data[8]
-#define tWinIn data[9]
-#define tWinOut data[10]
+#define tShakeDir   data[5]
+#define tDispCnt    data[6]
+#define tBldCnt     data[7]
+#define tBldAlpha   data[8]
+#define tWinIn      data[9]
+#define tWinOut     data[10]
 
 static void Task_OrbEffect(u8 taskId) {
     s16* data = gTasks[taskId].data;

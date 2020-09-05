@@ -342,8 +342,8 @@ static void AdvancePlayhead(u8 windowId) {
 static void DrawWaveformSegment(u8 position, u8 amplitude) {
 // Position is a bitfield containing the play start pos, the playhead pos, and which vertical slice half to draw
 #define PLAY_START_POS (position >> 3)
-#define PLAYHEAD_POS (position & ((1 << 3) - 1))
-#define VERT_SLICE (position & 1)
+#define PLAYHEAD_POS   (position & ((1 << 3) - 1))
+#define VERT_SLICE     (position & 1)
 
     u8 currentPointY;
     u8 nybble;

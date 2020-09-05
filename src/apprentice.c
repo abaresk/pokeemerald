@@ -61,7 +61,7 @@
  * PlayersApprentice playerApprentice of SaveBlock2
  */
 
-#define PLAYER_APPRENTICE gSaveBlock2Ptr->playerApprentice
+#define PLAYER_APPRENTICE    gSaveBlock2Ptr->playerApprentice
 #define CURRENT_QUESTION_NUM PLAYER_APPRENTICE.questionsAnswered - NUM_WHICH_MON_QUESTIONS
 
 struct ApprenticePartyMovesData {
@@ -596,9 +596,9 @@ static void CreateApprenticeMenu(u8 menu) {
     CreateChooseAnswerTask(TRUE, count, windowId);
 }
 
-#define tNoBButton data[4]
+#define tNoBButton  data[4]
 #define tWrapAround data[5]
-#define tWindowId data[6]
+#define tWindowId   data[6]
 
 static void Task_ChooseAnswer(u8 taskId) {
     s8 input;

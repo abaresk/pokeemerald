@@ -1111,11 +1111,11 @@ void AnimTask_BlendBackground(u8 taskId) {
     DestroyAnimVisualTask(taskId);
 }
 
-#define tShakeNum data[0]
-#define tMaxShakes data[1]
+#define tShakeNum    data[0]
+#define tMaxShakes   data[1]
 #define tShakeOffset data[2] // Never read, gBattleAnimArgs[1] is used directly instead
-#define tVertical data[3]
-#define tPatternId data[4]
+#define tVertical    data[3]
+#define tPatternId   data[4]
 
 // Shakes target horizontally or vertically tMaxShakes times, following a set pattern of alternations
 void AnimTask_ShakeTargetInPattern(u8 taskId) {

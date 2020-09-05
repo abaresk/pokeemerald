@@ -503,15 +503,15 @@ static void AnimDigDirtMound(struct Sprite* sprite) {
     sprite->callback = WaitAnimForDuration;
 }
 
-#define tState data[0]
-#define tDelay data[1]
-#define tTimer data[2]
-#define tMaxTime data[3]
+#define tState               data[0]
+#define tDelay               data[1]
+#define tTimer               data[2]
+#define tMaxTime             data[3]
 #define tbattlerSpriteIds(i) data[9 + (i)]
-#define tNumBattlers data[13] // AnimTask_ShakeBattlers
-#define tInitialX data[13]    // AnimTask_ShakeTerrain
-#define tHorizOffset data[14]
-#define tInitHorizOffset data[15]
+#define tNumBattlers         data[13] // AnimTask_ShakeBattlers
+#define tInitialX            data[13] // AnimTask_ShakeTerrain
+#define tHorizOffset         data[14]
+#define tInitHorizOffset     data[15]
 
 // Shakes battler(s) or the battle terrain back and forth horizontally. Used by e.g. Earthquake, Eruption
 // arg0: What to shake. 0-3 for any specific battler, MAX_BATTLERS_COUNT for all battlers, MAX_BATTLERS_COUNT + 1 for

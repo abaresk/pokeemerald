@@ -39,8 +39,8 @@
  *
  */
 
-#define MAP_WIDTH 28
-#define MAP_HEIGHT 15
+#define MAP_WIDTH       28
+#define MAP_HEIGHT      15
 #define MAPCURSOR_X_MIN 1
 #define MAPCURSOR_Y_MIN 2
 #define MAPCURSOR_X_MAX (MAPCURSOR_X_MIN + MAP_WIDTH - 1)
@@ -1479,7 +1479,7 @@ static void LoadFlyDestIcons(void) {
 }
 
 // Sprite data for SpriteCB_FlyDestIcon
-#define sIconMapSec data[0]
+#define sIconMapSec   data[0]
 #define sFlickerTimer data[1]
 
 static void CreateFlyDestIcons(void) {

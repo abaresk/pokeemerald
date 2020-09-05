@@ -29,20 +29,20 @@
 #include "constants/songs.h"
 
 #define SLOTMACHINE_GFX_TILES 233
-#define MAX_BET 3
+#define MAX_BET               3
 
-#define SYMBOLS_PER_REEL 21
+#define SYMBOLS_PER_REEL   21
 #define REEL_SYMBOL_HEIGHT 24
 
 // Lucky Flags
-#define LUCKY_BIAS_REPLAY (1 << 0)
-#define LUCKY_BIAS_CHERRY (1 << 1)
-#define LUCKY_BIAS_LOTAD (1 << 2)
-#define LUCKY_BIAS_AZURILL (1 << 3)
-#define LUCKY_BIAS_POWER (1 << 4)
-#define LUCKY_BIAS_REELTIME (1 << 5)
+#define LUCKY_BIAS_REPLAY    (1 << 0)
+#define LUCKY_BIAS_CHERRY    (1 << 1)
+#define LUCKY_BIAS_LOTAD     (1 << 2)
+#define LUCKY_BIAS_AZURILL   (1 << 3)
+#define LUCKY_BIAS_POWER     (1 << 4)
+#define LUCKY_BIAS_REELTIME  (1 << 5)
 #define LUCKY_BIAS_MIXED_777 (1 << 6)
-#define LUCKY_BIAS_777 (1 << 7)
+#define LUCKY_BIAS_777       (1 << 7)
 
 enum {
     GFXTAG_7_RED,
@@ -1828,7 +1828,7 @@ s16 AdvanceReeltimeReelToNextTag(s16 value) {
     return offset;
 }
 
-#define tState data[0]
+#define tState  data[0]
 #define tMoving data[14]
 #define tReelId data[15]
 
@@ -2439,12 +2439,12 @@ static void DarkenBetTiles(u8 betVal) {
         DarkenMatchLine(sBetToMatchLineIds[betVal][i]);
 }
 
-#define sMatchLineId data[0]
-#define sFlashing data[1]
-#define sNumFullFlashes data[2]
-#define sDelayTimer data[3]
-#define sColor data[4]
-#define sColorIncr data[5]
+#define sMatchLineId     data[0]
+#define sFlashing        data[1]
+#define sNumFullFlashes  data[2]
+#define sDelayTimer      data[3]
+#define sColor           data[4]
+#define sColorIncr       data[5]
 #define sAtOriginalColor data[7]
 
 // Creates invisible sprites that flash the bet lines/numbers where a match occurs
@@ -2538,7 +2538,7 @@ static void SpriteCB_FlashMatchingLines(struct Sprite* sprite) {
 
 #define sDelayTimer data[1]
 #define sFlashState data[2]
-#define sFlashDir data[3]
+#define sFlashDir   data[3]
 
 static void FlashSlotMachineLights(void) {
     u8 taskId = CreateTask(Task_FlashSlotMachineLights, 6);
@@ -2571,10 +2571,10 @@ static void Task_FlashSlotMachineLights(u8 taskId) {
 #undef sFlashState
 #undef sFlashDir
 
-#define tState data[0]
-#define tNumBolts data[1]
-#define tSpriteId data[2]
-#define tTimer data[2] // re-used
+#define tState     data[0]
+#define tNumBolts  data[1]
+#define tSpriteId  data[2]
+#define tTimer     data[2] // re-used
 #define tAnimating data[15]
 
 static void CreatePikaPowerBoltTask(void) {
@@ -3375,10 +3375,10 @@ static void DestroyBrokenReelTimeMachineSprite(void) {
 }
 
 #define sDelayTimer data[0]
-#define sXDir data[1]
-#define sYDir data[2]
-#define sCounter data[3]
-#define sDelay data[7]
+#define sXDir       data[1]
+#define sYDir       data[2]
+#define sCounter    data[3]
+#define sDelay      data[7]
 
 static void CreateReelTimeBoltSprites(void) {
     u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 152, 32, 5);
@@ -3435,10 +3435,10 @@ static void DestroyReelTimeBoltSprites(void) {
 #undef sCounter
 #undef sDelay
 
-#define sFlashPal data[0]
-#define sColorIdx data[5]
+#define sFlashPal   data[0]
+#define sColorIdx   data[5]
 #define sDelayTimer data[6]
-#define sDelay data[7]
+#define sDelay      data[7]
 
 static void CreateReelTimePikachuAuraSprites(void) {
     // Left half of electricity orb
@@ -3535,9 +3535,9 @@ static void DestroyReelTimeDuckSprites(void) {
     }
 }
 
-#define sState data[0]
-#define sMoveY data[1]
-#define sTimer data[2]
+#define sState        data[0]
+#define sMoveY        data[1]
+#define sTimer        data[2]
 #define sAnimFinished data[7]
 
 static void CreateReelTimeSmokeSprite(void) {
@@ -3610,8 +3610,8 @@ static u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 sprit
                                       sDigitalDisplay_SpriteCoords[dispInfoId][1], spriteId);
 }
 
-#define sState data[0]
-#define sCounter data[1]
+#define sState    data[0]
+#define sCounter  data[1]
 #define sSpriteId data[6]
 
 static u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 internalSpriteId) {

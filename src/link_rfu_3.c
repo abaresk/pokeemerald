@@ -15,7 +15,7 @@ enum {
     WIRELESS_STATUS_ANIM_ERROR,
 };
 
-#define UNUSED_QUEUE_NUM_SLOTS 2
+#define UNUSED_QUEUE_NUM_SLOTS   2
 #define UNUSED_QUEUE_SLOT_LENGTH 256
 
 struct RfuUnusedQueue {
@@ -963,13 +963,13 @@ void LinkRfu3_SetGnameUnameFromStaticBuffers(struct GFtgtGname* buff1, u8* buff2
     memcpy(buff2, gHostRFUtgtUnameBuffer, PLAYER_NAME_LENGTH + 1);
 }
 
-#define sNextAnimNum data[0]
-#define sSavedAnimNum data[1]
-#define sCurrAnimNum data[2]
-#define sFrameDelay data[3]
-#define sFrameIdx data[4]
-#define sTileStart data[6]
-#define sValidator data[7]
+#define sNextAnimNum            data[0]
+#define sSavedAnimNum           data[1]
+#define sCurrAnimNum            data[2]
+#define sFrameDelay             data[3]
+#define sFrameIdx               data[4]
+#define sTileStart              data[6]
+#define sValidator              data[7]
 #define STATUS_INDICATOR_ACTIVE 0x1234 // Used to validate active indicator
 
 void CreateWirelessStatusIndicatorSprite(u8 x, u8 y) {

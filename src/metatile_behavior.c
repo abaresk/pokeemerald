@@ -3,7 +3,7 @@
 #include "constants/metatile_behaviors.h"
 
 #define TILE_FLAG_ENCOUNTER_TILE 1
-#define TILE_FLAG_SURFABLE 2
+#define TILE_FLAG_SURFABLE       2
 
 #define TILE_ATTRIBUTES(unused, surfable, wildEncounter) \
     (((wildEncounter) ? 1 : 0) | ((surfable) ? 2 : 0) | ((unused) ? 4 : 0))

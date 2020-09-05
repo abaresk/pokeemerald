@@ -11,13 +11,13 @@
 static void Task_LinkContest_StartInitFlags(u8);
 static void Task_LinkContest_InitFlags(u8);
 
-#define tState data[0]
-#define tDelayTimer data[1]
+#define tState         data[0]
+#define tDelayTimer    data[1]
 #define tCategories(i) data[(i) + 1]
-#define tLeaderIds(i) data[(i) + 5]
-#define tCategory data[9]
-#define tTimer data[11]
-#define tStandbyState data[12]
+#define tLeaderIds(i)  data[(i) + 5]
+#define tCategory      data[9]
+#define tTimer         data[11]
+#define tStandbyState  data[12]
 
 bool32 LinkContest_SendBlock(void* src, u16 size) {
     memcpy(gDecompressionBuffer, src, size);

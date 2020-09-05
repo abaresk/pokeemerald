@@ -861,12 +861,12 @@ void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, s32 value) {
     }
 }
 
-#define tState data[0]
-#define tAnimNum data[1]
-#define tBounceDir data[2]
+#define tState      data[0]
+#define tAnimNum    data[1]
+#define tBounceDir  data[2]
 #define tMultiplier data[3]
-#define tFrequency data[4]
-#define tSinePos data[5]
+#define tFrequency  data[4]
+#define tSinePos    data[5]
 
 static void SpriteCallback_ScrollIndicatorArrow(struct Sprite* sprite) {
     s32 multiplier;

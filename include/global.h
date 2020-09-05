@@ -15,20 +15,20 @@
 // to help in decompiling
 #define asm_comment(x) asm volatile("@ -- " x " -- ")
 #define asm_unified(x) asm(".syntax unified\n" x "\n.syntax divided")
-#define NAKED __attribute__((naked))
+#define NAKED          __attribute__((naked))
 
 // IDE support
 #if defined(__APPLE__) || defined(__CYGWIN__) || defined(_MSC_VER)
-#define _(x) x
+#define _(x)  x
 #define __(x) x
 
 // Fool CLion IDE
 #define INCBIN(x) \
     { 0 }
-#define INCBIN_U8 INCBIN
+#define INCBIN_U8  INCBIN
 #define INCBIN_U16 INCBIN
 #define INCBIN_U32 INCBIN
-#define INCBIN_S8 INCBIN
+#define INCBIN_S8  INCBIN
 #define INCBIN_S16 INCBIN
 #define INCBIN_S32 INCBIN
 #endif // IDE support
@@ -88,23 +88,23 @@
 // as these below. Because of this, there is a theory (Two Team Theory) that states that these
 // programming projects had more than 1 "programming team" which utilized different macros for
 // each of the files that were worked on.
-#define T1_READ_8(ptr) ((ptr)[0])
-#define T1_READ_16(ptr) ((ptr)[0] | ((ptr)[1] << 8))
-#define T1_READ_32(ptr) ((ptr)[0] | ((ptr)[1] << 8) | ((ptr)[2] << 16) | ((ptr)[3] << 24))
+#define T1_READ_8(ptr)   ((ptr)[0])
+#define T1_READ_16(ptr)  ((ptr)[0] | ((ptr)[1] << 8))
+#define T1_READ_32(ptr)  ((ptr)[0] | ((ptr)[1] << 8) | ((ptr)[2] << 16) | ((ptr)[3] << 24))
 #define T1_READ_PTR(ptr) (u8*)T1_READ_32(ptr)
 
 // T2_READ_8 is a duplicate to remain consistent with each group.
-#define T2_READ_8(ptr) ((ptr)[0])
-#define T2_READ_16(ptr) ((ptr)[0] + ((ptr)[1] << 8))
-#define T2_READ_32(ptr) ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
+#define T2_READ_8(ptr)   ((ptr)[0])
+#define T2_READ_16(ptr)  ((ptr)[0] + ((ptr)[1] << 8))
+#define T2_READ_32(ptr)  ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
 #define T2_READ_PTR(ptr) (void*)T2_READ_32(ptr)
 
 // Macros for checking the joypad
 #define TEST_BUTTON(field, button) ({ (field) & (button); })
-#define JOY_NEW(button) TEST_BUTTON(gMain.newKeys, button)
-#define JOY_HELD(button) TEST_BUTTON(gMain.heldKeys, button)
-#define JOY_HELD_RAW(button) TEST_BUTTON(gMain.heldKeysRaw, button)
-#define JOY_REPEAT(button) TEST_BUTTON(gMain.newAndRepeatedKeys, button)
+#define JOY_NEW(button)            TEST_BUTTON(gMain.newKeys, button)
+#define JOY_HELD(button)           TEST_BUTTON(gMain.heldKeys, button)
+#define JOY_HELD_RAW(button)       TEST_BUTTON(gMain.heldKeysRaw, button)
+#define JOY_REPEAT(button)         TEST_BUTTON(gMain.newAndRepeatedKeys, button)
 
 #define S16TOPOSFLOAT(val)  \
     ({                      \
@@ -117,7 +117,7 @@
 
 #define ROUND_BITS_TO_BYTES(numBits) (((numBits) / 8) + (((numBits) % 8) ? 1 : 0))
 
-#define DEX_FLAGS_NO (ROUND_BITS_TO_BYTES(POKEMON_SLOTS_NUMBER))
+#define DEX_FLAGS_NO   (ROUND_BITS_TO_BYTES(POKEMON_SLOTS_NUMBER))
 #define NUM_FLAG_BYTES (ROUND_BITS_TO_BYTES(FLAGS_COUNT))
 
 struct Coords8 {

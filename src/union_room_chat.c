@@ -1716,12 +1716,12 @@ void InitUnionRoomChatRegisteredTexts(void) {
     StringCopy(gSaveBlock1Ptr->registeredTexts[9], gText_ByeBye);
 }
 
-#define tState data[0]
-#define tI data[1]
-#define tCurrLinkPlayer data[2]
+#define tState               data[0]
+#define tI                   data[1]
+#define tCurrLinkPlayer      data[2]
 #define tBlockReceivedStatus data[3]
-#define tLinkPlayerCount data[4]
-#define tNextState data[5]
+#define tLinkPlayerCount     data[4]
+#define tNextState           data[5]
 
 static void Task_ReceiveChatMessage(u8 taskId) {
     u8* buffer;

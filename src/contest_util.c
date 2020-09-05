@@ -491,8 +491,8 @@ static void VBlankCB_ShowContestResults(void) {
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-#define tState data[0]
-#define tTimer data[1]
+#define tState   data[0]
+#define tTimer   data[1]
 #define tCounter data[2]
 
 static void Task_ShowContestResults(u8 taskId) {
@@ -678,7 +678,7 @@ static void Task_ShowRound2Results(u8 taskId) {
 
 // Task data for Task_DrawFinalStandingNumber
 #define tFinalStanding data[0]
-#define tMonIndex data[1]
+#define tMonIndex      data[1]
 
 static void Task_AnnounceWinner(u8 taskId) {
     int i;
@@ -899,8 +899,8 @@ static void Task_SlideContestResultsBg(u8 taskId) {
         gBattle_BG3_Y -= 255;
 }
 
-#define tDelay data[0]
-#define tCoeff data[1]
+#define tDelay      data[0]
+#define tCoeff      data[1]
 #define tDecreasing data[2]
 
 static void Task_FlashStarsAndHearts(u8 taskId) {
@@ -1349,10 +1349,10 @@ static void LoadContestResultSprites(void) {
     HideLinkResultsTextBox();
 }
 
-#define sTargetX data[4]
-#define sSlideOutTimer data[5]
+#define sTargetX        data[4]
+#define sSlideOutTimer  data[5]
 #define sSlideIncrement data[6]
-#define sDistance data[7]
+#define sDistance       data[7]
 
 // If slideOutTimer is -1, it will not automatically slide out
 static void StartTextBoxSlideIn(s16 x, u16 y, u16 slideOutTimer, u16 slideIncrement) {
@@ -1691,11 +1691,11 @@ static void SpriteCB_Confetti(struct Sprite* sprite) {
     }
 }
 
-#define tMonIndex data[0]
+#define tMonIndex  data[0]
 #define tNumFrames data[1]
-#define tSpecies data[2]
-#define tTimer data[10]
-#define tBounced data[11]
+#define tSpecies   data[2]
+#define tTimer     data[10]
+#define tBounced   data[11]
 
 static void BounceMonIconInBox(u8 monIndex, u8 numFrames) {
     u8 taskId = CreateTask(Task_BounceMonIconInBox, 8);
@@ -1785,8 +1785,8 @@ static void CalculateContestantsResultData(void) {
     }
 }
 
-#define tMonId data[0]
-#define tTarget data[1]
+#define tMonId      data[0]
+#define tTarget     data[1]
 #define tDecreasing data[2]
 
 static void UpdateContestResultBars(bool8 isRound2, u8 numUpdates) {

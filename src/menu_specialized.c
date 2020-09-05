@@ -988,11 +988,11 @@ void LoadConditionSelectionIcons(struct SpriteSheet* sheets, struct SpriteTempla
         *(pals++) = dataPals[i];
 }
 
-#define sSparkleId data[0]
-#define sDelayTimer data[1]
-#define sNumExtraSparkles data[2]
-#define sCurSparkleId data[3]
-#define sMonSpriteId data[4]
+#define sSparkleId           data[0]
+#define sDelayTimer          data[1]
+#define sNumExtraSparkles    data[2]
+#define sCurSparkleId        data[3]
+#define sMonSpriteId         data[4]
 #define sNextSparkleSpriteId data[5]
 
 void LoadConditionSparkle(struct SpriteSheet* sheet, struct SpritePalette* pal) {

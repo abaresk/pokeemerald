@@ -36,8 +36,8 @@
 #define BALLS_PER_ROUND 6
 
 // "Board" is used in this file to refer to both the wheel and the bet selection grid
-#define NUM_BOARD_COLORS 3 // Rows on grid
-#define NUM_BOARD_POKES 4  // Columns on grid
+#define NUM_BOARD_COLORS   3 // Rows on grid
+#define NUM_BOARD_POKES    4 // Columns on grid
 #define NUM_ROULETTE_SLOTS (NUM_BOARD_COLORS * NUM_BOARD_POKES)
 
 // The degree change between each slot on the roulette wheel
@@ -47,25 +47,25 @@
 #define SLOT_MIDPOINT (DEGREES_PER_SLOT / 2 - 1)
 
 // IDs for grid selections when betting
-#define SELECTION_NONE 0
-#define COL_WYNAUT 1
-#define COL_AZURILL 2
-#define COL_SKITTY 3
-#define COL_MAKUHITA 4
-#define ROW_ORANGE (COL_MAKUHITA + 1)
-#define SQU_ORANGE_WYNAUT (ROW_ORANGE + COL_WYNAUT)
-#define SQU_ORANGE_AZURILL (ROW_ORANGE + COL_AZURILL)
-#define SQU_ORANGE_SKITTY (ROW_ORANGE + COL_SKITTY)
+#define SELECTION_NONE      0
+#define COL_WYNAUT          1
+#define COL_AZURILL         2
+#define COL_SKITTY          3
+#define COL_MAKUHITA        4
+#define ROW_ORANGE          (COL_MAKUHITA + 1)
+#define SQU_ORANGE_WYNAUT   (ROW_ORANGE + COL_WYNAUT)
+#define SQU_ORANGE_AZURILL  (ROW_ORANGE + COL_AZURILL)
+#define SQU_ORANGE_SKITTY   (ROW_ORANGE + COL_SKITTY)
 #define SQU_ORANGE_MAKUHITA (ROW_ORANGE + COL_MAKUHITA)
-#define ROW_GREEN (SQU_ORANGE_MAKUHITA + 1)
-#define SQU_GREEN_WYNAUT (ROW_GREEN + COL_WYNAUT)
-#define SQU_GREEN_AZURILL (ROW_GREEN + COL_AZURILL)
-#define SQU_GREEN_SKITTY (ROW_GREEN + COL_SKITTY)
-#define SQU_GREEN_MAKUHITA (ROW_GREEN + COL_MAKUHITA)
-#define ROW_PURPLE (SQU_GREEN_MAKUHITA + 1)
-#define SQU_PURPLE_WYNAUT (ROW_PURPLE + COL_WYNAUT)
-#define SQU_PURPLE_AZURILL (ROW_PURPLE + COL_AZURILL)
-#define SQU_PURPLE_SKITTY (ROW_PURPLE + COL_SKITTY)
+#define ROW_GREEN           (SQU_ORANGE_MAKUHITA + 1)
+#define SQU_GREEN_WYNAUT    (ROW_GREEN + COL_WYNAUT)
+#define SQU_GREEN_AZURILL   (ROW_GREEN + COL_AZURILL)
+#define SQU_GREEN_SKITTY    (ROW_GREEN + COL_SKITTY)
+#define SQU_GREEN_MAKUHITA  (ROW_GREEN + COL_MAKUHITA)
+#define ROW_PURPLE          (SQU_GREEN_MAKUHITA + 1)
+#define SQU_PURPLE_WYNAUT   (ROW_PURPLE + COL_WYNAUT)
+#define SQU_PURPLE_AZURILL  (ROW_PURPLE + COL_AZURILL)
+#define SQU_PURPLE_SKITTY   (ROW_PURPLE + COL_SKITTY)
 #define SQU_PURPLE_MAKUHITA (ROW_PURPLE + COL_MAKUHITA)
 #define NUM_GRID_SELECTIONS SQU_PURPLE_MAKUHITA
 
@@ -80,73 +80,73 @@
 #define GET_ROW_IDX(selectionId) (selectionId / 5 - 1)
 
 // Flags for the above selections, used to set which spaces have been hit or bet on
-#define F_WYNAUT_COL (1 << COL_WYNAUT)
-#define F_AZURILL_COL (1 << COL_AZURILL)
-#define F_SKITTY_COL (1 << COL_SKITTY)
-#define F_MAKUHITA_COL (1 << COL_MAKUHITA)
-#define F_ORANGE_ROW (1 << ROW_ORANGE)
-#define F_ORANGE_WYNAUT (1 << SQU_ORANGE_WYNAUT)
-#define F_ORANGE_AZURILL (1 << SQU_ORANGE_AZURILL)
-#define F_ORANGE_SKITTY (1 << SQU_ORANGE_SKITTY)
+#define F_WYNAUT_COL      (1 << COL_WYNAUT)
+#define F_AZURILL_COL     (1 << COL_AZURILL)
+#define F_SKITTY_COL      (1 << COL_SKITTY)
+#define F_MAKUHITA_COL    (1 << COL_MAKUHITA)
+#define F_ORANGE_ROW      (1 << ROW_ORANGE)
+#define F_ORANGE_WYNAUT   (1 << SQU_ORANGE_WYNAUT)
+#define F_ORANGE_AZURILL  (1 << SQU_ORANGE_AZURILL)
+#define F_ORANGE_SKITTY   (1 << SQU_ORANGE_SKITTY)
 #define F_ORANGE_MAKUHITA (1 << SQU_ORANGE_MAKUHITA)
-#define F_GREEN_ROW (1 << ROW_GREEN)
-#define F_GREEN_WYNAUT (1 << SQU_GREEN_WYNAUT)
-#define F_GREEN_AZURILL (1 << SQU_GREEN_AZURILL)
-#define F_GREEN_SKITTY (1 << SQU_GREEN_SKITTY)
-#define F_GREEN_MAKUHITA (1 << SQU_GREEN_MAKUHITA)
-#define F_PURPLE_ROW (1 << ROW_PURPLE)
-#define F_PURPLE_WYNAUT (1 << SQU_PURPLE_WYNAUT)
-#define F_PURPLE_AZURILL (1 << SQU_PURPLE_AZURILL)
-#define F_PURPLE_SKITTY (1 << SQU_PURPLE_SKITTY)
+#define F_GREEN_ROW       (1 << ROW_GREEN)
+#define F_GREEN_WYNAUT    (1 << SQU_GREEN_WYNAUT)
+#define F_GREEN_AZURILL   (1 << SQU_GREEN_AZURILL)
+#define F_GREEN_SKITTY    (1 << SQU_GREEN_SKITTY)
+#define F_GREEN_MAKUHITA  (1 << SQU_GREEN_MAKUHITA)
+#define F_PURPLE_ROW      (1 << ROW_PURPLE)
+#define F_PURPLE_WYNAUT   (1 << SQU_PURPLE_WYNAUT)
+#define F_PURPLE_AZURILL  (1 << SQU_PURPLE_AZURILL)
+#define F_PURPLE_SKITTY   (1 << SQU_PURPLE_SKITTY)
 #define F_PURPLE_MAKUHITA (1 << SQU_PURPLE_MAKUHITA)
 
 // Flags for flashing selections on the roulette wheel
-#define F_FLASH_COLOR_O_WYNAUT (1 << 0)
-#define F_FLASH_COLOR_G_AZURILL (1 << 1)
-#define F_FLASH_COLOR_P_SKITTY (1 << 2)
+#define F_FLASH_COLOR_O_WYNAUT   (1 << 0)
+#define F_FLASH_COLOR_G_AZURILL  (1 << 1)
+#define F_FLASH_COLOR_P_SKITTY   (1 << 2)
 #define F_FLASH_COLOR_O_MAKUHITA (1 << 3)
-#define F_FLASH_COLOR_G_WYNAUT (1 << 4)
-#define F_FLASH_COLOR_P_AZURILL (1 << 5)
-#define F_FLASH_COLOR_O_SKITTY (1 << 6)
+#define F_FLASH_COLOR_G_WYNAUT   (1 << 4)
+#define F_FLASH_COLOR_P_AZURILL  (1 << 5)
+#define F_FLASH_COLOR_O_SKITTY   (1 << 6)
 #define F_FLASH_COLOR_G_MAKUHITA (1 << 7)
-#define F_FLASH_COLOR_P_WYNAUT (1 << 8)
-#define F_FLASH_COLOR_O_AZURILL (1 << 9)
-#define F_FLASH_COLOR_G_SKITTY (1 << 10)
+#define F_FLASH_COLOR_P_WYNAUT   (1 << 8)
+#define F_FLASH_COLOR_O_AZURILL  (1 << 9)
+#define F_FLASH_COLOR_G_SKITTY   (1 << 10)
 #define F_FLASH_COLOR_P_MAKUHITA (1 << 11)
-#define F_FLASH_OUTER_EDGES (1 << 12) // when the player wins
-#define FLASH_ICON (NUM_ROULETTE_SLOTS + 1)
-#define FLASH_ICON_2 (FLASH_ICON + 1)
-#define FLASH_ICON_3 (FLASH_ICON + 2)
-#define F_FLASH_ICON (1 << FLASH_ICON)
-#define F_FLASH_COLUMN (1 << FLASH_ICON | 1 << FLASH_ICON_2 | 1 << FLASH_ICON_3)
+#define F_FLASH_OUTER_EDGES      (1 << 12) // when the player wins
+#define FLASH_ICON               (NUM_ROULETTE_SLOTS + 1)
+#define FLASH_ICON_2             (FLASH_ICON + 1)
+#define FLASH_ICON_3             (FLASH_ICON + 2)
+#define F_FLASH_ICON             (1 << FLASH_ICON)
+#define F_FLASH_COLUMN           (1 << FLASH_ICON | 1 << FLASH_ICON_2 | 1 << FLASH_ICON_3)
 
 #define MAX_MULTIPLIER 12
 
-#define PALTAG_SHADOW 1
-#define PALTAG_BALL 2
+#define PALTAG_SHADOW       1
+#define PALTAG_BALL         2
 #define PALTAG_BALL_COUNTER 3
-#define PALTAG_CURSOR 4
-#define PALTAG_INTERFACE 5
-#define PALTAG_SHROOMISH 6
-#define PALTAG_TAILLOW 7
-#define PALTAG_GRID_ICONS 8
-#define PALTAG_WYNAUT 9
-#define PALTAG_AZURILL 10
-#define PALTAG_SKITTY 11
-#define PALTAG_MAKUHITA 12
+#define PALTAG_CURSOR       4
+#define PALTAG_INTERFACE    5
+#define PALTAG_SHROOMISH    6
+#define PALTAG_TAILLOW      7
+#define PALTAG_GRID_ICONS   8
+#define PALTAG_WYNAUT       9
+#define PALTAG_AZURILL      10
+#define PALTAG_SKITTY       11
+#define PALTAG_MAKUHITA     12
 
-#define GFXTAG_WHEEL_ICONS 0
-#define GFXTAG_HEADERS 4
-#define GFXTAG_GRID_ICONS 5
-#define GFXTAG_WHEEL_CENTER 6
-#define GFXTAG_CREDIT 7
-#define GFXTAG_CREDIT_DIGIT 8
-#define GFXTAG_MULTIPLIER 9
-#define GFXTAG_BALL_COUNTER 10
-#define GFXTAG_CURSOR 11
-#define GFXTAG_BALL 12
+#define GFXTAG_WHEEL_ICONS       0
+#define GFXTAG_HEADERS           4
+#define GFXTAG_GRID_ICONS        5
+#define GFXTAG_WHEEL_CENTER      6
+#define GFXTAG_CREDIT            7
+#define GFXTAG_CREDIT_DIGIT      8
+#define GFXTAG_MULTIPLIER        9
+#define GFXTAG_BALL_COUNTER      10
+#define GFXTAG_CURSOR            11
+#define GFXTAG_BALL              12
 #define GFXTAG_SHROOMISH_TAILLOW 13
-#define GFXTAG_SHADOW 14
+#define GFXTAG_SHADOW            14
 
 // 2 different Roulette tables with 2 different rates (normal vs service day special)
 // & 1 gets which table, >> 7 gets if ROULETTE_SPECIAL_RATE is set
@@ -155,7 +155,7 @@
 // Having Shroomish or Taillow in the party can make rolls more consistent in length
 // It also increases the likelihood that, if they appear to unstick a ball, they'll move it to a slot the player bet on
 #define HAS_SHROOMISH (1 << 0)
-#define HAS_TAILLOW (1 << 1)
+#define HAS_TAILLOW   (1 << 1)
 
 #define NO_DELAY 0xFFFF
 
@@ -242,14 +242,14 @@ enum {
 };
 
 // Start points for sprite IDs that are looped over
-#define SPR_WHEEL_BALLS SPR_WHEEL_BALL_1
-#define SPR_WHEEL_ICONS SPR_WHEEL_ICON_ORANGE_WYNAUT
-#define SPR_BALL_COUNTER SPR_BALL_COUNTER_1
+#define SPR_WHEEL_BALLS   SPR_WHEEL_BALL_1
+#define SPR_WHEEL_ICONS   SPR_WHEEL_ICON_ORANGE_WYNAUT
+#define SPR_BALL_COUNTER  SPR_BALL_COUNTER_1
 #define SPR_CREDIT_DIGITS SPR_CREDIT_DIG_1
-#define SPR_GRID_ICONS SPR_GRID_ICON_ORANGE_WYNAUT
-#define SPR_POKE_HEADERS SPR_POKE_HEADER_1
+#define SPR_GRID_ICONS    SPR_GRID_ICON_ORANGE_WYNAUT
+#define SPR_POKE_HEADERS  SPR_POKE_HEADER_1
 #define SPR_COLOR_HEADERS SPR_COLOR_HEADER_1
-#define SPR_GRID_BALLS SPR_GRID_BALL_1
+#define SPR_GRID_BALLS    SPR_GRID_BALL_1
 
 struct Shroomish {
     u16 startAngle;
@@ -1118,14 +1118,14 @@ static void InitRouletteTableData(void) {
 }
 
 // Task data for the roulette game tasks, starting with Task_StartPlaying
-#define tMultiplier data[2]
-#define tSelectionId data[4]
-#define tWonBet data[5]
-#define tBallNum data[6]
-#define tTotalBallNum data[8] // Same as tBallNum but isn't cleared every 6 balls
+#define tMultiplier      data[2]
+#define tSelectionId     data[4]
+#define tWonBet          data[5]
+#define tBallNum         data[6]
+#define tTotalBallNum    data[8] // Same as tBallNum but isn't cleared every 6 balls
 #define tConsecutiveWins data[11]
-#define tWinningSquare data[12]
-#define tCoins data[13]
+#define tWinningSquare   data[12]
+#define tCoins           data[13]
 
 static void CB2_LoadRoulette(void) {
     u8 taskId;
@@ -3253,11 +3253,11 @@ static void HideWheelBalls(void) {
 
 // Sprite data for the roulette ball
 #define sStuckOnWheelLeft data[0] // if true, ball got stuck in left half of wheel, else got stuck in right half
-#define sState data[1]
+#define sState            data[1]
 #define sSlotMidpointDist data[2]
-#define sBallAngle data[3]
+#define sBallAngle        data[3]
 #define sBallDistToCenter data[4]
-#define sBallWheelAngle data[6]
+#define sBallWheelAngle   data[6]
 
 #define LandBall()                                                                                      \
     {                                                                                                   \
@@ -3612,9 +3612,9 @@ static void SpriteCB_RollBall_Start(struct Sprite* sprite) {
 }
 
 // Sprite data for Shroomish / its shadows
-#define sMonSpriteId data[4]
+#define sMonSpriteId        data[4]
 #define sBallShadowSpriteId data[5]
-#define sMonShadowSpriteId data[6]
+#define sMonShadowSpriteId  data[6]
 
 static void CreateShroomishSprite(struct Sprite* ball) {
     u16 t;

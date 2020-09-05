@@ -9,7 +9,7 @@
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
 
-#define UR_SPRITE_START_ID (MAX_SPRITES - MAX_UNION_ROOM_PLAYERS)
+#define UR_SPRITE_START_ID                        (MAX_SPRITES - MAX_UNION_ROOM_PLAYERS)
 #define UR_PLAYER_SPRITE_ID(playerIdx, facingDir) (5 * playerIdx + facingDir)
 
 static EWRAM_DATA struct UnionRoomObject* sUnionObjWork = NULL;

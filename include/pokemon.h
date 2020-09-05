@@ -290,8 +290,8 @@ s32 CalculateBaseDamage(struct BattlePokemon* attacker, struct BattlePokemon* de
 
 u8 CountAliveMonsInBattle(u8 caseId);
 #define BATTLE_ALIVE_EXCEPT_ACTIVE 0
-#define BATTLE_ALIVE_ATK_SIDE 1
-#define BATTLE_ALIVE_DEF_SIDE 2
+#define BATTLE_ALIVE_ATK_SIDE      1
+#define BATTLE_ALIVE_DEF_SIDE      2
 
 u8 GetDefaultMoveTarget(u8 battlerId);
 u8 GetMonGender(struct Pokemon* mon);

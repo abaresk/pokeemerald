@@ -9,9 +9,9 @@
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
 
-#define DOOR_SOUND_NORMAL 0
+#define DOOR_SOUND_NORMAL  0
 #define DOOR_SOUND_SLIDING 1
-#define DOOR_SOUND_ARENA 2
+#define DOOR_SOUND_ARENA   2
 
 struct DoorGraphics {
     u16 metatileNum;

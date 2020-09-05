@@ -11,8 +11,8 @@
 #define LOOPED_TASK_DECODE_STATE(action) (action - 5)
 
 #define LOOPED_TASK_ID(primary, secondary) (((secondary) << 16) | (primary))
-#define LOOPED_TASK_PRIMARY_ID(taskId) (taskId & 0xFFFF)
-#define LOOPED_TASK_SECONDARY_ID(taskId) (taskId >> 16)
+#define LOOPED_TASK_PRIMARY_ID(taskId)     (taskId & 0xFFFF)
+#define LOOPED_TASK_SECONDARY_ID(taskId)   (taskId >> 16)
 
 #define SUBSTRUCT_COUNT 19
 

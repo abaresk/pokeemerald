@@ -4176,8 +4176,8 @@ void DrawTextOnTradeWindow(u8 windowId, const u8* str, u8 speed) {
     CopyWindowToVram(windowId, 3);
 }
 
-#define idx data[0]
-#define counter data[1]
+#define idx              data[0]
+#define counter          data[1]
 #define signalComingBack data[2]
 
 static void Task_AnimateWirelessSignal(u8 taskId) {

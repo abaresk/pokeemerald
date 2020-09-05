@@ -35,7 +35,7 @@ EWRAM_DATA struct SaveBlock1 gSaveBlock1 = {};
 EWRAM_DATA struct PokemonStorage gPokemonStorage = {};
 
 // Each 4 KiB flash sector contains 3968 bytes of actual data followed by a 128 byte footer
-#define SECTOR_DATA_SIZE 3968
+#define SECTOR_DATA_SIZE   3968
 #define SECTOR_FOOTER_SIZE 128
 
 #define SAVEBLOCK_CHUNK(structure, chunkNum)                                       \

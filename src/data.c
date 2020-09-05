@@ -202,11 +202,11 @@ const union AnimCmd* const gUnknown_082FF70C[] = {
 };
 
 #define SPECIES_SPRITE(species, sprite) [SPECIES_##species] = { sprite, 0x800, SPECIES_##species }
-#define SPECIES_PAL(species, pal) [SPECIES_##species] = { pal, SPECIES_##species }
+#define SPECIES_PAL(species, pal)       [SPECIES_##species] = { pal, SPECIES_##species }
 #define SPECIES_SHINY_PAL(species, pal) [SPECIES_##species] = { pal, SPECIES_##species + SPECIES_SHINY_TAG }
 
 #define TRAINER_SPRITE(trainerPic, sprite, size) [TRAINER_PIC_##trainerPic] = { sprite, size, TRAINER_PIC_##trainerPic }
-#define TRAINER_PAL(trainerPic, pal) [TRAINER_PIC_##trainerPic] = { pal, TRAINER_PIC_##trainerPic }
+#define TRAINER_PAL(trainerPic, pal)             [TRAINER_PIC_##trainerPic] = { pal, TRAINER_PIC_##trainerPic }
 
 #define TRAINER_BACK_PAL(trainerPic, pal) [TRAINER_BACK_PIC_##trainerPic] = { pal, TRAINER_BACK_PIC_##trainerPic }
 

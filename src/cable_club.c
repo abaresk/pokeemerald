@@ -72,8 +72,8 @@ static void Task_ReestablishLinkAwaitConfirmation(u8 taskId);
 #define tMinPlayers data[1]
 #define tMaxPlayers data[2]
 #define tNumPlayers data[3]
-#define tTimer data[4]
-#define tWindowId data[5]
+#define tTimer      data[4]
+#define tWindowId   data[5]
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers) {
     if (FindTaskIdByFunc(Task_LinkupStart) == 0xFF) {

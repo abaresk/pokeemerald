@@ -66,21 +66,21 @@ struct OamData {
 };
 
 #define ST_OAM_OBJ_NORMAL 0
-#define ST_OAM_OBJ_BLEND 1
+#define ST_OAM_OBJ_BLEND  1
 #define ST_OAM_OBJ_WINDOW 2
 
-#define ST_OAM_AFFINE_OFF 0
+#define ST_OAM_AFFINE_OFF    0
 #define ST_OAM_AFFINE_NORMAL 1
-#define ST_OAM_AFFINE_ERASE 2
+#define ST_OAM_AFFINE_ERASE  2
 #define ST_OAM_AFFINE_DOUBLE 3
 
-#define ST_OAM_AFFINE_ON_MASK 1
+#define ST_OAM_AFFINE_ON_MASK     1
 #define ST_OAM_AFFINE_DOUBLE_MASK 2
 
 #define ST_OAM_4BPP 0
 #define ST_OAM_8BPP 1
 
-#define ST_OAM_SQUARE 0
+#define ST_OAM_SQUARE      0
 #define ST_OAM_H_RECTANGLE 1
 #define ST_OAM_V_RECTANGLE 2
 
@@ -127,9 +127,9 @@ struct SioMultiCnt {
 #define ST_SIO_MULTI_MODE 2 // Multi-player communication mode
 
 // baud rate
-#define ST_SIO_9600_BPS 0   //   9600 bps
-#define ST_SIO_38400_BPS 1  //  38400 bps
-#define ST_SIO_57600_BPS 2  //  57600 bps
+#define ST_SIO_9600_BPS   0 //   9600 bps
+#define ST_SIO_38400_BPS  1 //  38400 bps
+#define ST_SIO_57600_BPS  2 //  57600 bps
 #define ST_SIO_115200_BPS 3 // 115200 bps
 
 typedef void (*MainCallback)(void);

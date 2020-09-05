@@ -1056,7 +1056,7 @@ static void DaycarePrintMonInfo(u8 windowId, s32 daycareSlotId, u8 y) {
 }
 
 #define tMenuListTaskId data[0]
-#define tWindowId data[1]
+#define tWindowId       data[1]
 
 static void Task_HandleDaycareLevelMenuInput(u8 taskId) {
     u32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuListTaskId);

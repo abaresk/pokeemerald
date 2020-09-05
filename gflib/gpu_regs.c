@@ -4,7 +4,7 @@
 #define GPU_REG_BUF_SIZE 0x60
 
 #define GPU_REG_BUF(offset) (*(u16*)(&sGpuRegBuffer[offset]))
-#define GPU_REG(offset) (*(vu16*)(REG_BASE + offset))
+#define GPU_REG(offset)     (*(vu16*)(REG_BASE + offset))
 
 #define EMPTY_SLOT 0xFF
 

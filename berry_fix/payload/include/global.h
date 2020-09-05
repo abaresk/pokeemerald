@@ -7,14 +7,14 @@
 
 // IDE support
 #if defined(__APPLE__) || defined(__CYGWIN__)
-#define _(x) x
+#define _(x)  x
 #define __(x) x
 #define INCBIN(x) \
     { 0 }
-#define INCBIN_U8 INCBIN
+#define INCBIN_U8  INCBIN
 #define INCBIN_U16 INCBIN
 #define INCBIN_U32 INCBIN
-#define INCBIN_S8 INCBIN
+#define INCBIN_S8  INCBIN
 #define INCBIN_S16 INCBIN
 #define INCBIN_S32 INCBIN
 #endif
@@ -30,8 +30,8 @@
 #define ARRAY_COUNT(array) (sizeof(array) / sizeof((array)[0]))
 
 #define POKEMON_SLOTS_NUMBER 412
-#define POKEMON_NAME_LENGTH 10
-#define OT_NAME_LENGTH 7
+#define POKEMON_NAME_LENGTH  10
+#define OT_NAME_LENGTH       7
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) >= (b) ? (a) : (b))
@@ -49,15 +49,15 @@ enum { B_8 = 1, B_16 = 2, B_32 = 4 };
 // as these below. Because of this, there is a theory (Two Team Theory) that states that these
 // programming projects had more than 1 "programming team" which utilized different macros for
 // each of the files that were worked on.
-#define T1_READ_8(ptr) ((ptr)[0])
-#define T1_READ_16(ptr) ((ptr)[0] | ((ptr)[1] << 8))
-#define T1_READ_32(ptr) ((ptr)[0] | ((ptr)[1] << 8) | ((ptr)[2] << 16) | ((ptr)[3] << 24))
+#define T1_READ_8(ptr)   ((ptr)[0])
+#define T1_READ_16(ptr)  ((ptr)[0] | ((ptr)[1] << 8))
+#define T1_READ_32(ptr)  ((ptr)[0] | ((ptr)[1] << 8) | ((ptr)[2] << 16) | ((ptr)[3] << 24))
 #define T1_READ_PTR(ptr) (u8*)T1_READ_32(ptr)
 
 // T2_READ_8 is a duplicate to remain consistent with each group.
-#define T2_READ_8(ptr) ((ptr)[0])
-#define T2_READ_16(ptr) ((ptr)[0] + ((ptr)[1] << 8))
-#define T2_READ_32(ptr) ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
+#define T2_READ_8(ptr)   ((ptr)[0])
+#define T2_READ_16(ptr)  ((ptr)[0] + ((ptr)[1] << 8))
+#define T2_READ_32(ptr)  ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
 #define T2_READ_PTR(ptr) (void*)T2_READ_32(ptr)
 
 // Credits to Made (dolphin emoji)
@@ -83,23 +83,23 @@ enum LanguageId {
 };
 
 // capacities of various saveblock objects
-#define DAYCARE_MON_COUNT 2
-#define POKEBLOCKS_COUNT 40
-#define PARTY_SIZE 6
+#define DAYCARE_MON_COUNT   2
+#define POKEBLOCKS_COUNT    40
+#define PARTY_SIZE          6
 #define EVENT_OBJECTS_COUNT 16
-#define BERRY_TREES_COUNT 128
-#define FLAGS_COUNT 288
-#define VARS_COUNT 256
-#define MAIL_COUNT 16
-#define SECRET_BASES_COUNT 20
-#define TV_SHOWS_COUNT 25
-#define POKE_NEWS_COUNT 16
-#define PC_ITEMS_COUNT 50
-#define BAG_ITEMS_COUNT 20
-#define BAG_KEYITEMS_COUNT 20
+#define BERRY_TREES_COUNT   128
+#define FLAGS_COUNT         288
+#define VARS_COUNT          256
+#define MAIL_COUNT          16
+#define SECRET_BASES_COUNT  20
+#define TV_SHOWS_COUNT      25
+#define POKE_NEWS_COUNT     16
+#define PC_ITEMS_COUNT      50
+#define BAG_ITEMS_COUNT     20
+#define BAG_KEYITEMS_COUNT  20
 #define BAG_POKEBALLS_COUNT 16
-#define BAG_TMHM_COUNT 64
-#define BAG_BERRIES_COUNT 46
+#define BAG_TMHM_COUNT      64
+#define BAG_BERRIES_COUNT   46
 
 enum { MALE, FEMALE };
 
@@ -779,13 +779,13 @@ struct HallOfFame {
 
 extern struct SaveBlock2 gSaveBlock2;
 
-#define RomHeaderGameTitle ((const char*)0x080000A0)
-#define RomHeaderGameCode ((const char*)0x080000AC)
-#define RomHeaderMakerCode ((const char*)0x080000B0)
-#define RomHeaderMagic ((const u8*)0x080000B2)
+#define RomHeaderGameTitle       ((const char*)0x080000A0)
+#define RomHeaderGameCode        ((const char*)0x080000AC)
+#define RomHeaderMakerCode       ((const char*)0x080000B0)
+#define RomHeaderMagic           ((const u8*)0x080000B2)
 #define RomHeaderSoftwareVersion ((const u8*)0x080000BC)
 
-#define LocalTimeOffset ((struct Time*)0x02028098)
+#define LocalTimeOffset     ((struct Time*)0x02028098)
 #define LastBerryTreeUpdate ((struct Time*)0x020280A0)
 
 #endif // GUARD_GLOBAL_H

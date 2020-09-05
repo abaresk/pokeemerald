@@ -85,9 +85,9 @@ struct CombinedMove {
 static const struct CombinedMove sCombinedMoves[2] = { { MOVE_EMBER, MOVE_GUST, MOVE_HEAT_WAVE },
                                                        { 0xFFFF, 0xFFFF, 0xFFFF } };
 
-#define SPECIES_TO_HOENN(name) [SPECIES_##name - 1] = HOENN_DEX_##name
+#define SPECIES_TO_HOENN(name)    [SPECIES_##name - 1] = HOENN_DEX_##name
 #define SPECIES_TO_NATIONAL(name) [SPECIES_##name - 1] = NATIONAL_DEX_##name
-#define HOENN_TO_NATIONAL(name) [HOENN_DEX_##name - 1] = NATIONAL_DEX_##name
+#define HOENN_TO_NATIONAL(name)   [HOENN_DEX_##name - 1] = NATIONAL_DEX_##name
 
 const u16 gSpeciesToHoennPokedexNum[] = // Assigns all species to the Hoenn Dex Index (Summary No. for Hoenn Dex)
     {
@@ -2640,7 +2640,7 @@ u32 GetBoxMonData(struct BoxPokemon* boxMon, s32 field, u8* data) {
     return retVal;
 }
 
-#define SET8(lhs) (lhs) = *data
+#define SET8(lhs)  (lhs) = *data
 #define SET16(lhs) (lhs) = data[0] + (data[1] << 8)
 #define SET32(lhs) (lhs) = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24)
 

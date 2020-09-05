@@ -271,15 +271,15 @@ bool8 IsComputerScreenCloseEffectActive(void) {
     return FuncIsActiveTask(Task_ComputerScreenCloseEffect);
 }
 
-#define tState data[0]
+#define tState         data[0]
 #define tHorzIncrement data[1]
 #define tVertIncrement data[2]
-#define tWinLeft data[3]
-#define tWinRight data[4]
-#define tWinTop data[5]
-#define tWinBottom data[6]
-#define tBlendCnt data[7]
-#define tBlendY data[8]
+#define tWinLeft       data[3]
+#define tWinRight      data[4]
+#define tWinTop        data[5]
+#define tWinBottom     data[6]
+#define tBlendCnt      data[7]
+#define tBlendY        data[8]
 
 static void CreateComputerScreenEffectTask(void (*taskfunc)(u8), u16 increment, u16 unused, u8 priority) {
     u8 taskId = CreateTask(taskfunc, priority);
@@ -669,8 +669,8 @@ static void SpriteCB_ShrubEntranceEnd(struct Sprite* sprite) {
     EnableBothScriptContexts();
 }
 
-#define tX data[0]
-#define tY data[1]
+#define tX     data[0]
+#define tY     data[1]
 #define tState data[2]
 
 bool8 FldEff_SecretBasePCTurnOn(void) {

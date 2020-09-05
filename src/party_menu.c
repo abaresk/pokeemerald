@@ -76,19 +76,19 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-#define PARTY_PAL_SELECTED (1 << 0)
-#define PARTY_PAL_FAINTED (1 << 1)
-#define PARTY_PAL_TO_SWITCH (1 << 2)
-#define PARTY_PAL_MULTI_ALT (1 << 3)
-#define PARTY_PAL_SWITCHING (1 << 4)
+#define PARTY_PAL_SELECTED    (1 << 0)
+#define PARTY_PAL_FAINTED     (1 << 1)
+#define PARTY_PAL_TO_SWITCH   (1 << 2)
+#define PARTY_PAL_MULTI_ALT   (1 << 3)
+#define PARTY_PAL_SWITCHING   (1 << 4)
 #define PARTY_PAL_TO_SOFTBOIL (1 << 5)
-#define PARTY_PAL_NO_MON (1 << 6)
-#define PARTY_PAL_UNUSED (1 << 7)
+#define PARTY_PAL_NO_MON      (1 << 6)
+#define PARTY_PAL_UNUSED      (1 << 7)
 
-#define MENU_DIR_DOWN 1
-#define MENU_DIR_UP -1
+#define MENU_DIR_DOWN  1
+#define MENU_DIR_UP    -1
 #define MENU_DIR_RIGHT 2
-#define MENU_DIR_LEFT -2
+#define MENU_DIR_LEFT  -2
 
 enum { CAN_LEARN_MOVE, CANNOT_LEARN_MOVE, ALREADY_KNOWS_MOVE, CANNOT_LEARN_MOVE_IS_EGG };
 
@@ -1561,12 +1561,12 @@ static void BufferBagFullCantTakeItemMessage(u16 itemUnused) {
     StringExpandPlaceholders(gStringVar4, gText_BagFullCouldNotRemoveItem);
 }
 
-#define tHP data[0]
-#define tMaxHP data[1]
+#define tHP          data[0]
+#define tMaxHP       data[1]
 #define tHPIncrement data[2]
-#define tHPToAdd data[3]
-#define tPartyId data[4]
-#define tStartHP data[5]
+#define tHPToAdd     data[3]
+#define tPartyId     data[4]
+#define tStartHP     data[5]
 
 static void Task_PartyMenuModifyHP(u8 taskId) {
     s16* data = gTasks[taskId].data;
@@ -2425,16 +2425,16 @@ static void CursorCb_Switch(u8 taskId) {
     gTasks[taskId].func = Task_HandleChooseMonInput;
 }
 
-#define tSlot1Left data[0]
-#define tSlot1Top data[1]
-#define tSlot1Width data[2]
-#define tSlot1Height data[3]
-#define tSlot2Left data[4]
-#define tSlot2Top data[5]
-#define tSlot2Width data[6]
-#define tSlot2Height data[7]
-#define tSlot1Offset data[8]
-#define tSlot2Offset data[9]
+#define tSlot1Left     data[0]
+#define tSlot1Top      data[1]
+#define tSlot1Width    data[2]
+#define tSlot1Height   data[3]
+#define tSlot2Left     data[4]
+#define tSlot2Top      data[5]
+#define tSlot2Width    data[6]
+#define tSlot2Height   data[7]
+#define tSlot1Offset   data[8]
+#define tSlot2Offset   data[9]
 #define tSlot1SlideDir data[10]
 #define tSlot2SlideDir data[11]
 
@@ -4455,8 +4455,8 @@ static void BufferMonStatsToTaskData(struct Pokemon* mon, s16* data) {
     data[3] = GetMonData(mon, MON_DATA_SPEED);
 }
 
-#define tUsedOnSlot data[0]
-#define tHadEffect data[1]
+#define tUsedOnSlot   data[0]
+#define tHadEffect    data[1]
 #define tLastSlotUsed data[2]
 
 void ItemUseCB_SacredAsh(u8 taskId, TaskFunc task) {

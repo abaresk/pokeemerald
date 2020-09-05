@@ -281,10 +281,10 @@ static void CompleteOnInactiveTextPrinter(void) {
 }
 
 // the whole exp task is copied&pasted from player controller
-#define tExpTask_monId data[0]
+#define tExpTask_monId     data[0]
 #define tExpTask_gainedExp data[1]
-#define tExpTask_bank data[2]
-#define tExpTask_frames data[10]
+#define tExpTask_bank      data[2]
+#define tExpTask_frames    data[10]
 
 static void Task_GiveExpToMon(u8 taskId) {
     u32 monId = (u8)(gTasks[taskId].tExpTask_monId);

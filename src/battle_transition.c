@@ -697,7 +697,7 @@ void BattleTransition_Start(u8 transitionId) {
 #define tState data[0]
 
 // main task that launches sub-tasks for phase1 and phase2
-#define tTransitionId data[1]
+#define tTransitionId   data[1]
 #define tTransitionDone data[15]
 
 bool8 IsBattleTransitionDone(void) {
@@ -770,17 +770,17 @@ static void Phase1Task_TransitionAll(u8 taskId) {
 }
 
 // sub-task for phase2
-#define tData1 data[1]
-#define tData2 data[2]
-#define tData3 data[3]
-#define tData4 data[4]
-#define tData5 data[5]
-#define tData6 data[6]
-#define tFuncState data[7]
-#define tFrames data[8]
+#define tData1            data[1]
+#define tData2            data[2]
+#define tData3            data[3]
+#define tData4            data[4]
+#define tData5            data[5]
+#define tData6            data[6]
+#define tFuncState        data[7]
+#define tFrames           data[8]
 #define tOpponentSpriteId data[13]
-#define tPlayerSpriteId data[14]
-#define tMugshotId data[15]
+#define tPlayerSpriteId   data[14]
+#define tMugshotId        data[15]
 
 static void Phase2Task_Blur(u8 taskId) {
     while (sPhase2_Blur_Funcs[gTasks[taskId].tState](&gTasks[taskId]))
@@ -1970,10 +1970,10 @@ static void HBlankCB_Phase2_Mugshots(void) {
 }
 
 // data fields for player/opponent sprites in mugshots
-#define sState data[0]
-#define sOffsetX data[1]
-#define sOffsetX2 data[2]
-#define sDone data[6]
+#define sState        data[0]
+#define sOffsetX      data[1]
+#define sOffsetX2     data[2]
+#define sDone         data[6]
 #define sSlideTableId data[7]
 
 static void Mugshots_CreateOpponentPlayerSprites(struct Task* task) {
@@ -3591,7 +3591,7 @@ static bool8 Phase2_FrontierSquares_End(struct Task* task) {
 // sub task for phase2 32
 #define tSub32_X_delta data[0]
 #define tSub32_Y_delta data[1]
-#define tSub32_Bool data[2]
+#define tSub32_Bool    data[2]
 
 static void sub_814ABE4(u8 taskId) {
     if (!(gTasks[taskId].tSub32_Bool ^= 1)) {

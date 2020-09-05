@@ -22,18 +22,18 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-#define AREA_SCREEN_WIDTH 32
+#define AREA_SCREEN_WIDTH  32
 #define AREA_SCREEN_HEIGHT 20
 
-#define GLOW_TILE_FULL 0xFFFF
-#define GLOW_TILE_LEFT (1 << 0)
-#define GLOW_TILE_RIGHT (1 << 1)
-#define GLOW_TILE_TOP (1 << 2)
-#define GLOW_TILE_BOTTOM (1 << 3)
+#define GLOW_TILE_FULL         0xFFFF
+#define GLOW_TILE_LEFT         (1 << 0)
+#define GLOW_TILE_RIGHT        (1 << 1)
+#define GLOW_TILE_TOP          (1 << 2)
+#define GLOW_TILE_BOTTOM       (1 << 3)
 #define GLOW_TILE_BOTTOM_RIGHT (1 << 4)
-#define GLOW_TILE_TOP_RIGHT (1 << 5)
-#define GLOW_TILE_BOTTOM_LEFT (1 << 6)
-#define GLOW_TILE_TOP_LEFT (1 << 7)
+#define GLOW_TILE_TOP_RIGHT    (1 << 5)
+#define GLOW_TILE_BOTTOM_LEFT  (1 << 6)
+#define GLOW_TILE_TOP_LEFT     (1 << 7)
 
 struct PokeDexAreaScreenMapIdentity {
     u8 mapGroup;

@@ -62,14 +62,14 @@ enum {
 };
 
 // For scrolling search parameter
-#define MAX_SEARCH_PARAM_ON_SCREEN 6
+#define MAX_SEARCH_PARAM_ON_SCREEN  6
 #define MAX_SEARCH_PARAM_CURSOR_POS (MAX_SEARCH_PARAM_ON_SCREEN - 1)
 
 #define MAX_MONS_ON_SCREEN 4
 
 #define LIST_SCROLL_STEP 16
 
-#define POKEBALL_ROTATION_TOP 64
+#define POKEBALL_ROTATION_TOP    64
 #define POKEBALL_ROTATION_BOTTOM (POKEBALL_ROTATION_TOP - 16)
 
 // EWRAM
@@ -617,10 +617,10 @@ static const struct BgTemplate sInfoScreen_BgTemplate[] = {
     { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 }
 };
 
-#define WIN_INFO 0
+#define WIN_INFO      0
 #define WIN_FOOTPRINT 1
-#define WIN_CRY_WAVE 2
-#define WIN_VU_METER 3
+#define WIN_CRY_WAVE  2
+#define WIN_VU_METER  3
 
 static const struct WindowTemplate sInfoScreen_WindowTemplates[] =
 {
@@ -1591,9 +1591,9 @@ static void FreeWindowAndBgBuffers(void) {
 
 static void CreatePokedexList(u8 dexMode, u8 order) {
     u16 vars[3]; // I have no idea why three regular variables are stored in an array, but whatever.
-#define temp_dexCount vars[0]
+#define temp_dexCount   vars[0]
 #define temp_isHoennDex vars[1]
-#define temp_dexNum vars[2]
+#define temp_dexNum     vars[2]
     s16 i;
 
     sPokedexView->pokemonListCount = 0;
@@ -3136,12 +3136,12 @@ static void HighlightSubmenuScreenSelectBarItem(u8 a, u16 b) {
     CopyBgTilemapBufferToVram(1);
 }
 
-#define tState data[0]
-#define tDexNum data[1]
-#define tPalTimer data[2]
-#define tMonSpriteId data[3]
-#define tOtIdLo data[12]
-#define tOtIdHi data[13]
+#define tState         data[0]
+#define tDexNum        data[1]
+#define tPalTimer      data[2]
+#define tMonSpriteId   data[3]
+#define tOtIdLo        data[12]
+#define tOtIdHi        data[13]
 #define tPersonalityLo data[14]
 #define tPersonalityHi data[15]
 
@@ -3900,22 +3900,22 @@ static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height) {
 }
 
 // Search task data
-#define tTopBarItem data[0]
-#define tMenuItem data[1]
-#define tCursorPos_Mode data[2]
-#define tScrollOffset_Mode data[3]
-#define tCursorPos_Order data[4]
-#define tScrollOffset_Order data[5]
-#define tCursorPos_Name data[6]
-#define tScrollOffset_Name data[7]
-#define tCursorPos_Color data[8]
-#define tScrollOffset_Color data[9]
-#define tCursorPos_TypeLeft data[10]
-#define tScrollOffset_TypeLeft data[11]
-#define tCursorPos_TypeRight data[12]
+#define tTopBarItem             data[0]
+#define tMenuItem               data[1]
+#define tCursorPos_Mode         data[2]
+#define tScrollOffset_Mode      data[3]
+#define tCursorPos_Order        data[4]
+#define tScrollOffset_Order     data[5]
+#define tCursorPos_Name         data[6]
+#define tScrollOffset_Name      data[7]
+#define tCursorPos_Color        data[8]
+#define tScrollOffset_Color     data[9]
+#define tCursorPos_TypeLeft     data[10]
+#define tScrollOffset_TypeLeft  data[11]
+#define tCursorPos_TypeRight    data[12]
 #define tScrollOffset_TypeRight data[13]
-#define tCursorPos data[14]
-#define tScrollOffset data[15]
+#define tCursorPos              data[14]
+#define tScrollOffset           data[15]
 
 static void Task_LoadSearchMenu(u8 taskId) {
     u16 i;
@@ -4365,17 +4365,17 @@ _080C1DEC:\n\
 }
 #endif
 
-#define SEARCH_BG_SEARCH SEARCH_TOPBAR_SEARCH
-#define SEARCH_BG_SHIFT SEARCH_TOPBAR_SHIFT
-#define SEARCH_BG_CANCEL SEARCH_TOPBAR_CANCEL
-#define SEARCH_BG_NAME (SEARCH_NAME + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_COLOR (SEARCH_COLOR + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_TYPE_SELECTION_LEFT (SEARCH_TYPE_LEFT + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_SEARCH               SEARCH_TOPBAR_SEARCH
+#define SEARCH_BG_SHIFT                SEARCH_TOPBAR_SHIFT
+#define SEARCH_BG_CANCEL               SEARCH_TOPBAR_CANCEL
+#define SEARCH_BG_NAME                 (SEARCH_NAME + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_COLOR                (SEARCH_COLOR + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_TYPE_SELECTION_LEFT  (SEARCH_TYPE_LEFT + SEARCH_TOPBAR_COUNT)
 #define SEARCH_BG_TYPE_SELECTION_RIGHT (SEARCH_TYPE_RIGHT + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_ORDER (SEARCH_ORDER + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_MODE (SEARCH_MODE + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_OK (SEARCH_OK + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_TYPE_TITLE (SEARCH_COUNT + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_ORDER                (SEARCH_ORDER + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_MODE                 (SEARCH_MODE + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_OK                   (SEARCH_OK + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_TYPE_TITLE           (SEARCH_COUNT + SEARCH_TOPBAR_COUNT)
 
 static void DrawSearchMenuItemBgHighlight(u8 searchBg, bool8 unselected, bool8 disabled) {
     u8 highlightFlags = (unselected & 1) | ((disabled & 1) << 1);

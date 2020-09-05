@@ -37,7 +37,7 @@
 #include "constants/rgb.h"
 
 #define HALL_OF_FAME_MAX_TEAMS 50
-#define TAG_CONFETTI 1001
+#define TAG_CONFETTI           1001
 
 struct HallofFameMon {
     u32 tid;
@@ -282,10 +282,10 @@ static bool8 InitHallOfFameScreen(void) {
     return TRUE;
 }
 
-#define tDontSaveData data[0]
+#define tDontSaveData   data[0]
 #define tDisplayedMonId data[1]
-#define tMonNumber data[2]
-#define tFrameCount data[3]
+#define tMonNumber      data[2]
+#define tFrameCount     data[3]
 #define tPlayerSpriteID data[4]
 #define tMonSpriteId(i) data[i + 5]
 
@@ -410,7 +410,7 @@ static void Task_Hof_SetMonDisplayTask(u8 taskId) {
 
 #define tDestinationX data[1]
 #define tDestinationY data[2]
-#define tSpecies data[7]
+#define tSpecies      data[7]
 
 static void Task_Hof_DisplayMon(u8 taskId) {
     u8 spriteId;
@@ -610,10 +610,10 @@ static void SetCallback2AfterHallOfFameDisplay(void) {
 #undef tPlayerSpriteID
 #undef tMonSpriteId
 
-#define tCurrTeamNo data[0]
-#define tCurrPageNo data[1]
-#define tCurrMonId data[2]
-#define tMonNo data[4]
+#define tCurrTeamNo     data[0]
+#define tCurrPageNo     data[1]
+#define tCurrMonId      data[2]
+#define tMonNo          data[4]
 #define tMonSpriteId(i) data[i + 5]
 
 void CB2_DoHallOfFamePC(void) {
@@ -1127,7 +1127,7 @@ static void SpriteCB_GetOnScreenAndAnimate(struct Sprite* sprite) {
 #undef tSpecies
 
 #define sSineIdx data[0]
-#define sExtraY data[1]
+#define sExtraY  data[1]
 
 static void SpriteCB_HofConfetti(struct Sprite* sprite) {
     if (sprite->pos2.y > 120) {
@@ -1171,14 +1171,14 @@ static bool8 CreateHofConfettiSprite(void) {
 // The below confetti functions are used when a Battle Dome tourney is won
 // For the Hall of Fame confetti see Task_Hof_DoConfetti
 // The end result is essentially the same, just a very different way of handling it
-#define tState data[0]
-#define tTimer data[1]
+#define tState         data[0]
+#define tTimer         data[1]
 #define tConfettiCount data[15]
 
 // Indexes into the data array of the struct ConfettiUtil
 #define CONFETTI_SINE_IDX 0
-#define CONFETTI_EXTRA_Y 1
-#define CONFETTI_TASK_ID 7
+#define CONFETTI_EXTRA_Y  1
+#define CONFETTI_TASK_ID  7
 
 void DoDomeConfetti(void) {
     u8 taskId;

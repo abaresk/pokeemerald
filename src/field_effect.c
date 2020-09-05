@@ -764,23 +764,23 @@ void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b) {
 }
 
 // Task data for Task_PokecenterHeal and Task_HallOfFameRecord
-#define tState data[0]
-#define tNumMons data[1]
-#define tFirstBallX data[2]
-#define tFirstBallY data[3]
-#define tMonitorX data[4]
-#define tMonitorY data[5]
-#define tBallSpriteId data[6]
+#define tState           data[0]
+#define tNumMons         data[1]
+#define tFirstBallX      data[2]
+#define tFirstBallY      data[3]
+#define tMonitorX        data[4]
+#define tMonitorY        data[5]
+#define tBallSpriteId    data[6]
 #define tMonitorSpriteId data[7]
-#define tStartHofFlash data[15]
+#define tStartHofFlash   data[15]
 
 // Sprite data for SpriteCB_PokeballGlowEffect
-#define sState data[0]
-#define sTimer data[1]
-#define sCounter data[2]
+#define sState      data[0]
+#define sTimer      data[1]
+#define sCounter    data[2]
 #define sPlayHealSe data[5]
-#define sNumMons data[6]
-#define sSpriteId data[7]
+#define sNumMons    data[6]
+#define sSpriteId   data[7]
 
 // Sprite data for SpriteCB_PokeballGlow
 #define sEffectSpriteId data[0]
@@ -1152,9 +1152,9 @@ static void Task_FlyIntoMap(u8 taskId) {
     }
 }
 
-#define tState data[0]
+#define tState      data[0]
 #define tFallOffset data[1]
-#define tTotalFall data[2]
+#define tTotalFall  data[2]
 #define tSetTrigger data[3]
 #define tSubsprMode data[4]
 
@@ -1284,7 +1284,7 @@ static bool8 FallWarpEffect_End(struct Task* task) {
 #undef tVertShake
 #undef tNumShakes
 
-#define tState data[0]
+#define tState   data[0]
 #define tGoingUp data[1]
 
 void StartEscalatorWarp(u8 metatileBehavior, u8 priority) {
@@ -1884,11 +1884,11 @@ void SpriteCB_AshPuff(struct Sprite* sprite) {
         FieldEffectStop(sprite, FLDEFF_ASH_PUFF);
 }
 
-#define tState data[0]
+#define tState     data[0]
 #define tSpinDelay data[1]
-#define tNumTurns data[2]
-#define tTimer data[14]
-#define tStartDir data[15]
+#define tNumTurns  data[2]
+#define tTimer     data[14]
+#define tStartDir  data[15]
 
 void StartEscapeRopeFieldEffect(void) {
     ScriptContext2_Enable();
@@ -2148,17 +2148,17 @@ static void TeleportWarpInFieldEffect_SpinGround(struct Task* task) {
 }
 
 // Task data for Task_FieldMoveShowMonOutDoors
-#define tState data[0]
-#define tWinHoriz data[1]
-#define tWinVert data[2]
-#define tWinIn data[3]
-#define tWinOut data[4]
-#define tBgHoriz data[5]
-#define tBgVert data[6]
+#define tState       data[0]
+#define tWinHoriz    data[1]
+#define tWinVert     data[2]
+#define tWinIn       data[3]
+#define tWinOut      data[4]
+#define tBgHoriz     data[5]
+#define tBgVert      data[6]
 #define tMonSpriteId data[15]
 
 // Sprite data for field move mon sprite
-#define sSpecies data[0]
+#define sSpecies       data[0]
 #define sOnscreenTimer data[1]
 #define sSlidOffscreen data[7]
 
@@ -2337,11 +2337,11 @@ static void LoadFieldMoveOutdoorStreaksTilemap(u16 offs) {
 #undef tMonSpriteId
 
 // Task data for Task_FieldMoveShowMonIndoors
-#define tState data[0]
-#define tBgHoriz data[1]
-#define tBgVert data[2]
+#define tState       data[0]
+#define tBgHoriz     data[1]
+#define tBgVert      data[2]
 #define tBgOffsetIdx data[3]
-#define tBgOffset data[4]
+#define tBgOffset    data[4]
 #define tMonSpriteId data[15]
 
 void (*const sFieldMoveShowMonIndoorsEffectFuncs[])(struct Task*) = {
@@ -2690,15 +2690,15 @@ static void SpriteCB_NPCFlyOut(struct Sprite* sprite) {
 }
 
 // Task data for Task_FlyOut/FlyIn
-#define tState data[0]
-#define tMonId data[1]
+#define tState        data[0]
+#define tMonId        data[1]
 #define tBirdSpriteId data[1] // re-used
-#define tTimer data[2]
-#define tAvatarFlags data[15]
+#define tTimer        data[2]
+#define tAvatarFlags  data[15]
 
 // Sprite data for the fly bird
 #define sPlayerSpriteId data[6]
-#define sAnimCompleted data[7]
+#define sAnimCompleted  data[7]
 
 u8 FldEff_UseFly(void) {
     u8 taskId = CreateTask(Task_FlyOut, 254);
@@ -3059,13 +3059,13 @@ static void FlyInFieldEffect_End(struct Task* task) {
 #undef sPlayerSpriteId
 #undef sAnimCompleted
 
-#define tState data[1]
+#define tState         data[1]
 #define tObjectEventId data[2]
-#define tTimer data[3]
-#define tCameraTaskId data[5]
-#define tLocalId data[6]
-#define tMapNum data[7]
-#define tMapGroup data[8]
+#define tTimer         data[3]
+#define tCameraTaskId  data[5]
+#define tLocalId       data[6]
+#define tMapNum        data[7]
+#define tMapGroup      data[8]
 
 bool8 FldEff_DestroyDeoxysRock(void) {
     u8 taskId;
@@ -3084,10 +3084,10 @@ bool8 FldEff_DestroyDeoxysRock(void) {
 }
 
 #define tShakeDelay data[0]
-#define tShakeUp data[1]
-#define tShake data[5]
-#define tEndDelay data[6]
-#define tEnding data[7]
+#define tShakeUp    data[1]
+#define tShake      data[5]
+#define tEndDelay   data[6]
+#define tEnding     data[7]
 
 static void Task_DeoxysRockCameraShake(u8 taskId) {
     s16* data = gTasks[taskId].data;

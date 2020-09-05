@@ -53,8 +53,8 @@ struct Struct203CF0C {
     u16 unk10;
 };
 
-#define MIRAGE_TOWER_GFX_LENGTH (sizeof(sBlankTile_Gfx) + sizeof(sMirageTower_Gfx))
-#define ROOT_FOSSIL_GFX_LENGTH sizeof(sRootFossil_Gfx)
+#define MIRAGE_TOWER_GFX_LENGTH           (sizeof(sBlankTile_Gfx) + sizeof(sMirageTower_Gfx))
+#define ROOT_FOSSIL_GFX_LENGTH            sizeof(sRootFossil_Gfx)
 #define ROOT_FOSSIL_GFX_RANDOMIZER_LENGTH 0x100
 
 // extern data

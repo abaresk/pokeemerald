@@ -21,7 +21,7 @@ extern ScrCmdFunc gMysteryEventScriptCmdTable[];
 extern ScrCmdFunc gMysteryEventScriptCmdTableEnd[];
 
 #define LANGUAGE_MASK 0x1
-#define VERSION_MASK 0x200
+#define VERSION_MASK  0x200
 
 EWRAM_DATA static struct ScriptContext sMysteryEventScriptContext = { 0 };
 

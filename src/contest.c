@@ -243,13 +243,13 @@ enum {
 #define MOVE_WINDOWS_START WIN_MOVE0
 
 #define TAG_CONTEST_SYMBOLS_PAL 0xABE0
-#define TAG_JUDGE_SYMBOLS_GFX 0xABE0
-#define TAG_FACES_GFX 0xABE1
-#define TAG_APPLAUSE_METER 0xABE2
+#define TAG_JUDGE_SYMBOLS_GFX   0xABE0
+#define TAG_FACES_GFX           0xABE1
+#define TAG_APPLAUSE_METER      0xABE2
 
-#define TAG_SLIDER_HEART 0x4E20
-#define TAG_JUDGE 0x4E21
-#define TAG_NEXT_TURN_PAL 0x4E22
+#define TAG_SLIDER_HEART    0x4E20
+#define TAG_JUDGE           0x4E21
+#define TAG_NEXT_TURN_PAL   0x4E22
 #define TAG_NEXT_TURN_1_GFX 0x4E22
 #define TAG_NEXT_TURN_2_GFX 0x4E23
 #define TAG_NEXT_TURN_3_GFX 0x4E24
@@ -1422,9 +1422,9 @@ static void Task_WaitHideApplauseMeterForAppealStart(u8 taskId) {
         gTasks[taskId].func = Task_AppealSetup;
 }
 
-#define tState data[0]
+#define tState       data[0]
 #define tMonSpriteId data[2]
-#define tCounter data[10]
+#define tCounter     data[10]
 
 static void Task_AppealSetup(u8 taskId) {
     if (++gTasks[taskId].data[0] > 19) {
@@ -3168,11 +3168,11 @@ static s8 GetNumHeartsFromAppealPoints(s16 appeal) {
     return hearts;
 }
 
-#define tNumHearts data[0]
+#define tNumHearts   data[0]
 #define tHeartsDelta data[1]
-#define tHeartsSign data[2]
-#define tContestant data[3]
-#define tDelayTimer data[10]
+#define tHeartsSign  data[2]
+#define tContestant  data[3]
+#define tDelayTimer  data[10]
 
 static u8 UpdateAppealHearts(s16 startAppeal, s16 appealDelta, u8 contestant) {
     u8 taskId;
@@ -3286,8 +3286,8 @@ static void CreateSliderHeartSprites(void) {
 }
 
 #define sContestant data[0]
-#define sTargetX data[1]
-#define sMoveX data[2]
+#define sTargetX    data[1]
+#define sMoveX      data[2]
 
 static void UpdateHeartSlider(u8 contestant) {
     u8 spriteId;
@@ -4190,8 +4190,8 @@ static void ShowApplauseMeterNoAnim(void) {
     gSprites[eContest.applauseMeterSpriteId].invisible = TRUE;
 }
 
-#define tDelay data[10]
-#define tFrame data[11]
+#define tDelay  data[10]
+#define tFrame  data[11]
 #define tCycles data[12]
 
 static void AnimateAudience(void) {
@@ -4222,11 +4222,11 @@ static void Task_AnimateAudience(u8 taskId) {
 #undef tFrame
 #undef tCycles
 
-#define tBlendColor data[0]
-#define tBlendCoeff data[1]
-#define tBlendDir data[2]
+#define tBlendColor       data[0]
+#define tBlendCoeff       data[1]
+#define tBlendDir         data[2]
 #define tTargetBlendCoeff data[3]
-#define tBlendDelay data[10]
+#define tBlendDelay       data[10]
 
 static void BlendAudienceBackground(s8 excitementDir, s8 blendDir) {
     u8 taskId = CreateTask(Task_BlendAudienceBackground, 10);

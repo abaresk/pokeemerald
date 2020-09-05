@@ -71,26 +71,26 @@ enum { BLENDER_MISTER, BLENDER_LADDIE, BLENDER_LASSIE, BLENDER_MASTER, BLENDER_D
 
 #define MAX_PROGRESS_BAR 1000
 
-#define MAX_ARROW_POS 0x10000 // By virtue of being u16
-#define MIN_ARROW_SPEED 0x80
+#define MAX_ARROW_POS       0x10000 // By virtue of being u16
+#define MIN_ARROW_SPEED     0x80
 #define ARROW_FALL_ROTATION 0x5800 // The amount the arrow spins as it falls in at the start
 
 // Tile offsets
-#define PROGRESS_BAR_FILLED_TOP 0x80E9
+#define PROGRESS_BAR_FILLED_TOP    0x80E9
 #define PROGRESS_BAR_FILLED_BOTTOM 0x80F9
-#define PROGRESS_BAR_EMPTY_TOP 0x80E1
-#define PROGRESS_BAR_EMPTY_BOTTOM 0x80F1
-#define RPM_DIGIT 0x8072
+#define PROGRESS_BAR_EMPTY_TOP     0x80E1
+#define PROGRESS_BAR_EMPTY_BOTTOM  0x80F1
+#define RPM_DIGIT                  0x8072
 
 // Tile and palette tags
 #define GFXTAG_COUNTDOWN_NUMBERS 12345
-#define GFXTAG_START 12346
-#define GFXTAG_PARTICLES 23456
-#define GFXTAG_PLAYER_ARROW 46545
-#define GFXTAG_SCORE_SYMBOLS 48888
+#define GFXTAG_START             12346
+#define GFXTAG_PARTICLES         23456
+#define GFXTAG_PLAYER_ARROW      46545
+#define GFXTAG_SCORE_SYMBOLS     48888
 
 #define PALTAG_PLAYER_ARROW 12312
-#define PALTAG_MISC 46546
+#define PALTAG_MISC         46546
 
 // Last berry that an NPC can put in
 #define NUM_NPC_BERRIES ITEM_TO_BERRY(ITEM_ASPEAR_BERRY)
@@ -899,14 +899,14 @@ static void CB2_LoadBerryBlender(void) {
     UpdatePaletteFade();
 }
 
-#define sTargetY data[0]
-#define sX data[1]
-#define sY data[2]
+#define sTargetY     data[0]
+#define sX           data[1]
+#define sY           data[2]
 #define sBounceSpeed data[3]
-#define sYUpSpeed data[4]
-#define sBounces data[5]
-#define sXSpeed data[6]
-#define sYDownSpeed data[7]
+#define sYUpSpeed    data[4]
+#define sBounces     data[5]
+#define sXSpeed      data[6]
+#define sYDownSpeed  data[7]
 
 // For throwing berries into the machine
 static void SpriteCB_Berry(struct Sprite* sprite) {
@@ -1507,8 +1507,8 @@ static void ResetLinkCmds(void) {
     }
 }
 
-#define tTimer data[0]
-#define tDelay data[1]
+#define tTimer    data[0]
+#define tDelay    data[1]
 #define tPlayerId data[2]
 
 static void Task_OpponentMiss(u8 taskId) {
@@ -2701,9 +2701,9 @@ static void SetPlayerBerryData(u8 playerId, u16 itemId) {
     ConvertItemToBlenderBerry(&sBerryBlender->blendedBerries[playerId], itemId);
 }
 
-#define sState data[0]
-#define sYPos data[1]
-#define sDelay data[2]
+#define sState  data[0]
+#define sYPos   data[1]
+#define sDelay  data[2]
 #define sAnimId data[3]
 
 static void SpriteCB_CountdownNumber(struct Sprite* sprite) {

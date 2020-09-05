@@ -6,12 +6,12 @@
 #include "window.h"
 
 #define MENU_NOTHING_CHOSEN -2
-#define MENU_B_PRESSED -1
+#define MENU_B_PRESSED      -1
 
-#define MENU_CURSOR_DELTA_NONE 0
-#define MENU_CURSOR_DELTA_UP -1
-#define MENU_CURSOR_DELTA_DOWN 1
-#define MENU_CURSOR_DELTA_LEFT -1
+#define MENU_CURSOR_DELTA_NONE  0
+#define MENU_CURSOR_DELTA_UP    -1
+#define MENU_CURSOR_DELTA_DOWN  1
+#define MENU_CURSOR_DELTA_LEFT  -1
 #define MENU_CURSOR_DELTA_RIGHT 1
 
 enum {

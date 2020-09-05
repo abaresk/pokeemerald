@@ -102,13 +102,13 @@ static void CopyValue32Bit(void) {
     *dest = *src;
 }
 
-#define tStartLine data[0]
-#define tEndLine data[1]
-#define tWaveLength data[2]
-#define tSrcBufferOffset data[3]
-#define tFramesUntilMove data[4]
-#define tDelayInterval data[5]
-#define tRegOffset data[6]
+#define tStartLine            data[0]
+#define tEndLine              data[1]
+#define tWaveLength           data[2]
+#define tSrcBufferOffset      data[3]
+#define tFramesUntilMove      data[4]
+#define tDelayInterval        data[5]
+#define tRegOffset            data[6]
 #define tApplyBattleBgOffsets data[7]
 
 static void TaskFunc_UpdateWavePerFrame(u8 taskId) {

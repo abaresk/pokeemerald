@@ -1438,21 +1438,21 @@ static void Task_WaitStopSurfing(u8 taskId) {
     }
 }
 
-#define tStep data[0]
-#define tFrameCounter data[1]
-#define tNumDots data[2]
-#define tDotsRequired data[3]
-#define tRoundsPlayed data[12]
+#define tStep              data[0]
+#define tFrameCounter      data[1]
+#define tNumDots           data[2]
+#define tDotsRequired      data[3]
+#define tRoundsPlayed      data[12]
 #define tMinRoundsRequired data[13]
-#define tPlayerGfxId data[14]
-#define tFishingRod data[15]
+#define tPlayerGfxId       data[14]
+#define tFishingRod        data[15]
 
 // Some states are jumped to directly, labeled below
 #define FISHING_START_ROUND 3
-#define FISHING_GOT_BITE 6
-#define FISHING_ON_HOOK 9
-#define FISHING_NO_BITE 11
-#define FISHING_GOT_AWAY 12
+#define FISHING_GOT_BITE    6
+#define FISHING_ON_HOOK     9
+#define FISHING_NO_BITE     11
+#define FISHING_GOT_AWAY    12
 #define FISHING_SHOW_RESULT 13
 
 static bool8 (*const sFishingStateFuncs[])(struct Task*) = {

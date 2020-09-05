@@ -283,7 +283,7 @@ static void Task_RecordMixing_SoundEffect(u8 taskId) {
 
 #undef tCounter
 
-#define tState data[0]
+#define tState        data[0]
 #define tSndEffTaskId data[15]
 
 // Note: Currently, special var 8005 contains the player's spot id.

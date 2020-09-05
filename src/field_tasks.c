@@ -85,7 +85,7 @@ static void Task_RunPerStepCallback(u8 taskId) {
     sPerStepCallbacks[idx](taskId);
 }
 
-#define tState data[0]
+#define tState           data[0]
 #define tAmbientCryState data[1]
 #define tAmbientCryDelay data[2]
 

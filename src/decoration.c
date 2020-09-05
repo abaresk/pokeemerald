@@ -40,26 +40,26 @@
 #include "constants/metatile_labels.h"
 
 #define PLACE_DECORATION_SELECTOR_TAG 0xbe5
-#define PLACE_DECORATION_PLAYER_TAG 0x008
-#define NUM_DECORATION_FLAGS (FLAG_DECORATION_14 - FLAG_DECORATION_0)
+#define PLACE_DECORATION_PLAYER_TAG   0x008
+#define NUM_DECORATION_FLAGS          (FLAG_DECORATION_14 - FLAG_DECORATION_0)
 
-#define tCursorX data[0]
-#define tCursorY data[1]
-#define tState data[2]
-#define tInitialX data[3]
-#define tInitialY data[4]
-#define tDecorWidth data[5]
-#define tDecorHeight data[6]
-#define tButton data[10]
-#define tDecorationMenuCommand data[11]
+#define tCursorX                    data[0]
+#define tCursorY                    data[1]
+#define tState                      data[2]
+#define tInitialX                   data[3]
+#define tInitialY                   data[4]
+#define tDecorWidth                 data[5]
+#define tDecorHeight                data[6]
+#define tButton                     data[10]
+#define tDecorationMenuCommand      data[11]
 #define tDecorationItemsMenuCommand data[12]
-#define tMenuTaskId data[13]
+#define tMenuTaskId                 data[13]
 
 #define DECOR_MENU_PLACE 0
-#define DECOR_MENU_TOSS 1
+#define DECOR_MENU_TOSS  1
 #define DECOR_MENU_TRADE 2
 
-#define DECOR_ITEMS_MENU_PLACE 0
+#define DECOR_ITEMS_MENU_PLACE    0
 #define DECOR_ITEMS_MENU_PUT_AWAY 1
 
 struct DecorationItemsMenu {

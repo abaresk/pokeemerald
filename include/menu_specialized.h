@@ -7,11 +7,11 @@
 #include "pokemon.h"
 #include "constants/berry.h"
 
-#define TAG_CONDITION_MON 100
-#define TAG_CONDITION_BALL 101
-#define TAG_CONDITION_CANCEL 102
+#define TAG_CONDITION_MON              100
+#define TAG_CONDITION_BALL             101
+#define TAG_CONDITION_CANCEL           102
 #define TAG_CONDITION_BALL_PLACEHOLDER 103
-#define TAG_CONDITION_SPARKLE 104
+#define TAG_CONDITION_SPARKLE          104
 
 #define MAX_CONDITION_SPARKLES 10
 

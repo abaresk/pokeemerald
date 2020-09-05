@@ -2320,7 +2320,7 @@ u32 sub_80397C4(u32 setId, u32 tableId) {
     return gBattleWindowTemplates[setId][tableId].width * 8;
 }
 
-#define sBattler data[0]
+#define sBattler   data[0]
 #define sSpeciesId data[2]
 
 void SpriteCb_WildMon(struct Sprite* sprite) {
@@ -2499,11 +2499,11 @@ void sub_8039C00(struct Sprite* sprite) {
     }
 }
 
-#define sSinIndex data[0]
-#define sDelta data[1]
-#define sAmplitude data[2]
+#define sSinIndex        data[0]
+#define sDelta           data[1]
+#define sAmplitude       data[2]
 #define sBouncerSpriteId data[3]
-#define sWhich data[4]
+#define sWhich           data[4]
 
 void DoBounceEffect(u8 battler, u8 which, s8 delta, s8 amplitude) {
     u8 invisibleSpriteId;

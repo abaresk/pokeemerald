@@ -568,7 +568,7 @@ static void SetPokeblockSpritePal(u8 pokeblockCaseId) {
 // defines for task data fields
 
 #define tFrames data[0]
-#define tData1 data[1]
+#define tData1  data[1]
 
 static void Task_HandlePokeblockFeed(u8 taskId) {
     if (!gPaletteFade.active) {
@@ -656,9 +656,9 @@ static void Task_PaletteFadeToReturn(u8 taskId) {
 
 // defines for mon sprite data fields
 
-#define tDelta data[0]
+#define tDelta    data[0]
 #define tDeltaMod data[1]
-#define tSpecies data[2]
+#define tSpecies  data[2]
 
 static u8 CreateMonSprite(struct Pokemon* mon) {
     u16 species = GetMonData(mon, MON_DATA_SPECIES2);
@@ -727,7 +727,7 @@ static void DoPokeblockCaseThrowEffect(u8 spriteId, bool8 a1) {
 }
 
 // defines for the pokeblock sprite data fields
-#define tDelta data[0]
+#define tDelta    data[0]
 #define tDeltaMod data[1]
 
 static u8 CreatePokeblockSprite(void) {

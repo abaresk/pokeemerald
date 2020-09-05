@@ -371,8 +371,8 @@ static void VBlankCB_BuyMenu(void) {
     TransferPlttBuffer();
 }
 
-#define tItemCount data[1]
-#define tItemId data[5]
+#define tItemCount  data[1]
+#define tItemId     data[5]
 #define tListTaskId data[7]
 
 static void CB2_InitBuyMenu(void) {

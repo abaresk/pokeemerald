@@ -32,7 +32,7 @@
 #define STARTER_PKMN_POS_Y 64
 
 #define TAG_POKEBALL_SELECT 0x1000
-#define TAG_STARTER_CIRCLE 0x1001
+#define TAG_STARTER_CIRCLE  0x1001
 
 static void CB2_StarterChoose(void);
 static void ClearStarterLabel(void);
@@ -267,8 +267,8 @@ static void VblankCB_StarterChoose(void) {
 
 // Data for Task_StarterChoose
 #define tStarterSelection data[0]
-#define tPkmnSpriteId data[1]
-#define tCircleSpriteId data[2]
+#define tPkmnSpriteId     data[1]
+#define tCircleSpriteId   data[2]
 
 // Data for sSpriteTemplate_Pokeball
 #define sTaskId data[0]

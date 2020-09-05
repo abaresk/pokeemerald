@@ -1203,12 +1203,12 @@ void UpdateSparkleFieldEffect(struct Sprite* sprite) {
         FieldEffectStop(sprite, FLDEFF_SPARKLE);
 }
 
-#define sTimer data[0]
-#define sState data[2]
-#define sStartY data[4]
-#define sCounter data[5]
+#define sTimer       data[0]
+#define sState       data[2]
+#define sStartY      data[4]
+#define sCounter     data[5]
 #define sAnimCounter data[6]
-#define sAnimState data[7]
+#define sAnimState   data[7]
 
 // Same as InitSpriteForFigure8Anim
 static void InitRayquazaForFigure8Anim(struct Sprite* sprite) {

@@ -701,9 +701,9 @@ static const struct SpriteTemplate sSpriteTemplate_MonIconOnLvlUpBox = { .tileTa
 
 static const u16 sProtectSuccessRates[] = { USHRT_MAX, USHRT_MAX / 2, USHRT_MAX / 4, USHRT_MAX / 8 };
 
-#define MIMIC_FORBIDDEN_END 0xFFFE
+#define MIMIC_FORBIDDEN_END     0xFFFE
 #define METRONOME_FORBIDDEN_END 0xFFFF
-#define ASSIST_FORBIDDEN_END 0xFFFF
+#define ASSIST_FORBIDDEN_END    0xFFFF
 
 static const u16 sMovesForbiddenToCopy[] = {
     MOVE_METRONOME,    MOVE_STRUGGLE,    MOVE_SKETCH,  MOVE_MIMIC,       MIMIC_FORBIDDEN_END,
@@ -5240,7 +5240,7 @@ static bool8 sub_804F344(void) {
     return (gBattle_BG2_X != 0x1A0);
 }
 
-#define sDestroy data[0]
+#define sDestroy                data[0]
 #define sSavedLvlUpBoxXPosition data[1]
 
 static void PutMonIconOnLvlUpBox(void) {
@@ -5917,7 +5917,7 @@ static void Cmd_negativedamage(void) {
     gBattlescriptCurrInstr++;
 }
 
-#define STAT_BUFF_WORKED 0
+#define STAT_BUFF_WORKED     0
 #define STAT_BUFF_DIDNT_WORK 1
 
 static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8* BS_ptr) {

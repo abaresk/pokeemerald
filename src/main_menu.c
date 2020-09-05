@@ -165,7 +165,7 @@
 
 // These two defines are used with the sCurrItemAndOptionsMenuCheck,
 // to distinguish between its two parts.
-#define OPTION_MENU_FLAG 0x8000
+#define OPTION_MENU_FLAG  0x8000
 #define CURRENT_ITEM_MASK 0x7FFF
 
 // Static type declarations
@@ -260,15 +260,15 @@ static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech
 static const u16 sBirchSpeechPlatformBlackPal[] = { RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK,
                                                     RGB_BLACK, RGB_BLACK, RGB_BLACK, RGB_BLACK };
 
-#define MENU_LEFT 2
-#define MENU_TOP_WIN0 1
-#define MENU_TOP_WIN1 5
-#define MENU_TOP_WIN2 1
-#define MENU_TOP_WIN3 9
-#define MENU_TOP_WIN4 13
-#define MENU_TOP_WIN5 17
-#define MENU_TOP_WIN6 21
-#define MENU_WIDTH 26
+#define MENU_LEFT        2
+#define MENU_TOP_WIN0    1
+#define MENU_TOP_WIN1    5
+#define MENU_TOP_WIN2    1
+#define MENU_TOP_WIN3    9
+#define MENU_TOP_WIN4    13
+#define MENU_TOP_WIN5    17
+#define MENU_TOP_WIN6    21
+#define MENU_WIDTH       26
 #define MENU_HEIGHT_WIN0 2
 #define MENU_HEIGHT_WIN1 2
 #define MENU_HEIGHT_WIN2 6
@@ -277,9 +277,9 @@ static const u16 sBirchSpeechPlatformBlackPal[] = { RGB_BLACK, RGB_BLACK, RGB_BL
 #define MENU_HEIGHT_WIN5 2
 #define MENU_HEIGHT_WIN6 2
 
-#define MENU_LEFT_ERROR 2
-#define MENU_TOP_ERROR 15
-#define MENU_WIDTH_ERROR 26
+#define MENU_LEFT_ERROR   2
+#define MENU_TOP_ERROR    15
+#define MENU_WIDTH_ERROR  26
 #define MENU_HEIGHT_ERROR 4
 
 #define MENU_SHADOW_PADDING 1
@@ -514,11 +514,11 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu) {
     return 0;
 }
 
-#define tMenuType data[0]
-#define tCurrItem data[1]
-#define tItemCount data[12]
-#define tScrollArrowTaskId data[13]
-#define tIsScrolled data[14]
+#define tMenuType                 data[0]
+#define tCurrItem                 data[1]
+#define tItemCount                data[12]
+#define tScrollArrowTaskId        data[13]
+#define tIsScrolled               data[14]
 #define tWirelessAdapterConnected data[15]
 
 #define tArrowTaskIsScrolled data[15] // For scroll indicator arrow task
@@ -1093,15 +1093,15 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
     }
 }
 
-#define tPlayerSpriteId data[2]
-#define tBG1HOFS data[4]
+#define tPlayerSpriteId      data[2]
+#define tBG1HOFS             data[4]
 #define tIsDoneFadingSprites data[5]
-#define tPlayerGender data[6]
-#define tTimer data[7]
-#define tBirchSpriteId data[8]
-#define tLotadSpriteId data[9]
-#define tBrendanSpriteId data[10]
-#define tMaySpriteId data[11]
+#define tPlayerGender        data[6]
+#define tTimer               data[7]
+#define tBirchSpriteId       data[8]
+#define tLotadSpriteId       data[9]
+#define tBrendanSpriteId     data[10]
+#define tMaySpriteId         data[11]
 
 static void Task_NewGameBirchSpeech_Init(u8 taskId) {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
@@ -1678,11 +1678,11 @@ static void AddBirchSpeechObjects(u8 taskId) {
 #undef tBrendanSpriteId
 #undef tMaySpriteId
 
-#define tMainTask data[0]
+#define tMainTask    data[0]
 #define tAlphaCoeff1 data[1]
 #define tAlphaCoeff2 data[2]
-#define tDelay data[3]
-#define tDelayTimer data[4]
+#define tDelay       data[3]
+#define tDelayTimer  data[4]
 
 static void Task_NewGameBirchSpeech_FadeOutTarget1InTarget2(u8 taskId) {
     int alphaCoeff2;
@@ -1756,11 +1756,11 @@ static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
 
 #undef tIsDoneFadingSprites
 
-#define tMainTask data[0]
-#define tPalIndex data[1]
+#define tMainTask    data[0]
+#define tPalIndex    data[1]
 #define tDelayBefore data[2]
-#define tDelay data[3]
-#define tDelayTimer data[4]
+#define tDelay       data[3]
+#define tDelayTimer  data[4]
 
 static void Task_NewGameBirchSpeech_FadePlatformIn(u8 taskId) {
     if (gTasks[taskId].tDelayBefore) {

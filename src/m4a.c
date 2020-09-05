@@ -1415,7 +1415,7 @@ start_song:
     mplayInfo = &gPokemonCryMusicPlayers[i];
     mplayInfo->ident++;
 
-#define CRY ((s32)&gPokemonCrySongs + i * sizeof(struct PokemonCrySong))
+#define CRY            ((s32)&gPokemonCrySongs + i * sizeof(struct PokemonCrySong))
 #define CRY_OFS(field) offsetof(struct PokemonCrySong, field)
 
     memcpy((void*)CRY, &gPokemonCrySong, sizeof(struct PokemonCrySong));

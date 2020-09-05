@@ -402,25 +402,25 @@ enum {
 };
 
 #define TAG_PAL_WAVEFORM 0xDACA
-#define TAG_PAL_DAC8 0xDAC8
-#define TAG_PAL_DAC6 0xDAC6
-#define TAG_PAL_DACE 0xDACE
-#define TAG_PAL_DAC7 0xDAC7
-#define TAG_PAL_DAC9 0xDAC9
-#define TAG_PAL_DAC0 0xDAC0
-#define TAG_PAL_DACB 0xDACB
+#define TAG_PAL_DAC8     0xDAC8
+#define TAG_PAL_DAC6     0xDAC6
+#define TAG_PAL_DACE     0xDACE
+#define TAG_PAL_DAC7     0xDAC7
+#define TAG_PAL_DAC9     0xDAC9
+#define TAG_PAL_DAC0     0xDAC0
+#define TAG_PAL_DACB     0xDACB
 
 #define TAG_TILE_WAVEFORM 0x5
-#define TAG_TILE_10 0x10
-#define TAG_TILE_2 0x2
-#define TAG_TILE_D 0xD
-#define TAG_TILE_A 0xA
-#define TAG_TILE_3 0x3
-#define TAG_TILE_4 0x4
-#define TAG_TILE_12 0x12
-#define TAG_TILE_7 0x7
-#define TAG_TILE_0 0x0
-#define TAG_TILE_1 0x1
+#define TAG_TILE_10       0x10
+#define TAG_TILE_2        0x2
+#define TAG_TILE_D        0xD
+#define TAG_TILE_A        0xA
+#define TAG_TILE_3        0x3
+#define TAG_TILE_4        0x4
+#define TAG_TILE_12       0x12
+#define TAG_TILE_7        0x7
+#define TAG_TILE_0        0x0
+#define TAG_TILE_1        0x1
 
 // IWRAM bss
 static u32 gUnknown_03000F78[98];

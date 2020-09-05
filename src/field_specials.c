@@ -1253,10 +1253,10 @@ bool8 IsPokerusInParty(void) {
 }
 
 #define horizontalPan data[0]
-#define delayCounter data[1]
-#define numShakes data[2]
-#define delay data[3]
-#define verticalPan data[4]
+#define delayCounter  data[1]
+#define numShakes     data[2]
+#define delay         data[3]
+#define verticalPan   data[4]
 
 void ShakeCamera(void) {
     u8 taskId = CreateTask(Task_ShakeCamera, 9);
@@ -1882,20 +1882,20 @@ void BufferBattleTowerElevatorFloors(void) {
 }
 
 // Scrollable Multichoice task data defines
-#define tMaxItemsOnScreen data[0]
-#define tNumItems data[1]
-#define tLeft data[2]
-#define tTop data[3]
-#define tWidth data[4]
-#define tHeight data[5]
+#define tMaxItemsOnScreen    data[0]
+#define tNumItems            data[1]
+#define tLeft                data[2]
+#define tTop                 data[3]
+#define tWidth               data[4]
+#define tHeight              data[5]
 #define tKeepOpenAfterSelect data[6]
-#define tScrollOffset data[7]
-#define tSelectedRow data[8]
-#define tScrollMultiId data[11]
-#define tScrollArrowId data[12]
-#define tWindowId data[13]
-#define tListTaskId data[14]
-#define tTaskId data[15]
+#define tScrollOffset        data[7]
+#define tSelectedRow         data[8]
+#define tScrollMultiId       data[11]
+#define tScrollArrowId       data[12]
+#define tWindowId            data[13]
+#define tListTaskId          data[14]
+#define tTaskId              data[15]
 // data[9] and [10] unused
 
 void ShowScrollableMultichoice(void) {
@@ -3124,7 +3124,7 @@ void Script_DoRayquazaScene(void) {
 }
 
 #define playCount data[0]
-#define delay data[1]
+#define delay     data[1]
 
 void LoopWingFlapSE(void) {
     CreateTask(Task_LoopWingFlapSE, 8);
@@ -3259,18 +3259,18 @@ bool8 InPokemonCenter(void) {
       2: Player has met their initial fans
 */
 
-#define FANCLUB_BITFIELD (gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START])
-#define FANCLUB_COUNTER 0x007F
+#define FANCLUB_BITFIELD  (gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START])
+#define FANCLUB_COUNTER   0x007F
 #define FANCLUB_FAN_FLAGS 0xFF80
 
-#define GET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD >> (flag)&1)
-#define SET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD |= 1 << (flag))
+#define GET_TRAINER_FAN_CLUB_FLAG(flag)  (FANCLUB_BITFIELD >> (flag)&1)
+#define SET_TRAINER_FAN_CLUB_FLAG(flag)  (FANCLUB_BITFIELD |= 1 << (flag))
 #define FLIP_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD ^= 1 << (flag))
 
-#define GET_TRAINER_FAN_CLUB_COUNTER (FANCLUB_BITFIELD & FANCLUB_COUNTER)
-#define SET_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD = (FANCLUB_BITFIELD & FANCLUB_FAN_FLAGS) | (count))
+#define GET_TRAINER_FAN_CLUB_COUNTER         (FANCLUB_BITFIELD & FANCLUB_COUNTER)
+#define SET_TRAINER_FAN_CLUB_COUNTER(count)  (FANCLUB_BITFIELD = (FANCLUB_BITFIELD & FANCLUB_FAN_FLAGS) | (count))
 #define INCR_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD += (count))
-#define CLEAR_TRAINER_FAN_CLUB_COUNTER (FANCLUB_BITFIELD &= ~(FANCLUB_COUNTER))
+#define CLEAR_TRAINER_FAN_CLUB_COUNTER       (FANCLUB_BITFIELD &= ~(FANCLUB_COUNTER))
 
 void ResetFanClub(void) {
     gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = 0;

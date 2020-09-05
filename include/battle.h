@@ -13,51 +13,51 @@
 #include "battle_bg.h"
 
 #define GET_BATTLER_POSITION(battler) (gBattlerPositions[battler])
-#define GET_BATTLER_SIDE(battler) (GetBattlerPosition(battler) & BIT_SIDE)
-#define GET_BATTLER_SIDE2(battler) (GET_BATTLER_POSITION(battler) & BIT_SIDE)
+#define GET_BATTLER_SIDE(battler)     (GetBattlerPosition(battler) & BIT_SIDE)
+#define GET_BATTLER_SIDE2(battler)    (GET_BATTLER_POSITION(battler) & BIT_SIDE)
 
 // Battle Actions
 // These determine what each battler will do in a turn
-#define B_ACTION_USE_MOVE 0
-#define B_ACTION_USE_ITEM 1
-#define B_ACTION_SWITCH 2
-#define B_ACTION_RUN 3
+#define B_ACTION_USE_MOVE               0
+#define B_ACTION_USE_ITEM               1
+#define B_ACTION_SWITCH                 2
+#define B_ACTION_RUN                    3
 #define B_ACTION_SAFARI_WATCH_CAREFULLY 4
-#define B_ACTION_SAFARI_BALL 5
-#define B_ACTION_SAFARI_POKEBLOCK 6
-#define B_ACTION_SAFARI_GO_NEAR 7
-#define B_ACTION_SAFARI_RUN 8
-#define B_ACTION_WALLY_THROW 9
-#define B_ACTION_EXEC_SCRIPT 10
-#define B_ACTION_TRY_FINISH 11
-#define B_ACTION_FINISHED 12
+#define B_ACTION_SAFARI_BALL            5
+#define B_ACTION_SAFARI_POKEBLOCK       6
+#define B_ACTION_SAFARI_GO_NEAR         7
+#define B_ACTION_SAFARI_RUN             8
+#define B_ACTION_WALLY_THROW            9
+#define B_ACTION_EXEC_SCRIPT            10
+#define B_ACTION_TRY_FINISH             11
+#define B_ACTION_FINISHED               12
 
-#define B_ACTION_CANCEL_PARTNER 12  // when choosing an action
+#define B_ACTION_CANCEL_PARTNER  12 // when choosing an action
 #define B_ACTION_NOTHING_FAINTED 13 // when choosing an action
-#define B_ACTION_NONE 0xFF
+#define B_ACTION_NONE            0xFF
 
 #define MAX_TRAINER_ITEMS 4
 
 // array entries for battle communication
-#define MULTIUSE_STATE 0x0
-#define CURSOR_POSITION 0x1
-#define TASK_ID 0x1             // task Id and cursor position share the same field
-#define SPRITES_INIT_STATE1 0x1 // shares the Id as well
-#define SPRITES_INIT_STATE2 0x2
-#define MOVE_EFFECT_BYTE 0x3
-#define ACTIONS_CONFIRMED_COUNT 0x4
-#define MULTISTRING_CHOOSER 0x5
-#define MSG_DISPLAY 0x7
+#define MULTIUSE_STATE                     0x0
+#define CURSOR_POSITION                    0x1
+#define TASK_ID                            0x1 // task Id and cursor position share the same field
+#define SPRITES_INIT_STATE1                0x1 // shares the Id as well
+#define SPRITES_INIT_STATE2                0x2
+#define MOVE_EFFECT_BYTE                   0x3
+#define ACTIONS_CONFIRMED_COUNT            0x4
+#define MULTISTRING_CHOOSER                0x5
+#define MSG_DISPLAY                        0x7
 #define BATTLE_COMMUNICATION_ENTRIES_COUNT 0x8
 
-#define MOVE_TARGET_SELECTED 0x0
-#define MOVE_TARGET_DEPENDS 0x1
+#define MOVE_TARGET_SELECTED         0x0
+#define MOVE_TARGET_DEPENDS          0x1
 #define MOVE_TARGET_USER_OR_SELECTED 0x2
-#define MOVE_TARGET_RANDOM 0x4
-#define MOVE_TARGET_BOTH 0x8
-#define MOVE_TARGET_USER 0x10
-#define MOVE_TARGET_FOES_AND_ALLY 0x20
-#define MOVE_TARGET_OPPONENTS_FIELD 0x40
+#define MOVE_TARGET_RANDOM           0x4
+#define MOVE_TARGET_BOTH             0x8
+#define MOVE_TARGET_USER             0x10
+#define MOVE_TARGET_FOES_AND_ALLY    0x20
+#define MOVE_TARGET_OPPONENTS_FIELD  0x40
 
 #define BATTLE_BUFFER_LINK_SIZE 0x1000
 
@@ -431,7 +431,7 @@ struct BattleStruct {
     }
 
 #define IS_TYPE_PHYSICAL(moveType) (moveType < TYPE_MYSTERY)
-#define IS_TYPE_SPECIAL(moveType) (moveType > TYPE_MYSTERY)
+#define IS_TYPE_SPECIAL(moveType)  (moveType > TYPE_MYSTERY)
 
 #define TARGET_TURN_DAMAGED \
     ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
@@ -444,10 +444,10 @@ struct BattleStruct {
         gBattleMons[battlerId].type2 = type; \
     }
 
-#define GET_STAT_BUFF_ID(n) ((n & 0xF)) // first four bits 0x1, 0x2, 0x4, 0x8
+#define GET_STAT_BUFF_ID(n)     ((n & 0xF)) // first four bits 0x1, 0x2, 0x4, 0x8
 #define GET_STAT_BUFF_VALUE2(n) ((n & 0xF0))
-#define GET_STAT_BUFF_VALUE(n) (((n >> 4) & 7)) // 0x10, 0x20, 0x40
-#define STAT_BUFF_NEGATIVE 0x80                 // 0x80, the sign bit
+#define GET_STAT_BUFF_VALUE(n)  (((n >> 4) & 7)) // 0x10, 0x20, 0x40
+#define STAT_BUFF_NEGATIVE      0x80             // 0x80, the sign bit
 
 #define SET_STAT_BUFF_VALUE(n) ((((n) << 4) & 0xF0))
 

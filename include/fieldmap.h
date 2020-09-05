@@ -1,13 +1,13 @@
 #ifndef GUARD_FIELDMAP_H
 #define GUARD_FIELDMAP_H
 
-#define NUM_TILES_IN_PRIMARY 512
-#define NUM_TILES_TOTAL 1024
+#define NUM_TILES_IN_PRIMARY     512
+#define NUM_TILES_TOTAL          1024
 #define NUM_METATILES_IN_PRIMARY 512
-#define NUM_METATILES_TOTAL 1024
-#define NUM_PALS_IN_PRIMARY 6
-#define NUM_PALS_TOTAL 13
-#define MAX_MAP_DATA_SIZE 0x2800
+#define NUM_METATILES_TOTAL      1024
+#define NUM_PALS_IN_PRIMARY      6
+#define NUM_PALS_TOTAL           13
+#define MAX_MAP_DATA_SIZE        0x2800
 
 #include "main.h"
 

@@ -22,3 +22,4 @@ AlignEscapedNewlines: Left
 AlignTrailingComments: true
 SortIncludes: false
 BreakStringLiterals: false
+AlignConsecutiveMacros: true

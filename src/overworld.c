@@ -69,19 +69,19 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 
-#define PLAYER_TRADING_STATE_IDLE 0x80
-#define PLAYER_TRADING_STATE_BUSY 0x81
-#define PLAYER_TRADING_STATE_UNK_2 0x82
+#define PLAYER_TRADING_STATE_IDLE         0x80
+#define PLAYER_TRADING_STATE_BUSY         0x81
+#define PLAYER_TRADING_STATE_UNK_2        0x82
 #define PLAYER_TRADING_STATE_EXITING_ROOM 0x83
 
-#define FACING_NONE 0
-#define FACING_UP 1
-#define FACING_DOWN 2
-#define FACING_LEFT 3
-#define FACING_RIGHT 4
-#define FACING_FORCED_UP 7
-#define FACING_FORCED_DOWN 8
-#define FACING_FORCED_LEFT 9
+#define FACING_NONE         0
+#define FACING_UP           1
+#define FACING_DOWN         2
+#define FACING_LEFT         3
+#define FACING_RIGHT        4
+#define FACING_FORCED_UP    7
+#define FACING_FORCED_DOWN  8
+#define FACING_FORCED_LEFT  9
 #define FACING_FORCED_RIGHT 10
 
 extern const struct MapLayout* const gMapLayouts[];

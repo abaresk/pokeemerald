@@ -190,12 +190,12 @@ u8 GetBattlerSpriteDefault_Y(u8 battlerId);
 u8 GetSubstituteSpriteDefault_Y(u8 battlerId);
 
 // battle_anim_status_effects.c
-#define STAT_ANIM_PLUS1 15
-#define STAT_ANIM_PLUS2 39
-#define STAT_ANIM_MINUS1 22
-#define STAT_ANIM_MINUS2 46
-#define STAT_ANIM_MULTIPLE_PLUS1 55
-#define STAT_ANIM_MULTIPLE_PLUS2 56
+#define STAT_ANIM_PLUS1           15
+#define STAT_ANIM_PLUS2           39
+#define STAT_ANIM_MINUS1          22
+#define STAT_ANIM_MINUS2          46
+#define STAT_ANIM_MULTIPLE_PLUS1  55
+#define STAT_ANIM_MULTIPLE_PLUS2  56
 #define STAT_ANIM_MULTIPLE_MINUS1 57
 #define STAT_ANIM_MULTIPLE_MINUS2 58
 void LaunchStatusAnimation(u8 battlerId, u8 statusAnimId);

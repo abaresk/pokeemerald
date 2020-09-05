@@ -21,7 +21,7 @@ enum { BALL_AFFINE_ANIM_0, BALL_ROTATE_RIGHT, BALL_ROTATE_LEFT, BALL_AFFINE_ANIM
 
 extern const struct SpriteTemplate gBallSpriteTemplates[];
 
-#define POKEBALL_PLAYER_SENDOUT 0xFF
+#define POKEBALL_PLAYER_SENDOUT   0xFF
 #define POKEBALL_OPPONENT_SENDOUT 0xFE
 
 u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow);

@@ -85,7 +85,7 @@ enum {
     PAGE_COUNT
 };
 
-#define COLOR_DARK_GREEN RGB(7, 11, 6)
+#define COLOR_DARK_GREEN  RGB(7, 11, 6)
 #define COLOR_LIGHT_GREEN RGB(13, 20, 12)
 
 enum {

@@ -24,16 +24,16 @@
 #include "constants/songs.h"
 
 #define VERSION_BANNER_RIGHT_TILEOFFSET 64
-#define VERSION_BANNER_LEFT_X 98
-#define VERSION_BANNER_RIGHT_X 162
-#define VERSION_BANNER_Y 2
-#define VERSION_BANNER_Y_GOAL 66
-#define START_BANNER_X 128
+#define VERSION_BANNER_LEFT_X           98
+#define VERSION_BANNER_RIGHT_X          162
+#define VERSION_BANNER_Y                2
+#define VERSION_BANNER_Y_GOAL           66
+#define START_BANNER_X                  128
 
-#define CLEAR_SAVE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_UP)
-#define RESET_RTC_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
+#define CLEAR_SAVE_BUTTON_COMBO   (B_BUTTON | SELECT_BUTTON | DPAD_UP)
+#define RESET_RTC_BUTTON_COMBO    (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
 #define BERRY_UPDATE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON)
-#define A_B_START_SELECT (A_BUTTON | B_BUTTON | START_BUTTON | SELECT_BUTTON)
+#define A_B_START_SELECT          (A_BUTTON | B_BUTTON | START_BUTTON | SELECT_BUTTON)
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
@@ -409,7 +409,7 @@ static void VBlankCB(void) {
     SetGpuReg(REG_OFFSET_BG1VOFS, gBattle_BG1_Y);
 }
 
-#define tCounter data[0]
+#define tCounter    data[0]
 #define tSkipToNext data[1]
 
 void CB2_InitTitleScreen(void) {

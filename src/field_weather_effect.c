@@ -257,10 +257,10 @@ void StartDroughtWeatherBlend(void) {
     CreateTask(UpdateDroughtBlend, 0x50);
 }
 
-#define tState data[0]
-#define tBlendY data[1]
+#define tState      data[0]
+#define tBlendY     data[1]
 #define tBlendDelay data[2]
-#define tWinRange data[3]
+#define tWinRange   data[3]
 
 static void UpdateDroughtBlend(u8 taskId) {
     struct Task* task = &gTasks[taskId];
@@ -462,11 +462,11 @@ bool8 Rain_Finish(void) {
 }
 
 #define tCounter data[0]
-#define tRandom data[1]
-#define tPosX data[2]
-#define tPosY data[3]
-#define tState data[4]
-#define tActive data[5]
+#define tRandom  data[1]
+#define tPosX    data[2]
+#define tPosY    data[3]
+#define tState   data[4]
+#define tActive  data[5]
 #define tWaiting data[6]
 
 static void StartRainSpriteFall(struct Sprite* sprite) {
@@ -761,14 +761,14 @@ static const struct SpriteTemplate sSnowflakeSpriteTemplate = {
     .callback = UpdateSnowflakeSprite,
 };
 
-#define tPosY data[0]
-#define tDeltaY data[1]
-#define tWaveDelta data[2]
-#define tWaveIndex data[3]
-#define tSnowflakeId data[4]
-#define tFallCounter data[5]
+#define tPosY         data[0]
+#define tDeltaY       data[1]
+#define tWaveDelta    data[2]
+#define tWaveIndex    data[3]
+#define tSnowflakeId  data[4]
+#define tFallCounter  data[5]
 #define tFallDuration data[6]
-#define tDeltaY2 data[7]
+#define tDeltaY2      data[7]
 
 static bool8 CreateSnowflakeSprite(void) {
     u8 spriteId = CreateSpriteAtEnd(&sSnowflakeSpriteTemplate, 0, 0, 78);
@@ -1396,10 +1396,10 @@ static const struct SpriteTemplate sAshSpriteTemplate = {
     .callback = UpdateAshSprite,
 };
 
-#define tOffsetY data[0]
-#define tCounterY data[1]
+#define tOffsetY      data[0]
+#define tCounterY     data[1]
 #define tSpriteColumn data[2]
-#define tSpriteRow data[3]
+#define tSpriteRow    data[3]
 
 static void CreateAshSprites(void) {
     u8 i;
@@ -1587,7 +1587,7 @@ static const struct SpriteTemplate sFogDiagonalSpriteTemplate = {
 };
 
 #define tSpriteColumn data[0]
-#define tSpriteRow data[1]
+#define tSpriteRow    data[1]
 
 static void CreateFogDiagonalSprites(void) {
     u16 i;
@@ -1809,11 +1809,11 @@ static const struct SpriteSheet sSandstormSpriteSheet = {
 
 // Regular sandstorm sprites
 #define tSpriteColumn data[0]
-#define tSpriteRow data[1]
+#define tSpriteRow    data[1]
 
 // Swirly sandstorm sprites
-#define tRadius data[0]
-#define tWaveIndex data[1]
+#define tRadius        data[0]
+#define tWaveIndex     data[1]
 #define tRadiusCounter data[2]
 #define tEntranceDelay data[3]
 
@@ -2012,8 +2012,8 @@ static const struct SpriteTemplate sBubbleSpriteTemplate = {
 };
 
 #define tScrollXCounter data[0]
-#define tScrollXDir data[1]
-#define tCounter data[2]
+#define tScrollXDir     data[1]
+#define tCounter        data[2]
 
 static void CreateBubbleSprite(u16 coordsIndex) {
     s16 x = sBubbleStartCoords[coordsIndex][0];

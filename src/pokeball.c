@@ -47,17 +47,17 @@ static u16 GetBattlerPokeballItemId(u8 battlerId);
 
 // rom const data
 
-#define GFX_TAG_POKEBALL 55000
-#define GFX_TAG_GREATBALL 55001
-#define GFX_TAG_SAFARIBALL 55002
-#define GFX_TAG_ULTRABALL 55003
-#define GFX_TAG_MASTERBALL 55004
-#define GFX_TAG_NETBALL 55005
-#define GFX_TAG_DIVEBALL 55006
-#define GFX_TAG_NESTBALL 55007
-#define GFX_TAG_REPEATBALL 55008
-#define GFX_TAG_TIMERBALL 55009
-#define GFX_TAG_LUXURYBALL 55010
+#define GFX_TAG_POKEBALL    55000
+#define GFX_TAG_GREATBALL   55001
+#define GFX_TAG_SAFARIBALL  55002
+#define GFX_TAG_ULTRABALL   55003
+#define GFX_TAG_MASTERBALL  55004
+#define GFX_TAG_NETBALL     55005
+#define GFX_TAG_DIVEBALL    55006
+#define GFX_TAG_NESTBALL    55007
+#define GFX_TAG_REPEATBALL  55008
+#define GFX_TAG_TIMERBALL   55009
+#define GFX_TAG_LUXURYBALL  55010
 #define GFX_TAG_PREMIERBALL 55011
 
 const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] = {
@@ -285,10 +285,10 @@ const struct SpriteTemplate gBallSpriteTemplates[POKEBALL_COUNT] = {
     },
 };
 
-#define tFrames data[0]
-#define tPan data[1]
-#define tThrowId data[2]
-#define tBattler data[3]
+#define tFrames          data[0]
+#define tPan             data[1]
+#define tThrowId         data[2]
+#define tBattler         data[3]
 #define tOpponentBattler data[4]
 
 u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow) {
@@ -568,15 +568,15 @@ static void sub_8075970(struct Sprite* sprite) {
     }
 }
 
-#define tCryTaskSpecies data[0]
-#define tCryTaskPan data[1]
-#define tCryTaskWantedCry data[2]
-#define tCryTaskBattler data[3]
+#define tCryTaskSpecies     data[0]
+#define tCryTaskPan         data[1]
+#define tCryTaskWantedCry   data[2]
+#define tCryTaskBattler     data[3]
 #define tCryTaskMonSpriteId data[4]
-#define tCryTaskMonPtr1 data[5]
-#define tCryTaskMonPtr2 data[6]
-#define tCryTaskFrames data[10]
-#define tCryTaskState data[15]
+#define tCryTaskMonPtr1     data[5]
+#define tCryTaskMonPtr2     data[6]
+#define tCryTaskFrames      data[10]
+#define tCryTaskState       data[15]
 
 static void Task_PlayCryWhenReleasedFromBall(u8 taskId) {
     u8 wantedCry = gTasks[taskId].tCryTaskWantedCry;

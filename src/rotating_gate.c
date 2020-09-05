@@ -8,14 +8,14 @@
 #include "constants/maps.h"
 #include "constants/songs.h"
 
-#define ROTATING_GATE_TILE_TAG 0x1300
+#define ROTATING_GATE_TILE_TAG   0x1300
 #define ROTATING_GATE_PUZZLE_MAX 12
-#define GATE_ARM_MAX_LENGTH 2
+#define GATE_ARM_MAX_LENGTH      2
 
 #define GATE_ROT(rotationDirection, arm, longArm) ((rotationDirection & 15) << 4) | ((arm & 7) << 1) | (longArm & 1)
-#define GATE_ROT_CW(arm, longArm) GATE_ROT(ROTATE_CLOCKWISE, arm, longArm)
-#define GATE_ROT_ACW(arm, longArm) GATE_ROT(ROTATE_ANTICLOCKWISE, arm, longArm)
-#define GATE_ROT_NONE 255
+#define GATE_ROT_CW(arm, longArm)                 GATE_ROT(ROTATE_CLOCKWISE, arm, longArm)
+#define GATE_ROT_ACW(arm, longArm)                GATE_ROT(ROTATE_ANTICLOCKWISE, arm, longArm)
+#define GATE_ROT_NONE                             255
 
 // static functions
 static void SpriteCallback_RotatingGate(struct Sprite* sprite);

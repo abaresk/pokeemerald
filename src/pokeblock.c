@@ -35,7 +35,7 @@
 #include "constants/rgb.h"
 
 #define POKEBLOCK_MAX_FEEL 99
-#define FIELD_E75_COUNT 7
+#define FIELD_E75_COUNT    7
 
 struct PokeblockMenuStruct {
     u8 tilemap[0x800];

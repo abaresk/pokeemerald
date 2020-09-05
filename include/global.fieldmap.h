@@ -1,12 +1,12 @@
 #ifndef GUARD_GLOBAL_FIELDMAP_H
 #define GUARD_GLOBAL_FIELDMAP_H
 
-#define METATILE_COLLISION_MASK 0x0C00
-#define METATILE_ID_MASK 0x03FF
-#define METATILE_ID_UNDEFINED 0x03FF
+#define METATILE_COLLISION_MASK  0x0C00
+#define METATILE_ID_MASK         0x03FF
+#define METATILE_ID_UNDEFINED    0x03FF
 #define METATILE_ELEVATION_SHIFT 12
 #define METATILE_COLLISION_SHIFT 10
-#define METATILE_ELEVATION_MASK 0xF000
+#define METATILE_ELEVATION_MASK  0xF000
 
 #define METATILE_ID(tileset, name) (METATILE_##tileset##_##name)
 
@@ -125,11 +125,11 @@ struct MapHeader {
 };
 
 // Flags for gMapHeader.flags, as defined in the map_header_flags macro
-#define MAP_ALLOW_CYCLING (1 << 0)
+#define MAP_ALLOW_CYCLING  (1 << 0)
 #define MAP_ALLOW_ESCAPING (1 << 1) // Escape Rope and Dig
-#define MAP_ALLOW_RUNNING (1 << 2)
-#define MAP_SHOW_MAP_NAME (1 << 3)
-#define UNUSED_MAP_FLAGS (1 << 4 | 1 << 5 | 1 << 6 | 1 << 7)
+#define MAP_ALLOW_RUNNING  (1 << 2)
+#define MAP_SHOW_MAP_NAME  (1 << 3)
+#define UNUSED_MAP_FLAGS   (1 << 4 | 1 << 5 | 1 << 6 | 1 << 7)
 
 #define SHOW_MAP_NAME_ENABLED ((gMapHeader.flags & (MAP_SHOW_MAP_NAME | UNUSED_MAP_FLAGS)) == MAP_SHOW_MAP_NAME)
 
@@ -225,14 +225,14 @@ enum {
     PLAYER_AVATAR_STATE_WATERING,
 };
 
-#define PLAYER_AVATAR_FLAG_ON_FOOT (1 << 0)
-#define PLAYER_AVATAR_FLAG_MACH_BIKE (1 << 1)
-#define PLAYER_AVATAR_FLAG_ACRO_BIKE (1 << 2)
-#define PLAYER_AVATAR_FLAG_SURFING (1 << 3)
-#define PLAYER_AVATAR_FLAG_UNDERWATER (1 << 4)
-#define PLAYER_AVATAR_FLAG_5 (1 << 5)
+#define PLAYER_AVATAR_FLAG_ON_FOOT     (1 << 0)
+#define PLAYER_AVATAR_FLAG_MACH_BIKE   (1 << 1)
+#define PLAYER_AVATAR_FLAG_ACRO_BIKE   (1 << 2)
+#define PLAYER_AVATAR_FLAG_SURFING     (1 << 3)
+#define PLAYER_AVATAR_FLAG_UNDERWATER  (1 << 4)
+#define PLAYER_AVATAR_FLAG_5           (1 << 5)
 #define PLAYER_AVATAR_FLAG_FORCED_MOVE (1 << 6)
-#define PLAYER_AVATAR_FLAG_DASH (1 << 7)
+#define PLAYER_AVATAR_FLAG_DASH        (1 << 7)
 
 enum {
     ACRO_BIKE_NORMAL,

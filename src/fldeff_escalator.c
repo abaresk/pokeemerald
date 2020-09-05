@@ -13,7 +13,7 @@ static void Task_DrawEscalator(u8 taskId);
 static void Task_DrawTeleporterHousing(u8 taskId);
 static void Task_DrawTeleporterCable(u8 taskId);
 
-#define ESCALATOR_STAGES 3
+#define ESCALATOR_STAGES     3
 #define LAST_ESCALATOR_STAGE (ESCALATOR_STAGES - 1)
 
 static const u16 sEscalatorMetatiles_1F_0[ESCALATOR_STAGES] = { METATILE_PokemonCenter_Escalator1F_Tile0_Frame2,
@@ -44,12 +44,12 @@ static const u16 sEscalatorMetatiles_2F_2[ESCALATOR_STAGES] = { METATILE_Pokemon
                                                                 METATILE_PokemonCenter_Escalator2F_Tile2_Frame1,
                                                                 METATILE_PokemonCenter_Escalator2F_Tile2_Frame2 };
 
-#define tState data[0]
-#define tTransitionStage data[1]
-#define tGoingUp data[2]
+#define tState            data[0]
+#define tTransitionStage  data[1]
+#define tGoingUp          data[2]
 #define tDrawingEscalator data[3]
-#define tPlayerX data[4]
-#define tPlayerY data[5]
+#define tPlayerX          data[4]
+#define tPlayerY          data[5]
 
 static void SetEscalatorMetatile(u8 taskId, const s16* metatileIds, u16 metatileMasks) {
     s16 x = gTasks[taskId].tPlayerX - 1;

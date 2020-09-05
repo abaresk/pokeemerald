@@ -258,12 +258,12 @@ static void ItemUseOnFieldCB_Itemfinder(u8 taskId) {
 }
 
 // Define itemfinder task data
-#define tItemDistanceX data[0]
-#define tItemDistanceY data[1]
-#define tItemFound data[2]
-#define tCounter data[3] // Used to count delay between beeps and rotations during player spin
+#define tItemDistanceX   data[0]
+#define tItemDistanceY   data[1]
+#define tItemFound       data[2]
+#define tCounter         data[3] // Used to count delay between beeps and rotations during player spin
 #define tItemfinderBeeps data[4]
-#define tFacingDir data[5]
+#define tFacingDir       data[5]
 
 static void Task_UseItemfinder(u8 taskId) {
     u8 playerDir;

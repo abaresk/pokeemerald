@@ -12,22 +12,22 @@
 #define MODE_P_C_SWITCH 2 // Start Link Manager in parent-child switching mode.
 
 // Value of lman.p_c_switch_flag
-#define PCSWITCH_1ST_SC_START 0x01
-#define PCSWITCH_1ST_SC 0x02
-#define PCSWITCH_2ND_SP_START 0x03
-#define PCSWITCH_2ND_SP 0x04
-#define PCSWITCH_3RD_SC_START 0x05
-#define PCSWITCH_3RD_SC 0x06
-#define PCSWITCH_CP 0x07
-#define PCSWITCH_SC_LOCK 0x08
+#define PCSWITCH_1ST_SC_START   0x01
+#define PCSWITCH_1ST_SC         0x02
+#define PCSWITCH_2ND_SP_START   0x03
+#define PCSWITCH_2ND_SP         0x04
+#define PCSWITCH_3RD_SC_START   0x05
+#define PCSWITCH_3RD_SC         0x06
+#define PCSWITCH_CP             0x07
+#define PCSWITCH_SC_LOCK        0x08
 #define PCSWITCH_FORCE_SP_START 0x09
 
 // Period for which parent-child switching search specified
 #define PCSWITCH_ALL_PERIOD 180 // Entire cycle 180 frames
-#define PCSWITCH_SP_PERIOD 40   // Child period 40 frames
+#define PCSWITCH_SP_PERIOD  40  // Child period 40 frames
 
 // Error code returned by Link Manager API (rfu_LMAN_...return value of function)
-#define LMAN_ERROR_MANAGER_BUSY 1  // Link Manager is already running.
+#define LMAN_ERROR_MANAGER_BUSY  1 // Link Manager is already running.
 #define LMAN_ERROR_AGB_CLK_SLAVE 2 // AGB is clock slave so link manager cannot run.
 #define LMAN_ERROR_PID_NOT_FOUND \
     3 // Parent device information of the specified PID does not exist in rfuLinkStatus->partner[0-3].
@@ -153,28 +153,28 @@
 #define RFU_CHILD_CLOCK_SLAVE_OFF_REQ 2 // The child device has requested that AGB clock slave mode be halted.
 
 // State of Link Manager (values of lman.state, lman.next_state)
-#define LMAN_STATE_READY 0x00                   // Waiting
+#define LMAN_STATE_READY                   0x00 // Waiting
 #define LMAN_STATE_SOFT_RESET_AND_CHECK_ID 0x01 // Requesting execution of rfu_REQBN_softResetAndCheckID (same as below)
-#define LMAN_STATE_RESET 0x02                   // rfu_REQ_reset
-#define LMAN_STATE_CONFIG_SYSTEM 0x03           // rfu_REQ_configSystem
-#define LMAN_STATE_CONFIG_GAME_DATA 0x04        // rfu_REQ_configGameData
-#define LMAN_STATE_START_SEARCH_CHILD 0x05      // rfu_REQ_startSearchChild
-#define LMAN_STATE_POLL_SEARCH_CHILD 0x06       // rfu_REQ_pollSearchChild
-#define LMAN_STATE_END_SEARCH_CHILD 0x07        // rfu_REQ_endSearchChild
-#define LMAN_STATE_WAIT_RECV_CHILD_NAME 0x08    // Awaiting reception of game name from connected child device.
-#define LMAN_STATE_START_SEARCH_PARENT 0x09     // rfu_REQ_startSearchParent
-#define LMAN_STATE_POLL_SEARCH_PARENT 0x0a      // rfu_REQ_pollSearchParent
-#define LMAN_STATE_END_SEARCH_PARENT 0x0b       // rfu_REQ_endSearchParent
-#define LMAN_STATE_START_CONNECT_PARENT 0x0c    // rfu_REQ_startConnectParent
-#define LMAN_STATE_POLL_CONNECT_PARENT 0x0d     // rfu_REQ_pollConnectParent
-#define LMAN_STATE_END_CONNECT_PARENT 0x0e      // rfu_REQ_endConnectParent
-#define LMAN_STATE_SEND_CHILD_NAME 0x0f         // Sending child game name.
-#define LMAN_STATE_START_LINK_RECOVERY 0x10     // rfu_REQ_CHILD_startConnectRecovery
-#define LMAN_STATE_POLL_LINK_RECOVERY 0x11      // rfu_REQ_CHILD_pollConnectRecovery
-#define LMAN_STATE_END_LINK_RECOVERY 0x12       // rfu_REQ_CHILD_endConnectRecovery
-#define LMAN_STATE_MS_CHANGE 0x13               // rfu_REQ_changeMasterSlave
-#define LMAN_STATE_WAIT_CLOCK_MASTER 0x14 // Waiting for AGB-RFU intercommunication clock to become AGB clock master.
-#define LMAN_STATE_STOP_MODE 0x15         // rfu_REQ_stopMode
+#define LMAN_STATE_RESET                   0x02 // rfu_REQ_reset
+#define LMAN_STATE_CONFIG_SYSTEM           0x03 // rfu_REQ_configSystem
+#define LMAN_STATE_CONFIG_GAME_DATA        0x04 // rfu_REQ_configGameData
+#define LMAN_STATE_START_SEARCH_CHILD      0x05 // rfu_REQ_startSearchChild
+#define LMAN_STATE_POLL_SEARCH_CHILD       0x06 // rfu_REQ_pollSearchChild
+#define LMAN_STATE_END_SEARCH_CHILD        0x07 // rfu_REQ_endSearchChild
+#define LMAN_STATE_WAIT_RECV_CHILD_NAME    0x08 // Awaiting reception of game name from connected child device.
+#define LMAN_STATE_START_SEARCH_PARENT     0x09 // rfu_REQ_startSearchParent
+#define LMAN_STATE_POLL_SEARCH_PARENT      0x0a // rfu_REQ_pollSearchParent
+#define LMAN_STATE_END_SEARCH_PARENT       0x0b // rfu_REQ_endSearchParent
+#define LMAN_STATE_START_CONNECT_PARENT    0x0c // rfu_REQ_startConnectParent
+#define LMAN_STATE_POLL_CONNECT_PARENT     0x0d // rfu_REQ_pollConnectParent
+#define LMAN_STATE_END_CONNECT_PARENT      0x0e // rfu_REQ_endConnectParent
+#define LMAN_STATE_SEND_CHILD_NAME         0x0f // Sending child game name.
+#define LMAN_STATE_START_LINK_RECOVERY     0x10 // rfu_REQ_CHILD_startConnectRecovery
+#define LMAN_STATE_POLL_LINK_RECOVERY      0x11 // rfu_REQ_CHILD_pollConnectRecovery
+#define LMAN_STATE_END_LINK_RECOVERY       0x12 // rfu_REQ_CHILD_endConnectRecovery
+#define LMAN_STATE_MS_CHANGE               0x13 // rfu_REQ_changeMasterSlave
+#define LMAN_STATE_WAIT_CLOCK_MASTER       0x14 // Waiting for AGB-RFU intercommunication clock to become AGB clock master.
+#define LMAN_STATE_STOP_MODE               0x15 // rfu_REQ_stopMode
 #define LMAN_STATE_BACK_STATE \
     0x16 // Following the completion of link-recovery processing, return the Link Manager state to the state present
          // before link-recovery processing was initiated.

@@ -102,7 +102,7 @@ static const struct LLSFStruct llsf_struct[2] = { [MODE_CHILD] = { .frameSize = 
                                                                     .framesMask = 0x7f } };
 
 #define xstr(s) str(s)
-#define str(s) #s
+#define str(s)  #s
 static const char version_string[] = "RFU_V" xstr(LIBRFU_VERSION);
 
 static const char str_checkMbootLL[] = "RFU-MBOOT";

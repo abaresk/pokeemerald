@@ -27,12 +27,12 @@ enum {
     COLORMODE_WHITE_DGRAY,
 };
 
-#define GROUPTYPE_TRADE 0
+#define GROUPTYPE_TRADE  0
 #define GROUPTYPE_BATTLE 1
-#define GROUPTYPE_UNION 2
-#define GROUPTYPE_TOTAL 3
-#define GROUPTYPE_NONE -1
-#define NUM_GROUPTYPES 4
+#define GROUPTYPE_UNION  2
+#define GROUPTYPE_TOTAL  3
+#define GROUPTYPE_NONE   -1
+#define NUM_GROUPTYPES   4
 
 struct WirelessCommunicationStatusScreen {
     u32 groupCounts[NUM_GROUPTYPES];
@@ -298,8 +298,8 @@ static u32 CountPlayersInGroupAndGetActivity(struct UnkStruct_x20* unk20, u32* g
     u32 activity = unk20->gname_uname.gname.activity;
 
 #define group_activity(i) (sActivityGroupInfo[(i)][0])
-#define group_type(i) (sActivityGroupInfo[(i)][1])
-#define group_players(i) (sActivityGroupInfo[(i)][2])
+#define group_type(i)     (sActivityGroupInfo[(i)][1])
+#define group_players(i)  (sActivityGroupInfo[(i)][2])
 
     for (i = 0; i < ARRAY_COUNT(sActivityGroupInfo); i++) {
         if (activity == group_activity(i) && unk20->groupScheduledAnim == UNION_ROOM_SPAWN_IN) {

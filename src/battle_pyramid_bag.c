@@ -143,12 +143,12 @@ static const struct ListMenuTemplate gUnknown_0861F2C0 = { .items = NULL,
                                                            .fontId = 7,
                                                            .cursorKind = 0 };
 
-#define ACTION_USE_FIELD 0
-#define ACTION_TOSS 1
-#define ACTION_GIVE 2
-#define ACTION_CANCEL 3
+#define ACTION_USE_FIELD  0
+#define ACTION_TOSS       1
+#define ACTION_GIVE       2
+#define ACTION_CANCEL     3
 #define ACTION_USE_BATTLE 4
-#define ACTION_DUMMY 5
+#define ACTION_DUMMY      5
 
 static const struct MenuAction sMenuActions[] = {
     [ACTION_USE_FIELD] = { gMenuText_Use, BagAction_UseOnField },

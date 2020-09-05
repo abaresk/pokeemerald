@@ -107,14 +107,14 @@ u16 ChooseMoveAndTargetInBattlePalace(void) {
 
 // Heavy variable re-use here makes this hard to read without defines
 // Possibly just optimization? might still match with additional vars
-#define maxGroupNum var1
-#define minGroupNum var2
-#define selectedGroup percent
-#define selectedMoves var2
-#define moveTarget var1
-#define validMoveFlags var1
+#define maxGroupNum        var1
+#define minGroupNum        var2
+#define selectedGroup      percent
+#define selectedMoves      var2
+#define moveTarget         var1
+#define validMoveFlags     var1
 #define numValidMoveGroups var2
-#define validMoveGroup var2
+#define validMoveGroup     var2
 
     // If battler is < 50% HP and not asleep, use second set of move group likelihoods
     // otherwise use first set

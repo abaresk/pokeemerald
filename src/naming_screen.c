@@ -699,7 +699,7 @@ static bool8 MainState_WaitPageSwap(void) {
 // Page Swap
 //--------------------------------------------------
 
-#define tState data[0]
+#define tState      data[0]
 #define tFrameCount data[1]
 
 static bool8 PageSwapAnimState_Init(struct Task*);
@@ -784,13 +784,13 @@ static bool8 PageSwapAnimState_Done(struct Task* task) {
 //
 //--------------------------------------------------
 
-#define tButtonId data[0]
+#define tButtonId     data[0]
 #define tKeepFlashing data[1]
-#define tAllowFlash data[2]
-#define tColor data[3]
-#define tColorIncr data[4]
-#define tColorDelay data[5]
-#define tColorDelta data[6]
+#define tAllowFlash   data[2]
+#define tColor        data[3]
+#define tColorIncr    data[4]
+#define tColorDelay   data[5]
+#define tColorDelta   data[6]
 
 static void CreateButtonFlashTask(void) {
     u8 taskId;
@@ -880,14 +880,14 @@ static void StartButtonFlash(struct Task* task, u8 button, bool8 keepFlashing) {
 #undef tColor
 
 // Sprite data for the the cursor
-#define sX data[0]
-#define sY data[1]
-#define sPrevX data[2]
-#define sPrevY data[3]
-#define sInvisible data[4] & 0x00FF
-#define sFlashing data[4] & 0xFF00
-#define sColor data[5]
-#define sColorIncr data[6]
+#define sX          data[0]
+#define sY          data[1]
+#define sPrevX      data[2]
+#define sPrevY      data[3]
+#define sInvisible  data[4] & 0x00FF
+#define sFlashing   data[4] & 0xFF00
+#define sColor      data[5]
+#define sColorIncr  data[6]
 #define sColorDelay data[7]
 
 static void SpriteCB_Cursor(struct Sprite* sprite) {
@@ -922,7 +922,7 @@ static void SpriteCB_Cursor(struct Sprite* sprite) {
     }
 }
 
-#define sDelay data[0]
+#define sDelay  data[0]
 #define sXPosId data[1]
 
 static void SpriteCB_InputArrow(struct Sprite* sprite) {
@@ -938,9 +938,9 @@ static void SpriteCB_InputArrow(struct Sprite* sprite) {
 #undef sDelay
 #undef sXPosId
 
-#define sId data[0] // set in CreateTextEntrySprites
+#define sId     data[0] // set in CreateTextEntrySprites
 #define sYPosId data[1]
-#define sDelay data[2]
+#define sDelay  data[2]
 
 static void SpriteCB_Underscore(struct Sprite* sprite) {
     const s16 y[] = { 2, 3, 2, 1 };
@@ -1061,9 +1061,9 @@ static bool8 PageSwapSprite_Idle(struct Sprite*);
 static bool8 PageSwapSprite_SlideOff(struct Sprite*);
 static bool8 PageSwapSprite_SlideOn(struct Sprite*);
 
-#define sState data[0]
-#define sPage data[1]
-#define sTextSpriteId data[6]
+#define sState          data[0]
+#define sPage           data[1]
+#define sTextSpriteId   data[6]
 #define sButtonSpriteId data[7]
 
 static void CreatePageSwapButtonSprites(void) {
@@ -1332,9 +1332,9 @@ static bool8 SwapKeyboardPage(void) {
 // Input handling
 //--------------------------------------------------
 
-#define tState data[0]
+#define tState         data[0]
 #define tKeyboardEvent data[1]
-#define tButtonId data[2]
+#define tButtonId      data[2]
 
 static void Input_Disabled(struct Task*);
 static void Input_Enabled(struct Task*);

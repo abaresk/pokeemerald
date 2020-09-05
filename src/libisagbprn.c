@@ -3,14 +3,14 @@
 #include "gba/gba.h"
 #include "config.h"
 
-#define AGB_PRINT_FLUSH_ADDR 0x9FE209D
-#define AGB_PRINT_STRUCT_ADDR 0x9FE20F8
+#define AGB_PRINT_FLUSH_ADDR   0x9FE209D
+#define AGB_PRINT_STRUCT_ADDR  0x9FE20F8
 #define AGB_PRINT_PROTECT_ADDR 0x9FE2FFE
-#define WSCNT_DATA (WAITCNT_PHI_OUT_16MHZ | WAITCNT_WS0_S_2 | WAITCNT_WS0_N_4)
+#define WSCNT_DATA             (WAITCNT_PHI_OUT_16MHZ | WAITCNT_WS0_S_2 | WAITCNT_WS0_N_4)
 
 // originally for auto no$gba support, the string "no$gba" should be at this address,
 // the user needs to read this string out as the memory viewer won't show it.
-#define NOCASHGBAIDADDR 0x4FFFA00
+#define NOCASHGBAIDADDR     0x4FFFA00
 #define NOCASHGBAPRINTADDR1 0x4FFFA10 // automatically adds a newline after the string has finished
 #define NOCASHGBAPRINTADDR2 \
     0x4FFFA14 // does not automatically add the newline. by default, NOCASHGBAPRINTADDR2 is used. this is used to keep

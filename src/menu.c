@@ -20,9 +20,9 @@
 #include "window.h"
 #include "constants/songs.h"
 
-#define DLG_WINDOW_PALETTE_NUM 15
+#define DLG_WINDOW_PALETTE_NUM   15
 #define DLG_WINDOW_BASE_TILE_NUM 0x200
-#define STD_WINDOW_PALETTE_NUM 14
+#define STD_WINDOW_PALETTE_NUM   14
 #define STD_WINDOW_BASE_TILE_NUM 0x214
 
 struct MoveMenuInfoIcon {

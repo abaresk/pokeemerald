@@ -41,40 +41,40 @@
 // REQ-COMMAND (STWI) ID CODE LIST
 
 // REQ Command ID returned by the REQ callback
-#define ID_RESET_REQ 0x0010
-#define ID_LINK_STATUS_REQ 0x0011
-#define ID_VERSION_STATUS_REQ 0x0012 // not defined in SDK header
-#define ID_SYSTEM_STATUS_REQ 0x0013
-#define ID_SLOT_STATUS_REQ 0x0014   // not defined in SDK header
-#define ID_CONFIG_STATUS_REQ 0x0015 // not defined in SDK header
-#define ID_GAME_CONFIG_REQ 0x0016
-#define ID_SYSTEM_CONFIG_REQ 0x0017
-#define ID_SC_START_REQ 0x0019
-#define ID_SC_POLL_REQ 0x001a
-#define ID_SC_END_REQ 0x001b
-#define ID_SP_START_REQ 0x001c
-#define ID_SP_POLL_REQ 0x001d
-#define ID_SP_END_REQ 0x001e
-#define ID_CP_START_REQ 0x001f
-#define ID_CP_POLL_REQ 0x0020
-#define ID_CP_END_REQ 0x0021
-#define ID_DATA_TX_REQ 0x0024
+#define ID_RESET_REQ              0x0010
+#define ID_LINK_STATUS_REQ        0x0011
+#define ID_VERSION_STATUS_REQ     0x0012 // not defined in SDK header
+#define ID_SYSTEM_STATUS_REQ      0x0013
+#define ID_SLOT_STATUS_REQ        0x0014 // not defined in SDK header
+#define ID_CONFIG_STATUS_REQ      0x0015 // not defined in SDK header
+#define ID_GAME_CONFIG_REQ        0x0016
+#define ID_SYSTEM_CONFIG_REQ      0x0017
+#define ID_SC_START_REQ           0x0019
+#define ID_SC_POLL_REQ            0x001a
+#define ID_SC_END_REQ             0x001b
+#define ID_SP_START_REQ           0x001c
+#define ID_SP_POLL_REQ            0x001d
+#define ID_SP_END_REQ             0x001e
+#define ID_CP_START_REQ           0x001f
+#define ID_CP_POLL_REQ            0x0020
+#define ID_CP_END_REQ             0x0021
+#define ID_DATA_TX_REQ            0x0024
 #define ID_DATA_TX_AND_CHANGE_REQ 0x0025
-#define ID_DATA_RX_REQ 0x0026
+#define ID_DATA_RX_REQ            0x0026
 #define ID_MS_CHANGE_REQ \
     0x0027 // When returned by the REQ callback, this ID indicates that execution of rfu_REQ_changeMasterSlave has
            // finished. This ID is returned by both the REQ callback and the MSC callback. When returned by the MSC
            // callback, this is notification that after the AGB has been made into the clock slave, the MC_Timer expired
            // and the RFU returned the AGB to be the clock master.
-#define ID_DISCONNECT_REQ 0x0030
-#define ID_TEST_MODE_REQ 0x0031 // not defined in SDK header
-#define ID_CPR_START_REQ 0x0032
-#define ID_CPR_POLL_REQ 0x0033
-#define ID_CPR_END_REQ 0x0034
-#define ID_UNK35_REQ 0x0035 // not defined in SDK header
-#define ID_UNK36_REQ 0x0036 // not defined in SDK header
+#define ID_DISCONNECT_REQ                   0x0030
+#define ID_TEST_MODE_REQ                    0x0031 // not defined in SDK header
+#define ID_CPR_START_REQ                    0x0032
+#define ID_CPR_POLL_REQ                     0x0033
+#define ID_CPR_END_REQ                      0x0034
+#define ID_UNK35_REQ                        0x0035 // not defined in SDK header
+#define ID_UNK36_REQ                        0x0036 // not defined in SDK header
 #define ID_RESUME_RETRANSMIT_AND_CHANGE_REQ 0x0037
-#define ID_STOP_MODE_REQ 0x003d
+#define ID_STOP_MODE_REQ                    0x003d
 #define ID_CLOCK_SLAVE_MS_CHANGE_ERROR_BY_DMA_REQ \
     0x00ff // When the AGB is the clock slave, the RFU generates an informational notice, and an automatically started
            // DMA, such as HDMA, is generated at the instant the AGB is being returned as the clock master. This ID is
@@ -82,8 +82,8 @@
 
 // REQ Command ID returned by the MSC callback
 #define ID_DISCONNECTED_AND_CHANGE_REQ 0x0029
-#define ID_DATA_READY_AND_CHANGE_REQ 0x0028
-#define ID_DRAC_REQ_WITH_ACK_FLAG 0x0128
+#define ID_DATA_READY_AND_CHANGE_REQ   0x0028
+#define ID_DRAC_REQ_WITH_ACK_FLAG      0x0128
 
 // --------------------------------------------------------------------------
 //
@@ -136,13 +136,13 @@
 
 // u8 connTypeFlag specified by rfu_setRecvBuffer
 #define TYPE_UNI 0x10 // UNI-type
-#define TYPE_NI 0x20  // NI-type
+#define TYPE_NI  0x20 // NI-type
 
 // u8 connTypeFlag specified by rfu_clearSlot
 #define TYPE_UNI_SEND 0x01 // UNI-type send
 #define TYPE_UNI_RECV 0x02 // UNI-type receive
-#define TYPE_NI_SEND 0x04  // NI-type send
-#define TYPE_NI_RECV 0x08  // NI-type receive
+#define TYPE_NI_SEND  0x04 // NI-type send
+#define TYPE_NI_RECV  0x08 // NI-type receive
 
 // *******************************************************
 // Definition Data Returned by Return Values for Library Functions
@@ -174,7 +174,7 @@
 // *******************************************************
 
 // Value returned by rfu_getMasterSlave
-#define AGB_CLK_SLAVE 0  // AGB clock slave
+#define AGB_CLK_SLAVE  0 // AGB clock slave
 #define AGB_CLK_MASTER 1 // AGB clock master
 
 // *******************************************************
@@ -182,7 +182,7 @@
 // *******************************************************
 
 // Error codes returned by u16 REQ_result with a REQ callback when a REQ-API function is executed
-#define ERR_REQ_CMD 0x0000
+#define ERR_REQ_CMD             0x0000
 #define ERR_REQ_CMD_CLOCK_DRIFT (ERR_REQ_CMD | 0x0001) // Clock drift occurs when a REQ command is sent
 #define ERR_REQ_CMD_SENDING \
     (ERR_REQ_CMD | 0x0002) // The next command cannot be issued because a REQ command is being sent
@@ -196,7 +196,7 @@
 
 // Error code returned by the return value of rfu_initializeAPI
 #define ERR_RFU_API_BUFF_SIZE 0x0001
-#define ERR_RFU_API_BUFF_ADR 0x0002
+#define ERR_RFU_API_BUFF_ADR  0x0002
 
 // Error codes returned by return values for rfu_REQBN_softReset_and_checkID
 #define ERR_ID_CHECK_IME_DISABLE \
@@ -206,14 +206,14 @@
 #define ERR_REQ_CMD_ID (ERR_REQ_CMD | 0x0010) // A required REQ command was not executed within this function execution
 
 // Error codes returned by rfu_NI_setSendData, rfu_UNI_setSendData, and rfu_NI_CHILD_setSendGameName
-#define ERR_MODE 0x0300
-#define ERR_MODE_NOT_PARENT (ERR_MODE | 0x0000)    // not in SDK
+#define ERR_MODE               0x0300
+#define ERR_MODE_NOT_PARENT    (ERR_MODE | 0x0000) // not in SDK
 #define ERR_MODE_NOT_CONNECTED (ERR_MODE | 0x0001) // RFU is not in connection mode (parent or child)
 
-#define ERR_SLOT 0x0400
-#define ERR_SLOT_NO (ERR_SLOT | 0x0000)            // The specified slot number is not right
+#define ERR_SLOT               0x0400
+#define ERR_SLOT_NO            (ERR_SLOT | 0x0000) // The specified slot number is not right
 #define ERR_SLOT_NOT_CONNECTED (ERR_SLOT | 0x0001) // The specified slot is not connected
-#define ERR_SLOT_BUSY (ERR_SLOT | 0x0002)          // The specified slot is already communicating
+#define ERR_SLOT_BUSY          (ERR_SLOT | 0x0002) // The specified slot is already communicating
 #define ERR_SLOT_NOT_SENDING \
     (ERR_SLOT |              \
      0x0003) // The specified slot is not currently sending (Note: This is returned by rfu_UNI_re_setSendData)
@@ -254,8 +254,8 @@
 // gRfuLinkStatus-------------------------------------------
 // Connection status (refer to gRfuLinkStatus->parentChild)
 #define MODE_NEUTRAL 0xff // Initialization
-#define MODE_CHILD 0x00   // Child
-#define MODE_PARENT 0x01  // Parent
+#define MODE_CHILD   0x00 // Child
+#define MODE_PARENT  0x01 // Parent
 
 // gRfuSlotStatusNI,UNI-----------------------------------
 // Definition data for NI-(Numbered Information) and UNI-(Un-Numbered Information) type communication
@@ -263,16 +263,16 @@
 // Definition data common to NI- and UNI-type communication
 #define LLF_P_SIZE \
     87 // Maximum link layer communication frame size for the Parent (Maximum number of bytes per transmission)
-#define LLF_C_SIZE 16        //      "                                "     for the Child
-#define LLSF_P_HEADER_SIZE 3 // Header size used by one link layer subframe (NI or UNI frame) for the Parent
-#define LLSF_C_HEADER_SIZE 2 //      "                                "                       for the Child
+#define LLF_C_SIZE         16 //      "                                "     for the Child
+#define LLSF_P_HEADER_SIZE 3  // Header size used by one link layer subframe (NI or UNI frame) for the Parent
+#define LLSF_C_HEADER_SIZE 2  //      "                                "                       for the Child
 
 // Link Layer Communication Code
-#define LCOM_NULL 0x0000
+#define LCOM_NULL     0x0000
 #define LCOM_NI_START 0x0001
-#define LCOM_NI 0x0002
-#define LCOM_NI_END 0x0003
-#define LCOM_UNI 0x0004
+#define LCOM_NI       0x0002
+#define LCOM_NI_END   0x0003
+#define LCOM_UNI      0x0004
 
 // Flag for Slot Status Data
 #define SLOT_BUSY_FLAG 0x8000 // Slot in use
@@ -285,8 +285,8 @@
 
 // Status data for NI-type communication (gRfuSlotStatusNI[x]->send or ->recv.state)
 #define SLOT_STATE_SEND_START (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NI_START) // Start transmission
-#define SLOT_STATE_SENDING (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NI)          // Transmitting
-#define SLOT_STATE_SEND_LAST (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NI_END)    // Verify transmission end
+#define SLOT_STATE_SENDING    (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NI)       // Transmitting
+#define SLOT_STATE_SEND_LAST  (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NI_END)   // Verify transmission end
 #define SLOT_STATE_SEND_NULL \
     (SLOT_BUSY_FLAG | SLOT_SEND_FLAG | LCOM_NULL)        // Send NULL subframe to notify end of transmission
 #define SLOT_STATE_SEND_SUCCESS (SLOT_SEND_FLAG | 0x006) // Transmission successful
@@ -294,11 +294,11 @@
     (SLOT_SEND_FLAG | 0x007) // Transmission failed
                              // Distinction of slot where transmission succeeded/failed compares
                              // gRfuSlotStatusNI[x]->send.bmSlot and same bmSlot_org
-#define SLOT_STATE_RECV_START (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI_START) // Start reception
-#define SLOT_STATE_RECEIVING (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI)        // Receiving
-#define SLOT_STATE_RECV_LAST (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI_END)    // Verify reception end
-#define SLOT_STATE_RECV_SUCCESS (SLOT_RECV_FLAG | 0x006)                        // Reception successful
-#define SLOT_STATE_RECV_FAILED (SLOT_RECV_FLAG | 0x007)                         // Reception failed
+#define SLOT_STATE_RECV_START   (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI_START) // Start reception
+#define SLOT_STATE_RECEIVING    (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI)       // Receiving
+#define SLOT_STATE_RECV_LAST    (SLOT_BUSY_FLAG | SLOT_RECV_FLAG | LCOM_NI_END)   // Verify reception end
+#define SLOT_STATE_RECV_SUCCESS (SLOT_RECV_FLAG | 0x006)                          // Reception successful
+#define SLOT_STATE_RECV_FAILED  (SLOT_RECV_FLAG | 0x007)                          // Reception failed
 #define SLOT_STATE_RECV_SUCCESS_AND_SENDSIDE_UNKNOWN \
     (SLOT_RECV_FLAG | 0x008) // The data was received successful, but because the end of the communication was
                              // incomplete, whether the transmission side status is successful or failed is unknown

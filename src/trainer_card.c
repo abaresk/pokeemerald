@@ -313,12 +313,12 @@ static void CloseTrainerCard(u8 taskId) {
 
 // States for Task_TrainerCard. Skips the initial states, which are done once in order
 #define STATE_HANDLE_INPUT_FRONT 10
-#define STATE_HANDLE_INPUT_BACK 11
-#define STATE_WAIT_FLIP_TO_BACK 12
+#define STATE_HANDLE_INPUT_BACK  11
+#define STATE_WAIT_FLIP_TO_BACK  12
 #define STATE_WAIT_FLIP_TO_FRONT 13
-#define STATE_CLOSE_CARD 14
-#define STATE_WAIT_LINK_PARTNER 15
-#define STATE_CLOSE_CARD_LINK 16
+#define STATE_CLOSE_CARD         14
+#define STATE_WAIT_LINK_PARTNER  15
+#define STATE_CLOSE_CARD_LINK    16
 
 static void Task_TrainerCard(u8 taskId) {
     switch (sData->mainState) {

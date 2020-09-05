@@ -34,7 +34,7 @@
 
 enum { WIN_NAME, WIN_NATURE, WIN_TEXT, WIN_COUNT };
 
-#define TAG_UP_DOWN 0
+#define TAG_UP_DOWN   0
 #define TAG_CONDITION 1
 
 // At any one time, the currently selected mon and its two adjacent neighbors can be loaded

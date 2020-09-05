@@ -32,18 +32,18 @@
 // Select_ refers to the first Pokemon selection screen where you choose 3 Pokemon.
 // Swap_   refers to the consecutive selection screen where you can keep your Pokemon or swap one with beaten trainer's.
 
-#define MENU_SUMMARY 0
-#define MENU_RENT 1
-#define MENU_DESELECT 1
-#define MENU_OTHERS 2
+#define MENU_SUMMARY       0
+#define MENU_RENT          1
+#define MENU_DESELECT      1
+#define MENU_OTHERS        2
 #define MENU_OPTIONS_COUNT 3
 
 #define SELECTABLE_MONS_COUNT 6
 
-#define TAG_PAL_BALL_GREY 0x64
+#define TAG_PAL_BALL_GREY     0x64
 #define TAG_PAL_BALL_SELECTED 0x65
-#define TAG_PAL_66 0x66
-#define TAG_PAL_67 0x67
+#define TAG_PAL_66            0x66
+#define TAG_PAL_67            0x67
 
 #define TAG_TILE_64 0x64
 #define TAG_TILE_65 0x65
@@ -92,7 +92,7 @@ struct FactorySelectMonsStruct {
 
 // 'Action' refers to the 3 Selectable mons, Cancel, Pknm for swap windows.
 #define ACTIONS_PLAYER_SCREEN 0
-#define ACTIONS_ENEMY_SCREEN 1
+#define ACTIONS_ENEMY_SCREEN  1
 
 struct SwapActionIdAndFunc {
     u8 id;

@@ -9,8 +9,8 @@
 #include "constants/metatile_labels.h"
 
 #define ROTATE_COUNTERCLOCKWISE 0
-#define ROTATE_CLOCKWISE 1
-#define ROTATE_NONE 2
+#define ROTATE_CLOCKWISE        1
+#define ROTATE_NONE             2
 
 struct RotatingTileObject {
     u8 prevPuzzleTileNum;

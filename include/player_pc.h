@@ -4,15 +4,15 @@
 #include "menu.h"
 
 // local task defines
-#define PAGE_INDEX data[0]
-#define ITEMS_ABOVE_TOP data[1]
-#define NUM_ITEMS data[1]
+#define PAGE_INDEX          data[0]
+#define ITEMS_ABOVE_TOP     data[1]
+#define NUM_ITEMS           data[1]
 #define NUM_QUANTITY_ROLLER data[3]
-#define NUM_PAGE_ITEMS data[4]
+#define NUM_PAGE_ITEMS      data[4]
 // not used
 #define CURRENT_ITEM_STORAGE_MENU data[3]
 // not used
-#define SWAP_ITEM_INDEX data[8]
+#define SWAP_ITEM_INDEX    data[8]
 #define SWITCH_MODE_ACTIVE data[9]
 
 // this is potentially an ewram access occuring in high ewram. TODO: investigate this further.

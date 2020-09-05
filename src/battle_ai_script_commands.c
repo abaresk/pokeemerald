@@ -16,17 +16,17 @@
 #include "constants/moves.h"
 #include "constants/species.h"
 
-#define AI_ACTION_DONE 0x0001
-#define AI_ACTION_FLEE 0x0002
-#define AI_ACTION_WATCH 0x0004
+#define AI_ACTION_DONE          0x0001
+#define AI_ACTION_FLEE          0x0002
+#define AI_ACTION_WATCH         0x0004
 #define AI_ACTION_DO_NOT_ATTACK 0x0008
-#define AI_ACTION_UNK5 0x0010
-#define AI_ACTION_UNK6 0x0020
-#define AI_ACTION_UNK7 0x0040
-#define AI_ACTION_UNK8 0x0080
+#define AI_ACTION_UNK5          0x0010
+#define AI_ACTION_UNK6          0x0020
+#define AI_ACTION_UNK7          0x0040
+#define AI_ACTION_UNK8          0x0080
 
 #define AI_THINKING_STRUCT ((struct AI_ThinkingStruct*)(gBattleResources->ai))
-#define BATTLE_HISTORY ((struct BattleHistory*)(gBattleResources->battleHistory))
+#define BATTLE_HISTORY     ((struct BattleHistory*)(gBattleResources->battleHistory))
 
 // AI states
 enum { AIState_SettingUp, AIState_Processing, AIState_FinishedProcessing, AIState_DoNotProcess };

@@ -47,11 +47,11 @@ struct PokenavSub18 {
 };
 
 // Return values of LoopedTask functions.
-#define LT_INC_AND_PAUSE 0
-#define LT_INC_AND_CONTINUE 1
-#define LT_PAUSE 2
-#define LT_CONTINUE 3
-#define LT_FINISH 4
+#define LT_INC_AND_PAUSE       0
+#define LT_INC_AND_CONTINUE    1
+#define LT_PAUSE               2
+#define LT_CONTINUE            3
+#define LT_FINISH              4
 #define LT_SET_STATE(newState) (newState + 5)
 
 enum {

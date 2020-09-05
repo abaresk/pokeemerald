@@ -35,10 +35,10 @@
 #include "constants/trainer_hill.h"
 #include "constants/trainer_types.h"
 
-#define HILL_TAG_NORMAL 0
+#define HILL_TAG_NORMAL  0
 #define HILL_TAG_VARIETY 1
-#define HILL_TAG_UNIQUE 2
-#define HILL_TAG_EXPERT 3
+#define HILL_TAG_UNIQUE  2
+#define HILL_TAG_EXPERT  3
 
 #define HILL_MAX_TIME 215999 // 60 * 60 * 60 - 1
 

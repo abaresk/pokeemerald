@@ -44,12 +44,12 @@ static void SpriteCB_AMIndicator(struct Sprite* sprite);
 static void SpriteCB_PMIndicator(struct Sprite* sprite);
 
 #define tMinuteHandAngle data[0]
-#define tHourHandAngle data[1]
-#define tHours data[2]
-#define tMinutes data[3]
-#define tMvmtDir data[4]
-#define tPeriod data[5]
-#define tMvmtSpeed data[6]
+#define tHourHandAngle   data[1]
+#define tHours           data[2]
+#define tMinutes         data[3]
+#define tMvmtDir         data[4]
+#define tPeriod          data[5]
+#define tMvmtSpeed       data[6]
 
 #define TAG_GFX_WALL_CLOCK_HAND 0x1000
 #define TAG_PAL_WALL_CLOCK_HAND 0x1000

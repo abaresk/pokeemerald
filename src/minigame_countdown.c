@@ -223,15 +223,15 @@ static void sub_802EAB0(u8 taskId) {
     }
 }
 
-#define tState data[0]
-#define tTilesTag data[2]
-#define tPalTag data[3]
-#define tX data[4]
-#define tY data[5]
+#define tState       data[0]
+#define tTilesTag    data[2]
+#define tPalTag      data[3]
+#define tX           data[4]
+#define tY           data[5]
 #define tSubpriority data[6]
-#define tSpriteId1 data[7]
-#define tSpriteId2 data[8]
-#define tSpriteId3 data[9]
+#define tSpriteId1   data[7]
+#define tSpriteId2   data[8]
+#define tSpriteId3   data[9]
 
 void StartMinigameCountdown(s16 tilesTag, s16 palTag, s16 x, s16 y, u8 subpriority) {
     u8 taskId = CreateTask(Task_MinigameCountdown, 80);

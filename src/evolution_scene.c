@@ -49,7 +49,7 @@ static EWRAM_DATA u16* sEvoMovingBgPtr = NULL;
 // IWRAM common
 void (*gCB2_AfterEvolution)(void);
 
-#define sEvoCursorPos gBattleCommunication[1] // when learning a new move
+#define sEvoCursorPos      gBattleCommunication[1] // when learning a new move
 #define sEvoGraphicsTaskID gBattleCommunication[2]
 
 // this file's functions
@@ -146,19 +146,19 @@ static void CB2_BeginEvolutionScene(void) {
     RunTasks();
 }
 
-#define tState data[0]
-#define tPreEvoSpecies data[1]
-#define tPostEvoSpecies data[2]
-#define tCanStop data[3]
-#define tBits data[3]
+#define tState           data[0]
+#define tPreEvoSpecies   data[1]
+#define tPostEvoSpecies  data[2]
+#define tCanStop         data[3]
+#define tBits            data[3]
 #define tLearnsFirstMove data[4]
-#define tLearnMoveState data[6]
-#define tData7 data[7]
-#define tData8 data[8]
-#define tEvoWasStopped data[9]
-#define tPartyID data[10]
+#define tLearnMoveState  data[6]
+#define tData7           data[7]
+#define tData8           data[8]
+#define tEvoWasStopped   data[9]
+#define tPartyID         data[10]
 
-#define TASK_BIT_CAN_STOP 0x1
+#define TASK_BIT_CAN_STOP   0x1
 #define TASK_BIT_LEARN_MOVE 0x80
 
 static void Task_BeginEvolutionScene(u8 taskID) {

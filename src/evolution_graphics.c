@@ -389,9 +389,9 @@ static void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(u8 taskID) {
 static void PokeEvoSprite_DummySpriteCB(struct Sprite* sprite) {
 }
 
-#define tPreEvoSpriteID data[1]
+#define tPreEvoSpriteID  data[1]
 #define tPostEvoSpriteID data[2]
-#define tEvoStopped data[8]
+#define tEvoStopped      data[8]
 
 u8 sub_817C3A0(u8 preEvoSpriteID, u8 postEvoSpriteID) {
     u16 i;

@@ -684,9 +684,9 @@ u8 GetSpeciesBackAnimSet(u16 species) {
         return 0;
 }
 
-#define tState data[0]
-#define tPtrHi data[1]
-#define tPtrLo data[2]
+#define tState  data[0]
+#define tPtrHi  data[1]
+#define tPtrLo  data[2]
 #define tAnimId data[3]
 #define tSaved0 data[4]
 #define tSaved2 data[5]

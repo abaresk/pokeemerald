@@ -344,7 +344,7 @@ enum {
     WILD_AREA_FISHING,
 };
 
-#define WILD_CHECK_REPEL 0x1
+#define WILD_CHECK_REPEL    0x1
 #define WILD_CHECK_KEEN_EYE 0x2
 
 static bool8 TryGenerateWildMon(const struct WildPokemonInfo* wildMonInfo, u8 area, u8 flags) {

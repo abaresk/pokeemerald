@@ -2,7 +2,7 @@
 #define GUARD_TV_H
 
 #define SLOT_MACHINE 0
-#define ROULETTE 1
+#define ROULETTE     1
 
 extern u8* const gTVStringVarPtrs[3];
 

@@ -326,9 +326,9 @@ static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent* trainerObj, u8 ap
     return 0;
 }
 
-#define tFuncId data[0]
-#define tTrainerRange data[3]
-#define tOutOfAshSpriteId data[4]
+#define tFuncId               data[0]
+#define tTrainerRange         data[3]
+#define tOutOfAshSpriteId     data[4]
 #define tTrainerObjectEventId data[7]
 
 static void TrainerApproachPlayer(struct ObjectEvent* trainerObj, u8 range) {
@@ -554,11 +554,11 @@ void TryPrepareSecondApproachingTrainer(void) {
     }
 }
 
-#define sLocalId data[0]
-#define sMapNum data[1]
+#define sLocalId  data[0]
+#define sMapNum   data[1]
 #define sMapGroup data[2]
-#define sData3 data[3]
-#define sData4 data[4]
+#define sData3    data[3]
+#define sData4    data[4]
 #define sFldEffId data[7]
 
 u8 FldEff_ExclamationMarkIcon(void) {

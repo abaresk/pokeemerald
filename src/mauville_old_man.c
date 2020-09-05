@@ -340,9 +340,9 @@ void ResetMauvilleOldManFlag(void) {
     ScrSpecial_SetMauvilleOldManObjEventGfx();
 }
 
-#define tState data[0]
-#define tCharIndex data[3]
-#define tCurrWord data[4]
+#define tState              data[0]
+#define tCharIndex          data[3]
+#define tCurrWord           data[4]
 #define tUseTemporaryLyrics data[5]
 
 #define MACRO1(a) (((a)&3) + (((a) / 8) & 1))

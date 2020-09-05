@@ -1,7 +1,7 @@
 #ifndef GUARD_SPRITE_H
 #define GUARD_SPRITE_H
 
-#define MAX_SPRITES 64
+#define MAX_SPRITES        64
 #define SPRITE_INVALID_TAG 0xFFFF
 
 struct SpriteSheet {
@@ -114,7 +114,7 @@ union AffineAnimCmd {
 
 #define AFFINEANIMCMDTYPE_LOOP 0x7FFD
 #define AFFINEANIMCMDTYPE_JUMP 0x7FFE
-#define AFFINEANIMCMDTYPE_END 0x7FFF
+#define AFFINEANIMCMDTYPE_END  0x7FFF
 
 #define AFFINEANIMCMD_FRAME(_xScale, _yScale, _rotation, _duration)                                    \
     {                                                                                                  \

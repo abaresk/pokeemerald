@@ -35,12 +35,12 @@
 #include "constants/species.h"
 #include "constants/rgb.h"
 
-#define EZCHAT_TASK_STATE 0
-#define EZCHAT_TASK_TYPE 1
-#define EZCHAT_TASK_WORDS 2
+#define EZCHAT_TASK_STATE        0
+#define EZCHAT_TASK_TYPE         1
+#define EZCHAT_TASK_WORDS        2
 #define EZCHAT_TASK_MAINCALLBACK 4
-#define EZCHAT_TASK_UNK06 6
-#define EZCHAT_TASK_SIZE 7
+#define EZCHAT_TASK_UNK06        6
+#define EZCHAT_TASK_SIZE         7
 
 static EWRAM_DATA struct EasyChatScreen* sEasyChatScreen = NULL;
 static EWRAM_DATA struct Unk203A11C* sUnknown_0203A11C = NULL;
