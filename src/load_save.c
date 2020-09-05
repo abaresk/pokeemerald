@@ -16,63 +16,55 @@
 
 static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey);
 
-#define SAVEBLOCK_MOVE_RANGE    128
+#define SAVEBLOCK_MOVE_RANGE 128
 
-struct LoadedSaveData
-{
- /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
- /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
- /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
- /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
- /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
- /*0x02E8*/ struct MailStruct mail[MAIL_COUNT];
+struct LoadedSaveData {
+    /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
+    /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+    /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
+    /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
+    /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
+    /*0x02E8*/ struct MailStruct mail[MAIL_COUNT];
 };
 
 // EWRAM DATA
-EWRAM_DATA struct SaveBlock2 gSaveblock2 = {0};
-EWRAM_DATA u8 gSaveblock2_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct SaveBlock2 gSaveblock2 = { 0 };
+EWRAM_DATA u8 gSaveblock2_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct SaveBlock1 gSaveblock1 = {0};
-EWRAM_DATA u8 gSaveblock1_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct SaveBlock1 gSaveblock1 = { 0 };
+EWRAM_DATA u8 gSaveblock1_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct PokemonStorage gPokemonStorage = {0};
-EWRAM_DATA u8 gSaveblock3_DMA[SAVEBLOCK_MOVE_RANGE] = {0};
+EWRAM_DATA struct PokemonStorage gPokemonStorage = { 0 };
+EWRAM_DATA u8 gSaveblock3_DMA[SAVEBLOCK_MOVE_RANGE] = { 0 };
 
-EWRAM_DATA struct LoadedSaveData gLoadedSaveData = {0};
+EWRAM_DATA struct LoadedSaveData gLoadedSaveData = { 0 };
 EWRAM_DATA u32 gLastEncryptionKey = 0;
 
 // IWRAM common
 bool32 gFlashMemoryPresent;
-struct SaveBlock1 *gSaveBlock1Ptr;
-struct SaveBlock2 *gSaveBlock2Ptr;
-struct PokemonStorage *gPokemonStoragePtr;
+struct SaveBlock1* gSaveBlock1Ptr;
+struct SaveBlock2* gSaveBlock2Ptr;
+struct PokemonStorage* gPokemonStoragePtr;
 
 // code
-void CheckForFlashMemory(void)
-{
-    if (!IdentifyFlash())
-    {
+void CheckForFlashMemory(void) {
+    if (!IdentifyFlash()) {
         gFlashMemoryPresent = TRUE;
         InitFlashTimer();
-    }
-    else
-    {
+    } else {
         gFlashMemoryPresent = FALSE;
     }
 }
 
-void ClearSav2(void)
-{
+void ClearSav2(void) {
     CpuFill16(0, &gSaveblock2, sizeof(struct SaveBlock2) + sizeof(gSaveblock2_DMA));
 }
 
-void ClearSav1(void)
-{
+void ClearSav1(void) {
     CpuFill16(0, &gSaveblock1, sizeof(struct SaveBlock1) + sizeof(gSaveblock1_DMA));
 }
 
-void SetSaveBlocksPointers(u16 offset)
-{
+void SetSaveBlocksPointers(u16 offset) {
     struct SaveBlock1** sav1_LocalVar = &gSaveBlock1Ptr;
 
     offset = (offset + Random()) & (SAVEBLOCK_MOVE_RANGE - 4);
@@ -85,13 +77,12 @@ void SetSaveBlocksPointers(u16 offset)
     SetDecorationInventoriesPointers();
 }
 
-void MoveSaveBlocks_ResetHeap(void)
-{
+void MoveSaveBlocks_ResetHeap(void) {
     void *vblankCB, *hblankCB;
     u32 encryptionKey;
-    struct SaveBlock2 *saveBlock2Copy;
-    struct SaveBlock1 *saveBlock1Copy;
-    struct PokemonStorage *pokemonStorageCopy;
+    struct SaveBlock2* saveBlock2Copy;
+    struct SaveBlock1* saveBlock1Copy;
+    struct PokemonStorage* pokemonStorageCopy;
 
     // save interrupt functions and turn them off
     vblankCB = gMain.vblankCallback;
@@ -100,9 +91,9 @@ void MoveSaveBlocks_ResetHeap(void)
     gMain.hblankCallback = NULL;
     gTrainerHillVBlankCounter = NULL;
 
-    saveBlock2Copy = (struct SaveBlock2 *)(gHeap);
-    saveBlock1Copy = (struct SaveBlock1 *)(gHeap + sizeof(struct SaveBlock2));
-    pokemonStorageCopy = (struct PokemonStorage *)(gHeap + sizeof(struct SaveBlock2) + sizeof(struct SaveBlock1));
+    saveBlock2Copy = (struct SaveBlock2*)(gHeap);
+    saveBlock1Copy = (struct SaveBlock1*)(gHeap + sizeof(struct SaveBlock2));
+    pokemonStorageCopy = (struct PokemonStorage*)(gHeap + sizeof(struct SaveBlock2) + sizeof(struct SaveBlock1));
 
     // backup the saves.
     *saveBlock2Copy = *gSaveBlock2Ptr;
@@ -111,11 +102,8 @@ void MoveSaveBlocks_ResetHeap(void)
 
     // change saveblocks' pointers
     // argument is a sum of the individual trainerId bytes
-    SetSaveBlocksPointers(
-      saveBlock2Copy->playerTrainerId[0] +
-      saveBlock2Copy->playerTrainerId[1] +
-      saveBlock2Copy->playerTrainerId[2] +
-      saveBlock2Copy->playerTrainerId[3]);
+    SetSaveBlocksPointers(saveBlock2Copy->playerTrainerId[0] + saveBlock2Copy->playerTrainerId[1] +
+                          saveBlock2Copy->playerTrainerId[2] + saveBlock2Copy->playerTrainerId[3]);
 
     // restore saveblock data since the pointers changed
     *gSaveBlock2Ptr = *saveBlock2Copy;
@@ -135,34 +123,28 @@ void MoveSaveBlocks_ResetHeap(void)
     gSaveBlock2Ptr->encryptionKey = encryptionKey;
 }
 
-u32 UseContinueGameWarp(void)
-{
+u32 UseContinueGameWarp(void) {
     return gSaveBlock2Ptr->specialSaveWarpFlags & CONTINUE_GAME_WARP;
 }
 
-void ClearContinueGameWarpStatus(void)
-{
+void ClearContinueGameWarpStatus(void) {
     gSaveBlock2Ptr->specialSaveWarpFlags &= ~CONTINUE_GAME_WARP;
 }
 
-void SetContinueGameWarpStatus(void)
-{
+void SetContinueGameWarpStatus(void) {
     gSaveBlock2Ptr->specialSaveWarpFlags |= CONTINUE_GAME_WARP;
 }
 
-void SetContinueGameWarpStatusToDynamicWarp(void)
-{
+void SetContinueGameWarpStatusToDynamicWarp(void) {
     SetContinueGameWarpToDynamicWarp(0);
     gSaveBlock2Ptr->specialSaveWarpFlags |= CONTINUE_GAME_WARP;
 }
 
-void ClearContinueGameWarpStatus2(void)
-{
+void ClearContinueGameWarpStatus2(void) {
     gSaveBlock2Ptr->specialSaveWarpFlags &= ~CONTINUE_GAME_WARP;
 }
 
-void SavePlayerParty(void)
-{
+void SavePlayerParty(void) {
     int i;
 
     gSaveBlock1Ptr->playerPartyCount = gPlayerPartyCount;
@@ -171,8 +153,7 @@ void SavePlayerParty(void)
         gSaveBlock1Ptr->playerParty[i] = gPlayerParty[i];
 }
 
-void LoadPlayerParty(void)
-{
+void LoadPlayerParty(void) {
     int i;
 
     gPlayerPartyCount = gSaveBlock1Ptr->playerPartyCount;
@@ -181,36 +162,31 @@ void LoadPlayerParty(void)
         gPlayerParty[i] = gSaveBlock1Ptr->playerParty[i];
 }
 
-void SaveObjectEvents(void)
-{
+void SaveObjectEvents(void) {
     int i;
 
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
         gSaveBlock1Ptr->objectEvents[i] = gObjectEvents[i];
 }
 
-void LoadObjectEvents(void)
-{
+void LoadObjectEvents(void) {
     int i;
 
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
         gObjectEvents[i] = gSaveBlock1Ptr->objectEvents[i];
 }
 
-void SavePartyAndObjects(void)
-{
+void SavePartyAndObjects(void) {
     SavePlayerParty();
     SaveObjectEvents();
 }
 
-void LoadPartyAndObjects(void)
-{
+void LoadPartyAndObjects(void) {
     LoadPlayerParty();
     LoadObjectEvents();
 }
 
-void LoadPlayerBag(void)
-{
+void LoadPlayerBag(void) {
     int i;
 
     // load player items.
@@ -240,8 +216,7 @@ void LoadPlayerBag(void)
     gLastEncryptionKey = gSaveBlock2Ptr->encryptionKey;
 }
 
-void SavePlayerBag(void)
-{
+void SavePlayerBag(void) {
     int i;
     u32 encryptionKeyBackup;
 
@@ -275,20 +250,17 @@ void SavePlayerBag(void)
     gSaveBlock2Ptr->encryptionKey = encryptionKeyBackup; // updated twice?
 }
 
-void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey)
-{
+void ApplyNewEncryptionKeyToHword(u16* hWord, u32 newKey) {
     *hWord ^= gSaveBlock2Ptr->encryptionKey;
     *hWord ^= newKey;
 }
 
-void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey)
-{
+void ApplyNewEncryptionKeyToWord(u32* word, u32 newKey) {
     *word ^= gSaveBlock2Ptr->encryptionKey;
     *word ^= newKey;
 }
 
-static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey)
-{
+static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey) {
     ApplyNewEncryptionKeyToGameStats(encryptionKey);
     ApplyNewEncryptionKeyToBagItems_(encryptionKey);
     ApplyNewEncryptionKeyToBerryPowder(encryptionKey);

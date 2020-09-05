@@ -27,19 +27,17 @@ static void Task_DiplomaFadeOut(u8);
 static void DisplayDiplomaText(void);
 static void InitDiplomaBg(void);
 static void InitDiplomaWindow(void);
-static void PrintDiplomaText(u8 *, u8, u8);
+static void PrintDiplomaText(u8*, u8, u8);
 
-EWRAM_DATA static u8 *sDiplomaTilemapPtr = NULL;
+EWRAM_DATA static u8* sDiplomaTilemapPtr = NULL;
 
-static void VBlankCB(void)
-{
+static void VBlankCB(void) {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static const u16 sDiplomaPalettes[][16] =
-{
+static const u16 sDiplomaPalettes[][16] = {
     INCBIN_U16("graphics/misc/diploma_national.gbapal"),
     INCBIN_U16("graphics/misc/diploma_hoenn.gbapal"),
 };
@@ -47,8 +45,7 @@ static const u16 sDiplomaPalettes[][16] =
 static const u32 sDiplomaTilemap[] = INCBIN_U32("graphics/misc/diploma_map.bin.lz");
 static const u32 sDiplomaTiles[] = INCBIN_U32("graphics/misc/diploma.4bpp.lz");
 
-void CB2_ShowDiploma(void)
-{
+void CB2_ShowDiploma(void) {
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
     SetGpuReg(REG_OFFSET_BG3CNT, DISPCNT_MODE_0);
@@ -91,33 +88,27 @@ void CB2_ShowDiploma(void)
     CreateTask(Task_DiplomaFadeIn, 0);
 }
 
-static void MainCB2(void)
-{
+static void MainCB2(void) {
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-static void Task_DiplomaFadeIn(u8 taskId)
-{
+static void Task_DiplomaFadeIn(u8 taskId) {
     if (!gPaletteFade.active)
         gTasks[taskId].func = Task_DiplomaWaitForKeyPress;
 }
 
-static void Task_DiplomaWaitForKeyPress(u8 taskId)
-{
-    if (gMain.newKeys & (A_BUTTON | B_BUTTON))
-    {
+static void Task_DiplomaWaitForKeyPress(u8 taskId) {
+    if (gMain.newKeys & (A_BUTTON | B_BUTTON)) {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_DiplomaFadeOut;
     }
 }
 
-static void Task_DiplomaFadeOut(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_DiplomaFadeOut(u8 taskId) {
+    if (!gPaletteFade.active) {
         Free(sDiplomaTilemapPtr);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
@@ -125,15 +116,11 @@ static void Task_DiplomaFadeOut(u8 taskId)
     }
 }
 
-static void DisplayDiplomaText(void)
-{
-    if (HasAllMons())
-    {
+static void DisplayDiplomaText(void) {
+    if (HasAllMons()) {
         SetGpuReg(REG_OFFSET_BG1HOFS, DISPCNT_BG0_ON);
         StringCopy(gStringVar1, gText_DexNational);
-    }
-    else
-    {
+    } else {
         SetGpuReg(REG_OFFSET_BG1HOFS, DISPCNT_MODE_0);
         StringCopy(gStringVar1, gText_DexHoenn);
     }
@@ -143,8 +130,7 @@ static void DisplayDiplomaText(void)
     CopyWindowToVram(0, 3);
 }
 
-static const struct BgTemplate sDiplomaBgTemplates[2] =
-{
+static const struct BgTemplate sDiplomaBgTemplates[2] = {
     {
         .bg = 0,
         .charBaseIndex = 1,
@@ -165,8 +151,7 @@ static const struct BgTemplate sDiplomaBgTemplates[2] =
     },
 };
 
-static void InitDiplomaBg(void)
-{
+static void InitDiplomaBg(void) {
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sDiplomaBgTemplates, 2);
     SetBgTilemapBuffer(1, sDiplomaTilemapPtr);
@@ -178,8 +163,7 @@ static void InitDiplomaBg(void)
     SetGpuReg(REG_OFFSET_BLDY, DISPCNT_MODE_0);
 }
 
-static const struct WindowTemplate sDiplomaWinTemplates[2] =
-{
+static const struct WindowTemplate sDiplomaWinTemplates[2] = {
     {
         .bg = 0,
         .tilemapLeft = 5,
@@ -192,8 +176,7 @@ static const struct WindowTemplate sDiplomaWinTemplates[2] =
     DUMMY_WIN_TEMPLATE,
 };
 
-static void InitDiplomaWindow(void)
-{
+static void InitDiplomaWindow(void) {
     InitWindows(sDiplomaWinTemplates);
     DeactivateAllTextPrinters();
     LoadPalette(gUnknown_0860F074, 0xF0, 0x20);
@@ -201,9 +184,8 @@ static void InitDiplomaWindow(void)
     PutWindowTilemap(0);
 }
 
-static void PrintDiplomaText(u8 *text, u8 var1, u8 var2)
-{
-    u8 color[3] = {0, 2, 3};
+static void PrintDiplomaText(u8* text, u8 var1, u8 var2) {
+    u8 color[3] = { 0, 2, 3 };
 
     AddTextPrinterParameterized4(0, 1, var1, var2, 0, 0, color, -1, text);
 }

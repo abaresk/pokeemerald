@@ -3,9 +3,8 @@
 
 // Exported type declarations
 
-struct CameraObject
-{
-    void (*callback)(struct CameraObject *);
+struct CameraObject {
+    void (*callback)(struct CameraObject*);
     u32 spriteId;
     s32 movementSpeedX;
     s32 movementSpeedY;
@@ -21,8 +20,8 @@ extern u16 gTotalCameraPixelOffsetY;
 // Exported ROM declarations
 void DrawWholeMapView(void);
 void CurrentMapDrawMetatileAt(int x, int y);
-void sub_8089C08(s16 *a0, s16 *a1);
-void DrawDoorMetatileAt(int x, int y, u16 *arr);
+void sub_8089C08(s16* a0, s16* a1);
+void DrawDoorMetatileAt(int x, int y, u16* arr);
 void ResetFieldCamera(void);
 void sub_8057A58(void);
 void ResetCameraUpdateInfo(void);
@@ -34,4 +33,4 @@ void InstallCameraPanAheadCallback(void);
 void UpdateCameraPanning(void);
 void FieldUpdateBgTilemapScroll(void);
 
-#endif //GUARD_FIELD_CAMERA_H
+#endif // GUARD_FIELD_CAMERA_H

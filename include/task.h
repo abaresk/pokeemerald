@@ -9,8 +9,7 @@
 
 typedef void (*TaskFunc)(u8 taskId);
 
-struct Task
-{
+struct Task {
     TaskFunc func;
     bool8 isActive;
     u8 prev;

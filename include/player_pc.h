@@ -16,36 +16,19 @@
 #define SWITCH_MODE_ACTIVE data[9]
 
 // this is potentially an ewram access occuring in high ewram. TODO: investigate this further.
-#define NEW_GAME_PC_ITEMS(i, type) ((u16)((u16 *)gNewGamePCItems + type)[i * 2])
+#define NEW_GAME_PC_ITEMS(i, type) ((u16)((u16*)gNewGamePCItems + type)[i * 2])
 
 // defined and used in the above macro
-enum
-{
-    PC_ITEM_ID,
-    PC_QUANTITY
-};
+enum { PC_ITEM_ID, PC_QUANTITY };
 
 // player PC menu options
-enum
-{
-    PLAYERPC_MENU_ITEMSTORAGE,
-    PLAYERPC_MENU_MAILBOX,
-    PLAYERPC_MENU_DECORATION,
-    PLAYERPC_MENU_TURNOFF
-};
+enum { PLAYERPC_MENU_ITEMSTORAGE, PLAYERPC_MENU_MAILBOX, PLAYERPC_MENU_DECORATION, PLAYERPC_MENU_TURNOFF };
 
 // item storage menus
-enum
-{
-    ITEMPC_MENU_WITHDRAW,
-    ITEMPC_MENU_DEPOSIT,
-    ITEMPC_MENU_TOSS,
-    ITEMPC_MENU_EXIT
-};
+enum { ITEMPC_MENU_WITHDRAW, ITEMPC_MENU_DEPOSIT, ITEMPC_MENU_TOSS, ITEMPC_MENU_EXIT };
 
 // mailbox mail options
-enum
-{
+enum {
     MAILBOX_READ,
     MAILBOX_MOVE_TO_BAG,
     MAILBOX_GIVE,
@@ -53,8 +36,7 @@ enum
 };
 
 // special item description handlers
-enum
-{
+enum {
     ITEMPC_SWITCH_WHICH_ITEM = 0xFFF7,
     ITEMPC_OKAY_TO_THROW_AWAY,
     ITEMPC_TOO_IMPORTANT,
@@ -66,8 +48,7 @@ enum
     ITEMPC_GO_BACK_TO_PREV
 };
 
-struct PlayerPCItemPageStruct
-{
+struct PlayerPCItemPageStruct {
     u16 cursorPos;
     u16 itemsAbove;
     u8 pageItems;
@@ -89,5 +70,4 @@ void sub_816B31C(void);
 void Mailbox_ReturnToMailListAfterDeposit(void);
 void NewGameInitPCItems(void);
 
-
-#endif //GUARD_PLAYER_PC_H
+#endif // GUARD_PLAYER_PC_H

@@ -1,9 +1,8 @@
 #ifndef GUARD_DECORATION_INVENTORY_H
 #define GUARD_DECORATION_INVENTORY_H
 
-struct DecorationInventory
-{
-    u8 *items;
+struct DecorationInventory {
+    u8* items;
     u8 size;
 };
 

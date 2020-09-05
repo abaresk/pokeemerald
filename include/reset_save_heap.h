@@ -9,4 +9,4 @@
 
 void sub_81700F8(void);
 
-#endif //GUARD_RESET_SAVE_HEAP_H
+#endif // GUARD_RESET_SAVE_HEAP_H

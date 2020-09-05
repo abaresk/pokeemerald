@@ -1,8 +1,7 @@
 #ifndef GUARD_IMAGE_PROCESSING_EFFECTS_H
 #define GUARD_IMAGE_PROCESSING_EFFECTS_H
 
-enum
-{
+enum {
     IMAGE_EFFECT_POINTILLISM = 2,
     IMAGE_EFFECT_GRAYSCALE_LIGHT = 6,
     IMAGE_EFFECT_BLUR = 8,
@@ -17,8 +16,7 @@ enum
     IMAGE_EFFECT_CHARCOAL = 36,
 };
 
-enum
-{
+enum {
     QUANTIZE_EFFECT_STANDARD,
     QUANTIZE_EFFECT_STANDARD_LIMITED_COLORS,
     QUANTIZE_EFFECT_PRIMARY_COLORS,
@@ -27,13 +25,12 @@ enum
     QUANTIZE_EFFECT_BLACK_WHITE,
 };
 
-struct ImageProcessingContext
-{
+struct ImageProcessingContext {
     u8 effect;
-    void *canvasPixels;
-    u16 *canvasPalette;
+    void* canvasPixels;
+    u16* canvasPalette;
     u8 fillerC[0x4];
-    void *dest;
+    void* dest;
     u16 quantizeEffect;
     u16 var_16;
     u8 paletteStart;
@@ -46,8 +43,8 @@ struct ImageProcessingContext
     u8 personality;
 };
 
-void ApplyImageProcessingEffects(struct ImageProcessingContext *);
-void ApplyImageProcessingQuantization(struct ImageProcessingContext *);
-void ConvertImageProcessingToGBA(struct ImageProcessingContext *);
+void ApplyImageProcessingEffects(struct ImageProcessingContext*);
+void ApplyImageProcessingQuantization(struct ImageProcessingContext*);
+void ConvertImageProcessingToGBA(struct ImageProcessingContext*);
 
 #endif

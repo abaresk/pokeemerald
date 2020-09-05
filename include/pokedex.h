@@ -4,32 +4,21 @@
 extern u8 gUnusedPokedexU8;
 extern void (*gPokedexVBlankCB)(void);
 
-enum
-{
-    DEX_MODE_HOENN,
-    DEX_MODE_NATIONAL
-};
+enum { DEX_MODE_HOENN, DEX_MODE_NATIONAL };
 
-enum
-{
-    FLAG_GET_SEEN,
-    FLAG_GET_CAUGHT,
-    FLAG_SET_SEEN,
-    FLAG_SET_CAUGHT
-};
+enum { FLAG_GET_SEEN, FLAG_GET_CAUGHT, FLAG_SET_SEEN, FLAG_SET_CAUGHT };
 
-struct PokedexEntry
-{
+struct PokedexEntry {
     /*0x00*/ u8 categoryName[12];
-    /*0x0C*/ u16 height; //in decimeters
-    /*0x0E*/ u16 weight; //in hectograms
-    /*0x10*/ const u8 *description;
+    /*0x0C*/ u16 height; // in decimeters
+    /*0x0E*/ u16 weight; // in hectograms
+    /*0x10*/ const u8* description;
     /*0x14*/ u16 unused;
     /*0x16*/ u16 pokemonScale;
     /*0x18*/ u16 pokemonOffset;
     /*0x1A*/ u16 trainerScale;
     /*0x1C*/ u16 trainerOffset;
-};  /*size = 0x20*/
+}; /*size = 0x20*/
 
 void ResetPokedex(void);
 u16 GetPokedexHeightWeight(u16 dexNum, u8 data);

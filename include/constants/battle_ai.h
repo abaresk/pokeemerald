@@ -15,12 +15,12 @@
 #define AI_TYPE_MOVE 4
 
 // type effectiveness
-#define AI_EFFECTIVENESS_x4     160
-#define AI_EFFECTIVENESS_x2     80
-#define AI_EFFECTIVENESS_x1     40
-#define AI_EFFECTIVENESS_x0_5   20
-#define AI_EFFECTIVENESS_x0_25  10
-#define AI_EFFECTIVENESS_x0     0
+#define AI_EFFECTIVENESS_x4 160
+#define AI_EFFECTIVENESS_x2 80
+#define AI_EFFECTIVENESS_x1 40
+#define AI_EFFECTIVENESS_x0_5 20
+#define AI_EFFECTIVENESS_x0_25 10
+#define AI_EFFECTIVENESS_x0 0
 
 // ai weather
 #define AI_WEATHER_SUN 0
@@ -29,9 +29,9 @@
 #define AI_WEATHER_HAIL 3
 
 // get_how_powerful_move_is
-#define MOVE_POWER_DISCOURAGED  0
-#define MOVE_NOT_MOST_POWERFUL  1
-#define MOVE_MOST_POWERFUL      2
+#define MOVE_POWER_DISCOURAGED 0
+#define MOVE_NOT_MOST_POWERFUL 1
+#define MOVE_MOST_POWERFUL 2
 
 // script's table id to bit
 #define AI_SCRIPT_CHECK_BAD_MOVE (1 << 0)

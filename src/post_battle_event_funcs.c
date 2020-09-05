@@ -10,8 +10,7 @@
 #include "constants/heal_locations.h"
 #include "constants/tv.h"
 
-int GameClear(void)
-{
+int GameClear(void) {
     int i;
     bool32 ribbonGet;
     struct RibbonCounter {
@@ -21,18 +20,17 @@ int GameClear(void)
 
     HealPlayerParty();
 
-    if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
-    {
+    if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE) {
         gHasHallOfFameRecords = TRUE;
-    }
-    else
-    {
+    } else {
         gHasHallOfFameRecords = FALSE;
         FlagSet(FLAG_SYS_GAME_CLEAR);
     }
 
     if (GetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME) == 0)
-        SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME, (gSaveBlock2Ptr->playTimeHours << 16) | (gSaveBlock2Ptr->playTimeMinutes << 8) | gSaveBlock2Ptr->playTimeSeconds);
+        SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME, (gSaveBlock2Ptr->playTimeHours << 16) |
+                                                       (gSaveBlock2Ptr->playTimeMinutes << 8) |
+                                                       gSaveBlock2Ptr->playTimeSeconds);
 
     SetContinueGameWarpStatus();
 
@@ -43,41 +41,34 @@ int GameClear(void)
 
     ribbonGet = FALSE;
 
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        struct Pokemon *mon = &gPlayerParty[i];
+    for (i = 0; i < PARTY_SIZE; i++) {
+        struct Pokemon* mon = &gPlayerParty[i];
 
         ribbonCounts[i].partyIndex = i;
         ribbonCounts[i].count = 0;
 
-        if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES)
-         && !GetMonData(mon, MON_DATA_SANITY_IS_EGG)
-         && !GetMonData(mon, MON_DATA_CHAMPION_RIBBON))
-        {
-            u8 val[1] = {TRUE};
+        if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES) && !GetMonData(mon, MON_DATA_SANITY_IS_EGG) &&
+            !GetMonData(mon, MON_DATA_CHAMPION_RIBBON)) {
+            u8 val[1] = { TRUE };
             SetMonData(mon, MON_DATA_CHAMPION_RIBBON, val);
             ribbonCounts[i].count = GetRibbonCount(mon);
             ribbonGet = TRUE;
         }
     }
 
-    if (ribbonGet == TRUE)
-    {
+    if (ribbonGet == TRUE) {
         IncrementGameStat(GAME_STAT_RECEIVED_RIBBONS);
         FlagSet(FLAG_SYS_RIBBON_GET);
-        
-        for (i = 1; i < 6; i++)
-        {
-            if (ribbonCounts[i].count > ribbonCounts[0].count)
-            {
+
+        for (i = 1; i < 6; i++) {
+            if (ribbonCounts[i].count > ribbonCounts[0].count) {
                 struct RibbonCounter prevBest = ribbonCounts[0];
                 ribbonCounts[0] = ribbonCounts[i];
                 ribbonCounts[i] = prevBest;
             }
         }
 
-        if (ribbonCounts[0].count > NUM_CUTIES_RIBBONS)
-        {
+        if (ribbonCounts[0].count > NUM_CUTIES_RIBBONS) {
             TryPutSpotTheCutiesOnAir(&gPlayerParty[ribbonCounts[0].partyIndex], MON_DATA_CHAMPION_RIBBON);
         }
     }
@@ -86,8 +77,7 @@ int GameClear(void)
     return 0;
 }
 
-bool8 SetCB2WhiteOut(void)
-{
+bool8 SetCB2WhiteOut(void) {
     SetMainCallback2(CB2_WhiteOut);
     return FALSE;
 }

@@ -5,8 +5,7 @@ typedef void (*MainCallback)(void);
 typedef void (*IntrCallback)(void);
 typedef void (*IntrFunc)(void);
 
-struct Main
-{
+struct Main {
     /*0x000*/ MainCallback callback1;
     /*0x004*/ MainCallback callback2;
 
@@ -35,9 +34,9 @@ struct Main
 
     /*0x438*/ u8 state;
 
-    /*0x439*/ u8 oamLoadDisabled:1;
-    /*0x439*/ u8 inBattle:1;
-    /*0x439*/ u8 field_439_x4:1;
+    /*0x439*/ u8 oamLoadDisabled : 1;
+    /*0x439*/ u8 inBattle : 1;
+    /*0x439*/ u8 field_439_x4 : 1;
 };
 
 extern const u8 gGameVersion;
@@ -63,7 +62,7 @@ void SetHBlankCallback(IntrCallback callback);
 void SetVCountCallback(IntrCallback callback);
 void SetSerialCallback(IntrCallback callback);
 void InitFlashTimer(void);
-void SetTrainerHillVBlankCounter(u32 *var);
+void SetTrainerHillVBlankCounter(u32* var);
 void ClearTrainerHillVBlankCounter(void);
 void DoSoftReset(void);
 void ClearPokemonCrySongs(void);

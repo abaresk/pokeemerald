@@ -24,7 +24,7 @@ typedef struct {
 
 // Static RAM declarations
 
-static berryfix_t *berry_fix_mb_manager;
+static berryfix_t* berry_fix_mb_manager;
 
 // Static ROM declarations
 
@@ -40,124 +40,64 @@ static const u8 sText_BerryProgramUpdate[] = _("Berry Program Update");
 static const u8 sText_RubySapphire[] = _("Ruby/Sapphire");
 static const u8 sText_Emerald[] = _("Emerald");
 
-static const u8 sText_BerryProgramWillBeUpdatedPressA[] = _("The Berry Program on your POKéMON\nRuby/Sapphire Game Pak will be updated.\n{COLOR RED}{SHADOW LIGHT_RED}Press the A Button.");
-static const u8 sText_EnsureGBAConnectionMatches[] = _("Please ensure the connection of your\nGame Boy Advance system matches this.\n{COLOR RED}{SHADOW LIGHT_RED}YES: Press the A Button.\nNO: Turn off the power and try again.");
-static const u8 sText_TurnOffPowerHoldingStartSelect[] = _("Please turn on the power of POKéMON\nRuby/Sapphire while holding START and\nSELECT simultaneously. Then, ensure\nthe picture above appears.");
-static const u8 sText_TransmittingPleaseWait[] = _("Transmitting. Please wait.\n{COLOR RED}{SHADOW LIGHT_RED}Please do not turn off the power or\nunplug the Game Boy Advance Game\nLink Cable.");
-static const u8 sText_PleaseFollowInstructionsOnScreen[] = _("Please follow the instructions on your\nPOKéMON Ruby/Sapphire screen.");
-static const u8 sText_TransmissionFailureTryAgain[] = _("Transmission failure.\n{COLOR RED}{SHADOW LIGHT_RED}Please try again.");
+static const u8 sText_BerryProgramWillBeUpdatedPressA[] =
+    _("The Berry Program on your POKéMON\nRuby/Sapphire Game Pak will be updated.\n{COLOR RED}{SHADOW LIGHT_RED}Press "
+      "the A Button.");
+static const u8 sText_EnsureGBAConnectionMatches[] =
+    _("Please ensure the connection of your\nGame Boy Advance system matches this.\n{COLOR RED}{SHADOW LIGHT_RED}YES: "
+      "Press the A Button.\nNO: Turn off the power and try again.");
+static const u8 sText_TurnOffPowerHoldingStartSelect[] =
+    _("Please turn on the power of POKéMON\nRuby/Sapphire while holding START and\nSELECT simultaneously. Then, "
+      "ensure\nthe picture above appears.");
+static const u8 sText_TransmittingPleaseWait[] =
+    _("Transmitting. Please wait.\n{COLOR RED}{SHADOW LIGHT_RED}Please do not turn off the power or\nunplug the Game "
+      "Boy Advance Game\nLink Cable.");
+static const u8 sText_PleaseFollowInstructionsOnScreen[] =
+    _("Please follow the instructions on your\nPOKéMON Ruby/Sapphire screen.");
+static const u8 sText_TransmissionFailureTryAgain[] =
+    _("Transmission failure.\n{COLOR RED}{SHADOW LIGHT_RED}Please try again.");
 
 static const struct BgTemplate sBerryFixBgTemplates[] = {
-    {
-        .bg = 0, 
-        .charBaseIndex = 0, 
-        .mapBaseIndex = 30, 
-        .screenSize = 0, 
-        .paletteMode = 0, 
-        .priority = 0,
-        .baseTile = 0
-    }, 
-    {
-        .bg = 1, 
-        .charBaseIndex = 1, 
-        .mapBaseIndex = 31, 
-        .screenSize = 0, 
-        .paletteMode = 0, 
-        .priority = 1,
-        .baseTile = 0
-    }
+    { .bg = 0,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 30,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 0,
+      .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 1, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 0 }
 };
 
 static const struct WindowTemplate sBerryFixWindowTemplates[] = {
-    {
-        .bg = 0, 
-        .tilemapLeft = 2,  
-        .tilemapTop = 4, 
-        .width = 26, 
-        .height = 2, 
-        .paletteNum = 15, 
-        .baseBlock = 1
-    },
-    {
-        .bg = 0, 
-        .tilemapLeft = 1, 
-        .tilemapTop = 11, 
-        .width = 28, 
-        .height = 8, 
-        .paletteNum = 15, 
-        .baseBlock = 53
-    },
-    {
-        .bg = 0, 
-        .tilemapLeft = 0,  
-        .tilemapTop = 8, 
-        .width = 30, 
-        .height = 2, 
-        .paletteNum = 15, 
-        .baseBlock = 277
-    },
-    {
-        .bg = 0, 
-        .tilemapLeft = 8,  
-        .tilemapTop = 0, 
-        .width = 14, 
-        .height = 2, 
-        .paletteNum = 15, 
-        .baseBlock = 337
-    },
+    { .bg = 0, .tilemapLeft = 2, .tilemapTop = 4, .width = 26, .height = 2, .paletteNum = 15, .baseBlock = 1 },
+    { .bg = 0, .tilemapLeft = 1, .tilemapTop = 11, .width = 28, .height = 8, .paletteNum = 15, .baseBlock = 53 },
+    { .bg = 0, .tilemapLeft = 0, .tilemapTop = 8, .width = 30, .height = 2, .paletteNum = 15, .baseBlock = 277 },
+    { .bg = 0, .tilemapLeft = 8, .tilemapTop = 0, .width = 14, .height = 2, .paletteNum = 15, .baseBlock = 337 },
     DUMMY_WIN_TEMPLATE
 };
 
-static const u16 sUnknown_08618138[] = {
-    0x7fff, 0x7fff, 0x318c, 0x675a,
-    0x043c, 0x3aff, 0x0664, 0x4bd2,
-    0x6546, 0x7b14, 0x7fff, 0x318c,
-    0x675a, 0, 0, 0
+static const u16 sUnknown_08618138[] = { 0x7fff, 0x7fff, 0x318c, 0x675a, 0x043c, 0x3aff, 0x0664, 0x4bd2,
+                                         0x6546, 0x7b14, 0x7fff, 0x318c, 0x675a, 0,      0,      0 };
+
+static const u8 sBerryProgramTextColors[] = { TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_2, TEXT_DYNAMIC_COLOR_3 };
+static const u8 sGameTitleTextColors[] = { TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_4 };
+
+static const u8* const sBerryProgramTexts[] = {
+    sText_EnsureGBAConnectionMatches,       sText_TurnOffPowerHoldingStartSelect, sText_TransmittingPleaseWait,
+    sText_PleaseFollowInstructionsOnScreen, sText_TransmissionFailureTryAgain,    sText_BerryProgramWillBeUpdatedPressA
 };
-
-static const u8 sBerryProgramTextColors[] = {TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_2, TEXT_DYNAMIC_COLOR_3};
-static const u8 sGameTitleTextColors[] = { TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_4};
-
-static const u8 *const sBerryProgramTexts[] = {
-    sText_EnsureGBAConnectionMatches,
-    sText_TurnOffPowerHoldingStartSelect,
-    sText_TransmittingPleaseWait,
-    sText_PleaseFollowInstructionsOnScreen,
-    sText_TransmissionFailureTryAgain,
-    sText_BerryProgramWillBeUpdatedPressA
-};
-
 
 static const struct {
-    const u32 *gfx;
-    const u32 *tilemap;
-    const u16 *pltt;
+    const u32* gfx;
+    const u32* tilemap;
+    const u16* pltt;
 } sBerryFixGraphics[] = {
-    {
-        gBerryFixGameboy_Gfx,
-        gBerryFixGameboy_Tilemap,
-        gBerryFixGameboy_Pal
-    }, {
-        gBerryFixGameboyLogo_Gfx,
-        gBerryFixGameboyLogo_Tilemap,
-        gBerryFixGameboyLogo_Pal
-    }, {
-        gBerryFixGbaTransfer_Gfx,
-        gBerryFixGbaTransfer_Tilemap,
-        gBerryFixGbaTransfer_Pal
-    }, {
-        gBerryFixGbaTransferHighlight_Gfx,
-        gBerryFixGbaTransferHighlight_Tilemap,
-        gBerryFixGbaTransferHighlight_Pal
-    }, {
-        gBerryFixGbaTransferError_Gfx,
-        gBerryFixGbaTransferError_Tilemap,
-        gBerryFixGbaTransferError_Pal
-    }, {
-        gBerryFixWindow_Gfx,
-        gBerryFixWindow_Tilemap,
-        gBerryFixWindow_Pal
-    },
+    { gBerryFixGameboy_Gfx, gBerryFixGameboy_Tilemap, gBerryFixGameboy_Pal },
+    { gBerryFixGameboyLogo_Gfx, gBerryFixGameboyLogo_Tilemap, gBerryFixGameboyLogo_Pal },
+    { gBerryFixGbaTransfer_Gfx, gBerryFixGbaTransfer_Tilemap, gBerryFixGbaTransfer_Pal },
+    { gBerryFixGbaTransferHighlight_Gfx, gBerryFixGbaTransferHighlight_Tilemap, gBerryFixGbaTransferHighlight_Pal },
+    { gBerryFixGbaTransferError_Gfx, gBerryFixGbaTransferError_Tilemap, gBerryFixGbaTransferError_Pal },
+    { gBerryFixWindow_Gfx, gBerryFixWindow_Tilemap, gBerryFixWindow_Pal },
 };
 
 extern const u8 gMultiBootProgram_BerryGlitchFix_Start[0x3BF4];
@@ -165,8 +105,7 @@ extern const u8 gMultiBootProgram_BerryGlitchFix_End[];
 
 // .text
 
-void CB2_InitBerryFixProgram(void)
-{
+void CB2_InitBerryFixProgram(void) {
     DisableInterrupts(0xFFFF); // all
     EnableInterrupts(INTR_FLAG_VBLANK);
     m4aSoundVSyncOff();
@@ -181,29 +120,24 @@ void CB2_InitBerryFixProgram(void)
     SetMainCallback2(berry_fix_main);
 }
 
-static void berry_fix_main(void)
-{
-    switch (berry_fix_mb_manager->state)
-    {
+static void berry_fix_main(void) {
+    switch (berry_fix_mb_manager->state) {
         case 0:
             berry_fix_gpu_set();
             berry_fix_mb_manager->state = 1;
             break;
         case 1:
-            if (berry_fix_text_update(5) == 5 && (gMain.newKeys & A_BUTTON))
-            {
+            if (berry_fix_text_update(5) == 5 && (gMain.newKeys & A_BUTTON)) {
                 berry_fix_mb_manager->state = 2;
             }
             break;
         case 2:
-            if (berry_fix_text_update(0) == 0 && (gMain.newKeys & A_BUTTON))
-            {
+            if (berry_fix_text_update(0) == 0 && (gMain.newKeys & A_BUTTON)) {
                 berry_fix_mb_manager->state = 3;
             }
             break;
         case 3:
-            if (berry_fix_text_update(1) == 1)
-            {
+            if (berry_fix_text_update(1) == 1) {
                 berry_fix_mb_manager->mb.masterp = gMultiBootProgram_BerryGlitchFix_Start;
                 berry_fix_mb_manager->mb.server_type = 0;
                 MultiBootInit(&berry_fix_mb_manager->mb);
@@ -213,13 +147,15 @@ static void berry_fix_main(void)
             break;
         case 4:
             MultiBootMain(&berry_fix_mb_manager->mb);
-            if (berry_fix_mb_manager->mb.probe_count != 0 || (!(berry_fix_mb_manager->mb.response_bit & 2) || !(berry_fix_mb_manager->mb.client_bit & 2)))
-            {
+            if (berry_fix_mb_manager->mb.probe_count != 0 ||
+                (!(berry_fix_mb_manager->mb.response_bit & 2) || !(berry_fix_mb_manager->mb.client_bit & 2))) {
                 berry_fix_mb_manager->unk2 = 0;
-            }
-            else if (++ berry_fix_mb_manager->unk2 > 180)
-            {
-                MultiBootStartMaster(&berry_fix_mb_manager->mb, gMultiBootProgram_BerryGlitchFix_Start + ROM_HEADER_SIZE, (u32)(gMultiBootProgram_BerryGlitchFix_End - (gMultiBootProgram_BerryGlitchFix_Start + ROM_HEADER_SIZE)), 4, 1);
+            } else if (++berry_fix_mb_manager->unk2 > 180) {
+                MultiBootStartMaster(&berry_fix_mb_manager->mb,
+                                     gMultiBootProgram_BerryGlitchFix_Start + ROM_HEADER_SIZE,
+                                     (u32)(gMultiBootProgram_BerryGlitchFix_End -
+                                           (gMultiBootProgram_BerryGlitchFix_Start + ROM_HEADER_SIZE)),
+                                     4, 1);
                 berry_fix_mb_manager->state = 5;
             }
             break;
@@ -228,29 +164,25 @@ static void berry_fix_main(void)
                 MultiBootMain(&berry_fix_mb_manager->mb);
                 if (MultiBootCheckComplete(&berry_fix_mb_manager->mb)) {
                     berry_fix_mb_manager->state = 6;
-                }
-                else if (!(berry_fix_mb_manager->mb.client_bit & 2)) {
+                } else if (!(berry_fix_mb_manager->mb.client_bit & 2)) {
                     berry_fix_mb_manager->state = 7;
                 }
             }
             break;
         case 6:
-            if (berry_fix_text_update(3) == 3 && gMain.newKeys & A_BUTTON)
-            {
+            if (berry_fix_text_update(3) == 3 && gMain.newKeys & A_BUTTON) {
                 DoSoftReset();
             }
             break;
         case 7:
-            if (berry_fix_text_update(4) == 4 && gMain.newKeys & A_BUTTON)
-            {
+            if (berry_fix_text_update(4) == 4 && gMain.newKeys & A_BUTTON) {
                 berry_fix_mb_manager->state = 1;
             }
             break;
     }
 }
 
-static void berry_fix_gpu_set(void)
-{
+static void berry_fix_gpu_set(void) {
     s32 width, left;
 
     SetGpuReg(REG_OFFSET_BG0CNT, 0);
@@ -301,34 +233,27 @@ static void berry_fix_gpu_set(void)
     CopyWindowToVram(0, 2);
 }
 
-static int berry_fix_text_update(int checkval)
-{
-    if (berry_fix_mb_manager->unk1 == checkval)
-    {
+static int berry_fix_text_update(int checkval) {
+    if (berry_fix_mb_manager->unk1 == checkval) {
         return checkval;
     }
-    if (berry_fix_mb_manager->unk1 == 6)
-    {
+    if (berry_fix_mb_manager->unk1 == 6) {
         berry_fix_text_print(checkval);
         berry_fix_mb_manager->unk1 = checkval;
-    }
-    else
-    {
+    } else {
         berry_fix_bg_hide();
         berry_fix_mb_manager->unk1 = 6;
     }
     return berry_fix_mb_manager->unk1;
 }
 
-static void berry_fix_text_print(int scene)
-{
+static void berry_fix_text_print(int scene) {
     FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
     FillWindowPixelBuffer(1, PIXEL_FILL(0xA));
     AddTextPrinterParameterized3(1, 1, 0, 0, sBerryProgramTextColors, -1, sBerryProgramTexts[scene]);
     PutWindowTilemap(1);
     CopyWindowToVram(1, 2);
-    switch (scene)
-    {
+    switch (scene) {
         case 0:
         case 2:
         case 3:
@@ -343,15 +268,14 @@ static void berry_fix_text_print(int scene)
             break;
     }
     CopyBgTilemapBufferToVram(0);
-    LZ77UnCompVram(sBerryFixGraphics[scene].gfx, (void *)BG_CHAR_ADDR(1));
-    LZ77UnCompVram(sBerryFixGraphics[scene].tilemap, (void *)BG_SCREEN_ADDR(31));
-    CpuCopy32(sBerryFixGraphics[scene].pltt, (void *)BG_PLTT, 0x100);
+    LZ77UnCompVram(sBerryFixGraphics[scene].gfx, (void*)BG_CHAR_ADDR(1));
+    LZ77UnCompVram(sBerryFixGraphics[scene].tilemap, (void*)BG_SCREEN_ADDR(31));
+    CpuCopy32(sBerryFixGraphics[scene].pltt, (void*)BG_PLTT, 0x100);
     ShowBg(0);
     ShowBg(1);
 }
 
-static void berry_fix_bg_hide(void)
-{
+static void berry_fix_bg_hide(void) {
     HideBg(0);
     HideBg(1);
 }

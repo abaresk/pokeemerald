@@ -1,8 +1,7 @@
 #ifndef GUARD_DECORATION_H
 #define GUARD_DECORATION_H
 
-enum DecorationPermission
-{
+enum DecorationPermission {
     /*
      * The nomenclature here describes collision and placement permissions, in that order.
      */
@@ -13,8 +12,7 @@ enum DecorationPermission
     DECORPERM_SPRITE,
 };
 
-enum DecorationShape
-{
+enum DecorationShape {
     DECORSHAPE_1x1,
     DECORSHAPE_2x1,
     DECORSHAPE_3x1, // unused
@@ -27,8 +25,7 @@ enum DecorationShape
     DECORSHAPE_3x2,
 };
 
-enum DecorationCategory
-{
+enum DecorationCategory {
     DECORCAT_DESK,
     DECORCAT_CHAIR,
     DECORCAT_PLANT,
@@ -40,20 +37,19 @@ enum DecorationCategory
     DECORCAT_COUNT,
 };
 
-struct Decoration
-{
+struct Decoration {
     u8 id;
     u8 name[16];
     u8 permission;
     u8 shape;
     u8 category;
     u16 price;
-    const u8 *description;
-    const u16 *tiles;
+    const u8* description;
+    const u16* tiles;
 };
 
 extern const struct Decoration gDecorations[];
-extern EWRAM_DATA u8 *gCurDecorationItems;
+extern EWRAM_DATA u8* gCurDecorationItems;
 extern EWRAM_DATA u8 gCurDecorationIndex;
 
 void InitDecorationContextItems(void);
@@ -61,8 +57,8 @@ void DoSecretBaseDecorationMenu(u8 taskId);
 void ShowDecorationOnMap(u16 mapX, u16 mapY, u16 decor);
 void DoPlayerRoomDecorationMenu(u8 taskId);
 void ShowDecorationCategoriesWindow(u8 taskId);
-void CopyDecorationCategoryName(u8 *dest, u8 decorCat);
+void CopyDecorationCategoryName(u8* dest, u8 decorCat);
 bool8 IsSelectedDecorInThePC(void);
 u8 AddDecorationIconObject(u8 decor, s16 x, s16 y, u8 priority, u16 tilesTag, u16 paletteTag);
 
-#endif //GUARD_DECORATION_H
+#endif // GUARD_DECORATION_H

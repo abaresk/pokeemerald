@@ -51,8 +51,8 @@ typedef union // size = 0x24
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u16 species;
-        /*0x04*/ u8 friendshipHighNybble:4;
-        /*0x04*/ u8 questionAsked:4;
+        /*0x04*/ u8 friendshipHighNybble : 4;
+        /*0x04*/ u8 questionAsked : 4;
         /*0x05*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
         /*0x0D*/ u8 language;
         /*0x0E*/ u8 pokemonNameLanguage;
@@ -94,9 +94,9 @@ typedef union // size = 0x24
         /*0x02*/ u16 species;
         /*0x04*/ u16 words[2];
         /*0x08*/ u8 pokemonNickname[POKEMON_NAME_LENGTH + 1];
-        /*0x13*/ u8 contestCategory:3;
-        /*0x13*/ u8 contestRank:2;
-        /*0x13*/ u8 contestResult:2;
+        /*0x13*/ u8 contestCategory : 3;
+        /*0x13*/ u8 contestRank : 2;
+        /*0x13*/ u8 contestResult : 2;
         /*0x14*/ u16 move;
         /*0x16*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
         /*0x1E*/ u8 language;
@@ -143,8 +143,8 @@ typedef union // size = 0x24
         /*0x00*/ u8 kind;
         /*0x01*/ bool8 active;
         /*0x02*/ u8 sheen;
-        /*0x03*/ u8 flavor:3;
-        /*0x03*/ u8 color:2;
+        /*0x03*/ u8 flavor : 3;
+        /*0x03*/ u8 color : 2;
         /*0x04*/ u8 worstBlenderName[PLAYER_NAME_LENGTH + 1];
         /*0x0C*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
         /*0x14*/ u8 language;
@@ -470,25 +470,24 @@ typedef struct // 2b50
     u16 days;
 } PokeNews;
 
-struct GabbyAndTyData
-{
+struct GabbyAndTyData {
     /*2ba4*/ u16 mon1;
     /*2ba6*/ u16 mon2;
     /*2ba8*/ u16 lastMove;
     /*2baa*/ u16 quote[1];
     /*2bac*/ u8 mapnum;
     /*2bad*/ u8 battleNum;
-    /*2bae*/ u8 battleTookMoreThanOneTurn:1;
-    /*2bae*/ u8 playerLostAMon:1;
-    /*2bae*/ u8 playerUsedHealingItem:1;
-    /*2bae*/ u8 playerThrewABall:1;
-    /*2bae*/ u8 onAir:1;
-    /*2bae*/ u8 valA_5:3;
-    /*2baf*/ u8 battleTookMoreThanOneTurn2:1;
-    /*2baf*/ u8 playerLostAMon2:1;
-    /*2baf*/ u8 playerUsedHealingItem2:1;
-    /*2baf*/ u8 playerThrewABall2:1;
-    /*2baf*/ u8 valB_4:4;
+    /*2bae*/ u8 battleTookMoreThanOneTurn : 1;
+    /*2bae*/ u8 playerLostAMon : 1;
+    /*2bae*/ u8 playerUsedHealingItem : 1;
+    /*2bae*/ u8 playerThrewABall : 1;
+    /*2bae*/ u8 onAir : 1;
+    /*2bae*/ u8 valA_5 : 3;
+    /*2baf*/ u8 battleTookMoreThanOneTurn2 : 1;
+    /*2baf*/ u8 playerLostAMon2 : 1;
+    /*2baf*/ u8 playerUsedHealingItem2 : 1;
+    /*2baf*/ u8 playerThrewABall2 : 1;
+    /*2baf*/ u8 valB_4 : 4;
 };
 
-#endif //GUARD_GLOBAL_TV_H
+#endif // GUARD_GLOBAL_TV_H

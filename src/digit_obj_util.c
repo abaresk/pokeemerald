@@ -5,8 +5,7 @@
 #include "main.h"
 #include "battle_main.h"
 
-struct DigitPrinter
-{
+struct DigitPrinter {
     bool8 isActive;
     u8 firstOamId;
     u8 strConvMode;
@@ -26,23 +25,22 @@ struct DigitPrinter
     s32 lastPrinted;
 };
 
-struct DigitPrinterAlloc
-{
+struct DigitPrinterAlloc {
     u32 count;
-    struct DigitPrinter *array;
+    struct DigitPrinter* array;
 };
 
 // this file's functions
 static u8 GetFirstOamId(u8 oamCount);
-static void CopyWorkToOam(struct DigitPrinter *objWork);
-static void DrawNumObjsLeadingZeros(struct DigitPrinter *objWork, s32 num, bool32 sign);
-static void DrawNumObjsMinusInFront(struct DigitPrinter *objWork, s32 num, bool32 sign);
-static void DrawNumObjsMinusInBack(struct DigitPrinter *objWork, s32 num, bool32 sign);
+static void CopyWorkToOam(struct DigitPrinter* objWork);
+static void DrawNumObjsLeadingZeros(struct DigitPrinter* objWork, s32 num, bool32 sign);
+static void DrawNumObjsMinusInFront(struct DigitPrinter* objWork, s32 num, bool32 sign);
+static void DrawNumObjsMinusInBack(struct DigitPrinter* objWork, s32 num, bool32 sign);
 static bool32 SharesTileWithAnyActive(u32 id);
 static bool32 SharesPalWithAnyActive(u32 id);
 
 // ewram
-static EWRAM_DATA struct DigitPrinterAlloc *sOamWork = {0};
+static EWRAM_DATA struct DigitPrinterAlloc* sOamWork = { 0 };
 
 // const rom data
 static const u8 sTilesPerImage[4][4] =
@@ -68,8 +66,7 @@ static const u8 sTilesPerImage[4][4] =
 };
 
 // code
-bool32 DigitObjUtil_Init(u32 count)
-{
+bool32 DigitObjUtil_Init(u32 count) {
     u32 i;
 
     if (sOamWork != NULL)
@@ -80,15 +77,13 @@ bool32 DigitObjUtil_Init(u32 count)
         return FALSE;
 
     sOamWork->array = Alloc(sizeof(struct DigitPrinter) * count);
-    if (sOamWork->array == NULL)
-    {
+    if (sOamWork->array == NULL) {
         Free(sOamWork);
         return FALSE;
     }
 
     sOamWork->count = count;
-    for (i = 0; i < count; i++)
-    {
+    for (i = 0; i < count; i++) {
         sOamWork->array[i].isActive = FALSE;
         sOamWork->array[i].firstOamId = 0xFF;
     }
@@ -96,12 +91,9 @@ bool32 DigitObjUtil_Init(u32 count)
     return TRUE;
 }
 
-void DigitObjUtil_Free(void)
-{
-    if (sOamWork != NULL)
-    {
-        if (sOamWork->array != NULL)
-        {
+void DigitObjUtil_Free(void) {
+    if (sOamWork != NULL) {
+        if (sOamWork->array != NULL) {
             u32 i;
 
             for (i = 0; i < sOamWork->count; i++)
@@ -114,8 +106,7 @@ void DigitObjUtil_Free(void)
     }
 }
 
-bool32 DigitObjUtil_CreatePrinter(u32 id, s32 num, const struct DigitObjUtilTemplate *template)
-{
+bool32 DigitObjUtil_CreatePrinter(u32 id, s32 num, const struct DigitObjUtilTemplate* template) {
     u32 i;
 
     if (sOamWork == NULL)
@@ -128,14 +119,10 @@ bool32 DigitObjUtil_CreatePrinter(u32 id, s32 num, const struct DigitObjUtilTemp
         return FALSE;
 
     sOamWork->array[id].tileStart = GetSpriteTileStartByTag(template->spriteSheet->tag);
-    if (sOamWork->array[id].tileStart == 0xFFFF)
-    {
-        if (template->spriteSheet->size != 0)
-        {
+    if (sOamWork->array[id].tileStart == 0xFFFF) {
+        if (template->spriteSheet->size != 0) {
             sOamWork->array[id].tileStart = LoadSpriteSheet(template->spriteSheet);
-        }
-        else
-        {
+        } else {
             struct CompressedSpriteSheet compSpriteSheet;
 
             compSpriteSheet = *(struct CompressedSpriteSheet*)(template->spriteSheet);
@@ -175,16 +162,14 @@ bool32 DigitObjUtil_CreatePrinter(u32 id, s32 num, const struct DigitObjUtilTemp
     return TRUE;
 }
 
-static void CopyWorkToOam(struct DigitPrinter *objWork)
-{
+static void CopyWorkToOam(struct DigitPrinter* objWork) {
     u32 i;
     u32 oamId = objWork->firstOamId;
     u32 x = objWork->x;
     u32 oamCount = objWork->oamCount + 1;
 
     CpuFill16(0, &gMain.oamBuffer[oamId], sizeof(struct OamData) * oamCount);
-    for (i = 0, oamId = objWork->firstOamId; i < oamCount; i++, oamId++)
-    {
+    for (i = 0, oamId = objWork->firstOamId; i < oamCount; i++, oamId++) {
         gMain.oamBuffer[oamId].y = objWork->y;
         gMain.oamBuffer[oamId].x = x;
         gMain.oamBuffer[oamId].shape = objWork->shape;
@@ -202,8 +187,7 @@ static void CopyWorkToOam(struct DigitPrinter *objWork)
     gMain.oamBuffer[oamId].tileNum = objWork->tileStart + (objWork->tilesPerImage * 10);
 }
 
-void DigitObjUtil_PrintNumOn(u32 id, s32 num)
-{
+void DigitObjUtil_PrintNumOn(u32 id, s32 num) {
     bool32 sign;
 
     if (sOamWork == NULL)
@@ -212,38 +196,32 @@ void DigitObjUtil_PrintNumOn(u32 id, s32 num)
         return;
 
     sOamWork->array[id].lastPrinted = num;
-    if (num < 0)
-    {
+    if (num < 0) {
         sign = TRUE;
         num *= -1;
-    }
-    else
-    {
+    } else {
         sign = FALSE;
     }
 
-    switch (sOamWork->array[id].strConvMode)
-    {
-    case 0:
-    default:
-        DrawNumObjsLeadingZeros(&sOamWork->array[id], num, sign);
-        break;
-    case 1:
-        DrawNumObjsMinusInFront(&sOamWork->array[id], num, sign);
-        break;
-    case 2:
-        DrawNumObjsMinusInBack(&sOamWork->array[id], num, sign);
-        break;
+    switch (sOamWork->array[id].strConvMode) {
+        case 0:
+        default:
+            DrawNumObjsLeadingZeros(&sOamWork->array[id], num, sign);
+            break;
+        case 1:
+            DrawNumObjsMinusInFront(&sOamWork->array[id], num, sign);
+            break;
+        case 2:
+            DrawNumObjsMinusInBack(&sOamWork->array[id], num, sign);
+            break;
     }
 }
 
-static void DrawNumObjsLeadingZeros(struct DigitPrinter *objWork, s32 num, bool32 sign)
-{
+static void DrawNumObjsLeadingZeros(struct DigitPrinter* objWork, s32 num, bool32 sign) {
     u32 pow10 = objWork->pow10;
     u32 oamId = objWork->firstOamId;
 
-    while (pow10 != 0)
-    {
+    while (pow10 != 0) {
         u32 digit = num / pow10;
         num -= (digit * pow10);
         pow10 /= 10;
@@ -258,8 +236,7 @@ static void DrawNumObjsLeadingZeros(struct DigitPrinter *objWork, s32 num, bool3
         gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
 }
 
-static void DrawNumObjsMinusInFront(struct DigitPrinter *objWork, s32 num, bool32 sign)
-{
+static void DrawNumObjsMinusInFront(struct DigitPrinter* objWork, s32 num, bool32 sign) {
     u32 pow10 = objWork->pow10;
     static int oamId;
     static int curDigit;
@@ -269,22 +246,18 @@ static void DrawNumObjsMinusInFront(struct DigitPrinter *objWork, s32 num, bool3
     curDigit = 0;
     firstDigit = -1;
 
-    while (pow10 != 0)
-    {
+    while (pow10 != 0) {
         u32 digit = num / pow10;
         num -= (digit * pow10);
         pow10 /= 10;
 
-        if (digit != 0 || firstDigit != -1 || pow10 == 0)
-        {
+        if (digit != 0 || firstDigit != -1 || pow10 == 0) {
             gMain.oamBuffer[oamId].tileNum = (digit * objWork->tilesPerImage) + objWork->tileStart;
             gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_OFF;
 
             if (firstDigit == -1)
                 firstDigit = curDigit;
-        }
-        else
-        {
+        } else {
             gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
         }
 
@@ -292,32 +265,26 @@ static void DrawNumObjsMinusInFront(struct DigitPrinter *objWork, s32 num, bool3
         curDigit++;
     }
 
-    if (sign)
-    {
+    if (sign) {
         gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_OFF;
         gMain.oamBuffer[oamId].x = objWork->x + ((firstDigit - 1) * objWork->xDelta);
-    }
-    else
-    {
+    } else {
         gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
     }
 }
 
-static void DrawNumObjsMinusInBack(struct DigitPrinter *objWork, s32 num, bool32 sign)
-{
+static void DrawNumObjsMinusInBack(struct DigitPrinter* objWork, s32 num, bool32 sign) {
     u32 pow10 = objWork->pow10;
     u32 oamId = objWork->firstOamId;
     bool32 printingDigits = FALSE;
     s32 nsprites = 0;
 
-    while (pow10 != 0)
-    {
+    while (pow10 != 0) {
         u32 digit = num / pow10;
         num -= (digit * pow10);
         pow10 /= 10;
 
-        if (digit != 0 || printingDigits || pow10 == 0)
-        {
+        if (digit != 0 || printingDigits || pow10 == 0) {
             printingDigits = TRUE;
             gMain.oamBuffer[oamId].tileNum = (digit * objWork->tilesPerImage) + objWork->tileStart;
             gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_OFF;
@@ -327,8 +294,7 @@ static void DrawNumObjsMinusInBack(struct DigitPrinter *objWork, s32 num, bool32
         }
     }
 
-    while (nsprites < objWork->oamCount)
-    {
+    while (nsprites < objWork->oamCount) {
         gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
         oamId++;
         nsprites++;
@@ -340,8 +306,7 @@ static void DrawNumObjsMinusInBack(struct DigitPrinter *objWork, s32 num, bool32
         gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
 }
 
-void DigitObjUtil_DeletePrinter(u32 id)
-{
+void DigitObjUtil_DeletePrinter(u32 id) {
     s32 oamId, oamCount, i;
 
     if (sOamWork == NULL)
@@ -363,8 +328,7 @@ void DigitObjUtil_DeletePrinter(u32 id)
     sOamWork->array[id].isActive = FALSE;
 }
 
-void DigitObjUtil_HideOrShow(u32 id, bool32 hide)
-{
+void DigitObjUtil_HideOrShow(u32 id, bool32 hide) {
     s32 oamId, oamCount, i;
 
     if (sOamWork == NULL)
@@ -374,13 +338,10 @@ void DigitObjUtil_HideOrShow(u32 id, bool32 hide)
 
     oamCount = sOamWork->array[id].oamCount + 1;
     oamId = sOamWork->array[id].firstOamId;
-    if (hide)
-    {
+    if (hide) {
         for (i = 0; i < oamCount; i++, oamId++)
             gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_ERASE;
-    }
-    else
-    {
+    } else {
         for (i = 0; i < oamCount; i++, oamId++)
             gMain.oamBuffer[oamId].affineMode = ST_OAM_AFFINE_OFF;
 
@@ -388,20 +349,15 @@ void DigitObjUtil_HideOrShow(u32 id, bool32 hide)
     }
 }
 
-static u8 GetFirstOamId(u8 oamCount)
-{
+static u8 GetFirstOamId(u8 oamCount) {
     u32 i;
     u16 firstOamId = 64;
 
-    for (i = 0; i < sOamWork->count; i++)
-    {
-        if (!sOamWork->array[i].isActive)
-        {
+    for (i = 0; i < sOamWork->count; i++) {
+        if (!sOamWork->array[i].isActive) {
             if (sOamWork->array[i].firstOamId != 0xFF && sOamWork->array[i].oamCount <= oamCount)
                 return sOamWork->array[i].firstOamId;
-        }
-        else
-        {
+        } else {
             firstOamId += 1 + sOamWork->array[i].oamCount;
         }
     }
@@ -412,15 +368,11 @@ static u8 GetFirstOamId(u8 oamCount)
         return firstOamId;
 }
 
-static bool32 SharesTileWithAnyActive(u32 id)
-{
+static bool32 SharesTileWithAnyActive(u32 id) {
     u32 i;
 
-    for (i = 0; i < sOamWork->count; i++)
-    {
-        if (sOamWork->array[i].isActive && i != id
-            && sOamWork->array[i].tileTag == sOamWork->array[id].tileTag)
-        {
+    for (i = 0; i < sOamWork->count; i++) {
+        if (sOamWork->array[i].isActive && i != id && sOamWork->array[i].tileTag == sOamWork->array[id].tileTag) {
             return TRUE;
         }
     }
@@ -428,15 +380,11 @@ static bool32 SharesTileWithAnyActive(u32 id)
     return FALSE;
 }
 
-static bool32 SharesPalWithAnyActive(u32 id)
-{
+static bool32 SharesPalWithAnyActive(u32 id) {
     u32 i;
 
-    for (i = 0; i < sOamWork->count; i++)
-    {
-        if (sOamWork->array[i].isActive && i != id
-            && sOamWork->array[i].palTag == sOamWork->array[id].palTag)
-        {
+    for (i = 0; i < sOamWork->count; i++) {
+        if (sOamWork->array[i].isActive && i != id && sOamWork->array[i].palTag == sOamWork->array[id].palTag) {
             return TRUE;
         }
     }
@@ -444,7 +392,6 @@ static bool32 SharesPalWithAnyActive(u32 id)
     return FALSE;
 }
 
-u8 GetTilesPerImage(u32 shape, u32 size)
-{
+u8 GetTilesPerImage(u32 shape, u32 size) {
     return sTilesPerImage[shape][size];
 }

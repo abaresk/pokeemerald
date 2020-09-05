@@ -11,20 +11,17 @@
 static void ReshowPCMenuAfterHallOfFamePC(void);
 static void Task_WaitForPaletteFade(u8);
 
-void AccessHallOfFamePC(void)
-{
+void AccessHallOfFamePC(void) {
     SetMainCallback2(CB2_DoHallOfFamePC);
     ScriptContext2_Enable();
 }
 
-void ReturnFromHallOfFamePC(void)
-{
+void ReturnFromHallOfFamePC(void) {
     SetMainCallback2(CB2_ReturnToField);
     gFieldCallback = ReshowPCMenuAfterHallOfFamePC;
 }
 
-static void ReshowPCMenuAfterHallOfFamePC(void)
-{
+static void ReshowPCMenuAfterHallOfFamePC(void) {
     ScriptContext2_Enable();
     Overworld_PlaySpecialMapMusic();
     ScriptMenu_CreatePCMultichoice();
@@ -33,8 +30,7 @@ static void ReshowPCMenuAfterHallOfFamePC(void)
     CreateTask(Task_WaitForPaletteFade, 10);
 }
 
-static void Task_WaitForPaletteFade(u8 taskId)
-{
+static void Task_WaitForPaletteFade(u8 taskId) {
     if (!gPaletteFade.active)
         DestroyTask(taskId);
 }

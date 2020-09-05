@@ -87,80 +87,73 @@ static void SafariBufferRunCommand(void);
 static void SafariBufferExecCompleted(void);
 static void CompleteWhenChosePokeblock(void);
 
-static void (*const sSafariBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
-{
-    SafariHandleGetMonData,
-    SafariHandleGetRawMonData,
-    SafariHandleSetMonData,
-    SafariHandleSetRawMonData,
-    SafariHandleLoadMonSprite,
-    SafariHandleSwitchInAnim,
-    SafariHandleReturnMonToBall,
-    SafariHandleDrawTrainerPic,
-    SafariHandleTrainerSlide,
-    SafariHandleTrainerSlideBack,
-    SafariHandleFaintAnimation,
-    SafariHandlePaletteFade,
-    SafariHandleSuccessBallThrowAnim,
-    SafariHandleBallThrowAnim,
-    SafariHandlePause,
-    SafariHandleMoveAnimation,
-    SafariHandlePrintString,
-    SafariHandlePrintSelectionString,
-    SafariHandleChooseAction,
-    SafariHandleUnknownYesNoBox,
-    SafariHandleChooseMove,
-    SafariHandleChooseItem,
-    SafariHandleChoosePokemon,
-    SafariHandleCmd23,
-    SafariHandleHealthBarUpdate,
-    SafariHandleExpUpdate,
-    SafariHandleStatusIconUpdate,
-    SafariHandleStatusAnimation,
-    SafariHandleStatusXor,
-    SafariHandleDataTransfer,
-    SafariHandleDMA3Transfer,
-    SafariHandlePlayBGM,
-    SafariHandleCmd32,
-    SafariHandleTwoReturnValues,
-    SafariHandleChosenMonReturnValue,
-    SafariHandleOneReturnValue,
-    SafariHandleOneReturnValue_Duplicate,
-    SafariHandleCmd37,
-    SafariHandleCmd38,
-    SafariHandleCmd39,
-    SafariHandleCmd40,
-    SafariHandleHitAnimation,
-    SafariHandleCmd42,
-    SafariHandlePlaySE,
-    SafariHandlePlayFanfareOrBGM,
-    SafariHandleFaintingCry,
-    SafariHandleIntroSlide,
-    SafariHandleIntroTrainerBallThrow,
-    SafariHandleDrawPartyStatusSummary,
-    SafariHandleHidePartyStatusSummary,
-    SafariHandleEndBounceEffect,
-    SafariHandleSpriteInvisibility,
-    SafariHandleBattleAnimation,
-    SafariHandleLinkStandbyMsg,
-    SafariHandleResetActionMoveSelection,
-    SafariHandleCmd55,
-    SafariCmdEnd
-};
+static void (*const sSafariBufferCommands[CONTROLLER_CMDS_COUNT])(void) = { SafariHandleGetMonData,
+                                                                            SafariHandleGetRawMonData,
+                                                                            SafariHandleSetMonData,
+                                                                            SafariHandleSetRawMonData,
+                                                                            SafariHandleLoadMonSprite,
+                                                                            SafariHandleSwitchInAnim,
+                                                                            SafariHandleReturnMonToBall,
+                                                                            SafariHandleDrawTrainerPic,
+                                                                            SafariHandleTrainerSlide,
+                                                                            SafariHandleTrainerSlideBack,
+                                                                            SafariHandleFaintAnimation,
+                                                                            SafariHandlePaletteFade,
+                                                                            SafariHandleSuccessBallThrowAnim,
+                                                                            SafariHandleBallThrowAnim,
+                                                                            SafariHandlePause,
+                                                                            SafariHandleMoveAnimation,
+                                                                            SafariHandlePrintString,
+                                                                            SafariHandlePrintSelectionString,
+                                                                            SafariHandleChooseAction,
+                                                                            SafariHandleUnknownYesNoBox,
+                                                                            SafariHandleChooseMove,
+                                                                            SafariHandleChooseItem,
+                                                                            SafariHandleChoosePokemon,
+                                                                            SafariHandleCmd23,
+                                                                            SafariHandleHealthBarUpdate,
+                                                                            SafariHandleExpUpdate,
+                                                                            SafariHandleStatusIconUpdate,
+                                                                            SafariHandleStatusAnimation,
+                                                                            SafariHandleStatusXor,
+                                                                            SafariHandleDataTransfer,
+                                                                            SafariHandleDMA3Transfer,
+                                                                            SafariHandlePlayBGM,
+                                                                            SafariHandleCmd32,
+                                                                            SafariHandleTwoReturnValues,
+                                                                            SafariHandleChosenMonReturnValue,
+                                                                            SafariHandleOneReturnValue,
+                                                                            SafariHandleOneReturnValue_Duplicate,
+                                                                            SafariHandleCmd37,
+                                                                            SafariHandleCmd38,
+                                                                            SafariHandleCmd39,
+                                                                            SafariHandleCmd40,
+                                                                            SafariHandleHitAnimation,
+                                                                            SafariHandleCmd42,
+                                                                            SafariHandlePlaySE,
+                                                                            SafariHandlePlayFanfareOrBGM,
+                                                                            SafariHandleFaintingCry,
+                                                                            SafariHandleIntroSlide,
+                                                                            SafariHandleIntroTrainerBallThrow,
+                                                                            SafariHandleDrawPartyStatusSummary,
+                                                                            SafariHandleHidePartyStatusSummary,
+                                                                            SafariHandleEndBounceEffect,
+                                                                            SafariHandleSpriteInvisibility,
+                                                                            SafariHandleBattleAnimation,
+                                                                            SafariHandleLinkStandbyMsg,
+                                                                            SafariHandleResetActionMoveSelection,
+                                                                            SafariHandleCmd55,
+                                                                            SafariCmdEnd };
 
-static void SpriteCB_Null4(void)
-{
+static void SpriteCB_Null4(void) {
 }
 
-void SetControllerToSafari(void)
-{
+void SetControllerToSafari(void) {
     gBattlerControllerFuncs[gActiveBattler] = SafariBufferRunCommand;
 }
 
-static void SafariBufferRunCommand(void)
-{
-    if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
-    {
+static void SafariBufferRunCommand(void) {
+    if (gBattleControllerExecFlags & gBitTable[gActiveBattler]) {
         if (gBattleBufferA[gActiveBattler][0] < ARRAY_COUNT(sSafariBufferCommands))
             sSafariBufferCommands[gBattleBufferA[gActiveBattler][0]]();
         else
@@ -168,63 +161,48 @@ static void SafariBufferRunCommand(void)
     }
 }
 
-static void HandleInputChooseAction(void)
-{
-    if (gMain.newKeys & A_BUTTON)
-    {
+static void HandleInputChooseAction(void) {
+    if (gMain.newKeys & A_BUTTON) {
         PlaySE(SE_SELECT);
 
-        switch (gActionSelectionCursor[gActiveBattler])
-        {
-        case 0:
-            BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_BALL, 0);
-            break;
-        case 1:
-            BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_POKEBLOCK, 0);
-            break;
-        case 2:
-            BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_GO_NEAR, 0);
-            break;
-        case 3:
-            BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_RUN, 0);
-            break;
+        switch (gActionSelectionCursor[gActiveBattler]) {
+            case 0:
+                BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_BALL, 0);
+                break;
+            case 1:
+                BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_POKEBLOCK, 0);
+                break;
+            case 2:
+                BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_GO_NEAR, 0);
+                break;
+            case 3:
+                BtlController_EmitTwoReturnValues(1, B_ACTION_SAFARI_RUN, 0);
+                break;
         }
         SafariBufferExecCompleted();
-    }
-    else if (gMain.newKeys & DPAD_LEFT)
-    {
-        if (gActionSelectionCursor[gActiveBattler] & 1)
-        {
+    } else if (gMain.newKeys & DPAD_LEFT) {
+        if (gActionSelectionCursor[gActiveBattler] & 1) {
             PlaySE(SE_SELECT);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
-    }
-    else if (gMain.newKeys & DPAD_RIGHT)
-    {
-        if (!(gActionSelectionCursor[gActiveBattler] & 1))
-        {
+    } else if (gMain.newKeys & DPAD_RIGHT) {
+        if (!(gActionSelectionCursor[gActiveBattler] & 1)) {
             PlaySE(SE_SELECT);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
-    }
-    else if (gMain.newKeys & DPAD_UP)
-    {
-        if (gActionSelectionCursor[gActiveBattler] & 2)
-        {
+    } else if (gMain.newKeys & DPAD_UP) {
+        if (gActionSelectionCursor[gActiveBattler] & 2) {
             PlaySE(SE_SELECT);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
-    }
-    else if (gMain.newKeys & DPAD_DOWN)
-    {
-        if (!(gActionSelectionCursor[gActiveBattler] & 2))
-        {
+    } else if (gMain.newKeys & DPAD_DOWN) {
+        if (!(gActionSelectionCursor[gActiveBattler] & 2)) {
             PlaySE(SE_SELECT);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
@@ -233,131 +211,104 @@ static void HandleInputChooseAction(void)
     }
 }
 
-static void CompleteOnBattlerSpriteCallbackDummy(void)
-{
+static void CompleteOnBattlerSpriteCallbackDummy(void) {
     if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
         SafariBufferExecCompleted();
 }
 
-static void CompleteOnInactiveTextPrinter(void)
-{
+static void CompleteOnInactiveTextPrinter(void) {
     if (!IsTextPrinterActive(0))
         SafariBufferExecCompleted();
 }
 
-static void CompleteOnHealthboxSpriteCallbackDummy(void)
-{
+static void CompleteOnHealthboxSpriteCallbackDummy(void) {
     if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
         SafariBufferExecCompleted();
 }
 
-static void sub_81595E4(void)
-{
-    if (!gPaletteFade.active)
-    {
+static void sub_81595E4(void) {
+    if (!gPaletteFade.active) {
         gMain.inBattle = FALSE;
         gMain.callback1 = gPreBattleCallback1;
         SetMainCallback2(gMain.savedCallback);
     }
 }
 
-static void CompleteOnSpecialAnimDone(void)
-{
+static void CompleteOnSpecialAnimDone(void) {
     if (!gDoingBattleAnim || !gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].specialAnimActive)
         SafariBufferExecCompleted();
 }
 
-static void SafariOpenPokeblockCase(void)
-{
-    if (!gPaletteFade.active)
-    {
+static void SafariOpenPokeblockCase(void) {
+    if (!gPaletteFade.active) {
         gBattlerControllerFuncs[gActiveBattler] = CompleteWhenChosePokeblock;
         FreeAllWindowBuffers();
         OpenPokeblockCaseInBattle();
     }
 }
 
-static void CompleteWhenChosePokeblock(void)
-{
-    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
-    {
+static void CompleteWhenChosePokeblock(void) {
+    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active) {
         BtlController_EmitOneReturnValue(1, gSpecialVar_ItemId);
         SafariBufferExecCompleted();
     }
 }
 
-static void CompleteOnFinishedBattleAnimation(void)
-{
+static void CompleteOnFinishedBattleAnimation(void) {
     if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animFromTableActive)
         SafariBufferExecCompleted();
 }
 
-static void SafariBufferExecCompleted(void)
-{
+static void SafariBufferExecCompleted(void) {
     gBattlerControllerFuncs[gActiveBattler] = SafariBufferRunCommand;
-    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
-    {
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK) {
         u8 playerId = GetMultiplayerId();
 
         PrepareBufferDataTransferLink(2, 4, &playerId);
         gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
-    }
-    else
-    {
+    } else {
         gBattleControllerExecFlags &= ~gBitTable[gActiveBattler];
     }
 }
 
-static void CompleteOnFinishedStatusAnimation(void)
-{
+static void CompleteOnFinishedStatusAnimation(void) {
     if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].statusAnimActive)
         SafariBufferExecCompleted();
 }
 
-static void SafariHandleGetMonData(void)
-{
+static void SafariHandleGetMonData(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleGetRawMonData(void)
-{
+static void SafariHandleGetRawMonData(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleSetMonData(void)
-{
+static void SafariHandleSetMonData(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleSetRawMonData(void)
-{
+static void SafariHandleSetRawMonData(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleLoadMonSprite(void)
-{
+static void SafariHandleLoadMonSprite(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleSwitchInAnim(void)
-{
+static void SafariHandleSwitchInAnim(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleReturnMonToBall(void)
-{
+static void SafariHandleReturnMonToBall(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleDrawTrainerPic(void)
-{
+static void SafariHandleDrawTrainerPic(void) {
     DecompressTrainerBackPic(gSaveBlock2Ptr->playerGender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2Ptr->playerGender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gMultiuseSpriteTemplate,
-      80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2Ptr->playerGender].size) * 4 + 80,
-      30);
+        &gMultiuseSpriteTemplate, 80, (8 - gTrainerBackPicCoords[gSaveBlock2Ptr->playerGender].size) * 4 + 80, 30);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].pos2.x = 240;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = -2;
@@ -365,57 +316,50 @@ static void SafariHandleDrawTrainerPic(void)
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnBattlerSpriteCallbackDummy;
 }
 
-static void SafariHandleTrainerSlide(void)
-{
+static void SafariHandleTrainerSlide(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleTrainerSlideBack(void)
-{
+static void SafariHandleTrainerSlideBack(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleFaintAnimation(void)
-{
+static void SafariHandleFaintAnimation(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandlePaletteFade(void)
-{
+static void SafariHandlePaletteFade(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleSuccessBallThrowAnim(void)
-{
+static void SafariHandleSuccessBallThrowAnim(void) {
     gBattleSpritesDataPtr->animationData->ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
     gDoingBattleAnim = TRUE;
-    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_SAFARI_BALL_THROW);
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT),
+                                  B_ANIM_SAFARI_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;
 }
 
-static void SafariHandleBallThrowAnim(void)
-{
+static void SafariHandleBallThrowAnim(void) {
     u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
 
     gBattleSpritesDataPtr->animationData->ballThrowCaseId = ballThrowCaseId;
     gDoingBattleAnim = TRUE;
-    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_SAFARI_BALL_THROW);
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT),
+                                  B_ANIM_SAFARI_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;
 }
 
-static void SafariHandlePause(void)
-{
+static void SafariHandlePause(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleMoveAnimation(void)
-{
+static void SafariHandleMoveAnimation(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandlePrintString(void)
-{
-    u16 *stringId;
+static void SafariHandlePrintString(void) {
+    u16* stringId;
 
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
@@ -425,26 +369,22 @@ static void SafariHandlePrintString(void)
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnInactiveTextPrinter;
 }
 
-static void SafariHandlePrintSelectionString(void)
-{
+static void SafariHandlePrintSelectionString(void) {
     if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
         SafariHandlePrintString();
     else
         SafariBufferExecCompleted();
 }
 
-static void HandleChooseActionAfterDma3(void)
-{
-    if (!IsDma3ManagerBusyWithBgCopy())
-    {
+static void HandleChooseActionAfterDma3(void) {
+    if (!IsDma3ManagerBusyWithBgCopy()) {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = 160;
         gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseAction;
     }
 }
 
-static void SafariHandleChooseAction(void)
-{
+static void SafariHandleChooseAction(void) {
     s32 i;
 
     gBattlerControllerFuncs[gActiveBattler] = HandleChooseActionAfterDma3;
@@ -458,18 +398,15 @@ static void SafariHandleChooseAction(void)
     BattlePutTextOnWindow(gDisplayedStringBattle, 1);
 }
 
-static void SafariHandleUnknownYesNoBox(void)
-{
+static void SafariHandleUnknownYesNoBox(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleChooseMove(void)
-{
+static void SafariHandleChooseMove(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleChooseItem(void)
-{
+static void SafariHandleChooseItem(void) {
     s32 i;
 
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
@@ -477,114 +414,93 @@ static void SafariHandleChooseItem(void)
     gBattlerInMenuId = gActiveBattler;
 }
 
-static void SafariHandleChoosePokemon(void)
-{
+static void SafariHandleChoosePokemon(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd23(void)
-{
+static void SafariHandleCmd23(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleHealthBarUpdate(void)
-{
+static void SafariHandleHealthBarUpdate(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleExpUpdate(void)
-{
+static void SafariHandleExpUpdate(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleStatusIconUpdate(void)
-{
-    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_SAFARI_BALLS_TEXT);
+static void SafariHandleStatusIconUpdate(void) {
+    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]],
+                             HEALTHBOX_SAFARI_BALLS_TEXT);
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleStatusAnimation(void)
-{
+static void SafariHandleStatusAnimation(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleStatusXor(void)
-{
+static void SafariHandleStatusXor(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleDataTransfer(void)
-{
+static void SafariHandleDataTransfer(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleDMA3Transfer(void)
-{
+static void SafariHandleDMA3Transfer(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandlePlayBGM(void)
-{
+static void SafariHandlePlayBGM(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd32(void)
-{
+static void SafariHandleCmd32(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleTwoReturnValues(void)
-{
+static void SafariHandleTwoReturnValues(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleChosenMonReturnValue(void)
-{
+static void SafariHandleChosenMonReturnValue(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleOneReturnValue(void)
-{
+static void SafariHandleOneReturnValue(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleOneReturnValue_Duplicate(void)
-{
+static void SafariHandleOneReturnValue_Duplicate(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd37(void)
-{
+static void SafariHandleCmd37(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd38(void)
-{
+static void SafariHandleCmd38(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd39(void)
-{
+static void SafariHandleCmd39(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd40(void)
-{
+static void SafariHandleCmd40(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleHitAnimation(void)
-{
+static void SafariHandleHitAnimation(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd42(void)
-{
+static void SafariHandleCmd42(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandlePlaySE(void)
-{
+static void SafariHandlePlaySE(void) {
     s8 pan;
 
     if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
@@ -596,66 +512,55 @@ static void SafariHandlePlaySE(void)
     SafariBufferExecCompleted();
 }
 
-static void SafariHandlePlayFanfareOrBGM(void)
-{
-    if (gBattleBufferA[gActiveBattler][3])
-    {
+static void SafariHandlePlayFanfareOrBGM(void) {
+    if (gBattleBufferA[gActiveBattler][3]) {
         BattleStopLowHpSound();
         PlayBGM(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
-    }
-    else
-    {
+    } else {
         PlayFanfare(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
     }
 
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleFaintingCry(void)
-{
+static void SafariHandleFaintingCry(void) {
     u16 species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
 
     PlayCry1(species, 25);
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleIntroSlide(void)
-{
+static void SafariHandleIntroSlide(void) {
     HandleIntroSlide(gBattleBufferA[gActiveBattler][1]);
     gIntroSlideFlags |= 1;
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleIntroTrainerBallThrow(void)
-{
-    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_SAFARI_ALL_TEXT);
+static void SafariHandleIntroTrainerBallThrow(void) {
+    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]],
+                             HEALTHBOX_SAFARI_ALL_TEXT);
     sub_8076918(gActiveBattler);
     SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthboxSpriteCallbackDummy;
 }
 
-static void SafariHandleDrawPartyStatusSummary(void)
-{
+static void SafariHandleDrawPartyStatusSummary(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleHidePartyStatusSummary(void)
-{
+static void SafariHandleHidePartyStatusSummary(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleEndBounceEffect(void)
-{
+static void SafariHandleEndBounceEffect(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleSpriteInvisibility(void)
-{
+static void SafariHandleSpriteInvisibility(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleBattleAnimation(void)
-{
+static void SafariHandleBattleAnimation(void) {
     u8 animationId = gBattleBufferA[gActiveBattler][1];
     u16 argument = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
 
@@ -665,18 +570,15 @@ static void SafariHandleBattleAnimation(void)
         gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedBattleAnimation;
 }
 
-static void SafariHandleLinkStandbyMsg(void)
-{
+static void SafariHandleLinkStandbyMsg(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleResetActionMoveSelection(void)
-{
+static void SafariHandleResetActionMoveSelection(void) {
     SafariBufferExecCompleted();
 }
 
-static void SafariHandleCmd55(void)
-{
+static void SafariHandleCmd55(void) {
     gBattleOutcome = gBattleBufferA[gActiveBattler][1];
     FadeOutMapMusic(5);
     BeginFastPaletteFade(3);
@@ -685,6 +587,5 @@ static void SafariHandleCmd55(void)
         gBattlerControllerFuncs[gActiveBattler] = sub_81595E4;
 }
 
-static void SafariCmdEnd(void)
-{
+static void SafariCmdEnd(void) {
 }

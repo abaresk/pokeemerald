@@ -5,13 +5,13 @@
 
 EWRAM_DATA struct DecorationInventory gDecorationInventories[DECORCAT_COUNT] = {};
 
-#define SET_DECOR_INV(i, ptr) {\
-    gDecorationInventories[i].items = ptr;\
-    gDecorationInventories[i].size = ARRAY_COUNT(ptr);\
-}
+#define SET_DECOR_INV(i, ptr)                              \
+    {                                                      \
+        gDecorationInventories[i].items = ptr;             \
+        gDecorationInventories[i].size = ARRAY_COUNT(ptr); \
+    }
 
-void SetDecorationInventoriesPointers(void)
-{
+void SetDecorationInventoriesPointers(void) {
     SET_DECOR_INV(DECORCAT_DESK, gSaveBlock1Ptr->decorationDesks);
     SET_DECOR_INV(DECORCAT_CHAIR, gSaveBlock1Ptr->decorationChairs);
     SET_DECOR_INV(DECORCAT_PLANT, gSaveBlock1Ptr->decorationPlants);
@@ -23,25 +23,21 @@ void SetDecorationInventoriesPointers(void)
     InitDecorationContextItems();
 }
 
-static void ClearDecorationInventory(u8 category)
-{
+static void ClearDecorationInventory(u8 category) {
     u8 i;
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
+    for (i = 0; i < gDecorationInventories[category].size; i++)
         gDecorationInventories[category].items[i] = DECOR_NONE;
 }
 
-void ClearDecorationInventories(void)
-{
+void ClearDecorationInventories(void) {
     u8 category;
     for (category = 0; category < 8; category++)
         ClearDecorationInventory(category);
 }
 
-s8 GetFirstEmptyDecorSlot(u8 category)
-{
+s8 GetFirstEmptyDecorSlot(u8 category) {
     s8 i;
-    for (i = 0; i < (s8)gDecorationInventories[category].size; i++)
-    {
+    for (i = 0; i < (s8)gDecorationInventories[category].size; i++) {
         if (gDecorationInventories[category].items[i] == DECOR_NONE)
             return i;
     }
@@ -49,14 +45,12 @@ s8 GetFirstEmptyDecorSlot(u8 category)
     return -1;
 }
 
-bool8 CheckHasDecoration(u8 decor)
-{
+bool8 CheckHasDecoration(u8 decor) {
     u8 i;
     u8 category;
 
     category = gDecorations[decor].category;
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
-    {
+    for (i = 0; i < gDecorationInventories[category].size; i++) {
         if (gDecorationInventories[category].items[i] == decor)
             return TRUE;
     }
@@ -64,8 +58,7 @@ bool8 CheckHasDecoration(u8 decor)
     return FALSE;
 }
 
-bool8 DecorationAdd(u8 decor)
-{
+bool8 DecorationAdd(u8 decor) {
     u8 category;
     s8 idx;
 
@@ -79,8 +72,7 @@ bool8 DecorationAdd(u8 decor)
     return TRUE;
 }
 
-bool8 DecorationCheckSpace(u8 decor)
-{
+bool8 DecorationCheckSpace(u8 decor) {
     if (decor == DECOR_NONE)
         return FALSE;
     if (GetFirstEmptyDecorSlot(gDecorations[decor].category) == -1)
@@ -88,8 +80,7 @@ bool8 DecorationCheckSpace(u8 decor)
     return TRUE;
 }
 
-s8 DecorationRemove(u8 decor)
-{
+s8 DecorationRemove(u8 decor) {
     u8 i;
     u8 category;
 
@@ -97,11 +88,9 @@ s8 DecorationRemove(u8 decor)
     if (decor == DECOR_NONE)
         return 0;
 
-    for (i = 0; i < gDecorationInventories[gDecorations[decor].category].size; i ++)
-    {
+    for (i = 0; i < gDecorationInventories[gDecorations[decor].category].size; i++) {
         category = gDecorations[decor].category;
-        if (gDecorationInventories[category].items[i] == decor)
-        {
+        if (gDecorationInventories[category].items[i] == decor) {
             gDecorationInventories[category].items[i] = DECOR_NONE;
             CondenseDecorationsInCategory(category);
             return 1;
@@ -111,18 +100,16 @@ s8 DecorationRemove(u8 decor)
     return 0;
 }
 
-void CondenseDecorationsInCategory(u8 category)
-{
+void CondenseDecorationsInCategory(u8 category) {
     u8 i;
     u8 j;
     u8 tmp;
 
-    for (i = 0; i < gDecorationInventories[category].size; i ++)
-    {
-        for (j = i + 1; j < gDecorationInventories[category].size; j ++)
-        {
-            if (gDecorationInventories[category].items[j] != DECOR_NONE && (gDecorationInventories[category].items[i] == DECOR_NONE || gDecorationInventories[category].items[i] > gDecorationInventories[category].items[j]))
-            {
+    for (i = 0; i < gDecorationInventories[category].size; i++) {
+        for (j = i + 1; j < gDecorationInventories[category].size; j++) {
+            if (gDecorationInventories[category].items[j] != DECOR_NONE &&
+                (gDecorationInventories[category].items[i] == DECOR_NONE ||
+                 gDecorationInventories[category].items[i] > gDecorationInventories[category].items[j])) {
                 tmp = gDecorationInventories[category].items[i];
                 gDecorationInventories[category].items[i] = gDecorationInventories[category].items[j];
                 gDecorationInventories[category].items[j] = tmp;
@@ -131,14 +118,12 @@ void CondenseDecorationsInCategory(u8 category)
     }
 }
 
-u8 GetNumOwnedDecorationsInCategory(u8 category)
-{
+u8 GetNumOwnedDecorationsInCategory(u8 category) {
     u8 i;
     u8 ct;
 
     ct = 0;
-    for (i = 0; i < gDecorationInventories[category].size; i++)
-    {
+    for (i = 0; i < gDecorationInventories[category].size; i++) {
         if (gDecorationInventories[category].items[i] != DECOR_NONE)
             ct++;
     }
@@ -146,8 +131,7 @@ u8 GetNumOwnedDecorationsInCategory(u8 category)
     return ct;
 }
 
-u8 GetNumOwnedDecorations(void)
-{
+u8 GetNumOwnedDecorations(void) {
     u8 category;
     u8 count;
 

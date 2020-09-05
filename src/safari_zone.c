@@ -12,8 +12,7 @@
 #include "constants/game_stat.h"
 #include "field_screen_effect.h"
 
-struct PokeblockFeeder
-{
+struct PokeblockFeeder {
     /*0x00*/ s16 x;
     /*0x02*/ s16 y;
     /*0x04*/ s8 mapNum;
@@ -32,28 +31,24 @@ EWRAM_DATA u8 gNumSafariBalls = 0;
 EWRAM_DATA static u16 sSafariZoneStepCounter = 0;
 EWRAM_DATA static u8 sSafariZoneCaughtMons = 0;
 EWRAM_DATA static u8 sSafariZonePkblkUses = 0;
-EWRAM_DATA static struct PokeblockFeeder sPokeblockFeeders[NUM_POKEBLOCK_FEEDERS] = {0};
+EWRAM_DATA static struct PokeblockFeeder sPokeblockFeeders[NUM_POKEBLOCK_FEEDERS] = { 0 };
 
 static void ClearAllPokeblockFeeders(void);
 static void DecrementFeederStepCounters(void);
 
-bool32 GetSafariZoneFlag(void)
-{
+bool32 GetSafariZoneFlag(void) {
     return FlagGet(FLAG_SYS_SAFARI_MODE);
 }
 
-void SetSafariZoneFlag(void)
-{
+void SetSafariZoneFlag(void) {
     FlagSet(FLAG_SYS_SAFARI_MODE);
 }
 
-void ResetSafariZoneFlag(void)
-{
+void ResetSafariZoneFlag(void) {
     FlagClear(FLAG_SYS_SAFARI_MODE);
 }
 
-void EnterSafariMode(void)
-{
+void EnterSafariMode(void) {
     IncrementGameStat(GAME_STAT_ENTERED_SAFARI_ZONE);
     SetSafariZoneFlag();
     ClearAllPokeblockFeeders();
@@ -63,8 +58,7 @@ void EnterSafariMode(void)
     sSafariZonePkblkUses = 0;
 }
 
-void ExitSafariMode(void)
-{
+void ExitSafariMode(void) {
     sub_80EE44C(sSafariZoneCaughtMons, sSafariZonePkblkUses);
     ResetSafariZoneFlag();
     ClearAllPokeblockFeeders();
@@ -72,75 +66,59 @@ void ExitSafariMode(void)
     sSafariZoneStepCounter = 0;
 }
 
-bool8 SafariZoneTakeStep(void)
-{
-    if (GetSafariZoneFlag() == FALSE)
-    {
+bool8 SafariZoneTakeStep(void) {
+    if (GetSafariZoneFlag() == FALSE) {
         return FALSE;
     }
 
     DecrementFeederStepCounters();
     sSafariZoneStepCounter--;
-    if (sSafariZoneStepCounter == 0)
-    {
+    if (sSafariZoneStepCounter == 0) {
         ScriptContext1_SetupScript(SafariZone_EventScript_TimesUp);
         return TRUE;
     }
     return FALSE;
 }
 
-void SafariZoneRetirePrompt(void)
-{
+void SafariZoneRetirePrompt(void) {
     ScriptContext1_SetupScript(SafariZone_EventScript_RetirePrompt);
 }
 
-void CB2_EndSafariBattle(void)
-{
+void CB2_EndSafariBattle(void) {
     sSafariZonePkblkUses += gBattleResults.pokeblockThrows;
     if (gBattleOutcome == B_OUTCOME_CAUGHT)
         sSafariZoneCaughtMons++;
-    if (gNumSafariBalls != 0)
-    {
+    if (gNumSafariBalls != 0) {
         SetMainCallback2(CB2_ReturnToField);
-    }
-    else if (gBattleOutcome == B_OUTCOME_NO_SAFARI_BALLS)
-    {
+    } else if (gBattleOutcome == B_OUTCOME_NO_SAFARI_BALLS) {
         ScriptContext2_RunNewScript(SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
         gFieldCallback = sub_80AF6F0;
         SetMainCallback2(CB2_LoadMap);
-    }
-    else if (gBattleOutcome == B_OUTCOME_CAUGHT)
-    {
+    } else if (gBattleOutcome == B_OUTCOME_CAUGHT) {
         ScriptContext1_SetupScript(SafariZone_EventScript_OutOfBalls);
         ScriptContext1_Stop();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }
 }
 
-static void ClearPokeblockFeeder(u8 index)
-{
+static void ClearPokeblockFeeder(u8 index) {
     memset(&sPokeblockFeeders[index], 0, sizeof(struct PokeblockFeeder));
 }
 
-static void ClearAllPokeblockFeeders(void)
-{
+static void ClearAllPokeblockFeeders(void) {
     memset(sPokeblockFeeders, 0, sizeof(sPokeblockFeeders));
 }
 
-void GetPokeblockFeederInFront(void)
-{
+void GetPokeblockFeederInFront(void) {
     s16 x, y;
     u16 i;
 
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
 
-    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++)
-    {
-        if (gSaveBlock1Ptr->location.mapNum == sPokeblockFeeders[i].mapNum
-         && sPokeblockFeeders[i].x == x
-         && sPokeblockFeeders[i].y == y)
-        {
+    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++) {
+        if (gSaveBlock1Ptr->location.mapNum == sPokeblockFeeders[i].mapNum && sPokeblockFeeders[i].x == x &&
+            sPokeblockFeeders[i].y == y) {
             gSpecialVar_Result = i;
             StringCopy(gStringVar1, gPokeblockNames[sPokeblockFeeders[i].pokeblock.color]);
             return;
@@ -150,17 +128,14 @@ void GetPokeblockFeederInFront(void)
     gSpecialVar_Result = -1;
 }
 
-void GetPokeblockFeederWithinRange(void)
-{
+void GetPokeblockFeederWithinRange(void) {
     s16 x, y;
     u16 i;
 
     PlayerGetDestCoords(&x, &y);
 
-    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++)
-    {
-        if (gSaveBlock1Ptr->location.mapNum == sPokeblockFeeders[i].mapNum)
-        {
+    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++) {
+        if (gSaveBlock1Ptr->location.mapNum == sPokeblockFeeders[i].mapNum) {
             // Get absolute value of x and y distance from Pokeblock feeder on current map.
             x -= sPokeblockFeeders[i].x;
             y -= sPokeblockFeeders[i].y;
@@ -168,8 +143,7 @@ void GetPokeblockFeederWithinRange(void)
                 x *= -1;
             if (y < 0)
                 y *= -1;
-            if ((x + y) <= 5)
-            {
+            if ((x + y) <= 5) {
                 gSpecialVar_Result = i;
                 return;
             }
@@ -180,8 +154,7 @@ void GetPokeblockFeederWithinRange(void)
 }
 
 // unused
-struct Pokeblock *SafariZoneGetPokeblockInFront(void)
-{
+struct Pokeblock* SafariZoneGetPokeblockInFront(void) {
     GetPokeblockFeederInFront();
 
     if (gSpecialVar_Result == 0xFFFF)
@@ -190,8 +163,7 @@ struct Pokeblock *SafariZoneGetPokeblockInFront(void)
         return &sPokeblockFeeders[gSpecialVar_Result].pokeblock;
 }
 
-struct Pokeblock *SafariZoneGetActivePokeblock(void)
-{
+struct Pokeblock* SafariZoneGetActivePokeblock(void) {
     GetPokeblockFeederWithinRange();
 
     if (gSpecialVar_Result == 0xFFFF)
@@ -200,18 +172,13 @@ struct Pokeblock *SafariZoneGetActivePokeblock(void)
         return &sPokeblockFeeders[gSpecialVar_Result].pokeblock;
 }
 
-void SafariZoneActivatePokeblockFeeder(u8 pkblId)
-{
+void SafariZoneActivatePokeblockFeeder(u8 pkblId) {
     s16 x, y;
     u8 i;
 
-    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++)
-    {
+    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++) {
         // Find free entry in sPokeblockFeeders
-        if (sPokeblockFeeders[i].mapNum == 0
-         && sPokeblockFeeders[i].x == 0
-         && sPokeblockFeeders[i].y == 0)
-        {
+        if (sPokeblockFeeders[i].mapNum == 0 && sPokeblockFeeders[i].x == 0 && sPokeblockFeeders[i].y == 0) {
             // Initialize Pokeblock feeder
             GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
             sPokeblockFeeders[i].mapNum = gSaveBlock1Ptr->location.mapNum;
@@ -224,14 +191,11 @@ void SafariZoneActivatePokeblockFeeder(u8 pkblId)
     }
 }
 
-static void DecrementFeederStepCounters(void)
-{
+static void DecrementFeederStepCounters(void) {
     u8 i;
 
-    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++)
-    {
-        if (sPokeblockFeeders[i].stepCounter != 0)
-        {
+    for (i = 0; i < NUM_POKEBLOCK_FEEDERS; i++) {
+        if (sPokeblockFeeders[i].stepCounter != 0) {
             sPokeblockFeeders[i].stepCounter--;
             if (sPokeblockFeeders[i].stepCounter == 0)
                 ClearPokeblockFeeder(i);
@@ -240,18 +204,15 @@ static void DecrementFeederStepCounters(void)
 }
 
 // unused
-bool8 GetInFrontFeederPokeblockAndSteps(void)
-{
+bool8 GetInFrontFeederPokeblockAndSteps(void) {
     GetPokeblockFeederInFront();
 
-    if (gSpecialVar_Result == 0xFFFF)
-    {
+    if (gSpecialVar_Result == 0xFFFF) {
         return FALSE;
     }
 
-    ConvertIntToDecimalStringN(gStringVar2,
-        sPokeblockFeeders[gSpecialVar_Result].stepCounter,
-        STR_CONV_MODE_LEADING_ZEROS, 3);
+    ConvertIntToDecimalStringN(gStringVar2, sPokeblockFeeders[gSpecialVar_Result].stepCounter,
+                               STR_CONV_MODE_LEADING_ZEROS, 3);
 
     return TRUE;
 }

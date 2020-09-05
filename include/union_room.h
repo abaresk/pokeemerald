@@ -7,48 +7,41 @@
 
 // Exported type declarations
 
-struct WirelessGnameUnamePair
-{
+struct WirelessGnameUnamePair {
     struct GFtgtGname gname;
     u8 ALIGNED(4) playerName[PLAYER_NAME_LENGTH + 1];
 };
 
-struct UnkStruct_x1C
-{
+struct UnkStruct_x1C {
     struct WirelessGnameUnamePair gname_uname;
-    u8 active:1;
+    u8 active : 1;
 };
 
-struct UnkStruct_x20
-{
+struct UnkStruct_x20 {
     struct WirelessGnameUnamePair gname_uname;
     u16 timeoutCounter;
-    u8 groupScheduledAnim:2;
-    bool8 useRedText:1; // Never set
+    u8 groupScheduledAnim : 2;
+    bool8 useRedText : 1; // Never set
     u8 field_1B;
     u8 filler[3];
 };
 
-struct UnkStruct_Main0
-{
+struct UnkStruct_Main0 {
     struct UnkStruct_x20 arr[MAX_UNION_ROOM_PLAYERS];
 };
 
-struct UnkStruct_Main4
-{
+struct UnkStruct_Main4 {
     struct UnkStruct_x1C arr[MAX_RFU_PLAYERS];
 };
 
-struct UnkStruct_Main8
-{
+struct UnkStruct_Main8 {
     struct UnkStruct_x20 arr[MAX_RFU_PLAYERS];
 };
 
-struct WirelessLink_Leader
-{
-    struct UnkStruct_Main0 *field_0;
-    struct UnkStruct_Main4 *field_4;
-    struct UnkStruct_Main8 *field_8;
+struct WirelessLink_Leader {
+    struct UnkStruct_Main0* field_0;
+    struct UnkStruct_Main4* field_4;
+    struct UnkStruct_Main8* field_8;
     u8 state;
     u8 textState;
     u8 delayTimerAfterOk;
@@ -65,10 +58,9 @@ struct WirelessLink_Leader
     u16 memberConfirmTimeout;
 };
 
-struct WirelessLink_Group
-{
-    struct UnkStruct_Main0 *field_0;
-    struct UnkStruct_Main4 *field_4;
+struct WirelessLink_Group {
+    struct UnkStruct_Main0* field_0;
+    struct UnkStruct_Main4* field_4;
     u8 state;
     u8 textState;
     u8 field_A;
@@ -85,20 +77,18 @@ struct WirelessLink_Group
     u8 delayBeforePrint;
 };
 
-struct UnionRoomObject
-{
+struct UnionRoomObject {
     u8 state;
     u8 gfxId;
     s8 animState;
     u8 schedAnim;
 };
 
-struct WirelessLink_URoom
-{
-    struct UnkStruct_Main0 *field_0;
-    struct UnkStruct_Main4 *field_4;
-    struct UnkStruct_Main0 *field_8;
-    struct UnkStruct_Main4 *field_C;
+struct WirelessLink_URoom {
+    struct UnkStruct_Main0* field_0;
+    struct UnkStruct_Main4* field_4;
+    struct UnkStruct_Main0* field_8;
+    struct UnkStruct_Main4* field_C;
     u16 unknown; // Never read
     u16 field_12;
     u8 state;
@@ -124,15 +114,13 @@ struct WirelessLink_URoom
     u8 trainerCardMsgStrBuffer[200];
 };
 
-union WirelessLink_Main
-{
-    struct WirelessLink_Leader *leader;
-    struct WirelessLink_Group *group;
-    struct WirelessLink_URoom *uRoom;
+union WirelessLink_Main {
+    struct WirelessLink_Leader* leader;
+    struct WirelessLink_Group* group;
+    struct WirelessLink_URoom* uRoom;
 };
 
-struct UnionRoomTrade
-{
+struct UnionRoomTrade {
     u16 state;
     u16 type;
     u32 playerPersonality;
@@ -165,4 +153,4 @@ void MEvent_CreateTask_Leader(u32 arg0);
 u8 CreateTask_ListenToWireless(void);
 void StartUnionRoomBattle(u16 battleFlags);
 
-#endif //GUARD_UNION_ROOM_H
+#endif // GUARD_UNION_ROOM_H

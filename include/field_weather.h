@@ -4,24 +4,20 @@
 #include "sprite.h"
 #include "constants/field_weather.h"
 
-struct Weather
-{
-    union
-    {
-        struct
-        {
-            struct Sprite *rainSprites[MAX_RAIN_SPRITES];
-            struct Sprite *snowflakeSprites[101];
-            struct Sprite *cloudSprites[NUM_CLOUD_SPRITES];
+struct Weather {
+    union {
+        struct {
+            struct Sprite* rainSprites[MAX_RAIN_SPRITES];
+            struct Sprite* snowflakeSprites[101];
+            struct Sprite* cloudSprites[NUM_CLOUD_SPRITES];
         } s1;
-        struct
-        {
+        struct {
             u8 filler0[0xA0];
-            struct Sprite *fogHSprites[NUM_FOG_HORIZONTAL_SPRITES];
-            struct Sprite *ashSprites[NUM_ASH_SPRITES];
-            struct Sprite *fogDSprites[NUM_FOG_DIAGONAL_SPRITES];
-            struct Sprite *sandstormSprites1[NUM_SANDSTORM_SPRITES];
-            struct Sprite *sandstormSprites2[NUM_SWIRL_SANDSTORM_SPRITES];
+            struct Sprite* fogHSprites[NUM_FOG_HORIZONTAL_SPRITES];
+            struct Sprite* ashSprites[NUM_ASH_SPRITES];
+            struct Sprite* fogDSprites[NUM_FOG_DIAGONAL_SPRITES];
+            struct Sprite* sandstormSprites1[NUM_SANDSTORM_SPRITES];
+            struct Sprite* sandstormSprites2[NUM_SWIRL_SANDSTORM_SPRITES];
         } s2;
     } sprites;
     u8 gammaShifts[19][32];
@@ -104,19 +100,19 @@ struct Weather
     u8 blendUpdateCounter;
     u8 blendFrameCounter;
     u8 blendDelay;
-    u8 filler_73B[0x3C-0x3B];
+    u8 filler_73B[0x3C - 0x3B];
     s16 unknown_73C;
     s16 unknown_73E;
     s16 unknown_740;
     s16 unknown_742;
-    u8 filler_744[0xD-4];
+    u8 filler_744[0xD - 4];
     s8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
 };
 
 // field_weather.c
 extern struct Weather gWeather;
-extern struct Weather *const gWeatherPtr;
+extern struct Weather* const gWeatherPtr;
 extern const u16 gUnknown_083970E8[];
 
 // field_weather_effect.c
@@ -133,7 +129,7 @@ bool8 IsWeatherNotFadingIn(void);
 void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex);
 void ApplyWeatherGammaShiftToPal(u8 paletteIndex);
 u8 sub_80ABF20(void);
-void LoadCustomWeatherSpritePalette(const u16 *palette);
+void LoadCustomWeatherSpritePalette(const u16* palette);
 void ResetDroughtWeatherPaletteLoading(void);
 bool8 LoadDroughtWeatherPalettes(void);
 void sub_80ABFE0(s8 gammaIndex);

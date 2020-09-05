@@ -7,25 +7,22 @@
 
 typedef u32 (*LoopedTask)(s32 state);
 
-struct PokenavMonList
-{
+struct PokenavMonList {
     u8 boxId;
     u8 monId;
     u16 data;
 };
 
-struct PokenavMatchCallEntries
-{
+struct PokenavMatchCallEntries {
     bool8 isSpecialTrainer;
     u8 mapSec;
     u16 headerId;
 };
 
-struct PokenavListTemplate
-{
+struct PokenavListTemplate {
     union {
-        struct PokenavMonList *monList;
-        struct PokenavMatchCallEntries *matchCallEntries;
+        struct PokenavMonList* monList;
+        struct PokenavMatchCallEntries* matchCallEntries;
     } list;
     u16 unk4;
     u16 unk6;
@@ -37,14 +34,13 @@ struct PokenavListTemplate
     u8 unkD;
     u8 unkE;
     union {
-        void (*unk10_1)(struct PokenavMonList *, u8 *a1);
-        void (*unk10_2)(struct PokenavMatchCallEntries *, u8 *a1);
+        void (*unk10_1)(struct PokenavMonList*, u8* a1);
+        void (*unk10_2)(struct PokenavMatchCallEntries*, u8* a1);
     } listFunc;
     void (*unk14)(u16 a0, u32 a1, u32 a2);
 };
 
-struct PokenavSub18
-{
+struct PokenavSub18 {
     u16 unk0;
     u16 unk2;
     struct PokenavMonList unk4[TOTAL_BOXES_COUNT * IN_BOX_COUNT + PARTY_SIZE];
@@ -58,15 +54,13 @@ struct PokenavSub18
 #define LT_FINISH 4
 #define LT_SET_STATE(newState) (newState + 5)
 
-enum
-{
+enum {
     POKENAV_MODE_NORMAL,           // Chosen from Start menu.
     POKENAV_MODE_FORCE_CALL_READY, // Pokenav tutorial before calling Mr. Stone
     POKENAV_MODE_FORCE_CALL_EXIT,  // Pokenav tutorial after calling Mr. Stone
 };
 
-enum
-{
+enum {
     POKENAV_GFX_MAIN_MENU,
     POKENAV_GFX_CONDITION_MENU,
     POKENAV_GFX_RIBBONS_MENU,
@@ -86,27 +80,25 @@ enum
 #define POKENAV_GFX_SUBMENUS_START POKENAV_GFX_PARTY_MENU
 
 #define POKENAV_MENU_IDS_START 100000
-enum
-{
-	POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START,
-	POKENAV_MAIN_MENU_CURSOR_ON_MAP,
-	POKENAV_CONDITION_MENU,
-	POKENAV_CONDITION_SEARCH_MENU,
-	POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL,
-	POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS,
-	POKENAV_REGION_MAP,
-	POKENAV_CONDITION_PARTY,
-	POKENAV_CONDITION_SEARCH_RESULTS,
-	POKENAV_MENU_9, // Condition
-	POKENAV_MENU_A, // Condition
-	POKENAV_MATCH_CALL,
-	POKENAV_RIBBONS_MON_LIST,
-	POKENAV_MENU_D, // Ribbons
-	POKENAV_MENU_E, // Ribbons
+enum {
+    POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START,
+    POKENAV_MAIN_MENU_CURSOR_ON_MAP,
+    POKENAV_CONDITION_MENU,
+    POKENAV_CONDITION_SEARCH_MENU,
+    POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL,
+    POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS,
+    POKENAV_REGION_MAP,
+    POKENAV_CONDITION_PARTY,
+    POKENAV_CONDITION_SEARCH_RESULTS,
+    POKENAV_MENU_9, // Condition
+    POKENAV_MENU_A, // Condition
+    POKENAV_MATCH_CALL,
+    POKENAV_RIBBONS_MON_LIST,
+    POKENAV_MENU_D, // Ribbons
+    POKENAV_MENU_E, // Ribbons
 };
 
-enum
-{
+enum {
     POKENAV_MENU_TYPE_DEFAULT,
     POKENAV_MENU_TYPE_UNLOCK_MC,
     POKENAV_MENU_TYPE_UNLOCK_MC_RIBBONS,
@@ -117,8 +109,7 @@ enum
 
 // Global IDs for menu selections
 // As opposed to the cursor position, which is only relative to the number of options for the current menu
-enum
-{
+enum {
     POKENAV_MENUITEM_MAP,
     POKENAV_MENUITEM_CONDITION,
     POKENAV_MENUITEM_MATCH_CALL,
@@ -138,8 +129,7 @@ enum
 // Max menu options (condition search uses 6)
 #define MAX_POKENAV_MENUITEMS 6
 
-enum
-{
+enum {
     HELPBAR_NONE,
     HELPBAR_MAP_ZOOMED_OUT,
     HELPBAR_MAP_ZOOMED_IN,
@@ -155,60 +145,46 @@ enum
     HELPBAR_COUNT
 };
 
-enum
-{
-	MC_HEADER_MR_STONE,
-	MC_HEADER_PROF_BIRCH,
-	MC_HEADER_BRENDAN,
-	MC_HEADER_MAY,
-	MC_HEADER_WALLY,
-	MC_HEADER_NORMAN,
-	MC_HEADER_MOM,
-	MC_HEADER_STEVEN,
-	MC_HEADER_SCOTT,
-	MC_HEADER_ROXANNE,
-	MC_HEADER_BRAWLY,
-	MC_HEADER_WATTSON,
-	MC_HEADER_FLANNERY,
-	MC_HEADER_WINONA,
-	MC_HEADER_TATE_LIZA,
-	MC_HEADER_JUAN,
-	MC_HEADER_SIDNEY,
-	MC_HEADER_PHOEBE,
-	MC_HEADER_GLACIA,
-	MC_HEADER_DRAKE,
-	MC_HEADER_WALLACE,
-	MC_HEADER_COUNT
+enum {
+    MC_HEADER_MR_STONE,
+    MC_HEADER_PROF_BIRCH,
+    MC_HEADER_BRENDAN,
+    MC_HEADER_MAY,
+    MC_HEADER_WALLY,
+    MC_HEADER_NORMAN,
+    MC_HEADER_MOM,
+    MC_HEADER_STEVEN,
+    MC_HEADER_SCOTT,
+    MC_HEADER_ROXANNE,
+    MC_HEADER_BRAWLY,
+    MC_HEADER_WATTSON,
+    MC_HEADER_FLANNERY,
+    MC_HEADER_WINONA,
+    MC_HEADER_TATE_LIZA,
+    MC_HEADER_JUAN,
+    MC_HEADER_SIDNEY,
+    MC_HEADER_PHOEBE,
+    MC_HEADER_GLACIA,
+    MC_HEADER_DRAKE,
+    MC_HEADER_WALLACE,
+    MC_HEADER_COUNT
 };
 
-enum
-{
-    MATCH_CALL_OPTION_CALL,
-    MATCH_CALL_OPTION_CHECK,
-    MATCH_CALL_OPTION_CANCEL,
-    MATCH_CALL_OPTION_COUNT
-};
+enum { MATCH_CALL_OPTION_CALL, MATCH_CALL_OPTION_CHECK, MATCH_CALL_OPTION_CANCEL, MATCH_CALL_OPTION_COUNT };
 
-enum
-{
-    CHECK_PAGE_STRATEGY,
-    CHECK_PAGE_POKEMON,
-    CHECK_PAGE_INTRO_1,
-    CHECK_PAGE_INTRO_2,
-    CHECK_PAGE_ENTRY_COUNT
-};
+enum { CHECK_PAGE_STRATEGY, CHECK_PAGE_POKEMON, CHECK_PAGE_INTRO_1, CHECK_PAGE_INTRO_2, CHECK_PAGE_ENTRY_COUNT };
 
-#define MCFLAVOR(name) {[CHECK_PAGE_STRATEGY] = gText_MatchCall##name##_Strategy, \
-                        [CHECK_PAGE_POKEMON]  = gText_MatchCall##name##_Pokemon,  \
-                        [CHECK_PAGE_INTRO_1]  = gText_MatchCall##name##_Intro1,   \
-                        [CHECK_PAGE_INTRO_2]  = gText_MatchCall##name##_Intro2}
-
+#define MCFLAVOR(name)                                                                                                 \
+    {                                                                                                                  \
+        [CHECK_PAGE_STRATEGY] = gText_MatchCall##name##_Strategy,                                                      \
+        [CHECK_PAGE_POKEMON] = gText_MatchCall##name##_Pokemon, [CHECK_PAGE_INTRO_1] = gText_MatchCall##name##_Intro1, \
+        [CHECK_PAGE_INTRO_2] = gText_MatchCall##name##_Intro2                                                          \
+    }
 
 // Pokenav Function IDs
 // Indices into the LoopedTask tables for each of the main Pokenav features
 
-enum
-{
+enum {
     POKENAV_MENU_FUNC_NONE,
     POKENAV_MENU_FUNC_MOVE_CURSOR,
     POKENAV_MENU_FUNC_OPEN_CONDITION,
@@ -220,8 +196,7 @@ enum
     POKENAV_MENU_FUNC_OPEN_FEATURE,
 };
 
-enum
-{
+enum {
     POKENAV_MC_FUNC_NONE,
     POKENAV_MC_FUNC_DOWN,
     POKENAV_MC_FUNC_UP,
@@ -240,8 +215,7 @@ enum
     POKENAV_MC_FUNC_EXIT
 };
 
-enum
-{
+enum {
     POKENAV_MAP_FUNC_NONE,
     POKENAV_MAP_FUNC_CURSOR_MOVED,
     POKENAV_MAP_FUNC_ZOOM_OUT,
@@ -256,10 +230,10 @@ u32 GetSelectedConditionSearch(void);
 void CB2_InitPokeNav(void);
 u32 CreateLoopedTask(LoopedTask loopedTask, u32 priority);
 bool32 FuncIsActiveLoopedTask(LoopedTask func);
-void *GetSubstructPtr(u32 index);
+void* GetSubstructPtr(u32 index);
 void FreePokenavSubstruct(u32 index);
-void *AllocSubstruct(u32 index, u32 size);
-void Pokenav_AllocAndLoadPalettes(const struct SpritePalette *palettes);
+void* AllocSubstruct(u32 index, u32 size);
+void Pokenav_AllocAndLoadPalettes(const struct SpritePalette* palettes);
 bool32 IsLoopedTaskActive(u32 taskId);
 void SetPokenavMode(u16 mode);
 u32 GetPokenavMode(void);
@@ -282,7 +256,7 @@ bool32 sub_81C8820(void);
 void PrintCheckPageInfo(s16 a0);
 u32 GetMatchCallListTopIndex(void);
 void sub_81C87F0(void);
-bool32 sub_81C81D4(const struct BgTemplate *arg0, struct PokenavListTemplate *arg1, s32 arg2);
+bool32 sub_81C81D4(const struct BgTemplate* arg0, struct PokenavListTemplate* arg1, s32 arg2);
 void sub_81C8234(void);
 
 // pokenav_match_call_data.c
@@ -293,29 +267,29 @@ bool32 MatchCall_GetEnabled(u32 idx);
 u32 MatchCall_GetRematchTableIdx(u32 idx);
 u32 GetTrainerIdxByRematchIdx(u32 rematchIdx);
 int MatchCall_GetOverrideFacilityClass(u32 idx);
-void MatchCall_GetMessage(u32 idx, u8 *dest);
-const u8 *MatchCall_GetOverrideFlavorText(u32 idx, u32 offset);
-void MatchCall_GetNameAndDesc(u32 idx, const u8 **desc, const u8 **name);
+void MatchCall_GetMessage(u32 idx, u8* dest);
+const u8* MatchCall_GetOverrideFlavorText(u32 idx, u32 offset);
+void MatchCall_GetNameAndDesc(u32 idx, const u8** desc, const u8** name);
 
 // pokenav_main_menu.c
 bool32 InitPokenavMainMenu(void);
-void CopyPaletteIntoBufferUnfaded(const u16 *palette, u32 bufferOffset, u32 size);
+void CopyPaletteIntoBufferUnfaded(const u16* palette, u32 bufferOffset, u32 size);
 void sub_81C7850(u32 a0);
 u32 sub_81C786C(void);
 void LoadLeftHeaderGfxForIndex(u32 arg0);
 void sub_81C7FA0(u32 arg0, bool32 arg1, bool32 arg2);
 void PokenavFadeScreen(s32 fadeType);
 bool32 sub_81C8010(void);
-void InitBgTemplates(const struct BgTemplate *templates, int count);
+void InitBgTemplates(const struct BgTemplate* templates, int count);
 bool32 IsPaletteFadeActive(void);
 void PrintHelpBarText(u32 textId);
 bool32 WaitForHelpBar(void);
 void sub_81C78A0(void);
 bool32 MainMenuLoopedTaskIsBusy(void);
 void sub_81C7FDC(void);
-void sub_81C79BC(const u16 *a0, const u16 *a1, u32 a2, u32 a3, u32 a4, u16 *a5);
+void sub_81C79BC(const u16* a0, const u16* a1, u32 a2, u32 a3, u32 a4, u16* a5);
 void sub_81C7B40(void);
-struct Sprite *PauseSpinningPokenavSprite(void);
+struct Sprite* PauseSpinningPokenavSprite(void);
 void ResumeSpinningPokenavSprite(void);
 void sub_81C7E14(u32 arg0);
 void sub_81C7FC4(u32 arg0, bool32 arg1);
@@ -323,7 +297,7 @@ void sub_81C7880(void);
 void sub_81C7990(u32 a0, u16 a1);
 u32 PokenavMainMenuLoopedTaskIsActive(void);
 bool32 WaitForPokenavShutdownFade(void);
-void sub_81C7834(void *func1, void *func2);
+void sub_81C7834(void* func1, void* func2);
 void ShutdownPokenav(void);
 
 // pokenav_menu_handler_1.c
@@ -354,16 +328,16 @@ void FreeMatchCallSubstruct1(void);
 int sub_81CAE28(void);
 int GetNumberRegistered(void);
 int sub_81CAE48(void);
-struct PokenavMatchCallEntries *sub_81CAE94(void);
+struct PokenavMatchCallEntries* sub_81CAE94(void);
 u16 GetMatchCallMapSec(int);
 bool32 ShouldDrawRematchPokeballIcon(int index);
 void ClearRematchPokeballIcon(u16 windowId, u32 a1);
 int GetMatchCallTrainerPic(int index);
-const u8 *GetMatchCallFlavorText(int index, int textType);
-const u8 *GetMatchCallMessageText(int index, u8 *arg1);
+const u8* GetMatchCallFlavorText(int index, int textType);
+const u8* GetMatchCallMessageText(int index, u8* arg1);
 u16 GetMatchCallOptionCursorPos(void);
 u16 GetMatchCallOptionId(int arg0);
-void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntries * arg0, u8 *str);
+void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntries* arg0, u8* str);
 u8 sub_81CB0C8(int rematchIndex);
 int GetIndexDeltaOfNextCheckPageDown(int index);
 int GetIndexDeltaOfNextCheckPageUp(int index);
@@ -391,17 +365,17 @@ u32 sub_81CD070(void);
 void sub_81CD1C0(void);
 bool32 sub_81CD3C4(void);
 bool32 sub_81CDD5C(void);
-struct ConditionGraph *sub_81CDC70(void);
+struct ConditionGraph* sub_81CDC70(void);
 u16 sub_81CDC60(void);
 u16 sub_81CDC50(void);
 u8 sub_81CDDB0(void);
 bool32 sub_81CD548(u8 arg0);
 u8 sub_81CDD7C(void);
-u8 *sub_81CDD04(u8 id);
-u8 *sub_81CDD24(u8 id);
+u8* sub_81CDD04(u8 id);
+u8* sub_81CDD24(u8 id);
 u16 sub_81CDD48(void);
-void *sub_81CDCB4(u8 id);
-void *sub_81CDCD4(u8 id);
+void* sub_81CDCB4(u8 id);
+void* sub_81CDCD4(u8 id);
 
 // pokenav_conditions_2.c
 bool32 sub_81CDDD4(void);

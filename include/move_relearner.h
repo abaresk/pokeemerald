@@ -4,4 +4,4 @@
 void TeachMoveRelearnerMove(void);
 void MoveRelearnerShowHideHearts(s32);
 
-#endif //GUARD_MOVE_RELEARNER_H
+#endif // GUARD_MOVE_RELEARNER_H

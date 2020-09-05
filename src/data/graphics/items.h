@@ -2,7 +2,8 @@ const u32 gItemIcon_QuestionMark[] = INCBIN_U32("graphics/items/icons/question_m
 const u32 gItemIconPalette_QuestionMark[] = INCBIN_U32("graphics/items/icon_palettes/question_mark.gbapal.lz");
 
 const u32 gItemIcon_ReturnToFieldArrow[] = INCBIN_U32("graphics/items/icons/return_to_field_arrow.4bpp.lz");
-const u32 gItemIconPalette_ReturnToFieldArrow[] = INCBIN_U32("graphics/items/icon_palettes/return_to_field_arrow.gbapal.lz");
+const u32 gItemIconPalette_ReturnToFieldArrow[] =
+    INCBIN_U32("graphics/items/icon_palettes/return_to_field_arrow.gbapal.lz");
 
 // Pokeballs
 
@@ -101,7 +102,8 @@ const u32 gItemIconPalette_Elixir[] = INCBIN_U32("graphics/items/icon_palettes/e
 const u32 gItemIconPalette_MaxElixir[] = INCBIN_U32("graphics/items/icon_palettes/max_elixir.gbapal.lz");
 
 const u32 gItemIcon_LavaCookie[] = INCBIN_U32("graphics/items/icons/lava_cookie.4bpp.lz");
-const u32 gItemIconPalette_LavaCookieAndLetter[] = INCBIN_U32("graphics/items/icon_palettes/lava_cookie_and_letter.gbapal.lz");
+const u32 gItemIconPalette_LavaCookieAndLetter[] =
+    INCBIN_U32("graphics/items/icon_palettes/lava_cookie_and_letter.gbapal.lz");
 
 const u32 gItemIcon_Flute[] = INCBIN_U32("graphics/items/icons/flute.4bpp.lz");
 const u32 gItemIconPalette_BlueFlute[] = INCBIN_U32("graphics/items/icon_palettes/blue_flute.gbapal.lz");
@@ -472,7 +474,8 @@ const u32 gItemIcon_MiracleSeed[] = INCBIN_U32("graphics/items/icons/miracle_see
 const u32 gItemIconPalette_MiracleSeed[] = INCBIN_U32("graphics/items/icon_palettes/miracle_seed.gbapal.lz");
 
 const u32 gItemIcon_BlackGlasses[] = INCBIN_U32("graphics/items/icons/black_glasses.4bpp.lz");
-const u32 gItemIconPalette_BlackTypeEnhancingItem[] = INCBIN_U32("graphics/items/icon_palettes/black_type_enhancing_item.gbapal.lz");
+const u32 gItemIconPalette_BlackTypeEnhancingItem[] =
+    INCBIN_U32("graphics/items/icon_palettes/black_type_enhancing_item.gbapal.lz");
 
 const u32 gItemIcon_BlackBelt[] = INCBIN_U32("graphics/items/icons/black_belt.4bpp.lz");
 

@@ -10,47 +10,29 @@
 
 #define DEFAULT_MAX_SIZE 0x8000 // was 0x8100 in Ruby/Sapphire
 
-struct UnknownStruct
-{
+struct UnknownStruct {
     u16 unk0;
     u8 unk2;
     u16 unk4;
 };
 
-static const struct UnknownStruct sBigMonSizeTable[] =
-{
-    {  290,   1,      0 },
-    {  300,   1,     10 },
-    {  400,   2,    110 },
-    {  500,   4,    310 },
-    {  600,  20,    710 },
-    {  700,  50,   2710 },
-    {  800, 100,   7710 },
-    {  900, 150,  17710 },
-    { 1000, 150,  32710 },
-    { 1100, 100, -17826 },
-    { 1200,  50,  -7826 },
-    { 1300,  20,  -2826 },
-    { 1400,   5,   -826 },
-    { 1500,   2,   -326 },
-    { 1600,   1,   -126 },
-    { 1700,   1,   -26 },
+static const struct UnknownStruct sBigMonSizeTable[] = {
+    { 290, 1, 0 },        { 300, 1, 10 },        { 400, 2, 110 },     { 500, 4, 310 },
+    { 600, 20, 710 },     { 700, 50, 2710 },     { 800, 100, 7710 },  { 900, 150, 17710 },
+    { 1000, 150, 32710 }, { 1100, 100, -17826 }, { 1200, 50, -7826 }, { 1300, 20, -2826 },
+    { 1400, 5, -826 },    { 1500, 2, -326 },     { 1600, 1, -126 },   { 1700, 1, -26 },
 };
 
-static const u8 sGiftRibbonsMonDataIds[] =
-{
-    MON_DATA_GIFT_RIBBON_1, MON_DATA_GIFT_RIBBON_2, MON_DATA_GIFT_RIBBON_3,
-    MON_DATA_GIFT_RIBBON_4, MON_DATA_GIFT_RIBBON_5, MON_DATA_GIFT_RIBBON_6,
-    MON_DATA_GIFT_RIBBON_7
-};
+static const u8 sGiftRibbonsMonDataIds[] = { MON_DATA_GIFT_RIBBON_1, MON_DATA_GIFT_RIBBON_2, MON_DATA_GIFT_RIBBON_3,
+                                             MON_DATA_GIFT_RIBBON_4, MON_DATA_GIFT_RIBBON_5, MON_DATA_GIFT_RIBBON_6,
+                                             MON_DATA_GIFT_RIBBON_7 };
 
 extern const u8 gText_DecimalPoint[];
 extern const u8 gText_Marco[];
 
 #define CM_PER_INCH 2.54
 
-static u32 GetMonSizeHash(struct Pokemon *pkmn)
-{
+static u32 GetMonSizeHash(struct Pokemon* pkmn) {
     u16 personality = GetMonData(pkmn, MON_DATA_PERSONALITY);
     u16 hpIV = GetMonData(pkmn, MON_DATA_HP_IV) & 0xF;
     u16 attackIV = GetMonData(pkmn, MON_DATA_ATK_IV) & 0xF;
@@ -64,20 +46,17 @@ static u32 GetMonSizeHash(struct Pokemon *pkmn)
     return (hibyte << 8) + lobyte;
 }
 
-static u8 TranslateBigMonSizeTableIndex(u16 a)
-{
+static u8 TranslateBigMonSizeTableIndex(u16 a) {
     u8 i;
 
-    for (i = 1; i < 15; i++)
-    {
+    for (i = 1; i < 15; i++) {
         if (a < sBigMonSizeTable[i].unk4)
             return i - 1;
     }
     return i;
 }
 
-static u32 GetMonSize(u16 species, u16 b)
-{
+static u32 GetMonSize(u16 species, u16 b) {
     u64 unk2;
     u64 unk4;
     u64 unk0;
@@ -93,10 +72,9 @@ static u32 GetMonSize(u16 species, u16 b)
     return height * unk0 / 10;
 }
 
-static void FormatMonSizeRecord(u8 *string, u32 size)
-{
+static void FormatMonSizeRecord(u8* string, u32 size) {
 #ifdef UNITS_IMPERIAL
-    //Convert size from centimeters to inches
+    // Convert size from centimeters to inches
     size = (double)(size * 10) / (CM_PER_INCH * 10);
 #endif
 
@@ -105,22 +83,15 @@ static void FormatMonSizeRecord(u8 *string, u32 size)
     ConvertIntToDecimalStringN(string, size % 10, STR_CONV_MODE_LEFT_ALIGN, 1);
 }
 
-static u8 CompareMonSize(u16 species, u16 *sizeRecord)
-{
-    if (gSpecialVar_Result == 0xFF)
-    {
+static u8 CompareMonSize(u16 species, u16* sizeRecord) {
+    if (gSpecialVar_Result == 0xFF) {
         return 0;
-    }
-    else
-    {
-        struct Pokemon *pkmn = &gPlayerParty[gSpecialVar_Result];
+    } else {
+        struct Pokemon* pkmn = &gPlayerParty[gSpecialVar_Result];
 
-        if (GetMonData(pkmn, MON_DATA_IS_EGG) == TRUE || GetMonData(pkmn, MON_DATA_SPECIES) != species)
-        {
+        if (GetMonData(pkmn, MON_DATA_IS_EGG) == TRUE || GetMonData(pkmn, MON_DATA_SPECIES) != species) {
             return 1;
-        }
-        else
-        {
+        } else {
             u32 oldSize;
             u32 newSize;
             u16 sizeParams;
@@ -129,12 +100,9 @@ static u8 CompareMonSize(u16 species, u16 *sizeRecord)
             newSize = GetMonSize(species, sizeParams);
             oldSize = GetMonSize(species, *sizeRecord);
             FormatMonSizeRecord(gStringVar2, newSize);
-            if (newSize <= oldSize)
-            {
+            if (newSize <= oldSize) {
                 return 2;
-            }
-            else
-            {
+            } else {
                 *sizeRecord = sizeParams;
                 return 3;
             }
@@ -143,8 +111,7 @@ static u8 CompareMonSize(u16 species, u16 *sizeRecord)
 }
 
 // Stores species name in gStringVar1, trainer's name in gStringVar2, and size in gStringVar3
-static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
-{
+static void GetMonSizeRecordInfo(u16 species, u16* sizeRecord) {
     u32 size = GetMonSize(species, *sizeRecord);
 
     FormatMonSizeRecord(gStringVar3, size);
@@ -155,61 +122,51 @@ static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
         StringCopy(gStringVar2, gSaveBlock2Ptr->playerName);
 }
 
-void InitSeedotSizeRecord(void)
-{
+void InitSeedotSizeRecord(void) {
     VarSet(VAR_SEEDOT_SIZE_RECORD, DEFAULT_MAX_SIZE);
 }
 
-void GetSeedotSizeRecordInfo(void)
-{
-    u16 *sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
+void GetSeedotSizeRecordInfo(void) {
+    u16* sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
 
     GetMonSizeRecordInfo(SPECIES_SEEDOT, sizeRecord);
 }
 
-void CompareSeedotSize(void)
-{
-    u16 *sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
+void CompareSeedotSize(void) {
+    u16* sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
 
     gSpecialVar_Result = CompareMonSize(SPECIES_SEEDOT, sizeRecord);
 }
 
-void InitLotadSizeRecord(void)
-{
+void InitLotadSizeRecord(void) {
     VarSet(VAR_LOTAD_SIZE_RECORD, DEFAULT_MAX_SIZE);
 }
 
-void GetLotadSizeRecordInfo(void)
-{
-    u16 *sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
+void GetLotadSizeRecordInfo(void) {
+    u16* sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
 
     GetMonSizeRecordInfo(SPECIES_LOTAD, sizeRecord);
 }
 
-void CompareLotadSize(void)
-{
-    u16 *sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
+void CompareLotadSize(void) {
+    u16* sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
 
     gSpecialVar_Result = CompareMonSize(SPECIES_LOTAD, sizeRecord);
 }
 
-void GiveGiftRibbonToParty(u8 index, u8 ribbonId)
-{
+void GiveGiftRibbonToParty(u8 index, u8 ribbonId) {
     s32 i;
     bool32 gotRibbon = FALSE;
     u8 data = 1;
     u8 array[8];
     memcpy(array, sGiftRibbonsMonDataIds, sizeof(sGiftRibbonsMonDataIds));
 
-    if (index < 11 && ribbonId < 65)
-    {
+    if (index < 11 && ribbonId < 65) {
         gSaveBlock1Ptr->giftRibbons[index] = ribbonId;
-        for (i = 0; i < PARTY_SIZE; i++)
-        {
-            struct Pokemon *mon = &gPlayerParty[i];
+        for (i = 0; i < PARTY_SIZE; i++) {
+            struct Pokemon* mon = &gPlayerParty[i];
 
-            if (GetMonData(mon, MON_DATA_SPECIES) != 0 && GetMonData(mon, MON_DATA_SANITY_IS_EGG) == 0)
-            {
+            if (GetMonData(mon, MON_DATA_SPECIES) != 0 && GetMonData(mon, MON_DATA_SANITY_IS_EGG) == 0) {
                 SetMonData(mon, array[index], &data);
                 gotRibbon = TRUE;
             }
