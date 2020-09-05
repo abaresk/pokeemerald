@@ -6,9 +6,9 @@ extern struct SaveBlock2 gSaveblock2;
 extern struct PokemonStorage gPokemonStorage;
 
 extern bool32 gFlashMemoryPresent;
-extern struct SaveBlock1 *gSaveBlock1Ptr;
-extern struct SaveBlock2 *gSaveBlock2Ptr;
-extern struct PokemonStorage *gPokemonStoragePtr;
+extern struct SaveBlock1* gSaveBlock1Ptr;
+extern struct SaveBlock2* gSaveBlock2Ptr;
+extern struct PokemonStorage* gPokemonStoragePtr;
 
 void CheckForFlashMemory(void);
 void ClearSav2(void);
@@ -28,7 +28,7 @@ void SaveSerializedGame(void);
 void LoadSerializedGame(void);
 void LoadPlayerBag(void);
 void SavePlayerBag(void);
-void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey);
-void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey);
+void ApplyNewEncryptionKeyToHword(u16* hWord, u32 newKey);
+void ApplyNewEncryptionKeyToWord(u32* word, u32 newKey);
 
 #endif // GUARD_LOAD_SAVE_H

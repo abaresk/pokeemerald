@@ -32,7 +32,7 @@ static EWRAM_DATA struct {
     u32 unused;
     struct RegionMap regionMap;
     u16 state;
-} *sFieldRegionMapHandler = NULL;
+}* sFieldRegionMapHandler = NULL;
 
 // Static ROM declarations
 
@@ -45,52 +45,25 @@ static void PrintRegionMapSecName(void);
 // .rodata
 
 static const struct BgTemplate sFieldRegionMapBgTemplates[] = {
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 31,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    }, {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 28,
-        .screenSize = 2,
-        .paletteMode = 1,
-        .priority = 2,
-        .baseTile = 0
-    }
+    { .bg = 0,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 31,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 0,
+      .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 2, .mapBaseIndex = 28, .screenSize = 2, .paletteMode = 1, .priority = 2, .baseTile = 0 }
 };
 
-static const struct WindowTemplate sFieldRegionMapWindowTemplates[] =
-{
-    {
-        .bg = 0,
-        .tilemapLeft = 17,
-        .tilemapTop = 17,
-        .width = 12,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 1
-    },
-    {
-        .bg = 0,
-        .tilemapLeft = 22,
-        .tilemapTop = 1,
-        .width = 7,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 25
-    },
+static const struct WindowTemplate sFieldRegionMapWindowTemplates[] = {
+    { .bg = 0, .tilemapLeft = 17, .tilemapTop = 17, .width = 12, .height = 2, .paletteNum = 15, .baseBlock = 1 },
+    { .bg = 0, .tilemapLeft = 22, .tilemapTop = 1, .width = 7, .height = 2, .paletteNum = 15, .baseBlock = 25 },
     DUMMY_WIN_TEMPLATE
 };
 
 // .text
 
-void FieldInitRegionMap(MainCallback callback)
-{
+void FieldInitRegionMap(MainCallback callback) {
     SetVBlankCallback(NULL);
     sFieldRegionMapHandler = malloc(sizeof(*sFieldRegionMapHandler));
     sFieldRegionMapHandler->state = 0;
@@ -98,8 +71,7 @@ void FieldInitRegionMap(MainCallback callback)
     SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
 
-static void MCB2_InitRegionMapRegisters(void)
-{
+static void MCB2_InitRegionMapRegisters(void) {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     SetGpuReg(REG_OFFSET_BG0HOFS, 0);
     SetGpuReg(REG_OFFSET_BG0VOFS, 0);
@@ -121,15 +93,13 @@ static void MCB2_InitRegionMapRegisters(void)
     SetVBlankCallback(VBCB_FieldUpdateRegionMap);
 }
 
-static void VBCB_FieldUpdateRegionMap(void)
-{
+static void VBCB_FieldUpdateRegionMap(void) {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void MCB2_FieldUpdateRegionMap(void)
-{
+static void MCB2_FieldUpdateRegionMap(void) {
     FieldUpdateRegionMap();
     AnimateSprites();
     BuildOamBuffer();
@@ -137,12 +107,10 @@ static void MCB2_FieldUpdateRegionMap(void)
     DoScheduledBgTilemapCopiesToVram();
 }
 
-static void FieldUpdateRegionMap(void)
-{
+static void FieldUpdateRegionMap(void) {
     u8 offset;
 
-    switch (sFieldRegionMapHandler->state)
-    {
+    switch (sFieldRegionMapHandler->state) {
         case 0:
             InitRegionMap(&sFieldRegionMapHandler->regionMap, FALSE);
             CreateRegionMapPlayerIcon(0, 0);
@@ -166,14 +134,12 @@ static void FieldUpdateRegionMap(void)
             sFieldRegionMapHandler->state++;
             break;
         case 3:
-            if (!gPaletteFade.active)
-            {
+            if (!gPaletteFade.active) {
                 sFieldRegionMapHandler->state++;
             }
             break;
         case 4:
-            switch (DoRegionMapInputCallback())
-            {
+            switch (DoRegionMapInputCallback()) {
                 case MAP_INPUT_MOVE_END:
                     PrintRegionMapSecName();
                     break;
@@ -188,12 +154,10 @@ static void FieldUpdateRegionMap(void)
             sFieldRegionMapHandler->state++;
             break;
         case 6:
-            if (!gPaletteFade.active)
-            {
+            if (!gPaletteFade.active) {
                 FreeRegionMapIconResources();
                 SetMainCallback2(sFieldRegionMapHandler->callback);
-                if (sFieldRegionMapHandler != NULL)
-                {
+                if (sFieldRegionMapHandler != NULL) {
                     FREE_AND_SET_NULL(sFieldRegionMapHandler);
                 }
                 FreeAllWindowBuffers();
@@ -202,16 +166,12 @@ static void FieldUpdateRegionMap(void)
     }
 }
 
-static void PrintRegionMapSecName(void)
-{
-    if (sFieldRegionMapHandler->regionMap.mapSecType != MAPSECTYPE_NONE)
-    {
+static void PrintRegionMapSecName(void) {
+    if (sFieldRegionMapHandler->regionMap.mapSecType != MAPSECTYPE_NONE) {
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
         AddTextPrinterParameterized(0, 1, sFieldRegionMapHandler->regionMap.mapSecName, 0, 1, 0, NULL);
         ScheduleBgCopyTilemapToVram(0);
-    }
-    else
-    {
+    } else {
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
         CopyWindowToVram(0, 3);
     }

@@ -5,15 +5,12 @@
 #include "constants/species.h"
 #include "strings.h"
 
-bool16 ScriptGetPokedexInfo(void)
-{
+bool16 ScriptGetPokedexInfo(void) {
     if (gSpecialVar_0x8004 == 0) // is national dex not present?
     {
         gSpecialVar_0x8005 = GetHoennPokedexCount(FLAG_GET_SEEN);
         gSpecialVar_0x8006 = GetHoennPokedexCount(FLAG_GET_CAUGHT);
-    }
-    else
-    {
+    } else {
         gSpecialVar_0x8005 = GetNationalPokedexCount(FLAG_GET_SEEN);
         gSpecialVar_0x8006 = GetNationalPokedexCount(FLAG_GET_CAUGHT);
     }
@@ -22,8 +19,7 @@ bool16 ScriptGetPokedexInfo(void)
 }
 
 // This shows your Hoenn Pokedex rating and not your National Dex.
-const u8 *GetPokedexRatingText(u16 count)
-{
+const u8* GetPokedexRatingText(u16 count) {
     if (count < 10)
         return gBirchDexRatingText_LessThan10;
     if (count < 20)
@@ -64,17 +60,20 @@ const u8 *GetPokedexRatingText(u16 count)
         return gBirchDexRatingText_LessThan190;
     if (count < 200)
         return gBirchDexRatingText_LessThan200;
-    if (count == 200)
-    {
-        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         || GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT)) // Jirachi or Deoxys is not counted towards the dex completion. If either of these flags are enabled, it means the actual count is less than 200.
+    if (count == 200) {
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT) ||
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(SPECIES_DEOXYS),
+                FLAG_GET_CAUGHT)) // Jirachi or Deoxys is not counted towards the dex completion. If either of these
+                                  // flags are enabled, it means the actual count is less than 200.
             return gBirchDexRatingText_LessThan200;
         return gBirchDexRatingText_DexCompleted;
     }
-    if (count == HOENN_DEX_COUNT - 1)
-    {
-        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         && GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT)) // If both of these flags are enabled, it means the actual count is less than 200.
+    if (count == HOENN_DEX_COUNT - 1) {
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT) &&
+            GetSetPokedexFlag(
+                SpeciesToNationalPokedexNum(SPECIES_DEOXYS),
+                FLAG_GET_CAUGHT)) // If both of these flags are enabled, it means the actual count is less than 200.
             return gBirchDexRatingText_LessThan200;
         return gBirchDexRatingText_DexCompleted;
     }
@@ -83,7 +82,6 @@ const u8 *GetPokedexRatingText(u16 count)
     return gBirchDexRatingText_LessThan10;
 }
 
-void ShowPokedexRatingMessage(void)
-{
+void ShowPokedexRatingMessage(void) {
     ShowFieldMessage(GetPokedexRatingText(gSpecialVar_0x8004));
 }

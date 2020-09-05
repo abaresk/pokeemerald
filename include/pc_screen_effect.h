@@ -1,8 +1,7 @@
 #ifndef GUARD_PC_SCREEN_EFFECT_H
 #define GUARD_PC_SCREEN_EFFECT_H
 
-struct PCScreenEffectStruct
-{
+struct PCScreenEffectStruct {
     /*0x00*/ u16 tileTag;
     /*0x02*/ u16 paletteTag;
     /*0x04*/ u16 unk04;
@@ -13,4 +12,4 @@ struct PCScreenEffectStruct
     /*0x10*/ u32 selectedPalettes;
 };
 
-#endif //GUARD_PC_SCREEN_EFFECT_H
+#endif // GUARD_PC_SCREEN_EFFECT_H

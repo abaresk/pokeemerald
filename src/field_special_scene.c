@@ -19,11 +19,10 @@
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
 
-#define SECONDS(value) ((signed) (60.0 * value + 0.5))
+#define SECONDS(value) ((signed)(60.0 * value + 0.5))
 
 // porthole states
-enum
-{
+enum {
     INIT_PORTHOLE,
     IDLE_CHECK,
     EXECUTE_MOVEMENT,
@@ -31,25 +30,16 @@ enum
 };
 
 //. rodata
-static const s8 gTruckCamera_HorizontalTable[] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, -1, -1, -1, 0};
+static const s8 gTruckCamera_HorizontalTable[] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, -1, -1, -1, 0 };
 
-static const u8 sSSTidalSailEastMovementScript[] = 
-{
-    MOVEMENT_ACTION_WALK_FAST_RIGHT, 
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sSSTidalSailEastMovementScript[] = { MOVEMENT_ACTION_WALK_FAST_RIGHT, MOVEMENT_ACTION_STEP_END };
 
-static const u8 sSSTidalSailWestMovementScript[] = 
-{
-    MOVEMENT_ACTION_WALK_FAST_LEFT, 
-    MOVEMENT_ACTION_STEP_END
-};
+static const u8 sSSTidalSailWestMovementScript[] = { MOVEMENT_ACTION_WALK_FAST_LEFT, MOVEMENT_ACTION_STEP_END };
 
 // .text
 static void Task_Truck3(u8);
 
-s16 GetTruckCameraBobbingY(int a1)
-{
+s16 GetTruckCameraBobbingY(int a1) {
     if (!(a1 % 120))
         return -1;
     else if ((a1 % 10) <= 4)
@@ -66,29 +56,30 @@ s16 GetTruckBoxMovement(int a1) // for the box movement?
     return 0;
 }
 
-void Task_Truck1(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
+void Task_Truck1(u8 taskId) {
+    s16* data = gTasks[taskId].data;
     s16 cameraXpan = 0, cameraYpan = 0;
     s16 box1, box2, box3;
 
     box1 = GetTruckBoxMovement(data[0] + 30) * 4; // top box.
-    SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 3 - cameraXpan, box1 + 3);
+    SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                           3 - cameraXpan, box1 + 3);
     box2 = GetTruckBoxMovement(data[0]) * 2; // bottom left box.
-    SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -cameraXpan, box2 - 3);
+    SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                           -cameraXpan, box2 - 3);
     box3 = GetTruckBoxMovement(data[0]) * 4; // bottom right box.
-    SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -3 - cameraXpan, box3);
+    SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                           -3 - cameraXpan, box3);
 
     if (++data[0] == SECONDS(500)) // this will never run
-        data[0] = 0; // reset the timer if it gets stuck.
+        data[0] = 0;               // reset the timer if it gets stuck.
 
     cameraYpan = GetTruckCameraBobbingY(data[0]);
     SetCameraPanning(cameraXpan, cameraYpan);
 }
 
-void Task_Truck2(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
+void Task_Truck2(u8 taskId) {
+    s16* data = gTasks[taskId].data;
     s16 cameraYpan;
     s16 cameraXpan;
     s16 box1;
@@ -98,17 +89,13 @@ void Task_Truck2(u8 taskId)
     data[0]++;
     data[2]++;
 
-    if (data[0] > 5)
-    {
+    if (data[0] > 5) {
         data[0] = 0;
         data[1]++;
     }
-    if ((u16)data[1] == 19)
-    {
+    if ((u16)data[1] == 19) {
         DestroyTask(taskId);
-    }
-    else
-    {
+    } else {
         if (gTruckCamera_HorizontalTable[data[1]] == 2)
             gTasks[taskId].func = Task_Truck3;
 
@@ -116,119 +103,112 @@ void Task_Truck2(u8 taskId)
         cameraYpan = GetTruckCameraBobbingY(data[2]);
         SetCameraPanning(cameraXpan, cameraYpan);
         box1 = GetTruckBoxMovement(data[2] + 30) * 4;
-        SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 3 - cameraXpan, box1 + 3);
+        SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               3 - cameraXpan, box1 + 3);
         box2 = GetTruckBoxMovement(data[2]) * 2;
-        SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -cameraXpan, box2 - 3);
+        SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               -cameraXpan, box2 - 3);
         box3 = GetTruckBoxMovement(data[2]) * 4;
-        SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -3 - cameraXpan, box3);
+        SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               -3 - cameraXpan, box3);
     }
 }
 
-static void Task_Truck3(u8 taskId)
-{
-   s16 *data = gTasks[taskId].data;
-   s16 cameraXpan;
-   s16 cameraYpan;
+static void Task_Truck3(u8 taskId) {
+    s16* data = gTasks[taskId].data;
+    s16 cameraXpan;
+    s16 cameraYpan;
 
-   data[0]++;
+    data[0]++;
 
-   if (data[0] > 5)
-   {
-       data[0] = 0;
-       data[1]++;
-   }
+    if (data[0] > 5) {
+        data[0] = 0;
+        data[1]++;
+    }
 
-   if ((u16)data[1] == 19)
-   {
-       DestroyTask(taskId);
-   }
-   else
-   {
-       cameraXpan = gTruckCamera_HorizontalTable[data[1]];
-       cameraYpan = 0;
-       SetCameraPanning(cameraXpan, 0);
-       SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 3 - cameraXpan, cameraYpan + 3);
-       SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -cameraXpan, cameraYpan - 3);
-       SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -3 - cameraXpan, cameraYpan);
-   }
-}
-
-void Task_HandleTruckSequence(u8 taskId)
-{
-   s16 *data = gTasks[taskId].data;
-
-    switch (data[0])
-    {
-        /*
-        Each case has a timer which is handled with data[1], incrementing
-        until it reaches the if function's condition, which sets the next task up.
-        */
-    case 0:
-        data[1]++;
-        if (data[1] == SECONDS(1.5))
-        {
-            SetCameraPanningCallback(NULL);
-            data[1] = 0; // reset the timer.
-            data[2] = CreateTask(Task_Truck1, 0xA);
-            data[0] = 1; // run the next case.
-            PlaySE(SE_TRUCK_MOVE);
-        }
-        break;
-    case 1:
-        data[1]++;
-        if (data[1] == SECONDS(2.5))
-        {
-            FadeInFromBlack();
-            data[1] = 0;
-            data[0] = 2;
-        }
-        break;
-    case 2:
-        data[1]++;
-        if (!gPaletteFade.active && data[1] > SECONDS(5))
-        {
-            data[1] = 0;
-            DestroyTask(data[2]);
-            data[3] = CreateTask(Task_Truck2, 0xA);
-            data[0] = 3;
-            PlaySE(SE_TRUCK_STOP);
-        }
-        break;
-    case 3:
-        if (!gTasks[data[3]].isActive) // is Truck2 no longer active (is Truck3 active?)
-        {
-            InstallCameraPanAheadCallback();
-            data[1] = 0;
-            data[0] = 4;
-        }
-        break;
-    case 4:
-        data[1]++;
-        if (data[1] == 90)
-        {
-            PlaySE(SE_TRUCK_UNLOAD);
-            data[1] = 0;
-            data[0] = 5;
-        }
-        break;
-    case 5:
-        data[1]++;
-        if (data[1] == 120)
-        {
-            MapGridSetMetatileIdAt(11, 8, METATILE_InsideOfTruck_ExitLight_Top);
-            MapGridSetMetatileIdAt(11, 9, METATILE_InsideOfTruck_ExitLight_Mid);
-            MapGridSetMetatileIdAt(11, 10, METATILE_InsideOfTruck_ExitLight_Bottom);
-            DrawWholeMapView();
-            PlaySE(SE_TRUCK_DOOR);
-            DestroyTask(taskId);
-            ScriptContext2_Disable();
-        }
-        break;
+    if ((u16)data[1] == 19) {
+        DestroyTask(taskId);
+    } else {
+        cameraXpan = gTruckCamera_HorizontalTable[data[1]];
+        cameraYpan = 0;
+        SetCameraPanning(cameraXpan, 0);
+        SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               3 - cameraXpan, cameraYpan + 3);
+        SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               -cameraXpan, cameraYpan - 3);
+        SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               -3 - cameraXpan, cameraYpan);
     }
 }
 
-void ExecuteTruckSequence(void)
-{
+void Task_HandleTruckSequence(u8 taskId) {
+    s16* data = gTasks[taskId].data;
+
+    switch (data[0]) {
+            /*
+            Each case has a timer which is handled with data[1], incrementing
+            until it reaches the if function's condition, which sets the next task up.
+            */
+        case 0:
+            data[1]++;
+            if (data[1] == SECONDS(1.5)) {
+                SetCameraPanningCallback(NULL);
+                data[1] = 0; // reset the timer.
+                data[2] = CreateTask(Task_Truck1, 0xA);
+                data[0] = 1; // run the next case.
+                PlaySE(SE_TRUCK_MOVE);
+            }
+            break;
+        case 1:
+            data[1]++;
+            if (data[1] == SECONDS(2.5)) {
+                FadeInFromBlack();
+                data[1] = 0;
+                data[0] = 2;
+            }
+            break;
+        case 2:
+            data[1]++;
+            if (!gPaletteFade.active && data[1] > SECONDS(5)) {
+                data[1] = 0;
+                DestroyTask(data[2]);
+                data[3] = CreateTask(Task_Truck2, 0xA);
+                data[0] = 3;
+                PlaySE(SE_TRUCK_STOP);
+            }
+            break;
+        case 3:
+            if (!gTasks[data[3]].isActive) // is Truck2 no longer active (is Truck3 active?)
+            {
+                InstallCameraPanAheadCallback();
+                data[1] = 0;
+                data[0] = 4;
+            }
+            break;
+        case 4:
+            data[1]++;
+            if (data[1] == 90) {
+                PlaySE(SE_TRUCK_UNLOAD);
+                data[1] = 0;
+                data[0] = 5;
+            }
+            break;
+        case 5:
+            data[1]++;
+            if (data[1] == 120) {
+                MapGridSetMetatileIdAt(11, 8, METATILE_InsideOfTruck_ExitLight_Top);
+                MapGridSetMetatileIdAt(11, 9, METATILE_InsideOfTruck_ExitLight_Mid);
+                MapGridSetMetatileIdAt(11, 10, METATILE_InsideOfTruck_ExitLight_Bottom);
+                DrawWholeMapView();
+                PlaySE(SE_TRUCK_DOOR);
+                DestroyTask(taskId);
+                ScriptContext2_Disable();
+            }
+            break;
+    }
+}
+
+void ExecuteTruckSequence(void) {
     MapGridSetMetatileIdAt(11, 8, METATILE_InsideOfTruck_DoorClosedFloor_Top);
     MapGridSetMetatileIdAt(11, 9, METATILE_InsideOfTruck_DoorClosedFloor_Mid);
     MapGridSetMetatileIdAt(11, 10, METATILE_InsideOfTruck_DoorClosedFloor_Bottom);
@@ -238,93 +218,83 @@ void ExecuteTruckSequence(void)
     CreateTask(Task_HandleTruckSequence, 0xA);
 }
 
-void EndTruckSequence(u8 taskId)
-{
-    if (!FuncIsActiveTask(Task_HandleTruckSequence))
-    {
-        SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 3, 3);
-        SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 0, -3);
-        SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, -3, 0);
+void EndTruckSequence(u8 taskId) {
+    if (!FuncIsActiveTask(Task_HandleTruckSequence)) {
+        SetObjectEventSpritePosByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 3,
+                                               3);
+        SetObjectEventSpritePosByLocalIdAndMap(2, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, 0,
+                                               -3);
+        SetObjectEventSpritePosByLocalIdAndMap(3, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup,
+                                               -3, 0);
     }
 }
 
-bool8 TrySetPortholeWarpDestination(void)
-{
+bool8 TrySetPortholeWarpDestination(void) {
     s8 mapGroup, mapNum;
     s16 x, y;
 
-    if (GetSSTidalLocation(&mapGroup, &mapNum, &x, &y) != SS_TIDAL_LOCATION_CURRENTS)
-    {
+    if (GetSSTidalLocation(&mapGroup, &mapNum, &x, &y) != SS_TIDAL_LOCATION_CURRENTS) {
         return FALSE;
-    }
-    else
-    {
+    } else {
         SetWarpDestination(mapGroup, mapNum, -1, x, y);
         return TRUE;
     }
 }
 
-void Task_HandlePorthole(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-    u16 *cruiseState = GetVarPointer(VAR_SS_TIDAL_STATE);
-    struct WarpData *location = &gSaveBlock1Ptr->location;
+void Task_HandlePorthole(u8 taskId) {
+    s16* data = gTasks[taskId].data;
+    u16* cruiseState = GetVarPointer(VAR_SS_TIDAL_STATE);
+    struct WarpData* location = &gSaveBlock1Ptr->location;
 
-    switch (data[0])
-    {
-    case INIT_PORTHOLE: // finish fading before making porthole finish.
-        if (!gPaletteFade.active)
-        {
-            data[1] = 0;
-            data[0] = EXECUTE_MOVEMENT; // execute movement before checking if should be exited. strange?
-        }
-        break;
-    case IDLE_CHECK:
-        if (gMain.newKeys & A_BUTTON)
-            data[1] = 1;
-        if (!ScriptMovement_IsObjectMovementFinished(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup))
-            return;
-        if (CountSSTidalStep(1) == TRUE)
-        {
-            if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT)
-                *cruiseState = SS_TIDAL_EXIT_CURRENTS_RIGHT;
-            else
-                *cruiseState = SS_TIDAL_EXIT_CURRENTS_LEFT;
-            data[0] = EXIT_PORTHOLE;
-            return;
-        }
-        data[0] = EXECUTE_MOVEMENT;
-        //fallthrough
-    case EXECUTE_MOVEMENT:
-        if (data[1])
-        {
-            data[0] = EXIT_PORTHOLE;
-            return;
-        }
+    switch (data[0]) {
+        case INIT_PORTHOLE: // finish fading before making porthole finish.
+            if (!gPaletteFade.active) {
+                data[1] = 0;
+                data[0] = EXECUTE_MOVEMENT; // execute movement before checking if should be exited. strange?
+            }
+            break;
+        case IDLE_CHECK:
+            if (gMain.newKeys & A_BUTTON)
+                data[1] = 1;
+            if (!ScriptMovement_IsObjectMovementFinished(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup))
+                return;
+            if (CountSSTidalStep(1) == TRUE) {
+                if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT)
+                    *cruiseState = SS_TIDAL_EXIT_CURRENTS_RIGHT;
+                else
+                    *cruiseState = SS_TIDAL_EXIT_CURRENTS_LEFT;
+                data[0] = EXIT_PORTHOLE;
+                return;
+            }
+            data[0] = EXECUTE_MOVEMENT;
+            // fallthrough
+        case EXECUTE_MOVEMENT:
+            if (data[1]) {
+                data[0] = EXIT_PORTHOLE;
+                return;
+            }
 
-        if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT)
-        {
-            ScriptMovement_StartObjectMovementScript(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailEastMovementScript);
-            data[0] = IDLE_CHECK;
-        }
-        else
-        {
-            ScriptMovement_StartObjectMovementScript(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailWestMovementScript);
-            data[0] = IDLE_CHECK;
-        }
-        break;
-    case EXIT_PORTHOLE:
-        FlagClear(FLAG_DONT_TRANSITION_MUSIC);
-        FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
-        SetWarpDestinationToDynamicWarp(0);
-        DoDiveWarp();
-        DestroyTask(taskId);
-        break;
+            if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT) {
+                ScriptMovement_StartObjectMovementScript(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup,
+                                                         sSSTidalSailEastMovementScript);
+                data[0] = IDLE_CHECK;
+            } else {
+                ScriptMovement_StartObjectMovementScript(OBJ_EVENT_ID_PLAYER, location->mapNum, location->mapGroup,
+                                                         sSSTidalSailWestMovementScript);
+                data[0] = IDLE_CHECK;
+            }
+            break;
+        case EXIT_PORTHOLE:
+            FlagClear(FLAG_DONT_TRANSITION_MUSIC);
+            FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
+            SetWarpDestinationToDynamicWarp(0);
+            DoDiveWarp();
+            DestroyTask(taskId);
+            break;
     }
 }
 
-static void ShowSSTidalWhileSailing(void)
-{
+static void ShowSSTidalWhileSailing(void) {
     u8 spriteId = AddPseudoObjectEvent(OBJ_EVENT_GFX_SS_TIDAL, SpriteCallbackDummy, 112, 80, 0);
 
     gSprites[spriteId].coordOffsetEnabled = FALSE;
@@ -335,8 +305,7 @@ static void ShowSSTidalWhileSailing(void)
         StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(DIR_WEST));
 }
 
-void FieldCB_ShowPortholeView(void)
-{
+void FieldCB_ShowPortholeView(void) {
     ShowSSTidalWhileSailing();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     FadeInFromBlack();
@@ -344,8 +313,7 @@ void FieldCB_ShowPortholeView(void)
     ScriptContext2_Enable();
 }
 
-void LookThroughPorthole(void)
-{
+void LookThroughPorthole(void) {
     FlagSet(FLAG_SYS_CRUISE_MODE);
     FlagSet(FLAG_DONT_TRANSITION_MUSIC);
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);

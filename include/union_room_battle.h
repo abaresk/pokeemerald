@@ -3,4 +3,4 @@
 
 void CB2_UnionRoomBattle(void);
 
-#endif //GUARD_UNION_ROOM_BATTLE_H
+#endif // GUARD_UNION_ROOM_BATTLE_H

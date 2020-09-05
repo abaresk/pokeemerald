@@ -1,12 +1,8 @@
 #define TRAINER_HILL_OTID 0x10000000
 
 static const struct TrHillTag sDataTagJPDefault = {
-    .numTrainers = NUM_TRAINER_HILL_TRAINERS_JP,
-    .unused1 = 1,
-    .numFloors = NUM_TRAINER_HILL_FLOORS_JP,
-    .checksum = 0x0
+    .numTrainers = NUM_TRAINER_HILL_TRAINERS_JP, .unused1 = 1, .numFloors = NUM_TRAINER_HILL_FLOORS_JP, .checksum = 0x0
 };
-
 
 static const struct TrHillFloor sDataTagJPDefault_Floors[] = {
     [0] = {
@@ -381,12 +377,8 @@ static const struct TrHillFloor sDataTagJPDefault_Floors[] = {
     },
 };
 
-static const struct TrHillTag sDataTagNormal =
-{
-    .numTrainers = NUM_TRAINER_HILL_TRAINERS,
-    .unused1 = 2,
-    .numFloors = NUM_TRAINER_HILL_FLOORS,
-    .checksum = 0x00051E05
+static const struct TrHillTag sDataTagNormal = {
+    .numTrainers = NUM_TRAINER_HILL_TRAINERS, .unused1 = 2, .numFloors = NUM_TRAINER_HILL_FLOORS, .checksum = 0x00051E05
 };
 
 static const struct TrHillFloor sDataTagNormal_Floors[] =
@@ -1601,12 +1593,8 @@ static const struct TrHillFloor sDataTagNormal_Floors[] =
     },
 };
 
-static const struct TrHillTag sDataTagVariety =
-{
-    .numTrainers = NUM_TRAINER_HILL_TRAINERS,
-    .unused1 = 1,
-    .numFloors = NUM_TRAINER_HILL_FLOORS,
-    .checksum = 0x00054C15
+static const struct TrHillTag sDataTagVariety = {
+    .numTrainers = NUM_TRAINER_HILL_TRAINERS, .unused1 = 1, .numFloors = NUM_TRAINER_HILL_FLOORS, .checksum = 0x00054C15
 };
 
 static const struct TrHillFloor sDataTagVariety_Floors[] = {
@@ -2827,12 +2815,8 @@ static const struct TrHillFloor sDataTagVariety_Floors[] = {
         },
 };
 
-static const struct TrHillTag sDataTagUnique =
-{
-    .numTrainers = NUM_TRAINER_HILL_TRAINERS,
-    .unused1 = 3,
-    .numFloors = NUM_TRAINER_HILL_FLOORS,
-    .checksum = 0x000652F3
+static const struct TrHillTag sDataTagUnique = {
+    .numTrainers = NUM_TRAINER_HILL_TRAINERS, .unused1 = 3, .numFloors = NUM_TRAINER_HILL_FLOORS, .checksum = 0x000652F3
 };
 
 static const struct TrHillFloor sDataTagUnique_Floors[] = {
@@ -4038,12 +4022,8 @@ static const struct TrHillFloor sDataTagUnique_Floors[] = {
         },
 };
 
-static const struct TrHillTag sDataTagExpert =
-{
-    .numTrainers = NUM_TRAINER_HILL_TRAINERS,
-    .unused1 = 1,
-    .numFloors = NUM_TRAINER_HILL_FLOORS,
-    .checksum = 0x00061F3F
+static const struct TrHillTag sDataTagExpert = {
+    .numTrainers = NUM_TRAINER_HILL_TRAINERS, .unused1 = 1, .numFloors = NUM_TRAINER_HILL_FLOORS, .checksum = 0x00061F3F
 };
 
 static const struct TrHillFloor sDataTagExpert_Floors[] = {

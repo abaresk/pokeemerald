@@ -5,8 +5,7 @@
 
 #define REMATCHES_COUNT 5
 
-struct RematchTrainer
-{
+struct RematchTrainer {
     u16 trainerIds[REMATCHES_COUNT];
     u16 mapGroup;
     u16 mapNum;
@@ -32,11 +31,11 @@ u8 GetSpecialBattleTransition(s32 arg0);
 void ChooseStarter(void);
 void ResetTrainerOpponentIds(void);
 void SetMapVarsToTrainer(void);
-const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data);
-void ConfigureAndSetUpOneTrainerBattle(u8 trainerObjEventId, const u8 *trainerScript);
-void ConfigureTwoTrainersBattle(u8 trainerObjEventId, const u8 *trainerScript);
+const u8* BattleSetup_ConfigureTrainerBattle(const u8* data);
+void ConfigureAndSetUpOneTrainerBattle(u8 trainerObjEventId, const u8* trainerScript);
+void ConfigureTwoTrainersBattle(u8 trainerObjEventId, const u8* trainerScript);
 void SetUpTwoTrainersBattle(void);
-bool32 GetTrainerFlagFromScriptPointer(const u8 *data);
+bool32 GetTrainerFlagFromScriptPointer(const u8* data);
 void SetUpTrainerMovement(void);
 u8 GetTrainerBattleMode(void);
 bool8 GetTrainerFlag(void);
@@ -46,13 +45,13 @@ void ClearTrainerFlag(u16 trainerId);
 void BattleSetup_StartTrainerBattle(void);
 void BattleSetup_StartRematchBattle(void);
 void ShowTrainerIntroSpeech(void);
-const u8 *BattleSetup_GetScriptAddrAfterBattle(void);
-const u8 *BattleSetup_GetTrainerPostBattleScript(void);
+const u8* BattleSetup_GetScriptAddrAfterBattle(void);
+const u8* BattleSetup_GetTrainerPostBattleScript(void);
 void ShowTrainerCantBattleSpeech(void);
 void SetUpTrainerEncounterMusic(void);
-const u8 *GetTrainerALoseText(void);
-const u8 *GetTrainerBLoseText(void);
-const u8 *GetTrainerWonSpeech(void);
+const u8* GetTrainerALoseText(void);
+const u8* GetTrainerBLoseText(void);
+const u8* GetTrainerWonSpeech(void);
 void UpdateRematchIfDefeated(s32 rematchTableId);
 void IncrementRematchStepCounter(void);
 void TryUpdateRandomTrainerRematches(u16 mapGroup, u16 mapNum);

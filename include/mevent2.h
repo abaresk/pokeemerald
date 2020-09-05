@@ -3,4 +3,4 @@
 
 void RecordIdOfWonderCardSenderByEventType(u32, u32);
 
-#endif //GUARD_MEVENT2_H
+#endif // GUARD_MEVENT2_H

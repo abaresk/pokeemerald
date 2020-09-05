@@ -1,14 +1,12 @@
 #ifndef GUARD_SAVE_H
 #define GUARD_SAVE_H
 
-struct SaveSectionLocation
-{
-    void *data;
+struct SaveSectionLocation {
+    void* data;
     u16 size;
 };
 
-struct SaveSection
-{
+struct SaveSection {
     u8 data[0xFF4];
     u16 id;
     u16 checksum;
@@ -17,14 +15,12 @@ struct SaveSection
 }; // size is 0x1000
 
 // headless save section?
-struct UnkSaveSection
-{
+struct UnkSaveSection {
     u8 data[0xFF4];
     u32 security;
 }; // size is 0xFF8
 
-struct SaveSectionOffsets
-{
+struct SaveSectionOffsets {
     u16 toAdd;
     u16 size;
 };
@@ -36,50 +32,48 @@ struct SaveSectionOffsets
 #define SPECIAL_SECTION_SENTINEL 0xB39D
 
 // SetDamagedSectorBits states
-enum
-{
+enum {
     ENABLE,
     DISABLE,
     CHECK // unused
 };
 
 // Do save types
-enum
-{
+enum {
     SAVE_NORMAL,
     SAVE_LINK,
-    //EREADER_SAVE, // deprecated in Emerald
+    // EREADER_SAVE, // deprecated in Emerald
     SAVE_LINK2, // unknown 2nd link save
     SAVE_HALL_OF_FAME,
     SAVE_OVERWRITE_DIFFERENT_FILE,
     SAVE_HALL_OF_FAME_ERASE_BEFORE // unused
 };
 
-#define SECTOR_ID_SAVEBLOCK2  0
+#define SECTOR_ID_SAVEBLOCK2 0
 #define SECTOR_ID_SAVEBLOCK1_START 1
-#define SECTOR_ID_SAVEBLOCK1_END   4
+#define SECTOR_ID_SAVEBLOCK1_END 4
 #define SECTOR_ID_PKMN_STORAGE_START 5
-#define SECTOR_ID_PKMN_STORAGE_END   13
+#define SECTOR_ID_PKMN_STORAGE_END 13
 #define SECTOR_SAVE_SLOT_LENGTH 14
 // Save Slot 1: 0-13;  Save Slot 2: 14-27
 #define SECTOR_ID_HOF_1 28
 #define SECTOR_ID_HOF_2 29
 #define SECTOR_ID_TRAINER_HILL 30
-#define SECTOR_ID_RECORDED_BATTLE  31
+#define SECTOR_ID_RECORDED_BATTLE 31
 #define SECTORS_COUNT 32
 
-#define SAVE_STATUS_EMPTY    0
-#define SAVE_STATUS_OK       1
-#define SAVE_STATUS_CORRUPT  2
+#define SAVE_STATUS_EMPTY 0
+#define SAVE_STATUS_OK 1
+#define SAVE_STATUS_CORRUPT 2
 #define SAVE_STATUS_NO_FLASH 4
-#define SAVE_STATUS_ERROR    0xFF
+#define SAVE_STATUS_ERROR 0xFF
 
 extern u16 gLastWrittenSector;
 extern u32 gLastSaveCounter;
 extern u16 gLastKnownGoodSector;
 extern u32 gDamagedSaveSectors;
 extern u32 gSaveCounter;
-extern struct SaveSection *gFastSaveSection;
+extern struct SaveSection* gFastSaveSection;
 extern u16 gUnknown_03006208;
 extern u16 gSaveFileStatus;
 extern void (*gGameContinueCallback)(void);

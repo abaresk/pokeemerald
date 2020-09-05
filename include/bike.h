@@ -1,22 +1,23 @@
 #ifndef GUARD_BIKE_H
 #define GUARD_BIKE_H
 
-// the struct below is used for checking button combinations of the last input so that the acro can potentially perform a side/turn jump.
-// its possible that at some point Game Freak intended for the acro bike to have more complex tricks: but only the acro jump combinations can be seen in the final ROM.
-struct BikeHistoryInputInfo
-{
-    u32 dirHistoryMatch; // the direction you need to press
+// the struct below is used for checking button combinations of the last input so that the acro can potentially perform
+// a side/turn jump. its possible that at some point Game Freak intended for the acro bike to have more complex tricks:
+// but only the acro jump combinations can be seen in the final ROM.
+struct BikeHistoryInputInfo {
+    u32 dirHistoryMatch;           // the direction you need to press
     u32 abStartSelectHistoryMatch; // the button you need to press
-    u32 dirHistoryMask; // mask applied so that way only the recent nybble (the recent input) is checked
-    u32 abStartSelectHistoryMask; // mask applied so that way only the recent nybble (the recent input) is checked
-    const u8 *dirTimerHistoryList; // list of timers to check for direction before the button+dir combination can be verified.
-    const u8 *abStartSelectHistoryList; // list of timers to check for buttons before the button+dir combination can be verified.
-    u32 direction; // direction to jump
+    u32 dirHistoryMask;            // mask applied so that way only the recent nybble (the recent input) is checked
+    u32 abStartSelectHistoryMask;  // mask applied so that way only the recent nybble (the recent input) is checked
+    const u8*
+        dirTimerHistoryList; // list of timers to check for direction before the button+dir combination can be verified.
+    const u8* abStartSelectHistoryList; // list of timers to check for buttons before the button+dir combination can be
+                                        // verified.
+    u32 direction;                      // direction to jump
 };
 
 // Player speeds
-enum
-{
+enum {
     SPEED_STANDING,
     SPEED_NORMAL,
     SPEED_FAST,
@@ -25,17 +26,10 @@ enum
 };
 
 // mach bike transitions enum
-enum
-{
-    MACH_TRANS_FACE_DIRECTION,
-    MACH_TRANS_TURN_DIRECTION,
-    MACH_TRANS_KEEP_MOVING,
-    MACH_TRANS_START_MOVING
-};
+enum { MACH_TRANS_FACE_DIRECTION, MACH_TRANS_TURN_DIRECTION, MACH_TRANS_KEEP_MOVING, MACH_TRANS_START_MOVING };
 
 // Acro bike states
-enum
-{
+enum {
     ACRO_STATE_NORMAL,
     ACRO_STATE_TURNING,
     ACRO_STATE_WHEELIE_STANDING,
@@ -46,8 +40,7 @@ enum
 };
 
 // Acro bike transitions
-enum
-{
+enum {
     ACRO_TRANS_FACE_DIRECTION,
     ACRO_TRANS_TURN_DIRECTION,
     ACRO_TRANS_MOVING,

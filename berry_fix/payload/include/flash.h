@@ -3,15 +3,13 @@
 
 #include "gba/gba.h"
 
-enum
-{
+enum {
     SECTOR_DAMAGED,
     SECTOR_OK,
     SECTOR_CHECK, // unused
 };
 
-enum MsgBoxUpdateMessage
-{
+enum MsgBoxUpdateMessage {
     MSGBOX_WILL_NOW_UPDATE = 0,
     MSGBOX_HAS_BEEN_UPDATED,
     MSGBOX_UNABLE_TO_UPDATE,
@@ -19,8 +17,7 @@ enum MsgBoxUpdateMessage
     MSGBOX_UPDATING
 };
 
-struct SaveSector
-{
+struct SaveSector {
     u8 data[0xFF4];
     u16 id;
     u16 checksum;
@@ -29,15 +26,14 @@ struct SaveSector
 }; // size is 0x1000
 
 // headless save section?
-struct UnkSaveSection
-{
+struct UnkSaveSection {
     u8 data[0xFF4];
     u32 signature;
 }; // size is 0xFF8
 
-#define eSaveSection ((struct SaveSector *)0x2020000)
+#define eSaveSection ((struct SaveSector*)0x2020000)
 
-#define NUM_SECTORS_PER_SAVE_SLOT 14  // Number of sectors occupied by a save slot
+#define NUM_SECTORS_PER_SAVE_SLOT 14 // Number of sectors occupied by a save slot
 #define FILE_SIGNATURE 0x08012025
 
 #define SAVE_STATUS_EMPTY 0
@@ -52,4 +48,4 @@ void msg_display(enum MsgBoxUpdateMessage);
 bool32 flash_maincb_check_need_reset_pacifidlog_tm(void);
 bool32 flash_maincb_reset_pacifidlog_tm(void);
 
-#endif //GUARD_FLASH_H
+#endif // GUARD_FLASH_H

@@ -3853,7 +3853,7 @@ extern const u32 gItemIconPalette_OldSeaMap[];
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u32 gItemIconPalette_ReturnToFieldArrow[];
 
-//menu graphics
+// menu graphics
 extern const u16 gFireRedMenuElements1_Pal[16];
 extern const u16 gFireRedMenuElements2_Pal[16];
 extern const u16 gFireRedMenuElements3_Pal[16];
@@ -3872,7 +3872,7 @@ extern const u32 gBagFemaleTiles[];
 extern const u32 gBagPalette[];
 extern const u32 gBerryCheckCircle_Gfx[];
 
-//intro graphics
+// intro graphics
 extern const u32 gIntro1SparkleGfx[];
 extern const u32 gIntro1FlygonGfx[];
 extern const u16 gIntro3LightningPal[];
@@ -3907,7 +3907,7 @@ extern const u32 gIntro3RayquazaGfx[];
 extern const u32 gIntro3Clouds2Gfx[];
 extern const u16 gIntro1GameFreakTextFadePal[];
 
-//intro/credits graphics
+// intro/credits graphics
 extern const u32 gIntro2BrendanNoTurnGfx[];
 extern const u32 gIntro2MayNoTurnGfx[];
 extern const u16 gIntro2BrendanNoTurnPal[];
@@ -4007,7 +4007,7 @@ extern const u32 gBerryPalette_Starf[];
 extern const u32 gBerryPic_Enigma[];
 extern const u32 gBerryPalette_Enigma[];
 
-//pokenav
+// pokenav
 extern const u16 gPokenavCondition_Pal[];
 extern const u32 gPokenavCondition_Gfx[];
 extern const u32 gPokenavCondition_Tilemap[];
@@ -4290,7 +4290,7 @@ extern const u32 gBattleAnimSpriteGfx_IceSpikes[];
 extern const u32 gBattleAnimSpriteGfx_HandsAndFeet[];
 extern const u32 gBattleAnimSpriteGfx_MistCloud[];
 extern const u32 gBattleAnimSpriteGfx_Clamp[];
-//extern const struct CompressedSpriteSheet gBattleAnimSpriteGfx_146[];
+// extern const struct CompressedSpriteSheet gBattleAnimSpriteGfx_146[];
 extern const u32 gBattleAnimSpriteGfx_Bubble[];
 extern const u32 gBattleAnimSpriteGfx_Orbs[];
 extern const u32 gBattleAnimSpriteGfx_WaterImpact[];
@@ -5013,4 +5013,4 @@ extern const u16 gPokenavMessageBox_Pal[];
 extern const u32 gPokenavOptions_Gfx[];
 extern const u16 gPokenavOptions_Pal[];
 
-#endif //GUARD_GRAPHICS_H
+#endif // GUARD_GRAPHICS_H

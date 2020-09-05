@@ -7,42 +7,31 @@
 #include "constants/items.h"
 
 // EWRAM vars
-EWRAM_DATA void *gItemIconDecompressionBuffer = NULL;
-EWRAM_DATA void *gItemIcon4x4Buffer = NULL;
+EWRAM_DATA void* gItemIconDecompressionBuffer = NULL;
+EWRAM_DATA void* gItemIcon4x4Buffer = NULL;
 
 // const rom data
 #include "data/item_icon_table.h"
 
-static const struct OamData sOamData_ItemIcon =
-{
-    .y = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(32x32),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(32x32),
-    .tileNum = 0,
-    .priority = 1,
-    .paletteNum = 2,
-    .affineParam = 0
-};
+static const struct OamData sOamData_ItemIcon = { .y = 0,
+                                                  .affineMode = ST_OAM_AFFINE_OFF,
+                                                  .objMode = ST_OAM_OBJ_NORMAL,
+                                                  .mosaic = 0,
+                                                  .bpp = ST_OAM_4BPP,
+                                                  .shape = SPRITE_SHAPE(32x32),
+                                                  .x = 0,
+                                                  .matrixNum = 0,
+                                                  .size = SPRITE_SIZE(32x32),
+                                                  .tileNum = 0,
+                                                  .priority = 1,
+                                                  .paletteNum = 2,
+                                                  .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_ItemIcon[] =
-{
-    ANIMCMD_FRAME(0, 0),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ItemIcon[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_ItemIcon[] =
-{
-    sSpriteAnim_ItemIcon
-};
+static const union AnimCmd* const sSpriteAnimTable_ItemIcon[] = { sSpriteAnim_ItemIcon };
 
-const struct SpriteTemplate gItemIconSpriteTemplate =
-{
+const struct SpriteTemplate gItemIconSpriteTemplate = {
     .tileTag = 0,
     .paletteTag = 0,
     .oam = &sOamData_ItemIcon,
@@ -53,8 +42,7 @@ const struct SpriteTemplate gItemIconSpriteTemplate =
 };
 
 // code
-bool8 AllocItemIconTemporaryBuffers(void)
-{
+bool8 AllocItemIconTemporaryBuffers(void) {
     gItemIconDecompressionBuffer = gItemIconDecompressionBuffer; // needed to match
     gItemIconDecompressionBuffer = Alloc(0x120);
     if (gItemIconDecompressionBuffer == NULL)
@@ -62,8 +50,7 @@ bool8 AllocItemIconTemporaryBuffers(void)
 
     gItemIcon4x4Buffer = gItemIcon4x4Buffer; // needed to match
     gItemIcon4x4Buffer = AllocZeroed(0x200);
-    if (gItemIcon4x4Buffer == NULL)
-    {
+    if (gItemIcon4x4Buffer == NULL) {
         Free(gItemIconDecompressionBuffer);
         return FALSE;
     }
@@ -71,32 +58,26 @@ bool8 AllocItemIconTemporaryBuffers(void)
     return TRUE;
 }
 
-void FreeItemIconTemporaryBuffers(void)
-{
+void FreeItemIconTemporaryBuffers(void) {
     Free(gItemIconDecompressionBuffer);
     Free(gItemIcon4x4Buffer);
 }
 
-void CopyItemIconPicTo4x4Buffer(const void *src, void *dest)
-{
+void CopyItemIconPicTo4x4Buffer(const void* src, void* dest) {
     u8 i;
 
     for (i = 0; i < 3; i++)
         CpuCopy16(src + i * 96, dest + i * 128, 0x60);
 }
 
-u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
-{
-    if (!AllocItemIconTemporaryBuffers())
-    {
+u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId) {
+    if (!AllocItemIconTemporaryBuffers()) {
         return MAX_SPRITES;
-    }
-    else
-    {
+    } else {
         u8 spriteId;
         struct SpriteSheet spriteSheet;
         struct CompressedSpritePalette spritePalette;
-        struct SpriteTemplate *spriteTemplate;
+        struct SpriteTemplate* spriteTemplate;
 
         LZDecompressWram(GetItemIconPicOrPalette(itemId, 0), gItemIconDecompressionBuffer);
         CopyItemIconPicTo4x4Buffer(gItemIconDecompressionBuffer, gItemIcon4x4Buffer);
@@ -122,18 +103,15 @@ u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
     }
 }
 
-u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, u16 itemId)
-{
-    if (!AllocItemIconTemporaryBuffers())
-    {
+u8 AddCustomItemIconSprite(const struct SpriteTemplate* customSpriteTemplate, u16 tilesTag, u16 paletteTag,
+                           u16 itemId) {
+    if (!AllocItemIconTemporaryBuffers()) {
         return MAX_SPRITES;
-    }
-    else
-    {
+    } else {
         u8 spriteId;
         struct SpriteSheet spriteSheet;
         struct CompressedSpritePalette spritePalette;
-        struct SpriteTemplate *spriteTemplate;
+        struct SpriteTemplate* spriteTemplate;
 
         LZDecompressWram(GetItemIconPicOrPalette(itemId, 0), gItemIconDecompressionBuffer);
         CopyItemIconPicTo4x4Buffer(gItemIconDecompressionBuffer, gItemIcon4x4Buffer);
@@ -159,8 +137,7 @@ u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u1
     }
 }
 
-const void *GetItemIconPicOrPalette(u16 itemId, u8 which)
-{
+const void* GetItemIconPicOrPalette(u16 itemId, u8 which) {
     if (itemId == 0xFFFF)
         itemId = ITEM_FIELD_ARROW;
     else if (itemId >= ITEMS_COUNT)

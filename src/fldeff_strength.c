@@ -15,10 +15,8 @@ static void FieldCallback_Strength(void);
 static void StartStrengthFieldEffect(void);
 
 // text
-bool8 SetUpFieldMove_Strength(void)
-{
-    if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_PUSHABLE_BOULDER) == TRUE)
-    {
+bool8 SetUpFieldMove_Strength(void) {
+    if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_PUSHABLE_BOULDER) == TRUE) {
         gSpecialVar_Result = GetCursorSelectionMonId();
         gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
         gPostMenuFieldCallback = FieldCallback_Strength;
@@ -27,14 +25,12 @@ bool8 SetUpFieldMove_Strength(void)
     return FALSE;
 }
 
-static void FieldCallback_Strength(void)
-{
+static void FieldCallback_Strength(void) {
     gFieldEffectArguments[0] = GetCursorSelectionMonId();
     ScriptContext1_SetupScript(EventScript_UseStrength);
 }
 
-bool8 FldEff_UseStrength(void)
-{
+bool8 FldEff_UseStrength(void) {
     u8 taskId = CreateFieldMoveTask();
     gTasks[taskId].data[8] = (u32)StartStrengthFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartStrengthFieldEffect;
@@ -43,8 +39,7 @@ bool8 FldEff_UseStrength(void)
 }
 
 // Just passes control back to EventScript_UseStrength
-static void StartStrengthFieldEffect(void)
-{
+static void StartStrengthFieldEffect(void) {
     FieldEffectActiveListRemove(FLDEFF_USE_STRENGTH);
     EnableBothScriptContexts();
 }

@@ -3,9 +3,7 @@
 
 // Exported type declarations
 
-
-struct BardSound
-{
+struct BardSound {
     /*0x00*/ u8 var00;
     /*0x01*/ s8 var01;
     /*0x02*/ u16 var02;
@@ -13,14 +11,12 @@ struct BardSound
     /*0x06*/ u16 var06;
 };
 
-struct BardPhoneme
-{
+struct BardPhoneme {
     /*0x00*/ u16 length;
     /*0x02*/ u16 pitch;
 };
 
-struct BardSong
-{
+struct BardSong {
     /*0x00*/ u8 currWord;
     /*0x01*/ u8 currPhoneme;
     /*0x02*/ u8 phonemeTimer;
@@ -31,7 +27,7 @@ struct BardSong
     /*0x0A*/ s16 voiceInflection;
     /*0x0C*/ u16 lyrics[6];
     /*0x18*/ struct BardPhoneme phonemes[6];
-    /*0x30*/ const struct BardSound *sound;
+    /*0x30*/ const struct BardSound* sound;
 };
 
 // Exported RAM declarations
@@ -40,7 +36,7 @@ struct BardSong
 
 extern const u16 gNumSpeciesNames;
 extern const u16 gUnknown_085FA1D4;
-const struct BardSound *GetWordSounds(u16 word);
-void GetWordPhonemes(struct BardSong *song, u16 word);
+const struct BardSound* GetWordSounds(u16 word);
+void GetWordPhonemes(struct BardSong* song, u16 word);
 
-#endif //GUARD_BARD_MUSIC_H
+#endif // GUARD_BARD_MUSIC_H

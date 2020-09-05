@@ -1,21 +1,21 @@
 #include "global.h"
 #include "blit.h"
 
-void BlitBitmapRect4BitWithoutColorKey(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY, u16 width, u16 height)
-{
+void BlitBitmapRect4BitWithoutColorKey(const struct Bitmap* src, struct Bitmap* dst, u16 srcX, u16 srcY, u16 dstX,
+                                       u16 dstY, u16 width, u16 height) {
     BlitBitmapRect4Bit(src, dst, srcX, srcY, dstX, dstY, width, height, 0xFF);
 }
 
-void BlitBitmapRect4Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY, u16 width, u16 height, u8 colorKey)
-{
+void BlitBitmapRect4Bit(const struct Bitmap* src, struct Bitmap* dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY, u16 width,
+                        u16 height, u8 colorKey) {
     s32 xEnd;
     s32 yEnd;
     s32 multiplierSrcY;
     s32 multiplierDstY;
     s32 loopSrcY, loopDstY;
     s32 loopSrcX, loopDstX;
-    const u8 *pixelsSrc;
-    u8 *pixelsDst;
+    const u8* pixelsSrc;
+    u8* pixelsDst;
     s32 toOrr;
     s32 toAnd;
     s32 toShift;
@@ -33,14 +33,13 @@ void BlitBitmapRect4Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, 
     multiplierSrcY = (src->width + (src->width & 7)) >> 3;
     multiplierDstY = (dst->width + (dst->width & 7)) >> 3;
 
-    if (colorKey == 0xFF)
-    {
-        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++)
-        {
-            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++)
-            {
-                pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1B);
-                pixelsDst = dst->pixels + ((loopDstX >> 1) & 3) + ((loopDstX >> 3) << 5) + (((loopDstY >> 3) * multiplierDstY) << 5) + ((u32)(loopDstY << 0x1d) >> 0x1B);
+    if (colorKey == 0xFF) {
+        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++) {
+            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++) {
+                pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) +
+                            (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1B);
+                pixelsDst = dst->pixels + ((loopDstX >> 1) & 3) + ((loopDstX >> 3) << 5) +
+                            (((loopDstY >> 3) * multiplierDstY) << 5) + ((u32)(loopDstY << 0x1d) >> 0x1B);
                 toOrr = ((*pixelsSrc >> ((loopSrcX & 1) << 2)) & 0xF);
                 toShift = ((loopDstX & 1) << 2);
                 toOrr <<= toShift;
@@ -48,18 +47,15 @@ void BlitBitmapRect4Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, 
                 *pixelsDst = toOrr | (*pixelsDst & toAnd);
             }
         }
-    }
-    else
-    {
-        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++)
-        {
-            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++)
-            {
-                pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1B);
-                pixelsDst = dst->pixels + ((loopDstX >> 1) & 3) + ((loopDstX >> 3) << 5) + (((loopDstY >> 3) * multiplierDstY) << 5) + ((u32)(loopDstY << 0x1d) >> 0x1B);
+    } else {
+        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++) {
+            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++) {
+                pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) +
+                            (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1B);
+                pixelsDst = dst->pixels + ((loopDstX >> 1) & 3) + ((loopDstX >> 3) << 5) +
+                            (((loopDstY >> 3) * multiplierDstY) << 5) + ((u32)(loopDstY << 0x1d) >> 0x1B);
                 toOrr = ((*pixelsSrc >> ((loopSrcX & 1) << 2)) & 0xF);
-                if (toOrr != colorKey)
-                {
+                if (toOrr != colorKey) {
                     toShift = ((loopDstX & 1) << 2);
                     toOrr <<= toShift;
                     toAnd = 0xF0 >> (toShift);
@@ -70,8 +66,7 @@ void BlitBitmapRect4Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, 
     }
 }
 
-void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue)
-{
+void FillBitmapRect4Bit(struct Bitmap* surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue) {
     s32 xEnd;
     s32 yEnd;
     s32 multiplierY;
@@ -90,11 +85,10 @@ void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 hei
     toOrr1 = (u32)(fillValue << 0x1C) >> 0x18;
     toOrr2 = (fillValue & 0xF);
 
-    for (loopY = y; loopY < yEnd; loopY++)
-    {
-        for (loopX = x; loopX < xEnd; loopX++)
-        {
-            u8 *pixels = surface->pixels + ((loopX >> 1) & 3) + ((loopX >> 3) << 5) + (((loopY >> 3) * multiplierY) << 5) + ((u32)(loopY << 0x1d) >> 0x1B);
+    for (loopY = y; loopY < yEnd; loopY++) {
+        for (loopX = x; loopX < xEnd; loopX++) {
+            u8* pixels = surface->pixels + ((loopX >> 1) & 3) + ((loopX >> 3) << 5) +
+                         (((loopY >> 3) * multiplierY) << 5) + ((u32)(loopY << 0x1d) >> 0x1B);
             if ((loopX << 0x1F) != 0)
                 *pixels = toOrr1 | (*pixels & 0xF);
             else
@@ -103,8 +97,8 @@ void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 hei
     }
 }
 
-void BlitBitmapRect4BitTo8Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY, u16 width, u16 height, u8 colorKey, u8 paletteOffset)
-{
+void BlitBitmapRect4BitTo8Bit(const struct Bitmap* src, struct Bitmap* dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY,
+                              u16 width, u16 height, u8 colorKey, u8 paletteOffset) {
     s32 palOffsetBits;
     s32 xEnd;
     s32 yEnd;
@@ -112,8 +106,8 @@ void BlitBitmapRect4BitTo8Bit(const struct Bitmap *src, struct Bitmap *dst, u16 
     s32 multiplierDstY;
     s32 loopSrcY, loopDstY;
     s32 loopSrcX, loopDstX;
-    const u8 *pixelsSrc;
-    u8 *pixelsDst;
+    const u8* pixelsSrc;
+    u8* pixelsDst;
     s32 colorKeyBits;
 
     palOffsetBits = (u32)(paletteOffset << 0x1C) >> 0x18;
@@ -132,47 +126,39 @@ void BlitBitmapRect4BitTo8Bit(const struct Bitmap *src, struct Bitmap *dst, u16 
     multiplierSrcY = (src->width + (src->width & 7)) >> 3;
     multiplierDstY = (dst->width + (dst->width & 7)) >> 3;
 
-    if (colorKey == 0xFF)
-    {
-        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++)
-        {
-            pixelsSrc = src->pixels + ((srcX >> 1) & 3) + ((srcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
-            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++)
-            {
-                pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) + (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
-                if (loopSrcX & 1)
-                {
+    if (colorKey == 0xFF) {
+        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++) {
+            pixelsSrc = src->pixels + ((srcX >> 1) & 3) + ((srcX >> 3) << 5) +
+                        (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
+            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++) {
+                pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) +
+                            (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
+                if (loopSrcX & 1) {
                     *pixelsDst = palOffsetBits + (*pixelsSrc >> 4);
-                }
-                else
-                {
-                    pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
+                } else {
+                    pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) +
+                                (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
                     *pixelsDst = palOffsetBits + (*pixelsSrc & 0xF);
                 }
             }
         }
-    }
-    else
-    {
-        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++)
-        {
-            pixelsSrc = src->pixels + ((srcX >> 1) & 3) + ((srcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
-            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++)
-            {
-                if (loopSrcX & 1)
-                {
-                    if ((*pixelsSrc & 0xF0) != colorKeyBits)
-                    {
-                        pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) + (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
+    } else {
+        for (loopSrcY = srcY, loopDstY = dstY; loopSrcY < yEnd; loopSrcY++, loopDstY++) {
+            pixelsSrc = src->pixels + ((srcX >> 1) & 3) + ((srcX >> 3) << 5) +
+                        (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
+            for (loopSrcX = srcX, loopDstX = dstX; loopSrcX < xEnd; loopSrcX++, loopDstX++) {
+                if (loopSrcX & 1) {
+                    if ((*pixelsSrc & 0xF0) != colorKeyBits) {
+                        pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) +
+                                    (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
                         *pixelsDst = palOffsetBits + (*pixelsSrc >> 4);
                     }
-                }
-                else
-                {
-                    pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) + (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
-                    if ((*pixelsSrc & 0xF) != colorKey)
-                    {
-                        pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) + (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
+                } else {
+                    pixelsSrc = src->pixels + ((loopSrcX >> 1) & 3) + ((loopSrcX >> 3) << 5) +
+                                (((loopSrcY >> 3) * multiplierSrcY) << 5) + ((u32)(loopSrcY << 0x1d) >> 0x1b);
+                    if ((*pixelsSrc & 0xF) != colorKey) {
+                        pixelsDst = dst->pixels + (loopDstX & 7) + ((loopDstX >> 3) << 6) +
+                                    (((loopDstY >> 3) * multiplierDstY) << 6) + ((u32)(loopDstY << 0x1d) >> 0x1a);
                         *pixelsDst = palOffsetBits + (*pixelsSrc & 0xF);
                     }
                 }
@@ -181,8 +167,7 @@ void BlitBitmapRect4BitTo8Bit(const struct Bitmap *src, struct Bitmap *dst, u16 
     }
 }
 
-void FillBitmapRect8Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue)
-{
+void FillBitmapRect8Bit(struct Bitmap* surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue) {
     s32 xEnd;
     s32 yEnd;
     s32 multiplierY;
@@ -198,11 +183,10 @@ void FillBitmapRect8Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 hei
 
     multiplierY = (surface->width + (surface->width & 7)) >> 3;
 
-    for (loopY = y; loopY < yEnd; loopY++)
-    {
-        for (loopX = x; loopX < xEnd; loopX++)
-        {
-            u8 *pixels = surface->pixels + (loopX & 7) + ((loopX >> 3) << 6) + (((loopY >> 3) * multiplierY) << 6) + ((u32)(loopY << 0x1d) >> 0x1a);
+    for (loopY = y; loopY < yEnd; loopY++) {
+        for (loopX = x; loopX < xEnd; loopX++) {
+            u8* pixels = surface->pixels + (loopX & 7) + ((loopX >> 3) << 6) + (((loopY >> 3) * multiplierY) << 6) +
+                         ((u32)(loopY << 0x1d) >> 0x1a);
             *pixels = fillValue;
         }
     }

@@ -10,10 +10,8 @@
 static void FieldCallback_Teleport(void);
 static void StartTeleportFieldEffect(void);
 
-bool8 SetUpFieldMove_Teleport(void)
-{
-    if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
-    {
+bool8 SetUpFieldMove_Teleport(void) {
+    if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE) {
         gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
         gPostMenuFieldCallback = FieldCallback_Teleport;
         return TRUE;
@@ -21,15 +19,13 @@ bool8 SetUpFieldMove_Teleport(void)
     return FALSE;
 }
 
-static void FieldCallback_Teleport(void)
-{
+static void FieldCallback_Teleport(void) {
     Overworld_ResetStateAfterTeleport();
     FieldEffectStart(FLDEFF_USE_TELEPORT);
     gFieldEffectArguments[0] = (u32)GetCursorSelectionMonId();
 }
 
-bool8 FldEff_UseTeleport(void)
-{
+bool8 FldEff_UseTeleport(void) {
     u8 taskId = CreateFieldMoveTask();
     gTasks[taskId].data[8] = (u32)StartTeleportFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartTeleportFieldEffect;
@@ -37,8 +33,7 @@ bool8 FldEff_UseTeleport(void)
     return FALSE;
 }
 
-static void StartTeleportFieldEffect(void)
-{
+static void StartTeleportFieldEffect(void) {
     FieldEffectActiveListRemove(FLDEFF_USE_TELEPORT);
     FldEff_TeleportWarpOut();
 }

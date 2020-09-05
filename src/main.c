@@ -36,8 +36,7 @@ const u8 gGameLanguage = GAME_LANGUAGE; // English
 
 const char BuildDateTime[] = "2005 02 21 11:10";
 
-const IntrFunc gIntrTableTemplate[] =
-{
+const IntrFunc gIntrTableTemplate[] = {
     VCountIntr, // V-count interrupt
     SerialIntr, // Serial interrupt
     Timer3Intr, // Timer 3 interrupt
@@ -54,7 +53,7 @@ const IntrFunc gIntrTableTemplate[] =
     IntrDummy,  // Game Pak interrupt
 };
 
-#define INTR_COUNT ((int)(sizeof(gIntrTableTemplate)/sizeof(IntrFunc)))
+#define INTR_COUNT ((int)(sizeof(gIntrTableTemplate) / sizeof(IntrFunc)))
 
 static u16 gUnknown_03000000;
 
@@ -70,12 +69,12 @@ s8 gPcmDmaCounter;
 
 static EWRAM_DATA u16 gTrainerId = 0;
 
-//EWRAM_DATA void (**gFlashTimerIntrFunc)(void) = NULL;
+// EWRAM_DATA void (**gFlashTimerIntrFunc)(void) = NULL;
 
 static void UpdateLinkAndCallCallbacks(void);
 static void InitMainCallbacks(void);
 static void CallCallbacks(void);
-//static void SeedRngWithRtc(void);
+// static void SeedRngWithRtc(void);
 static void ReadKeys(void);
 void InitIntrHandlers(void);
 static void WaitForVBlank(void);
@@ -83,8 +82,7 @@ void EnableVCountIntrAtLine150(void);
 
 #define B_START_SELECT (B_BUTTON | START_BUTTON | SELECT_BUTTON)
 
-void AgbMain()
-{
+void AgbMain() {
 #if MODERN
     // Modern compilers are liberal with the stack on entry to this function,
     // so RegisterRamReset may crash if it resets IWRAM.
@@ -101,12 +99,11 @@ void AgbMain()
         ".LCU0:\n"
         "\tstmia r1!, {r0, r3, r4, r5}\n"
         "\tcmp\tr1, r2\n"
-        "\tbcc\t.LCU0\n"
-    );
+        "\tbcc\t.LCU0\n");
 #else
     RegisterRamReset(RESET_ALL);
-#endif //MODERN
-    *(vu16 *)BG_PLTT = 0x7FFF;
+#endif // MODERN
+    *(vu16*)BG_PLTT = 0x7FFF;
     InitGpuRegManager();
     REG_WAITCNT = WAITCNT_PREFETCH_ENABLE | WAITCNT_WS0_S_1 | WAITCNT_WS0_N_3;
     InitKeys();
@@ -118,7 +115,7 @@ void AgbMain()
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
-    //SeedRngWithRtc(); see comment at SeedRngWithRtc declaration below
+    // SeedRngWithRtc(); see comment at SeedRngWithRtc declaration below
     ClearDma3Requests();
     ResetBgs();
     SetDefaultFontsPointer();
@@ -132,32 +129,25 @@ void AgbMain()
     gLinkTransferringData = FALSE;
     gUnknown_03000000 = 0xFC0;
 
-    for (;;)
-    {
+    for (;;) {
         ReadKeys();
 
-        if (gSoftResetDisabled == FALSE
-         && (gMain.heldKeysRaw & A_BUTTON)
-         && (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
-        {
+        if (gSoftResetDisabled == FALSE && (gMain.heldKeysRaw & A_BUTTON) &&
+            (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT) {
             rfu_REQ_stopMode();
             rfu_waitREQComplete();
             DoSoftReset();
         }
 
-        if (sub_8087634() == 1)
-        {
+        if (sub_8087634() == 1) {
             gLinkTransferringData = TRUE;
             UpdateLinkAndCallCallbacks();
             gLinkTransferringData = FALSE;
-        }
-        else
-        {
+        } else {
             gLinkTransferringData = FALSE;
             UpdateLinkAndCallCallbacks();
 
-            if (sub_80875C8() == 1)
-            {
+            if (sub_80875C8() == 1) {
                 gMain.newKeys = 0;
                 ClearSpriteCopyRequests();
                 gLinkTransferringData = TRUE;
@@ -172,14 +162,12 @@ void AgbMain()
     }
 }
 
-static void UpdateLinkAndCallCallbacks(void)
-{
+static void UpdateLinkAndCallCallbacks(void) {
     if (!HandleLinkConnection())
         CallCallbacks();
 }
 
-static void InitMainCallbacks(void)
-{
+static void InitMainCallbacks(void) {
     gMain.vblankCounter1 = 0;
     gTrainerHillVBlankCounter = NULL;
     gMain.vblankCounter2 = 0;
@@ -189,8 +177,7 @@ static void InitMainCallbacks(void)
     gPokemonStoragePtr = &gPokemonStorage;
 }
 
-static void CallCallbacks(void)
-{
+static void CallCallbacks(void) {
     if (gMain.callback1)
         gMain.callback1();
 
@@ -198,47 +185,41 @@ static void CallCallbacks(void)
         gMain.callback2();
 }
 
-void SetMainCallback2(MainCallback callback)
-{
+void SetMainCallback2(MainCallback callback) {
     gMain.callback2 = callback;
     gMain.state = 0;
 }
 
-void StartTimer1(void)
-{
+void StartTimer1(void) {
     REG_TM1CNT_H = 0x80;
 }
 
-void SeedRngAndSetTrainerId(void)
-{
+void SeedRngAndSetTrainerId(void) {
     u16 val = REG_TM1CNT_L;
     SeedRng(val);
     REG_TM1CNT_H = 0;
     gTrainerId = val;
 }
 
-u16 GetGeneratedTrainerIdLower(void)
-{
+u16 GetGeneratedTrainerIdLower(void) {
     return gTrainerId;
 }
 
-void EnableVCountIntrAtLine150(void)
-{
+void EnableVCountIntrAtLine150(void) {
     u16 gpuReg = (GetGpuReg(REG_OFFSET_DISPSTAT) & 0xFF) | (150 << 8);
     SetGpuReg(REG_OFFSET_DISPSTAT, gpuReg | DISPSTAT_VCOUNT_INTR);
     EnableInterrupts(INTR_FLAG_VCOUNT);
 }
 
 // oops! FRLG commented this out to remove RTC, however Emerald didnt undo this!
-//static void SeedRngWithRtc(void)
+// static void SeedRngWithRtc(void)
 //{
 //    u32 seed = RtcGetMinuteCount();
 //    seed = (seed >> 16) ^ (seed & 0xFFFF);
 //    SeedRng(seed);
 //}
 
-void InitKeys(void)
-{
+void InitKeys(void) {
     gKeyRepeatContinueDelay = 5;
     gKeyRepeatStartDelay = 40;
 
@@ -249,8 +230,7 @@ void InitKeys(void)
     gMain.newKeysRaw = 0;
 }
 
-static void ReadKeys(void)
-{
+static void ReadKeys(void) {
     u16 keyInput = REG_KEYINPUT ^ KEYS_MASK;
     gMain.newKeysRaw = keyInput & ~gMain.heldKeysRaw;
     gMain.newKeys = gMain.newKeysRaw;
@@ -260,18 +240,14 @@ static void ReadKeys(void)
     // because it compares the raw key input with the remapped held keys.
     // Note that newAndRepeatedKeys is never remapped either.
 
-    if (keyInput != 0 && gMain.heldKeys == keyInput)
-    {
+    if (keyInput != 0 && gMain.heldKeys == keyInput) {
         gMain.keyRepeatCounter--;
 
-        if (gMain.keyRepeatCounter == 0)
-        {
+        if (gMain.keyRepeatCounter == 0) {
             gMain.newAndRepeatedKeys = keyInput;
             gMain.keyRepeatCounter = gKeyRepeatContinueDelay;
         }
-    }
-    else
-    {
+    } else {
         // If there is no input or the input has changed, reset the counter.
         gMain.keyRepeatCounter = gKeyRepeatStartDelay;
     }
@@ -280,8 +256,7 @@ static void ReadKeys(void)
     gMain.heldKeys = gMain.heldKeysRaw;
 
     // Remap L to A if the L=A option is enabled.
-    if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A)
-    {
+    if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A) {
         if (gMain.newKeys & L_BUTTON)
             gMain.newKeys |= A_BUTTON;
 
@@ -293,8 +268,7 @@ static void ReadKeys(void)
         gMain.watchedKeysPressed = TRUE;
 }
 
-void InitIntrHandlers(void)
-{
+void InitIntrHandlers(void) {
     int i;
 
     for (i = 0; i < INTR_COUNT; i++)
@@ -313,34 +287,28 @@ void InitIntrHandlers(void)
     EnableInterrupts(0x1);
 }
 
-void SetVBlankCallback(IntrCallback callback)
-{
+void SetVBlankCallback(IntrCallback callback) {
     gMain.vblankCallback = callback;
 }
 
-void SetHBlankCallback(IntrCallback callback)
-{
+void SetHBlankCallback(IntrCallback callback) {
     gMain.hblankCallback = callback;
 }
 
-void SetVCountCallback(IntrCallback callback)
-{
+void SetVCountCallback(IntrCallback callback) {
     gMain.vcountCallback = callback;
 }
 
-void RestoreSerialTimer3IntrHandlers(void)
-{
+void RestoreSerialTimer3IntrHandlers(void) {
     gIntrTable[1] = SerialIntr;
     gIntrTable[2] = Timer3Intr;
 }
 
-void SetSerialCallback(IntrCallback callback)
-{
+void SetSerialCallback(IntrCallback callback) {
     gMain.serialCallback = callback;
 }
 
-static void VBlankIntr(void)
-{
+static void VBlankIntr(void) {
     if (gWirelessCommType != 0)
         RfuVSync();
     else if (gLinkVSyncDisabled == FALSE)
@@ -373,13 +341,11 @@ static void VBlankIntr(void)
     gMain.intrCheck |= INTR_FLAG_VBLANK;
 }
 
-void InitFlashTimer(void)
-{
+void InitFlashTimer(void) {
     SetFlashTimerIntr(2, gIntrTable + 0x7);
 }
 
-static void HBlankIntr(void)
-{
+static void HBlankIntr(void) {
     if (gMain.hblankCallback)
         gMain.hblankCallback();
 
@@ -387,8 +353,7 @@ static void HBlankIntr(void)
     gMain.intrCheck |= INTR_FLAG_HBLANK;
 }
 
-static void VCountIntr(void)
-{
+static void VCountIntr(void) {
     if (gMain.vcountCallback)
         gMain.vcountCallback();
 
@@ -397,8 +362,7 @@ static void VCountIntr(void)
     gMain.intrCheck |= INTR_FLAG_VCOUNT;
 }
 
-static void SerialIntr(void)
-{
+static void SerialIntr(void) {
     if (gMain.serialCallback)
         gMain.serialCallback();
 
@@ -406,29 +370,25 @@ static void SerialIntr(void)
     gMain.intrCheck |= INTR_FLAG_SERIAL;
 }
 
-static void IntrDummy(void)
-{}
+static void IntrDummy(void) {
+}
 
-static void WaitForVBlank(void)
-{
+static void WaitForVBlank(void) {
     gMain.intrCheck &= ~INTR_FLAG_VBLANK;
 
     while (!(gMain.intrCheck & INTR_FLAG_VBLANK))
         ;
 }
 
-void SetTrainerHillVBlankCounter(u32 *counter)
-{
+void SetTrainerHillVBlankCounter(u32* counter) {
     gTrainerHillVBlankCounter = counter;
 }
 
-void ClearTrainerHillVBlankCounter(void)
-{
+void ClearTrainerHillVBlankCounter(void) {
     gTrainerHillVBlankCounter = NULL;
 }
 
-void DoSoftReset(void)
-{
+void DoSoftReset(void) {
     REG_IME = 0;
     m4aSoundVSyncOff();
     ScanlineEffect_Stop();
@@ -439,7 +399,6 @@ void DoSoftReset(void)
     SoftReset(RESET_ALL);
 }
 
-void ClearPokemonCrySongs(void)
-{
+void ClearPokemonCrySongs(void) {
     CpuFill16(0, gPokemonCrySongs, MAX_POKEMON_CRIES * sizeof(struct PokemonCrySong));
 }

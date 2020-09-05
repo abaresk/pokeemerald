@@ -22,15 +22,22 @@ const u32 gRaySceneRayquaza_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/rayquaza
 const u32 gRaySceneRayquaza_Pal[] = INCBIN_U32("graphics/rayquaza_scene/rayquaza.gbapal.lz");
 const u32 gRaySceneRayquaza_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/rayquaza.bin.lz");
 
-const u32 gRaySceneOvercast_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/overcast.4bpp.lz"); // uses pal 2 of gRaySceneRayquaza_Pal
+const u32 gRaySceneOvercast_Gfx[] =
+    INCBIN_U32("graphics/rayquaza_scene/overcast.4bpp.lz"); // uses pal 2 of gRaySceneRayquaza_Pal
 const u32 gRaySceneOvercast_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/overcast.bin.lz");
 
 const u32 gRaySceneRayquazaFly1_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/rayquaza_fly1.4bpp.lz");
-const u32 gRaySceneRayquazaTail_Gfx[] = INCBIN_U32( "graphics/rayquaza_scene/rayquaza_tail_fix.4bpp.lz"); // for some reason there are an extra 0xC bytes at the end of the original 4bpp, so in order to produce the correct lz, we have to cat the bytes at the end with a make rule. not sure why those bytes are there, it may have been a bug in Game Freak's software.
+const u32 gRaySceneRayquazaTail_Gfx[] = INCBIN_U32(
+    "graphics/rayquaza_scene/rayquaza_tail_fix.4bpp.lz"); // for some reason there are an extra 0xC bytes at the end of
+                                                          // the original 4bpp, so in order to produce the correct lz,
+                                                          // we have to cat the bytes at the end with a make rule. not
+                                                          // sure why those bytes are there, it may have been a bug in
+                                                          // Game Freak's software.
 
 const u32 gRaySceneOvercast2_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/overcast2.4bpp.lz");
 
-const u32 gRaySceneRayquazaLight_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/rayquaza_light.4bpp.lz"); // uses pal 2 of gRaySceneOvercast2_Pal
+const u32 gRaySceneRayquazaLight_Gfx[] =
+    INCBIN_U32("graphics/rayquaza_scene/rayquaza_light.4bpp.lz"); // uses pal 2 of gRaySceneOvercast2_Pal
 
 const u32 gRaySceneOvercast2_Pal[] = INCBIN_U32("graphics/rayquaza_scene/overcast2.gbapal.lz");
 const u32 gRaySceneOvercast2_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/overcast2.bin.lz");

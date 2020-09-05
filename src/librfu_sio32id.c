@@ -4,8 +4,7 @@ static void Sio32IDIntr(void);
 static void Sio32IDInit(void);
 static s32 Sio32IDMain(void);
 
-struct RfuSIO32Id
-{
+struct RfuSIO32Id {
     u8 MS_mode;
     u8 state;
     u16 count;
@@ -20,10 +19,9 @@ struct RfuSIO32Id gRfuSIO32Id;
 static const u16 Sio32ConnectionData[] = { 0x494e, 0x544e, 0x4e45, 0x4f44 }; // NINTENDO
 static const char Sio32IDLib_Var[] = "Sio32ID_030820";
 
-s32 AgbRFU_checkID(u8 maxTries)
-{
+s32 AgbRFU_checkID(u8 maxTries) {
     u16 ieBak;
-    vu16 *regTMCNTL;
+    vu16* regTMCNTL;
     s32 id;
 
     // Interrupts must be enabled
@@ -35,8 +33,7 @@ s32 AgbRFU_checkID(u8 maxTries)
     Sio32IDInit();
     regTMCNTL = &REG_TMCNT_L(gSTWIStatus->timerSelect);
     maxTries *= 8;
-    while (--maxTries != 0xFF)
-    {
+    while (--maxTries != 0xFF) {
         id = Sio32IDMain();
         if (id != 0)
             break;
@@ -56,8 +53,7 @@ s32 AgbRFU_checkID(u8 maxTries)
     return id;
 }
 
-static void Sio32IDInit(void)
-{
+static void Sio32IDInit(void) {
     REG_IME = 0;
     REG_IE &= ~((8 << gSTWIStatus->timerSelect) | INTR_FLAG_SERIAL);
     REG_IME = 1;
@@ -68,59 +64,49 @@ static void Sio32IDInit(void)
     REG_IF = INTR_FLAG_SERIAL;
 }
 
-static s32 Sio32IDMain(void)
-{
-    switch (gRfuSIO32Id.state)
-    {
-    case 0:
-        gRfuSIO32Id.MS_mode = AGB_CLK_MASTER;
-        REG_SIOCNT |= SIO_38400_BPS;
-        REG_IME = 0;
-        REG_IE |= INTR_FLAG_SERIAL;
-        REG_IME = 1;
-        gRfuSIO32Id.state = 1;
-        *(vu8 *)&REG_SIOCNT |= SIO_ENABLE;
-        break;
-    case 1:
-        if (gRfuSIO32Id.lastId == 0)
-        {
-            if (gRfuSIO32Id.MS_mode == AGB_CLK_MASTER)
-            {
-                if (gRfuSIO32Id.count == 0)
-                {
+static s32 Sio32IDMain(void) {
+    switch (gRfuSIO32Id.state) {
+        case 0:
+            gRfuSIO32Id.MS_mode = AGB_CLK_MASTER;
+            REG_SIOCNT |= SIO_38400_BPS;
+            REG_IME = 0;
+            REG_IE |= INTR_FLAG_SERIAL;
+            REG_IME = 1;
+            gRfuSIO32Id.state = 1;
+            *(vu8*)&REG_SIOCNT |= SIO_ENABLE;
+            break;
+        case 1:
+            if (gRfuSIO32Id.lastId == 0) {
+                if (gRfuSIO32Id.MS_mode == AGB_CLK_MASTER) {
+                    if (gRfuSIO32Id.count == 0) {
+                        REG_IME = 0;
+                        REG_SIOCNT |= SIO_ENABLE;
+                        REG_IME = 1;
+                    }
+                } else if (gRfuSIO32Id.send_id != RFU_ID && !gRfuSIO32Id.count) {
                     REG_IME = 0;
-                    REG_SIOCNT |= SIO_ENABLE;
+                    REG_IE &= ~INTR_FLAG_SERIAL;
+                    REG_IME = 1;
+                    REG_SIOCNT = 0;
+                    REG_SIOCNT = SIO_32BIT_MODE;
+                    REG_IF = INTR_FLAG_SERIAL;
+                    REG_SIOCNT |= SIO_INTR_ENABLE | SIO_ENABLE;
+                    REG_IME = 0;
+                    REG_IE |= INTR_FLAG_SERIAL;
                     REG_IME = 1;
                 }
+                break;
+            } else {
+                gRfuSIO32Id.state = 2;
+                // fallthrough
             }
-            else if (gRfuSIO32Id.send_id != RFU_ID && !gRfuSIO32Id.count)
-            {
-                REG_IME = 0;
-                REG_IE &= ~INTR_FLAG_SERIAL;
-                REG_IME = 1;
-                REG_SIOCNT = 0;
-                REG_SIOCNT = SIO_32BIT_MODE;
-                REG_IF = INTR_FLAG_SERIAL;
-                REG_SIOCNT |= SIO_INTR_ENABLE | SIO_ENABLE;
-                REG_IME = 0;
-                REG_IE |= INTR_FLAG_SERIAL;
-                REG_IME = 1;
-            }
-            break;
-        }
-        else
-        {
-            gRfuSIO32Id.state = 2;
-            // fallthrough
-        }
-    default:
-        return gRfuSIO32Id.lastId;
+        default:
+            return gRfuSIO32Id.lastId;
     }
     return 0;
 }
 
-static void Sio32IDIntr(void)
-{
+static void Sio32IDIntr(void) {
     u32 regSIODATA32;
     u16 delay;
 #ifndef NONMATCHING
@@ -137,23 +123,16 @@ static void Sio32IDIntr(void)
     rfuSIO32IdUnk0_times_16 = 16 * gRfuSIO32Id.MS_mode; // to handle side effect of inline asm
     rfuSIO32IdUnk0_times_16 = (regSIODATA32 << rfuSIO32IdUnk0_times_16) >> 16;
     regSIODATA32 = (regSIODATA32 << 16 * (1 - gRfuSIO32Id.MS_mode)) >> 16;
-    if (gRfuSIO32Id.lastId == 0)
-    {
-        if (rfuSIO32IdUnk0_times_16 == gRfuSIO32Id.recv_id)
-        {
-            if (gRfuSIO32Id.count > 3)
-            {
+    if (gRfuSIO32Id.lastId == 0) {
+        if (rfuSIO32IdUnk0_times_16 == gRfuSIO32Id.recv_id) {
+            if (gRfuSIO32Id.count > 3) {
                 gRfuSIO32Id.lastId = regSIODATA32;
-            }
-            else if (rfuSIO32IdUnk0_times_16 == (u16)~gRfuSIO32Id.send_id)
-            {
+            } else if (rfuSIO32IdUnk0_times_16 == (u16)~gRfuSIO32Id.send_id) {
                 negRfuSIO32IdUnk6 = ~gRfuSIO32Id.recv_id;
                 if (regSIODATA32 == negRfuSIO32IdUnk6)
                     ++gRfuSIO32Id.count;
             }
-        }
-        else
-        {
+        } else {
             gRfuSIO32Id.count = 0;
         }
     }
@@ -162,10 +141,9 @@ static void Sio32IDIntr(void)
     else
         gRfuSIO32Id.send_id = RFU_ID;
     gRfuSIO32Id.recv_id = ~regSIODATA32;
-    REG_SIODATA32 = (gRfuSIO32Id.send_id << 16 * (1 - gRfuSIO32Id.MS_mode))
-                  + (gRfuSIO32Id.recv_id << 16 * gRfuSIO32Id.MS_mode);
-    if (gRfuSIO32Id.MS_mode == AGB_CLK_MASTER && (gRfuSIO32Id.count != 0 || regSIODATA32 == 0x494e))
-    {
+    REG_SIODATA32 =
+        (gRfuSIO32Id.send_id << 16 * (1 - gRfuSIO32Id.MS_mode)) + (gRfuSIO32Id.recv_id << 16 * gRfuSIO32Id.MS_mode);
+    if (gRfuSIO32Id.MS_mode == AGB_CLK_MASTER && (gRfuSIO32Id.count != 0 || regSIODATA32 == 0x494e)) {
         for (delay = 0; delay < 600; ++delay)
             ;
         if (gRfuSIO32Id.lastId == 0)

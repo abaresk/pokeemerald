@@ -8,8 +8,7 @@
 #include "overworld.h"
 #include "malloc.h"
 
-void sub_81700F8(void)
-{
+void sub_81700F8(void) {
     u16 imeBackup;
 
     imeBackup = REG_IME;

@@ -15,54 +15,47 @@
 #include "task.h"
 #include "script_menu.h"
 
-static const u8 * const sDefaultTraderNames[] =
-{
+static const u8* const sDefaultTraderNames[] = {
     gText_Tristan,
     gText_Philip,
     gText_Dennis,
     gText_Roberto,
 };
 
-static const u8 sDefaultTraderDecorations[] =
-{
+static const u8 sDefaultTraderDecorations[] = {
     DECOR_DUSKULL_DOLL,
     DECOR_BALL_CUSHION,
     DECOR_TIRE,
     DECOR_PRETTY_FLOWERS,
 };
 
-void TraderSetup(void)
-{
+void TraderSetup(void) {
     u8 i;
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
 
     trader->id = MAUVILLE_MAN_TRADER;
     trader->alreadyTraded = FALSE;
 
-    for (i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         StringCopy(trader->playerNames[i], sDefaultTraderNames[i]);
         trader->decorations[i] = sDefaultTraderDecorations[i];
         trader->language[i] = GAME_LANGUAGE;
     }
 }
 
-void Trader_ResetFlag(void)
-{
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
+void Trader_ResetFlag(void) {
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
     trader->alreadyTraded = FALSE;
 }
 
-void CreateAvailableDecorationsMenu(u8 taskId)
-{
+void CreateAvailableDecorationsMenu(u8 taskId) {
     u8 i;
-    s16 * data = gTasks[taskId].data;
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
-    struct WindowTemplate windowTemplate = {0, 1, 1, 10, 10, 15, 1};
+    s16* data = gTasks[taskId].data;
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
+    struct WindowTemplate windowTemplate = { 0, 1, 1, 10, 10, 15, 1 };
     s32 windowWidth = GetStringWidth(1, gText_Exit, 0);
     s32 fiveMarksWidth = GetStringWidth(1, gText_FiveMarks, 0);
-    for (i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         s32 curWidth;
         if (trader->decorations[i] > NUM_DECORATIONS)
             curWidth = fiveMarksWidth;
@@ -74,27 +67,23 @@ void CreateAvailableDecorationsMenu(u8 taskId)
     windowTemplate.width = ConvertPixelWidthToTileWidth(windowWidth);
     data[3] = AddWindow(&windowTemplate);
     DrawStdFrameWithCustomTileAndPalette(data[3], FALSE, 0x214, 14);
-    for (i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         if (trader->decorations[i] > NUM_DECORATIONS)
             AddTextPrinterParameterized(data[3], 1, gText_FiveMarks, 8, 16 * i + 1, 255, NULL);
         else
-            AddTextPrinterParameterized(data[3], 1, gDecorations[trader->decorations[i]].name, 8, 16 * i + 1, 255, NULL);
+            AddTextPrinterParameterized(data[3], 1, gDecorations[trader->decorations[i]].name, 8, 16 * i + 1, 255,
+                                        NULL);
     }
     AddTextPrinterParameterized(data[3], 1, gText_Exit, 8, 16 * i + 1, 255, NULL);
     InitMenuInUpperLeftCornerPlaySoundWhenAPressed(data[3], 5, 0);
     ScheduleBgCopyTilemapToVram(0);
 }
 
-void Task_BufferDecorSelectionAndCloseWindow(u8 taskId, u8 decorationId)
-{
-    s16 * data = gTasks[taskId].data;
-    if (decorationId > NUM_DECORATIONS)
-    {
+void Task_BufferDecorSelectionAndCloseWindow(u8 taskId, u8 decorationId) {
+    s16* data = gTasks[taskId].data;
+    if (decorationId > NUM_DECORATIONS) {
         gSpecialVar_0x8004 = 0xFFFF;
-    }
-    else
-    {
+    } else {
         gSpecialVar_0x8004 = decorationId;
     }
 
@@ -106,13 +95,11 @@ void Task_BufferDecorSelectionAndCloseWindow(u8 taskId, u8 decorationId)
     EnableBothScriptContexts();
 }
 
-void Task_HandleGetDecorationMenuInput(u8 taskId)
-{
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
+void Task_HandleGetDecorationMenuInput(u8 taskId) {
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
     s8 input = Menu_ProcessInput();
 
-    switch (input)
-    {
+    switch (input) {
         case MENU_NOTHING_CHOSEN:
             break;
         case MENU_B_PRESSED:
@@ -130,20 +117,16 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
     }
 }
 
-void ScrSpecial_GetTraderTradedFlag(void)
-{
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
+void ScrSpecial_GetTraderTradedFlag(void) {
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
     gSpecialVar_Result = trader->alreadyTraded;
 }
 
-void ScrSpecial_DoesPlayerHaveNoDecorations(void)
-{
+void ScrSpecial_DoesPlayerHaveNoDecorations(void) {
     u8 i;
 
-    for (i = 0; i < 8; i++)
-    {
-        if (GetNumOwnedDecorationsInCategory(i))
-        {
+    for (i = 0; i < 8; i++) {
+        if (GetNumOwnedDecorationsInCategory(i)) {
             gSpecialVar_Result = FALSE;
             return;
         }
@@ -151,48 +134,39 @@ void ScrSpecial_DoesPlayerHaveNoDecorations(void)
     gSpecialVar_Result = TRUE;
 }
 
-void ScrSpecial_IsDecorationFull(void)
-{
+void ScrSpecial_IsDecorationFull(void) {
     gSpecialVar_Result = FALSE;
-    if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category
-        && GetFirstEmptyDecorSlot(gDecorations[gSpecialVar_0x8004].category) == -1)
-    {
+    if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category &&
+        GetFirstEmptyDecorSlot(gDecorations[gSpecialVar_0x8004].category) == -1) {
         CopyDecorationCategoryName(gStringVar2, gDecorations[gSpecialVar_0x8004].category);
         gSpecialVar_Result = TRUE;
     }
 }
 
-void ScrSpecial_TraderMenuGiveDecoration(void)
-{
+void ScrSpecial_TraderMenuGiveDecoration(void) {
     CreateTask(ShowDecorationCategoriesWindow, 0);
 }
 
-void DecorationItemsMenuAction_Trade(u8 taskId)
-{
-    if (IsSelectedDecorInThePC() == TRUE)
-    {
+void DecorationItemsMenuAction_Trade(u8 taskId) {
+    if (IsSelectedDecorInThePC() == TRUE) {
         gSpecialVar_0x8006 = gCurDecorationItems[gCurDecorationIndex];
         StringCopy(gStringVar3, gDecorations[gSpecialVar_0x8004].name);
         StringCopy(gStringVar2, gDecorations[gSpecialVar_0x8006].name);
-    }
-    else
-    {
+    } else {
         gSpecialVar_0x8006 = 0xFFFF;
     }
     DestroyTask(taskId);
     EnableBothScriptContexts();
 }
 
-void ExitTraderMenu(u8 taskId)
-{
+void ExitTraderMenu(u8 taskId) {
     gSpecialVar_0x8006 = 0;
     DestroyTask(taskId);
     EnableBothScriptContexts();
 }
 
-void ScrSpecial_TraderDoDecorationTrade(void)
-{
-    struct MauvilleOldManTrader *trader = &gSaveBlock1Ptr->oldMan.trader;
+void ScrSpecial_TraderDoDecorationTrade(void) {
+    struct MauvilleOldManTrader* trader = &gSaveBlock1Ptr->oldMan.trader;
 
     DecorationRemove(gSpecialVar_0x8006);
     DecorationAdd(gSpecialVar_0x8004);
@@ -202,8 +176,7 @@ void ScrSpecial_TraderDoDecorationTrade(void)
     trader->alreadyTraded = TRUE;
 }
 
-void ScrSpecial_TraderMenuGetDecoration(void)
-{
+void ScrSpecial_TraderMenuGetDecoration(void) {
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);
 }

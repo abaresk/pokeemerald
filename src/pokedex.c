@@ -30,29 +30,11 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-enum
-{
-    PAGE_MAIN,
-    PAGE_INFO,
-    PAGE_SEARCH,
-    PAGE_SEARCH_RESULTS,
-    PAGE_UNK,
-    PAGE_AREA,
-    PAGE_CRY,
-    PAGE_SIZE
-};
+enum { PAGE_MAIN, PAGE_INFO, PAGE_SEARCH, PAGE_SEARCH_RESULTS, PAGE_UNK, PAGE_AREA, PAGE_CRY, PAGE_SIZE };
 
-enum
-{
-    AREA_SCREEN,
-    CRY_SCREEN,
-    SIZE_SCREEN,
-    CANCEL_SCREEN,
-    SCREEN_COUNT
-};
+enum { AREA_SCREEN, CRY_SCREEN, SIZE_SCREEN, CANCEL_SCREEN, SCREEN_COUNT };
 
-enum
-{
+enum {
     SEARCH_NAME,
     SEARCH_COLOR,
     SEARCH_TYPE_LEFT,
@@ -63,26 +45,11 @@ enum
     SEARCH_COUNT
 };
 
-enum
-{
-    SEARCH_TOPBAR_SEARCH,
-    SEARCH_TOPBAR_SHIFT,
-    SEARCH_TOPBAR_CANCEL,
-    SEARCH_TOPBAR_COUNT
-};
+enum { SEARCH_TOPBAR_SEARCH, SEARCH_TOPBAR_SHIFT, SEARCH_TOPBAR_CANCEL, SEARCH_TOPBAR_COUNT };
 
-enum
-{
-   ORDER_NUMERICAL,
-   ORDER_ALPHABETICAL,
-   ORDER_HEAVIEST,
-   ORDER_LIGHTEST,
-   ORDER_TALLEST,
-   ORDER_SMALLEST
-};
+enum { ORDER_NUMERICAL, ORDER_ALPHABETICAL, ORDER_HEAVIEST, ORDER_LIGHTEST, ORDER_TALLEST, ORDER_SMALLEST };
 
-enum
-{
+enum {
     NAME_ABC = 1,
     NAME_DEF,
     NAME_GHI,
@@ -95,52 +62,48 @@ enum
 };
 
 // For scrolling search parameter
-#define MAX_SEARCH_PARAM_ON_SCREEN   6
-#define MAX_SEARCH_PARAM_CURSOR_POS  (MAX_SEARCH_PARAM_ON_SCREEN - 1)
+#define MAX_SEARCH_PARAM_ON_SCREEN 6
+#define MAX_SEARCH_PARAM_CURSOR_POS (MAX_SEARCH_PARAM_ON_SCREEN - 1)
 
 #define MAX_MONS_ON_SCREEN 4
 
-#define LIST_SCROLL_STEP         16
+#define LIST_SCROLL_STEP 16
 
-#define POKEBALL_ROTATION_TOP    64
+#define POKEBALL_ROTATION_TOP 64
 #define POKEBALL_ROTATION_BOTTOM (POKEBALL_ROTATION_TOP - 16)
 
 // EWRAM
-static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
+static EWRAM_DATA struct PokedexView* sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
 static EWRAM_DATA u8 sPokeBallRotation = 0;
-static EWRAM_DATA struct PokedexListItem *sPokedexListItem = NULL;
+static EWRAM_DATA struct PokedexListItem* sPokedexListItem = NULL;
 
 // IWRAM common
 // This is written to, but never read.
 u8 gUnusedPokedexU8;
 void (*gPokedexVBlankCB)(void);
 
-struct SearchOptionText
-{
-    const u8 *description;
-    const u8 *title;
+struct SearchOptionText {
+    const u8* description;
+    const u8* title;
 };
 
-struct SearchOption
-{
-    const struct SearchOptionText *texts;
+struct SearchOption {
+    const struct SearchOptionText* texts;
     u8 taskDataCursorPos;
     u8 taskDataScrollOffset;
     u16 numOptions;
 };
 
-struct SearchMenuTopBarItem
-{
-    const u8 *description;
+struct SearchMenuTopBarItem {
+    const u8* description;
     u8 highlightX;
     u8 highlightY;
     u8 highlightWidth;
 };
 
-struct SearchMenuItem
-{
-    const u8 *description;
+struct SearchMenuItem {
+    const u8* description;
     u8 titleBgX;
     u8 titleBgY;
     u8 titleBgWidth;
@@ -151,15 +114,13 @@ struct SearchMenuItem
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
-struct PokedexListItem
-{
+struct PokedexListItem {
     u16 dexNum;
-    u16 seen:1;
-    u16 owned:1;
+    u16 seen : 1;
+    u16 owned : 1;
 };
 
-struct PokedexView
-{
+struct PokedexView {
     struct PokedexListItem pokedexList[NATIONAL_DEX_COUNT + 1];
     u16 pokemonListCount;
     u16 selectedPokemon;
@@ -187,12 +148,12 @@ struct PokedexView
     u8 filler[8];
     u8 currentPage;
     u8 currentPageBackup;
-    bool8 isSearchResults:1;
+    bool8 isSearchResults : 1;
     u8 selectedScreen;
     u8 screenSwitchState;
     u8 menuIsOpen;
     u16 menuCursorPos;
-    s16 menuY;     //Menu Y position (inverted because we use REG_BG0VOFS for this)
+    s16 menuY;     // Menu Y position (inverted because we use REG_BG0VOFS for this)
     u8 unkArr2[8]; // Cleared, never read
     u8 unkArr3[8]; // Cleared, never read
 };
@@ -232,14 +193,14 @@ static u8 ClearMonSprites(void);
 static u16 GetPokemonSpriteToDisplay(u16);
 static u32 CreatePokedexMonSprite(u16, s16, s16);
 static void CreateInterfaceSprites(u8);
-static void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite);
-static void SpriteCB_Scrollbar(struct Sprite *sprite);
-static void SpriteCB_ScrollArrow(struct Sprite *sprite);
-static void SpriteCB_DexListInterfaceText(struct Sprite *sprite);
-static void SpriteCB_RotatingPokeBall(struct Sprite *sprite);
-static void SpriteCB_SeenOwnInfo(struct Sprite *sprite);
-static void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite);
-static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite);
+static void SpriteCB_MoveMonForInfoScreen(struct Sprite* sprite);
+static void SpriteCB_Scrollbar(struct Sprite* sprite);
+static void SpriteCB_ScrollArrow(struct Sprite* sprite);
+static void SpriteCB_DexListInterfaceText(struct Sprite* sprite);
+static void SpriteCB_RotatingPokeBall(struct Sprite* sprite);
+static void SpriteCB_SeenOwnInfo(struct Sprite* sprite);
+static void SpriteCB_DexListStartMenuCursor(struct Sprite* sprite);
+static void SpriteCB_PokedexListMonSprite(struct Sprite* sprite);
 static u8 LoadInfoScreen(struct PokedexListItem*, u8 monSpriteId);
 static bool8 IsInfoScreenScrolling(u8);
 static u8 sub_80BE9F8(struct PokedexListItem*, u8);
@@ -265,7 +226,7 @@ static void HighlightSubmenuScreenSelectBarItem(u8, u16);
 static void Task_DisplayCaughtMonDexPage(u8);
 static void Task_HandleCaughtMonPageInput(u8);
 static void Task_ExitCaughtMonPage(u8);
-static void SpriteCB_SlideCaughtMonToCenter(struct Sprite *sprite);
+static void SpriteCB_SlideCaughtMonToCenter(struct Sprite* sprite);
 static void PrintMonInfo(u32 num, u32, u32 owned, u32 newEntry);
 static void PrintMonHeight(u16 height, u8 left, u8 top);
 static void PrintMonWeight(u16 weight, u8 left, u8 top);
@@ -304,372 +265,187 @@ static void ClearSearchParameterBoxText(void);
 // const rom data
 #include "data/pokemon/pokedex_orders.h"
 
-static const struct OamData sOamData_ScrollBar =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(8x8),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(8x8),
-    .tileNum = 0,
-    .priority = 1,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_ScrollBar = { .y = 160,
+                                                   .affineMode = ST_OAM_AFFINE_OFF,
+                                                   .objMode = ST_OAM_OBJ_NORMAL,
+                                                   .mosaic = 0,
+                                                   .bpp = ST_OAM_4BPP,
+                                                   .shape = SPRITE_SHAPE(8x8),
+                                                   .x = 0,
+                                                   .matrixNum = 0,
+                                                   .size = SPRITE_SIZE(8x8),
+                                                   .tileNum = 0,
+                                                   .priority = 1,
+                                                   .paletteNum = 0,
+                                                   .affineParam = 0 };
 
-static const struct OamData sOamData_ScrollArrow =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(16x8),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(16x8),
-    .tileNum = 0,
-    .priority = 0,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_ScrollArrow = { .y = 160,
+                                                     .affineMode = ST_OAM_AFFINE_OFF,
+                                                     .objMode = ST_OAM_OBJ_NORMAL,
+                                                     .mosaic = 0,
+                                                     .bpp = ST_OAM_4BPP,
+                                                     .shape = SPRITE_SHAPE(16x8),
+                                                     .x = 0,
+                                                     .matrixNum = 0,
+                                                     .size = SPRITE_SIZE(16x8),
+                                                     .tileNum = 0,
+                                                     .priority = 0,
+                                                     .paletteNum = 0,
+                                                     .affineParam = 0 };
 
-static const struct OamData sOamData_InterfaceText =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(32x16),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(32x16),
-    .tileNum = 0,
-    .priority = 0,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_InterfaceText = { .y = 160,
+                                                       .affineMode = ST_OAM_AFFINE_OFF,
+                                                       .objMode = ST_OAM_OBJ_NORMAL,
+                                                       .mosaic = 0,
+                                                       .bpp = ST_OAM_4BPP,
+                                                       .shape = SPRITE_SHAPE(32x16),
+                                                       .x = 0,
+                                                       .matrixNum = 0,
+                                                       .size = SPRITE_SIZE(32x16),
+                                                       .tileNum = 0,
+                                                       .priority = 0,
+                                                       .paletteNum = 0,
+                                                       .affineParam = 0 };
 
-static const struct OamData sOamData_RotatingPokeBall =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_WINDOW,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(32x32),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(32x32),
-    .tileNum = 0,
-    .priority = 1,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_RotatingPokeBall = { .y = 160,
+                                                          .affineMode = ST_OAM_AFFINE_OFF,
+                                                          .objMode = ST_OAM_OBJ_WINDOW,
+                                                          .mosaic = 0,
+                                                          .bpp = ST_OAM_4BPP,
+                                                          .shape = SPRITE_SHAPE(32x32),
+                                                          .x = 0,
+                                                          .matrixNum = 0,
+                                                          .size = SPRITE_SIZE(32x32),
+                                                          .tileNum = 0,
+                                                          .priority = 1,
+                                                          .paletteNum = 0,
+                                                          .affineParam = 0 };
 
-static const struct OamData sOamData_SeenOwnText =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(64x32),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(64x32),
-    .tileNum = 0,
-    .priority = 0,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_SeenOwnText = { .y = 160,
+                                                     .affineMode = ST_OAM_AFFINE_OFF,
+                                                     .objMode = ST_OAM_OBJ_NORMAL,
+                                                     .mosaic = 0,
+                                                     .bpp = ST_OAM_4BPP,
+                                                     .shape = SPRITE_SHAPE(64x32),
+                                                     .x = 0,
+                                                     .matrixNum = 0,
+                                                     .size = SPRITE_SIZE(64x32),
+                                                     .tileNum = 0,
+                                                     .priority = 0,
+                                                     .paletteNum = 0,
+                                                     .affineParam = 0 };
 
-static const struct OamData sOamData_Dex8x16 =
-{
-    .y = 160,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = 0,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(8x16),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(8x16),
-    .tileNum = 0,
-    .priority = 0,
-    .paletteNum = 0,
-    .affineParam = 0
-};
+static const struct OamData sOamData_Dex8x16 = { .y = 160,
+                                                 .affineMode = ST_OAM_AFFINE_OFF,
+                                                 .objMode = ST_OAM_OBJ_NORMAL,
+                                                 .mosaic = 0,
+                                                 .bpp = ST_OAM_4BPP,
+                                                 .shape = SPRITE_SHAPE(8x16),
+                                                 .x = 0,
+                                                 .matrixNum = 0,
+                                                 .size = SPRITE_SIZE(8x16),
+                                                 .tileNum = 0,
+                                                 .priority = 0,
+                                                 .paletteNum = 0,
+                                                 .affineParam = 0 };
 
-static const union AnimCmd sSpriteAnim_ScrollBar[] =
-{
-    ANIMCMD_FRAME(3, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollBar[] = { ANIMCMD_FRAME(3, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_ScrollArrow[] =
-{
-    ANIMCMD_FRAME(1, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_ScrollArrow[] = { ANIMCMD_FRAME(1, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_RotatingPokeBall[] =
-{
-    ANIMCMD_FRAME(16, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_RotatingPokeBall[] = { ANIMCMD_FRAME(16, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_StartButton[] =
-{
-    ANIMCMD_FRAME(48, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_StartButton[] = { ANIMCMD_FRAME(48, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_SearchText[] =
-{
-    ANIMCMD_FRAME(40, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_SearchText[] = { ANIMCMD_FRAME(40, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_SelectButton[] =
-{
-    ANIMCMD_FRAME(32, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_SelectButton[] = { ANIMCMD_FRAME(32, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_MenuText[] =
-{
-    ANIMCMD_FRAME(56, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_MenuText[] = { ANIMCMD_FRAME(56, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_SeenText[] =
-{
-    ANIMCMD_FRAME(64, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_SeenText[] = { ANIMCMD_FRAME(64, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_OwnText[] =
-{
-    ANIMCMD_FRAME(96, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_OwnText[] = { ANIMCMD_FRAME(96, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennText[] =
-{
-    ANIMCMD_FRAME(160, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennText[] = { ANIMCMD_FRAME(160, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalText[] =
-{
-    ANIMCMD_FRAME(168, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalText[] = { ANIMCMD_FRAME(168, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit0[] =
-{
-    ANIMCMD_FRAME(128, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit0[] = { ANIMCMD_FRAME(128, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit1[] =
-{
-    ANIMCMD_FRAME(130, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit1[] = { ANIMCMD_FRAME(130, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit2[] =
-{
-    ANIMCMD_FRAME(132, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit2[] = { ANIMCMD_FRAME(132, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit3[] =
-{
-    ANIMCMD_FRAME(134, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit3[] = { ANIMCMD_FRAME(134, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit4[] =
-{
-    ANIMCMD_FRAME(136, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit4[] = { ANIMCMD_FRAME(136, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit5[] =
-{
-    ANIMCMD_FRAME(138, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit5[] = { ANIMCMD_FRAME(138, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit6[] =
-{
-    ANIMCMD_FRAME(140, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit6[] = { ANIMCMD_FRAME(140, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit7[] =
-{
-    ANIMCMD_FRAME(142, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit7[] = { ANIMCMD_FRAME(142, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit8[] =
-{
-    ANIMCMD_FRAME(144, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit8[] = { ANIMCMD_FRAME(144, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit9[] =
-{
-    ANIMCMD_FRAME(146, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit9[] = { ANIMCMD_FRAME(146, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit0[] =
-{
-    ANIMCMD_FRAME(176, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit0[] = { ANIMCMD_FRAME(176, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit1[] =
-{
-    ANIMCMD_FRAME(178, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit1[] = { ANIMCMD_FRAME(178, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit2[] =
-{
-    ANIMCMD_FRAME(180, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit2[] = { ANIMCMD_FRAME(180, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit3[] =
-{
-    ANIMCMD_FRAME(182, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit3[] = { ANIMCMD_FRAME(182, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit4[] =
-{
-    ANIMCMD_FRAME(184, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit4[] = { ANIMCMD_FRAME(184, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit5[] =
-{
-    ANIMCMD_FRAME(186, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit5[] = { ANIMCMD_FRAME(186, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit6[] =
-{
-    ANIMCMD_FRAME(188, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit6[] = { ANIMCMD_FRAME(188, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit7[] =
-{
-    ANIMCMD_FRAME(190, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit7[] = { ANIMCMD_FRAME(190, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit8[] =
-{
-    ANIMCMD_FRAME(192, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit8[] = { ANIMCMD_FRAME(192, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit9[] =
-{
-    ANIMCMD_FRAME(194, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit9[] = { ANIMCMD_FRAME(194, 30), ANIMCMD_END };
 
-static const union AnimCmd sSpriteAnim_DexListStartMenuCursor[] =
-{
-    ANIMCMD_FRAME(4, 30),
-    ANIMCMD_END
-};
+static const union AnimCmd sSpriteAnim_DexListStartMenuCursor[] = { ANIMCMD_FRAME(4, 30), ANIMCMD_END };
 
-static const union AnimCmd *const sSpriteAnimTable_ScrollBar[] =
-{
-    sSpriteAnim_ScrollBar
-};
+static const union AnimCmd* const sSpriteAnimTable_ScrollBar[] = { sSpriteAnim_ScrollBar };
 
-static const union AnimCmd *const sSpriteAnimTable_ScrollArrow[] =
-{
-    sSpriteAnim_ScrollArrow
-};
+static const union AnimCmd* const sSpriteAnimTable_ScrollArrow[] = { sSpriteAnim_ScrollArrow };
 
-static const union AnimCmd *const sSpriteAnimTable_RotatingPokeBall[] =
-{
-    sSpriteAnim_RotatingPokeBall
-};
+static const union AnimCmd* const sSpriteAnimTable_RotatingPokeBall[] = { sSpriteAnim_RotatingPokeBall };
 
-static const union AnimCmd *const sSpriteAnimTable_InterfaceText[] =
-{
-    sSpriteAnim_StartButton,
-    sSpriteAnim_SearchText,
-    sSpriteAnim_SelectButton,
-    sSpriteAnim_MenuText
-};
+static const union AnimCmd* const sSpriteAnimTable_InterfaceText[] = { sSpriteAnim_StartButton, sSpriteAnim_SearchText,
+                                                                       sSpriteAnim_SelectButton, sSpriteAnim_MenuText };
 
-static const union AnimCmd *const sSpriteAnimTable_SeenOwnText[] =
-{
-    sSpriteAnim_SeenText,
-    sSpriteAnim_OwnText
-};
+static const union AnimCmd* const sSpriteAnimTable_SeenOwnText[] = { sSpriteAnim_SeenText, sSpriteAnim_OwnText };
 
-static const union AnimCmd *const sSpriteAnimTable_HoennNationalText[] =
-{
-    sSpriteAnim_HoennText,
-    sSpriteAnim_NationalText
-};
+static const union AnimCmd* const sSpriteAnimTable_HoennNationalText[] = { sSpriteAnim_HoennText,
+                                                                           sSpriteAnim_NationalText };
 
-static const union AnimCmd *const sSpriteAnimTable_HoennSeenOwnNumber[] =
-{
-    sSpriteAnim_HoennSeenOwnDigit0,
-    sSpriteAnim_HoennSeenOwnDigit1,
-    sSpriteAnim_HoennSeenOwnDigit2,
-    sSpriteAnim_HoennSeenOwnDigit3,
-    sSpriteAnim_HoennSeenOwnDigit4,
-    sSpriteAnim_HoennSeenOwnDigit5,
-    sSpriteAnim_HoennSeenOwnDigit6,
-    sSpriteAnim_HoennSeenOwnDigit7,
-    sSpriteAnim_HoennSeenOwnDigit8,
+static const union AnimCmd* const sSpriteAnimTable_HoennSeenOwnNumber[] = {
+    sSpriteAnim_HoennSeenOwnDigit0, sSpriteAnim_HoennSeenOwnDigit1, sSpriteAnim_HoennSeenOwnDigit2,
+    sSpriteAnim_HoennSeenOwnDigit3, sSpriteAnim_HoennSeenOwnDigit4, sSpriteAnim_HoennSeenOwnDigit5,
+    sSpriteAnim_HoennSeenOwnDigit6, sSpriteAnim_HoennSeenOwnDigit7, sSpriteAnim_HoennSeenOwnDigit8,
     sSpriteAnim_HoennSeenOwnDigit9
 };
 
-static const union AnimCmd *const sSpriteAnimTable_NationalSeenOwnNumber[] =
-{
-    sSpriteAnim_NationalSeenOwnDigit0,
-    sSpriteAnim_NationalSeenOwnDigit1,
-    sSpriteAnim_NationalSeenOwnDigit2,
-    sSpriteAnim_NationalSeenOwnDigit3,
-    sSpriteAnim_NationalSeenOwnDigit4,
-    sSpriteAnim_NationalSeenOwnDigit5,
-    sSpriteAnim_NationalSeenOwnDigit6,
-    sSpriteAnim_NationalSeenOwnDigit7,
-    sSpriteAnim_NationalSeenOwnDigit8,
+static const union AnimCmd* const sSpriteAnimTable_NationalSeenOwnNumber[] = {
+    sSpriteAnim_NationalSeenOwnDigit0, sSpriteAnim_NationalSeenOwnDigit1, sSpriteAnim_NationalSeenOwnDigit2,
+    sSpriteAnim_NationalSeenOwnDigit3, sSpriteAnim_NationalSeenOwnDigit4, sSpriteAnim_NationalSeenOwnDigit5,
+    sSpriteAnim_NationalSeenOwnDigit6, sSpriteAnim_NationalSeenOwnDigit7, sSpriteAnim_NationalSeenOwnDigit8,
     sSpriteAnim_NationalSeenOwnDigit9
 };
 
-static const union AnimCmd *const sSpriteAnimTable_DexListStartMenuCursor[] =
-{
-    sSpriteAnim_DexListStartMenuCursor
-};
+static const union AnimCmd* const sSpriteAnimTable_DexListStartMenuCursor[] = { sSpriteAnim_DexListStartMenuCursor };
 
 #define TAG_DEX_INTERFACE 4096 // Tile and pal tag used for all interface sprites.
 
-static const struct SpriteTemplate sScrollBarSpriteTemplate =
-{
+static const struct SpriteTemplate sScrollBarSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_ScrollBar,
@@ -679,8 +455,7 @@ static const struct SpriteTemplate sScrollBarSpriteTemplate =
     .callback = SpriteCB_Scrollbar,
 };
 
-static const struct SpriteTemplate sScrollArrowSpriteTemplate =
-{
+static const struct SpriteTemplate sScrollArrowSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_ScrollArrow,
@@ -690,8 +465,7 @@ static const struct SpriteTemplate sScrollArrowSpriteTemplate =
     .callback = SpriteCB_ScrollArrow,
 };
 
-static const struct SpriteTemplate sInterfaceTextSpriteTemplate =
-{
+static const struct SpriteTemplate sInterfaceTextSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_InterfaceText,
@@ -701,8 +475,7 @@ static const struct SpriteTemplate sInterfaceTextSpriteTemplate =
     .callback = SpriteCB_DexListInterfaceText,
 };
 
-static const struct SpriteTemplate sRotatingPokeBallSpriteTemplate =
-{
+static const struct SpriteTemplate sRotatingPokeBallSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_RotatingPokeBall,
@@ -712,8 +485,7 @@ static const struct SpriteTemplate sRotatingPokeBallSpriteTemplate =
     .callback = SpriteCB_RotatingPokeBall,
 };
 
-static const struct SpriteTemplate sSeenOwnTextSpriteTemplate =
-{
+static const struct SpriteTemplate sSeenOwnTextSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_SeenOwnText,
@@ -723,8 +495,7 @@ static const struct SpriteTemplate sSeenOwnTextSpriteTemplate =
     .callback = SpriteCB_SeenOwnInfo,
 };
 
-static const struct SpriteTemplate sHoennNationalTextSpriteTemplate =
-{
+static const struct SpriteTemplate sHoennNationalTextSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_InterfaceText,
@@ -734,8 +505,7 @@ static const struct SpriteTemplate sHoennNationalTextSpriteTemplate =
     .callback = SpriteCB_SeenOwnInfo,
 };
 
-static const struct SpriteTemplate sHoennDexSeenOwnNumberSpriteTemplate =
-{
+static const struct SpriteTemplate sHoennDexSeenOwnNumberSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_Dex8x16,
@@ -745,8 +515,7 @@ static const struct SpriteTemplate sHoennDexSeenOwnNumberSpriteTemplate =
     .callback = SpriteCB_SeenOwnInfo,
 };
 
-static const struct SpriteTemplate sNationalDexSeenOwnNumberSpriteTemplate =
-{
+static const struct SpriteTemplate sNationalDexSeenOwnNumberSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_Dex8x16,
@@ -756,8 +525,7 @@ static const struct SpriteTemplate sNationalDexSeenOwnNumberSpriteTemplate =
     .callback = SpriteCB_SeenOwnInfo,
 };
 
-static const struct SpriteTemplate sDexListStartMenuCursorSpriteTemplate =
-{
+static const struct SpriteTemplate sDexListStartMenuCursorSpriteTemplate = {
     .tileTag = TAG_DEX_INTERFACE,
     .paletteTag = TAG_DEX_INTERFACE,
     .oam = &sOamData_Dex8x16,
@@ -767,75 +535,51 @@ static const struct SpriteTemplate sDexListStartMenuCursorSpriteTemplate =
     .callback = SpriteCB_DexListStartMenuCursor,
 };
 
-static const struct CompressedSpriteSheet sInterfaceSpriteSheet[] =
-{
-    {gPokedexInterface_Gfx, 0x2000, TAG_DEX_INTERFACE},
-    {0}
+static const struct CompressedSpriteSheet sInterfaceSpriteSheet[] = {
+    { gPokedexInterface_Gfx, 0x2000, TAG_DEX_INTERFACE }, { 0 }
 };
 
-static const struct SpritePalette sInterfaceSpritePalette[] =
-{
-    {gPokedexBgHoenn_Pal, TAG_DEX_INTERFACE},
-    {0}
-};
+static const struct SpritePalette sInterfaceSpritePalette[] = { { gPokedexBgHoenn_Pal, TAG_DEX_INTERFACE }, { 0 } };
 
 // By scroll speed. Last element of each unused
-static const u8 sScrollMonIncrements[] = {4, 8, 16, 32, 32};
-static const u8 sScrollTimers[] = {8, 4, 2, 1, 1};
+static const u8 sScrollMonIncrements[] = { 4, 8, 16, 32, 32 };
+static const u8 sScrollTimers[] = { 8, 4, 2, 1, 1 };
 
-static const struct BgTemplate sPokedex_BgTemplate[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 12,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 13,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 14,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 15,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
-    }
+static const struct BgTemplate sPokedex_BgTemplate[] = {
+    { .bg = 0,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 12,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 0,
+      .baseTile = 0 },
+    { .bg = 1,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 13,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 1,
+      .baseTile = 0 },
+    { .bg = 2,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 14,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 2,
+      .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 }
 };
 
-static const struct WindowTemplate sPokemonList_WindowTemplate[] =
-{
-    {
-        .bg = 2,
-        .tilemapLeft = 0,
-        .tilemapTop = 0,
-        .width = 32,
-        .height = 32,
-        .paletteNum = 0,
-        .baseBlock = 1,
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sPokemonList_WindowTemplate[] = { {
+                                                                         .bg = 2,
+                                                                         .tilemapLeft = 0,
+                                                                         .tilemapTop = 0,
+                                                                         .width = 32,
+                                                                         .height = 32,
+                                                                         .paletteNum = 0,
+                                                                         .baseBlock = 1,
+                                                                     },
+                                                                     DUMMY_WIN_TEMPLATE };
 
 static const u8 sText_No000[] = _("{NO}000");
 static const u8 sCaughtBall_Gfx[] = INCBIN_U8("graphics/pokedex/caught_ball.4bpp");
@@ -848,44 +592,29 @@ ALIGNED(4) static const u8 gExpandedPlaceholder_PokedexDescription[] = _("");
 
 static const u16 sSizeScreenSilhouette_Pal[] = INCBIN_U16("graphics/pokedex/size_silhouette.gbapal");
 
-static const struct BgTemplate sInfoScreen_BgTemplate[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 12,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 13,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 14,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 15,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    }
+static const struct BgTemplate sInfoScreen_BgTemplate[] = {
+    { .bg = 0,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 12,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 3,
+      .baseTile = 0 },
+    { .bg = 1,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 13,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 0,
+      .baseTile = 0 },
+    { .bg = 2,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 14,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 1,
+      .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 }
 };
 
 #define WIN_INFO 0
@@ -938,26 +667,21 @@ static const struct WindowTemplate sInfoScreen_WindowTemplates[] =
     DUMMY_WIN_TEMPLATE
 };
 
-static const struct BgTemplate sNewEntryInfoScreen_BgTemplate[] =
-{
-    {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 14,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
-        .charBaseIndex = 1,
-        .mapBaseIndex = 15,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
-    },
+static const struct BgTemplate sNewEntryInfoScreen_BgTemplate[] = {
+    { .bg = 2,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 14,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 2,
+      .baseTile = 0 },
+    { .bg = 3,
+      .charBaseIndex = 1,
+      .mapBaseIndex = 15,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 3,
+      .baseTile = 0 },
 };
 
 static const struct WindowTemplate sNewEntryInfoScreen_WindowTemplates[] =
@@ -990,27 +714,26 @@ static const u8 sText_TenDashes2[] = _("----------");
 #include "data/pokemon_graphics/footprint_table.h"
 
 // First character in range followed by number of characters in range for upper and lowercase
-static const u8 sLetterSearchRanges[][4] =
-{
+static const u8 sLetterSearchRanges[][4] = {
     {}, // Name not specified, shouldn't be reached
-    [NAME_ABC] = {CHAR_A, 3, CHAR_a, 3},
-    [NAME_DEF] = {CHAR_D, 3, CHAR_d, 3},
-    [NAME_GHI] = {CHAR_G, 3, CHAR_g, 3},
-    [NAME_JKL] = {CHAR_J, 3, CHAR_j, 3},
-    [NAME_MNO] = {CHAR_M, 3, CHAR_m, 3},
-    [NAME_PQR] = {CHAR_P, 3, CHAR_p, 3},
-    [NAME_STU] = {CHAR_S, 3, CHAR_s, 3},
-    [NAME_VWX] = {CHAR_V, 3, CHAR_v, 3},
-    [NAME_YZ]  = {CHAR_Y, 2, CHAR_y, 2},
+    [NAME_ABC] = { CHAR_A, 3, CHAR_a, 3 },
+    [NAME_DEF] = { CHAR_D, 3, CHAR_d, 3 },
+    [NAME_GHI] = { CHAR_G, 3, CHAR_g, 3 },
+    [NAME_JKL] = { CHAR_J, 3, CHAR_j, 3 },
+    [NAME_MNO] = { CHAR_M, 3, CHAR_m, 3 },
+    [NAME_PQR] = { CHAR_P, 3, CHAR_p, 3 },
+    [NAME_STU] = { CHAR_S, 3, CHAR_s, 3 },
+    [NAME_VWX] = { CHAR_V, 3, CHAR_v, 3 },
+    [NAME_YZ] = { CHAR_Y, 2, CHAR_y, 2 },
 };
 
-#define LETTER_IN_RANGE_UPPER(letter, range) \
-    ((letter) >= sLetterSearchRanges[range][0]                                  \
-  && (letter) < sLetterSearchRanges[range][0] + sLetterSearchRanges[range][1])  \
+#define LETTER_IN_RANGE_UPPER(letter, range)      \
+    ((letter) >= sLetterSearchRanges[range][0] && \
+     (letter) < sLetterSearchRanges[range][0] + sLetterSearchRanges[range][1])
 
-#define LETTER_IN_RANGE_LOWER(letter, range) \
-    ((letter) >= sLetterSearchRanges[range][2]                                  \
-  && (letter) < sLetterSearchRanges[range][2] + sLetterSearchRanges[range][3])  \
+#define LETTER_IN_RANGE_LOWER(letter, range)      \
+    ((letter) >= sLetterSearchRanges[range][2] && \
+     (letter) < sLetterSearchRanges[range][2] + sLetterSearchRanges[range][3])
 
 static const struct SearchMenuTopBarItem sSearchMenuTopBarItems[SEARCH_TOPBAR_COUNT] =
 {
@@ -1112,394 +835,171 @@ static const struct SearchMenuItem sSearchMenuItems[SEARCH_COUNT] =
 };
 
 // Left, Right, Up, Down
-static const u8 sSearchMovementMap_SearchNatDex[SEARCH_COUNT][4] =
-{
-    [SEARCH_NAME] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        SEARCH_COLOR
-    },
-    [SEARCH_COLOR] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_NAME,
-        SEARCH_TYPE_LEFT
-    },
-    [SEARCH_TYPE_LEFT] =
-    {
-        0xFF,
-        SEARCH_TYPE_RIGHT,
-        SEARCH_COLOR,
-        SEARCH_ORDER
-    },
-    [SEARCH_TYPE_RIGHT] =
-    {   SEARCH_TYPE_LEFT,
-        0xFF,
-        SEARCH_COLOR,
-        SEARCH_ORDER
-    },
-    [SEARCH_ORDER] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_TYPE_LEFT,
-        SEARCH_MODE
-    },
-    [SEARCH_MODE] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_ORDER,
-        SEARCH_OK
-    },
-    [SEARCH_OK] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_MODE,
-        0xFF
-    },
+static const u8 sSearchMovementMap_SearchNatDex[SEARCH_COUNT][4] = {
+    [SEARCH_NAME] = { 0xFF, 0xFF, 0xFF, SEARCH_COLOR },
+    [SEARCH_COLOR] = { 0xFF, 0xFF, SEARCH_NAME, SEARCH_TYPE_LEFT },
+    [SEARCH_TYPE_LEFT] = { 0xFF, SEARCH_TYPE_RIGHT, SEARCH_COLOR, SEARCH_ORDER },
+    [SEARCH_TYPE_RIGHT] = { SEARCH_TYPE_LEFT, 0xFF, SEARCH_COLOR, SEARCH_ORDER },
+    [SEARCH_ORDER] = { 0xFF, 0xFF, SEARCH_TYPE_LEFT, SEARCH_MODE },
+    [SEARCH_MODE] = { 0xFF, 0xFF, SEARCH_ORDER, SEARCH_OK },
+    [SEARCH_OK] = { 0xFF, 0xFF, SEARCH_MODE, 0xFF },
 };
 
 // Left, Right, Up, Down
-static const u8 sSearchMovementMap_ShiftNatDex[SEARCH_COUNT][4] =
-{
-    [SEARCH_NAME] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_COLOR] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_TYPE_LEFT] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_TYPE_RIGHT] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_ORDER] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        SEARCH_MODE
-    },
-    [SEARCH_MODE] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_ORDER,
-        SEARCH_OK
-    },
-    [SEARCH_OK] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_MODE,
-        0xFF
-    },
+static const u8 sSearchMovementMap_ShiftNatDex[SEARCH_COUNT][4] = {
+    [SEARCH_NAME] = { 0xFF, 0xFF, 0xFF, 0xFF },         [SEARCH_COLOR] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_TYPE_LEFT] = { 0xFF, 0xFF, 0xFF, 0xFF },    [SEARCH_TYPE_RIGHT] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_ORDER] = { 0xFF, 0xFF, 0xFF, SEARCH_MODE }, [SEARCH_MODE] = { 0xFF, 0xFF, SEARCH_ORDER, SEARCH_OK },
+    [SEARCH_OK] = { 0xFF, 0xFF, SEARCH_MODE, 0xFF },
 };
 
 // Left, Right, Up, Down
-static const u8 sSearchMovementMap_SearchHoennDex[SEARCH_COUNT][4] =
-{
-    [SEARCH_NAME] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        SEARCH_COLOR
-    },
-    [SEARCH_COLOR] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_NAME,
-        SEARCH_TYPE_LEFT
-    },
-    [SEARCH_TYPE_LEFT] =
-    {
-        0xFF,
-        SEARCH_TYPE_RIGHT,
-        SEARCH_COLOR,
-        SEARCH_ORDER
-    },
-    [SEARCH_TYPE_RIGHT] =
-    {   SEARCH_TYPE_LEFT,
-        0xFF,
-        SEARCH_COLOR,
-        SEARCH_ORDER
-    },
-    [SEARCH_ORDER] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_TYPE_LEFT,
-        SEARCH_OK
-    },
-    [SEARCH_MODE] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_OK] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_ORDER,
-        0xFF
-    },
+static const u8 sSearchMovementMap_SearchHoennDex[SEARCH_COUNT][4] = {
+    [SEARCH_NAME] = { 0xFF, 0xFF, 0xFF, SEARCH_COLOR },
+    [SEARCH_COLOR] = { 0xFF, 0xFF, SEARCH_NAME, SEARCH_TYPE_LEFT },
+    [SEARCH_TYPE_LEFT] = { 0xFF, SEARCH_TYPE_RIGHT, SEARCH_COLOR, SEARCH_ORDER },
+    [SEARCH_TYPE_RIGHT] = { SEARCH_TYPE_LEFT, 0xFF, SEARCH_COLOR, SEARCH_ORDER },
+    [SEARCH_ORDER] = { 0xFF, 0xFF, SEARCH_TYPE_LEFT, SEARCH_OK },
+    [SEARCH_MODE] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_OK] = { 0xFF, 0xFF, SEARCH_ORDER, 0xFF },
 };
 
 // Left, Right, Up, Down
-static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
-{
-    [SEARCH_NAME] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_COLOR] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_TYPE_LEFT] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_TYPE_RIGHT] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_ORDER] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        SEARCH_OK
-    },
-    [SEARCH_MODE] =
-    {
-        0xFF,
-        0xFF,
-        0xFF,
-        0xFF
-    },
-    [SEARCH_OK] =
-    {
-        0xFF,
-        0xFF,
-        SEARCH_ORDER,
-        0xFF
-    },
+static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] = {
+    [SEARCH_NAME] = { 0xFF, 0xFF, 0xFF, 0xFF },       [SEARCH_COLOR] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_TYPE_LEFT] = { 0xFF, 0xFF, 0xFF, 0xFF },  [SEARCH_TYPE_RIGHT] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_ORDER] = { 0xFF, 0xFF, 0xFF, SEARCH_OK }, [SEARCH_MODE] = { 0xFF, 0xFF, 0xFF, 0xFF },
+    [SEARCH_OK] = { 0xFF, 0xFF, SEARCH_ORDER, 0xFF },
 };
 
-static const struct SearchOptionText sDexModeOptions[] =
-{
-    [DEX_MODE_HOENN]    = {gText_DexHoennDescription, gText_DexHoennTitle},
-    [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
+static const struct SearchOptionText sDexModeOptions[] = {
+    [DEX_MODE_HOENN] = { gText_DexHoennDescription, gText_DexHoennTitle },
+    [DEX_MODE_NATIONAL] = { gText_DexNatDescription, gText_DexNatTitle },
     {},
 };
 
-static const struct SearchOptionText sDexOrderOptions[] =
-{
-    [ORDER_NUMERICAL]    = {gText_DexSortNumericalDescription, gText_DexSortNumericalTitle},
-    [ORDER_ALPHABETICAL] = {gText_DexSortAtoZDescription,      gText_DexSortAtoZTitle},
-    [ORDER_HEAVIEST]     = {gText_DexSortHeaviestDescription,  gText_DexSortHeaviestTitle},
-    [ORDER_LIGHTEST]     = {gText_DexSortLightestDescription,  gText_DexSortLightestTitle},
-    [ORDER_TALLEST]      = {gText_DexSortTallestDescription,   gText_DexSortTallestTitle},
-    [ORDER_SMALLEST]     = {gText_DexSortSmallestDescription,  gText_DexSortSmallestTitle},
+static const struct SearchOptionText sDexOrderOptions[] = {
+    [ORDER_NUMERICAL] = { gText_DexSortNumericalDescription, gText_DexSortNumericalTitle },
+    [ORDER_ALPHABETICAL] = { gText_DexSortAtoZDescription, gText_DexSortAtoZTitle },
+    [ORDER_HEAVIEST] = { gText_DexSortHeaviestDescription, gText_DexSortHeaviestTitle },
+    [ORDER_LIGHTEST] = { gText_DexSortLightestDescription, gText_DexSortLightestTitle },
+    [ORDER_TALLEST] = { gText_DexSortTallestDescription, gText_DexSortTallestTitle },
+    [ORDER_SMALLEST] = { gText_DexSortSmallestDescription, gText_DexSortSmallestTitle },
     {},
 };
 
-static const struct SearchOptionText sDexSearchNameOptions[] =
-{
-    {gText_DexEmptyString, gText_DexSearchDontSpecify},
-    [NAME_ABC] = {gText_DexEmptyString, gText_DexSearchAlphaABC},
-    [NAME_DEF] = {gText_DexEmptyString, gText_DexSearchAlphaDEF},
-    [NAME_GHI] = {gText_DexEmptyString, gText_DexSearchAlphaGHI},
-    [NAME_JKL] = {gText_DexEmptyString, gText_DexSearchAlphaJKL},
-    [NAME_MNO] = {gText_DexEmptyString, gText_DexSearchAlphaMNO},
-    [NAME_PQR] = {gText_DexEmptyString, gText_DexSearchAlphaPQR},
-    [NAME_STU] = {gText_DexEmptyString, gText_DexSearchAlphaSTU},
-    [NAME_VWX] = {gText_DexEmptyString, gText_DexSearchAlphaVWX},
-    [NAME_YZ]  = {gText_DexEmptyString, gText_DexSearchAlphaYZ},
+static const struct SearchOptionText sDexSearchNameOptions[] = {
+    { gText_DexEmptyString, gText_DexSearchDontSpecify },
+    [NAME_ABC] = { gText_DexEmptyString, gText_DexSearchAlphaABC },
+    [NAME_DEF] = { gText_DexEmptyString, gText_DexSearchAlphaDEF },
+    [NAME_GHI] = { gText_DexEmptyString, gText_DexSearchAlphaGHI },
+    [NAME_JKL] = { gText_DexEmptyString, gText_DexSearchAlphaJKL },
+    [NAME_MNO] = { gText_DexEmptyString, gText_DexSearchAlphaMNO },
+    [NAME_PQR] = { gText_DexEmptyString, gText_DexSearchAlphaPQR },
+    [NAME_STU] = { gText_DexEmptyString, gText_DexSearchAlphaSTU },
+    [NAME_VWX] = { gText_DexEmptyString, gText_DexSearchAlphaVWX },
+    [NAME_YZ] = { gText_DexEmptyString, gText_DexSearchAlphaYZ },
     {},
 };
 
-static const struct SearchOptionText sDexSearchColorOptions[] =
-{
-    {gText_DexEmptyString, gText_DexSearchDontSpecify},
-    [BODY_COLOR_RED + 1]    = {gText_DexEmptyString, gText_DexSearchColorRed},
-    [BODY_COLOR_BLUE + 1]   = {gText_DexEmptyString, gText_DexSearchColorBlue},
-    [BODY_COLOR_YELLOW + 1] = {gText_DexEmptyString, gText_DexSearchColorYellow},
-    [BODY_COLOR_GREEN + 1]  = {gText_DexEmptyString, gText_DexSearchColorGreen},
-    [BODY_COLOR_BLACK + 1]  = {gText_DexEmptyString, gText_DexSearchColorBlack},
-    [BODY_COLOR_BROWN + 1]  = {gText_DexEmptyString, gText_DexSearchColorBrown},
-    [BODY_COLOR_PURPLE + 1] = {gText_DexEmptyString, gText_DexSearchColorPurple},
-    [BODY_COLOR_GRAY + 1]   = {gText_DexEmptyString, gText_DexSearchColorGray},
-    [BODY_COLOR_WHITE + 1]  = {gText_DexEmptyString, gText_DexSearchColorWhite},
-    [BODY_COLOR_PINK + 1]   = {gText_DexEmptyString, gText_DexSearchColorPink},
+static const struct SearchOptionText sDexSearchColorOptions[] = {
+    { gText_DexEmptyString, gText_DexSearchDontSpecify },
+    [BODY_COLOR_RED + 1] = { gText_DexEmptyString, gText_DexSearchColorRed },
+    [BODY_COLOR_BLUE + 1] = { gText_DexEmptyString, gText_DexSearchColorBlue },
+    [BODY_COLOR_YELLOW + 1] = { gText_DexEmptyString, gText_DexSearchColorYellow },
+    [BODY_COLOR_GREEN + 1] = { gText_DexEmptyString, gText_DexSearchColorGreen },
+    [BODY_COLOR_BLACK + 1] = { gText_DexEmptyString, gText_DexSearchColorBlack },
+    [BODY_COLOR_BROWN + 1] = { gText_DexEmptyString, gText_DexSearchColorBrown },
+    [BODY_COLOR_PURPLE + 1] = { gText_DexEmptyString, gText_DexSearchColorPurple },
+    [BODY_COLOR_GRAY + 1] = { gText_DexEmptyString, gText_DexSearchColorGray },
+    [BODY_COLOR_WHITE + 1] = { gText_DexEmptyString, gText_DexSearchColorWhite },
+    [BODY_COLOR_PINK + 1] = { gText_DexEmptyString, gText_DexSearchColorPink },
     {},
 };
 
-static const struct SearchOptionText sDexSearchTypeOptions[] =
-{
-    {gText_DexEmptyString, gText_DexSearchTypeNone},
-    {gText_DexEmptyString, gTypeNames[TYPE_NORMAL]},
-    {gText_DexEmptyString, gTypeNames[TYPE_FIGHTING]},
-    {gText_DexEmptyString, gTypeNames[TYPE_FLYING]},
-    {gText_DexEmptyString, gTypeNames[TYPE_POISON]},
-    {gText_DexEmptyString, gTypeNames[TYPE_GROUND]},
-    {gText_DexEmptyString, gTypeNames[TYPE_ROCK]},
-    {gText_DexEmptyString, gTypeNames[TYPE_BUG]},
-    {gText_DexEmptyString, gTypeNames[TYPE_GHOST]},
-    {gText_DexEmptyString, gTypeNames[TYPE_STEEL]},
-    {gText_DexEmptyString, gTypeNames[TYPE_FIRE]},
-    {gText_DexEmptyString, gTypeNames[TYPE_WATER]},
-    {gText_DexEmptyString, gTypeNames[TYPE_GRASS]},
-    {gText_DexEmptyString, gTypeNames[TYPE_ELECTRIC]},
-    {gText_DexEmptyString, gTypeNames[TYPE_PSYCHIC]},
-    {gText_DexEmptyString, gTypeNames[TYPE_ICE]},
-    {gText_DexEmptyString, gTypeNames[TYPE_DRAGON]},
-    {gText_DexEmptyString, gTypeNames[TYPE_DARK]},
+static const struct SearchOptionText sDexSearchTypeOptions[] = {
+    { gText_DexEmptyString, gText_DexSearchTypeNone },
+    { gText_DexEmptyString, gTypeNames[TYPE_NORMAL] },
+    { gText_DexEmptyString, gTypeNames[TYPE_FIGHTING] },
+    { gText_DexEmptyString, gTypeNames[TYPE_FLYING] },
+    { gText_DexEmptyString, gTypeNames[TYPE_POISON] },
+    { gText_DexEmptyString, gTypeNames[TYPE_GROUND] },
+    { gText_DexEmptyString, gTypeNames[TYPE_ROCK] },
+    { gText_DexEmptyString, gTypeNames[TYPE_BUG] },
+    { gText_DexEmptyString, gTypeNames[TYPE_GHOST] },
+    { gText_DexEmptyString, gTypeNames[TYPE_STEEL] },
+    { gText_DexEmptyString, gTypeNames[TYPE_FIRE] },
+    { gText_DexEmptyString, gTypeNames[TYPE_WATER] },
+    { gText_DexEmptyString, gTypeNames[TYPE_GRASS] },
+    { gText_DexEmptyString, gTypeNames[TYPE_ELECTRIC] },
+    { gText_DexEmptyString, gTypeNames[TYPE_PSYCHIC] },
+    { gText_DexEmptyString, gTypeNames[TYPE_ICE] },
+    { gText_DexEmptyString, gTypeNames[TYPE_DRAGON] },
+    { gText_DexEmptyString, gTypeNames[TYPE_DARK] },
     {},
 };
 
-static const u8 sPokedexModes[] = {DEX_MODE_HOENN, DEX_MODE_NATIONAL};
-static const u8 sOrderOptions[] =
-{
-    ORDER_NUMERICAL,
-    ORDER_ALPHABETICAL,
-    ORDER_HEAVIEST,
-    ORDER_LIGHTEST,
-    ORDER_TALLEST,
-    ORDER_SMALLEST,
+static const u8 sPokedexModes[] = { DEX_MODE_HOENN, DEX_MODE_NATIONAL };
+static const u8 sOrderOptions[] = {
+    ORDER_NUMERICAL, ORDER_ALPHABETICAL, ORDER_HEAVIEST, ORDER_LIGHTEST, ORDER_TALLEST, ORDER_SMALLEST,
 };
 
-static const u8 sDexSearchTypeIds[] =
-{
-    TYPE_NONE,
-    TYPE_NORMAL,
-    TYPE_FIGHTING,
-    TYPE_FLYING,
-    TYPE_POISON,
-    TYPE_GROUND,
-    TYPE_ROCK,
-    TYPE_BUG,
-    TYPE_GHOST,
-    TYPE_STEEL,
-    TYPE_FIRE,
-    TYPE_WATER,
-    TYPE_GRASS,
-    TYPE_ELECTRIC,
-    TYPE_PSYCHIC,
-    TYPE_ICE,
-    TYPE_DRAGON,
-    TYPE_DARK,
+static const u8 sDexSearchTypeIds[] = {
+    TYPE_NONE,  TYPE_NORMAL,   TYPE_FIGHTING, TYPE_FLYING, TYPE_POISON, TYPE_GROUND,
+    TYPE_ROCK,  TYPE_BUG,      TYPE_GHOST,    TYPE_STEEL,  TYPE_FIRE,   TYPE_WATER,
+    TYPE_GRASS, TYPE_ELECTRIC, TYPE_PSYCHIC,  TYPE_ICE,    TYPE_DRAGON, TYPE_DARK,
 };
 
 // Number pairs are the task data for tracking the cursor pos and scroll offset of each option list
 // See task data defines above Task_LoadSearchMenu
-static const struct SearchOption sSearchOptions[] =
-{
-    [SEARCH_NAME]       = {sDexSearchNameOptions,  6,  7, ARRAY_COUNT(sDexSearchNameOptions) - 1},
-    [SEARCH_COLOR]      = {sDexSearchColorOptions, 8,  9, ARRAY_COUNT(sDexSearchColorOptions) - 1},
-    [SEARCH_TYPE_LEFT]  = {sDexSearchTypeOptions, 10, 11, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
-    [SEARCH_TYPE_RIGHT] = {sDexSearchTypeOptions, 12, 13, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
-    [SEARCH_ORDER]      = {sDexOrderOptions,       4,  5, ARRAY_COUNT(sDexOrderOptions) - 1},
-    [SEARCH_MODE]       = {sDexModeOptions,        2,  3, ARRAY_COUNT(sDexModeOptions) - 1},
+static const struct SearchOption sSearchOptions[] = {
+    [SEARCH_NAME] = { sDexSearchNameOptions, 6, 7, ARRAY_COUNT(sDexSearchNameOptions) - 1 },
+    [SEARCH_COLOR] = { sDexSearchColorOptions, 8, 9, ARRAY_COUNT(sDexSearchColorOptions) - 1 },
+    [SEARCH_TYPE_LEFT] = { sDexSearchTypeOptions, 10, 11, ARRAY_COUNT(sDexSearchTypeOptions) - 1 },
+    [SEARCH_TYPE_RIGHT] = { sDexSearchTypeOptions, 12, 13, ARRAY_COUNT(sDexSearchTypeOptions) - 1 },
+    [SEARCH_ORDER] = { sDexOrderOptions, 4, 5, ARRAY_COUNT(sDexOrderOptions) - 1 },
+    [SEARCH_MODE] = { sDexModeOptions, 2, 3, ARRAY_COUNT(sDexModeOptions) - 1 },
 };
 
-static const struct BgTemplate sSearchMenu_BgTemplate[] =
-{
-    {
-        .bg = 0,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 12,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 0,
-        .baseTile = 0
-    },
-    {
-        .bg = 1,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 13,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 1,
-        .baseTile = 0
-    },
-    {
-        .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 14,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
-        .baseTile = 0
-    },
-    {
-        .bg = 3,
-        .charBaseIndex = 0,
-        .mapBaseIndex = 15,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 3,
-        .baseTile = 0
-    }
+static const struct BgTemplate sSearchMenu_BgTemplate[] = {
+    { .bg = 0,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 12,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 0,
+      .baseTile = 0 },
+    { .bg = 1,
+      .charBaseIndex = 0,
+      .mapBaseIndex = 13,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 1,
+      .baseTile = 0 },
+    { .bg = 2,
+      .charBaseIndex = 2,
+      .mapBaseIndex = 14,
+      .screenSize = 0,
+      .paletteMode = 0,
+      .priority = 2,
+      .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 }
 };
 
-static const struct WindowTemplate sSearchMenu_WindowTemplate[] =
-{
-    {
-        .bg = 2,
-        .tilemapLeft = 0,
-        .tilemapTop = 0,
-        .width = 32,
-        .height = 20,
-        .paletteNum = 0,
-        .baseBlock = 0x0001,
-    },
-    DUMMY_WIN_TEMPLATE
-};
+static const struct WindowTemplate sSearchMenu_WindowTemplate[] = { {
+                                                                        .bg = 2,
+                                                                        .tilemapLeft = 0,
+                                                                        .tilemapTop = 0,
+                                                                        .width = 32,
+                                                                        .height = 20,
+                                                                        .paletteNum = 0,
+                                                                        .baseBlock = 0x0001,
+                                                                    },
+                                                                    DUMMY_WIN_TEMPLATE };
 
 // .text
 
-void ResetPokedex(void)
-{
+void ResetPokedex(void) {
     u16 i;
 
     sLastSelectedPokemon = 0;
@@ -1513,8 +1013,7 @@ void ResetPokedex(void)
     gSaveBlock2Ptr->pokedex.spindaPersonality = 0;
     gSaveBlock2Ptr->pokedex.unknown3 = 0;
     DisableNationalPokedex();
-    for (i = 0; i < DEX_FLAGS_NO; i++)
-    {
+    for (i = 0; i < DEX_FLAGS_NO; i++) {
         gSaveBlock2Ptr->pokedex.owned[i] = 0;
         gSaveBlock2Ptr->pokedex.seen[i] = 0;
         gSaveBlock1Ptr->seen1[i] = 0;
@@ -1522,25 +1021,21 @@ void ResetPokedex(void)
     }
 }
 
-void ResetPokedexScrollPositions(void)
-{
+void ResetPokedexScrollPositions(void) {
     sLastSelectedPokemon = 0;
     sPokeBallRotation = POKEBALL_ROTATION_TOP;
 }
 
-static void VBlankCB_Pokedex(void)
-{
+static void VBlankCB_Pokedex(void) {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void ResetPokedexView(struct PokedexView *pokedexView)
-{
+static void ResetPokedexView(struct PokedexView* pokedexView) {
     u16 i;
 
-    for (i = 0; i < NATIONAL_DEX_COUNT; i++)
-    {
+    for (i = 0; i < NATIONAL_DEX_COUNT; i++) {
         pokedexView->pokedexList[i].dexNum = 0xFFFF;
         pokedexView->pokedexList[i].seen = FALSE;
         pokedexView->pokedexList[i].owned = FALSE;
@@ -1586,76 +1081,69 @@ static void ResetPokedexView(struct PokedexView *pokedexView)
         pokedexView->unkArr3[i] = 0;
 }
 
-void CB2_OpenPokedex(void)
-{
-    u8 *addr;
+void CB2_OpenPokedex(void) {
+    u8* addr;
     u32 size;
 
-    switch (gMain.state)
-    {
-    case 0:
-    default:
-        SetVBlankCallback(NULL);
-        ResetOtherVideoRegisters(0);
-        DmaFillLarge16(3, 0, (u8 *)VRAM, VRAM_SIZE, 0x1000);
-        DmaClear32(3, OAM, OAM_SIZE);
-        DmaClear16(3, PLTT, PLTT_SIZE);
-        gMain.state = 1;
-        break;
-    case 1:
-        ScanlineEffect_Stop();
-        ResetTasks();
-        ResetSpriteData();
-        ResetPaletteFade();
-        FreeAllSpritePalettes();
-        gReservedSpritePaletteCount = 8;
-        ResetAllPicSprites();
-        gMain.state++;
-        break;
-    case 2:
-        sPokedexView = AllocZeroed(sizeof(struct PokedexView));
-        ResetPokedexView(sPokedexView);
-        CreateTask(Task_OpenPokedexMainPage, 0);
-        sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
-        if (!IsNationalPokedexEnabled())
-            sPokedexView->dexMode = DEX_MODE_HOENN;
-        sPokedexView->dexOrder = gSaveBlock2Ptr->pokedex.order;
-        sPokedexView->selectedPokemon = sLastSelectedPokemon;
-        sPokedexView->pokeBallRotation = sPokeBallRotation;
-        sPokedexView->selectedScreen = AREA_SCREEN;
-        if (!IsNationalPokedexEnabled())
-        {
-            sPokedexView->seenCount = GetHoennPokedexCount(FLAG_GET_SEEN);
-            sPokedexView->ownCount = GetHoennPokedexCount(FLAG_GET_CAUGHT);
-        }
-        else
-        {
-            sPokedexView->seenCount = GetNationalPokedexCount(FLAG_GET_SEEN);
-            sPokedexView->ownCount = GetNationalPokedexCount(FLAG_GET_CAUGHT);
-        }
-        sPokedexView->initialVOffset = 8;
-        gMain.state++;
-        break;
-    case 3:
-        EnableInterrupts(1);
-        SetVBlankCallback(VBlankCB_Pokedex);
-        SetMainCallback2(CB2_Pokedex);
-        CreatePokedexList(sPokedexView->dexMode, sPokedexView->dexOrder);
-        m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x80);
-        break;
+    switch (gMain.state) {
+        case 0:
+        default:
+            SetVBlankCallback(NULL);
+            ResetOtherVideoRegisters(0);
+            DmaFillLarge16(3, 0, (u8*)VRAM, VRAM_SIZE, 0x1000);
+            DmaClear32(3, OAM, OAM_SIZE);
+            DmaClear16(3, PLTT, PLTT_SIZE);
+            gMain.state = 1;
+            break;
+        case 1:
+            ScanlineEffect_Stop();
+            ResetTasks();
+            ResetSpriteData();
+            ResetPaletteFade();
+            FreeAllSpritePalettes();
+            gReservedSpritePaletteCount = 8;
+            ResetAllPicSprites();
+            gMain.state++;
+            break;
+        case 2:
+            sPokedexView = AllocZeroed(sizeof(struct PokedexView));
+            ResetPokedexView(sPokedexView);
+            CreateTask(Task_OpenPokedexMainPage, 0);
+            sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
+            if (!IsNationalPokedexEnabled())
+                sPokedexView->dexMode = DEX_MODE_HOENN;
+            sPokedexView->dexOrder = gSaveBlock2Ptr->pokedex.order;
+            sPokedexView->selectedPokemon = sLastSelectedPokemon;
+            sPokedexView->pokeBallRotation = sPokeBallRotation;
+            sPokedexView->selectedScreen = AREA_SCREEN;
+            if (!IsNationalPokedexEnabled()) {
+                sPokedexView->seenCount = GetHoennPokedexCount(FLAG_GET_SEEN);
+                sPokedexView->ownCount = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+            } else {
+                sPokedexView->seenCount = GetNationalPokedexCount(FLAG_GET_SEEN);
+                sPokedexView->ownCount = GetNationalPokedexCount(FLAG_GET_CAUGHT);
+            }
+            sPokedexView->initialVOffset = 8;
+            gMain.state++;
+            break;
+        case 3:
+            EnableInterrupts(1);
+            SetVBlankCallback(VBlankCB_Pokedex);
+            SetMainCallback2(CB2_Pokedex);
+            CreatePokedexList(sPokedexView->dexMode, sPokedexView->dexOrder);
+            m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x80);
+            break;
     }
 }
 
-static void CB2_Pokedex(void)
-{
+static void CB2_Pokedex(void) {
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-void Task_OpenPokedexMainPage(u8 taskId)
-{
+void Task_OpenPokedexMainPage(u8 taskId) {
     sPokedexView->isSearchResults = FALSE;
     if (LoadPokedexListPage(PAGE_MAIN))
         gTasks[taskId].func = Task_HandlePokedexInput;
@@ -1663,35 +1151,27 @@ void Task_OpenPokedexMainPage(u8 taskId)
 
 #define tTaskId data[0]
 
-static void Task_HandlePokedexInput(u8 taskId)
-{
+static void Task_HandlePokedexInput(u8 taskId) {
     SetGpuReg(REG_OFFSET_BG0VOFS, sPokedexView->menuY);
 
-    if (sPokedexView->menuY)
-    {
+    if (sPokedexView->menuY) {
         sPokedexView->menuY -= 8;
-    }
-    else
-    {
-        if ((gMain.newKeys & A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen)
-        {
+    } else {
+        if ((gMain.newKeys & A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen) {
             UpdateSelectedMonSpriteId();
-            BeginNormalPaletteFade(~(1 << (gSprites[sPokedexView->selectedMonSpriteId].oam.paletteNum + 16)), 0, 0, 0x10, RGB_BLACK);
+            BeginNormalPaletteFade(~(1 << (gSprites[sPokedexView->selectedMonSpriteId].oam.paletteNum + 16)), 0, 0,
+                                   0x10, RGB_BLACK);
             gSprites[sPokedexView->selectedMonSpriteId].callback = SpriteCB_MoveMonForInfoScreen;
             gTasks[taskId].func = Task_OpenInfoScreenAfterMonMovement;
             PlaySE(SE_PIN);
             FreeWindowAndBgBuffers();
-        }
-        else if (gMain.newKeys & START_BUTTON)
-        {
+        } else if (gMain.newKeys & START_BUTTON) {
             sPokedexView->menuY = 0;
             sPokedexView->menuIsOpen = TRUE;
             sPokedexView->menuCursorPos = 0;
             gTasks[taskId].func = Task_HandlePokedexStartMenuInput;
             PlaySE(SE_SELECT);
-        }
-        else if (gMain.newKeys & SELECT_BUTTON)
-        {
+        } else if (gMain.newKeys & SELECT_BUTTON) {
             PlaySE(SE_SELECT);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].tTaskId = LoadSearchMenu();
@@ -1703,16 +1183,12 @@ static void Task_HandlePokedexInput(u8 taskId)
             gTasks[taskId].func = Task_WaitForExitSearch;
             PlaySE(SE_PC_LOGIN);
             FreeWindowAndBgBuffers();
-        }
-        else if (gMain.newKeys & B_BUTTON)
-        {
+        } else if (gMain.newKeys & B_BUTTON) {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].func = Task_ClosePokedex;
             PlaySE(SE_PC_OFF);
-        }
-        else
-        {
-            //Handle D-pad
+        } else {
+            // Handle D-pad
             sPokedexView->selectedPokemon = TryDoPokedexScroll(sPokedexView->selectedPokemon, 0xE);
             if (sPokedexView->scrollTimer)
                 gTasks[taskId].func = Task_WaitForScroll;
@@ -1720,114 +1196,96 @@ static void Task_HandlePokedexInput(u8 taskId)
     }
 }
 
-static void Task_WaitForScroll(u8 taskId)
-{
-    if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement, sPokedexView->maxScrollTimer))
+static void Task_WaitForScroll(u8 taskId) {
+    if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement,
+                            sPokedexView->maxScrollTimer))
         gTasks[taskId].func = Task_HandlePokedexInput;
 }
 
-static void Task_HandlePokedexStartMenuInput(u8 taskId)
-{
+static void Task_HandlePokedexStartMenuInput(u8 taskId) {
     SetGpuReg(REG_OFFSET_BG0VOFS, sPokedexView->menuY);
 
-    //If menu is not open, slide it up, on screen
-    if (sPokedexView->menuY != 80)
-    {
+    // If menu is not open, slide it up, on screen
+    if (sPokedexView->menuY != 80) {
         sPokedexView->menuY += 8;
-    }
-    else
-    {
-        if (gMain.newKeys & A_BUTTON)
-        {
-            switch (sPokedexView->menuCursorPos)
-            {
-            case 0: //BACK TO LIST
-            default:
-                gMain.newKeys |= START_BUTTON;  //Exit menu
-                break;
-            case 1: //LIST TOP
-                sPokedexView->selectedPokemon = 0;
-                sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
-                ClearMonSprites();
-                CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
-                gMain.newKeys |= START_BUTTON;  //Exit menu
-                break;
-            case 2: //LIST BOTTOM
-                sPokedexView->selectedPokemon = sPokedexView->pokemonListCount - 1;
-                sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
-                ClearMonSprites();
-                CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
-                gMain.newKeys |= START_BUTTON;  //Exit menu
-                break;
-            case 3: //CLOSE POKEDEX
-                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-                gTasks[taskId].func = Task_ClosePokedex;
-                PlaySE(SE_PC_OFF);
-                break;
+    } else {
+        if (gMain.newKeys & A_BUTTON) {
+            switch (sPokedexView->menuCursorPos) {
+                case 0: // BACK TO LIST
+                default:
+                    gMain.newKeys |= START_BUTTON; // Exit menu
+                    break;
+                case 1: // LIST TOP
+                    sPokedexView->selectedPokemon = 0;
+                    sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
+                    ClearMonSprites();
+                    CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                    gMain.newKeys |= START_BUTTON; // Exit menu
+                    break;
+                case 2: // LIST BOTTOM
+                    sPokedexView->selectedPokemon = sPokedexView->pokemonListCount - 1;
+                    sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
+                    ClearMonSprites();
+                    CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                    gMain.newKeys |= START_BUTTON; // Exit menu
+                    break;
+                case 3: // CLOSE POKEDEX
+                    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+                    gTasks[taskId].func = Task_ClosePokedex;
+                    PlaySE(SE_PC_OFF);
+                    break;
             }
         }
 
-        //Exit menu when Start or B is pressed
-        if (gMain.newKeys & (START_BUTTON | B_BUTTON))
-        {
+        // Exit menu when Start or B is pressed
+        if (gMain.newKeys & (START_BUTTON | B_BUTTON)) {
             sPokedexView->menuIsOpen = FALSE;
             gTasks[taskId].func = Task_HandlePokedexInput;
             PlaySE(SE_SELECT);
-        }
-        else if ((gMain.newAndRepeatedKeys & DPAD_UP) && sPokedexView->menuCursorPos != 0)
-        {
+        } else if ((gMain.newAndRepeatedKeys & DPAD_UP) && sPokedexView->menuCursorPos != 0) {
             sPokedexView->menuCursorPos--;
             PlaySE(SE_SELECT);
-        }
-        else if ((gMain.newAndRepeatedKeys & DPAD_DOWN) && sPokedexView->menuCursorPos < 3)
-        {
+        } else if ((gMain.newAndRepeatedKeys & DPAD_DOWN) && sPokedexView->menuCursorPos < 3) {
             sPokedexView->menuCursorPos++;
             PlaySE(SE_SELECT);
         }
     }
 }
 
-static void Task_OpenInfoScreenAfterMonMovement(u8 taskId)
-{
-    if (gSprites[sPokedexView->selectedMonSpriteId].pos1.x == 48 && gSprites[sPokedexView->selectedMonSpriteId].pos1.y == 56)
-    {
+static void Task_OpenInfoScreenAfterMonMovement(u8 taskId) {
+    if (gSprites[sPokedexView->selectedMonSpriteId].pos1.x == 48 &&
+        gSprites[sPokedexView->selectedMonSpriteId].pos1.y == 56) {
         sPokedexView->currentPageBackup = sPokedexView->currentPage;
-        gTasks[taskId].tTaskId = LoadInfoScreen(&sPokedexView->pokedexList[sPokedexView->selectedPokemon], sPokedexView->selectedMonSpriteId);
+        gTasks[taskId].tTaskId = LoadInfoScreen(&sPokedexView->pokedexList[sPokedexView->selectedPokemon],
+                                                sPokedexView->selectedMonSpriteId);
         gTasks[taskId].func = Task_WaitForExitInfoScreen;
     }
 }
 
-static void Task_WaitForExitInfoScreen(u8 taskId)
-{
-    if (gTasks[gTasks[taskId].tTaskId].isActive)
-    {
-        if (sPokedexView->currentPage == PAGE_INFO && !IsInfoScreenScrolling(gTasks[taskId].tTaskId) && TryDoInfoScreenScroll())
+static void Task_WaitForExitInfoScreen(u8 taskId) {
+    if (gTasks[gTasks[taskId].tTaskId].isActive) {
+        if (sPokedexView->currentPage == PAGE_INFO && !IsInfoScreenScrolling(gTasks[taskId].tTaskId) &&
+            TryDoInfoScreenScroll())
             sub_80BE9F8(&sPokedexView->pokedexList[sPokedexView->selectedPokemon], gTasks[taskId].tTaskId);
-    }
-    else
-    {
+    } else {
         sLastSelectedPokemon = sPokedexView->selectedPokemon;
         sPokeBallRotation = sPokedexView->pokeBallRotation;
         gTasks[taskId].func = Task_OpenPokedexMainPage;
     }
 }
 
-static void Task_WaitForExitSearch(u8 taskId)
-{
-    if (!gTasks[gTasks[taskId].tTaskId].isActive)
-    {
+static void Task_WaitForExitSearch(u8 taskId) {
+    if (!gTasks[gTasks[taskId].tTaskId].isActive) {
         ClearMonSprites();
 
         // Search produced results
-        if (sPokedexView->screenSwitchState != 0)
-        {
+        if (sPokedexView->screenSwitchState != 0) {
             sPokedexView->selectedPokemon = 0;
             sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
             gTasks[taskId].func = Task_OpenSearchResults;
         }
         // Search didn't produce results
-        else
-        {
+        else {
             sPokedexView->pokeBallRotation = sPokedexView->pokeBallRotationBackup;
             sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
             sPokedexView->dexMode = sPokedexView->dexModeBackup;
@@ -1839,10 +1297,8 @@ static void Task_WaitForExitSearch(u8 taskId)
     }
 }
 
-static void Task_ClosePokedex(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ClosePokedex(u8 taskId) {
+    if (!gPaletteFade.active) {
         gSaveBlock2Ptr->pokedex.mode = sPokedexView->dexMode;
         if (!IsNationalPokedexEnabled())
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_HOENN;
@@ -1856,25 +1312,19 @@ static void Task_ClosePokedex(u8 taskId)
     }
 }
 
-static void Task_OpenSearchResults(u8 taskId)
-{
+static void Task_OpenSearchResults(u8 taskId) {
     sPokedexView->isSearchResults = TRUE;
     if (LoadPokedexListPage(PAGE_SEARCH_RESULTS))
         gTasks[taskId].func = Task_HandleSearchResultsInput;
 }
 
-static void Task_HandleSearchResultsInput(u8 taskId)
-{
+static void Task_HandleSearchResultsInput(u8 taskId) {
     SetGpuReg(REG_OFFSET_BG0VOFS, sPokedexView->menuY);
 
-    if (sPokedexView->menuY)
-    {
+    if (sPokedexView->menuY) {
         sPokedexView->menuY -= 8;
-    }
-    else
-    {
-        if ((gMain.newKeys & A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen)
-        {
+    } else {
+        if ((gMain.newKeys & A_BUTTON) && sPokedexView->pokedexList[sPokedexView->selectedPokemon].seen) {
             u32 a;
 
             UpdateSelectedMonSpriteId();
@@ -1884,33 +1334,25 @@ static void Task_HandleSearchResultsInput(u8 taskId)
             gTasks[taskId].func = Task_OpenSearchResultsInfoScreenAfterMonMovement;
             PlaySE(SE_PIN);
             FreeWindowAndBgBuffers();
-        }
-        else if (gMain.newKeys & START_BUTTON)
-        {
+        } else if (gMain.newKeys & START_BUTTON) {
             sPokedexView->menuY = 0;
             sPokedexView->menuIsOpen = TRUE;
             sPokedexView->menuCursorPos = 0;
             gTasks[taskId].func = Task_HandleSearchResultsStartMenuInput;
             PlaySE(SE_SELECT);
-        }
-        else if (gMain.newKeys & SELECT_BUTTON)
-        {
+        } else if (gMain.newKeys & SELECT_BUTTON) {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].tTaskId = LoadSearchMenu();
             sPokedexView->screenSwitchState = 0;
             gTasks[taskId].func = Task_WaitForExitSearch;
             PlaySE(SE_PC_LOGIN);
             FreeWindowAndBgBuffers();
-        }
-        else if (gMain.newKeys & B_BUTTON)
-        {
+        } else if (gMain.newKeys & B_BUTTON) {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].func = Task_ReturnToPokedexFromSearchResults;
             PlaySE(SE_PC_OFF);
-        }
-        else
-        {
-            //Handle D-pad
+        } else {
+            // Handle D-pad
             sPokedexView->selectedPokemon = TryDoPokedexScroll(sPokedexView->selectedPokemon, 0xE);
             if (sPokedexView->scrollTimer)
                 gTasks[taskId].func = Task_WaitForSearchResultsScroll;
@@ -1918,105 +1360,89 @@ static void Task_HandleSearchResultsInput(u8 taskId)
     }
 }
 
-static void Task_WaitForSearchResultsScroll(u8 taskId)
-{
-    if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement, sPokedexView->maxScrollTimer))
+static void Task_WaitForSearchResultsScroll(u8 taskId) {
+    if (UpdateDexListScroll(sPokedexView->scrollDirection, sPokedexView->scrollMonIncrement,
+                            sPokedexView->maxScrollTimer))
         gTasks[taskId].func = Task_HandleSearchResultsInput;
 }
 
-static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
-{
+static void Task_HandleSearchResultsStartMenuInput(u8 taskId) {
     SetGpuReg(REG_OFFSET_BG0VOFS, sPokedexView->menuY);
 
-    if (sPokedexView->menuY != 96)
-    {
+    if (sPokedexView->menuY != 96) {
         sPokedexView->menuY += 8;
-    }
-    else
-    {
-        if (gMain.newKeys & A_BUTTON)
-        {
-            switch (sPokedexView->menuCursorPos)
-            {
-            case 0: //BACK TO LIST
-            default:
-                gMain.newKeys |= START_BUTTON;
-                break;
-            case 1: //LIST TOP
-                sPokedexView->selectedPokemon = 0;
-                sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
-                ClearMonSprites();
-                CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
-                gMain.newKeys |= START_BUTTON;
-                break;
-            case 2: //LIST BOTTOM
-                sPokedexView->selectedPokemon = sPokedexView->pokemonListCount - 1;
-                sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
-                ClearMonSprites();
-                CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
-                gMain.newKeys |= START_BUTTON;
-                break;
-            case 3: //BACK TO POKEDEX
-                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-                gTasks[taskId].func = Task_ReturnToPokedexFromSearchResults;
-                PlaySE(SE_TRUCK_DOOR);
-                break;
-            case 4: //CLOSE POKEDEX
-                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-                gTasks[taskId].func = Task_ClosePokedexFromSearchResultsStartMenu;
-                PlaySE(SE_PC_OFF);
-                break;
+    } else {
+        if (gMain.newKeys & A_BUTTON) {
+            switch (sPokedexView->menuCursorPos) {
+                case 0: // BACK TO LIST
+                default:
+                    gMain.newKeys |= START_BUTTON;
+                    break;
+                case 1: // LIST TOP
+                    sPokedexView->selectedPokemon = 0;
+                    sPokedexView->pokeBallRotation = POKEBALL_ROTATION_TOP;
+                    ClearMonSprites();
+                    CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                    gMain.newKeys |= START_BUTTON;
+                    break;
+                case 2: // LIST BOTTOM
+                    sPokedexView->selectedPokemon = sPokedexView->pokemonListCount - 1;
+                    sPokedexView->pokeBallRotation = sPokedexView->pokemonListCount * 16 + POKEBALL_ROTATION_BOTTOM;
+                    ClearMonSprites();
+                    CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+                    gMain.newKeys |= START_BUTTON;
+                    break;
+                case 3: // BACK TO POKEDEX
+                    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+                    gTasks[taskId].func = Task_ReturnToPokedexFromSearchResults;
+                    PlaySE(SE_TRUCK_DOOR);
+                    break;
+                case 4: // CLOSE POKEDEX
+                    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+                    gTasks[taskId].func = Task_ClosePokedexFromSearchResultsStartMenu;
+                    PlaySE(SE_PC_OFF);
+                    break;
             }
         }
 
-        //Exit menu when Start or B is pressed
-        if (gMain.newKeys & (START_BUTTON | B_BUTTON))
-        {
+        // Exit menu when Start or B is pressed
+        if (gMain.newKeys & (START_BUTTON | B_BUTTON)) {
             sPokedexView->menuIsOpen = FALSE;
             gTasks[taskId].func = Task_HandleSearchResultsInput;
             PlaySE(SE_SELECT);
-        }
-        else if ((gMain.newAndRepeatedKeys & DPAD_UP) && sPokedexView->menuCursorPos)
-        {
+        } else if ((gMain.newAndRepeatedKeys & DPAD_UP) && sPokedexView->menuCursorPos) {
             sPokedexView->menuCursorPos--;
             PlaySE(SE_SELECT);
-        }
-        else if ((gMain.newAndRepeatedKeys & DPAD_DOWN) && sPokedexView->menuCursorPos < 4)
-        {
+        } else if ((gMain.newAndRepeatedKeys & DPAD_DOWN) && sPokedexView->menuCursorPos < 4) {
             sPokedexView->menuCursorPos++;
             PlaySE(SE_SELECT);
         }
     }
 }
 
-static void Task_OpenSearchResultsInfoScreenAfterMonMovement(u8 taskId)
-{
-    if (gSprites[sPokedexView->selectedMonSpriteId].pos1.x == 48 && gSprites[sPokedexView->selectedMonSpriteId].pos1.y == 56)
-    {
+static void Task_OpenSearchResultsInfoScreenAfterMonMovement(u8 taskId) {
+    if (gSprites[sPokedexView->selectedMonSpriteId].pos1.x == 48 &&
+        gSprites[sPokedexView->selectedMonSpriteId].pos1.y == 56) {
         sPokedexView->currentPageBackup = sPokedexView->currentPage;
-        gTasks[taskId].tTaskId = LoadInfoScreen(&sPokedexView->pokedexList[sPokedexView->selectedPokemon], sPokedexView->selectedMonSpriteId);
+        gTasks[taskId].tTaskId = LoadInfoScreen(&sPokedexView->pokedexList[sPokedexView->selectedPokemon],
+                                                sPokedexView->selectedMonSpriteId);
         sPokedexView->selectedMonSpriteId = -1;
         gTasks[taskId].func = Task_WaitForExitSearchResultsInfoScreen;
     }
 }
 
-static void Task_WaitForExitSearchResultsInfoScreen(u8 taskId)
-{
-    if (gTasks[gTasks[taskId].tTaskId].isActive)
-    {
-        if (sPokedexView->currentPage == PAGE_INFO && !IsInfoScreenScrolling(gTasks[taskId].tTaskId) && TryDoInfoScreenScroll())
+static void Task_WaitForExitSearchResultsInfoScreen(u8 taskId) {
+    if (gTasks[gTasks[taskId].tTaskId].isActive) {
+        if (sPokedexView->currentPage == PAGE_INFO && !IsInfoScreenScrolling(gTasks[taskId].tTaskId) &&
+            TryDoInfoScreenScroll())
             sub_80BE9F8(&sPokedexView->pokedexList[sPokedexView->selectedPokemon], gTasks[taskId].tTaskId);
-    }
-    else
-    {
+    } else {
         gTasks[taskId].func = Task_OpenSearchResults;
     }
 }
 
-static void Task_ReturnToPokedexFromSearchResults(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ReturnToPokedexFromSearchResults(u8 taskId) {
+    if (!gPaletteFade.active) {
         sPokedexView->pokeBallRotation = sPokedexView->pokeBallRotationBackup;
         sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
         sPokedexView->dexMode = sPokedexView->dexModeBackup;
@@ -2029,10 +1455,8 @@ static void Task_ReturnToPokedexFromSearchResults(u8 taskId)
     }
 }
 
-static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId) {
+    if (!gPaletteFade.active) {
         sPokedexView->pokeBallRotation = sPokedexView->pokeBallRotationBackup;
         sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
         sPokedexView->dexMode = sPokedexView->dexModeBackup;
@@ -2046,102 +1470,98 @@ static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId)
 #undef tTaskId
 
 // For loading main pokedex page or pokedex search results
-static bool8 LoadPokedexListPage(u8 page)
-{
-    switch (gMain.state)
-    {
-    case 0:
-    default:
-        if (gPaletteFade.active)
-            return 0;
-        SetVBlankCallback(NULL);
-        sPokedexView->currentPage = page;
-        ResetOtherVideoRegisters(0);
-        SetGpuReg(REG_OFFSET_BG2VOFS, sPokedexView->initialVOffset);
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sPokedex_BgTemplate, ARRAY_COUNT(sPokedex_BgTemplate));
-        SetBgTilemapBuffer(3, AllocZeroed(0x800));
-        SetBgTilemapBuffer(2, AllocZeroed(0x800));
-        SetBgTilemapBuffer(1, AllocZeroed(0x800));
-        SetBgTilemapBuffer(0, AllocZeroed(0x800));
-        DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
-        CopyToBgTilemapBuffer(1, gPokedexList_Tilemap, 0, 0);
-        CopyToBgTilemapBuffer(3, gPokedexListUnderlay_Tilemap, 0, 0);
-        if (page == PAGE_MAIN)
-            CopyToBgTilemapBuffer(0, gPokedexStartMenuMain_Tilemap, 0, 0x280);
-        else
-            CopyToBgTilemapBuffer(0, gPokedexStartMenuSearchResults_Tilemap, 0, 0x280);
-        ResetPaletteFade();
-        if (page == PAGE_MAIN)
-            sPokedexView->isSearchResults = FALSE;
-        else
-            sPokedexView->isSearchResults = TRUE;
-        LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        InitWindows(sPokemonList_WindowTemplate);
-        DeactivateAllTextPrinters();
-        PutWindowTilemap(0);
-        CopyWindowToVram(0, 3);
-        gMain.state = 1;
-        break;
-    case 1:
-        ResetSpriteData();
-        FreeAllSpritePalettes();
-        gReservedSpritePaletteCount = 8;
-        LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[0]);
-        LoadSpritePalettes(sInterfaceSpritePalette);
-        CreateInterfaceSprites(page);
-        gMain.state++;
-        break;
-    case 2:
-        gMain.state++;
-        break;
-    case 3:
-        if (page == PAGE_MAIN)
-            CreatePokedexList(sPokedexView->dexMode, sPokedexView->dexOrder);
-        CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
-        sPokedexView->menuIsOpen = FALSE;
-        sPokedexView->menuY = 0;
-        CopyBgTilemapBufferToVram(0);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        CopyBgTilemapBufferToVram(3);
-        gMain.state++;
-        break;
-    case 4:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
-        SetVBlankCallback(VBlankCB_Pokedex);
-        gMain.state++;
-        break;
-    case 5:
-        SetGpuReg(REG_OFFSET_WININ, 0x3F3F);
-        SetGpuReg(REG_OFFSET_WINOUT, 0x1D3F);
-        SetGpuReg(REG_OFFSET_WIN0H, 0);
-        SetGpuReg(REG_OFFSET_WIN0V, 0);
-        SetGpuReg(REG_OFFSET_WIN1H, 0);
-        SetGpuReg(REG_OFFSET_WIN1V, 0);
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_OBJWIN_ON);
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 6:
-        if (!gPaletteFade.active)
-        {
-            gMain.state = 0;
-            return TRUE;
-        }
-        break;
+static bool8 LoadPokedexListPage(u8 page) {
+    switch (gMain.state) {
+        case 0:
+        default:
+            if (gPaletteFade.active)
+                return 0;
+            SetVBlankCallback(NULL);
+            sPokedexView->currentPage = page;
+            ResetOtherVideoRegisters(0);
+            SetGpuReg(REG_OFFSET_BG2VOFS, sPokedexView->initialVOffset);
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sPokedex_BgTemplate, ARRAY_COUNT(sPokedex_BgTemplate));
+            SetBgTilemapBuffer(3, AllocZeroed(0x800));
+            SetBgTilemapBuffer(2, AllocZeroed(0x800));
+            SetBgTilemapBuffer(1, AllocZeroed(0x800));
+            SetBgTilemapBuffer(0, AllocZeroed(0x800));
+            DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
+            CopyToBgTilemapBuffer(1, gPokedexList_Tilemap, 0, 0);
+            CopyToBgTilemapBuffer(3, gPokedexListUnderlay_Tilemap, 0, 0);
+            if (page == PAGE_MAIN)
+                CopyToBgTilemapBuffer(0, gPokedexStartMenuMain_Tilemap, 0, 0x280);
+            else
+                CopyToBgTilemapBuffer(0, gPokedexStartMenuSearchResults_Tilemap, 0, 0x280);
+            ResetPaletteFade();
+            if (page == PAGE_MAIN)
+                sPokedexView->isSearchResults = FALSE;
+            else
+                sPokedexView->isSearchResults = TRUE;
+            LoadPokedexBgPalette(sPokedexView->isSearchResults);
+            InitWindows(sPokemonList_WindowTemplate);
+            DeactivateAllTextPrinters();
+            PutWindowTilemap(0);
+            CopyWindowToVram(0, 3);
+            gMain.state = 1;
+            break;
+        case 1:
+            ResetSpriteData();
+            FreeAllSpritePalettes();
+            gReservedSpritePaletteCount = 8;
+            LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[0]);
+            LoadSpritePalettes(sInterfaceSpritePalette);
+            CreateInterfaceSprites(page);
+            gMain.state++;
+            break;
+        case 2:
+            gMain.state++;
+            break;
+        case 3:
+            if (page == PAGE_MAIN)
+                CreatePokedexList(sPokedexView->dexMode, sPokedexView->dexOrder);
+            CreateMonSpritesAtPos(sPokedexView->selectedPokemon, 0xE);
+            sPokedexView->menuIsOpen = FALSE;
+            sPokedexView->menuY = 0;
+            CopyBgTilemapBufferToVram(0);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            CopyBgTilemapBufferToVram(3);
+            gMain.state++;
+            break;
+        case 4:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
+            SetVBlankCallback(VBlankCB_Pokedex);
+            gMain.state++;
+            break;
+        case 5:
+            SetGpuReg(REG_OFFSET_WININ, 0x3F3F);
+            SetGpuReg(REG_OFFSET_WINOUT, 0x1D3F);
+            SetGpuReg(REG_OFFSET_WIN0H, 0);
+            SetGpuReg(REG_OFFSET_WIN0V, 0);
+            SetGpuReg(REG_OFFSET_WIN1H, 0);
+            SetGpuReg(REG_OFFSET_WIN1V, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_OBJWIN_ON);
+            ShowBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 6:
+            if (!gPaletteFade.active) {
+                gMain.state = 0;
+                return TRUE;
+            }
+            break;
     }
     return FALSE;
 }
 
-static void LoadPokedexBgPalette(bool8 isSearchResults)
-{
+static void LoadPokedexBgPalette(bool8 isSearchResults) {
     if (isSearchResults == TRUE)
         LoadPalette(gPokedexSearchResults_Pal + 1, 1, 0xBE);
     else if (!IsNationalPokedexEnabled())
@@ -2151,8 +1571,7 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
     LoadPalette(GetOverworldTextboxPalettePtr(), 0xF0, 32);
 }
 
-static void FreeWindowAndBgBuffers(void)
-{
+static void FreeWindowAndBgBuffers(void) {
     void* tilemapBuffer;
 
     FreeAllWindowBuffers();
@@ -2170,154 +1589,136 @@ static void FreeWindowAndBgBuffers(void)
         Free(tilemapBuffer);
 }
 
-static void CreatePokedexList(u8 dexMode, u8 order)
-{
-    u16 vars[3]; //I have no idea why three regular variables are stored in an array, but whatever.
-#define temp_dexCount   vars[0]
+static void CreatePokedexList(u8 dexMode, u8 order) {
+    u16 vars[3]; // I have no idea why three regular variables are stored in an array, but whatever.
+#define temp_dexCount vars[0]
 #define temp_isHoennDex vars[1]
-#define temp_dexNum     vars[2]
+#define temp_dexNum vars[2]
     s16 i;
 
     sPokedexView->pokemonListCount = 0;
 
-    switch (dexMode)
-    {
-    default:
-    case DEX_MODE_HOENN:
-        temp_dexCount = HOENN_DEX_COUNT;
-        temp_isHoennDex = TRUE;
-        break;
-    case DEX_MODE_NATIONAL:
-        if (IsNationalPokedexEnabled())
-        {
-            temp_dexCount = NATIONAL_DEX_COUNT;
-            temp_isHoennDex = FALSE;
-        }
-        else
-        {
+    switch (dexMode) {
+        default:
+        case DEX_MODE_HOENN:
             temp_dexCount = HOENN_DEX_COUNT;
             temp_isHoennDex = TRUE;
-        }
-        break;
+            break;
+        case DEX_MODE_NATIONAL:
+            if (IsNationalPokedexEnabled()) {
+                temp_dexCount = NATIONAL_DEX_COUNT;
+                temp_isHoennDex = FALSE;
+            } else {
+                temp_dexCount = HOENN_DEX_COUNT;
+                temp_isHoennDex = TRUE;
+            }
+            break;
     }
 
-    switch (order)
-    {
-    case ORDER_NUMERICAL:
-        if (temp_isHoennDex)
-        {
-            for (i = 0; i < temp_dexCount; i++)
-            {
-                temp_dexNum = HoennToNationalOrder(i + 1);
-                sPokedexView->pokedexList[i].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
-                sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
-                if (sPokedexView->pokedexList[i].seen)
-                    sPokedexView->pokemonListCount = i + 1;
-            }
-        }
-        else
-        {
-            s16 r5, r10;
-            for (i = 0, r5 = 0, r10 = 0; i < temp_dexCount; i++)
-            {
-                temp_dexNum = i + 1;
-                if (GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN))
-                    r10 = 1;
-                if (r10)
-                {
-                    sPokedexView->pokedexList[r5].dexNum = temp_dexNum;
-                    sPokedexView->pokedexList[r5].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
-                    sPokedexView->pokedexList[r5].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
-                    if (sPokedexView->pokedexList[r5].seen)
-                        sPokedexView->pokemonListCount = r5 + 1;
-                    r5++;
+    switch (order) {
+        case ORDER_NUMERICAL:
+            if (temp_isHoennDex) {
+                for (i = 0; i < temp_dexCount; i++) {
+                    temp_dexNum = HoennToNationalOrder(i + 1);
+                    sPokedexView->pokedexList[i].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                    sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
+                    if (sPokedexView->pokedexList[i].seen)
+                        sPokedexView->pokemonListCount = i + 1;
+                }
+            } else {
+                s16 r5, r10;
+                for (i = 0, r5 = 0, r10 = 0; i < temp_dexCount; i++) {
+                    temp_dexNum = i + 1;
+                    if (GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN))
+                        r10 = 1;
+                    if (r10) {
+                        sPokedexView->pokedexList[r5].dexNum = temp_dexNum;
+                        sPokedexView->pokedexList[r5].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                        sPokedexView->pokedexList[r5].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
+                        if (sPokedexView->pokedexList[r5].seen)
+                            sPokedexView->pokemonListCount = r5 + 1;
+                        r5++;
+                    }
                 }
             }
-        }
-        break;
-    case ORDER_ALPHABETICAL:
-        for (i = 0; i < NUM_SPECIES - 1; i++)
-        {
-            temp_dexNum = gPokedexOrder_Alphabetical[i];
+            break;
+        case ORDER_ALPHABETICAL:
+            for (i = 0; i < NUM_SPECIES - 1; i++) {
+                temp_dexNum = gPokedexOrder_Alphabetical[i];
 
-            if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount && GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN))
-            {
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
-                sPokedexView->pokemonListCount++;
+                if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount &&
+                    GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN)) {
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned =
+                        GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
+                    sPokedexView->pokemonListCount++;
+                }
             }
-        }
-        break;
-    case ORDER_HEAVIEST:
-        for (i = NATIONAL_DEX_COUNT - 1; i >= 0; i--)
-        {
-            temp_dexNum = gPokedexOrder_Weight[i];
+            break;
+        case ORDER_HEAVIEST:
+            for (i = NATIONAL_DEX_COUNT - 1; i >= 0; i--) {
+                temp_dexNum = gPokedexOrder_Weight[i];
 
-            if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount && GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT))
-            {
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
-                sPokedexView->pokemonListCount++;
+                if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount &&
+                    GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT)) {
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
+                    sPokedexView->pokemonListCount++;
+                }
             }
-        }
-        break;
-    case ORDER_LIGHTEST:
-        for (i = 0; i < NATIONAL_DEX_COUNT; i++)
-        {
-            temp_dexNum = gPokedexOrder_Weight[i];
+            break;
+        case ORDER_LIGHTEST:
+            for (i = 0; i < NATIONAL_DEX_COUNT; i++) {
+                temp_dexNum = gPokedexOrder_Weight[i];
 
-            if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount && GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT))
-            {
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
-                sPokedexView->pokemonListCount++;
+                if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount &&
+                    GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT)) {
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
+                    sPokedexView->pokemonListCount++;
+                }
             }
-        }
-        break;
-    case ORDER_TALLEST:
-        for (i = NATIONAL_DEX_COUNT - 1; i >= 0; i--)
-        {
-            temp_dexNum = gPokedexOrder_Height[i];
+            break;
+        case ORDER_TALLEST:
+            for (i = NATIONAL_DEX_COUNT - 1; i >= 0; i--) {
+                temp_dexNum = gPokedexOrder_Height[i];
 
-            if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount && GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT))
-            {
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
-                sPokedexView->pokemonListCount++;
+                if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount &&
+                    GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT)) {
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
+                    sPokedexView->pokemonListCount++;
+                }
             }
-        }
-        break;
-    case ORDER_SMALLEST:
-        for (i = 0; i < NATIONAL_DEX_COUNT; i++)
-        {
-            temp_dexNum = gPokedexOrder_Height[i];
+            break;
+        case ORDER_SMALLEST:
+            for (i = 0; i < NATIONAL_DEX_COUNT; i++) {
+                temp_dexNum = gPokedexOrder_Height[i];
 
-            if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount && GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT))
-            {
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
-                sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
-                sPokedexView->pokemonListCount++;
+                if (NationalToHoennOrder(temp_dexNum) <= temp_dexCount &&
+                    GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT)) {
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].dexNum = temp_dexNum;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].seen = TRUE;
+                    sPokedexView->pokedexList[sPokedexView->pokemonListCount].owned = TRUE;
+                    sPokedexView->pokemonListCount++;
+                }
             }
-        }
-        break;
+            break;
     }
 
-    for (i = sPokedexView->pokemonListCount; i < NATIONAL_DEX_COUNT; i++)
-    {
+    for (i = sPokedexView->pokemonListCount; i < NATIONAL_DEX_COUNT; i++) {
         sPokedexView->pokedexList[i].dexNum = 0xFFFF;
         sPokedexView->pokedexList[i].seen = FALSE;
         sPokedexView->pokedexList[i].owned = FALSE;
     }
 }
 
-static void PrintMonDexNumAndName(u8 windowId, u8 fontId, const u8* str, u8 left, u8 top)
-{
+static void PrintMonDexNumAndName(u8 windowId, u8 fontId, const u8* str, u8 left, u8 top) {
     u8 color[3];
 
     color[0] = TEXT_COLOR_TRANSPARENT;
@@ -2327,95 +1728,78 @@ static void PrintMonDexNumAndName(u8 windowId, u8 fontId, const u8* str, u8 left
 }
 
 // u16 ignored is passed but never used
-static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
-{
+static void CreateMonListEntry(u8 position, u16 b, u16 ignored) {
     s16 entryNum;
     u16 i;
     u16 vOffset;
 
-    switch (position)
-    {
-    case 0: // Initial
-    default:
-        entryNum = b - 5;
-        for (i = 0; i <= 10; i++)
-        {
+    switch (position) {
+        case 0: // Initial
+        default:
+            entryNum = b - 5;
+            for (i = 0; i <= 10; i++) {
+                if (entryNum < 0 || entryNum >= NATIONAL_DEX_COUNT ||
+                    sPokedexView->pokedexList[entryNum].dexNum == 0xFFFF) {
+                    ClearMonListEntry(17, i * 2, ignored);
+                } else {
+                    ClearMonListEntry(17, i * 2, ignored);
+                    if (sPokedexView->pokedexList[entryNum].seen) {
+                        CreateMonDexNum(entryNum, 0x12, i * 2, ignored);
+                        CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, i * 2, ignored);
+                        CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, i * 2);
+                    } else {
+                        CreateMonDexNum(entryNum, 0x12, i * 2, ignored);
+                        CreateCaughtBall(FALSE, 0x11, i * 2, ignored);
+                        CreateMonName(0, 0x16, i * 2);
+                    }
+                }
+                entryNum++;
+            }
+            break;
+        case 1: // Up
+            entryNum = b - 5;
+            if (entryNum < 0 || entryNum >= NATIONAL_DEX_COUNT ||
+                sPokedexView->pokedexList[entryNum].dexNum == 0xFFFF) {
+                ClearMonListEntry(17, sPokedexView->listVOffset * 2, ignored);
+            } else {
+                ClearMonListEntry(17, sPokedexView->listVOffset * 2, ignored);
+                if (sPokedexView->pokedexList[entryNum].seen) {
+                    CreateMonDexNum(entryNum, 18, sPokedexView->listVOffset * 2, ignored);
+                    CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, sPokedexView->listVOffset * 2,
+                                     ignored);
+                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, sPokedexView->listVOffset * 2);
+                } else {
+                    CreateMonDexNum(entryNum, 18, sPokedexView->listVOffset * 2, ignored);
+                    CreateCaughtBall(FALSE, 17, sPokedexView->listVOffset * 2, ignored);
+                    CreateMonName(0, 0x16, sPokedexView->listVOffset * 2);
+                }
+            }
+            break;
+        case 2: // Down
+            entryNum = b + 5;
+            vOffset = sPokedexView->listVOffset + 10;
+            if (vOffset >= LIST_SCROLL_STEP)
+                vOffset -= LIST_SCROLL_STEP;
             if (entryNum < 0 || entryNum >= NATIONAL_DEX_COUNT || sPokedexView->pokedexList[entryNum].dexNum == 0xFFFF)
-            {
-                ClearMonListEntry(17, i * 2, ignored);
-            }
-            else
-            {
-                ClearMonListEntry(17, i * 2, ignored);
-                if (sPokedexView->pokedexList[entryNum].seen)
-                {
-                    CreateMonDexNum(entryNum, 0x12, i * 2, ignored);
-                    CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, i * 2, ignored);
-                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, i * 2);
-                }
-                else
-                {
-                    CreateMonDexNum(entryNum, 0x12, i * 2, ignored);
-                    CreateCaughtBall(FALSE, 0x11, i * 2, ignored);
-                    CreateMonName(0, 0x16, i * 2);
+                ClearMonListEntry(17, vOffset * 2, ignored);
+            else {
+                ClearMonListEntry(17, vOffset * 2, ignored);
+                if (sPokedexView->pokedexList[entryNum].seen) {
+                    CreateMonDexNum(entryNum, 18, vOffset * 2, ignored);
+                    CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, vOffset * 2, ignored);
+                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, vOffset * 2);
+                } else {
+                    CreateMonDexNum(entryNum, 18, vOffset * 2, ignored);
+                    CreateCaughtBall(FALSE, 0x11, vOffset * 2, ignored);
+                    CreateMonName(0, 0x16, vOffset * 2);
                 }
             }
-            entryNum++;
-        }
-        break;
-    case 1: // Up
-        entryNum = b - 5;
-        if (entryNum < 0 || entryNum >= NATIONAL_DEX_COUNT || sPokedexView->pokedexList[entryNum].dexNum == 0xFFFF)
-        {
-            ClearMonListEntry(17, sPokedexView->listVOffset * 2, ignored);
-        }
-        else
-        {
-            ClearMonListEntry(17, sPokedexView->listVOffset * 2, ignored);
-            if (sPokedexView->pokedexList[entryNum].seen)
-            {
-                CreateMonDexNum(entryNum, 18, sPokedexView->listVOffset * 2, ignored);
-                CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, sPokedexView->listVOffset * 2, ignored);
-                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, sPokedexView->listVOffset * 2);
-            }
-            else
-            {
-                CreateMonDexNum(entryNum, 18, sPokedexView->listVOffset * 2, ignored);
-                CreateCaughtBall(FALSE, 17, sPokedexView->listVOffset * 2, ignored);
-                CreateMonName(0, 0x16, sPokedexView->listVOffset * 2);
-            }
-        }
-        break;
-    case 2: // Down
-        entryNum = b + 5;
-        vOffset = sPokedexView->listVOffset + 10;
-        if (vOffset >= LIST_SCROLL_STEP)
-            vOffset -= LIST_SCROLL_STEP;
-        if (entryNum < 0 || entryNum >= NATIONAL_DEX_COUNT || sPokedexView->pokedexList[entryNum].dexNum == 0xFFFF)
-            ClearMonListEntry(17, vOffset * 2, ignored);
-        else
-        {
-            ClearMonListEntry(17, vOffset * 2, ignored);
-            if (sPokedexView->pokedexList[entryNum].seen)
-            {
-                CreateMonDexNum(entryNum, 18, vOffset * 2, ignored);
-                CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, 0x11, vOffset * 2, ignored);
-                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, 0x16, vOffset * 2);
-            }
-            else
-            {
-                CreateMonDexNum(entryNum, 18, vOffset * 2, ignored);
-                CreateCaughtBall(FALSE, 0x11, vOffset * 2, ignored);
-                CreateMonName(0, 0x16, vOffset * 2);
-            }
-        }
-        break;
+            break;
     }
     CopyWindowToVram(0, 2);
 }
 
-static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
-{
+static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused) {
     u8 text[6];
     u16 dexNum;
 
@@ -2429,16 +1813,14 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
     PrintMonDexNumAndName(0, 7, text, left, top);
 }
 
-static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused)
-{
+static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused) {
     if (owned)
         BlitBitmapToWindow(0, sCaughtBall_Gfx, x * 8, y * 8, 8, 16);
     else
         FillWindowPixelRect(0, PIXEL_FILL(0), x * 8, y * 8, 8, 16);
 }
 
-static u8 CreateMonName(u16 num, u8 left, u8 top)
-{
+static u8 CreateMonName(u16 num, u8 left, u8 top) {
     const u8* str;
 
     num = NationalPokedexNumToSpecies(num);
@@ -2450,14 +1832,12 @@ static u8 CreateMonName(u16 num, u8 left, u8 top)
     return StringLength(str);
 }
 
-static void ClearMonListEntry(u8 x, u8 y, u16 unused)
-{
+static void ClearMonListEntry(u8 x, u8 y, u16 unused) {
     FillWindowPixelRect(0, PIXEL_FILL(0), x * 8, y * 8, 0x60, 16);
 }
 
 // u16 ignored is passed but never used
-static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored)
-{
+static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored) {
     u8 i;
     u16 dexNum;
     u8 spriteId;
@@ -2470,8 +1850,7 @@ static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored)
 
     // Create top mon sprite
     dexNum = GetPokemonSpriteToDisplay(selectedMon - 1);
-    if (dexNum != 0xFFFF)
-    {
+    if (dexNum != 0xFFFF) {
         spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
         gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
         gSprites[spriteId].data[5] = -32;
@@ -2479,8 +1858,7 @@ static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored)
 
     // Create mid mon sprite
     dexNum = GetPokemonSpriteToDisplay(selectedMon);
-    if (dexNum != 0xFFFF)
-    {
+    if (dexNum != 0xFFFF) {
         spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
         gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
         gSprites[spriteId].data[5] = 0;
@@ -2488,8 +1866,7 @@ static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored)
 
     // Create bottom mon sprite
     dexNum = GetPokemonSpriteToDisplay(selectedMon + 1);
-    if (dexNum != 0xFFFF)
-    {
+    if (dexNum != 0xFFFF) {
         spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
         gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
         gSprites[spriteId].data[5] = 32;
@@ -2504,110 +1881,95 @@ static void CreateMonSpritesAtPos(u16 selectedMon, u16 ignored)
     gPaletteFade.bufferTransferDisabled = FALSE;
 }
 
-static bool8 UpdateDexListScroll(u8 direction, u8 monMoveIncrement, u8 scrollTimerMax)
-{
+static bool8 UpdateDexListScroll(u8 direction, u8 monMoveIncrement, u8 scrollTimerMax) {
     u16 i;
     u8 step;
 
-    if (sPokedexView->scrollTimer)
-    {
+    if (sPokedexView->scrollTimer) {
         sPokedexView->scrollTimer--;
-        switch (direction)
-        {
-        case 1: // Up
-            for (i = 0; i < MAX_MONS_ON_SCREEN; i++)
-            {
-                if (sPokedexView->monSpriteIds[i] != 0xFFFF)
-                    gSprites[sPokedexView->monSpriteIds[i]].data[5] += monMoveIncrement;
-            }
-            step = LIST_SCROLL_STEP * (scrollTimerMax - sPokedexView->scrollTimer) / scrollTimerMax;
-            SetGpuReg(REG_OFFSET_BG2VOFS, sPokedexView->initialVOffset + sPokedexView->listMovingVOffset * LIST_SCROLL_STEP - step);
-            sPokedexView->pokeBallRotation -= sPokedexView->pokeBallRotationStep;
-            break;
-        case 2: // Down
-            for (i = 0; i < MAX_MONS_ON_SCREEN; i++)
-            {
-                if (sPokedexView->monSpriteIds[i] != 0xFFFF)
-                    gSprites[sPokedexView->monSpriteIds[i]].data[5] -= monMoveIncrement;
-            }
-            step = LIST_SCROLL_STEP * (scrollTimerMax - sPokedexView->scrollTimer) / scrollTimerMax;
-            SetGpuReg(REG_OFFSET_BG2VOFS, sPokedexView->initialVOffset + sPokedexView->listMovingVOffset * LIST_SCROLL_STEP + step);
-            sPokedexView->pokeBallRotation += sPokedexView->pokeBallRotationStep;
-            break;
+        switch (direction) {
+            case 1: // Up
+                for (i = 0; i < MAX_MONS_ON_SCREEN; i++) {
+                    if (sPokedexView->monSpriteIds[i] != 0xFFFF)
+                        gSprites[sPokedexView->monSpriteIds[i]].data[5] += monMoveIncrement;
+                }
+                step = LIST_SCROLL_STEP * (scrollTimerMax - sPokedexView->scrollTimer) / scrollTimerMax;
+                SetGpuReg(REG_OFFSET_BG2VOFS,
+                          sPokedexView->initialVOffset + sPokedexView->listMovingVOffset * LIST_SCROLL_STEP - step);
+                sPokedexView->pokeBallRotation -= sPokedexView->pokeBallRotationStep;
+                break;
+            case 2: // Down
+                for (i = 0; i < MAX_MONS_ON_SCREEN; i++) {
+                    if (sPokedexView->monSpriteIds[i] != 0xFFFF)
+                        gSprites[sPokedexView->monSpriteIds[i]].data[5] -= monMoveIncrement;
+                }
+                step = LIST_SCROLL_STEP * (scrollTimerMax - sPokedexView->scrollTimer) / scrollTimerMax;
+                SetGpuReg(REG_OFFSET_BG2VOFS,
+                          sPokedexView->initialVOffset + sPokedexView->listMovingVOffset * LIST_SCROLL_STEP + step);
+                sPokedexView->pokeBallRotation += sPokedexView->pokeBallRotationStep;
+                break;
         }
         return FALSE;
-    }
-    else
-    {
+    } else {
         SetGpuReg(REG_OFFSET_BG2VOFS, sPokedexView->initialVOffset + sPokedexView->listVOffset * LIST_SCROLL_STEP);
         return TRUE;
     }
 }
 
-static void CreateScrollingPokemonSprite(u8 direction, u16 selectedMon)
-{
+static void CreateScrollingPokemonSprite(u8 direction, u16 selectedMon) {
     u16 dexNum;
     u8 spriteId;
 
     sPokedexView->listMovingVOffset = sPokedexView->listVOffset;
-    switch (direction)
-    {
-    case 1: // up
-        dexNum = GetPokemonSpriteToDisplay(selectedMon - 1);
-        if (dexNum != 0xFFFF)
-        {
-            spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
-            gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
-            gSprites[spriteId].data[5] = -64;
-        }
-        if (sPokedexView->listVOffset > 0)
-            sPokedexView->listVOffset--;
-        else
-            sPokedexView->listVOffset = LIST_SCROLL_STEP - 1;
-        break;
-    case 2: // down
-        dexNum = GetPokemonSpriteToDisplay(selectedMon + 1);
-        if (dexNum != 0xFFFF)
-        {
-            spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
-            gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
-            gSprites[spriteId].data[5] = 64;
-        }
-        if (sPokedexView->listVOffset < LIST_SCROLL_STEP - 1)
-            sPokedexView->listVOffset++;
-        else
-            sPokedexView->listVOffset = 0;
-        break;
+    switch (direction) {
+        case 1: // up
+            dexNum = GetPokemonSpriteToDisplay(selectedMon - 1);
+            if (dexNum != 0xFFFF) {
+                spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
+                gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
+                gSprites[spriteId].data[5] = -64;
+            }
+            if (sPokedexView->listVOffset > 0)
+                sPokedexView->listVOffset--;
+            else
+                sPokedexView->listVOffset = LIST_SCROLL_STEP - 1;
+            break;
+        case 2: // down
+            dexNum = GetPokemonSpriteToDisplay(selectedMon + 1);
+            if (dexNum != 0xFFFF) {
+                spriteId = CreatePokedexMonSprite(dexNum, 0x60, 0x50);
+                gSprites[spriteId].callback = SpriteCB_PokedexListMonSprite;
+                gSprites[spriteId].data[5] = 64;
+            }
+            if (sPokedexView->listVOffset < LIST_SCROLL_STEP - 1)
+                sPokedexView->listVOffset++;
+            else
+                sPokedexView->listVOffset = 0;
+            break;
     }
 }
 
 // u16 ignored is passed but never used
-static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
-{
+static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored) {
     u8 scrollTimer;
     u8 scrollMonIncrement;
     u8 i;
     u16 startingPos;
     u8 scrollDir = 0;
 
-    if ((gMain.heldKeys & DPAD_UP) && (selectedMon > 0))
-    {
+    if ((gMain.heldKeys & DPAD_UP) && (selectedMon > 0)) {
         scrollDir = 1;
         selectedMon = GetNextPosition(1, selectedMon, 0, sPokedexView->pokemonListCount - 1);
         CreateScrollingPokemonSprite(1, selectedMon);
         CreateMonListEntry(1, selectedMon, ignored);
         PlaySE(SE_DEX_SCROLL);
-    }
-    else if ((gMain.heldKeys & DPAD_DOWN) && (selectedMon < sPokedexView->pokemonListCount - 1))
-    {
+    } else if ((gMain.heldKeys & DPAD_DOWN) && (selectedMon < sPokedexView->pokemonListCount - 1)) {
         scrollDir = 2;
         selectedMon = GetNextPosition(0, selectedMon, 0, sPokedexView->pokemonListCount - 1);
         CreateScrollingPokemonSprite(2, selectedMon);
         CreateMonListEntry(2, selectedMon, ignored);
         PlaySE(SE_DEX_SCROLL);
-    }
-    else if ((gMain.newKeys & DPAD_LEFT) && (selectedMon > 0))
-    {
+    } else if ((gMain.newKeys & DPAD_LEFT) && (selectedMon > 0)) {
         startingPos = selectedMon;
 
         for (i = 0; i < 7; i++)
@@ -2616,9 +1978,7 @@ static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
         ClearMonSprites();
         CreateMonSpritesAtPos(selectedMon, 0xE);
         PlaySE(SE_DEX_PAGE);
-    }
-    else if ((gMain.newKeys & DPAD_RIGHT) && (selectedMon < sPokedexView->pokemonListCount - 1))
-    {
+    } else if ((gMain.newKeys & DPAD_RIGHT) && (selectedMon < sPokedexView->pokemonListCount - 1)) {
         startingPos = selectedMon;
         for (i = 0; i < 7; i++)
             selectedMon = GetNextPosition(0, selectedMon, 0, sPokedexView->pokemonListCount - 1);
@@ -2628,8 +1988,7 @@ static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
         PlaySE(SE_DEX_PAGE);
     }
 
-    if (scrollDir == 0)
-    {
+    if (scrollDir == 0) {
         // Left/right input just snaps up/down, no scrolling
         sPokedexView->scrollSpeed = 0;
         return selectedMon;
@@ -2648,12 +2007,10 @@ static u16 TryDoPokedexScroll(u16 selectedMon, u16 ignored)
     return selectedMon;
 }
 
-static void UpdateSelectedMonSpriteId(void)
-{
+static void UpdateSelectedMonSpriteId(void) {
     u16 i;
 
-    for (i = 0; i < MAX_MONS_ON_SCREEN; i++)
-    {
+    for (i = 0; i < MAX_MONS_ON_SCREEN; i++) {
         u16 spriteId = sPokedexView->monSpriteIds[i];
 
         if (gSprites[spriteId].pos2.x == 0 && gSprites[spriteId].pos2.y == 0 && spriteId != 0xFFFF)
@@ -2661,20 +2018,16 @@ static void UpdateSelectedMonSpriteId(void)
     }
 }
 
-static bool8 TryDoInfoScreenScroll(void)
-{
+static bool8 TryDoInfoScreenScroll(void) {
     u16 nextPokemon;
     u16 selectedPokemon = sPokedexView->selectedPokemon;
 
-    if ((gMain.newKeys & DPAD_UP) && selectedPokemon)
-    {
+    if ((gMain.newKeys & DPAD_UP) && selectedPokemon) {
         nextPokemon = selectedPokemon;
-        while (nextPokemon != 0)
-        {
+        while (nextPokemon != 0) {
             nextPokemon = GetNextPosition(1, nextPokemon, 0, sPokedexView->pokemonListCount - 1);
 
-            if (sPokedexView->pokedexList[nextPokemon].seen)
-            {
+            if (sPokedexView->pokedexList[nextPokemon].seen) {
                 selectedPokemon = nextPokemon;
                 break;
             }
@@ -2682,22 +2035,17 @@ static bool8 TryDoInfoScreenScroll(void)
 
         if (sPokedexView->selectedPokemon == selectedPokemon)
             return FALSE;
-        else
-        {
+        else {
             sPokedexView->selectedPokemon = selectedPokemon;
             sPokedexView->pokeBallRotation -= 16;
             return TRUE;
         }
-    }
-    else if ((gMain.newKeys & DPAD_DOWN) && selectedPokemon < sPokedexView->pokemonListCount - 1)
-    {
+    } else if ((gMain.newKeys & DPAD_DOWN) && selectedPokemon < sPokedexView->pokemonListCount - 1) {
         nextPokemon = selectedPokemon;
-        while (nextPokemon < sPokedexView->pokemonListCount - 1)
-        {
+        while (nextPokemon < sPokedexView->pokemonListCount - 1) {
             nextPokemon = GetNextPosition(0, nextPokemon, 0, sPokedexView->pokemonListCount - 1);
 
-            if (sPokedexView->pokedexList[nextPokemon].seen)
-            {
+            if (sPokedexView->pokedexList[nextPokemon].seen) {
                 selectedPokemon = nextPokemon;
                 break;
             }
@@ -2705,8 +2053,7 @@ static bool8 TryDoInfoScreenScroll(void)
 
         if (sPokedexView->selectedPokemon == selectedPokemon)
             return FALSE;
-        else
-        {
+        else {
             sPokedexView->selectedPokemon = selectedPokemon;
             sPokedexView->pokeBallRotation += 16;
             return TRUE;
@@ -2715,14 +2062,11 @@ static bool8 TryDoInfoScreenScroll(void)
     return FALSE;
 }
 
-static u8 ClearMonSprites(void)
-{
+static u8 ClearMonSprites(void) {
     u16 i;
 
-    for (i = 0; i < MAX_MONS_ON_SCREEN; i++)
-    {
-        if (sPokedexView->monSpriteIds[i] != 0xFFFF)
-        {
+    for (i = 0; i < MAX_MONS_ON_SCREEN; i++) {
+        if (sPokedexView->monSpriteIds[i] != 0xFFFF) {
             FreeAndDestroyMonPicSprite(sPokedexView->monSpriteIds[i]);
             sPokedexView->monSpriteIds[i] = 0xFFFF;
         }
@@ -2730,8 +2074,7 @@ static u8 ClearMonSprites(void)
     return FALSE;
 }
 
-static u16 GetPokemonSpriteToDisplay(u16 species)
-{
+static u16 GetPokemonSpriteToDisplay(u16 species) {
     if (species >= NATIONAL_DEX_COUNT || sPokedexView->pokedexList[species].dexNum == 0xFFFF)
         return 0xFFFF;
     else if (sPokedexView->pokedexList[species].seen)
@@ -2740,14 +2083,11 @@ static u16 GetPokemonSpriteToDisplay(u16 species)
         return 0;
 }
 
-static u32 CreatePokedexMonSprite(u16 num, s16 x, s16 y)
-{
+static u32 CreatePokedexMonSprite(u16 num, s16 x, s16 y) {
     u8 i;
 
-    for (i = 0; i < MAX_MONS_ON_SCREEN; i++)
-    {
-        if (sPokedexView->monSpriteIds[i] == 0xFFFF)
-        {
+    for (i = 0; i < MAX_MONS_ON_SCREEN; i++) {
+        if (sPokedexView->monSpriteIds[i] == 0xFFFF) {
             u8 spriteId = CreateMonSpriteFromNationalDexNumber(num, x, y, i);
 
             gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
@@ -2764,8 +2104,7 @@ static u32 CreatePokedexMonSprite(u16 num, s16 x, s16 y)
 
 #define sIsDownArrow data[1]
 
-static void CreateInterfaceSprites(u8 page)
-{
+static void CreateInterfaceSprites(u8 page) {
     u8 spriteId;
     u16 digitNum;
 
@@ -2802,12 +2141,10 @@ static void CreateInterfaceSprites(u8 page)
     gSprites[spriteId].data[0] = 31;
     gSprites[spriteId].data[1] = 128;
 
-    if (page == PAGE_MAIN)
-    {
+    if (page == PAGE_MAIN) {
         bool32 drawNextDigit;
 
-        if (!IsNationalPokedexEnabled())
-        {
+        if (!IsNationalPokedexEnabled()) {
             // Seen text
             CreateSprite(&sSeenOwnTextSpriteTemplate, 32, 40, 1);
             // Own text
@@ -2859,9 +2196,7 @@ static void CreateInterfaceSprites(u8 page)
             spriteId = CreateSprite(&sHoennDexSeenOwnNumberSpriteTemplate, 40, 80, 1);
             digitNum = (sPokedexView->ownCount % 100) % 10;
             StartSpriteAnim(&gSprites[spriteId], digitNum);
-        }
-        else
-        {
+        } else {
             u16 seenOwnedCount;
 
             // Seen text
@@ -2981,33 +2316,28 @@ static void CreateInterfaceSprites(u8 page)
         }
         spriteId = CreateSprite(&sDexListStartMenuCursorSpriteTemplate, 136, 96, 1);
         gSprites[spriteId].invisible = TRUE;
-    }
-    else // PAGE_SEARCH_RESULTS
+    } else // PAGE_SEARCH_RESULTS
     {
         spriteId = CreateSprite(&sDexListStartMenuCursorSpriteTemplate, 136, 80, 1);
         gSprites[spriteId].invisible = TRUE;
     }
 }
 
-static void SpriteCB_EndMoveMonForInfoScreen(struct Sprite *sprite)
-{
+static void SpriteCB_EndMoveMonForInfoScreen(struct Sprite* sprite) {
     // Once mon is done moving there's nothing left to do
 }
 
-static void SpriteCB_SeenOwnInfo(struct Sprite *sprite)
-{
+static void SpriteCB_SeenOwnInfo(struct Sprite* sprite) {
     if (sPokedexView->currentPage != PAGE_MAIN)
         DestroySprite(sprite);
 }
 
-void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite)
-{
+void SpriteCB_MoveMonForInfoScreen(struct Sprite* sprite) {
     sprite->oam.priority = 0;
     sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
     sprite->pos2.x = 0;
     sprite->pos2.y = 0;
-    if (sprite->pos1.x != 48 || sprite->pos1.y != 56)
-    {
+    if (sprite->pos1.x != 48 || sprite->pos1.y != 56) {
         if (sprite->pos1.x > 48)
             sprite->pos1.x--;
         if (sprite->pos1.x < 48)
@@ -3017,24 +2347,18 @@ void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite)
             sprite->pos1.y--;
         if (sprite->pos1.y < 56)
             sprite->pos1.y++;
-    }
-    else
-    {
+    } else {
         sprite->callback = SpriteCB_EndMoveMonForInfoScreen;
     }
 }
 
-static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
-{
+static void SpriteCB_PokedexListMonSprite(struct Sprite* sprite) {
     u8 monId = sprite->data[1];
 
-    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
-    {
+    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS) {
         FreeAndDestroyMonPicSprite(sPokedexView->monSpriteIds[monId]);
         sPokedexView->monSpriteIds[monId] = 0xFFFF;
-    }
-    else
-    {
+    } else {
         u32 var;
 
         sprite->pos2.y = gSineTable[(u8)sprite->data[5]] * 76 / 256;
@@ -3044,52 +2368,40 @@ static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
         SetOamMatrix(sprite->data[1] + 1, 0x100, 0, 0, var);
         sprite->oam.matrixNum = monId + 1;
 
-        if (sprite->data[5] > -64 && sprite->data[5] < 64)
-        {
+        if (sprite->data[5] > -64 && sprite->data[5] < 64) {
             sprite->invisible = FALSE;
             sprite->data[0] = 1;
-        }
-        else
-        {
+        } else {
             sprite->invisible = TRUE;
         }
 
-        if ((sprite->data[5] <= -64 || sprite->data[5] >= 64) && sprite->data[0] != 0)
-        {
+        if ((sprite->data[5] <= -64 || sprite->data[5] >= 64) && sprite->data[0] != 0) {
             FreeAndDestroyMonPicSprite(sPokedexView->monSpriteIds[monId]);
             sPokedexView->monSpriteIds[monId] = 0xFFFF;
         }
     }
 }
 
-static void SpriteCB_Scrollbar(struct Sprite *sprite)
-{
+static void SpriteCB_Scrollbar(struct Sprite* sprite) {
     if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
         DestroySprite(sprite);
     else
         sprite->pos2.y = sPokedexView->selectedPokemon * 120 / (sPokedexView->pokemonListCount - 1);
 }
 
-static void SpriteCB_ScrollArrow(struct Sprite *sprite)
-{
-    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
-    {
+static void SpriteCB_ScrollArrow(struct Sprite* sprite) {
+    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS) {
         DestroySprite(sprite);
-    }
-    else
-    {
+    } else {
         u8 r0;
 
-        if (sprite->sIsDownArrow)
-        {
+        if (sprite->sIsDownArrow) {
             if (sPokedexView->selectedPokemon == sPokedexView->pokemonListCount - 1)
                 sprite->invisible = TRUE;
             else
                 sprite->invisible = FALSE;
             r0 = sprite->data[2];
-        }
-        else
-        {
+        } else {
             if (sPokedexView->selectedPokemon == 0)
                 sprite->invisible = TRUE;
             else
@@ -3105,20 +2417,15 @@ static void SpriteCB_ScrollArrow(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_DexListInterfaceText(struct Sprite *sprite)
-{
+static void SpriteCB_DexListInterfaceText(struct Sprite* sprite) {
     if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
         DestroySprite(sprite);
 }
 
-static void SpriteCB_RotatingPokeBall(struct Sprite *sprite)
-{
-    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
-    {
+static void SpriteCB_RotatingPokeBall(struct Sprite* sprite) {
+    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS) {
         DestroySprite(sprite);
-    }
-    else
-    {
+    } else {
         u8 val;
         s16 r3;
         s16 r0;
@@ -3136,32 +2443,24 @@ static void SpriteCB_RotatingPokeBall(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite)
-{
-    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS)
-    {
+static void SpriteCB_DexListStartMenuCursor(struct Sprite* sprite) {
+    if (sPokedexView->currentPage != PAGE_MAIN && sPokedexView->currentPage != PAGE_SEARCH_RESULTS) {
         DestroySprite(sprite);
-    }
-    else
-    {
+    } else {
         u16 r1 = sPokedexView->currentPage == PAGE_MAIN ? 80 : 96;
 
-        if (sPokedexView->menuIsOpen && sPokedexView->menuY == r1)
-        {
+        if (sPokedexView->menuIsOpen && sPokedexView->menuY == r1) {
             sprite->invisible = FALSE;
             sprite->pos2.y = sPokedexView->menuCursorPos * 16;
             sprite->pos2.x = gSineTable[(u8)sprite->data[2]] / 64;
             sprite->data[2] += 8;
-        }
-        else
-        {
+        } else {
             sprite->invisible = TRUE;
         }
     }
 }
 
-static void PrintInfoScreenText(const u8* str, u8 left, u8 top)
-{
+static void PrintInfoScreenText(const u8* str, u8 left, u8 top) {
     u8 color[3];
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
@@ -3172,8 +2471,7 @@ static void PrintInfoScreenText(const u8* str, u8 left, u8 top)
 
 #define tMonSpriteId data[4]
 
-static u8 LoadInfoScreen(struct PokedexListItem* item, u8 monSpriteId)
-{
+static u8 LoadInfoScreen(struct PokedexListItem* item, u8 monSpriteId) {
     u8 taskId;
 
     sPokedexListItem = item;
@@ -3196,16 +2494,14 @@ static u8 LoadInfoScreen(struct PokedexListItem* item, u8 monSpriteId)
     return taskId;
 }
 
-static bool8 IsInfoScreenScrolling(u8 taskId)
-{
+static bool8 IsInfoScreenScrolling(u8 taskId) {
     if (gTasks[taskId].data[0] == 0 && gTasks[taskId].func == Task_HandleInfoScreenInput)
         return FALSE;
     else
         return TRUE;
 }
 
-static u8 sub_80BE9F8(struct PokedexListItem *item, u8 taskId)
-{
+static u8 sub_80BE9F8(struct PokedexListItem* item, u8 taskId) {
     sPokedexListItem = item;
     gTasks[taskId].data[0] = 1;
     gTasks[taskId].data[1] = 0;
@@ -3214,67 +2510,64 @@ static u8 sub_80BE9F8(struct PokedexListItem *item, u8 taskId)
     return taskId;
 }
 
-static void Task_LoadInfoScreen(u8 taskId)
-{
-    switch (gMain.state)
-    {
-    case 0:
-    default:
-        if (!gPaletteFade.active)
-        {
-            u16 r2;
+static void Task_LoadInfoScreen(u8 taskId) {
+    switch (gMain.state) {
+        case 0:
+        default:
+            if (!gPaletteFade.active) {
+                u16 r2;
 
-            sPokedexView->currentPage = PAGE_INFO;
-            gPokedexVBlankCB = gMain.vblankCallback;
-            SetVBlankCallback(NULL);
-            r2 = 0;
-            if (gTasks[taskId].data[1] != 0)
-                r2 += DISPCNT_OBJ_ON;
-            if (gTasks[taskId].data[2] != 0)
-                r2 |= DISPCNT_BG1_ON;
-            ResetOtherVideoRegisters(r2);
-            gMain.state = 1;
-        }
-        break;
-    case 1:
-        DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
-        CopyToBgTilemapBuffer(3, gPokedexInfoScreen_Tilemap, 0, 0);
-        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
-        PutWindowTilemap(WIN_INFO);
-        PutWindowTilemap(WIN_FOOTPRINT);
-        PrintFootprint(WIN_FOOTPRINT, sPokedexListItem->dexNum);
-        CopyWindowToVram(WIN_FOOTPRINT, 2);
-        gMain.state++;
-        break;
-    case 2:
-        LoadScreenSelectBarMain(0xD);
-        HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
-        LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        gMain.state++;
-        break;
-    case 3:
-        gMain.state++;
-        break;
-    case 4:
-        PrintMonInfo(sPokedexListItem->dexNum, sPokedexView->dexMode == DEX_MODE_HOENN ? FALSE : TRUE, sPokedexListItem->owned, 0);
-        if (!sPokedexListItem->owned)
-            LoadPalette(gPlttBufferUnfaded + 1, 0x31, 0x1E);
-        CopyWindowToVram(WIN_INFO, 3);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        CopyBgTilemapBufferToVram(3);
-        gMain.state++;
-        break;
-    case 5:
-        if (gTasks[taskId].data[1] == 0)
-        {
-            gTasks[taskId].tMonSpriteId = (u16)CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 48, 56, 0);
-            gSprites[gTasks[taskId].tMonSpriteId].oam.priority = 0;
-        }
-        gMain.state++;
-        break;
-    case 6:
-        {
+                sPokedexView->currentPage = PAGE_INFO;
+                gPokedexVBlankCB = gMain.vblankCallback;
+                SetVBlankCallback(NULL);
+                r2 = 0;
+                if (gTasks[taskId].data[1] != 0)
+                    r2 += DISPCNT_OBJ_ON;
+                if (gTasks[taskId].data[2] != 0)
+                    r2 |= DISPCNT_BG1_ON;
+                ResetOtherVideoRegisters(r2);
+                gMain.state = 1;
+            }
+            break;
+        case 1:
+            DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
+            CopyToBgTilemapBuffer(3, gPokedexInfoScreen_Tilemap, 0, 0);
+            FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+            PutWindowTilemap(WIN_INFO);
+            PutWindowTilemap(WIN_FOOTPRINT);
+            PrintFootprint(WIN_FOOTPRINT, sPokedexListItem->dexNum);
+            CopyWindowToVram(WIN_FOOTPRINT, 2);
+            gMain.state++;
+            break;
+        case 2:
+            LoadScreenSelectBarMain(0xD);
+            HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
+            LoadPokedexBgPalette(sPokedexView->isSearchResults);
+            gMain.state++;
+            break;
+        case 3:
+            gMain.state++;
+            break;
+        case 4:
+            PrintMonInfo(sPokedexListItem->dexNum, sPokedexView->dexMode == DEX_MODE_HOENN ? FALSE : TRUE,
+                         sPokedexListItem->owned, 0);
+            if (!sPokedexListItem->owned)
+                LoadPalette(gPlttBufferUnfaded + 1, 0x31, 0x1E);
+            CopyWindowToVram(WIN_INFO, 3);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            CopyBgTilemapBufferToVram(3);
+            gMain.state++;
+            break;
+        case 5:
+            if (gTasks[taskId].data[1] == 0) {
+                gTasks[taskId].tMonSpriteId =
+                    (u16)CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 48, 56, 0);
+                gSprites[gTasks[taskId].tMonSpriteId].oam.priority = 0;
+            }
+            gMain.state++;
+            break;
+        case 6: {
             u32 preservedPalettes = 0;
 
             if (gTasks[taskId].data[2] != 0)
@@ -3284,52 +2577,46 @@ static void Task_LoadInfoScreen(u8 taskId)
             BeginNormalPaletteFade(~preservedPalettes, 0, 16, 0, RGB_BLACK);
             SetVBlankCallback(gPokedexVBlankCB);
             gMain.state++;
-        }
-        break;
-    case 7:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        HideBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 8:
-        if (!gPaletteFade.active)
-        {
+        } break;
+        case 7:
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            HideBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
             gMain.state++;
-            if (gTasks[taskId].data[3] == 0)
-            {
-                StopCryAndClearCrySongs();
-                PlayCry2(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), 0, 0x7D, 0xA);
-            }
-            else
-            {
+            break;
+        case 8:
+            if (!gPaletteFade.active) {
                 gMain.state++;
+                if (gTasks[taskId].data[3] == 0) {
+                    StopCryAndClearCrySongs();
+                    PlayCry2(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), 0, 0x7D, 0xA);
+                } else {
+                    gMain.state++;
+                }
             }
-        }
-        break;
-    case 9:
-        if (!IsCryPlayingOrClearCrySongs())
-            gMain.state++;
-        break;
-    case 10:
-        gTasks[taskId].data[0] = 0;
-        gTasks[taskId].data[1] = 0;
-        gTasks[taskId].data[2] = 1;
-        gTasks[taskId].data[3] = 1;
-        gTasks[taskId].func = Task_HandleInfoScreenInput;
-        gMain.state = 0;
-        break;
+            break;
+        case 9:
+            if (!IsCryPlayingOrClearCrySongs())
+                gMain.state++;
+            break;
+        case 10:
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[1] = 0;
+            gTasks[taskId].data[2] = 1;
+            gTasks[taskId].data[3] = 1;
+            gTasks[taskId].func = Task_HandleInfoScreenInput;
+            gMain.state = 0;
+            break;
     }
 }
 
-static void FreeInfoScreenWindowAndBgBuffers(void)
-{
-    void *tilemapBuffer;
+static void FreeInfoScreenWindowAndBgBuffers(void) {
+    void* tilemapBuffer;
 
     FreeAllWindowBuffers();
     tilemapBuffer = GetBgTilemapBuffer(0);
@@ -3346,73 +2633,63 @@ static void FreeInfoScreenWindowAndBgBuffers(void)
         Free(tilemapBuffer);
 }
 
-static void Task_HandleInfoScreenInput(u8 taskId)
-{
-    if (gTasks[taskId].data[0] != 0)
-    {
+static void Task_HandleInfoScreenInput(u8 taskId) {
+    if (gTasks[taskId].data[0] != 0) {
         // Scroll up/down
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_LoadInfoScreenWaitForFade;
         PlaySE(SE_DEX_SCROLL);
         return;
     }
-    if (gMain.newKeys & B_BUTTON)
-    {
+    if (gMain.newKeys & B_BUTTON) {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_ExitInfoScreen;
         PlaySE(SE_PC_OFF);
         return;
     }
-    if (gMain.newKeys & A_BUTTON)
-    {
-        switch (sPokedexView->selectedScreen)
-        {
-        case AREA_SCREEN:
-            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 16, RGB_BLACK);
-            sPokedexView->screenSwitchState = 1;
-            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
-            PlaySE(SE_PIN);
-            break;
-        case CRY_SCREEN:
-            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
-            sPokedexView->screenSwitchState = 2;
-            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
-            PlaySE(SE_PIN);
-            break;
-        case SIZE_SCREEN:
-            if (!sPokedexListItem->owned)
-            {
-                PlaySE(SE_FAILURE);
-            }
-            else
-            {
-                BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
-                sPokedexView->screenSwitchState = 3;
+    if (gMain.newKeys & A_BUTTON) {
+        switch (sPokedexView->selectedScreen) {
+            case AREA_SCREEN:
+                BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 16, RGB_BLACK);
+                sPokedexView->screenSwitchState = 1;
                 gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
                 PlaySE(SE_PIN);
-            }
-            break;
-        case CANCEL_SCREEN:
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
-            gTasks[taskId].func = Task_ExitInfoScreen;
-            PlaySE(SE_PC_OFF);
-            break;
+                break;
+            case CRY_SCREEN:
+                BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+                sPokedexView->screenSwitchState = 2;
+                gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+                PlaySE(SE_PIN);
+                break;
+            case SIZE_SCREEN:
+                if (!sPokedexListItem->owned) {
+                    PlaySE(SE_FAILURE);
+                } else {
+                    BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
+                    sPokedexView->screenSwitchState = 3;
+                    gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+                    PlaySE(SE_PIN);
+                }
+                break;
+            case CANCEL_SCREEN:
+                BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+                gTasks[taskId].func = Task_ExitInfoScreen;
+                PlaySE(SE_PC_OFF);
+                break;
         }
         return;
     }
-    if (((gMain.newKeys & DPAD_LEFT)
-     || ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-     && sPokedexView->selectedScreen > 0)
-    {
+    if (((gMain.newKeys & DPAD_LEFT) ||
+         ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)) &&
+        sPokedexView->selectedScreen > 0) {
         sPokedexView->selectedScreen--;
         HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
         PlaySE(SE_DEX_PAGE);
         return;
     }
-    if (((gMain.newKeys & DPAD_RIGHT)
-     || ((gMain.newKeys & R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-     && sPokedexView->selectedScreen < CANCEL_SCREEN)
-    {
+    if (((gMain.newKeys & DPAD_RIGHT) ||
+         ((gMain.newKeys & R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)) &&
+        sPokedexView->selectedScreen < CANCEL_SCREEN) {
         sPokedexView->selectedScreen++;
         HighlightScreenSelectBarItem(sPokedexView->selectedScreen, 0xD);
         PlaySE(SE_DEX_PAGE);
@@ -3420,152 +2697,136 @@ static void Task_HandleInfoScreenInput(u8 taskId)
     }
 }
 
-static void Task_SwitchScreensFromInfoScreen(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_SwitchScreensFromInfoScreen(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
-        switch (sPokedexView->screenSwitchState)
-        {
-        case 1:
-        default:
-            gTasks[taskId].func = Task_LoadAreaScreen;
-            break;
-        case 2:
-            gTasks[taskId].func = Task_LoadCryScreen;
-            break;
-        case 3:
-            gTasks[taskId].func = Task_LoadSizeScreen;
-            break;
+        switch (sPokedexView->screenSwitchState) {
+            case 1:
+            default:
+                gTasks[taskId].func = Task_LoadAreaScreen;
+                break;
+            case 2:
+                gTasks[taskId].func = Task_LoadCryScreen;
+                break;
+            case 3:
+                gTasks[taskId].func = Task_LoadSizeScreen;
+                break;
         }
     }
 }
 
-static void Task_LoadInfoScreenWaitForFade(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_LoadInfoScreenWaitForFade(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
         gTasks[taskId].func = Task_LoadInfoScreen;
     }
 }
 
-static void Task_ExitInfoScreen(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ExitInfoScreen(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
         FreeInfoScreenWindowAndBgBuffers();
         DestroyTask(taskId);
     }
 }
 
-static void Task_LoadAreaScreen(u8 taskId)
-{
-    switch (gMain.state)
-    {
-    case 0:
-    default:
-        if (!gPaletteFade.active)
-        {
-            sPokedexView->currentPage = PAGE_AREA;
-            gPokedexVBlankCB = gMain.vblankCallback;
-            SetVBlankCallback(NULL);
-            ResetOtherVideoRegisters(DISPCNT_BG1_ON);
-            sPokedexView->selectedScreen = AREA_SCREEN;
-            gMain.state = 1;
-        }
-        break;
-    case 1:
-        LoadScreenSelectBarSubmenu(0xD);
-        HighlightSubmenuScreenSelectBarItem(0, 0xD);
-        LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(13) | BGCNT_16COLOR | BGCNT_TXT256x256);
-        gMain.state++;
-        break;
-    case 2:
-        ShowPokedexAreaScreen(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState);
-        SetVBlankCallback(gPokedexVBlankCB);
-        sPokedexView->screenSwitchState = 0;
-        gMain.state = 0;
-        gTasks[taskId].func = Task_WaitForAreaScreenInput;
-        break;
+static void Task_LoadAreaScreen(u8 taskId) {
+    switch (gMain.state) {
+        case 0:
+        default:
+            if (!gPaletteFade.active) {
+                sPokedexView->currentPage = PAGE_AREA;
+                gPokedexVBlankCB = gMain.vblankCallback;
+                SetVBlankCallback(NULL);
+                ResetOtherVideoRegisters(DISPCNT_BG1_ON);
+                sPokedexView->selectedScreen = AREA_SCREEN;
+                gMain.state = 1;
+            }
+            break;
+        case 1:
+            LoadScreenSelectBarSubmenu(0xD);
+            HighlightSubmenuScreenSelectBarItem(0, 0xD);
+            LoadPokedexBgPalette(sPokedexView->isSearchResults);
+            SetGpuReg(REG_OFFSET_BG1CNT,
+                      BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(13) | BGCNT_16COLOR | BGCNT_TXT256x256);
+            gMain.state++;
+            break;
+        case 2:
+            ShowPokedexAreaScreen(NationalPokedexNumToSpecies(sPokedexListItem->dexNum),
+                                  &sPokedexView->screenSwitchState);
+            SetVBlankCallback(gPokedexVBlankCB);
+            sPokedexView->screenSwitchState = 0;
+            gMain.state = 0;
+            gTasks[taskId].func = Task_WaitForAreaScreenInput;
+            break;
     }
 }
 
-static void Task_WaitForAreaScreenInput(u8 taskId)
-{
-// See Task_HandlePokedexAreaScreenInput() in pokedex_area_screen.c
+static void Task_WaitForAreaScreenInput(u8 taskId) {
+    // See Task_HandlePokedexAreaScreenInput() in pokedex_area_screen.c
     if (sPokedexView->screenSwitchState != 0)
         gTasks[taskId].func = Task_SwitchScreensFromAreaScreen;
 }
 
-static void Task_SwitchScreensFromAreaScreen(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
-        switch (sPokedexView->screenSwitchState)
-        {
-        case 1:
-        default:
-            gTasks[taskId].func = Task_LoadInfoScreen;
-            break;
-        case 2:
-            gTasks[taskId].func = Task_LoadCryScreen;
-            break;
+static void Task_SwitchScreensFromAreaScreen(u8 taskId) {
+    if (!gPaletteFade.active) {
+        switch (sPokedexView->screenSwitchState) {
+            case 1:
+            default:
+                gTasks[taskId].func = Task_LoadInfoScreen;
+                break;
+            case 2:
+                gTasks[taskId].func = Task_LoadCryScreen;
+                break;
         }
     }
 }
 
-static void Task_LoadCryScreen(u8 taskId)
-{
-    switch (gMain.state)
-    {
-    case 0:
-    default:
-        if (!gPaletteFade.active)
-        {
-            m4aMPlayStop(&gMPlayInfo_BGM);
-            sPokedexView->currentPage = PAGE_CRY;
-            gPokedexVBlankCB = gMain.vblankCallback;
-            SetVBlankCallback(NULL);
-            ResetOtherVideoRegisters(DISPCNT_BG1_ON);
-            sPokedexView->selectedScreen = CRY_SCREEN;
-            gMain.state = 1;
-        }
-        break;
-    case 1:
-        DecompressAndLoadBgGfxUsingHeap(3, &gPokedexMenu_Gfx, 0x2000, 0, 0);
-        CopyToBgTilemapBuffer(3, &gPokedexCryScreen_Tilemap, 0, 0);
-        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
-        PutWindowTilemap(WIN_INFO);
-        PutWindowTilemap(WIN_VU_METER);
-        PutWindowTilemap(WIN_CRY_WAVE);
-        gMain.state++;
-        break;
-    case 2:
-        LoadScreenSelectBarSubmenu(0xD);
-        HighlightSubmenuScreenSelectBarItem(1, 0xD);
-        LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        gMain.state++;
-        break;
-    case 3:
-        ResetPaletteFade();
-        gMain.state++;
-        break;
-    case 4:
-        PrintInfoScreenText(gText_CryOf, 82, 33);
-        PrintCryScreenSpeciesName(0, sPokedexListItem->dexNum, 82, 49);
-        gMain.state++;
-        break;
-    case 5:
-        gTasks[taskId].tMonSpriteId = CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 48, 56, 0);
-        gSprites[gTasks[taskId].tMonSpriteId].oam.priority = 0;
-        gDexCryScreenState = 0;
-        gMain.state++;
-        break;
-    case 6:
-        {
+static void Task_LoadCryScreen(u8 taskId) {
+    switch (gMain.state) {
+        case 0:
+        default:
+            if (!gPaletteFade.active) {
+                m4aMPlayStop(&gMPlayInfo_BGM);
+                sPokedexView->currentPage = PAGE_CRY;
+                gPokedexVBlankCB = gMain.vblankCallback;
+                SetVBlankCallback(NULL);
+                ResetOtherVideoRegisters(DISPCNT_BG1_ON);
+                sPokedexView->selectedScreen = CRY_SCREEN;
+                gMain.state = 1;
+            }
+            break;
+        case 1:
+            DecompressAndLoadBgGfxUsingHeap(3, &gPokedexMenu_Gfx, 0x2000, 0, 0);
+            CopyToBgTilemapBuffer(3, &gPokedexCryScreen_Tilemap, 0, 0);
+            FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+            PutWindowTilemap(WIN_INFO);
+            PutWindowTilemap(WIN_VU_METER);
+            PutWindowTilemap(WIN_CRY_WAVE);
+            gMain.state++;
+            break;
+        case 2:
+            LoadScreenSelectBarSubmenu(0xD);
+            HighlightSubmenuScreenSelectBarItem(1, 0xD);
+            LoadPokedexBgPalette(sPokedexView->isSearchResults);
+            gMain.state++;
+            break;
+        case 3:
+            ResetPaletteFade();
+            gMain.state++;
+            break;
+        case 4:
+            PrintInfoScreenText(gText_CryOf, 82, 33);
+            PrintCryScreenSpeciesName(0, sPokedexListItem->dexNum, 82, 49);
+            gMain.state++;
+            break;
+        case 5:
+            gTasks[taskId].tMonSpriteId = CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 48, 56, 0);
+            gSprites[gTasks[taskId].tMonSpriteId].oam.priority = 0;
+            gDexCryScreenState = 0;
+            gMain.state++;
+            break;
+        case 6: {
             struct CryScreenWindow waveformWindow;
 
             waveformWindow.unk0 = 0x4020;
@@ -3573,15 +2834,12 @@ static void Task_LoadCryScreen(u8 taskId)
             waveformWindow.paletteNo = 8;
             waveformWindow.yPos = 30;
             waveformWindow.xPos = 12;
-            if (LoadCryWaveformWindow(&waveformWindow, 2))
-            {
+            if (LoadCryWaveformWindow(&waveformWindow, 2)) {
                 gMain.state++;
                 gDexCryScreenState = 0;
             }
-        }
-        break;
-    case 7:
-        {
+        } break;
+        case 7: {
             struct CryScreenWindow cryMeter;
 
             cryMeter.paletteNo = 9;
@@ -3595,34 +2853,32 @@ static void Task_LoadCryScreen(u8 taskId)
             CopyBgTilemapBufferToVram(1);
             CopyBgTilemapBufferToVram(2);
             CopyBgTilemapBufferToVram(3);
-        }
-        break;
-    case 8:
-        BeginNormalPaletteFade(0xFFFFFFEB, 0, 0x10, 0, RGB_BLACK);
-        SetVBlankCallback(gPokedexVBlankCB);
-        gMain.state++;
-        break;
-    case 9:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 10:
-        sPokedexView->screenSwitchState = 0;
-        gMain.state = 0;
-        gTasks[taskId].func = Task_HandleCryScreenInput;
-        break;
+        } break;
+        case 8:
+            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0x10, 0, RGB_BLACK);
+            SetVBlankCallback(gPokedexVBlankCB);
+            gMain.state++;
+            break;
+        case 9:
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            ShowBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 10:
+            sPokedexView->screenSwitchState = 0;
+            gMain.state = 0;
+            gTasks[taskId].func = Task_HandleCryScreenInput;
+            break;
     }
 }
 
-static void Task_HandleCryScreenInput(u8 taskId)
-{
+static void Task_HandleCryScreenInput(u8 taskId) {
     UpdateCryWaveformWindow(2);
 
     if (IsCryPlaying())
@@ -3630,16 +2886,12 @@ static void Task_HandleCryScreenInput(u8 taskId)
     else
         LoadPlayArrowPalette(FALSE);
 
-    if (gMain.newKeys & A_BUTTON)
-    {
+    if (gMain.newKeys & A_BUTTON) {
         LoadPlayArrowPalette(TRUE);
         CryScreenPlayButton(NationalPokedexNumToSpecies(sPokedexListItem->dexNum));
         return;
-    }
-    else if (!gPaletteFade.active)
-    {
-        if (gMain.newKeys & B_BUTTON)
-        {
+    } else if (!gPaletteFade.active) {
+        if (gMain.newKeys & B_BUTTON) {
             BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
             m4aMPlayContinue(&gMPlayInfo_BGM);
             sPokedexView->screenSwitchState = 1;
@@ -3647,9 +2899,8 @@ static void Task_HandleCryScreenInput(u8 taskId)
             PlaySE(SE_PC_OFF);
             return;
         }
-        if ((gMain.newKeys & DPAD_LEFT)
-         || ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-        {
+        if ((gMain.newKeys & DPAD_LEFT) ||
+            ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)) {
             BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
             m4aMPlayContinue(&gMPlayInfo_BGM);
             sPokedexView->screenSwitchState = 2;
@@ -3657,15 +2908,11 @@ static void Task_HandleCryScreenInput(u8 taskId)
             PlaySE(SE_DEX_PAGE);
             return;
         }
-        if ((gMain.newKeys & DPAD_RIGHT)
-         || ((gMain.newKeys & R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-        {
-            if (!sPokedexListItem->owned)
-            {
+        if ((gMain.newKeys & DPAD_RIGHT) ||
+            ((gMain.newKeys & R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)) {
+            if (!sPokedexListItem->owned) {
                 PlaySE(SE_FAILURE);
-            }
-            else
-            {
+            } else {
                 BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
                 m4aMPlayContinue(&gMPlayInfo_BGM);
                 sPokedexView->screenSwitchState = 3;
@@ -3677,30 +2924,26 @@ static void Task_HandleCryScreenInput(u8 taskId)
     }
 }
 
-static void Task_SwitchScreensFromCryScreen(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_SwitchScreensFromCryScreen(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeCryScreen();
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
-        switch (sPokedexView->screenSwitchState)
-        {
-        default:
-        case 1:
-            gTasks[taskId].func = Task_LoadInfoScreen;
-            break;
-        case 2:
-            gTasks[taskId].func = Task_LoadAreaScreen;
-            break;
-        case 3:
-            gTasks[taskId].func = Task_LoadSizeScreen;
-            break;
+        switch (sPokedexView->screenSwitchState) {
+            default:
+            case 1:
+                gTasks[taskId].func = Task_LoadInfoScreen;
+                break;
+            case 2:
+                gTasks[taskId].func = Task_LoadAreaScreen;
+                break;
+            case 3:
+                gTasks[taskId].func = Task_LoadSizeScreen;
+                break;
         }
     }
 }
 
-static void LoadPlayArrowPalette(bool8 cryPlaying)
-{
+static void LoadPlayArrowPalette(bool8 cryPlaying) {
     u16 color;
 
     if (cryPlaying)
@@ -3710,116 +2953,109 @@ static void LoadPlayArrowPalette(bool8 cryPlaying)
     LoadPalette(&color, 0x5D, 2);
 }
 
-static void Task_LoadSizeScreen(u8 taskId)
-{
+static void Task_LoadSizeScreen(u8 taskId) {
     u8 spriteId;
 
-    switch (gMain.state)
-    {
-    default:
-    case 0:
-        if (!gPaletteFade.active)
-        {
-            sPokedexView->currentPage = PAGE_SIZE;
-            gPokedexVBlankCB = gMain.vblankCallback;
-            SetVBlankCallback(NULL);
-            ResetOtherVideoRegisters(DISPCNT_BG1_ON);
-            sPokedexView->selectedScreen = SIZE_SCREEN;
-            gMain.state = 1;
-        }
-        break;
-    case 1:
-        DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
-        CopyToBgTilemapBuffer(3, gPokedexSizeScreen_Tilemap, 0, 0);
-        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
-        PutWindowTilemap(WIN_INFO);
-        gMain.state++;
-        break;
-    case 2:
-        LoadScreenSelectBarSubmenu(0xD);
-        HighlightSubmenuScreenSelectBarItem(2, 0xD);
-        LoadPokedexBgPalette(sPokedexView->isSearchResults);
-        gMain.state++;
-        break;
-    case 3:
-        {
+    switch (gMain.state) {
+        default:
+        case 0:
+            if (!gPaletteFade.active) {
+                sPokedexView->currentPage = PAGE_SIZE;
+                gPokedexVBlankCB = gMain.vblankCallback;
+                SetVBlankCallback(NULL);
+                ResetOtherVideoRegisters(DISPCNT_BG1_ON);
+                sPokedexView->selectedScreen = SIZE_SCREEN;
+                gMain.state = 1;
+            }
+            break;
+        case 1:
+            DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
+            CopyToBgTilemapBuffer(3, gPokedexSizeScreen_Tilemap, 0, 0);
+            FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+            PutWindowTilemap(WIN_INFO);
+            gMain.state++;
+            break;
+        case 2:
+            LoadScreenSelectBarSubmenu(0xD);
+            HighlightSubmenuScreenSelectBarItem(2, 0xD);
+            LoadPokedexBgPalette(sPokedexView->isSearchResults);
+            gMain.state++;
+            break;
+        case 3: {
             u8 string[64];
 
             StringCopy(string, gText_SizeComparedTo);
             StringAppend(string, gSaveBlock2Ptr->playerName);
             PrintInfoScreenText(string, GetStringCenterAlignXOffset(1, string, 0xF0), 0x79);
             gMain.state++;
-        }
-        break;
-    case 4:
-        ResetPaletteFade();
-        gMain.state++;
-        break;
-    case 5:
-        spriteId = CreateSizeScreenTrainerPic(PlayerGenderToFrontTrainerPicId(gSaveBlock2Ptr->playerGender), 152, 56, 0);
-        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
-        gSprites[spriteId].oam.matrixNum = 1;
-        gSprites[spriteId].oam.priority = 0;
-        gSprites[spriteId].pos2.y = gPokedexEntries[sPokedexListItem->dexNum].trainerOffset;
-        SetOamMatrix(1, gPokedexEntries[sPokedexListItem->dexNum].trainerScale, 0, 0, gPokedexEntries[sPokedexListItem->dexNum].trainerScale);
-        LoadPalette(sSizeScreenSilhouette_Pal, (gSprites[spriteId].oam.paletteNum + 16) * 16, 0x20);
-        gTasks[taskId].data[5] = spriteId;
-        gMain.state++;
-        break;
-    case 6:
-        spriteId = CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 88, 56, 1);
-        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
-        gSprites[spriteId].oam.matrixNum = 2;
-        gSprites[spriteId].oam.priority = 0;
-        gSprites[spriteId].pos2.y = gPokedexEntries[sPokedexListItem->dexNum].pokemonOffset;
-        SetOamMatrix(2, gPokedexEntries[sPokedexListItem->dexNum].pokemonScale, 0, 0, gPokedexEntries[sPokedexListItem->dexNum].pokemonScale);
-        LoadPalette(sSizeScreenSilhouette_Pal, (gSprites[spriteId].oam.paletteNum + 16) * 16, 0x20);
-        gTasks[taskId].tMonSpriteId = spriteId;
-        CopyWindowToVram(WIN_INFO, 3);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        CopyBgTilemapBufferToVram(3);
-        gMain.state++;
-        break;
-    case 7:
-        BeginNormalPaletteFade(0xFFFFFFEB, 0, 0x10, 0, RGB_BLACK);
-        SetVBlankCallback(gPokedexVBlankCB);
-        gMain.state++;
-        break;
-    case 8:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        HideBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 9:
-        if (!gPaletteFade.active)
-        {
-            sPokedexView->screenSwitchState = 0;
-            gMain.state = 0;
-            gTasks[taskId].func = Task_HandleSizeScreenInput;
-        }
-        break;
+        } break;
+        case 4:
+            ResetPaletteFade();
+            gMain.state++;
+            break;
+        case 5:
+            spriteId =
+                CreateSizeScreenTrainerPic(PlayerGenderToFrontTrainerPicId(gSaveBlock2Ptr->playerGender), 152, 56, 0);
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+            gSprites[spriteId].oam.matrixNum = 1;
+            gSprites[spriteId].oam.priority = 0;
+            gSprites[spriteId].pos2.y = gPokedexEntries[sPokedexListItem->dexNum].trainerOffset;
+            SetOamMatrix(1, gPokedexEntries[sPokedexListItem->dexNum].trainerScale, 0, 0,
+                         gPokedexEntries[sPokedexListItem->dexNum].trainerScale);
+            LoadPalette(sSizeScreenSilhouette_Pal, (gSprites[spriteId].oam.paletteNum + 16) * 16, 0x20);
+            gTasks[taskId].data[5] = spriteId;
+            gMain.state++;
+            break;
+        case 6:
+            spriteId = CreateMonSpriteFromNationalDexNumber(sPokedexListItem->dexNum, 88, 56, 1);
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+            gSprites[spriteId].oam.matrixNum = 2;
+            gSprites[spriteId].oam.priority = 0;
+            gSprites[spriteId].pos2.y = gPokedexEntries[sPokedexListItem->dexNum].pokemonOffset;
+            SetOamMatrix(2, gPokedexEntries[sPokedexListItem->dexNum].pokemonScale, 0, 0,
+                         gPokedexEntries[sPokedexListItem->dexNum].pokemonScale);
+            LoadPalette(sSizeScreenSilhouette_Pal, (gSprites[spriteId].oam.paletteNum + 16) * 16, 0x20);
+            gTasks[taskId].tMonSpriteId = spriteId;
+            CopyWindowToVram(WIN_INFO, 3);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            CopyBgTilemapBufferToVram(3);
+            gMain.state++;
+            break;
+        case 7:
+            BeginNormalPaletteFade(0xFFFFFFEB, 0, 0x10, 0, RGB_BLACK);
+            SetVBlankCallback(gPokedexVBlankCB);
+            gMain.state++;
+            break;
+        case 8:
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            HideBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 9:
+            if (!gPaletteFade.active) {
+                sPokedexView->screenSwitchState = 0;
+                gMain.state = 0;
+                gTasks[taskId].func = Task_HandleSizeScreenInput;
+            }
+            break;
     }
 }
 
-static void Task_HandleSizeScreenInput(u8 taskId)
-{
-    if (gMain.newKeys & B_BUTTON)
-    {
+static void Task_HandleSizeScreenInput(u8 taskId) {
+    if (gMain.newKeys & B_BUTTON) {
         BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
         sPokedexView->screenSwitchState = 1;
         gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
         PlaySE(SE_PC_OFF);
-    }
-    else if ((gMain.newKeys & DPAD_LEFT)
-     || ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-    {
+    } else if ((gMain.newKeys & DPAD_LEFT) ||
+               ((gMain.newKeys & L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)) {
         BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
         sPokedexView->screenSwitchState = 2;
         gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
@@ -3827,57 +3063,48 @@ static void Task_HandleSizeScreenInput(u8 taskId)
     }
 }
 
-static void Task_SwitchScreensFromSizeScreen(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_SwitchScreensFromSizeScreen(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
         FreeAndDestroyTrainerPicSprite(gTasks[taskId].data[5]);
-        switch (sPokedexView->screenSwitchState)
-        {
-        default:
-        case 1:
-            gTasks[taskId].func = Task_LoadInfoScreen;
-            break;
-        case 2:
-            gTasks[taskId].func = Task_LoadCryScreen;
-            break;
+        switch (sPokedexView->screenSwitchState) {
+            default:
+            case 1:
+                gTasks[taskId].func = Task_LoadInfoScreen;
+                break;
+            case 2:
+                gTasks[taskId].func = Task_LoadCryScreen;
+                break;
         }
     }
 }
 
 #undef tMonSpriteId
 
-static void LoadScreenSelectBarMain(u16 unused)
-{
+static void LoadScreenSelectBarMain(u16 unused) {
     CopyToBgTilemapBuffer(1, gPokedexScreenSelectBarMain_Tilemap, 0, 0);
 }
 
-static void LoadScreenSelectBarSubmenu(u16 unused)
-{
+static void LoadScreenSelectBarSubmenu(u16 unused) {
     CopyToBgTilemapBuffer(1, gPokedexScreenSelectBarSubmenu_Tilemap, 0, 0);
 }
 
-static void HighlightScreenSelectBarItem(u8 selectedScreen, u16 unused)
-{
+static void HighlightScreenSelectBarItem(u8 selectedScreen, u16 unused) {
     u8 i;
     u8 j;
     u16* ptr = GetBgTilemapBuffer(1);
 
-    for (i = 0; i < SCREEN_COUNT; i++)
-    {
+    for (i = 0; i < SCREEN_COUNT; i++) {
         u8 row = (i * 7) + 1;
         u16 newPalette;
 
-        do
-        {
+        do {
             newPalette = 0x4000;
             if (i == selectedScreen)
                 newPalette = 0x2000;
         } while (0);
 
-        for (j = 0; j < 7; j++)
-        {
+        for (j = 0; j < 7; j++) {
             ptr[row + j] = (ptr[row + j] % 0x1000) | newPalette;
             ptr[row + j + 0x20] = (ptr[row + j + 0x20] % 0x1000) | newPalette;
         }
@@ -3885,27 +3112,23 @@ static void HighlightScreenSelectBarItem(u8 selectedScreen, u16 unused)
     CopyBgTilemapBufferToVram(1);
 }
 
-static void HighlightSubmenuScreenSelectBarItem(u8 a, u16 b)
-{
+static void HighlightSubmenuScreenSelectBarItem(u8 a, u16 b) {
     u8 i;
     u8 j;
     u16* ptr = GetBgTilemapBuffer(1);
 
-    for (i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         u8 row = i * 7 + 1;
         u32 newPalette;
 
-        do
-        {
+        do {
             if (i == a || i == 3)
                 newPalette = 0x2000;
             else
                 newPalette = 0x4000;
         } while (0);
 
-        for (j = 0; j < 7; j++)
-        {
+        for (j = 0; j < 7; j++) {
             ptr[row + j] = (ptr[row + j] % 0x1000) | newPalette;
             ptr[row + j + 0x20] = (ptr[row + j + 0x20] % 0x1000) | newPalette;
         }
@@ -3913,17 +3136,16 @@ static void HighlightSubmenuScreenSelectBarItem(u8 a, u16 b)
     CopyBgTilemapBufferToVram(1);
 }
 
-#define tState         data[0]
-#define tDexNum        data[1]
-#define tPalTimer      data[2]
-#define tMonSpriteId   data[3]
-#define tOtIdLo        data[12]
-#define tOtIdHi        data[13]
+#define tState data[0]
+#define tDexNum data[1]
+#define tPalTimer data[2]
+#define tMonSpriteId data[3]
+#define tOtIdLo data[12]
+#define tOtIdHi data[13]
 #define tPersonalityLo data[14]
 #define tPersonalityHi data[15]
 
-u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality)
-{
+u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality) {
     u8 taskId = CreateTask(Task_DisplayCaughtMonDexPage, 0);
 
     gTasks[taskId].tState = 0;
@@ -3935,108 +3157,97 @@ u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality)
     return taskId;
 }
 
-static void Task_DisplayCaughtMonDexPage(u8 taskId)
-{
+static void Task_DisplayCaughtMonDexPage(u8 taskId) {
     u8 spriteId;
     u16 dexNum = gTasks[taskId].tDexNum;
 
-    switch (gTasks[taskId].tState)
-    {
-    case 0:
-    default:
-        if (!gPaletteFade.active)
-        {
-            gPokedexVBlankCB = gMain.vblankCallback;
-            SetVBlankCallback(NULL);
-            ResetOtherVideoRegisters(DISPCNT_BG0_ON);
-            ResetBgsAndClearDma3BusyFlags(0);
-            InitBgsFromTemplates(0, sNewEntryInfoScreen_BgTemplate, ARRAY_COUNT(sNewEntryInfoScreen_BgTemplate));
-            SetBgTilemapBuffer(3, AllocZeroed(0x800));
-            SetBgTilemapBuffer(2, AllocZeroed(0x800));
-            InitWindows(sNewEntryInfoScreen_WindowTemplates);
-            DeactivateAllTextPrinters();
-            gTasks[taskId].tState = 1;
-        }
-        break;
-    case 1:
-        DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
-        CopyToBgTilemapBuffer(3, gPokedexInfoScreen_Tilemap, 0, 0);
-        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
-        PutWindowTilemap(WIN_INFO);
-        PutWindowTilemap(WIN_FOOTPRINT);
-        PrintFootprint(WIN_FOOTPRINT, gTasks[taskId].tDexNum);
-        CopyWindowToVram(WIN_FOOTPRINT, 2);
-        ResetPaletteFade();
-        LoadPokedexBgPalette(FALSE);
-        gTasks[taskId].tState++;
-        break;
-    case 2:
-        gTasks[taskId].tState++;
-        break;
-    case 3:
-        PrintMonInfo(dexNum, IsNationalPokedexEnabled(), 1, 1);
-        CopyWindowToVram(WIN_INFO, 3);
-        CopyBgTilemapBufferToVram(2);
-        CopyBgTilemapBufferToVram(3);
-        gTasks[taskId].tState++;
-        break;
-    case 4:
-        spriteId = CreateMonSpriteFromNationalDexNumber(dexNum, 48, 56, 0);
-        gSprites[spriteId].oam.priority = 0;
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
-        SetVBlankCallback(gPokedexVBlankCB);
-        gTasks[taskId].tMonSpriteId = spriteId;
-        gTasks[taskId].tState++;
-        break;
-    case 5:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        ShowBg(2);
-        ShowBg(3);
-        gTasks[taskId].tState++;
-        break;
-    case 6:
-        if (!gPaletteFade.active)
-        {
-            PlayCry1(NationalPokedexNumToSpecies(dexNum), 0);
-            gTasks[taskId].tPalTimer = 0;
-            gTasks[taskId].func = Task_HandleCaughtMonPageInput;
-        }
-        break;
+    switch (gTasks[taskId].tState) {
+        case 0:
+        default:
+            if (!gPaletteFade.active) {
+                gPokedexVBlankCB = gMain.vblankCallback;
+                SetVBlankCallback(NULL);
+                ResetOtherVideoRegisters(DISPCNT_BG0_ON);
+                ResetBgsAndClearDma3BusyFlags(0);
+                InitBgsFromTemplates(0, sNewEntryInfoScreen_BgTemplate, ARRAY_COUNT(sNewEntryInfoScreen_BgTemplate));
+                SetBgTilemapBuffer(3, AllocZeroed(0x800));
+                SetBgTilemapBuffer(2, AllocZeroed(0x800));
+                InitWindows(sNewEntryInfoScreen_WindowTemplates);
+                DeactivateAllTextPrinters();
+                gTasks[taskId].tState = 1;
+            }
+            break;
+        case 1:
+            DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
+            CopyToBgTilemapBuffer(3, gPokedexInfoScreen_Tilemap, 0, 0);
+            FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+            PutWindowTilemap(WIN_INFO);
+            PutWindowTilemap(WIN_FOOTPRINT);
+            PrintFootprint(WIN_FOOTPRINT, gTasks[taskId].tDexNum);
+            CopyWindowToVram(WIN_FOOTPRINT, 2);
+            ResetPaletteFade();
+            LoadPokedexBgPalette(FALSE);
+            gTasks[taskId].tState++;
+            break;
+        case 2:
+            gTasks[taskId].tState++;
+            break;
+        case 3:
+            PrintMonInfo(dexNum, IsNationalPokedexEnabled(), 1, 1);
+            CopyWindowToVram(WIN_INFO, 3);
+            CopyBgTilemapBufferToVram(2);
+            CopyBgTilemapBufferToVram(3);
+            gTasks[taskId].tState++;
+            break;
+        case 4:
+            spriteId = CreateMonSpriteFromNationalDexNumber(dexNum, 48, 56, 0);
+            gSprites[spriteId].oam.priority = 0;
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
+            SetVBlankCallback(gPokedexVBlankCB);
+            gTasks[taskId].tMonSpriteId = spriteId;
+            gTasks[taskId].tState++;
+            break;
+        case 5:
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            ShowBg(2);
+            ShowBg(3);
+            gTasks[taskId].tState++;
+            break;
+        case 6:
+            if (!gPaletteFade.active) {
+                PlayCry1(NationalPokedexNumToSpecies(dexNum), 0);
+                gTasks[taskId].tPalTimer = 0;
+                gTasks[taskId].func = Task_HandleCaughtMonPageInput;
+            }
+            break;
     }
 }
 
-static void Task_HandleCaughtMonPageInput(u8 taskId)
-{
-    if (gMain.newKeys & (A_BUTTON | B_BUTTON))
-    {
+static void Task_HandleCaughtMonPageInput(u8 taskId) {
+    if (gMain.newKeys & (A_BUTTON | B_BUTTON)) {
         BeginNormalPaletteFade(0x0000FFFF, 0, 0, 16, RGB_BLACK);
         gSprites[gTasks[taskId].tMonSpriteId].callback = SpriteCB_SlideCaughtMonToCenter;
         gTasks[taskId].func = Task_ExitCaughtMonPage;
     }
     // Flicker caught screen color
-    else if (++gTasks[taskId].tPalTimer & 16)
-    {
+    else if (++gTasks[taskId].tPalTimer & 16) {
         LoadPalette(gPokedexBgHoenn_Pal + 1, 0x31, 14);
-    }
-    else
-    {
+    } else {
         LoadPalette(gPokedexCaughtScreen_Pal + 1, 0x31, 14);
     }
 }
 
-static void Task_ExitCaughtMonPage(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ExitCaughtMonPage(u8 taskId) {
+    if (!gPaletteFade.active) {
         u16 species;
         u32 otId;
         u32 personality;
         u8 paletteNum;
-        const u32 *lzPaletteData;
-        void *buffer;
+        const u32* lzPaletteData;
+        void* buffer;
 
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
         FreeAllWindowBuffers();
@@ -4057,8 +3268,7 @@ static void Task_ExitCaughtMonPage(u8 taskId)
     }
 }
 
-static void SpriteCB_SlideCaughtMonToCenter(struct Sprite *sprite)
-{
+static void SpriteCB_SlideCaughtMonToCenter(struct Sprite* sprite) {
     if (sprite->pos1.x < 0x78)
         sprite->pos1.x += 2;
     if (sprite->pos1.x > 0x78)
@@ -4080,17 +3290,17 @@ static void SpriteCB_SlideCaughtMonToCenter(struct Sprite *sprite)
 #undef tPersonalityHi
 
 // u32 value is re-used, but passed as a bool that's TRUE if national dex is enabled
-static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
-{
+static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry) {
     u8 str[16];
     u8 str2[32];
     u16 natNum;
-    const u8 *name;
-    const u8 *category;
-    const u8 *description;
+    const u8* name;
+    const u8* category;
+    const u8* description;
 
     if (newEntry)
-        PrintInfoScreenText(gText_PokedexRegistration, GetStringCenterAlignXOffset(1, gText_PokedexRegistration, 0xF0), 0);
+        PrintInfoScreenText(gText_PokedexRegistration, GetStringCenterAlignXOffset(1, gText_PokedexRegistration, 0xF0),
+                            0);
     if (value == 0)
         value = NationalToHoennOrder(num);
     else
@@ -4103,25 +3313,19 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
     else
         name = sText_TenDashes2;
     PrintInfoScreenText(name, 0x84, 0x19);
-    if (owned)
-    {
+    if (owned) {
         CopyMonCategoryText(num, str2);
         category = str2;
-    }
-    else
-    {
+    } else {
         category = gText_5MarksPokemon;
     }
     PrintInfoScreenText(category, 0x64, 0x29);
     PrintInfoScreenText(gText_HTHeight, 0x60, 0x39);
     PrintInfoScreenText(gText_WTWeight, 0x60, 0x49);
-    if (owned)
-    {
+    if (owned) {
         PrintMonHeight(gPokedexEntries[num].height, 0x81, 0x39);
         PrintMonWeight(gPokedexEntries[num].weight, 0x81, 0x49);
-    }
-    else
-    {
+    } else {
         PrintInfoScreenText(gText_UnkHeight, 0x81, 0x39);
         PrintInfoScreenText(gText_UnkWeight, 0x81, 0x49);
     }
@@ -4132,8 +3336,7 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
     PrintInfoScreenText(description, GetStringCenterAlignXOffset(1, description, 0xF0), 0x5F);
 }
 
-static void PrintMonHeight(u16 height, u8 left, u8 top)
-{
+static void PrintMonHeight(u16 height, u8 left, u8 top) {
     u8 buffer[16];
     u32 inches, feet;
     u8 i = 0;
@@ -4146,13 +3349,10 @@ static void PrintMonHeight(u16 height, u8 left, u8 top)
 
     buffer[i++] = EXT_CTRL_CODE_BEGIN;
     buffer[i++] = EXT_CTRL_CODE_CLEAR_TO;
-    if (feet / 10 == 0)
-    {
+    if (feet / 10 == 0) {
         buffer[i++] = 18;
         buffer[i++] = feet + CHAR_0;
-    }
-    else
-    {
+    } else {
         buffer[i++] = 12;
         buffer[i++] = feet / 10 + CHAR_0;
         buffer[i++] = (feet % 10) + CHAR_0;
@@ -4165,92 +3365,79 @@ static void PrintMonHeight(u16 height, u8 left, u8 top)
     PrintInfoScreenText(buffer, left, top);
 }
 
-static void PrintMonWeight(u16 weight, u8 left, u8 top)
-{
+static void PrintMonWeight(u16 weight, u8 left, u8 top) {
 #ifndef NONMATCHING
-    asm("":::"r9");
-{
+    asm("" ::: "r9");
+    {
 #endif
-    u8 buffer[16];
-    bool8 output;
-    u8 i = 0;
-    u32 lbs = (weight * 100000) / 4536;
+        u8 buffer[16];
+        bool8 output;
+        u8 i = 0;
+        u32 lbs = (weight * 100000) / 4536;
 
-    if (lbs % 10u >= 5)
-        lbs += 10;
-    output = FALSE;
+        if (lbs % 10u >= 5)
+            lbs += 10;
+        output = FALSE;
 
-    buffer[i] = (lbs / 100000) + CHAR_0;
-    if (buffer[i] == CHAR_0)
-    {
-        buffer[i++] = 0x77;
-    }
-    else
-    {
-        output = TRUE;
-        i++;
-    }
+        buffer[i] = (lbs / 100000) + CHAR_0;
+        if (buffer[i] == CHAR_0) {
+            buffer[i++] = 0x77;
+        } else {
+            output = TRUE;
+            i++;
+        }
 
-    lbs %= 100000;
-    buffer[i] = (lbs / 10000) + CHAR_0;
-    if (buffer[i] == CHAR_0 && !output)
-    {
-        buffer[i++] = 0x77;
-    }
-    else
-    {
-        output = TRUE;
-        i++;
-    }
+        lbs %= 100000;
+        buffer[i] = (lbs / 10000) + CHAR_0;
+        if (buffer[i] == CHAR_0 && !output) {
+            buffer[i++] = 0x77;
+        } else {
+            output = TRUE;
+            i++;
+        }
 
-    lbs %= 10000;
-    buffer[i] = (lbs / 1000) + CHAR_0;
-    if (buffer[i] == CHAR_0 && !output)
-    {
-        buffer[i++] = 0x77;
-    }
-    else
-    {
-        i++;
-    }
+        lbs %= 10000;
+        buffer[i] = (lbs / 1000) + CHAR_0;
+        if (buffer[i] == CHAR_0 && !output) {
+            buffer[i++] = 0x77;
+        } else {
+            i++;
+        }
 
-    lbs %= 1000;
-    buffer[i++] = (lbs / 100) + CHAR_0;
-    lbs %= 100;
-    buffer[i++] = CHAR_PERIOD;
-    buffer[i++] = (lbs / 10) + CHAR_0;
-    buffer[i++] = CHAR_SPACE;
-    buffer[i++] = CHAR_l;
-    buffer[i++] = CHAR_b;
-    buffer[i++] = CHAR_s;
-    buffer[i++] = CHAR_PERIOD;
-    buffer[i++] = EOS;
-    PrintInfoScreenText(buffer, left, top);
+        lbs %= 1000;
+        buffer[i++] = (lbs / 100) + CHAR_0;
+        lbs %= 100;
+        buffer[i++] = CHAR_PERIOD;
+        buffer[i++] = (lbs / 10) + CHAR_0;
+        buffer[i++] = CHAR_SPACE;
+        buffer[i++] = CHAR_l;
+        buffer[i++] = CHAR_b;
+        buffer[i++] = CHAR_s;
+        buffer[i++] = CHAR_PERIOD;
+        buffer[i++] = EOS;
+        PrintInfoScreenText(buffer, left, top);
 #ifndef NONMATCHING
-}
+    }
 #endif
 }
 
-const u8 *GetPokedexCategoryName(u16 dexNum) // unused
+const u8* GetPokedexCategoryName(u16 dexNum) // unused
 {
     return gPokedexEntries[dexNum].categoryName;
 }
 
-u16 GetPokedexHeightWeight(u16 dexNum, u8 data)
-{
-    switch (data)
-    {
-    case 0:  // height
-        return gPokedexEntries[dexNum].height;
-    case 1:  // weight
-        return gPokedexEntries[dexNum].weight;
-    default:
-        return 1;
+u16 GetPokedexHeightWeight(u16 dexNum, u8 data) {
+    switch (data) {
+        case 0: // height
+            return gPokedexEntries[dexNum].height;
+        case 1: // weight
+            return gPokedexEntries[dexNum].weight;
+        default:
+            return 1;
     }
 }
 
-s8 GetSetPokedexFlag(u16 nationalDexNo, u8 caseID)
-{
+s8 GetSetPokedexFlag(u16 nationalDexNo, u8 caseID) {
     u8 index;
     u8 bit;
     u8 mask;
@@ -4261,203 +3448,175 @@ s8 GetSetPokedexFlag(u16 nationalDexNo, u8 caseID)
     bit = nationalDexNo % 8;
     mask = 1 << bit;
     retVal = 0;
-    switch (caseID)
-    {
-    case FLAG_GET_SEEN:
-        if (gSaveBlock2Ptr->pokedex.seen[index] & mask)
-        {
-            if ((gSaveBlock2Ptr->pokedex.seen[index] & mask) == (gSaveBlock1Ptr->seen1[index] & mask)
-             && (gSaveBlock2Ptr->pokedex.seen[index] & mask) == (gSaveBlock1Ptr->seen2[index] & mask))
-                retVal = 1;
-            else
-            {
-                gSaveBlock2Ptr->pokedex.seen[index] &= ~mask;
-                gSaveBlock1Ptr->seen1[index] &= ~mask;
-                gSaveBlock1Ptr->seen2[index] &= ~mask;
-                retVal = 0;
+    switch (caseID) {
+        case FLAG_GET_SEEN:
+            if (gSaveBlock2Ptr->pokedex.seen[index] & mask) {
+                if ((gSaveBlock2Ptr->pokedex.seen[index] & mask) == (gSaveBlock1Ptr->seen1[index] & mask) &&
+                    (gSaveBlock2Ptr->pokedex.seen[index] & mask) == (gSaveBlock1Ptr->seen2[index] & mask))
+                    retVal = 1;
+                else {
+                    gSaveBlock2Ptr->pokedex.seen[index] &= ~mask;
+                    gSaveBlock1Ptr->seen1[index] &= ~mask;
+                    gSaveBlock1Ptr->seen2[index] &= ~mask;
+                    retVal = 0;
+                }
             }
-        }
-        break;
-    case FLAG_GET_CAUGHT:
-        if (gSaveBlock2Ptr->pokedex.owned[index] & mask)
-        {
-            if ((gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock2Ptr->pokedex.seen[index] & mask)
-             && (gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock1Ptr->seen1[index] & mask)
-             && (gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock1Ptr->seen2[index] & mask))
-                retVal = 1;
-            else
-            {
-                gSaveBlock2Ptr->pokedex.owned[index] &= ~mask;
-                gSaveBlock2Ptr->pokedex.seen[index] &= ~mask;
-                gSaveBlock1Ptr->seen1[index] &= ~mask;
-                gSaveBlock1Ptr->seen2[index] &= ~mask;
-                retVal = 0;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (gSaveBlock2Ptr->pokedex.owned[index] & mask) {
+                if ((gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock2Ptr->pokedex.seen[index] & mask) &&
+                    (gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock1Ptr->seen1[index] & mask) &&
+                    (gSaveBlock2Ptr->pokedex.owned[index] & mask) == (gSaveBlock1Ptr->seen2[index] & mask))
+                    retVal = 1;
+                else {
+                    gSaveBlock2Ptr->pokedex.owned[index] &= ~mask;
+                    gSaveBlock2Ptr->pokedex.seen[index] &= ~mask;
+                    gSaveBlock1Ptr->seen1[index] &= ~mask;
+                    gSaveBlock1Ptr->seen2[index] &= ~mask;
+                    retVal = 0;
+                }
             }
-        }
-        break;
-    case FLAG_SET_SEEN:
-        gSaveBlock2Ptr->pokedex.seen[index] |= mask;
-        gSaveBlock1Ptr->seen1[index] |= mask;
-        gSaveBlock1Ptr->seen2[index] |= mask;
-        break;
-    case FLAG_SET_CAUGHT:
-        gSaveBlock2Ptr->pokedex.owned[index] |= mask;
-        break;
+            break;
+        case FLAG_SET_SEEN:
+            gSaveBlock2Ptr->pokedex.seen[index] |= mask;
+            gSaveBlock1Ptr->seen1[index] |= mask;
+            gSaveBlock1Ptr->seen2[index] |= mask;
+            break;
+        case FLAG_SET_CAUGHT:
+            gSaveBlock2Ptr->pokedex.owned[index] |= mask;
+            break;
     }
     return retVal;
 }
 
-u16 GetNationalPokedexCount(u8 caseID)
-{
+u16 GetNationalPokedexCount(u8 caseID) {
     u16 count = 0;
     u16 i;
 
-    for (i = 0; i < NATIONAL_DEX_COUNT; i++)
-    {
-        switch (caseID)
-        {
-        case FLAG_GET_SEEN:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
-                count++;
-            break;
-        case FLAG_GET_CAUGHT:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
-                count++;
-            break;
+    for (i = 0; i < NATIONAL_DEX_COUNT; i++) {
+        switch (caseID) {
+            case FLAG_GET_SEEN:
+                if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                    count++;
+                break;
+            case FLAG_GET_CAUGHT:
+                if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                    count++;
+                break;
         }
     }
     return count;
 }
 
-u16 GetHoennPokedexCount(u8 caseID)
-{
+u16 GetHoennPokedexCount(u8 caseID) {
     u16 count = 0;
     u16 i;
 
-    for (i = 0; i < HOENN_DEX_COUNT; i++)
-    {
-        switch (caseID)
-        {
-        case FLAG_GET_SEEN:
-            if (GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_SEEN))
-                count++;
-            break;
-        case FLAG_GET_CAUGHT:
-            if (GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_CAUGHT))
-                count++;
-            break;
+    for (i = 0; i < HOENN_DEX_COUNT; i++) {
+        switch (caseID) {
+            case FLAG_GET_SEEN:
+                if (GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_SEEN))
+                    count++;
+                break;
+            case FLAG_GET_CAUGHT:
+                if (GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_CAUGHT))
+                    count++;
+                break;
         }
     }
     return count;
 }
 
-u16 GetKantoPokedexCount(u8 caseID)
-{
+u16 GetKantoPokedexCount(u8 caseID) {
     u16 count = 0;
     u16 i;
 
-    for (i = 0; i < KANTO_DEX_COUNT; i++)
-    {
-        switch (caseID)
-        {
-        case FLAG_GET_SEEN:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
-                count++;
-            break;
-        case FLAG_GET_CAUGHT:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
-                count++;
-            break;
+    for (i = 0; i < KANTO_DEX_COUNT; i++) {
+        switch (caseID) {
+            case FLAG_GET_SEEN:
+                if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                    count++;
+                break;
+            case FLAG_GET_CAUGHT:
+                if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                    count++;
+                break;
         }
     }
     return count;
 }
 
-bool16 HasAllHoennMons(void)
-{
+bool16 HasAllHoennMons(void) {
     u16 i;
 
     // -2 excludes Jirachi and Deoxys
-    for (i = 0; i < HOENN_DEX_COUNT - 2; i++)
-    {
+    for (i = 0; i < HOENN_DEX_COUNT - 2; i++) {
         if (!GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_CAUGHT))
             return FALSE;
     }
     return TRUE;
 }
 
-bool8 HasAllKantoMons(void)
-{
+bool8 HasAllKantoMons(void) {
     u16 i;
 
     // -1 excludes Mew
-    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
-    {
+    for (i = 0; i < KANTO_DEX_COUNT - 1; i++) {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
     return TRUE;
 }
 
-bool16 HasAllMons(void)
-{
+bool16 HasAllMons(void) {
     u16 i;
 
     // -1 excludes Mew
-    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
-    {
+    for (i = 0; i < KANTO_DEX_COUNT - 1; i++) {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
 
     // -3 excludes Lugia, Ho-Oh, and Celebi
-    for (i = KANTO_DEX_COUNT; i < JOHTO_DEX_COUNT - 3; i++)
-    {
+    for (i = KANTO_DEX_COUNT; i < JOHTO_DEX_COUNT - 3; i++) {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
 
     // -2 excludes Jirachi and Deoxys
-    for (i = JOHTO_DEX_COUNT; i < NATIONAL_DEX_COUNT - 2; i++)
-    {
+    for (i = JOHTO_DEX_COUNT; i < NATIONAL_DEX_COUNT - 2; i++) {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
     return TRUE;
 }
 
-static void ResetOtherVideoRegisters(u16 a)
-{
-    if (!(a & DISPCNT_BG0_ON))
-    {
+static void ResetOtherVideoRegisters(u16 a) {
+    if (!(a & DISPCNT_BG0_ON)) {
         ClearGpuRegBits(0, DISPCNT_BG0_ON);
         SetGpuReg(REG_OFFSET_BG0CNT, 0);
         SetGpuReg(REG_OFFSET_BG0HOFS, 0);
         SetGpuReg(REG_OFFSET_BG0VOFS, 0);
     }
-    if (!(a & DISPCNT_BG1_ON))
-    {
+    if (!(a & DISPCNT_BG1_ON)) {
         ClearGpuRegBits(0, DISPCNT_BG1_ON);
         SetGpuReg(REG_OFFSET_BG1CNT, 0);
         SetGpuReg(REG_OFFSET_BG1HOFS, 0);
         SetGpuReg(REG_OFFSET_BG1VOFS, 0);
     }
-    if (!(a & DISPCNT_BG2_ON))
-    {
+    if (!(a & DISPCNT_BG2_ON)) {
         ClearGpuRegBits(0, DISPCNT_BG2_ON);
         SetGpuReg(REG_OFFSET_BG2CNT, 0);
         SetGpuReg(REG_OFFSET_BG2HOFS, 0);
         SetGpuReg(REG_OFFSET_BG2VOFS, 0);
     }
-    if (!(a & DISPCNT_BG3_ON))
-    {
+    if (!(a & DISPCNT_BG3_ON)) {
         ClearGpuRegBits(0, DISPCNT_BG3_ON);
         SetGpuReg(REG_OFFSET_BG3CNT, 0);
         SetGpuReg(REG_OFFSET_BG3HOFS, 0);
         SetGpuReg(REG_OFFSET_BG3VOFS, 0);
     }
-    if (!(a & DISPCNT_OBJ_ON))
-    {
+    if (!(a & DISPCNT_OBJ_ON)) {
         ClearGpuRegBits(0, DISPCNT_OBJ_ON);
         ResetSpriteData();
         FreeAllSpritePalettes();
@@ -4465,8 +3624,7 @@ static void ResetOtherVideoRegisters(u16 a)
     }
 }
 
-static void PrintInfoSubMenuText(u8 windowId, const u8 *str, u8 left, u8 top)
-{
+static void PrintInfoSubMenuText(u8 windowId, const u8* str, u8 left, u8 top) {
     u8 color[3];
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
@@ -4475,8 +3633,7 @@ static void PrintInfoSubMenuText(u8 windowId, const u8 *str, u8 left, u8 top)
     AddTextPrinterParameterized4(windowId, 1, left, top, 0, 0, color, -1, str);
 }
 
-static void UnusedPrintNum(u8 windowId, u16 num, u8 left, u8 top)
-{
+static void UnusedPrintNum(u8 windowId, u16 num, u8 left, u8 top) {
     u8 str[4];
 
     str[0] = CHAR_0 + num / 100;
@@ -4486,31 +3643,28 @@ static void UnusedPrintNum(u8 windowId, u16 num, u8 left, u8 top)
     PrintInfoSubMenuText(windowId, str, left, top);
 }
 
-static u8 PrintCryScreenSpeciesName(u8 windowId, u16 num, u8 left, u8 top)
-{
+static u8 PrintCryScreenSpeciesName(u8 windowId, u16 num, u8 left, u8 top) {
     u8 str[POKEMON_NAME_LENGTH + 1];
     u8 i;
 
     for (i = 0; i < ARRAY_COUNT(str); i++)
         str[i] = EOS;
     num = NationalPokedexNumToSpecies(num);
-    switch (num)
-    {
-    default:
-        for (i = 0; gSpeciesNames[num][i] != EOS && i < POKEMON_NAME_LENGTH; i++)
-            str[i] = gSpeciesNames[num][i];
-        break;
-    case 0:
-        for (i = 0; i < 5; i++)
-            str[i] = CHAR_HYPHEN;
-        break;
+    switch (num) {
+        default:
+            for (i = 0; gSpeciesNames[num][i] != EOS && i < POKEMON_NAME_LENGTH; i++)
+                str[i] = gSpeciesNames[num][i];
+            break;
+        case 0:
+            for (i = 0; i < 5; i++)
+                str[i] = CHAR_HYPHEN;
+            break;
     }
     PrintInfoSubMenuText(windowId, str, left, top);
     return i;
 }
 
-static void UnusedPrintMonName(u8 windowId, const u8* name, u8 left, u8 top)
-{
+static void UnusedPrintMonName(u8 windowId, const u8* name, u8 left, u8 top) {
     u8 str[POKEMON_NAME_LENGTH + 1];
     u8 i;
     u8 nameLength;
@@ -4529,32 +3683,25 @@ static void UnusedPrintMonName(u8 windowId, const u8* name, u8 left, u8 top)
     PrintInfoSubMenuText(windowId, str, left, top);
 }
 
-static void UnusedPrintDecimalNum(u8 windowId, u16 b, u8 left, u8 top)
-{
+static void UnusedPrintDecimalNum(u8 windowId, u16 b, u8 left, u8 top) {
     u8 str[6];
     bool8 outputted = FALSE;
     u8 result;
 
     result = b / 1000;
-    if (result == 0)
-    {
+    if (result == 0) {
         str[0] = 0x77;
         outputted = FALSE;
-    }
-    else
-    {
+    } else {
         str[0] = CHAR_0 + result;
         outputted = TRUE;
     }
 
     result = (b % 1000) / 100;
-    if (result == 0 && !outputted)
-    {
+    if (result == 0 && !outputted) {
         str[1] = 0x77;
         outputted = FALSE;
-    }
-    else
-    {
+    } else {
         str[1] = CHAR_0 + result;
         outputted = TRUE;
     }
@@ -4566,19 +3713,16 @@ static void UnusedPrintDecimalNum(u8 windowId, u16 b, u8 left, u8 top)
     PrintInfoSubMenuText(windowId, str, left, top);
 }
 
-static void PrintFootprint(u8 windowId, u16 dexNum)
-{
+static void PrintFootprint(u8 windowId, u16 dexNum) {
     u8 image[32 * 4];
-    const u8 * r12 = gMonFootprintTable[NationalPokedexNumToSpecies(dexNum)];
+    const u8* r12 = gMonFootprintTable[NationalPokedexNumToSpecies(dexNum)];
     u16 r5 = 0;
     u16 i;
     u16 j;
 
-    for (i = 0; i < 32; i++)
-    {
+    for (i = 0; i < 32; i++) {
         u8 r3 = r12[i];
-        for (j = 0; j < 4; j++)
-        {
+        for (j = 0; j < 4; j++) {
             u8 value = ((r3 >> (2 * j)) & 1 ? 2 : 0);
             if ((2 << (2 * j)) & r3)
                 value |= 0x20;
@@ -4590,72 +3734,63 @@ static void PrintFootprint(u8 windowId, u16 dexNum)
 }
 
 // Unused
-void sub_80C0DC0(u16 a, u16 b)
-{
-    *(u16 *)(VRAM + a * 0x800 + 0x232) = 0xF000 + b + 0;
-    *(u16 *)(VRAM + a * 0x800 + 0x234) = 0xF000 + b + 1;
-    *(u16 *)(VRAM + a * 0x800 + 0x272) = 0xF000 + b + 2;
-    *(u16 *)(VRAM + a * 0x800 + 0x274) = 0xF000 + b + 3;
+void sub_80C0DC0(u16 a, u16 b) {
+    *(u16*)(VRAM + a * 0x800 + 0x232) = 0xF000 + b + 0;
+    *(u16*)(VRAM + a * 0x800 + 0x234) = 0xF000 + b + 1;
+    *(u16*)(VRAM + a * 0x800 + 0x272) = 0xF000 + b + 2;
+    *(u16*)(VRAM + a * 0x800 + 0x274) = 0xF000 + b + 3;
 }
 
-static u16 GetNextPosition(u8 direction, u16 position, u16 min, u16 max)
-{
-    switch (direction)
-    {
-    case 1: // Up/Left
-        if (position > min)
-            position--;
-        break;
-    case 0: // Down/Right
-        if (position < max)
-            position++;
-        break;
-    case 3: // Up/Left with loop (unused)
-        if (position > min)
-            position--;
-        else
-            position = max;
-        break;
-    case 2: // Down/Right with loop (unused)
-        if (position < max)
-            position++;
-        else
-            position = min;
-        break;
+static u16 GetNextPosition(u8 direction, u16 position, u16 min, u16 max) {
+    switch (direction) {
+        case 1: // Up/Left
+            if (position > min)
+                position--;
+            break;
+        case 0: // Down/Right
+            if (position < max)
+                position++;
+            break;
+        case 3: // Up/Left with loop (unused)
+            if (position > min)
+                position--;
+            else
+                position = max;
+            break;
+        case 2: // Down/Right with loop (unused)
+            if (position < max)
+                position++;
+            else
+                position = min;
+            break;
     }
     return position;
 }
 
 // Unown and Spinda use the personality of the first seen individual of that species
 // All others use personality 0
-static u32 GetPokedexMonPersonality(u16 species)
-{
-    if (species == SPECIES_UNOWN || species == SPECIES_SPINDA)
-    {
+static u32 GetPokedexMonPersonality(u16 species) {
+    if (species == SPECIES_UNOWN || species == SPECIES_SPINDA) {
         if (species == SPECIES_UNOWN)
             return gSaveBlock2Ptr->pokedex.unownPersonality;
         else
             return gSaveBlock2Ptr->pokedex.spindaPersonality;
-    }
-    else
-    {
+    } else {
         return 0;
     }
 }
 
-u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot)
-{
+u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot) {
     nationalNum = NationalPokedexNumToSpecies(nationalNum);
-    return CreateMonPicSprite_HandleDeoxys(nationalNum, SHINY_ODDS, GetPokedexMonPersonality(nationalNum), TRUE, x, y, paletteSlot, 0xFFFF);
+    return CreateMonPicSprite_HandleDeoxys(nationalNum, SHINY_ODDS, GetPokedexMonPersonality(nationalNum), TRUE, x, y,
+                                           paletteSlot, 0xFFFF);
 }
 
-static u16 CreateSizeScreenTrainerPic(u16 species, s16 x, s16 y, s8 paletteSlot)
-{
+static u16 CreateSizeScreenTrainerPic(u16 species, s16 x, s16 y, s8 paletteSlot) {
     return CreateTrainerPicSprite(species, TRUE, x, y, paletteSlot, 0xFFFF);
 }
 
-static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 type1, u8 type2)
-{
+static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 type1, u8 type2) {
     u16 species;
     u16 i;
     u16 resultsCount;
@@ -4663,10 +3798,8 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
 
     CreatePokedexList(dexMode, order);
 
-    for (i = 0, resultsCount = 0; i < NATIONAL_DEX_COUNT; i++)
-    {
-        if (sPokedexView->pokedexList[i].seen)
-        {
+    for (i = 0, resultsCount = 0; i < NATIONAL_DEX_COUNT; i++) {
+        if (sPokedexView->pokedexList[i].seen) {
             sPokedexView->pokedexList[resultsCount] = sPokedexView->pokedexList[i];
             resultsCount++;
         }
@@ -4674,16 +3807,13 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
     sPokedexView->pokemonListCount = resultsCount;
 
     // Search by name
-    if (abcGroup != 0xFF)
-    {
-        for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++)
-        {
+    if (abcGroup != 0xFF) {
+        for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++) {
             u8 firstLetter;
 
             species = NationalPokedexNumToSpecies(sPokedexView->pokedexList[i].dexNum);
             firstLetter = gSpeciesNames[species][0];
-            if (LETTER_IN_RANGE_UPPER(firstLetter, abcGroup) || LETTER_IN_RANGE_LOWER(firstLetter, abcGroup))
-            {
+            if (LETTER_IN_RANGE_UPPER(firstLetter, abcGroup) || LETTER_IN_RANGE_LOWER(firstLetter, abcGroup)) {
                 sPokedexView->pokedexList[resultsCount] = sPokedexView->pokedexList[i];
                 resultsCount++;
             }
@@ -4692,14 +3822,11 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
     }
 
     // Search by body color
-    if (bodyColor != 0xFF)
-    {
-        for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++)
-        {
+    if (bodyColor != 0xFF) {
+        for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++) {
             species = NationalPokedexNumToSpecies(sPokedexView->pokedexList[i].dexNum);
 
-            if (bodyColor == gBaseStats[species].bodyColor)
-            {
+            if (bodyColor == gBaseStats[species].bodyColor) {
                 sPokedexView->pokedexList[resultsCount] = sPokedexView->pokedexList[i];
                 resultsCount++;
             }
@@ -4708,44 +3835,33 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
     }
 
     // Search by type
-    if (type1 != TYPE_NONE || type2 != TYPE_NONE)
-    {
-        if (type1 == TYPE_NONE)
-        {
+    if (type1 != TYPE_NONE || type2 != TYPE_NONE) {
+        if (type1 == TYPE_NONE) {
             type1 = type2;
             type2 = TYPE_NONE;
         }
 
-        if (type2 == TYPE_NONE)
-        {
-            for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++)
-            {
-                if (sPokedexView->pokedexList[i].owned)
-                {
+        if (type2 == TYPE_NONE) {
+            for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++) {
+                if (sPokedexView->pokedexList[i].owned) {
                     species = NationalPokedexNumToSpecies(sPokedexView->pokedexList[i].dexNum);
 
                     types[0] = gBaseStats[species].type1;
                     types[1] = gBaseStats[species].type2;
-                    if (types[0] == type1 || types[1] == type1)
-                    {
+                    if (types[0] == type1 || types[1] == type1) {
                         sPokedexView->pokedexList[resultsCount] = sPokedexView->pokedexList[i];
                         resultsCount++;
                     }
                 }
             }
-        }
-        else
-        {
-            for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++)
-            {
-                if (sPokedexView->pokedexList[i].owned)
-                {
+        } else {
+            for (i = 0, resultsCount = 0; i < sPokedexView->pokemonListCount; i++) {
+                if (sPokedexView->pokedexList[i].owned) {
                     species = NationalPokedexNumToSpecies(sPokedexView->pokedexList[i].dexNum);
 
                     types[0] = gBaseStats[species].type1;
                     types[1] = gBaseStats[species].type2;
-                    if ((types[0] == type1 && types[1] == type2) || (types[0] == type2 && types[1] == type1))
-                    {
+                    if ((types[0] == type1 && types[1] == type2) || (types[0] == type2 && types[1] == type1)) {
                         sPokedexView->pokedexList[resultsCount] = sPokedexView->pokedexList[i];
                         resultsCount++;
                     }
@@ -4755,10 +3871,8 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
         sPokedexView->pokemonListCount = resultsCount;
     }
 
-    if (sPokedexView->pokemonListCount != 0)
-    {
-        for (i = sPokedexView->pokemonListCount; i < NATIONAL_DEX_COUNT; i++)
-        {
+    if (sPokedexView->pokemonListCount != 0) {
+        for (i = sPokedexView->pokemonListCount; i < NATIONAL_DEX_COUNT; i++) {
             sPokedexView->pokedexList[i].dexNum = 0xFFFF;
             sPokedexView->pokedexList[i].seen = FALSE;
             sPokedexView->pokedexList[i].owned = FALSE;
@@ -4768,13 +3882,11 @@ static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 t
     return resultsCount;
 }
 
-static u8 LoadSearchMenu(void)
-{
+static u8 LoadSearchMenu(void) {
     return CreateTask(Task_LoadSearchMenu, 0);
 }
 
-static void PrintSearchText(const u8 *str, u32 x, u32 y)
-{
+static void PrintSearchText(const u8* str, u32 x, u32 y) {
     u8 color[3];
 
     color[0] = TEXT_COLOR_TRANSPARENT;
@@ -4783,102 +3895,96 @@ static void PrintSearchText(const u8 *str, u32 x, u32 y)
     AddTextPrinterParameterized4(0, 1, x, y, 0, 0, color, -1, str);
 }
 
-static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height)
-{
+static void ClearSearchMenuRect(u32 x, u32 y, u32 width, u32 height) {
     FillWindowPixelRect(0, PIXEL_FILL(0), x, y, width, height);
 }
 
 // Search task data
-#define tTopBarItem             data[0]
-#define tMenuItem               data[1]
-#define tCursorPos_Mode         data[2]
-#define tScrollOffset_Mode      data[3]
-#define tCursorPos_Order        data[4]
-#define tScrollOffset_Order     data[5]
-#define tCursorPos_Name         data[6]
-#define tScrollOffset_Name      data[7]
-#define tCursorPos_Color        data[8]
-#define tScrollOffset_Color     data[9]
-#define tCursorPos_TypeLeft     data[10]
-#define tScrollOffset_TypeLeft  data[11]
-#define tCursorPos_TypeRight    data[12]
+#define tTopBarItem data[0]
+#define tMenuItem data[1]
+#define tCursorPos_Mode data[2]
+#define tScrollOffset_Mode data[3]
+#define tCursorPos_Order data[4]
+#define tScrollOffset_Order data[5]
+#define tCursorPos_Name data[6]
+#define tScrollOffset_Name data[7]
+#define tCursorPos_Color data[8]
+#define tScrollOffset_Color data[9]
+#define tCursorPos_TypeLeft data[10]
+#define tScrollOffset_TypeLeft data[11]
+#define tCursorPos_TypeRight data[12]
 #define tScrollOffset_TypeRight data[13]
-#define tCursorPos              data[14]
-#define tScrollOffset           data[15]
+#define tCursorPos data[14]
+#define tScrollOffset data[15]
 
-static void Task_LoadSearchMenu(u8 taskId)
-{
+static void Task_LoadSearchMenu(u8 taskId) {
     u16 i;
 
-    switch (gMain.state)
-    {
-    default:
-    case 0:
-        if (!gPaletteFade.active)
-        {
-            sPokedexView->currentPage = PAGE_SEARCH;
-            ResetOtherVideoRegisters(0);
-            ResetBgsAndClearDma3BusyFlags(0);
-            InitBgsFromTemplates(0, sSearchMenu_BgTemplate, ARRAY_COUNT(sSearchMenu_BgTemplate));
-            SetBgTilemapBuffer(3, AllocZeroed(0x800));
-            SetBgTilemapBuffer(2, AllocZeroed(0x800));
-            SetBgTilemapBuffer(1, AllocZeroed(0x800));
-            SetBgTilemapBuffer(0, AllocZeroed(0x800));
-            InitWindows(sSearchMenu_WindowTemplate);
-            DeactivateAllTextPrinters();
-            PutWindowTilemap(0);
-            DecompressAndLoadBgGfxUsingHeap(3, gPokedexSearchMenu_Gfx, 0x2000, 0, 0);
+    switch (gMain.state) {
+        default:
+        case 0:
+            if (!gPaletteFade.active) {
+                sPokedexView->currentPage = PAGE_SEARCH;
+                ResetOtherVideoRegisters(0);
+                ResetBgsAndClearDma3BusyFlags(0);
+                InitBgsFromTemplates(0, sSearchMenu_BgTemplate, ARRAY_COUNT(sSearchMenu_BgTemplate));
+                SetBgTilemapBuffer(3, AllocZeroed(0x800));
+                SetBgTilemapBuffer(2, AllocZeroed(0x800));
+                SetBgTilemapBuffer(1, AllocZeroed(0x800));
+                SetBgTilemapBuffer(0, AllocZeroed(0x800));
+                InitWindows(sSearchMenu_WindowTemplate);
+                DeactivateAllTextPrinters();
+                PutWindowTilemap(0);
+                DecompressAndLoadBgGfxUsingHeap(3, gPokedexSearchMenu_Gfx, 0x2000, 0, 0);
 
-            if (!IsNationalPokedexEnabled())
-                CopyToBgTilemapBuffer(3, gPokedexSearchMenuHoenn_Tilemap, 0, 0);
-            else
-                CopyToBgTilemapBuffer(3, gPokedexSearchMenuNational_Tilemap, 0, 0);
-            LoadPalette(gPokedexSearchMenu_Pal + 1, 1, 0x7E);
-            gMain.state = 1;
-        }
-        break;
-    case 1:
-        LoadCompressedSpriteSheet(sInterfaceSpriteSheet);
-        LoadSpritePalettes(sInterfaceSpritePalette);
-        CreateSearchParameterScrollArrows(taskId);
-        for (i = 0; i < NUM_TASK_DATA; i++)
-            gTasks[taskId].data[i] = 0;
-        SetDefaultSearchModeAndOrder(taskId);
-        HighlightSelectedSearchTopBarItem(SEARCH_TOPBAR_SEARCH);
-        PrintSelectedSearchParameters(taskId);
-        CopyWindowToVram(0, 3);
-        CopyBgTilemapBufferToVram(1);
-        CopyBgTilemapBufferToVram(2);
-        CopyBgTilemapBufferToVram(3);
-        gMain.state++;
-        break;
-    case 2:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
-        gMain.state++;
-        break;
-    case 3:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-        SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        HideBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
-        gMain.state++;
-        break;
-    case 4:
-        if (!gPaletteFade.active)
-        {
-            gTasks[taskId].func = Task_SwitchToSearchMenuTopBar;
-            gMain.state = 0;
-        }
-        break;
+                if (!IsNationalPokedexEnabled())
+                    CopyToBgTilemapBuffer(3, gPokedexSearchMenuHoenn_Tilemap, 0, 0);
+                else
+                    CopyToBgTilemapBuffer(3, gPokedexSearchMenuNational_Tilemap, 0, 0);
+                LoadPalette(gPokedexSearchMenu_Pal + 1, 1, 0x7E);
+                gMain.state = 1;
+            }
+            break;
+        case 1:
+            LoadCompressedSpriteSheet(sInterfaceSpriteSheet);
+            LoadSpritePalettes(sInterfaceSpritePalette);
+            CreateSearchParameterScrollArrows(taskId);
+            for (i = 0; i < NUM_TASK_DATA; i++)
+                gTasks[taskId].data[i] = 0;
+            SetDefaultSearchModeAndOrder(taskId);
+            HighlightSelectedSearchTopBarItem(SEARCH_TOPBAR_SEARCH);
+            PrintSelectedSearchParameters(taskId);
+            CopyWindowToVram(0, 3);
+            CopyBgTilemapBufferToVram(1);
+            CopyBgTilemapBufferToVram(2);
+            CopyBgTilemapBufferToVram(3);
+            gMain.state++;
+            break;
+        case 2:
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+            gMain.state++;
+            break;
+        case 3:
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            HideBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 4:
+            if (!gPaletteFade.active) {
+                gTasks[taskId].func = Task_SwitchToSearchMenuTopBar;
+                gMain.state = 0;
+            }
+            break;
     }
 }
 
-static void FreeSearchWindowAndBgBuffers(void)
-{
+static void FreeSearchWindowAndBgBuffers(void) {
     void* tilemapBuffer;
 
     FreeAllWindowBuffers();
@@ -4896,8 +4002,7 @@ static void FreeSearchWindowAndBgBuffers(void)
         Free(tilemapBuffer);
 }
 
-static void Task_SwitchToSearchMenuTopBar(u8 taskId)
-{
+static void Task_SwitchToSearchMenuTopBar(u8 taskId) {
     HighlightSelectedSearchTopBarItem(gTasks[taskId].tTopBarItem);
     PrintSelectedSearchParameters(taskId);
     CopyWindowToVram(0, 2);
@@ -4905,45 +4010,39 @@ static void Task_SwitchToSearchMenuTopBar(u8 taskId)
     gTasks[taskId].func = Task_HandleSearchTopBarInput;
 }
 
-static void Task_HandleSearchTopBarInput(u8 taskId)
-{
-    if (gMain.newKeys & B_BUTTON)
-    {
+static void Task_HandleSearchTopBarInput(u8 taskId) {
+    if (gMain.newKeys & B_BUTTON) {
         PlaySE(SE_PC_OFF);
         gTasks[taskId].func = Task_ExitSearch;
         return;
     }
-    if (gMain.newKeys & A_BUTTON)
-    {
-        switch (gTasks[taskId].tTopBarItem)
-        {
-        case SEARCH_TOPBAR_SEARCH:
-            PlaySE(SE_PIN);
-            gTasks[taskId].tMenuItem = SEARCH_NAME;
-            gTasks[taskId].func = Task_SwitchToSearchMenu;
-            break;
-        case SEARCH_TOPBAR_SHIFT:
-            PlaySE(SE_PIN);
-            gTasks[taskId].tMenuItem = SEARCH_ORDER;
-            gTasks[taskId].func = Task_SwitchToSearchMenu;
-            break;
-        case SEARCH_TOPBAR_CANCEL:
-            PlaySE(SE_PC_OFF);
-            gTasks[taskId].func = Task_ExitSearch;
-            break;
+    if (gMain.newKeys & A_BUTTON) {
+        switch (gTasks[taskId].tTopBarItem) {
+            case SEARCH_TOPBAR_SEARCH:
+                PlaySE(SE_PIN);
+                gTasks[taskId].tMenuItem = SEARCH_NAME;
+                gTasks[taskId].func = Task_SwitchToSearchMenu;
+                break;
+            case SEARCH_TOPBAR_SHIFT:
+                PlaySE(SE_PIN);
+                gTasks[taskId].tMenuItem = SEARCH_ORDER;
+                gTasks[taskId].func = Task_SwitchToSearchMenu;
+                break;
+            case SEARCH_TOPBAR_CANCEL:
+                PlaySE(SE_PC_OFF);
+                gTasks[taskId].func = Task_ExitSearch;
+                break;
         }
         return;
     }
-    if ((gMain.newKeys & DPAD_LEFT) && gTasks[taskId].tTopBarItem > SEARCH_TOPBAR_SEARCH)
-    {
+    if ((gMain.newKeys & DPAD_LEFT) && gTasks[taskId].tTopBarItem > SEARCH_TOPBAR_SEARCH) {
         PlaySE(SE_DEX_PAGE);
         gTasks[taskId].tTopBarItem--;
         HighlightSelectedSearchTopBarItem(gTasks[taskId].tTopBarItem);
         CopyWindowToVram(0, 2);
         CopyBgTilemapBufferToVram(3);
     }
-    if ((gMain.newKeys & DPAD_RIGHT) && gTasks[taskId].tTopBarItem < SEARCH_TOPBAR_CANCEL)
-    {
+    if ((gMain.newKeys & DPAD_RIGHT) && gTasks[taskId].tTopBarItem < SEARCH_TOPBAR_CANCEL) {
         PlaySE(SE_DEX_PAGE);
         gTasks[taskId].tTopBarItem++;
         HighlightSelectedSearchTopBarItem(gTasks[taskId].tTopBarItem);
@@ -4952,8 +4051,7 @@ static void Task_HandleSearchTopBarInput(u8 taskId)
     }
 }
 
-static void Task_SwitchToSearchMenu(u8 taskId)
-{
+static void Task_SwitchToSearchMenu(u8 taskId) {
     HighlightSelectedSearchMenuItem(gTasks[taskId].tTopBarItem, gTasks[taskId].tMenuItem);
     PrintSelectedSearchParameters(taskId);
     CopyWindowToVram(0, 2);
@@ -4962,38 +4060,30 @@ static void Task_SwitchToSearchMenu(u8 taskId)
 }
 
 // Input for main search menu
-static void Task_HandleSearchMenuInput(u8 taskId)
-{
-    const u8 (*movementMap)[4];
+static void Task_HandleSearchMenuInput(u8 taskId) {
+    const u8(*movementMap)[4];
 
-    if (gTasks[taskId].tTopBarItem != SEARCH_TOPBAR_SEARCH)
-    {
+    if (gTasks[taskId].tTopBarItem != SEARCH_TOPBAR_SEARCH) {
         if (!IsNationalPokedexEnabled())
             movementMap = sSearchMovementMap_ShiftHoennDex;
         else
             movementMap = sSearchMovementMap_ShiftNatDex;
-    }
-    else
-    {
+    } else {
         if (!IsNationalPokedexEnabled())
             movementMap = sSearchMovementMap_SearchHoennDex;
         else
             movementMap = sSearchMovementMap_SearchNatDex;
     }
 
-    if (gMain.newKeys & B_BUTTON)
-    {
+    if (gMain.newKeys & B_BUTTON) {
         PlaySE(SE_BALL);
         SetDefaultSearchModeAndOrder(taskId);
         gTasks[taskId].func = Task_SwitchToSearchMenuTopBar;
         return;
     }
-    if (gMain.newKeys & A_BUTTON)
-    {
-        if (gTasks[taskId].tMenuItem == SEARCH_OK)
-        {
-            if (gTasks[taskId].tTopBarItem != SEARCH_TOPBAR_SEARCH)
-            {
+    if (gMain.newKeys & A_BUTTON) {
+        if (gTasks[taskId].tMenuItem == SEARCH_OK) {
+            if (gTasks[taskId].tTopBarItem != SEARCH_TOPBAR_SEARCH) {
                 sPokeBallRotation = POKEBALL_ROTATION_TOP;
                 sPokedexView->pokeBallRotationBackup = POKEBALL_ROTATION_TOP;
                 sLastSelectedPokemon = 0;
@@ -5006,49 +4096,41 @@ static void Task_HandleSearchMenuInput(u8 taskId)
                 sPokedexView->dexOrderBackup = gSaveBlock2Ptr->pokedex.order;
                 PlaySE(SE_PC_OFF);
                 gTasks[taskId].func = Task_ExitSearch;
-            }
-            else
-            {
+            } else {
                 EraseAndPrintSearchTextBox(gText_SearchingPleaseWait);
                 gTasks[taskId].func = Task_StartPokedexSearch;
                 PlaySE(SE_DEX_SEARCH);
                 CopyWindowToVram(0, 2);
             }
-        }
-        else
-        {
+        } else {
             PlaySE(SE_PIN);
             gTasks[taskId].func = Task_SelectSearchMenuItem;
         }
         return;
     }
 
-    if ((gMain.newKeys & DPAD_LEFT) && movementMap[gTasks[taskId].tMenuItem][0] != 0xFF)
-    {
+    if ((gMain.newKeys & DPAD_LEFT) && movementMap[gTasks[taskId].tMenuItem][0] != 0xFF) {
         PlaySE(SE_SELECT);
         gTasks[taskId].tMenuItem = movementMap[gTasks[taskId].tMenuItem][0];
         HighlightSelectedSearchMenuItem(gTasks[taskId].tTopBarItem, gTasks[taskId].tMenuItem);
         CopyWindowToVram(0, 2);
         CopyBgTilemapBufferToVram(3);
     }
-    if ((gMain.newKeys & DPAD_RIGHT) && movementMap[gTasks[taskId].tMenuItem][1] != 0xFF)
-    {
+    if ((gMain.newKeys & DPAD_RIGHT) && movementMap[gTasks[taskId].tMenuItem][1] != 0xFF) {
         PlaySE(SE_SELECT);
         gTasks[taskId].tMenuItem = movementMap[gTasks[taskId].tMenuItem][1];
         HighlightSelectedSearchMenuItem(gTasks[taskId].tTopBarItem, gTasks[taskId].tMenuItem);
         CopyWindowToVram(0, 2);
         CopyBgTilemapBufferToVram(3);
     }
-    if ((gMain.newKeys & DPAD_UP) && movementMap[gTasks[taskId].tMenuItem][2] != 0xFF)
-    {
+    if ((gMain.newKeys & DPAD_UP) && movementMap[gTasks[taskId].tMenuItem][2] != 0xFF) {
         PlaySE(SE_SELECT);
         gTasks[taskId].tMenuItem = movementMap[gTasks[taskId].tMenuItem][2];
         HighlightSelectedSearchMenuItem(gTasks[taskId].tTopBarItem, gTasks[taskId].tMenuItem);
         CopyWindowToVram(0, 2);
         CopyBgTilemapBufferToVram(3);
     }
-    if ((gMain.newKeys & DPAD_DOWN) && movementMap[gTasks[taskId].tMenuItem][3] != 0xFF)
-    {
+    if ((gMain.newKeys & DPAD_DOWN) && movementMap[gTasks[taskId].tMenuItem][3] != 0xFF) {
         PlaySE(SE_SELECT);
         gTasks[taskId].tMenuItem = movementMap[gTasks[taskId].tMenuItem][3];
         HighlightSelectedSearchMenuItem(gTasks[taskId].tTopBarItem, gTasks[taskId].tMenuItem);
@@ -5057,8 +4139,7 @@ static void Task_HandleSearchMenuInput(u8 taskId)
     }
 }
 
-static void Task_StartPokedexSearch(u8 taskId)
-{
+static void Task_StartPokedexSearch(u8 taskId) {
     u8 dexMode = GetSearchModeSelection(taskId, SEARCH_MODE);
     u8 order = GetSearchModeSelection(taskId, SEARCH_ORDER);
     u8 abcGroup = GetSearchModeSelection(taskId, SEARCH_NAME);
@@ -5070,17 +4151,12 @@ static void Task_StartPokedexSearch(u8 taskId)
     gTasks[taskId].func = Task_WaitAndCompleteSearch;
 }
 
-static void Task_WaitAndCompleteSearch(u8 taskId)
-{
-    if (!IsSEPlaying())
-    {
-        if (sPokedexView->pokemonListCount != 0)
-        {
+static void Task_WaitAndCompleteSearch(u8 taskId) {
+    if (!IsSEPlaying()) {
+        if (sPokedexView->pokemonListCount != 0) {
             PlaySE(SE_SUCCESS);
             EraseAndPrintSearchTextBox(gText_SearchCompleted);
-        }
-        else
-        {
+        } else {
             PlaySE(SE_FAILURE);
             EraseAndPrintSearchTextBox(gText_NoMatchingPkmnWereFound);
         }
@@ -5089,32 +4165,26 @@ static void Task_WaitAndCompleteSearch(u8 taskId)
     }
 }
 
-static void Task_SearchCompleteWaitForInput(u8 taskId)
-{
-    if (gMain.newKeys & A_BUTTON)
-    {
-        if (sPokedexView->pokemonListCount != 0)
-        {
+static void Task_SearchCompleteWaitForInput(u8 taskId) {
+    if (gMain.newKeys & A_BUTTON) {
+        if (sPokedexView->pokemonListCount != 0) {
             // Return to dex list and show search results
             sPokedexView->screenSwitchState = 1;
             sPokedexView->dexMode = GetSearchModeSelection(taskId, SEARCH_MODE);
             sPokedexView->dexOrder = GetSearchModeSelection(taskId, SEARCH_ORDER);
             gTasks[taskId].func = Task_ExitSearch;
             PlaySE(SE_PC_OFF);
-        }
-        else
-        {
+        } else {
             gTasks[taskId].func = Task_SwitchToSearchMenu;
             PlaySE(SE_BALL);
         }
     }
 }
 
-static void Task_SelectSearchMenuItem(u8 taskId)
-{
+static void Task_SelectSearchMenuItem(u8 taskId) {
     u8 menuItem;
-    u16 *cursorPos;
-    u16 *scrollOffset;
+    u16* cursorPos;
+    u16* scrollOffset;
 
     DrawOrEraseSearchParameterBox(FALSE);
     menuItem = (u16)gTasks[taskId].tMenuItem;
@@ -5130,12 +4200,11 @@ static void Task_SelectSearchMenuItem(u8 taskId)
 }
 
 // Input for scrolling parameter box in right column
-static void Task_HandleSearchParameterInput(u8 taskId)
-{
+static void Task_HandleSearchParameterInput(u8 taskId) {
     u8 menuItem;
-    const struct SearchOptionText *texts;
-    u16 *cursorPos;
-    u16 *scrollOffset;
+    const struct SearchOptionText* texts;
+    u16* cursorPos;
+    u16* scrollOffset;
     u16 maxOption;
     bool8 moved;
 
@@ -5144,8 +4213,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
     cursorPos = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataCursorPos];
     scrollOffset = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
     maxOption = sSearchOptions[menuItem].numOptions - 1;
-    if (gMain.newKeys & A_BUTTON)
-    {
+    if (gMain.newKeys & A_BUTTON) {
         PlaySE(SE_PIN);
         ClearSearchParameterBoxText();
         DrawOrEraseSearchParameterBox(TRUE);
@@ -5154,8 +4222,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
         CopyBgTilemapBufferToVram(3);
         return;
     }
-    if (gMain.newKeys & B_BUTTON)
-    {
+    if (gMain.newKeys & B_BUTTON) {
         PlaySE(SE_BALL);
         ClearSearchParameterBoxText();
         DrawOrEraseSearchParameterBox(TRUE);
@@ -5167,52 +4234,42 @@ static void Task_HandleSearchParameterInput(u8 taskId)
         return;
     }
     moved = FALSE;
-    if (gMain.newAndRepeatedKeys & DPAD_UP)
-    {
-        if (*cursorPos != 0)
-        {
+    if (gMain.newAndRepeatedKeys & DPAD_UP) {
+        if (*cursorPos != 0) {
             // Move cursor up
             EraseSelectorArrow(*cursorPos);
             (*cursorPos)--;
             PrintSelectorArrow(*cursorPos);
             moved = TRUE;
-        }
-        else if (*scrollOffset != 0)
-        {
+        } else if (*scrollOffset != 0) {
             // Scroll up
             (*scrollOffset)--;
             PrintSearchParameterText(taskId);
             PrintSelectorArrow(*cursorPos);
             moved = TRUE;
         }
-        if (moved)
-        {
+        if (moved) {
             PlaySE(SE_SELECT);
             EraseAndPrintSearchTextBox(texts[*cursorPos + *scrollOffset].description);
             CopyWindowToVram(0, 2);
         }
         return;
     }
-    if (gMain.newAndRepeatedKeys & DPAD_DOWN)
-    {
-        if (*cursorPos < MAX_SEARCH_PARAM_CURSOR_POS && *cursorPos < maxOption)
-        {
+    if (gMain.newAndRepeatedKeys & DPAD_DOWN) {
+        if (*cursorPos < MAX_SEARCH_PARAM_CURSOR_POS && *cursorPos < maxOption) {
             // Move cursor down
             EraseSelectorArrow(*cursorPos);
             (*cursorPos)++;
             PrintSelectorArrow(*cursorPos);
             moved = TRUE;
-        }
-        else if (maxOption > MAX_SEARCH_PARAM_CURSOR_POS && *scrollOffset < maxOption - MAX_SEARCH_PARAM_CURSOR_POS)
-        {
+        } else if (maxOption > MAX_SEARCH_PARAM_CURSOR_POS && *scrollOffset < maxOption - MAX_SEARCH_PARAM_CURSOR_POS) {
             // Scroll down
             (*scrollOffset)++;
             PrintSearchParameterText(taskId);
             PrintSelectorArrow(5);
             moved = TRUE;
         }
-        if (moved)
-        {
+        if (moved) {
             PlaySE(SE_SELECT);
             EraseAndPrintSearchTextBox(texts[*cursorPos + *scrollOffset].description);
             CopyWindowToVram(0, 2);
@@ -5221,16 +4278,13 @@ static void Task_HandleSearchParameterInput(u8 taskId)
     }
 }
 
-static void Task_ExitSearch(u8 taskId)
-{
+static void Task_ExitSearch(u8 taskId) {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_ExitSearchWaitForFade;
 }
 
-static void Task_ExitSearchWaitForFade(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
+static void Task_ExitSearchWaitForFade(u8 taskId) {
+    if (!gPaletteFade.active) {
         FreeSearchWindowAndBgBuffers();
         DestroyTask(taskId);
     }
@@ -5239,14 +4293,12 @@ static void Task_ExitSearchWaitForFade(u8 taskId)
 #ifdef NONMATCHING
 // This doesn't match because gcc flips the naming of the r7 and r6
 // registers. It also does one of the additions backwards.
-void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width)
-{
+void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width) {
     u16 i;
     u16* ptr = GetBgTilemapBuffer(3);
 
     u16* temp;
-    for (i = 0; i < width; i++)
-    {
+    for (i = 0; i < width; i++) {
         // This addition is supposed to be done in this order; however,
         // gcc will always do it in ptr + (y * 32) order.
         temp = (y * 32) + ptr;
@@ -5258,9 +4310,7 @@ void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width)
     }
 }
 #else
-__attribute__((naked))
-void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width)
-{
+__attribute__((naked)) void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width) {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
     mov r7, r8\n\
@@ -5315,138 +4365,142 @@ _080C1DEC:\n\
 }
 #endif
 
-#define SEARCH_BG_SEARCH                SEARCH_TOPBAR_SEARCH
-#define SEARCH_BG_SHIFT                 SEARCH_TOPBAR_SHIFT
-#define SEARCH_BG_CANCEL                SEARCH_TOPBAR_CANCEL
-#define SEARCH_BG_NAME                  (SEARCH_NAME + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_COLOR                 (SEARCH_COLOR + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_TYPE_SELECTION_LEFT   (SEARCH_TYPE_LEFT + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_TYPE_SELECTION_RIGHT  (SEARCH_TYPE_RIGHT + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_ORDER                 (SEARCH_ORDER + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_MODE                  (SEARCH_MODE + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_OK                    (SEARCH_OK + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_TYPE_TITLE            (SEARCH_COUNT + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_SEARCH SEARCH_TOPBAR_SEARCH
+#define SEARCH_BG_SHIFT SEARCH_TOPBAR_SHIFT
+#define SEARCH_BG_CANCEL SEARCH_TOPBAR_CANCEL
+#define SEARCH_BG_NAME (SEARCH_NAME + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_COLOR (SEARCH_COLOR + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_TYPE_SELECTION_LEFT (SEARCH_TYPE_LEFT + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_TYPE_SELECTION_RIGHT (SEARCH_TYPE_RIGHT + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_ORDER (SEARCH_ORDER + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_MODE (SEARCH_MODE + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_OK (SEARCH_OK + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_TYPE_TITLE (SEARCH_COUNT + SEARCH_TOPBAR_COUNT)
 
-static void DrawSearchMenuItemBgHighlight(u8 searchBg, bool8 unselected, bool8 disabled)
-{
+static void DrawSearchMenuItemBgHighlight(u8 searchBg, bool8 unselected, bool8 disabled) {
     u8 highlightFlags = (unselected & 1) | ((disabled & 1) << 1);
 
-    switch (searchBg)
-    {
-    case SEARCH_BG_SEARCH:
-    case SEARCH_BG_SHIFT:
-    case SEARCH_BG_CANCEL:
-        SetSearchRectHighlight(highlightFlags, sSearchMenuTopBarItems[searchBg].highlightX, sSearchMenuTopBarItems[searchBg].highlightY, sSearchMenuTopBarItems[searchBg].highlightWidth);
-        break;
-    case SEARCH_BG_NAME:
-    case SEARCH_BG_COLOR:
-    case SEARCH_BG_ORDER:
-    case SEARCH_BG_MODE:
-        SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
-        // fall through, draw selectionBg for above
-    case SEARCH_BG_TYPE_SELECTION_LEFT:
-    case SEARCH_BG_TYPE_SELECTION_RIGHT:
-        SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgX, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgY, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgWidth);
-        break;
-    case SEARCH_BG_TYPE_TITLE:
-        SetSearchRectHighlight(highlightFlags, sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgX, sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgY, sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgWidth);
-        break;
-    case SEARCH_BG_OK:
-        if (!IsNationalPokedexEnabled())
-            SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY - 2, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
-        else
-            SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
-        break;
+    switch (searchBg) {
+        case SEARCH_BG_SEARCH:
+        case SEARCH_BG_SHIFT:
+        case SEARCH_BG_CANCEL:
+            SetSearchRectHighlight(highlightFlags, sSearchMenuTopBarItems[searchBg].highlightX,
+                                   sSearchMenuTopBarItems[searchBg].highlightY,
+                                   sSearchMenuTopBarItems[searchBg].highlightWidth);
+            break;
+        case SEARCH_BG_NAME:
+        case SEARCH_BG_COLOR:
+        case SEARCH_BG_ORDER:
+        case SEARCH_BG_MODE:
+            SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX,
+                                   sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY,
+                                   sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
+            // fall through, draw selectionBg for above
+        case SEARCH_BG_TYPE_SELECTION_LEFT:
+        case SEARCH_BG_TYPE_SELECTION_RIGHT:
+            SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgX,
+                                   sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgY,
+                                   sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].selectionBgWidth);
+            break;
+        case SEARCH_BG_TYPE_TITLE:
+            SetSearchRectHighlight(highlightFlags, sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgX,
+                                   sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgY,
+                                   sSearchMenuItems[SEARCH_TYPE_LEFT].titleBgWidth);
+            break;
+        case SEARCH_BG_OK:
+            if (!IsNationalPokedexEnabled())
+                SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX,
+                                       sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY - 2,
+                                       sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
+            else
+                SetSearchRectHighlight(highlightFlags, sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgX,
+                                       sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgY,
+                                       sSearchMenuItems[searchBg - SEARCH_TOPBAR_COUNT].titleBgWidth);
+            break;
     }
 }
 
-static void SetInitialSearchMenuBgHighlights(u8 topBarItem)
-{
-    switch (topBarItem)
-    {
-    case SEARCH_TOPBAR_SEARCH:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, FALSE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, FALSE);
-        break;
-    case SEARCH_TOPBAR_SHIFT:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, FALSE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, FALSE);
-        break;
-    case SEARCH_TOPBAR_CANCEL:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, TRUE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, FALSE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, TRUE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, TRUE);
-        break;
+static void SetInitialSearchMenuBgHighlights(u8 topBarItem) {
+    switch (topBarItem) {
+        case SEARCH_TOPBAR_SEARCH:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, FALSE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, FALSE);
+            break;
+        case SEARCH_TOPBAR_SHIFT:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, FALSE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, FALSE);
+            break;
+        case SEARCH_TOPBAR_CANCEL:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SEARCH, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_SHIFT, TRUE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_CANCEL, FALSE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, TRUE, TRUE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, TRUE, TRUE);
+            break;
     }
 }
 
-static void HighlightSelectedSearchTopBarItem(u8 topBarItem)
-{
+static void HighlightSelectedSearchTopBarItem(u8 topBarItem) {
     SetInitialSearchMenuBgHighlights(topBarItem);
     EraseAndPrintSearchTextBox(sSearchMenuTopBarItems[topBarItem].description);
 }
 
-static void HighlightSelectedSearchMenuItem(u8 topBarItem, u8 menuItem)
-{
+static void HighlightSelectedSearchMenuItem(u8 topBarItem, u8 menuItem) {
     SetInitialSearchMenuBgHighlights(topBarItem);
-    switch (menuItem)
-    {
-    case SEARCH_NAME:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, FALSE, FALSE);
-        break;
-    case SEARCH_COLOR:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, FALSE, FALSE);
-        break;
-    case SEARCH_TYPE_LEFT:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, FALSE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, FALSE, FALSE);
-        break;
-    case SEARCH_TYPE_RIGHT:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, FALSE, FALSE);
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, FALSE, FALSE);
-        break;
-    case SEARCH_ORDER:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, FALSE, FALSE);
-        break;
-    case SEARCH_MODE:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, FALSE, FALSE);
-        break;
-    case SEARCH_OK:
-        DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, FALSE, FALSE);
-        break;
+    switch (menuItem) {
+        case SEARCH_NAME:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, FALSE, FALSE);
+            break;
+        case SEARCH_COLOR:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, FALSE, FALSE);
+            break;
+        case SEARCH_TYPE_LEFT:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, FALSE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_LEFT, FALSE, FALSE);
+            break;
+        case SEARCH_TYPE_RIGHT:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_TITLE, FALSE, FALSE);
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_TYPE_SELECTION_RIGHT, FALSE, FALSE);
+            break;
+        case SEARCH_ORDER:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_ORDER, FALSE, FALSE);
+            break;
+        case SEARCH_MODE:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_MODE, FALSE, FALSE);
+            break;
+        case SEARCH_OK:
+            DrawSearchMenuItemBgHighlight(SEARCH_BG_OK, FALSE, FALSE);
+            break;
     }
     EraseAndPrintSearchTextBox(sSearchMenuItems[menuItem].description);
 }
 
 // Prints the currently selected search parameters in the search menu selection boxes
-static void PrintSelectedSearchParameters(u8 taskId)
-{
+static void PrintSelectedSearchParameters(u8 taskId) {
     u16 searchParamId;
 
     ClearSearchMenuRect(40, 16, 96, 80);
@@ -5466,26 +4520,22 @@ static void PrintSelectedSearchParameters(u8 taskId)
     searchParamId = gTasks[taskId].tCursorPos_Order + gTasks[taskId].tScrollOffset_Order;
     PrintSearchText(sDexOrderOptions[searchParamId].title, 0x2D, 0x41);
 
-    if (IsNationalPokedexEnabled())
-    {
+    if (IsNationalPokedexEnabled()) {
         searchParamId = gTasks[taskId].tCursorPos_Mode + gTasks[taskId].tScrollOffset_Mode;
         PrintSearchText(sDexModeOptions[searchParamId].title, 0x2D, 0x51);
     }
 }
 
-static void DrawOrEraseSearchParameterBox(bool8 erase)
-{
+static void DrawOrEraseSearchParameterBox(bool8 erase) {
     u16 i;
     u16 j;
     u16* ptr = GetBgTilemapBuffer(3);
 
-    if (!erase)
-    {
+    if (!erase) {
         *(ptr + 0x11) = 0xC0B;
         for (i = 0x12; i < 0x1F; i++)
             *(ptr + i) = 0x80D;
-        for (j = 1; j < 13; j++)
-        {
+        for (j = 1; j < 13; j++) {
             *(ptr + 0x11 + j * 32) = 0x40A;
             for (i = 0x12; i < 0x1F; i++)
                 *(ptr + j * 32 + i) = 2;
@@ -5493,13 +4543,9 @@ static void DrawOrEraseSearchParameterBox(bool8 erase)
         *(ptr + 0x1B1) = 0x40B;
         for (i = 0x12; i < 0x1F; i++)
             *(ptr + 0x1A0 + i) = 0xD;
-    }
-    else
-    {
-        for (j = 0; j < 14; j++)
-        {
-            for (i = 0x11; i < 0x1E; i++)
-            {
+    } else {
+        for (j = 0; j < 14; j++) {
+            for (i = 0x11; i < 0x1E; i++) {
                 *(ptr + j * 32 + i) = 0x4F;
             }
         }
@@ -5508,11 +4554,10 @@ static void DrawOrEraseSearchParameterBox(bool8 erase)
 
 // Prints the currently viewable search parameter titles in the right-hand text box
 // and the currently selected search parameter description in the bottom text box
-static void PrintSearchParameterText(u8 taskId)
-{
-    const struct SearchOptionText *texts = sSearchOptions[gTasks[taskId].tMenuItem].texts;
-    const u16 *cursorPos = &gTasks[taskId].data[sSearchOptions[gTasks[taskId].tMenuItem].taskDataCursorPos];
-    const u16 *scrollOffset = &gTasks[taskId].data[sSearchOptions[gTasks[taskId].tMenuItem].taskDataScrollOffset];
+static void PrintSearchParameterText(u8 taskId) {
+    const struct SearchOptionText* texts = sSearchOptions[gTasks[taskId].tMenuItem].texts;
+    const u16* cursorPos = &gTasks[taskId].data[sSearchOptions[gTasks[taskId].tMenuItem].taskDataCursorPos];
+    const u16* scrollOffset = &gTasks[taskId].data[sSearchOptions[gTasks[taskId].tMenuItem].taskDataScrollOffset];
     u16 i;
     u16 j;
 
@@ -5524,81 +4569,75 @@ static void PrintSearchParameterText(u8 taskId)
     EraseAndPrintSearchTextBox(texts[*cursorPos + *scrollOffset].description);
 }
 
-static u8 GetSearchModeSelection(u8 taskId, u8 option)
-{
-    const u16 *cursorPos = &gTasks[taskId].data[sSearchOptions[option].taskDataCursorPos];
-    const u16 *scrollOffset = &gTasks[taskId].data[sSearchOptions[option].taskDataScrollOffset];
+static u8 GetSearchModeSelection(u8 taskId, u8 option) {
+    const u16* cursorPos = &gTasks[taskId].data[sSearchOptions[option].taskDataCursorPos];
+    const u16* scrollOffset = &gTasks[taskId].data[sSearchOptions[option].taskDataScrollOffset];
     u16 id = *cursorPos + *scrollOffset;
 
-    switch (option)
-    {
-    default:
-        return 0;
-    case SEARCH_MODE:
-        return sPokedexModes[id];
-    case SEARCH_ORDER:
-        return sOrderOptions[id];
-    case SEARCH_NAME:
-        if (id == 0)
-            return 0xFF;
-        else
-            return id;
-    case SEARCH_COLOR:
-        if (id == 0)
-            return 0xFF;
-        else
-            return id - 1;
-    case SEARCH_TYPE_LEFT:
-    case SEARCH_TYPE_RIGHT:
-        return sDexSearchTypeIds[id];
+    switch (option) {
+        default:
+            return 0;
+        case SEARCH_MODE:
+            return sPokedexModes[id];
+        case SEARCH_ORDER:
+            return sOrderOptions[id];
+        case SEARCH_NAME:
+            if (id == 0)
+                return 0xFF;
+            else
+                return id;
+        case SEARCH_COLOR:
+            if (id == 0)
+                return 0xFF;
+            else
+                return id - 1;
+        case SEARCH_TYPE_LEFT:
+        case SEARCH_TYPE_RIGHT:
+            return sDexSearchTypeIds[id];
     }
 }
 
-static void SetDefaultSearchModeAndOrder(u8 taskId)
-{
+static void SetDefaultSearchModeAndOrder(u8 taskId) {
     u16 selected;
 
-    switch (sPokedexView->dexModeBackup)
-    {
-    default:
-    case DEX_MODE_HOENN:
-        selected = DEX_MODE_HOENN;
-        break;
-    case DEX_MODE_NATIONAL:
-        selected = DEX_MODE_NATIONAL;
-        break;
+    switch (sPokedexView->dexModeBackup) {
+        default:
+        case DEX_MODE_HOENN:
+            selected = DEX_MODE_HOENN;
+            break;
+        case DEX_MODE_NATIONAL:
+            selected = DEX_MODE_NATIONAL;
+            break;
     }
     gTasks[taskId].tCursorPos_Mode = selected;
 
-    switch (sPokedexView->dexOrderBackup)
-    {
-    default:
-    case ORDER_NUMERICAL:
-        selected = ORDER_NUMERICAL;
-        break;
-    case ORDER_ALPHABETICAL:
-        selected = ORDER_ALPHABETICAL;
-        break;
-    case ORDER_HEAVIEST:
-        selected = ORDER_HEAVIEST;
-        break;
-    case ORDER_LIGHTEST:
-        selected = ORDER_LIGHTEST;
-        break;
-    case ORDER_TALLEST:
-        selected = ORDER_TALLEST;
-        break;
-    case ORDER_SMALLEST:
-        selected = ORDER_SMALLEST;
-        break;
+    switch (sPokedexView->dexOrderBackup) {
+        default:
+        case ORDER_NUMERICAL:
+            selected = ORDER_NUMERICAL;
+            break;
+        case ORDER_ALPHABETICAL:
+            selected = ORDER_ALPHABETICAL;
+            break;
+        case ORDER_HEAVIEST:
+            selected = ORDER_HEAVIEST;
+            break;
+        case ORDER_LIGHTEST:
+            selected = ORDER_LIGHTEST;
+            break;
+        case ORDER_TALLEST:
+            selected = ORDER_TALLEST;
+            break;
+        case ORDER_SMALLEST:
+            selected = ORDER_SMALLEST;
+            break;
     }
     gTasks[taskId].tCursorPos_Order = selected;
 }
 
-static bool8 SearchParamCantScrollUp(u8 taskId)
-{
+static bool8 SearchParamCantScrollUp(u8 taskId) {
     u8 menuItem = gTasks[taskId].tMenuItem;
-    const u16 *scrollOffset = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
+    const u16* scrollOffset = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
     u16 lastOption = sSearchOptions[menuItem].numOptions - 1;
 
     if (lastOption > MAX_SEARCH_PARAM_CURSOR_POS && *scrollOffset != 0)
@@ -5607,10 +4646,9 @@ static bool8 SearchParamCantScrollUp(u8 taskId)
         return TRUE;
 }
 
-static bool8 SearchParamCantScrollDown(u8 taskId)
-{
+static bool8 SearchParamCantScrollDown(u8 taskId) {
     u8 menuItem = gTasks[taskId].tMenuItem;
-    const u16 *scrollOffset = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
+    const u16* scrollOffset = &gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
     u16 lastOption = sSearchOptions[menuItem].numOptions - 1;
 
     if (lastOption > MAX_SEARCH_PARAM_CURSOR_POS && *scrollOffset < lastOption - MAX_SEARCH_PARAM_CURSOR_POS)
@@ -5619,23 +4657,18 @@ static bool8 SearchParamCantScrollDown(u8 taskId)
         return TRUE;
 }
 
-#define sTaskId      data[0]
+#define sTaskId data[0]
 
-static void SpriteCB_SearchParameterScrollArrow(struct Sprite *sprite)
-{
-    if (gTasks[sprite->sTaskId].func == Task_HandleSearchParameterInput)
-    {
+static void SpriteCB_SearchParameterScrollArrow(struct Sprite* sprite) {
+    if (gTasks[sprite->sTaskId].func == Task_HandleSearchParameterInput) {
         u8 val;
 
-        if (sprite->sIsDownArrow)
-        {
+        if (sprite->sIsDownArrow) {
             if (SearchParamCantScrollDown(sprite->sTaskId))
                 sprite->invisible = TRUE;
             else
                 sprite->invisible = FALSE;
-        }
-        else
-        {
+        } else {
             if (SearchParamCantScrollUp(sprite->sTaskId))
                 sprite->invisible = TRUE;
             else
@@ -5644,15 +4677,12 @@ static void SpriteCB_SearchParameterScrollArrow(struct Sprite *sprite)
         val = sprite->data[2] + sprite->sIsDownArrow * 128;
         sprite->pos2.y = gSineTable[val] / 128;
         sprite->data[2] += 8;
-    }
-    else
-    {
+    } else {
         sprite->invisible = TRUE;
     }
 }
 
-static void CreateSearchParameterScrollArrows(u8 taskId)
-{
+static void CreateSearchParameterScrollArrows(u8 taskId) {
     u8 spriteId;
 
     spriteId = CreateSprite(&sScrollArrowSpriteTemplate, 184, 4, 0);
@@ -5670,28 +4700,23 @@ static void CreateSearchParameterScrollArrows(u8 taskId)
 #undef sTaskId
 #undef sIsDownArrow
 
-static void EraseAndPrintSearchTextBox(const u8* str)
-{
+static void EraseAndPrintSearchTextBox(const u8* str) {
     ClearSearchMenuRect(8, 120, 224, 32);
     PrintSearchText(str, 8, 121);
 }
 
-static void EraseSelectorArrow(u32 y)
-{
+static void EraseSelectorArrow(u32 y) {
     ClearSearchMenuRect(144, y * 16 + 8, 8, 16);
 }
 
-static void PrintSelectorArrow(u32 y)
-{
+static void PrintSelectorArrow(u32 y) {
     PrintSearchText(gText_SelectorArrow, 144, y * 16 + 9);
 }
 
-static void PrintSearchParameterTitle(u32 y, const u8* str)
-{
+static void PrintSearchParameterTitle(u32 y, const u8* str) {
     PrintSearchText(str, 152, y * 16 + 9);
 }
 
-static void ClearSearchParameterBoxText(void)
-{
+static void ClearSearchParameterBoxText(void) {
     ClearSearchMenuRect(144, 8, 96, 96);
 }
