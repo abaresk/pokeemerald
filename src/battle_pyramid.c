@@ -947,7 +947,7 @@ static void SavePyramidChallenge(void)
     gSaveBlock2Ptr->frontier.challengeStatus = gSpecialVar_0x8005;
     VarSet(VAR_TEMP_0, 0);
     gSaveBlock2Ptr->frontier.challengePaused = TRUE;
-    save_serialize_map();
+    SaveMapView();
     TrySavingData(SAVE_LINK);
 }
 
@@ -1547,11 +1547,11 @@ void GenerateBattlePyramidFloorLayout(u16 *backupMapData, bool8 setPlayerPositio
         const u16 *layoutMap = mapLayout->map;
 
         gBackupMapLayout.map = backupMapData;
-        gBackupMapLayout.width = mapLayout->width * 4 + 15;
-        gBackupMapLayout.height = mapLayout->height * 4 + 14;
+        gBackupMapLayout.width = mapLayout->width * 4 + 2 * MAP_BORDER + 1;
+        gBackupMapLayout.height = mapLayout->height * 4 + 2 * MAP_BORDER;
         map = backupMapData;
-        yOffset = ((i / 4 * mapLayout->height) + 7) * gBackupMapLayout.width;
-        xOffset = (i % 4 * mapLayout->width) + 7;
+        yOffset = ((i / 4 * mapLayout->height) + MAP_BORDER) * gBackupMapLayout.width;
+        xOffset = (i % 4 * mapLayout->width) + MAP_BORDER;
         map += yOffset + xOffset;
         for (y = 0; y < mapLayout->height; y++)
         {

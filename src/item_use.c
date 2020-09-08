@@ -399,28 +399,28 @@ static bool8 IsHiddenItemPresentInConnection(struct MapConnection *connection, i
 
     struct MapHeader const *const mapHeader = GetMapHeaderFromConnection(connection);
 
-    switch (connection->direction)
+    switch (connection->type)
     {
     // same weird temp variable behavior seen in IsHiddenItemPresentAtCoords
-    case 2:
+    case CONNECTION_NORTH:
         localOffset = connection->offset + 7;
         localX = x - localOffset;
         localLength = mapHeader->mapLayout->height - 7;
         localY = localLength + y; // additions are reversed for some reason
         break;
-    case 1:
+    case CONNECTION_SOUTH:
         localOffset = connection->offset + 7;
         localX = x - localOffset;
         localLength = gMapHeader.mapLayout->height + 7;
         localY = y - localLength;
         break;
-    case 3:
+    case CONNECTION_WEST:
         localLength = mapHeader->mapLayout->width - 7;
         localX = localLength + x; // additions are reversed for some reason
         localOffset = connection->offset + 7;
         localY = y - localOffset;
         break;
-    case 4:
+    case CONNECTION_EAST:
         localLength = gMapHeader.mapLayout->width + 7;
         localX = x - localLength;
         localOffset = connection->offset + 7;
@@ -442,7 +442,7 @@ static void CheckForHiddenItemsInMapConnection(u8 taskId)
     s16 var1 = 7;
     s16 var2 = 7;
 
-    PlayerGetDestCoords(&playerX, &playerY);
+    PlayerGetDestCoords(&playerX, &playerY); // relative to map corner (in the border)
 
     for (x = playerX - 7; x <= playerX + 7; x++)
     {

@@ -308,8 +308,8 @@ void UpdateTallGrassFieldEffect(struct Sprite *sprite)
     mapGroup = sprite->data[5];
     if (gCamera.active && (gSaveBlock1Ptr->location.mapNum != mapNum || gSaveBlock1Ptr->location.mapGroup != mapGroup))
     {
-        sprite->data[1] -= gCamera.x;
-        sprite->data[2] -= gCamera.y;
+        sprite->data[1] -= gCamera.dx;
+        sprite->data[2] -= gCamera.dy;
         sprite->data[5] = ((u8)gSaveBlock1Ptr->location.mapNum << 8) | (u8)gSaveBlock1Ptr->location.mapGroup;
     }
     localId = sprite->data[3] >> 8;
@@ -414,8 +414,8 @@ void UpdateLongGrassFieldEffect(struct Sprite *sprite)
     mapGroup = sprite->data[5];
     if (gCamera.active && (gSaveBlock1Ptr->location.mapNum != mapNum || gSaveBlock1Ptr->location.mapGroup != mapGroup))
     {
-        sprite->data[1] -= gCamera.x;
-        sprite->data[2] -= gCamera.y;
+        sprite->data[1] -= gCamera.dx;
+        sprite->data[2] -= gCamera.dy;
         sprite->data[5] = ((u8)gSaveBlock1Ptr->location.mapNum << 8) | (u8)gSaveBlock1Ptr->location.mapGroup;
     }
     localId = sprite->data[3] >> 8;

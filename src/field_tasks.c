@@ -739,8 +739,8 @@ static void Task_MuddySlope(u8 taskId)
     if (gCamera.active && mapId != data[0])
     {
         data[0] = mapId;
-        x2 = gCamera.x;
-        y2 = gCamera.y;
+        x2 = gCamera.dx;
+        y2 = gCamera.dy;
     }
     else
     {

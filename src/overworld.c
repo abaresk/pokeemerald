@@ -733,7 +733,7 @@ void SetContinueGameWarpToDynamicWarp(int unused)
     gSaveBlock1Ptr->continueGameWarp = gSaveBlock1Ptr->dynamicWarp;
 }
 
-const struct MapConnection *GetMapConnection(u8 dir)
+const struct MapConnection *GetMapConnection(u8 type)
 {
     s32 i;
     s32 count = gMapHeader.connections->count;
@@ -743,7 +743,7 @@ const struct MapConnection *GetMapConnection(u8 dir)
         return NULL;
 
     for(i = 0; i < count; i++, connection++)
-        if (connection->direction == dir)
+        if (connection->type == type)
             return connection;
 
     return NULL;

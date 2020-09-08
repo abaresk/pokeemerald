@@ -335,15 +335,15 @@ static void CameraUpdateCallback(struct CameraObject *fieldCamera)
 {
     if (fieldCamera->spriteId != 0)
     {
-        fieldCamera->movementSpeedX = gSprites[fieldCamera->spriteId].data[2];
-        fieldCamera->movementSpeedY = gSprites[fieldCamera->spriteId].data[3];
+        fieldCamera->speedX = gSprites[fieldCamera->spriteId].data[2];
+        fieldCamera->speedY = gSprites[fieldCamera->spriteId].data[3];
     }
 }
 
 void ResetCameraUpdateInfo(void)
 {
-    gFieldCamera.movementSpeedX = 0;
-    gFieldCamera.movementSpeedY = 0;
+    gFieldCamera.speedX = 0;
+    gFieldCamera.speedY = 0;
     gFieldCamera.x = 0;
     gFieldCamera.y = 0;
     gFieldCamera.spriteId = 0;
@@ -361,60 +361,60 @@ u32 InitCameraUpdateCallback(u8 trackedSpriteId)
 
 void CameraUpdate(void)
 {
-    int deltaX;
-    int deltaY;
-    int curMovementOffsetY;
-    int curMovementOffsetX;
-    int movementSpeedX;
-    int movementSpeedY;
+    s32 deltaX;
+    s32 deltaY;
+    s32 posX;
+    s32 posY;
+    s32 speedX;
+    s32 speedY;
 
     if (gFieldCamera.callback != NULL)
         gFieldCamera.callback(&gFieldCamera);
-    movementSpeedX = gFieldCamera.movementSpeedX;
-    movementSpeedY = gFieldCamera.movementSpeedY;
+    speedX = gFieldCamera.speedX;
+    speedY = gFieldCamera.speedY;
     deltaX = 0;
     deltaY = 0;
-    curMovementOffsetX = gFieldCamera.x;
-    curMovementOffsetY = gFieldCamera.y;
+    posX = gFieldCamera.x;
+    posY = gFieldCamera.y;
 
 
-    if (curMovementOffsetX == 0 && movementSpeedX != 0)
+    if (posX == 0 && speedX != 0)
     {
-        if (movementSpeedX > 0)
+        if (speedX > 0)
             deltaX = 1;
         else
             deltaX = -1;
     }
-    if (curMovementOffsetY == 0 && movementSpeedY != 0)
+    if (posY == 0 && speedY != 0)
     {
-        if (movementSpeedY > 0)
+        if (speedY > 0)
             deltaY = 1;
         else
             deltaY = -1;
     }
-    if (curMovementOffsetX != 0 && curMovementOffsetX == -movementSpeedX)
+    if (posX != 0 && posX == -speedX)
     {
-        if (movementSpeedX > 0)
+        if (speedX > 0)
             deltaX = 1;
         else
             deltaX = -1;
     }
-    if (curMovementOffsetY != 0 && curMovementOffsetY == -movementSpeedY)
+    if (posY != 0 && posY == -speedY)
     {
-        if (movementSpeedY > 0)
+        if (speedY > 0)
             deltaX = 1;
         else
             deltaX = -1;
     }
 
-    gFieldCamera.x += movementSpeedX;
+    gFieldCamera.x += speedX;
     gFieldCamera.x = gFieldCamera.x - 16 * (gFieldCamera.x / 16);
-    gFieldCamera.y += movementSpeedY;
+    gFieldCamera.y += speedY;
     gFieldCamera.y = gFieldCamera.y - 16 * (gFieldCamera.y / 16);
 
     if (deltaX != 0 || deltaY != 0)
     {
-        CameraMove(deltaX, deltaY);
+        MovePlayerAndCamera(deltaX, deltaY);
         UpdateObjectEventsForCameraUpdate(deltaX, deltaY);
         RotatingGatePuzzleCameraUpdate(deltaX, deltaY);
         ResetBerryTreeSparkleFlags();
@@ -422,14 +422,14 @@ void CameraUpdate(void)
         RedrawMapSlicesForCameraUpdate(&sFieldCameraOffset, deltaX * 2, deltaY * 2);
     }
 
-    AddCameraPixelOffset(&sFieldCameraOffset, movementSpeedX, movementSpeedY);
-    gTotalCameraPixelOffsetX -= movementSpeedX;
-    gTotalCameraPixelOffsetY -= movementSpeedY;
+    AddCameraPixelOffset(&sFieldCameraOffset, speedX, speedY);
+    gTotalCameraPixelOffsetX -= speedX;
+    gTotalCameraPixelOffsetY -= speedY;
 }
 
 void MoveCameraAndRedrawMap(int deltaX, int deltaY) //unused
 {
-    CameraMove(deltaX, deltaY);
+    MovePlayerAndCamera(deltaX, deltaY);
     UpdateObjectEventsForCameraUpdate(deltaX, deltaY);
     DrawWholeMapView();
     gTotalCameraPixelOffsetX -= deltaX * 16;

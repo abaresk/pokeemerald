@@ -12,7 +12,9 @@
 
 enum
 {
-    CONNECTION_SOUTH = 1,
+    CONNECTION_INVALID = -1,
+    CONNECTION_NONE,
+    CONNECTION_SOUTH,
     CONNECTION_NORTH,
     CONNECTION_WEST,
     CONNECTION_EAST,
@@ -114,8 +116,8 @@ struct MapEvents
 
 struct MapConnection
 {
-    u8 direction;
-    u32 offset;
+    u8 type;
+    s32 offset;
     u8 mapGroup;
     u8 mapNum;
 };
@@ -326,8 +328,8 @@ struct PlayerAvatar
 struct Camera
 {
     bool8 active:1;
-    s32 x;
-    s32 y;
+    s32 dx;
+    s32 dy;
 };
 
 extern struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];

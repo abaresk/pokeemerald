@@ -9,6 +9,8 @@
 #define NUM_PALS_TOTAL 13
 #define MAX_MAP_DATA_SIZE 0x2800
 
+#define MAP_BORDER 7
+
 #include "main.h"
 
 extern struct BackupMapLayout gBackupMapLayout;
@@ -19,17 +21,14 @@ void MapGridSetMetatileIdAt(int, int, u16);
 void MapGridSetMetatileEntryAt(int, int, u16);
 void GetCameraCoords(u16*, u16*);
 bool8 MapGridIsImpassableAt(int, int);
-int GetMapBorderIdAt(int x, int y);
-int CanCameraMoveInDirection(int direction);
+int GetConnectionType(s32, s32);
+bool32 CanCameraMoveInDirection(u32);
 u16 GetBehaviorByMetatileId(u16 metatileId);
 void GetCameraFocusCoords(u16 *x, u16 *y);
 u8 MapGridGetMetatileLayerTypeAt(int x, int y);
 u8 MapGridGetZCoordAt(int x, int y);
-bool8 CameraMove(int deltaX, int deltaY);
-struct MapConnection *sub_8088950(u8 direction, int x, int y);
-bool8 sub_80889A8(u8 direction, int x, int y, struct MapConnection *connection);
-bool8 sub_8088A0C(int x, int src_width, int dest_width, int offset);
-void save_serialize_map(void);
+bool8 MovePlayerAndCamera(s32 deltaX, s32 deltaY);
+void SaveMapView(void);
 void SetCameraFocusCoords(u16 x, u16 y);
 void InitMap(void);
 void InitMapFromSavedGame(void);
