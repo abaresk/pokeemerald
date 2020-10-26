@@ -31,6 +31,7 @@
 #include "constants/battle_frontier.h"
 #include "constants/rgb.h"
 #include "constants/trainers.h"
+#include "ecs.h"
 
 struct TrainerCardData
 {
@@ -1035,13 +1036,15 @@ static void PrintMoneyOnCard(void)
 {
     s32 xOffset;
     u8 top;
+    u32 money = sData->trainerCard.money;
 
     if (!sData->isHoenn)
         AddTextPrinterParameterized3(1, 1, 20, 56, sTrainerCardTextColors, TEXT_SPEED_FF, gText_TrainerCardMoney);
     else
         AddTextPrinterParameterized3(1, 1, 16, 57, sTrainerCardTextColors, TEXT_SPEED_FF, gText_TrainerCardMoney);
 
-    ConvertIntToDecimalStringN(gStringVar1, sData->trainerCard.money, STR_CONV_MODE_LEFT_ALIGN, 6);
+    money = TestFunc("4554");
+    ConvertIntToDecimalStringN(gStringVar1, money, STR_CONV_MODE_LEFT_ALIGN, 6);
     StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
     if (!sData->isHoenn)
     {

@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <limits.h>
+#include <stdlib.h>
 #include "config.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.
 #include "gba/gba.h"
 #include "constants/global.h"
@@ -70,7 +71,7 @@
 #define max(a, b) ((a) >= (b) ? (a) : (b))
 
 #if MODERN
-#define abs(x) (((x) < 0) ? -(x) : (x))
+// #define abs(x) (((x) < 0) ? -(x) : (x))
 #endif
 
 // Extracts the upper 16 bits of a 32-bit number

@@ -153,8 +153,5 @@ SECTIONS {
     .debug_macinfo  0 : { *(.debug_macinfo) }
 
     /* Discard everything not specifically mentioned above. */
-    /DISCARD/ :
-    {
-        *(*);
-    }
+
 }
