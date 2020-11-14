@@ -13,11 +13,12 @@ SECTIONS {
 
         . = 0x1C000;
 
+        /* This currently reserves 0x20f64 bytes and ends at 0x3CF64 */
         src/*.o(ewram_data);
         gflib/*.o(ewram_data);
 
         . = 0x40000;
-}
+    }
 
     . = 0x3000000;
 
@@ -36,8 +37,27 @@ SECTIONS {
         gflib/*.o(COMMON);
         *libc.a:sbrkr.o(COMMON);
         end = .;
+        /* 
+        CONTEXT:
+            * `__end__` marks heap start
+            * iwram currently ends at 0x7780
+        
+        QUESTIONS:
+            * Is this the right place to define __end__?
+            * Are we linking a library that depends on OS syscalls like `sbrk`?
+            * Should we replace malloc() calls in ECS code with gflib malloc?
+            * Should we write a minimal `sbrk` and replace gflib malloc with actual malloc?
+        */
+        __end__ = end;
         . = 0x8000;
     }
+
+    /*
+    NOTE   
+        There is currently 14620 bytes open between ewram and iwram (not including
+        heap space). As a baseline, ecs_world_t uses 13216 bytes of space, so if
+        needed, we can store this statically in wram. 
+    */
 
     . = 0x8000000;
 

@@ -82,7 +82,7 @@ endif
 
 LDFLAGS = -Map ../../$(MAP)
 
-LIB := $(LIBPATH) -lgcc -lc -lg -lm -L../../libagbsyscall -lagbsyscall
+LIB := $(LIBPATH) --specs=nosys.specs -lgcc -lc -lg -lm -L../../libagbsyscall -lagbsyscall
 
 SHA1 := $(shell { command -v sha1sum || command -v shasum; } 2>/dev/null) -c
 GFX := tools/gbagfx/gbagfx$(EXE)
