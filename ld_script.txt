@@ -335,6 +335,7 @@ SECTIONS {
         src/international_string_util.o(.text);
         src/ecs.o(.text);
         src/flecs_piecemeal.o(.text);
+        src/mgba.o(.text);
     } =0
 
     script_data :
@@ -696,6 +697,7 @@ SECTIONS {
         data/sound_data.o(.rodata);
         src/ecs.o(.rodata);
         src/flecs_piecemeal.o(.rodata);
+        src/mgba.o(.rodata);
     } =0
 
     song_data :

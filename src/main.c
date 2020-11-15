@@ -23,6 +23,8 @@
 #include "intro.h"
 #include "main.h"
 #include "trainer_hill.h"
+#include "mgba.h"
+#include "malloc.h"
 
 static void VBlankIntr(void);
 static void HBlankIntr(void);
@@ -113,6 +115,8 @@ void AgbMain()
     EnableVCountIntrAtLine150();
     InitRFU();
     RtcInit();
+    mgba_open();
+    mgba_printf(MGBA_LOG_INFO, "Game on");
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
@@ -168,6 +172,8 @@ void AgbMain()
 
         PlayTimeCounter_Update();
         MapMusicMain();
+        // PrintHeap();
+        mgba_printf(MGBA_LOG_INFO, "Heap used: %d", CalcHeapUsed());
         WaitForVBlank();
     }
 }
