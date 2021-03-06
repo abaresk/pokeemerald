@@ -17,6 +17,7 @@ extern u32 gHeapUsed;
 
 void *Alloc(u32 size);
 void *AllocZeroed(u32 size);
+void *Realloc(void *pointer, u32 size);
 void Free(void *pointer);
 void InitHeap(void *pointer, u32 size);
 void PrintHeap(void);

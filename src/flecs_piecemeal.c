@@ -1,4 +1,6 @@
 #include "flecs_piecemeal.h"
+#include "mgba.h"
+#include "malloc.h"
 
 #ifndef FLECS_PRIVATE_H
 #define FLECS_PRIVATE_H
@@ -7306,8 +7308,14 @@ chunk_t* chunk_new(
     result->data = ecs_os_calloc(sparse->size * CHUNK_COUNT);
 
     ecs_assert(result->sparse != NULL, ECS_INTERNAL_ERROR, NULL);
+    mgba_printf(MGBA_LOG_INFO, "larvitar");
+    mgba_printf(MGBA_LOG_INFO, "result->sparse: %X", result->sparse);
+    mgba_printf(MGBA_LOG_INFO, "result->data: %X", result->data);
+    mgba_printf(MGBA_LOG_INFO, "sparse->size: %d", sparse->size);
+    mgba_printf(MGBA_LOG_INFO, "CHUNK_COUNT: %d", CHUNK_COUNT);
     ecs_assert(result->data != NULL, ECS_INTERNAL_ERROR, NULL);
 
+    mgba_printf(MGBA_LOG_INFO, "tyranitar");
     return result;
 }
 
@@ -7344,7 +7352,10 @@ chunk_t* get_or_create_chunk(
         return chunk;
     }
 
-    return chunk_new(sparse, chunk_index);
+    mgba_printf(MGBA_LOG_INFO, "bagon");
+    chunk_t* ret = chunk_new(sparse, chunk_index);
+    mgba_printf(MGBA_LOG_INFO, "salamence");
+    return ret;
 }
 
 static
@@ -7639,6 +7650,7 @@ void* _ecs_sparse_get_or_create(
     ecs_assert(ecs_vector_count(sparse->dense) > 0, ECS_INTERNAL_ERROR, NULL);
 
     uint64_t gen = strip_generation(&index);
+    mgba_printf(MGBA_LOG_INFO, "dratini");
     chunk_t *chunk = get_or_create_chunk(sparse, CHUNK(index));
     int32_t offset = OFFSET(index);
     int32_t dense = chunk->sparse[offset];
@@ -7686,6 +7698,7 @@ void* _ecs_sparse_get_or_create(
         dense_array[count] |= gen;
     }
 
+    mgba_printf(MGBA_LOG_INFO, "dragonite");
     return DATA(chunk->data, sparse->size, offset);
 }
 
@@ -10297,7 +10310,9 @@ void init_store(ecs_world_t *world) {
     world->store.tables = ecs_sparse_new(ecs_table_t);
 
     /* Initialize one root table per stage */
+    mgba_printf(MGBA_LOG_INFO, "tympole");
     ecs_init_root_table(world);
+    mgba_printf(MGBA_LOG_INFO, "seismitoad");
 }
 
 static
@@ -10361,17 +10376,28 @@ ecs_world_t *ecs_mini(void) {
     if (!ecs_os_has_heap()) {
         ecs_abort(ECS_MISSING_OS_API, NULL);
     }
+    mgba_printf(MGBA_LOG_INFO, "Has heap: %d", ecs_os_has_heap());
 
     if (!ecs_os_has_threading()) {
         ecs_trace_1("threading not available");
     }
+    mgba_printf(MGBA_LOG_INFO, "Has threading: %d", ecs_os_has_heap());
 
     if (!ecs_os_has_time()) {
         ecs_trace_1("time management not available");
     }
+    mgba_printf(MGBA_LOG_INFO, "Has time: %d", ecs_os_has_time());
+
+    // Test malloc
+    // int32_t *test = malloc(4);
+    mgba_printf(MGBA_LOG_INFO, "malloc address: %X", malloc);
+    // mgba_printf(MGBA_LOG_INFO, "test address: %X", test);
+    mgba_printf(MGBA_LOG_INFO, "world size: %d", sizeof(ecs_world_t));
+    mgba_printf(MGBA_LOG_INFO, "map size: %d", sizeof(ecs_c_info_t));
 
     ecs_world_t *world = ecs_os_malloc(sizeof(ecs_world_t));
     ecs_assert(world != NULL, ECS_OUT_OF_MEMORY, NULL);
+    mgba_printf(MGBA_LOG_INFO, "world: %X", world);
 
     world->magic = ECS_WORLD_MAGIC;
     memset(&world->c_info, 0, sizeof(ecs_c_info_t) * ECS_HI_COMPONENT_ID); 
@@ -10410,6 +10436,7 @@ ecs_world_t *ecs_mini(void) {
     world->pipeline = 0;
 
     world->frame_start_time = (ecs_time_t){0, 0};
+    mgba_printf(MGBA_LOG_INFO, "Has time: %d", ecs_os_has_time());
     if (ecs_os_has_time()) {
         ecs_os_get_time(&world->world_start_time);
     }
@@ -10442,6 +10469,7 @@ ecs_world_t *ecs_mini(void) {
     ecs_stage_init(world, &world->stage);
     ecs_stage_init(world, &world->temp_stage);
     init_store(world);
+    mgba_printf(MGBA_LOG_INFO, "hewwo");
 
     world->stage.world = world;
     world->temp_stage.world = world;
@@ -13451,6 +13479,7 @@ void ecs_os_err(const char *fmt, ...) {
 
 void ecs_os_gettime(ecs_time_t *time)
 {
+    mgba_printf(MGBA_LOG_INFO, "wooper");
     uint64_t now = ecs_os_time_now();
     uint64_t sec = now / 1000000000;
 
@@ -13459,20 +13488,25 @@ void ecs_os_gettime(ecs_time_t *time)
 
     time->sec = (uint32_t)sec;
     time->nanosec = (uint32_t)(now - sec * 1000000000);
+    mgba_printf(MGBA_LOG_INFO, "quagsire");
 }
 
 static
 void* ecs_os_api_malloc(ecs_size_t size) {
     ecs_os_api_malloc_count ++;
     ecs_assert(size > 0, ECS_INVALID_PARAMETER, NULL);
-    return malloc((size_t)size);
+    // Replaced temporarily with gflib malloc
+    // return malloc((size_t)size);
+    return Alloc((size_t)size);
 }
 
 static
 void* ecs_os_api_calloc(ecs_size_t size) {
     ecs_os_api_calloc_count ++;
     ecs_assert(size > 0, ECS_INVALID_PARAMETER, NULL);
-    return calloc(1, (size_t)size);
+    // Replaced temporarily with gflib calloc
+    // return calloc(1, (size_t)size);
+    return AllocZeroed((size_t)size);
 }
 
 static
@@ -13486,7 +13520,9 @@ void* ecs_os_api_realloc(void *ptr, ecs_size_t size) {
         ecs_os_api_malloc_count ++; 
     }
     
-    return realloc(ptr, (size_t)size);
+    // Replaced temporarily with gflib realloc
+    // return realloc(ptr, (size_t)size);
+    return Realloc(ptr, (size_t)size);
 }
 
 static
@@ -13494,7 +13530,9 @@ void ecs_os_api_free(void *ptr) {
     if (ptr) {
         ecs_os_api_free_count ++;
     }
-    free(ptr);
+    // Replaced temporarily with gflib free
+    // free(ptr);
+    Free(ptr);
 }
 
 static
@@ -13624,9 +13662,11 @@ bool ecs_os_has_threading(void) {
 }
 
 bool ecs_os_has_time(void) {
-    return 
-        (ecs_os_api.get_time_ != NULL) &&
-        (ecs_os_api.sleep_ != NULL);
+    // Stubbing this out since clock_gettime causes GBA to crash.
+    // return 
+    //     (ecs_os_api.get_time_ != NULL) &&
+    //     (ecs_os_api.sleep_ != NULL);
+    return false;
 }
 
 bool ecs_os_has_logging(void) {
@@ -16310,7 +16350,9 @@ void register_child_table(
         world->child_tables = ecs_map_new(ecs_vector_t*, 1);
     }
 
+    mgba_printf(MGBA_LOG_INFO, "electrike");
     ecs_map_set(world->child_tables, parent, &child_tables);
+    mgba_printf(MGBA_LOG_INFO, "manectric");
 }
 
 static
@@ -16400,9 +16442,11 @@ void init_edges(
     });
     
     /* Register as root table */
+    mgba_printf(MGBA_LOG_INFO, "shinx");
     if (!(table->flags & EcsTableHasParent)) {
         register_child_table(world, table, 0);
     }
+    mgba_printf(MGBA_LOG_INFO, "luxray");
 }
 
 static
@@ -16427,7 +16471,9 @@ void init_table(
     table->column_count = data_column_count(world, table);
     table->sw_column_count = switch_column_count(table);
 
+    mgba_printf(MGBA_LOG_INFO, "stuffle");
     init_edges(world, table);
+    mgba_printf(MGBA_LOG_INFO, "bewear");
 }
 
 static
@@ -17287,7 +17333,10 @@ ecs_bucket_t* find_or_create_bucket(
     }
 
     uint64_t bucket_id = get_bucket_id(bucket_count, key);
-    return _ecs_sparse_get_or_create(buckets, 0, bucket_id);    
+    mgba_printf(MGBA_LOG_INFO, "gible");
+    ecs_bucket_t *ret = _ecs_sparse_get_or_create(buckets, 0, bucket_id);
+    mgba_printf(MGBA_LOG_INFO, "garchomp");
+    return ret;    
 }
 
 static
@@ -17435,6 +17484,7 @@ ecs_map_t* _ecs_map_new(
     }
 
     result->bucket_count = bucket_count;
+    mgba_printf(MGBA_LOG_INFO, "Sparse size: %d", BUCKET_SIZE(elem_size, result->offset));
     result->buckets = _ecs_sparse_new(BUCKET_SIZE(elem_size, result->offset));
 
     return result;
@@ -17519,6 +17569,7 @@ void _ecs_map_set(
     ecs_assert(map != NULL, ECS_INVALID_PARAMETER, NULL);
     ecs_assert(elem_size == map->type_elem_size, ECS_INVALID_PARAMETER, NULL);
 
+    mgba_printf(MGBA_LOG_INFO, "ponyta");
     ecs_bucket_t * bucket = find_or_create_bucket(map, key);
     ecs_assert(bucket != NULL, ECS_INTERNAL_ERROR, NULL);
     
@@ -17567,6 +17618,7 @@ void _ecs_map_set(
     }
 
     ecs_assert(map->bucket_count != 0, ECS_INTERNAL_ERROR, NULL);
+    mgba_printf(MGBA_LOG_INFO, "rapidash");
 }
 
 void ecs_map_remove(
@@ -18203,6 +18255,7 @@ void ecs_os_time_setup(void) {
 }
 
 uint64_t ecs_os_time_now(void) {
+    mgba_printf(MGBA_LOG_INFO, "teddiursa");
     ecs_assert(ecs_os_time_initialized != 0, ECS_INTERNAL_ERROR, NULL);
 
     uint64_t now;
@@ -18219,6 +18272,7 @@ uint64_t ecs_os_time_now(void) {
         now = ((uint64_t)ts.tv_sec * 1000000000 + (uint64_t)ts.tv_nsec);
     #endif
 
+    mgba_printf(MGBA_LOG_INFO, "ursaring");
     return now;
 }
 

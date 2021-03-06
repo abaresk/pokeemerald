@@ -22,6 +22,7 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
+#include "flecs_piecemeal.h"
 
 extern struct MapPosition gPlayerFacingPosition;
 
@@ -306,10 +307,22 @@ static void StartCutGrassFieldEffect(void)
     FieldEffectStart(FLDEFF_CUT_GRASS);
 }
 
+typedef struct Position {
+    int32_t x;
+    int32_t y;
+} Position;
+
 bool8 FldEff_CutGrass(void)
 {
     s16 x, y;
     u8 i = 0;
+
+    /* Create the world, pass arguments for overriding the number of threads,fps
+     * or for starting the admin dashboard (see flecs.h for details). */
+    ecs_world_t *world = ecs_init();
+
+    // /* Cleanup */
+    // ecs_fini(world);
 
     PlaySE(SE_M_CUT);
     PlayerGetDestCoords(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
