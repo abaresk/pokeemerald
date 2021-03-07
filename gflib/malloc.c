@@ -186,6 +186,36 @@ void *AllocZeroed(u32 size)
     return AllocZeroedInternal(sHeapStart, size);
 }
 
+void *Realloc(void *pointer, u32 size)
+{
+    struct MemBlock *block = (struct MemBlock *)((u8 *)pointer - sizeof(struct MemBlock));
+    u32 originalSize = block->size;
+    void *newPointer;
+
+    if (size == 0)
+    {
+        Free(pointer);
+    }
+    else if (!pointer)
+    {
+        return Alloc(size);
+    }
+    else if (size <= originalSize)
+    {
+        return pointer;
+    }
+    else
+    {
+        newPointer = Alloc(size);
+        if (newPointer)
+        {
+            memcpy(newPointer, pointer, originalSize);
+            Free(pointer);
+        }
+        return newPointer;
+    }
+}
+
 void Free(void *pointer)
 {
     FreeInternal(sHeapStart, pointer);
