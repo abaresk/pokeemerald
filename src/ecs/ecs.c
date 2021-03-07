@@ -1,5 +1,5 @@
 #include "global.h"
-#include "ecs.h"
+#include "ecs/ecs.h"
 
 /* -- Implementation -- */
 EcsEntity ecs_new_w_type(
