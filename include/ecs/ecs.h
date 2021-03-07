@@ -1,6 +1,8 @@
 #ifndef GUARD_ECS_H
 #define GUARD_ECS_H
 
+#include "api_defines.h"
+
 typedef struct {
     u8 val;
 } EcsWorld;
@@ -157,8 +159,6 @@ typedef struct
     EcsEntity system;     /**< The current system (if applicable) */
 } EcsIterator;
 
-#define ECS_ALIGNOF(T) (u32) __alignof__(T)
-
 /** Declare entity variable */
 #define ECS_ENTITY_VAR(id) \
     EcsEntity ecs_typeid(id)
@@ -166,14 +166,5 @@ typedef struct
 /** Action callback for systems and triggers */
 typedef void (*EcsIteratorAction)(
     EcsIterator *it);
-
-/** Translate C type to ecs_type_t variable. */
-#define ecs_type(T) FLECS__T##T
-
-/** Translate C type to entity id. */
-#define ecs_typeid(T) FLECS__E##T
-
-/** Translate C type to module struct. */
-#define ecs_iter_action(T) FLECS__F##T
 
 #endif // GUARD_ECS_H
