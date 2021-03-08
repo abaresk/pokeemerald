@@ -36,6 +36,7 @@ SECTIONS {
         gflib/*.o(COMMON);
         *libc.a:sbrkr.o(COMMON);
         end = .;
+        __end__ = end;
         . = 0x8000;
     }
 
@@ -152,9 +153,10 @@ SECTIONS {
     .debug_loc      0 : { *(.debug_loc) }
     .debug_macinfo  0 : { *(.debug_macinfo) }
 
-    /* Discard everything not specifically mentioned above. */
+    /* Discard everything not specifically mentioned above.
     /DISCARD/ :
     {
         *(*);
     }
+    */
 }

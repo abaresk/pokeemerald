@@ -24,6 +24,7 @@
 #include "main.h"
 #include "trainer_hill.h"
 #include "constants/rgb.h"
+#include "mgba.h"
 
 static void VBlankIntr(void);
 static void HBlankIntr(void);
@@ -100,6 +101,8 @@ void AgbMain()
     EnableVCountIntrAtLine150();
     InitRFU();
     RtcInit();
+    mgba_open();
+    mgba_printf(MGBA_LOG_INFO, "Game start");
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
