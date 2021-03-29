@@ -336,6 +336,8 @@ SECTIONS {
         src/mgba.o(.text);
         src/ecs/ecs.o(.text);
         src/ecs/log.o(.text);
+        src/ecs/map.o(.text);
+        src/ecs/misc.o(.text);
     } =0
 
     script_data :
@@ -698,6 +700,8 @@ SECTIONS {
         src/mgba.o(.rodata);
         src/ecs/ecs.o(.rodata);
         src/ecs/log.o(.rodata);
+        src/ecs/map.o(.rodata);
+        src/ecs/misc.o(.rodata);
     } =0
 
     song_data :
