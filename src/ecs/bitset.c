@@ -64,39 +64,44 @@ void ecs_bitset_replace(Bitset **dest, Bitset **src) {
 }
 
 /* -- Logical operators -- */
-Bitset *ecs_bitset_and(Bitset *first, Bitset *second) {
+void ecs_bitset_and(Bitset *first, Bitset *second, Bitset **result) {
     if (first->length != second->length) {
-        return NULL;
+        ecs_bitset_free(*result);
+        return;
     }
 
-    Bitset *result = ecs_bitset_new(first->length);
+    Bitset *product = ecs_bitset_new(first->length);
     uint32_t n_chunks = num_chunks(first->length);
     for (uint32_t i = 0; i < n_chunks; i++) {
-        result->chunks[i] = first->chunks[i] & second->chunks[i];
+        product->chunks[i] = first->chunks[i] & second->chunks[i];
     }
-    return result;
+
+    ecs_bitset_replace(result, &product);
 }
 
-Bitset *ecs_bitset_or(Bitset *first, Bitset *second) {
+void ecs_bitset_or(Bitset *first, Bitset *second, Bitset **result) {
     if (first->length != second->length) {
-        return NULL;
+        ecs_bitset_free(*result);
+        return;
     }
 
-    Bitset *result = ecs_bitset_new(first->length);
+    Bitset *product = ecs_bitset_new(first->length);
     uint32_t n_chunks = num_chunks(first->length);
     for (uint32_t i = 0; i < n_chunks; i++) {
-        result->chunks[i] = first->chunks[i] | second->chunks[i];
+        product->chunks[i] = first->chunks[i] | second->chunks[i];
     }
-    return result;
+
+    ecs_bitset_replace(result, &product);
 }
 
-Bitset *ecs_bitset_not(Bitset *bitset) {
-    Bitset *result = ecs_bitset_new(bitset->length);
+void ecs_bitset_not(Bitset *bitset, Bitset **result) {
+    Bitset *product = ecs_bitset_new(bitset->length);
     uint32_t n_chunks = num_chunks(bitset->length);
     for (uint32_t i = 0; i < n_chunks; i++) {
-        result->chunks[i] = ~bitset->chunks[i];
+        product->chunks[i] = ~bitset->chunks[i];
     }
-    return result;
+
+    ecs_bitset_replace(result, &product);
 }
 
 /* -- Helper methods -- */

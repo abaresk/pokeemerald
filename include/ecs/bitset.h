@@ -27,10 +27,31 @@ void ecs_bitset_clear(Bitset *bitset, uint32_t index);
 void ecs_bitset_replace(Bitset **dest, Bitset **src);
 
 /* -- Logical operators -- */
-Bitset *ecs_bitset_and(Bitset *first, Bitset *second);
 
-Bitset *ecs_bitset_or(Bitset *first, Bitset *second);
+// Performs a logical AND on two Bitset operands and stores the result in
+// `result`. Frees any pre-exisiting resources used by `result`.
+//
+// You can chain AND operations as follows:
+// Bitset *acc = ecs_bitset_new(length);
+// Bitset *second = ecs_bitset_new(length);
+// ecs_bitset_and(acc, second, &acc);
+void ecs_bitset_and(Bitset *first, Bitset *second, Bitset **result);
 
-Bitset *ecs_bitset_not(Bitset *bitset);
+// Performs a logical OR on two Bitset operands and stores the result in
+// `result`. Frees any pre-exisiting resources used by `result`.
+//
+// You can chain OR operations as follows:
+// Bitset *acc = ecs_bitset_new(length);
+// Bitset *second = ecs_bitset_new(length);
+// ecs_bitset_or(acc, second, &acc);
+void ecs_bitset_or(Bitset *first, Bitset *second, Bitset **result);
+
+// Performs a logical NOT on a Bitset operand and stores the result in
+// `result`. Frees any pre-exisiting resources used by `result`.
+//
+// You can chain NOT operations as follows:
+// Bitset *acc = ecs_bitset_new(length);
+// ecs_bitset_not(acc, &acc);
+void ecs_bitset_not(Bitset *bitset, Bitset **result);
 
 #endif // ECS_BITSET_H
