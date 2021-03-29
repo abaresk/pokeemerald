@@ -26,6 +26,8 @@ void ecs_bitset_clear(Bitset *bitset, uint32_t index);
 // Replaces one bitset for another
 void ecs_bitset_replace(Bitset **dest, Bitset **src);
 
+Bitset *ecs_bitset_copy(Bitset *src);
+
 /* -- Logical operators -- */
 
 // Performs a logical AND on two Bitset operands and stores the result in

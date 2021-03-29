@@ -63,6 +63,20 @@ void ecs_bitset_replace(Bitset **dest, Bitset **src) {
     *src = NULL;
 }
 
+Bitset *ecs_bitset_copy(Bitset *src) {
+    if (src == NULL) {
+        return NULL;
+    }
+
+    Bitset *result = ecs_bitset_new(src->length);
+    uint32_t n_chunks = num_chunks(src->length);
+    for (uint32_t i = 0; i < n_chunks; i++) {
+        result->chunks[i] = src->chunks[i];
+    }
+
+    return result;
+}
+
 /* -- Logical operators -- */
 void ecs_bitset_and(Bitset *first, Bitset *second, Bitset **result) {
     if (first->length != second->length) {
