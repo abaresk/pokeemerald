@@ -53,7 +53,55 @@ void ecs_bitset_clear(Bitset *bitset, uint32_t index) {
     bitset->chunks[chunk_idx] &= ~(1 << (index % CHAR_BITS));
 }
 
-static uint32_t num_chunks(uint32_t length) {
+void ecs_bitset_replace(Bitset **dest, Bitset **src) {
+    if (dest == NULL || *dest == NULL || src == NULL || *src == NULL) {
+        return NULL;
+    }
+
+    ecs_bitset_free(*dest);
+    *dest = *src;
+    *src = NULL;
+}
+
+/* -- Logical operators -- */
+Bitset *ecs_bitset_and(Bitset *first, Bitset *second) {
+    if (first->length != second->length) {
+        return NULL;
+    }
+
+    Bitset *result = ecs_bitset_new(first->length);
+    uint32_t n_chunks = num_chunks(first->length);
+    for (uint32_t i = 0; i < n_chunks; i++) {
+        result->chunks[i] = first->chunks[i] & second->chunks[i];
+    }
+    return result;
+}
+
+Bitset *ecs_bitset_or(Bitset *first, Bitset *second) {
+    if (first->length != second->length) {
+        return NULL;
+    }
+
+    Bitset *result = ecs_bitset_new(first->length);
+    uint32_t n_chunks = num_chunks(first->length);
+    for (uint32_t i = 0; i < n_chunks; i++) {
+        result->chunks[i] = first->chunks[i] | second->chunks[i];
+    }
+    return result;
+}
+
+Bitset *ecs_bitset_not(Bitset *bitset) {
+    Bitset *result = ecs_bitset_new(bitset->length);
+    uint32_t n_chunks = num_chunks(bitset->length);
+    for (uint32_t i = 0; i < n_chunks; i++) {
+        result->chunks[i] = ~bitset->chunks[i];
+    }
+    return result;
+}
+
+/* -- Helper methods -- */
+static uint32_t num_chunks(uint32_t length)
+{
     uint32_t ret = length / CHAR_BITS;
     if (length % CHAR_BITS != 0) {
         ret++;

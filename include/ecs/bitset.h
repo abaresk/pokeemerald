@@ -23,4 +23,14 @@ uint8_t ecs_bitset_get(Bitset *bitset, uint32_t index);
 
 void ecs_bitset_clear(Bitset *bitset, uint32_t index);
 
+// Replaces one bitset for another
+void ecs_bitset_replace(Bitset **dest, Bitset **src);
+
+/* -- Logical operators -- */
+Bitset *ecs_bitset_and(Bitset *first, Bitset *second);
+
+Bitset *ecs_bitset_or(Bitset *first, Bitset *second);
+
+Bitset *ecs_bitset_not(Bitset *bitset);
+
 #endif // ECS_BITSET_H
