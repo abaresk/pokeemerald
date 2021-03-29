@@ -21,7 +21,7 @@ void _ecs_assert(
     const char *file,
     int32_t line);
 
-#ifdef DEBUG
+#ifdef NDEBUG
 #define ecs_assert(condition, error_code, param)
 #else
 #define ecs_assert(condition, error_code, param)\

@@ -339,6 +339,7 @@ SECTIONS {
         src/ecs/map.o(.text);
         src/ecs/misc.o(.text);
         src/ecs/bitset.o(.text);
+        src/ecs/vector.o(.text);
     } =0
 
     script_data :
@@ -704,6 +705,7 @@ SECTIONS {
         src/ecs/map.o(.rodata);
         src/ecs/misc.o(.rodata);
         src/ecs/bitset.o(.rodata);
+        src/ecs/vector.o(.rodata);
     } =0
 
     song_data :
