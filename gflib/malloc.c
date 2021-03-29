@@ -189,19 +189,20 @@ void *AllocZeroed(u32 size)
 
 void *Realloc(void *pointer, u32 size)
 {
-    struct MemBlock *block = (struct MemBlock *)((u8 *)pointer - sizeof(struct MemBlock));
-    u32 originalSize = block->size;
-    void *newPointer;
-
     if (size == 0)
     {
         Free(pointer);
+        return;
     }
     else if (!pointer)
     {
         return Alloc(size);
     }
-    else if (size <= originalSize)
+
+    struct MemBlock *block = (struct MemBlock *)((u8 *)pointer - sizeof(struct MemBlock));
+    u32 originalSize = block->size;
+    void *newPointer;
+    if (size <= originalSize)
     {
         return pointer;
     }
