@@ -192,7 +192,7 @@ void *Realloc(void *pointer, u32 size)
     if (size == 0)
     {
         Free(pointer);
-        return;
+        return NULL;
     }
     else if (!pointer)
     {
