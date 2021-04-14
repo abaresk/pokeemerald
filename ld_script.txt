@@ -337,6 +337,7 @@ SECTIONS {
         src/ecs/ecs.o(.text);
         src/ecs/log.o(.text);
         src/ecs/map.o(.text);
+        src/ecs/set.o(.text);
         src/ecs/misc.o(.text);
         src/ecs/bitset.o(.text);
         src/ecs/vector.o(.text);
@@ -703,6 +704,7 @@ SECTIONS {
         src/ecs/ecs.o(.rodata);
         src/ecs/log.o(.rodata);
         src/ecs/map.o(.rodata);
+        src/ecs/set.o(.rodata);
         src/ecs/misc.o(.rodata);
         src/ecs/bitset.o(.rodata);
         src/ecs/vector.o(.rodata);
